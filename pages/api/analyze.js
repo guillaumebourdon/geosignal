@@ -1,14 +1,15 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import Anthropic from '@anthropic-ai/sdk';
+import { Redis } from '@upstash/redis';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
-// ── Cache 24h ─────────────────────────────────────────────────
-const cache = new Map();
-const CACHE_DURATION = 24 * 60 * 60 * 1000;
-
-// ── Règles fixes ──────────────────────────────────────────────
+const CACHE_DURATION = 24 * 60 * 60; // 24h en secondes
 
 function scoreStructuredData(html, $) {
   const schemaTypes = [];
@@ -133,7 +134,6 @@ function scoreExternalPresence($, html) {
   };
 }
 
-// ── Analyse Claude (verdict + recommandations uniquement) ─────
 async function runClaudeAnalysis(url, textContent, scores) {
   const prompt = `Tu es un expert en GEO (Generative Engine Optimization).
 
@@ -172,41 +172,41 @@ Réponds UNIQUEMENT en JSON valide :
   return JSON.parse(cleaned);
 }
 
-// ── Handler principal ─────────────────────────────────────────
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: 'URL manquante' });
 
-  // Vérifier le cache
-  const cacheKey = url.toLowerCase().trim();
-  const cached   = cache.get(cacheKey);
-  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-    console.log(`Cache hit : ${cacheKey}`);
-    return res.status(200).json(cached.data);
+  const cacheKey = `detekia:${url.toLowerCase().trim()}`;
+
+  // Vérifier le cache Upstash
+  try {
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      console.log(`Cache hit : ${cacheKey}`);
+      return res.status(200).json(cached);
+    }
+  } catch (e) {
+    console.error('Cache read error:', e);
   }
 
   try {
-    // 1. Scraping via Jina AI
     const jinaUrl = `https://r.jina.ai/${url}`;
     const { data: rawContent } = await axios.get(jinaUrl, {
       headers: { Accept: 'text/html' },
       timeout: 15000,
     });
 
-    // 2. Parse HTML
     const $           = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
 
-    // 3. Validation
     if (textContent.length < 200) {
       return res.status(422).json({
         error: "Impossible d'analyser ce site. Le contenu est trop court ou inaccessible.",
       });
     }
 
-    // 4. Scores fixes
     const scores = {
       structuredData:   scoreStructuredData(rawContent, $),
       identity:         scoreIdentity($),
@@ -216,13 +216,9 @@ export default async function handler(req, res) {
       externalPresence: scoreExternalPresence($, rawContent),
     };
 
-    // 5. Claude pour verdict + recommandations uniquement
     const claude = await runClaudeAnalysis(url, textContent, scores);
-
-    // 6. Score global
     const totalScore = Object.values(scores).reduce((sum, s) => sum + s.score, 0);
 
-    // 7. Construire la réponse
     const responseData = {
       score: totalScore,
       verdict: claude.verdict,
@@ -237,8 +233,13 @@ export default async function handler(req, res) {
       recommendations: claude.recommendations,
     };
 
-    // 8. Sauvegarder dans le cache
-    cache.set(cacheKey, { data: responseData, timestamp: Date.now() });
+    // Sauvegarder dans Upstash avec expiration 24h
+    try {
+      await redis.set(cacheKey, responseData, { ex: CACHE_DURATION });
+      console.log(`Cache set : ${cacheKey}`);
+    } catch (e) {
+      console.error('Cache write error:', e);
+    }
 
     return res.status(200).json(responseData);
 
@@ -247,3 +248,8 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Erreur lors de l'analyse", detail: err.message });
   }
 }
+```
+
+**Cmd+S** puis redémarre le serveur :
+```
+npm run dev
