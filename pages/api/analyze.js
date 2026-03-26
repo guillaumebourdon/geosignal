@@ -1,7 +1,7 @@
-import axios from 'axios';
-import * as cheerio from 'cheerio';
 import Anthropic from '@anthropic-ai/sdk';
 import { Redis } from '@upstash/redis';
+import axios from 'axios';
+import * as cheerio from 'cheerio';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const redis = new Redis({
@@ -9,165 +9,249 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-const CACHE_DURATION = 24 * 60 * 60; // 24h en secondes
+const CACHE_DURATION = 24 * 60 * 60;
 
-function scoreStructuredData(html, $) {
+function scoreExtractibility($, text) {
+  let score = 0;
+  const details = [];
+
+  const intro = text.slice(0, 300);
+  const hasDirectAnswer = intro.split(' ').length > 30;
+  if (hasDirectAnswer) { score += 5; details.push('Intro substantielle ✓'); }
+  else details.push('Intro trop courte ✗');
+
+  const listCount = $('ul li, ol li').length;
+  if (listCount >= 10) { score += 5; details.push(`${listCount} éléments de liste ✓`); }
+  else if (listCount >= 4) { score += 3; details.push(`${listCount} éléments de liste`); }
+  else details.push('Peu de listes ✗');
+
+  const tableCount = $('table').length;
+  if (tableCount >= 2) { score += 5; details.push(`${tableCount} tableaux ✓`); }
+  else if (tableCount === 1) { score += 3; details.push('1 tableau'); }
+  else details.push('Aucun tableau ✗');
+
+  const h2Count = $('h2').length;
+  if (h2Count >= 4) { score += 5; details.push('Structure H2/H3 riche ✓'); }
+  else if (h2Count >= 2) { score += 3; details.push('Structure H2/H3 correcte'); }
+  else details.push('Structure de titres faible ✗');
+
+  const paragraphs = $('p');
+  const shortParas = Array.from(paragraphs).filter(p => {
+    const txt = $(p).text().trim();
+    return txt.length > 50 && txt.length < 300;
+  }).length;
+  if (shortParas >= 5) { score += 5; details.push(`${shortParas} paragraphes bien calibrés ✓`); }
+  else if (shortParas >= 3) { score += 3; details.push(`${shortParas} paragraphes corrects`); }
+  else details.push('Paragraphes trop longs ou absents ✗');
+
+  return { score: Math.min(score, 25), max: 25, detail: details.slice(0, 3).join(' · ') };
+}
+
+function scoreVerifiability($, text, html) {
+  let score = 0;
+  const details = [];
+
+  const numbers = text.match(/\d+[.,]?\d*\s*(%|€|\$|k|M|pts?|points?|fois|ans?|mois|jours?)/gi) || [];
+  if (numbers.length >= 5) { score += 5; details.push(`${numbers.length} données chiffrées ✓`); }
+  else if (numbers.length >= 2) { score += 3; details.push(`${numbers.length} données chiffrées`); }
+  else details.push('Peu de données chiffrées ✗');
+
+  const externalLinks = [];
+  $('a[href]').each((_, el) => {
+    const href = $(el).attr('href') || '';
+    if (href.startsWith('http')) externalLinks.push(href);
+  });
+  if (externalLinks.length >= 5) { score += 5; details.push(`${externalLinks.length} liens vers sources ✓`); }
+  else if (externalLinks.length >= 2) { score += 3; details.push(`${externalLinks.length} liens externes`); }
+  else details.push('Peu de sources citées ✗');
+
+  const hasDate = html.includes('datePublished') || html.includes('dateModified') ||
+    /\b(20\d{2})\b/.test(text.slice(0, 500)) || $('time[datetime]').length > 0;
+  if (hasDate) { score += 4; details.push('Dates présentes ✓'); }
+  else details.push('Aucune date visible ✗');
+
+  if ($('table').length > 0) { score += 4; details.push('Tableaux de données ✓'); }
+  if ($('blockquote').length > 0) { score += 2; details.push('Citations présentes ✓'); }
+
+  return { score: Math.min(score, 20), max: 20, detail: details.slice(0, 3).join(' · ') };
+}
+
+function scoreAuthority($, html) {
+  let score = 0;
+  const details = [];
+
+  const links = [];
+  $('a[href]').each((_, el) => links.push(($(el).attr('href') || '').toLowerCase()));
+
+  const hasAuthorPage = links.some(l => l.includes('author') || l.includes('auteur') || l.includes('equipe') || l.includes('team'));
+  if (hasAuthorPage) { score += 3; details.push('Page auteur ✓'); }
+  else details.push('Pas de page auteur ✗');
+
+  const hasAuthorSchema = html.includes('"author"') || html.includes('rel="author"');
+  const hasAuthorText = /par\s+[A-Z][a-z]+|by\s+[A-Z][a-z]+|rédigé par|written by/i.test(html);
+  if (hasAuthorSchema || hasAuthorText) { score += 3; details.push('Auteur identifié ✓'); }
+  else details.push('Auteur non identifié ✗');
+
+  const hasAbout = links.some(l => l.includes('about') || l.includes('propos'));
+  if (hasAbout) { score += 2; details.push('Page À propos ✓'); }
+
+  const hasContact = links.some(l => l.includes('contact'));
+  const hasLegal = links.some(l => l.includes('legal') || l.includes('mention') || l.includes('cgu') || l.includes('privacy'));
+  if (hasContact) score += 2;
+  if (hasLegal) score += 2;
+  if (hasContact && hasLegal) details.push('Contact + Légal ✓');
+  else if (hasContact || hasLegal) details.push('Contact ou Légal ✓');
+
+  const hasOrgSchema = html.includes('"Organization"') || html.includes('"Person"');
+  if (hasOrgSchema) { score += 3; details.push('Schema Organization/Person ✓'); }
+
+  return { score: Math.min(score, 15), max: 15, detail: details.slice(0, 3).join(' · ') };
+}
+
+function scoreCrawlability($, html) {
+  let score = 0;
+  const details = [];
+
+  const textLength = $('body').text().replace(/\s+/g, ' ').trim().length;
+  if (textLength > 3000) { score += 4; details.push(`${textLength} chars ✓`); }
+  else if (textLength > 1000) { score += 2; details.push(`${textLength} chars`); }
+  else details.push('Contenu trop court ✗');
+
+  if ($('html[lang]').length > 0) { score += 2; details.push('Lang défini ✓'); }
+  if ($('link[rel="canonical"]').length > 0) { score += 2; details.push('Canonical ✓'); }
+
+  const metaRobots = $('meta[name="robots"]').attr('content') || '';
+  if (!metaRobots.includes('noindex')) { score += 3; details.push('Indexable ✓'); }
+  else details.push('NOINDEX détecté ✗');
+
+  if (html.includes('sitemap')) { score += 2; details.push('Sitemap ✓'); }
+  if (html.includes('GPTBot') || html.includes('OAI-SearchBot') || html.includes('ClaudeBot')) {
+    score += 2; details.push('Bots IA mentionnés ✓');
+  }
+
+  return { score: Math.min(score, 15), max: 15, detail: details.slice(0, 3).join(' · ') };
+}
+
+function scoreStructuredData($, html) {
+  let score = 0;
+  const details = [];
   const schemaTypes = [];
+
   $('script[type="application/ld+json"]').each((_, el) => {
     try {
       const data = JSON.parse($(el).html());
       if (data['@type']) schemaTypes.push(data['@type']);
+      if (Array.isArray(data['@graph'])) {
+        data['@graph'].forEach(item => { if (item['@type']) schemaTypes.push(item['@type']); });
+      }
     } catch {}
   });
-  const count = schemaTypes.length;
-  const score = count === 0 ? 0 : count === 1 ? 8 : count === 2 ? 14 : 20;
-  return {
-    score,
-    max: 20,
-    detail: count > 0 ? `Schema détecté : ${schemaTypes.join(', ')}` : 'Aucun schema.org détecté',
-  };
-}
 
-function scoreIdentity($) {
-  const hasTitle    = $('title').length > 0 && $('title').text().trim().length > 5;
-  const hasMetaDesc = $('meta[name="description"]').length > 0;
-  const hasH1       = $('h1').length > 0;
-  const hasOgTitle  = $('meta[property="og:title"]').length > 0;
-  const hasOgDesc   = $('meta[property="og:description"]').length > 0;
-  const count       = [hasTitle, hasMetaDesc, hasH1, hasOgTitle, hasOgDesc].filter(Boolean).length;
-  return {
-    score: Math.round((count / 5) * 20),
-    max: 20,
-    detail: `Title: ${hasTitle?'✓':'✗'} · Meta desc: ${hasMetaDesc?'✓':'✗'} · H1: ${hasH1?'✓':'✗'} · OG Title: ${hasOgTitle?'✓':'✗'} · OG Desc: ${hasOgDesc?'✓':'✗'}`,
-  };
-}
+  const highValueTypes = ['FAQPage', 'QAPage', 'HowTo', 'Article', 'BlogPosting'];
+  const medValueTypes = ['Organization', 'Person', 'Product', 'Service', 'WebSite'];
 
-function scoreCitability($) {
-  const text       = $('body').text().replace(/\s+/g, ' ').trim();
-  const words      = text.split(' ').length;
-  const hasNumbers = /\d+/.test(text);
-  const paragraphs = $('p').length;
-  const hasLists   = $('ul, ol').length > 0;
-  const hasQuotes  = $('blockquote').length > 0;
+  const hasHighValue = schemaTypes.some(t => highValueTypes.includes(t));
+  const hasMedValue = schemaTypes.some(t => medValueTypes.includes(t));
 
-  let score = 0;
-  if (words > 300)    score += 5;
-  if (words > 800)    score += 3;
-  if (words > 1500)   score += 2;
-  if (hasNumbers)     score += 4;
-  if (paragraphs > 3) score += 3;
-  if (hasLists)       score += 2;
-  if (hasQuotes)      score += 1;
+  if (hasHighValue) { score += 5; details.push(`Schema prioritaire : ${schemaTypes.filter(t => highValueTypes.includes(t)).join(', ')} ✓`); }
+  if (hasMedValue) { score += 3; details.push(`Schema entité : ${schemaTypes.filter(t => medValueTypes.includes(t)).join(', ')} ✓`); }
+  if (schemaTypes.length > 0 && !hasHighValue && !hasMedValue) { score += 1; details.push(`Schema : ${schemaTypes[0]}`); }
+  if (schemaTypes.length === 0) details.push('Aucun schema.org ✗');
+  if (hasHighValue && $('h2').length > 2) { score += 2; details.push('Schema cohérent ✓'); }
 
-  return {
-    score: Math.min(score, 20),
-    max: 20,
-    detail: `${words} mots · ${paragraphs} paragraphes · Données chiffrées: ${hasNumbers?'✓':'✗'} · Listes: ${hasLists?'✓':'✗'}`,
-  };
-}
-
-function scoreArchitecture($) {
-  const links = [];
-  $('a[href]').each((_, el) => {
-    const href = $(el).attr('href');
-    if (href) links.push(href.toLowerCase());
-  });
-  const hasAbout   = links.some(l => l.includes('about') || l.includes('propos'));
-  const hasContact = links.some(l => l.includes('contact'));
-  const hasBlog    = links.some(l => l.includes('blog') || l.includes('article') || l.includes('news'));
-  const hasFaq     = links.some(l => l.includes('faq'));
-  const count      = [hasAbout, hasContact, hasBlog, hasFaq].filter(Boolean).length;
-  return {
-    score: Math.round((count / 4) * 20),
-    max: 20,
-    detail: `Pages : ${[hasAbout&&'À propos', hasContact&&'Contact', hasBlog&&'Blog', hasFaq&&'FAQ'].filter(Boolean).join(', ') || 'aucune détectée'}`,
-  };
-}
-
-function scoreCrawlability($) {
-  const text       = $('body').text().replace(/\s+/g, ' ').trim();
-  const textLength = text.length;
-  const hasMetaDesc = $('meta[name="description"]').length > 0;
-  const hasH1       = $('h1').length > 0;
-  const hasCanon    = $('link[rel="canonical"]').length > 0;
-  const hasLang     = $('html[lang]').length > 0;
-
-  let score = 0;
-  if (textLength > 500)  score += 5;
-  if (textLength > 2000) score += 3;
-  if (hasMetaDesc) score += 4;
-  if (hasH1)       score += 4;
-  if (hasCanon)    score += 2;
-  if (hasLang)     score += 2;
-
-  return {
-    score: Math.min(score, 20),
-    max: 20,
-    detail: `${textLength} caractères · Meta desc: ${hasMetaDesc?'✓':'✗'} · H1: ${hasH1?'✓':'✗'} · Canonical: ${hasCanon?'✓':'✗'} · Lang: ${hasLang?'✓':'✗'}`,
-  };
+  return { score: Math.min(score, 10), max: 10, detail: details.slice(0, 2).join(' · ') || 'Aucun schema.org détecté' };
 }
 
 function scoreExternalPresence($, html) {
+  let score = 0;
+  const details = [];
+
   const externalLinks = [];
   $('a[href]').each((_, el) => {
     const href = $(el).attr('href') || '';
     if (href.startsWith('http')) externalLinks.push(href.toLowerCase());
   });
-  const hasTestimonials = /témoignage|avis|review|testimonial|client/i.test(html);
-  const hasPress        = /presse|média|press|featured|vu dans|as seen/i.test(html);
-  const hasSocial       = externalLinks.some(l => l.includes('linkedin') || l.includes('twitter') || l.includes('facebook') || l.includes('instagram'));
-  const hasPartners     = /partenaire|partner|certifi|label/i.test(html);
-  const extCount        = externalLinks.length;
 
+  const hasPress = /presse|média|press|featured|vu dans|as seen/i.test(html);
+  const hasSocial = externalLinks.some(l => l.includes('linkedin') || l.includes('twitter') || l.includes('facebook') || l.includes('instagram'));
+  const hasTestimonials = /témoignage|avis client|review|testimonial/i.test(html);
+
+  if (hasPress) { score += 2; details.push('Mentions presse ✓'); }
+  if (hasSocial) { score += 2; details.push('Réseaux sociaux ✓'); }
+  if (hasTestimonials) { score += 1; details.push('Témoignages ✓'); }
+  if (details.length === 0) details.push('Peu de présence externe détectée');
+
+  return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') };
+}
+
+function scoreFreshness($, html) {
   let score = 0;
-  if (extCount > 0)    score += 3;
-  if (extCount > 5)    score += 2;
-  if (hasTestimonials) score += 5;
-  if (hasPress)        score += 5;
-  if (hasSocial)       score += 3;
-  if (hasPartners)     score += 2;
+  const details = [];
+  const currentYear = new Date().getFullYear();
 
-  return {
-    score: Math.min(score, 20),
-    max: 20,
-    detail: `${extCount} liens externes · Témoignages: ${hasTestimonials?'✓':'✗'} · Presse: ${hasPress?'✓':'✗'} · Réseaux sociaux: ${hasSocial?'✓':'✗'}`,
-  };
+  if (html.includes('dateModified')) { score += 2; details.push('Date de mise à jour ✓'); }
+
+  const recentYearRegex = new RegExp(`\\b(${currentYear}|${currentYear - 1})\\b`);
+  if (recentYearRegex.test(html)) { score += 2; details.push(`Contenu récent (${currentYear}) ✓`); }
+  else details.push('Contenu possiblement daté ✗');
+
+  if (new RegExp(`©\\s*${currentYear}`).test(html)) { score += 1; details.push('Copyright à jour ✓'); }
+
+  return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') || 'Fraîcheur non détectable' };
 }
 
 async function runClaudeAnalysis(url, textContent, scores) {
-  const prompt = `Tu es un expert en GEO (Generative Engine Optimization).
+  const total = Object.values(scores).reduce((s, c) => s + c.score, 0);
 
-Voici les scores obtenus pour le site ${url} :
-- Données structurées : ${scores.structuredData.score}/20
-- Clarté de l'identité : ${scores.identity.score}/20
-- Citabilité : ${scores.citability.score}/20
-- Architecture : ${scores.architecture.score}/20
-- Accessibilité crawlers : ${scores.crawlability.score}/20
-- Présence externe : ${scores.externalPresence.score}/20
+  const prompt = `Tu es un consultant GEO (Generative Engine Optimization) senior qui rédige un rapport d'audit professionnel pour le site ${url}.
 
-Extrait du contenu :
-${textContent.slice(0, 2000)}
+SCORES OBTENUS :
+- Extractibilité & réponse directe : ${scores.extractibility.score}/25 — ${scores.extractibility.detail}
+- Vérifiabilité & preuves : ${scores.verifiability.score}/20 — ${scores.verifiability.detail}
+- Autorité & E-E-A-T : ${scores.authority.score}/15 — ${scores.authority.detail}
+- Crawlabilité IA : ${scores.crawlability.score}/15 — ${scores.crawlability.detail}
+- Données structurées : ${scores.structuredData.score}/10 — ${scores.structuredData.detail}
+- Présence externe : ${scores.externalPresence.score}/5 — ${scores.externalPresence.detail}
+- Fraîcheur : ${scores.freshness.score}/5 — ${scores.freshness.detail}
+SCORE TOTAL : ${total}/100
+
+EXTRAIT DU CONTENU DU SITE :
+${textContent.slice(0, 800)}
+
+Ta mission : rédiger un rapport d'audit GEO professionnel de niveau cabinet de conseil.
+
+Pour CHAQUE critère dont le score est inférieur à 80% du maximum, rédige une recommandation complète et experte qui inclut :
+1. Le diagnostic précis du problème constaté
+2. Pourquoi c'est critique pour la visibilité dans les IA (ChatGPT, Gemini, Perplexity)
+3. Les actions concrètes à mettre en place (étapes précises, avec exemples si pertinent)
+4. L'impact attendu sur le score GEO et la citabilité
+
+Chaque recommandation doit faire minimum 3-4 phrases détaillées. Parle comme un expert à un expert.
+
+Évalue aussi la NEUTRALITÉ ÉDITORIALE (0 à 10).
 
 Réponds UNIQUEMENT en JSON valide :
 {
+  "neutralityScore": <0 à 10>,
+  "neutralityDetail": "<diagnostic précis du ton éditorial>",
   "recommendations": [
-    { "priority": "high",   "text": "<action concrète à faire en priorité>" },
-    { "priority": "high",   "text": "<action concrète à faire en priorité>" },
-    { "priority": "medium", "text": "<action concrète importante>" },
-    { "priority": "medium", "text": "<action concrète importante>" },
-    { "priority": "low",    "text": "<amélioration bonus>" }
+    {
+      "priority": "high",
+      "criterion": "<nom du critère concerné>",
+      "text": "<recommandation complète et experte de 3-4 phrases minimum>"
+    }
   ],
-  "verdict": "<2 phrases de synthèse sur la présence GEO du site>"
+  "verdict": "<2 phrases de synthèse percutantes>"
 }`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 1024,
+    max_tokens: 4096,
     temperature: 0,
     messages: [{ role: 'user', content: prompt }],
   });
 
-  const raw     = message.content[0].text;
+  const raw = message.content[0].text;
   const cleaned = raw.replace(/```json|```/g, '').trim();
   return JSON.parse(cleaned);
 }
@@ -178,9 +262,8 @@ export default async function handler(req, res) {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: 'URL manquante' });
 
-  const cacheKey = `detekia:${url.toLowerCase().trim()}`;
+  const cacheKey = `detekia:v5:${url.toLowerCase().trim()}`;
 
-  // Vérifier le cache Upstash
   try {
     const cached = await redis.get(cacheKey);
     if (cached) {
@@ -195,48 +278,49 @@ export default async function handler(req, res) {
     const jinaUrl = `https://r.jina.ai/${url}`;
     const { data: rawContent } = await axios.get(jinaUrl, {
       headers: { Accept: 'text/html' },
-      timeout: 15000,
+      timeout: 20000,
     });
 
-    const $           = cheerio.load(rawContent);
+    const $ = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
 
     if (textContent.length < 200) {
-      return res.status(422).json({
-        error: "Impossible d'analyser ce site. Le contenu est trop court ou inaccessible.",
-      });
+      return res.status(422).json({ error: "Impossible d'analyser ce site. Contenu trop court ou inaccessible." });
     }
 
     const scores = {
-      structuredData:   scoreStructuredData(rawContent, $),
-      identity:         scoreIdentity($),
-      citability:       scoreCitability($),
-      architecture:     scoreArchitecture($),
-      crawlability:     scoreCrawlability($),
+      extractibility:   scoreExtractibility($, textContent),
+      verifiability:    scoreVerifiability($, textContent, rawContent),
+      authority:        scoreAuthority($, rawContent),
+      crawlability:     scoreCrawlability($, rawContent),
+      structuredData:   scoreStructuredData($, rawContent),
       externalPresence: scoreExternalPresence($, rawContent),
+      freshness:        scoreFreshness($, rawContent),
     };
 
     const claude = await runClaudeAnalysis(url, textContent, scores);
-    const totalScore = Object.values(scores).reduce((sum, s) => sum + s.score, 0);
+    const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
+    const neutralityBonus = Math.round((claude.neutralityScore / 10) * 10) - 5;
+    const totalScore = Math.max(0, Math.min(100, baseScore + neutralityBonus));
 
     const responseData = {
       score: totalScore,
       verdict: claude.verdict,
       criteria: [
-        { name: 'Données structurées',    ...scores.structuredData },
-        { name: "Clarté de l'identité",   ...scores.identity },
-        { name: 'Citabilité du contenu',  ...scores.citability },
-        { name: 'Architecture & pages',   ...scores.architecture },
-        { name: 'Accessibilité crawlers', ...scores.crawlability },
-        { name: 'Présence externe',       ...scores.externalPresence },
+        { name: 'Extractibilité & réponse directe', ...scores.extractibility },
+        { name: 'Vérifiabilité & preuves',          ...scores.verifiability },
+        { name: 'Autorité & E-E-A-T',               ...scores.authority },
+        { name: 'Crawlabilité IA',                  ...scores.crawlability },
+        { name: 'Données structurées',              ...scores.structuredData },
+        { name: 'Neutralité éditoriale',            score: claude.neutralityScore, max: 10, detail: claude.neutralityDetail },
+        { name: 'Présence externe',                 ...scores.externalPresence },
+        { name: 'Fraîcheur & maintenance',          ...scores.freshness },
       ],
       recommendations: claude.recommendations,
     };
 
-    // Sauvegarder dans Upstash avec expiration 24h
     try {
       await redis.set(cacheKey, responseData, { ex: CACHE_DURATION });
-      console.log(`Cache set : ${cacheKey}`);
     } catch (e) {
       console.error('Cache write error:', e);
     }
