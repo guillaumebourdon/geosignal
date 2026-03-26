@@ -31,7 +31,7 @@ export default function Pricing() {
               <div key={i} style={{ background: c, borderRadius: '50%' }} />
             ))}
           </div>
-          GeoSignal
+          Detekia
         </a>
         <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
           <a href="/pricing" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none' }}>Tarifs</a>
@@ -60,7 +60,7 @@ export default function Pricing() {
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: 28 }}>
           <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>Gratuit</div>
           <div style={{ fontFamily: 'Georgia, serif', fontSize: 42, color: '#1A1916', letterSpacing: -1, marginBottom: 4 }}>0€</div>
-          <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui, sans-serif', marginBottom: 24 }}>Pour découvrir GeoSignal</div>
+          <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui, sans-serif', marginBottom: 24 }}>Pour découvrir Detekia</div>
           <a href="/" style={{ display: 'block', textAlign: 'center', background: '#F0EDE8', color: '#1A1916', padding: '12px 0', borderRadius: 10, fontWeight: 600, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui, sans-serif', marginBottom: 28 }}>
             Commencer gratuitement
           </a>
@@ -118,11 +118,11 @@ export default function Pricing() {
       <div style={{ maxWidth: 620, margin: '0 auto', padding: '0 24px 100px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>Questions fréquentes</div>
         {[
-          ['Comment fonctionne l\'analyse gratuite ?', 'Entrez l\'URL de votre site, GeoSignal l\'analyse en ~20 secondes et vous donne un score GEO sur 120 avec 2 recommandations prioritaires offertes.'],
+          ['Comment fonctionne l\'analyse gratuite ?', 'Entrez l\'URL de votre site, Detekia l\'analyse en ~20 secondes et vous donne un score GEO sur 120 avec 2 recommandations prioritaires offertes.'],
           ['Qu\'est-ce que le GEO ?', 'Le GEO (Generative Engine Optimization) est l\'optimisation de votre site pour apparaître dans les réponses de ChatGPT, Claude, Gemini et Perplexity.'],
           ['Le paiement à 9€ est-il par site ou par analyse ?', 'Par analyse. Chaque rapport débloqué correspond à une analyse d\'un site à un instant donné.'],
           ['Puis-je annuler mon abonnement Pro ?', 'Oui, à tout moment et sans engagement depuis votre espace Stripe.'],
-          ['Les données de mon site sont-elles conservées ?', 'Non. GeoSignal analyse votre site en temps réel et ne conserve aucune donnée sur nos serveurs.'],
+          ['Les données de mon site sont-elles conservées ?', 'Non. Detekia analyse votre site en temps réel et ne conserve aucune donnée sur nos serveurs.'],
         ].map(([q,a],i) => (
           <div key={i} style={{ borderBottom: '1px solid #E5E2DC', padding: '20px 0' }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui, sans-serif' }}>{q}</div>

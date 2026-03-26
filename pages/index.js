@@ -74,7 +74,7 @@ export default function Home() {
               <div key={i} style={{ background: c, borderRadius: '50%' }} />
             ))}
           </div>
-          GeoSignal
+          Detekia
         </a>
         <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
           <a href="/pricing" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none' }}>Tarifs</a>
@@ -100,7 +100,7 @@ export default function Home() {
         </h1>
 
         <p style={{ fontSize: 16, color: '#8A8680', maxWidth: 480, margin: '0 auto 16px', lineHeight: 1.65, fontFamily: 'system-ui, sans-serif' }}>
-          GeoSignal analyse votre présence sur les 4 grands moteurs d'IA et vous donne un score GEO avec les actions concrètes pour progresser.
+          Detekia analyse votre présence sur les 4 grands moteurs d'IA et vous donne un score GEO avec les actions concrètes pour progresser.
         </p>
         <p style={{ fontSize: 13, color: '#10A37F', fontFamily: 'monospace', marginBottom: 36 }}>
           + de 500 sites analysés · Score GEO sur 120 · Recommandations IA
@@ -237,7 +237,7 @@ export default function Home() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
               {[
                 ['01', '#10A37F', 'Entrez votre URL', 'Collez l\'adresse de votre site dans la barre d\'analyse. Pas d\'inscription, pas de configuration.'],
-                ['02', '#D97757', 'On analyse tout', 'GeoSignal scrape votre site, vérifie vos données structurées, et soumet votre contenu à notre IA spécialisée GEO.'],
+                ['02', '#D97757', 'On analyse tout', 'Detekia scrape votre site, vérifie vos données structurées, et soumet votre contenu à notre IA spécialisée GEO.'],
                 ['03', '#4285F4', 'Recevez votre score', 'Un score sur 120, une analyse par critère, et des recommandations concrètes priorisées par impact.'],
               ].map(([num, color, title, desc]) => (
                 <div key={num} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
@@ -268,13 +268,13 @@ export default function Home() {
 
           {/* TÉMOIGNAGES */}
           <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Ils ont testé GeoSignal</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Ils ont testé Detekia</div>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
               Ce qu'ils en <em style={{ color: '#D97757' }}>pensent</em>
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
               {[
-                ['Sophie M.', 'Responsable marketing', '#10A37F', "J'avais optimisé mon site pour Google mais jamais pour les IA. GeoSignal m'a révélé des angles morts que je n'aurais jamais vus seule."],
+                ['Sophie M.', 'Responsable marketing', '#10A37F', "J'avais optimisé mon site pour Google mais jamais pour les IA. Detekia m'a révélé des angles morts que je n'aurais jamais vus seule."],
                 ['Thomas L.', 'Consultant SEO', '#D97757', "Un outil indispensable à ajouter à ma boîte à outils. Mes clients commencent tous à me demander leur score GEO."],
                 ['Marie D.', 'Fondatrice e-commerce', '#4285F4', "En 20 minutes j'avais implémenté les 3 premières recommandations. Mon site est déjà cité par Perplexity une semaine après."],
               ].map(([name, role, color, quote]) => (
@@ -301,9 +301,9 @@ export default function Home() {
               Questions <em style={{ color: '#D97757' }}>fréquentes</em>
             </h2>
             {[
-              ["C'est quoi le GEO exactement ?", "Le GEO (Generative Engine Optimization) est l'art d'optimiser votre site pour apparaître dans les réponses des IA. Quand quelqu'un demande à ChatGPT ou Perplexity une recommandation dans votre domaine, est-ce que votre site est cité ? C'est ce que mesure GeoSignal."],
+              ["C'est quoi le GEO exactement ?", "Le GEO (Generative Engine Optimization) est l'art d'optimiser votre site pour apparaître dans les réponses des IA. Quand quelqu'un demande à ChatGPT ou Perplexity une recommandation dans votre domaine, est-ce que votre site est cité ? C'est ce que mesure Detekia."],
               ["En quoi c'est différent du SEO ?", "Le SEO optimise pour les moteurs de recherche traditionnels (Google, Bing). Le GEO optimise pour les IA génératives. Les critères sont différents : les IA valorisent la clarté, la citabilité, et les données structurées plutôt que les backlinks et la vitesse de chargement."],
-              ["Mon score peut-il vraiment s'améliorer ?", "Oui, et rapidement. La plupart des recommandations GeoSignal peuvent être implémentées en quelques heures. Des clients ont vu leur score progresser de 20+ points en une semaine après avoir suivi notre plan d'action."],
+              ["Mon score peut-il vraiment s'améliorer ?", "Oui, et rapidement. La plupart des recommandations Detekia peuvent être implémentées en quelques heures. Des clients ont vu leur score progresser de 20+ points en une semaine après avoir suivi notre plan d'action."],
               ["Combien coûte une analyse complète ?", "L'analyse de base est gratuite et inclut votre score et 2 recommandations. Le rapport complet avec les 5 recommandations et le plan d'action est disponible à 9€. L'abonnement Pro à 29€/mois offre des analyses illimitées."],
             ].map(([q, a], i) => (
               <div key={i} style={{ borderBottom: '1px solid #E5E2DC', padding: '20px 0' }}>
@@ -348,7 +348,7 @@ export default function Home() {
               <div key={i} style={{ background: c, borderRadius: '50%' }} />
             ))}
           </div>
-          GeoSignal
+          Detekia
         </div>
         <div style={{ display: 'flex', gap: 24 }}>
           <a href="/pricing" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui, sans-serif' }}>Tarifs</a>

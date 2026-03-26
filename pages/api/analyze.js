@@ -4,12 +4,13 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-// ── Règles fixes ──────────────────────────────────────────────
-function runFixedRules(html, $) {
-  const results = {};
+// ── Cache 24h ─────────────────────────────────────────────────
+const cache = new Map();
+const CACHE_DURATION = 24 * 60 * 60 * 1000;
 
-  // 1. Données structurées
-  const hasSchema = html.includes('application/ld+json');
+// ── Règles fixes ──────────────────────────────────────────────
+
+function scoreStructuredData(html, $) {
   const schemaTypes = [];
   $('script[type="application/ld+json"]').each((_, el) => {
     try {
@@ -17,72 +18,144 @@ function runFixedRules(html, $) {
       if (data['@type']) schemaTypes.push(data['@type']);
     } catch {}
   });
-  results.structuredData = {
-    score: hasSchema ? (schemaTypes.length >= 2 ? 18 : 12) : 2,
+  const count = schemaTypes.length;
+  const score = count === 0 ? 0 : count === 1 ? 8 : count === 2 ? 14 : 20;
+  return {
+    score,
     max: 20,
-    detail: hasSchema ? `Schema détecté : ${schemaTypes.join(', ')}` : 'Aucun schema.org détecté',
+    detail: count > 0 ? `Schema détecté : ${schemaTypes.join(', ')}` : 'Aucun schema.org détecté',
   };
+}
 
-  // 2. Architecture & pages clés
+function scoreIdentity($) {
+  const hasTitle    = $('title').length > 0 && $('title').text().trim().length > 5;
+  const hasMetaDesc = $('meta[name="description"]').length > 0;
+  const hasH1       = $('h1').length > 0;
+  const hasOgTitle  = $('meta[property="og:title"]').length > 0;
+  const hasOgDesc   = $('meta[property="og:description"]').length > 0;
+  const count       = [hasTitle, hasMetaDesc, hasH1, hasOgTitle, hasOgDesc].filter(Boolean).length;
+  return {
+    score: Math.round((count / 5) * 20),
+    max: 20,
+    detail: `Title: ${hasTitle?'✓':'✗'} · Meta desc: ${hasMetaDesc?'✓':'✗'} · H1: ${hasH1?'✓':'✗'} · OG Title: ${hasOgTitle?'✓':'✗'} · OG Desc: ${hasOgDesc?'✓':'✗'}`,
+  };
+}
+
+function scoreCitability($) {
+  const text       = $('body').text().replace(/\s+/g, ' ').trim();
+  const words      = text.split(' ').length;
+  const hasNumbers = /\d+/.test(text);
+  const paragraphs = $('p').length;
+  const hasLists   = $('ul, ol').length > 0;
+  const hasQuotes  = $('blockquote').length > 0;
+
+  let score = 0;
+  if (words > 300)    score += 5;
+  if (words > 800)    score += 3;
+  if (words > 1500)   score += 2;
+  if (hasNumbers)     score += 4;
+  if (paragraphs > 3) score += 3;
+  if (hasLists)       score += 2;
+  if (hasQuotes)      score += 1;
+
+  return {
+    score: Math.min(score, 20),
+    max: 20,
+    detail: `${words} mots · ${paragraphs} paragraphes · Données chiffrées: ${hasNumbers?'✓':'✗'} · Listes: ${hasLists?'✓':'✗'}`,
+  };
+}
+
+function scoreArchitecture($) {
   const links = [];
-  $('a[href]').each((_, el) => links.push($(el).attr('href').toLowerCase()));
+  $('a[href]').each((_, el) => {
+    const href = $(el).attr('href');
+    if (href) links.push(href.toLowerCase());
+  });
   const hasAbout   = links.some(l => l.includes('about') || l.includes('propos'));
   const hasContact = links.some(l => l.includes('contact'));
   const hasBlog    = links.some(l => l.includes('blog') || l.includes('article') || l.includes('news'));
   const hasFaq     = links.some(l => l.includes('faq'));
-  const pageScore  = [hasAbout, hasContact, hasBlog, hasFaq].filter(Boolean).length;
-  results.architecture = {
-    score: Math.round((pageScore / 4) * 20),
+  const count      = [hasAbout, hasContact, hasBlog, hasFaq].filter(Boolean).length;
+  return {
+    score: Math.round((count / 4) * 20),
     max: 20,
-    detail: `Pages trouvées : ${[hasAbout && 'À propos', hasContact && 'Contact', hasBlog && 'Blog', hasFaq && 'FAQ'].filter(Boolean).join(', ') || 'aucune'}`,
+    detail: `Pages : ${[hasAbout&&'À propos', hasContact&&'Contact', hasBlog&&'Blog', hasFaq&&'FAQ'].filter(Boolean).join(', ') || 'aucune détectée'}`,
   };
-
-  // 3. Accessibilité crawlers
-  const textLength  = $('body').text().replace(/\s+/g, ' ').trim().length;
-  const hasMetaDesc = $('meta[name="description"]').length > 0;
-  const hasH1       = $('h1').length > 0;
-  const crawlScore  = (textLength > 500 ? 8 : 3) + (hasMetaDesc ? 6 : 0) + (hasH1 ? 4 : 0) + 2;
-  results.crawlability = {
-    score: Math.min(crawlScore, 20),
-    max: 20,
-    detail: `Texte : ${textLength} caractères · Meta description : ${hasMetaDesc ? '✓' : '✗'} · H1 : ${hasH1 ? '✓' : '✗'}`,
-  };
-
-  return results;
 }
 
-// ── Analyse Claude ────────────────────────────────────────────
-async function runClaudeAnalysis(url, textContent) {
-  const prompt = `Tu es un expert en GEO (Generative Engine Optimization) — l'art d'optimiser un site pour être bien cité et référencé par les IA comme ChatGPT, Claude, Gemini et Perplexity.
+function scoreCrawlability($) {
+  const text       = $('body').text().replace(/\s+/g, ' ').trim();
+  const textLength = text.length;
+  const hasMetaDesc = $('meta[name="description"]').length > 0;
+  const hasH1       = $('h1').length > 0;
+  const hasCanon    = $('link[rel="canonical"]').length > 0;
+  const hasLang     = $('html[lang]').length > 0;
 
-Analyse ce contenu extrait du site ${url} et évalue 3 critères sur 20 chacun.
+  let score = 0;
+  if (textLength > 500)  score += 5;
+  if (textLength > 2000) score += 3;
+  if (hasMetaDesc) score += 4;
+  if (hasH1)       score += 4;
+  if (hasCanon)    score += 2;
+  if (hasLang)     score += 2;
 
-CONTENU DU SITE :
-${textContent.slice(0, 3000)}
+  return {
+    score: Math.min(score, 20),
+    max: 20,
+    detail: `${textLength} caractères · Meta desc: ${hasMetaDesc?'✓':'✗'} · H1: ${hasH1?'✓':'✗'} · Canonical: ${hasCanon?'✓':'✗'} · Lang: ${hasLang?'✓':'✗'}`,
+  };
+}
 
-Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, avec exactement cette structure :
+function scoreExternalPresence($, html) {
+  const externalLinks = [];
+  $('a[href]').each((_, el) => {
+    const href = $(el).attr('href') || '';
+    if (href.startsWith('http')) externalLinks.push(href.toLowerCase());
+  });
+  const hasTestimonials = /témoignage|avis|review|testimonial|client/i.test(html);
+  const hasPress        = /presse|média|press|featured|vu dans|as seen/i.test(html);
+  const hasSocial       = externalLinks.some(l => l.includes('linkedin') || l.includes('twitter') || l.includes('facebook') || l.includes('instagram'));
+  const hasPartners     = /partenaire|partner|certifi|label/i.test(html);
+  const extCount        = externalLinks.length;
+
+  let score = 0;
+  if (extCount > 0)    score += 3;
+  if (extCount > 5)    score += 2;
+  if (hasTestimonials) score += 5;
+  if (hasPress)        score += 5;
+  if (hasSocial)       score += 3;
+  if (hasPartners)     score += 2;
+
+  return {
+    score: Math.min(score, 20),
+    max: 20,
+    detail: `${extCount} liens externes · Témoignages: ${hasTestimonials?'✓':'✗'} · Presse: ${hasPress?'✓':'✗'} · Réseaux sociaux: ${hasSocial?'✓':'✗'}`,
+  };
+}
+
+// ── Analyse Claude (verdict + recommandations uniquement) ─────
+async function runClaudeAnalysis(url, textContent, scores) {
+  const prompt = `Tu es un expert en GEO (Generative Engine Optimization).
+
+Voici les scores obtenus pour le site ${url} :
+- Données structurées : ${scores.structuredData.score}/20
+- Clarté de l'identité : ${scores.identity.score}/20
+- Citabilité : ${scores.citability.score}/20
+- Architecture : ${scores.architecture.score}/20
+- Accessibilité crawlers : ${scores.crawlability.score}/20
+- Présence externe : ${scores.externalPresence.score}/20
+
+Extrait du contenu :
+${textContent.slice(0, 2000)}
+
+Réponds UNIQUEMENT en JSON valide :
 {
-  "identity": {
-    "score": <nombre entre 0 et 20>,
-    "max": 20,
-    "detail": "<explication courte en français>"
-  },
-  "citability": {
-    "score": <nombre entre 0 et 20>,
-    "max": 20,
-    "detail": "<explication courte en français>"
-  },
-  "externalPresence": {
-    "score": <nombre entre 0 et 20>,
-    "max": 20,
-    "detail": "<explication courte en français>"
-  },
   "recommendations": [
-    { "priority": "high",   "text": "<recommandation concrète>" },
-    { "priority": "high",   "text": "<recommandation concrète>" },
-    { "priority": "medium", "text": "<recommandation concrète>" },
-    { "priority": "medium", "text": "<recommandation concrète>" },
-    { "priority": "low",    "text": "<recommandation concrète>" }
+    { "priority": "high",   "text": "<action concrète à faire en priorité>" },
+    { "priority": "high",   "text": "<action concrète à faire en priorité>" },
+    { "priority": "medium", "text": "<action concrète importante>" },
+    { "priority": "medium", "text": "<action concrète importante>" },
+    { "priority": "low",    "text": "<amélioration bonus>" }
   ],
   "verdict": "<2 phrases de synthèse sur la présence GEO du site>"
 }`;
@@ -90,10 +163,11 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, avec exactement 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
     max_tokens: 1024,
+    temperature: 0,
     messages: [{ role: 'user', content: prompt }],
   });
 
-  const raw = message.content[0].text;
+  const raw     = message.content[0].text;
   const cleaned = raw.replace(/```json|```/g, '').trim();
   return JSON.parse(cleaned);
 }
@@ -105,6 +179,14 @@ export default async function handler(req, res) {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: 'URL manquante' });
 
+  // Vérifier le cache
+  const cacheKey = url.toLowerCase().trim();
+  const cached   = cache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    console.log(`Cache hit : ${cacheKey}`);
+    return res.status(200).json(cached.data);
+  }
+
   try {
     // 1. Scraping via Jina AI
     const jinaUrl = `https://r.jina.ai/${url}`;
@@ -113,39 +195,52 @@ export default async function handler(req, res) {
       timeout: 15000,
     });
 
-    // 2. Parse HTML avec cheerio
-    const $ = cheerio.load(rawContent);
+    // 2. Parse HTML
+    const $           = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
 
-    // 3. Règles fixes
-    const fixed = runFixedRules(rawContent, $);
+    // 3. Validation
+    if (textContent.length < 200) {
+      return res.status(422).json({
+        error: "Impossible d'analyser ce site. Le contenu est trop court ou inaccessible.",
+      });
+    }
 
-    // 4. Analyse Claude
-    const claude = await runClaudeAnalysis(url, textContent);
+    // 4. Scores fixes
+    const scores = {
+      structuredData:   scoreStructuredData(rawContent, $),
+      identity:         scoreIdentity($),
+      citability:       scoreCitability($),
+      architecture:     scoreArchitecture($),
+      crawlability:     scoreCrawlability($),
+      externalPresence: scoreExternalPresence($, rawContent),
+    };
 
-    // 5. Score global
-    const totalScore =
-      fixed.structuredData.score +
-      fixed.architecture.score +
-      fixed.crawlability.score +
-      claude.identity.score +
-      claude.citability.score +
-      claude.externalPresence.score;
+    // 5. Claude pour verdict + recommandations uniquement
+    const claude = await runClaudeAnalysis(url, textContent, scores);
 
-    // 6. Réponse
-    res.status(200).json({
+    // 6. Score global
+    const totalScore = Object.values(scores).reduce((sum, s) => sum + s.score, 0);
+
+    // 7. Construire la réponse
+    const responseData = {
       score: totalScore,
       verdict: claude.verdict,
       criteria: [
-        { name: 'Données structurées',   ...fixed.structuredData },
-        { name: "Clarté de l'identité",  ...claude.identity },
-        { name: 'Citabilité du contenu', ...claude.citability },
-        { name: 'Architecture & pages',  ...fixed.architecture },
-        { name: 'Accessibilité crawlers',...fixed.crawlability },
-        { name: 'Présence externe',      ...claude.externalPresence },
+        { name: 'Données structurées',    ...scores.structuredData },
+        { name: "Clarté de l'identité",   ...scores.identity },
+        { name: 'Citabilité du contenu',  ...scores.citability },
+        { name: 'Architecture & pages',   ...scores.architecture },
+        { name: 'Accessibilité crawlers', ...scores.crawlability },
+        { name: 'Présence externe',       ...scores.externalPresence },
       ],
       recommendations: claude.recommendations,
-    });
+    };
+
+    // 8. Sauvegarder dans le cache
+    cache.set(cacheKey, { data: responseData, timestamp: Date.now() });
+
+    return res.status(200).json(responseData);
 
   } catch (err) {
     console.error(err);

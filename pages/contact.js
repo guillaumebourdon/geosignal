@@ -20,7 +20,7 @@ export default function Contact() {
               <div key={i} style={{ background: c, borderRadius: '50%' }} />
             ))}
           </div>
-          GeoSignal
+          Detekia
         </a>
         <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
           <a href="/pricing" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none' }}>Tarifs</a>
@@ -99,7 +99,7 @@ export default function Contact() {
         <div style={{ textAlign: 'center', marginTop: 32 }}>
           <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui, sans-serif' }}>
             Ou directement par email :{' '}
-            <a href="mailto:hello@geosignal.fr" style={{ color: '#D97757', textDecoration: 'none' }}>hello@geosignal.fr</a>
+            <a href="mailto:hello@detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>hello@detekia.fr</a>
           </div>
         </div>
       </div>

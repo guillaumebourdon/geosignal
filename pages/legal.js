@@ -10,7 +10,7 @@ export default function Legal() {
               <div key={i} style={{ background: c, borderRadius: '50%' }} />
             ))}
           </div>
-          GeoSignal
+          Detekia
         </a>
         <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
           <a href="/pricing" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none' }}>Tarifs</a>
@@ -26,10 +26,10 @@ export default function Legal() {
         <p style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 1, marginBottom: 48 }}>Dernière mise à jour : mars 2026</p>
 
         {[
-          ['Éditeur du site', `GeoSignal\nReprésentant : Guillaume Bourdon\nEmail : hello@geosignal.fr`],
+          ['Éditeur du site', `Detekia\nReprésentant : Guillaume Bourdon\nEmail : hello@detekia.fr`],
           ['Hébergement', `Vercel Inc.\n340 Pine Street, Suite 701\nSan Francisco, CA 94104, États-Unis\nhttps://vercel.com`],
-          ['Propriété intellectuelle', `L'ensemble du contenu de ce site (textes, images, logotypes, interface) est protégé par le droit d'auteur. Toute reproduction, même partielle, est interdite sans autorisation préalable écrite de GeoSignal.`],
-          ['Limitation de responsabilité', `GeoSignal fournit des analyses à titre indicatif. Les scores et recommandations ne constituent pas des conseils professionnels certifiés. GeoSignal ne saurait être tenu responsable des décisions prises sur la base des analyses fournies.`],
+          ['Propriété intellectuelle', `L'ensemble du contenu de ce site (textes, images, logotypes, interface) est protégé par le droit d'auteur. Toute reproduction, même partielle, est interdite sans autorisation préalable écrite de Detekia.`],
+          ['Limitation de responsabilité', `Detekia fournit des analyses à titre indicatif. Les scores et recommandations ne constituent pas des conseils professionnels certifiés. Detekia ne saurait être tenu responsable des décisions prises sur la base des analyses fournies.`],
         ].map(([title, content]) => (
           <div key={title} style={{ marginBottom: 40 }}>
             <h2 style={{ fontSize: 16, fontWeight: 600, color: '#1A1916', marginBottom: 12, fontFamily: 'system-ui, sans-serif' }}>{title}</h2>
@@ -42,11 +42,11 @@ export default function Legal() {
           <p style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 1, marginBottom: 48 }}>Conforme au RGPD</p>
 
           {[
-            ['Données collectées', `GeoSignal collecte uniquement les données nécessaires au fonctionnement du service :\n• Les URLs soumises pour analyse (non conservées après analyse)\n• Les données du formulaire de contact (nom, email, message)\n• Les données de navigation anonymes (via Vercel Analytics)`],
+            ['Données collectées', `Detekia collecte uniquement les données nécessaires au fonctionnement du service :\n• Les URLs soumises pour analyse (non conservées après analyse)\n• Les données du formulaire de contact (nom, email, message)\n• Les données de navigation anonymes (via Vercel Analytics)`],
             ['Utilisation des données', `Les données sont utilisées exclusivement pour :\n• Réaliser l'analyse GEO demandée\n• Répondre aux messages de contact\n• Améliorer le service de façon anonyme`],
             ['Conservation des données', `Les URLs analysées ne sont pas conservées sur nos serveurs. Les données de contact sont conservées 3 ans maximum. Vous pouvez demander leur suppression à tout moment.`],
-            ['Vos droits (RGPD)', `Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données. Pour exercer ces droits : hello@geosignal.fr`],
-            ['Cookies', `GeoSignal n'utilise pas de cookies publicitaires ou de tracking tiers. Seuls des cookies techniques indispensables au fonctionnement du site peuvent être déposés.`],
+            ['Vos droits (RGPD)', `Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données. Pour exercer ces droits : hello@detekia.fr`],
+            ['Cookies', `Detekia n'utilise pas de cookies publicitaires ou de tracking tiers. Seuls des cookies techniques indispensables au fonctionnement du site peuvent être déposés.`],
           ].map(([title, content]) => (
             <div key={title} style={{ marginBottom: 40 }}>
               <h2 style={{ fontSize: 16, fontWeight: 600, color: '#1A1916', marginBottom: 12, fontFamily: 'system-ui, sans-serif' }}>{title}</h2>
@@ -60,10 +60,10 @@ export default function Legal() {
           <p style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 1, marginBottom: 48 }}>En vigueur au 1er mars 2026</p>
 
           {[
-            ['Objet', `Les présentes CGU définissent les conditions d'utilisation du service GeoSignal, outil d'analyse GEO (Generative Engine Optimization) accessible à l'adresse geosignal.vercel.app.`],
+            ['Objet', `Les présentes CGU définissent les conditions d'utilisation du service Detekia, outil d'analyse GEO (Generative Engine Optimization) accessible à l'adresse detekia.vercel.app.`],
             ['Accès au service', `L'accès à l'analyse de base est gratuit et sans inscription. L'accès aux rapports complets est soumis à un paiement selon les tarifs en vigueur sur la page Tarifs.`],
-            ['Utilisation acceptable', `L'utilisateur s'engage à ne pas utiliser GeoSignal pour analyser des sites à des fins malveillantes, ne pas soumettre des URLs en masse de façon automatisée, et ne pas tenter de contourner les limitations du service.`],
-            ['Disponibilité', `GeoSignal s'efforce d'assurer une disponibilité maximale du service mais ne garantit pas une disponibilité ininterrompue. Des interruptions pour maintenance peuvent survenir.`],
+            ['Utilisation acceptable', `L'utilisateur s'engage à ne pas utiliser Detekia pour analyser des sites à des fins malveillantes, ne pas soumettre des URLs en masse de façon automatisée, et ne pas tenter de contourner les limitations du service.`],
+            ['Disponibilité', `Detekia s'efforce d'assurer une disponibilité maximale du service mais ne garantit pas une disponibilité ininterrompue. Des interruptions pour maintenance peuvent survenir.`],
             ['Droit applicable', `Les présentes CGU sont soumises au droit français. En cas de litige, les tribunaux français seront compétents.`],
           ].map(([title, content]) => (
             <div key={title} style={{ marginBottom: 40 }}>
@@ -82,7 +82,7 @@ export default function Legal() {
               <div key={i} style={{ background: c, borderRadius: '50%' }} />
             ))}
           </div>
-          GeoSignal
+          Detekia
         </div>
         <div style={{ display: 'flex', gap: 24 }}>
           <a href="/legal" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none' }}>Mentions légales</a>

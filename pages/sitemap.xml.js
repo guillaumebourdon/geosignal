@@ -1,4 +1,4 @@
-const SITE_URL = 'https://geosignal-five.vercel.app';
+const SITE_URL = 'https://detekia-five.vercel.app';
 
 export default function Sitemap() {}
 

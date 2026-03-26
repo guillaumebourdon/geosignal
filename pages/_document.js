@@ -5,21 +5,21 @@ export default function Document() {
     <Html lang="fr">
       <Head>
         <meta charSet="utf-8" />
-        <meta name="description" content="GeoSignal analyse votre site et vous donne un score GEO sur 120 — optimisez votre présence sur ChatGPT, Claude, Gemini et Perplexity en 20 secondes." />
+        <meta name="description" content="Detekia analyse votre site et vous donne un score GEO sur 120 — optimisez votre présence sur ChatGPT, Claude, Gemini et Perplexity en 20 secondes." />
         <meta name="keywords" content="GEO, Generative Engine Optimization, audit GEO, score GEO, optimisation IA, ChatGPT SEO, visibilité IA, référencement IA" />
-        <meta name="author" content="GeoSignal" />
+        <meta name="author" content="Detekia" />
         <meta name="robots" content="index, follow" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://geosignal-five.vercel.app" />
-        <meta property="og:title" content="GeoSignal — Votre site est-il visible par les IA ?" />
+        <meta property="og:url" content="https://detekia-five.vercel.app" />
+        <meta property="og:title" content="Detekia — Votre site est-il visible par les IA ?" />
         <meta property="og:description" content="Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 120 + recommandations personnalisées en 20 secondes." />
         <meta property="og:locale" content="fr_FR" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="GeoSignal — Votre site est-il visible par les IA ?" />
+        <meta name="twitter:title" content="Detekia — Votre site est-il visible par les IA ?" />
         <meta name="twitter:description" content="Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 120 + recommandations personnalisées." />
 
         {/* Schema.org — ce que les IA lisent en priorité */}
@@ -28,9 +28,9 @@ export default function Document() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
-            "name": "GeoSignal",
+            "name": "Detekia",
             "description": "Outil d'audit GEO (Generative Engine Optimization) qui analyse la visibilité d'un site web sur les moteurs d'IA comme ChatGPT, Claude, Gemini et Perplexity.",
-            "url": "https://geosignal-five.vercel.app",
+            "url": "https://detekia-five.vercel.app",
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "Web",
             "offers": [
@@ -67,11 +67,11 @@ export default function Document() {
             "inLanguage": "fr",
             "publisher": {
               "@type": "Organization",
-              "name": "GeoSignal",
-              "url": "https://geosignal-five.vercel.app",
+              "name": "Detekia",
+              "url": "https://detekia-five.vercel.app",
               "contactPoint": {
                 "@type": "ContactPoint",
-                "email": "hello@geosignal.fr",
+                "email": "hello@detekia.fr",
                 "contactType": "customer support"
               }
             }
@@ -106,12 +106,12 @@ export default function Document() {
                 "name": "Qu'est-ce qu'un bon score GEO ?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Sur GeoSignal, un score GEO supérieur à 70/120 est considéré comme bon. Entre 45 et 70 est moyen, en dessous de 45 est faible. La majorité des sites analysés obtiennent un score inférieur à 60/120."
+                  "text": "Sur Detekia, un score GEO supérieur à 70/120 est considéré comme bon. Entre 45 et 70 est moyen, en dessous de 45 est faible. La majorité des sites analysés obtiennent un score inférieur à 60/120."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Combien coûte un audit GEO avec GeoSignal ?",
+                "name": "Combien coûte un audit GEO avec Detekia ?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "L'analyse de base est gratuite et inclut le score GEO sur 120 et 2 recommandations. Le rapport complet avec 5 recommandations est disponible à 9€. L'abonnement Pro à 29€/mois offre des analyses illimitées."
