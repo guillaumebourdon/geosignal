@@ -248,8 +248,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Erreur lors de l'analyse", detail: err.message });
   }
 }
-```
-
-**Cmd+S** puis redémarre le serveur :
-```
-npm run dev
