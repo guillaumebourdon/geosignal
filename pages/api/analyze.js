@@ -220,28 +220,36 @@ ${textContent.slice(0, 800)}
 
 Ta mission : rédiger un rapport d'audit GEO professionnel de niveau cabinet de conseil.
 
-Pour CHAQUE critère dont le score est inférieur à 80% du maximum, rédige une recommandation complète et experte qui inclut :
-1. Le diagnostic précis du problème constaté
-2. Pourquoi c'est critique pour la visibilité dans les IA (ChatGPT, Gemini, Perplexity)
-3. Les actions concrètes à mettre en place (étapes précises, avec exemples si pertinent)
-4. L'impact attendu sur le score GEO et la citabilité
+Pour CHAQUE critère dont le score est inférieur à 80% du maximum, génère une recommandation structurée.
 
-Chaque recommandation doit faire minimum 3-4 phrases détaillées. Parle comme un expert à un expert.
+Structure selon la priorité :
+- CRITIQUE (high) : 7 sections complètes
+- IMPORTANT (medium) : 5 sections (sans exemple et tips)
+- BONUS (low) : 3 sections (diagnostic + quoi faire + impact)
 
 Évalue aussi la NEUTRALITÉ ÉDITORIALE (0 à 10).
 
 Réponds UNIQUEMENT en JSON valide :
 {
   "neutralityScore": <0 à 10>,
-  "neutralityDetail": "<diagnostic précis du ton éditorial>",
+  "neutralityDetail": "<diagnostic précis>",
   "recommendations": [
     {
       "priority": "high",
-      "criterion": "<nom du critère concerné>",
-      "text": "<recommandation complète et experte de 3-4 phrases minimum>"
+      "criterion": "<nom du critère>",
+      "title": "<titre court et percutant de la recommandation>",
+      "diagnostic": "<ce qu'on a détecté concrètement sur CE site spécifique>",
+      "whyCritical": "<pourquoi c'est critique pour la visibilité IA, avec chiffres>",
+      "whatToDo": "<actions concrètes et priorisées>",
+      "howToDoIt": "<étapes précises, exemples de code JSON-LD ou contenu si pertinent>",
+      "concreteExample": "<exemple avant/après ou exemple du secteur — uniquement pour high>",
+      "expectedImpact": "<gain de points estimé et délai de mise en oeuvre>",
+      "expertTip": "<ce que la plupart des gens ratent sur ce point — uniquement pour high>"
     }
   ],
-  "verdict": "<2 phrases de synthèse percutantes>"
+  "verdict": "<2 phrases de synthèse percutantes>",
+  "strengths": ["<point fort 1>", "<point fort 2>"],
+  "topPriority": "<l'action la plus urgente à faire en premier>"
 }`;
 
   const message = await client.messages.create({
@@ -262,7 +270,7 @@ export default async function handler(req, res) {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: 'URL manquante' });
 
-  const cacheKey = `detekia:v5:${url.toLowerCase().trim()}`;
+  const cacheKey = `detekia:v6:${url.toLowerCase().trim()}`;
 
   try {
     const cached = await redis.get(cacheKey);
@@ -306,6 +314,8 @@ export default async function handler(req, res) {
     const responseData = {
       score: totalScore,
       verdict: claude.verdict,
+      strengths: claude.strengths || [],
+      topPriority: claude.topPriority || '',
       criteria: [
         { name: 'Extractibilité & réponse directe', ...scores.extractibility },
         { name: 'Vérifiabilité & preuves',          ...scores.verifiability },
