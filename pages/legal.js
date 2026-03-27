@@ -1,4 +1,5 @@
 const NAV_LINKS = [
+  { label: 'Blog', href: '/blog' },
   { label: 'Tarifs', href: '/pricing' },
   { label: 'Méthodologie', href: '/methodologie' },
   { label: 'Contact', href: '/contact' },

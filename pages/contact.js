@@ -23,6 +23,7 @@ export default function Contact() {
           Detekia
         </a>
         <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+          <a href="/blog" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none' }}>Blog</a>
           <a href="/pricing" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none' }}>Tarifs</a>
           <a href="/contact" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none' }}>Contact</a>
           <a href="/" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '8px 18px', borderRadius: 8, textDecoration: 'none' }}>Analyser mon site</a>
