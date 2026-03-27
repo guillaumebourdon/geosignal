@@ -49,7 +49,7 @@ export default function Home() {
     },
     {
       question: "Pourquoi l'analyse est-elle vraiment gratuite ?",
-      answer: "L'analyse de base — score sur 100, 8 critères détaillés, une recommandation experte en aperçu — est totalement gratuite et sans inscription. Aucune carte bancaire requise. Nous croyons que tout le monde devrait pouvoir savoir si son site est visible par les IA. Le rapport complet avec toutes les recommandations détaillées et les plans d'action est disponible à 9€.",
+      answer: "L'analyse de base — score sur 100, 8 critères détaillés, une recommandation experte en aperçu — est totalement gratuite et sans inscription. Aucune carte bancaire requise. Nous croyons que tout le monde devrait pouvoir savoir si son site est visible par les IA. Le rapport complet avec toutes les recommandations détaillées et les plans d'action est disponible à 19,99€ (offre de lancement jusqu'au 15 avril, au lieu de 59,99€).",
     },
     {
       question: "Qu'est-ce qu'un bon score GEO ?",

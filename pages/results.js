@@ -188,7 +188,12 @@ function RecoCard({ r, index, isPaid, onCheckout }) {
               <div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>🔒 Recommandation complète masquée</div>
               <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>Méthode, exemples et impact détaillé dans le rapport complet.</div>
             </div>
-            <button onClick={onCheckout} style={{ background: tag.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 12, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', flexShrink: 0 }}>Débloquer →</button>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 5, flexShrink: 0 }}>
+              <button onClick={onCheckout} style={{ background: tag.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 12, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui' }}>Débloquer →</button>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757' }}>
+                19,99€{' '}<span style={{ textDecoration: 'line-through', color: '#C2BDB8' }}>59,99€</span>{' '}· lancement
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -463,10 +468,18 @@ export default function Results() {
               {!isPaid && (
                 <div style={{ marginTop: 16, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, boxShadow: '0 8px 32px rgba(26,25,22,0.12)' }}>
                   <div>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(217,119,87,0.15)', border: '1px solid rgba(217,119,87,0.25)', borderRadius: 6, padding: '3px 9px', marginBottom: 10 }}>
+                      <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1 }}>🎉 Offre de lancement</span>
+                    </div>
                     <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#F7F5F2', marginBottom: 6 }}>Rapport complet disponible</div>
                     <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6 }}>{recommendations.length - 1} recommandations expertes avec méthodes, exemples et impact attendu.</div>
                   </div>
-                  <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', flexShrink: 0, opacity: checkoutLoading ? 0.7 : 1 }}>{checkoutLoading ? 'Chargement...' : 'Débloquer — 19,99€ →'}</button>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, flexShrink: 0 }}>
+                    <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', opacity: checkoutLoading ? 0.7 : 1 }}>{checkoutLoading ? 'Chargement...' : 'Débloquer — 19,99€ →'}</button>
+                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
+                      au lieu de <span style={{ textDecoration: 'line-through' }}>59,99€</span> · jusqu'au 15 avril
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
