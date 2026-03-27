@@ -167,7 +167,7 @@ function scoreFreshness($, html) {
 async function runClaudeAnalysis(url, textContent, scores) {
   const total = Object.values(scores).reduce((s, c) => s + c.score, 0);
 
-  // Identify criteria below 80% threshold (max 5 recommendations to keep JSON short)
+  // All criteria below 80% threshold, sorted by worst score first
   const criteriaBelow = [
     { key: 'extractibility', label: 'Extractibilité', max: 25 },
     { key: 'verifiability', label: 'Vérifiabilité', max: 20 },
@@ -178,8 +178,7 @@ async function runClaudeAnalysis(url, textContent, scores) {
     { key: 'freshness', label: 'Fraîcheur', max: 5 },
   ]
     .filter(c => scores[c.key].score / c.max < 0.8)
-    .sort((a, b) => (scores[a.key].score / a.max) - (scores[b.key].score / b.max))
-    .slice(0, 4);
+    .sort((a, b) => (scores[a.key].score / a.max) - (scores[b.key].score / b.max));
 
   const criteriaList = criteriaBelow.map(c =>
     `- ${c.label} : ${scores[c.key].score}/${c.max} — ${scores[c.key].detail}`
@@ -192,11 +191,11 @@ ${criteriaList}
 
 CONTENU : ${textContent.slice(0, 300)}
 
-Génère max ${criteriaBelow.length + 1} recommandations (critères ci-dessus + 1 sur la Neutralité éditoriale).
-Chaque champ : 1 phrase max. Sois concis.
+Génère 1 recommandation par critère ci-dessus + 1 sur la Neutralité éditoriale.
+RÈGLE ABSOLUE : chaque valeur de champ = exactement 1 phrase courte (max 15 mots). Zéro exception.
 
 JSON uniquement, sans markdown :
-{"neutralityScore":<0-10>,"neutralityDetail":"<phrase>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<titre>","diagnostic":"<phrase>","whyCritical":"<phrase>","whatToDo":"<phrase>","howToDoIt":"<phrase>","concreteExample":"<phrase>","expectedImpact":"<phrase>","expertTip":"<phrase>"}],"verdict":"<2 phrases>","strengths":["<point 1>","<point 2>"],"topPriority":"<phrase>"}`;
+{"neutralityScore":<0-10>,"neutralityDetail":"<1 phrase>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<5 mots max>","diagnostic":"<1 phrase>","whyCritical":"<1 phrase>","whatToDo":"<1 phrase>","howToDoIt":"<1 phrase>","concreteExample":"<1 phrase>","expectedImpact":"<1 phrase>","expertTip":"<1 phrase>"}],"verdict":"<1 phrase>","strengths":["<1 phrase>","<1 phrase>"],"topPriority":"<1 phrase>"}`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
