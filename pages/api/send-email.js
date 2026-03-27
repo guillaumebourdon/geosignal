@@ -63,7 +63,7 @@ export default async function handler(req, res) {
     <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:20px;">
       <div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.4);letter-spacing:2px;margin-bottom:8px">${url}</div>
       <div style="font-family:Georgia,serif;font-size:72px;color:#F7F5F2;line-height:1;letter-spacing:-2px">${score}</div>
-      <div style="font-family:monospace;font-size:13px;color:rgba(247,245,242,0.4)">/120</div>
+      <div style="font-family:monospace;font-size:13px;color:rgba(247,245,242,0.4)">/100</div>
       <div style="display:inline-block;margin-top:12px;background:rgba(255,255,255,0.1);color:${gradeColor};font-family:monospace;font-size:10px;letter-spacing:2px;padding:4px 14px;border-radius:20px">${gradeLabel}</div>
       <div style="font-family:Georgia,serif;font-size:16px;color:rgba(247,245,242,0.7);margin-top:16px;line-height:1.5">${verdict}</div>
     </div>
@@ -80,14 +80,14 @@ export default async function handler(req, res) {
     <div style="background:#1A1916;border-radius:16px;padding:28px;text-align:center;margin-top:28px;">
       <div style="font-family:Georgia,serif;font-size:18px;color:#F7F5F2;margin-bottom:8px">Appliquer ces recommandations ?</div>
       <div style="font-size:13px;color:rgba(247,245,242,0.5);font-family:sans-serif;margin-bottom:20px">Analysez vos concurrents ou un autre site gratuitement.</div>
-      <a href="https://detekia.vercel.app" style="display:inline-block;background:#D97757;color:#fff;padding:12px 28px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;font-family:sans-serif">Analyser un autre site →</a>
+      <a href="https://detekia.fr" style="display:inline-block;background:#D97757;color:#fff;padding:12px 28px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;font-family:sans-serif">Analyser un autre site →</a>
     </div>
 
     <!-- Footer -->
     <div style="text-align:center;margin-top:32px;font-family:monospace;font-size:10px;color:#C8C0B0;letter-spacing:1px;">
-      Detekia · detekia.vercel.app<br>
-      <a href="https://detekia.vercel.app/legal" style="color:#C8C0B0">Mentions légales</a> · 
-      <a href="https://detekia.vercel.app/legal" style="color:#C8C0B0">Confidentialité</a>
+      Detekia · detekia.fr<br>
+      <a href="https://detekia.fr/legal" style="color:#C8C0B0">Mentions légales</a> · 
+      <a href="https://detekia.fr/legal" style="color:#C8C0B0">Confidentialité</a>
     </div>
   </div>
 </body>
@@ -97,7 +97,7 @@ export default async function handler(req, res) {
     const { data, error } = await resend.emails.send({
       from: 'Detekia <onboarding@resend.dev>',
       to: email,
-      subject: `Votre rapport GEO — ${url} · Score ${score}/120`,
+      subject: `Votre rapport GEO — ${url} · Score ${score}/100`,
       html,
     });
 

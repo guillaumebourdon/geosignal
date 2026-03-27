@@ -1,9 +1,9 @@
-const SITE_URL = 'https://detekia-five.vercel.app';
+const SITE_URL = 'https://detekia.fr';
 
 export default function Sitemap() {}
 
 export async function getServerSideProps({ res }) {
-  const pages = ['', '/pricing', '/contact', '/legal'];
+  const pages = ['', '/pricing', '/contact', '/legal', '/methodologie'];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages.map(page => `  <url>

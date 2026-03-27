@@ -165,7 +165,7 @@ function generateReportHTML(data) {
       <span style="font-family:Georgia,serif;font-size:14px;color:#F7F5F2">Detekia</span>
       <span style="font-size:11px;color:rgba(247,245,242,0.3);font-family:system-ui">— Rapport GEO généré le ${date}</span>
     </div>
-    <span style="font-family:monospace;font-size:10px;color:rgba(247,245,242,0.3)">detekia.vercel.app</span>
+    <span style="font-family:monospace;font-size:10px;color:rgba(247,245,242,0.3)">detekia.fr</span>
   </div>
 
 </div>

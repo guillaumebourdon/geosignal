@@ -34,7 +34,9 @@ export default function Pricing() {
           Detekia
         </a>
         <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
-          <a href="/pricing" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none' }}>Tarifs</a>
+          <a href="/pricing" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
+          <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
+          <a href="/contact" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
           <a href="/" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '8px 18px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser mon site</a>
         </div>
       </nav>
@@ -122,12 +124,12 @@ export default function Pricing() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {[
-              ['✓', 'Score GEO /100'],
-              ['✓', 'Analyse des 8 critères'],
-              ['✓', 'Toutes les recommandations'],
-              ['✓', 'Méthodes & exemples concrets'],
-              ['✓', 'Rapport complet envoyé par email'],
-              ['✓', 'Accès immédiat en ligne'],
+              ['✓', 'Score GEO /100 + analyse des 8 critères'],
+              ['✓', 'Toutes les recommandations (5 à 8 selon le site)'],
+              ['✓', 'Diagnostic, méthode, exemple concret par reco'],
+              ['✓', 'Impact attendu et tip d\'expert pour chaque action'],
+              ['✓', 'Rapport HTML complet envoyé par email'],
+              ['✓', 'Accès immédiat en ligne, à vie'],
             ].map(([check, text], i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 12, color: '#10A37F', flexShrink: 0 }}>{check}</span>

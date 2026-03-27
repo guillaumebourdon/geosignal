@@ -16,12 +16,7 @@ function FAQItem({ question, answer }) {
           <span style={{ fontSize: 14, color: open ? '#F7F5F2' : '#8A8680', lineHeight: 1, transition: 'all 0.3s', transform: open ? 'rotate(45deg)' : 'none', display: 'block' }}>+</span>
         </div>
       </div>
-      <div style={{
-        maxHeight: open ? '300px' : '0',
-        opacity: open ? 1 : 0,
-        overflow: 'hidden',
-        transition: 'max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease',
-      }}>
+      <div style={{ maxHeight: open ? '300px' : '0', opacity: open ? 1 : 0, overflow: 'hidden', transition: 'max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease' }}>
         <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.75, fontFamily: 'system-ui', paddingBottom: 20 }}>{answer}</div>
       </div>
     </div>
@@ -45,7 +40,7 @@ export default function Home() {
     },
     {
       question: "Comment fonctionne l'analyse Detekia ?",
-      answer: "Entrez l'URL de votre site, Detekia scrape votre contenu et l'analyse selon 8 critères GEO : extractibilité, vérifiabilité, autorité E-E-A-T, crawlabilité IA, données structurées, neutralité éditoriale, présence externe et fraîcheur. Notre IA génère ensuite des recommandations expertes personnalisées pour votre site.",
+      answer: "Entrez l'URL de votre site, Detekia scrape votre contenu et l'analyse selon 8 critères GEO : extractibilité, vérifiabilité, autorité E-E-A-T, crawlabilité IA, données structurées, neutralité éditoriale, présence externe et fraîcheur. Notre IA génère ensuite des recommandations expertes personnalisées pour votre site. La méthodologie complète est disponible sur la page Méthodologie.",
     },
     {
       question: "Pourquoi l'analyse est-elle vraiment gratuite ?",
@@ -53,11 +48,11 @@ export default function Home() {
     },
     {
       question: "Qu'est-ce qu'un bon score GEO ?",
-      answer: "Sur Detekia, un score supérieur à 70/100 est considéré comme bon. Entre 45 et 70, votre site a des bases solides mais nécessite des optimisations ciblées. En dessous de 45, des actions prioritaires s'imposent. La majorité des sites analysés obtiennent un score entre 15 et 45 — même les grandes marques comme Apple ou Amazon obtiennent des scores faibles car leurs sites sont optimisés pour vendre, pas pour être cités par les IA.",
+      answer: "Sur Detekia, un score supérieur à 70/100 est considéré comme bon. Entre 45 et 70, votre site a des bases solides mais nécessite des optimisations ciblées. En dessous de 45, des actions prioritaires s'imposent. La majorité des sites analysés obtiennent un score entre 15 et 45 — même les grandes marques obtiennent souvent des scores faibles car leurs sites sont optimisés pour vendre, pas pour être cités par les IA.",
     },
     {
       question: "Les données de mon site sont-elles conservées ?",
-      answer: "Non. Detekia analyse votre site en temps réel et ne conserve aucune donnée de votre site sur nos serveurs. Les résultats d'analyse sont mis en cache 24h pour accélérer les analyses successives du même site, mais aucune donnée personnelle n'est stockée.",
+      answer: "Non. Detekia analyse votre site en temps réel et ne conserve aucune donnée de votre site au-delà de 24h. Les résultats d'analyse sont mis en cache 24h pour accélérer les analyses successives du même site, mais aucune donnée personnelle n'est stockée.",
     },
     {
       question: "Detekia fonctionne-t-il pour tous les types de sites ?",
@@ -91,8 +86,9 @@ export default function Home() {
         </a>
         <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
           <a href="/pricing" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
+          <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
           <a href="/contact" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
-          <a href="/pricing" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '8px 18px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>Voir les tarifs</a>
+          <a href="/" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '8px 18px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser gratuitement</a>
         </div>
       </nav>
 
@@ -113,12 +109,12 @@ export default function Home() {
         </div>
 
         <h1 style={{ fontSize: 'clamp(40px, 7vw, 68px)', lineHeight: 1.0, letterSpacing: -1.5, marginBottom: 20, color: '#1A1916' }}>
-          Votre site est-il<br />
-          <em style={{ color: '#D97757', fontStyle: 'italic' }}>visible</em> par les IA ?
+          Pourquoi les IA ne citent<br />
+          <em style={{ color: '#D97757', fontStyle: 'italic' }}>pas votre site ?</em>
         </h1>
 
-        <p style={{ fontSize: 16, color: '#8A8680', maxWidth: 500, margin: '0 auto 12px', lineHeight: 1.65, fontFamily: 'system-ui' }}>
-          Detekia analyse votre site selon 8 critères GEO et vous donne un score sur 100 avec des recommandations expertes pour être cité par ChatGPT, Gemini et Perplexity.
+        <p style={{ fontSize: 16, color: '#8A8680', maxWidth: 520, margin: '0 auto 12px', lineHeight: 1.65, fontFamily: 'system-ui' }}>
+          Découvrez ce qui empêche ChatGPT, Claude et Perplexity de vous recommander — et obtenez un plan d'action concret pour y remédier.
         </p>
 
         <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 36, flexWrap: 'wrap' }}>
@@ -147,7 +143,7 @@ export default function Home() {
       </div>
 
       {/* COMMENT ÇA MARCHE */}
-      <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
+      <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 16px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Comment ça marche</div>
         <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
           Un audit GEO complet en <em style={{ color: '#D97757' }}>20 secondes</em>
@@ -164,6 +160,12 @@ export default function Home() {
               <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.6, fontFamily: 'system-ui' }}>{desc}</div>
             </div>
           ))}
+        </div>
+        {/* Lien méthodologie */}
+        <div style={{ textAlign: 'center', marginTop: 20, marginBottom: 64 }}>
+          <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
+            Voir la méthodologie complète →
+          </a>
         </div>
       </div>
 
@@ -201,57 +203,60 @@ export default function Home() {
         </div>
       </div>
 
-      {/* TÉMOIGNAGES + FAQ */}
+      {/* POURQUOI FAIRE CONFIANCE */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Ils ont testé Detekia</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Transparence & confiance</div>
         <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
-          Ce qu'ils en <em style={{ color: '#D97757' }}>pensent</em>
+          Pourquoi faire confiance <em style={{ color: '#D97757' }}>à Detekia ?</em>
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 80 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
           {[
-            ['Sophie M.', 'Responsable marketing', '#10A37F', "J'avais optimisé mon site pour Google mais jamais pour les IA. Detekia m'a révélé des angles morts que je n'aurais jamais vus seule."],
-            ['Thomas L.', 'Consultant SEO', '#D97757', "Un outil indispensable. Mes clients commencent tous à me demander leur score GEO — et je leur réponds avec Detekia."],
-            ['Marie D.', 'Fondatrice e-commerce', '#4285F4', "En 20 minutes j'avais implémenté les 3 premières recommandations. Mon site est déjà cité par Perplexity une semaine après."],
-          ].map(([name, role, color, quote]) => (
-            <div key={name} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
-              <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 20, fontStyle: 'italic' }}>"{quote}"</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ width: 32, height: 32, borderRadius: '50%', background: color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, fontFamily: 'system-ui' }}>{name[0]}</div>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui' }}>{name}</div>
-                  <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>{role}</div>
-                </div>
-              </div>
+            ['🔬', 'Méthode transparente', 'Notre méthodologie est entièrement documentée et publique. Vous savez exactement comment chaque point de votre score est calculé.', '/methodologie'],
+            ['⚡', 'Analyse immédiate', 'Aucune attente de devis, aucun rendez-vous. Votre rapport est disponible en 20 secondes, à toute heure.', null],
+            ['🔓', 'Aucun compte requis', 'Pas d\'inscription, pas de mot de passe, pas d\'email demandé pour l\'analyse gratuite. Essayez sans engagement.', null],
+            ['🔒', 'Paiement sécurisé Stripe', 'Les paiements sont traités par Stripe, leader mondial du paiement en ligne. Aucune donnée bancaire ne transite par nos serveurs.', null],
+            ['↩️', 'Remboursement sous 24h', 'Si votre rapport n\'est pas accessible suite à un problème technique, nous vous remboursons intégralement sous 24 heures.', null],
+            ['🛡️', 'Données non conservées', 'Votre URL est analysée en temps réel. Aucune donnée de votre site n\'est stockée au-delà de 24h de cache technique.', null],
+          ].map(([icon, title, desc, link]) => (
+            <div key={title} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 20px 16px' }}>
+              <div style={{ fontSize: 22, marginBottom: 10 }}>{icon}</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 6, fontFamily: 'system-ui' }}>{title}</div>
+              <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
+              {link && (
+                <a href={link} style={{ display: 'inline-block', marginTop: 10, fontSize: 11, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>
+                  Voir la méthodologie →
+                </a>
+              )}
             </div>
-          ))}
-        </div>
-
-        {/* FAQ */}
-        <div style={{ maxWidth: 640, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>FAQ</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 40 }}>
-            Questions <em style={{ color: '#D97757' }}>fréquentes</em>
-          </h2>
-          {faqs.map((faq, i) => (
-            <FAQItem key={i} question={faq.question} answer={faq.answer} />
           ))}
         </div>
       </div>
 
+      {/* FAQ */}
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 24px 80px' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>FAQ</div>
+        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 40 }}>
+          Questions <em style={{ color: '#D97757' }}>fréquentes</em>
+        </h2>
+        {faqs.map((faq, i) => (
+          <FAQItem key={i} question={faq.question} answer={faq.answer} />
+        ))}
+      </div>
+
       {/* CTA FINAL */}
       <div style={{ background: '#1A1916', padding: '80px 24px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 560, margin: '0 auto' }}>
+        <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.15)', border: '1px solid rgba(16,163,127,0.3)', borderRadius: 20, padding: '6px 14px', marginBottom: 24 }}>
             <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
             <span style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>Gratuit · Sans inscription · Sans carte bancaire</span>
           </div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#F7F5F2', letterSpacing: -1, marginBottom: 16, lineHeight: 1.1 }}>
-            Prêt à découvrir votre<br /><em style={{ color: '#D97757' }}>score GEO ?</em>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#F7F5F2', letterSpacing: -1, marginBottom: 12, lineHeight: 1.1 }}>
+            Votre site mérite d'être cité<br /><em style={{ color: '#D97757' }}>par les IA.</em>
           </h2>
           <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginBottom: 32, lineHeight: 1.6 }}>
-            Analyse gratuite en 20 secondes. Aucune inscription requise.
+            Découvrez votre score GEO en 20 secondes — et les premières actions concrètes à mettre en place.
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(247,245,242,0.08)', border: '1px solid rgba(247,245,242,0.15)', borderRadius: 14, padding: '6px 6px 6px 20px', maxWidth: 480, margin: '0 auto', gap: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(247,245,242,0.08)', border: '1px solid rgba(247,245,242,0.15)', borderRadius: 14, padding: '6px 6px 6px 20px', maxWidth: 500, margin: '0 auto 16px', gap: 10 }}>
             <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(247,245,242,0.4)', whiteSpace: 'nowrap' }}>https://</span>
             <input
               value={url}
@@ -264,23 +269,39 @@ export default function Home() {
               Analyser →
             </button>
           </div>
+          <p style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)', letterSpacing: 1 }}>
+            Analyse gratuite · Rapport complet à 19,99€ · Offre de lancement jusqu'au 15 avril
+          </p>
         </div>
       </div>
 
       {/* FOOTER */}
-      <footer style={{ borderTop: '1px solid #E5E2DC', padding: '32px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, fontWeight: 'bold', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
-            {['#10A37F','#D97757','#4285F4','#1C7DC4'].map((c,i) => (
-              <div key={i} style={{ background: c, borderRadius: '50%' }} />
-            ))}
+      <footer style={{ borderTop: '1px solid #E5E2DC', padding: '32px 48px', background: '#fff' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, maxWidth: 1200, margin: '0 auto' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, fontWeight: 'bold', color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 4 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
+                {['#10A37F','#D97757','#4285F4','#1C7DC4'].map((c,i) => (
+                  <div key={i} style={{ background: c, borderRadius: '50%' }} />
+                ))}
+              </div>
+              Detekia
+            </div>
+            <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>par Beeleven SASU · Paris</div>
           </div>
-          Detekia
-        </div>
-        <div style={{ display: 'flex', gap: 24 }}>
-          {[['Tarifs','/pricing'],['Contact','/contact'],['Mentions légales','/legal'],['Confidentialité','/legal'],['CGU','/legal']].map(([label, href]) => (
-            <a key={label} href={href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{label}</a>
-          ))}
+          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'center' }}>
+            {[
+              ['Tarifs', '/pricing'],
+              ['Méthodologie', '/methodologie'],
+              ['Contact', '/contact'],
+              ['Mentions légales', '/legal'],
+              ['Confidentialité', '/legal'],
+              ['CGU', '/legal'],
+            ].map(([label, href]) => (
+              <a key={label} href={href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{label}</a>
+            ))}
+            <a href="https://linkedin.com/company/detekia" target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>LinkedIn</a>
+          </div>
         </div>
       </footer>
 
