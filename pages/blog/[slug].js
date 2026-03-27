@@ -9,6 +9,9 @@ const CONTENT_MAP = {
   'score-geo-mesurer-visibilite-ia': require('../../content/articles/score-geo-mesurer-visibilite-ia').default,
   'schema-org-ia-guide-pratique': require('../../content/articles/schema-org-ia-guide-pratique').default,
   'ecommerce-recommandations-ia': require('../../content/articles/ecommerce-recommandations-ia').default,
+  '8-criteres-geo-methodologie-detekia': require('../../content/articles/8-criteres-geo-methodologie-detekia').default,
+  'llms-txt-robots-crawlabilite-ia': require('../../content/articles/llms-txt-robots-crawlabilite-ia').default,
+  'geo-agences-seo-audit-ia': require('../../content/articles/geo-agences-seo-audit-ia').default,
 };
 
 const CATEGORY_COLORS = {
