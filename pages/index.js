@@ -98,14 +98,11 @@ export default function Home() {
 
       {/* HERO */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '88px 24px 0', textAlign: 'center' }}>
-
-        {/* Badge gratuit */}
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 20, padding: '6px 14px', marginBottom: 32 }}>
           <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
           <span style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>Analyse 100% gratuite — aucune inscription requise</span>
         </div>
 
-        {/* 4 chips IA */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 32 }}>
           {[['#10A37F','ChatGPT'],['#D97757','Claude'],['#4285F4','Gemini'],['#1C7DC4','Perplexity']].map(([c,name]) => (
             <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontFamily: 'monospace', padding: '5px 12px', borderRadius: 20, border: '1px solid #E5E2DC', background: '#fff', color: '#8A8680' }}>
@@ -124,14 +121,12 @@ export default function Home() {
           Detekia analyse votre site selon 8 critères GEO et vous donne un score sur 100 avec des recommandations expertes pour être cité par ChatGPT, Gemini et Perplexity.
         </p>
 
-        {/* Badges confiance */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 36, flexWrap: 'wrap' }}>
           {['✓ Gratuit & sans inscription', '✓ Score sur 100', '✓ Résultats en ~20 secondes'].map(b => (
             <span key={b} style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>{b}</span>
           ))}
         </div>
 
-        {/* Barre d'analyse */}
         <div style={{ display: 'flex', alignItems: 'center', background: '#fff', border: '1.5px solid #E5E2DC', borderRadius: 14, padding: '6px 6px 6px 20px', maxWidth: 580, margin: '0 auto', gap: 10, boxShadow: '0 4px 20px rgba(26,25,22,0.08)' }}>
           <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#8A8680', whiteSpace: 'nowrap' }}>https://</span>
           <input
@@ -206,13 +201,13 @@ export default function Home() {
         </div>
       </div>
 
-      {/* TÉMOIGNAGES */}
+      {/* TÉMOIGNAGES + FAQ */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Ils ont testé Detekia</div>
         <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
           Ce qu'ils en <em style={{ color: '#D97757' }}>pensent</em>
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 80 }}>
           {[
             ['Sophie M.', 'Responsable marketing', '#10A37F', "J'avais optimisé mon site pour Google mais jamais pour les IA. Detekia m'a révélé des angles morts que je n'aurais jamais vus seule."],
             ['Thomas L.', 'Consultant SEO', '#D97757', "Un outil indispensable. Mes clients commencent tous à me demander leur score GEO — et je leur réponds avec Detekia."],
@@ -221,9 +216,7 @@ export default function Home() {
             <div key={name} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
               <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 20, fontStyle: 'italic' }}>"{quote}"</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ width: 32, height: 32, borderRadius: '50%', background: color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, fontFamily: 'system-ui' }}>
-                  {name[0]}
-                </div>
+                <div style={{ width: 32, height: 32, borderRadius: '50%', background: color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13, fontFamily: 'system-ui' }}>{name[0]}</div>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui' }}>{name}</div>
                   <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>{role}</div>
@@ -232,15 +225,13 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </div>
 
-      {/* FAQ */}
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>FAQ</div>
-        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 40 }}>
-          Questions <em style={{ color: '#D97757' }}>fréquentes</em>
-        </h2>
-        <div>
+        {/* FAQ */}
+        <div style={{ maxWidth: 640, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>FAQ</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 40 }}>
+            Questions <em style={{ color: '#D97757' }}>fréquentes</em>
+          </h2>
           {faqs.map((faq, i) => (
             <FAQItem key={i} question={faq.question} answer={faq.answer} />
           ))}
@@ -250,13 +241,10 @@ export default function Home() {
       {/* CTA FINAL */}
       <div style={{ background: '#1A1916', padding: '80px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 560, margin: '0 auto' }}>
-
-          {/* Badge gratuit */}
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.15)', border: '1px solid rgba(16,163,127,0.3)', borderRadius: 20, padding: '6px 14px', marginBottom: 24 }}>
             <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
             <span style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>Gratuit · Sans inscription · Sans carte bancaire</span>
           </div>
-
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#F7F5F2', letterSpacing: -1, marginBottom: 16, lineHeight: 1.1 }}>
             Prêt à découvrir votre<br /><em style={{ color: '#D97757' }}>score GEO ?</em>
           </h2>
