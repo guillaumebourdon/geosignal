@@ -138,24 +138,6 @@ function ProductMockup() {
           </div>
           <div style={{ height: 16, background: 'linear-gradient(to bottom, transparent, #FAFAF9)', marginTop: -4 }} />
         </div>
-        {/* Blurred locked recos */}
-        {[
-          ['35%','72%','48%'],
-          ['50%','60%','38%'],
-        ].map(([w1,w2,w3], i) => (
-          <div key={i} style={{ background: '#FAFAF9', borderRadius: 10, padding: '12px 14px', border: '1px solid #E5E2DC', marginBottom: 8, position: 'relative', overflow: 'hidden' }}>
-            <div style={{ filter: 'blur(4px)', userSelect: 'none' }}>
-              <div style={{ height: 7, background: '#E5E2DC', borderRadius: 3, marginBottom: 7, width: w1 }} />
-              <div style={{ height: 6, background: '#EDEBE6', borderRadius: 3, marginBottom: 7, width: w2 }} />
-              <div style={{ height: 7, background: '#E5E2DC', borderRadius: 3, width: w3 }} />
-            </div>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(26,25,22,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontSize: 12 }}>🔒</span>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
 
       {/* Footer CTA */}
@@ -221,11 +203,11 @@ export default function Home() {
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section style={{ background: '#F7F5F2', padding: '20px 48px 32px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'flex-start' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
           <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 20, padding: '6px 14px', marginBottom: 10 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.12)', border: '1.5px solid rgba(16,163,127,0.35)', borderRadius: 20, padding: '8px 18px', marginBottom: 10 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
-              <span style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>Analyse 100% gratuite — aucune inscription</span>
+              <span style={{ fontSize: 13, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 600 }}>Analyse 100% gratuite — aucune inscription</span>
             </div>
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
