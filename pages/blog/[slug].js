@@ -7,6 +7,7 @@ const CONTENT_MAP = {
   'pourquoi-chatgpt-ne-cite-pas-votre-site': require('../../content/articles/pourquoi-chatgpt-ne-cite-pas-votre-site').default,
   'seo-vs-geo-differences-2026': require('../../content/articles/seo-vs-geo-differences-2026').default,
   'score-geo-mesurer-visibilite-ia': require('../../content/articles/score-geo-mesurer-visibilite-ia').default,
+  'schema-org-ia-guide-pratique': require('../../content/articles/schema-org-ia-guide-pratique').default,
 };
 
 const CATEGORY_COLORS = {
