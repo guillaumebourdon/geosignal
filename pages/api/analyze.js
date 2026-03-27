@@ -167,64 +167,53 @@ function scoreFreshness($, html) {
 async function runClaudeAnalysis(url, textContent, scores) {
   const total = Object.values(scores).reduce((s, c) => s + c.score, 0);
 
-  const prompt = `Tu es un consultant GEO senior. Audite le site ${url}.
+  // Identify criteria below 80% threshold (max 5 recommendations to keep JSON short)
+  const criteriaBelow = [
+    { key: 'extractibility', label: 'Extractibilité', max: 25 },
+    { key: 'verifiability', label: 'Vérifiabilité', max: 20 },
+    { key: 'authority', label: 'Autorité E-E-A-T', max: 15 },
+    { key: 'crawlability', label: 'Crawlabilité IA', max: 15 },
+    { key: 'structuredData', label: 'Données structurées', max: 10 },
+    { key: 'externalPresence', label: 'Présence externe', max: 5 },
+    { key: 'freshness', label: 'Fraîcheur', max: 5 },
+  ]
+    .filter(c => scores[c.key].score / c.max < 0.8)
+    .sort((a, b) => (scores[a.key].score / a.max) - (scores[b.key].score / b.max))
+    .slice(0, 4);
 
-SCORES :
-- Extractibilité : ${scores.extractibility.score}/25 — ${scores.extractibility.detail}
-- Vérifiabilité : ${scores.verifiability.score}/20 — ${scores.verifiability.detail}
-- Autorité E-E-A-T : ${scores.authority.score}/15 — ${scores.authority.detail}
-- Crawlabilité IA : ${scores.crawlability.score}/15 — ${scores.crawlability.detail}
-- Données structurées : ${scores.structuredData.score}/10 — ${scores.structuredData.detail}
-- Présence externe : ${scores.externalPresence.score}/5 — ${scores.externalPresence.detail}
-- Fraîcheur : ${scores.freshness.score}/5 — ${scores.freshness.detail}
-TOTAL : ${total}/100
+  const criteriaList = criteriaBelow.map(c =>
+    `- ${c.label} : ${scores[c.key].score}/${c.max} — ${scores[c.key].detail}`
+  ).join('\n');
 
-CONTENU (extrait) :
-${textContent.slice(0, 400)}
+  const prompt = `Tu es un consultant GEO senior. Audite ${url}.
 
-Génère des recommandations pour chaque critère sous 80% du max.
-IMPORTANT : génère TOUJOURS une recommandation sur la "Neutralité éditoriale" en analysant le ton du contenu extrait ci-dessus (trop promotionnel ? claims non sourcés ? langage biaisé ?).
+SCORES : ${total}/100
+${criteriaList}
 
-Structure selon priorité :
-- CRITIQUE (high) : diagnostic, whyCritical, whatToDo, howToDoIt, concreteExample, expectedImpact, expertTip
-- IMPORTANT (medium) : diagnostic, whyCritical, whatToDo, howToDoIt, expectedImpact
-- BONUS (low) : diagnostic, whatToDo, expectedImpact
+CONTENU : ${textContent.slice(0, 300)}
 
-Chaque champ : 1-2 phrases max.
+Génère max ${criteriaBelow.length + 1} recommandations (critères ci-dessus + 1 sur la Neutralité éditoriale).
+Chaque champ : 1 phrase max. Sois concis.
 
-JSON uniquement :
-{
-  "neutralityScore": <0-10>,
-  "neutralityDetail": "<1 phrase>",
-  "recommendations": [
-    {
-      "priority": "high",
-      "criterion": "<nom du critère>",
-      "title": "<titre court>",
-      "diagnostic": "<1-2 phrases>",
-      "whyCritical": "<1-2 phrases>",
-      "whatToDo": "<1-2 phrases>",
-      "howToDoIt": "<1-2 phrases>",
-      "concreteExample": "<1-2 phrases>",
-      "expectedImpact": "<1 phrase>",
-      "expertTip": "<1 phrase>"
-    }
-  ],
-  "verdict": "<2 phrases>",
-  "strengths": ["<point 1>", "<point 2>"],
-  "topPriority": "<1 phrase>"
-}`;
+JSON uniquement, sans markdown :
+{"neutralityScore":<0-10>,"neutralityDetail":"<phrase>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<titre>","diagnostic":"<phrase>","whyCritical":"<phrase>","whatToDo":"<phrase>","howToDoIt":"<phrase>","concreteExample":"<phrase>","expectedImpact":"<phrase>","expertTip":"<phrase>"}],"verdict":"<2 phrases>","strengths":["<point 1>","<point 2>"],"topPriority":"<phrase>"}`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 3000,
+    max_tokens: 4096,
     temperature: 0,
     messages: [{ role: 'user', content: prompt }],
   });
 
+  if (message.stop_reason !== 'end_turn') {
+    throw new Error(`Claude response truncated (stop_reason: ${message.stop_reason})`);
+  }
+
   const raw = message.content[0].text;
-  const cleaned = raw.replace(/```json|```/g, '').trim();
-  return JSON.parse(cleaned);
+  // Extract JSON even if there's surrounding text
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error('No JSON found in Claude response');
+  return JSON.parse(jsonMatch[0]);
 }
 
 export default async function handler(req, res) {
