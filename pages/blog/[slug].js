@@ -1,6 +1,11 @@
 import Head from 'next/head';
 import { articles, getArticleBySlug, getRelatedArticles, formatDate } from '../../lib/articles';
 
+// Map of slug → content component. Add an entry here each time an article is written.
+const CONTENT_MAP = {
+  'geo-guide-complet-2026': require('../../content/articles/geo-guide-complet-2026').default,
+};
+
 const CATEGORY_COLORS = {
   'GUIDE': '#10A37F',
   'TECHNIQUE': '#4285F4',
@@ -18,7 +23,8 @@ function Logo() {
 }
 
 function ArticleContent({ slug }) {
-  // Placeholder — contenu réel à ajouter dans content/articles/{slug}.js
+  const Content = CONTENT_MAP[slug];
+  if (Content) return <Content />;
   return (
     <div style={{ color: '#8A8680', fontFamily: 'system-ui', fontSize: 15, lineHeight: 1.75, padding: '48px 0', textAlign: 'center', border: '1px dashed #E5E2DC', borderRadius: 10 }}>
       Contenu de l'article à venir — <code style={{ fontFamily: 'monospace', fontSize: 13, background: 'rgba(229,226,220,0.5)', padding: '2px 6px', borderRadius: 4 }}>content/articles/{slug}.js</code>
