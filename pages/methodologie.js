@@ -239,7 +239,7 @@ export default function Methodologie() {
             Testez votre site<br /><em style={{ color: '#D97757' }}>gratuitement</em>
           </h2>
           <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginBottom: 28, lineHeight: 1.6 }}>
-            Analyse complète en 20 secondes. Aucune inscription requise.
+            Analyse complète en 30 secondes. Aucune inscription requise.
           </p>
           <a href="/" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui' }}>
             Analyser mon site →

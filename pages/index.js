@@ -220,15 +220,15 @@ export default function Home() {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '28px 48px 48px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
+      <section style={{ background: '#F7F5F2', padding: '20px 48px 32px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'flex-start' }}>
           <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 20, padding: '6px 14px', marginBottom: 14 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 20, padding: '6px 14px', marginBottom: 10 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
               <span style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>Analyse 100% gratuite — aucune inscription</span>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
               {[['#10A37F','ChatGPT'],['#D97757','Claude'],['#4285F4','Gemini'],['#1C7DC4','Perplexity']].map(([c,name]) => (
                 <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontFamily: 'monospace', padding: '5px 12px', borderRadius: 20, border: '1px solid #E5E2DC', background: '#fff', color: '#8A8680' }}>
                   <div style={{ width: 6, height: 6, borderRadius: '50%', background: c }} />{name}
@@ -236,11 +236,11 @@ export default function Home() {
               ))}
             </div>
 
-            <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 14, color: '#1A1916', maxWidth: 540 }}>
+            <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 10, color: '#1A1916', maxWidth: 540 }}>
               Vos concurrents apparaissent dans ChatGPT.<br /><span style={{ color: '#D97757' }}>Pas vous.</span>
             </h1>
 
-            <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.6, fontFamily: 'system-ui', marginBottom: 20 }}>
+            <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
               Analysez votre site en 30 secondes. Score sur 100, 8 critères, recommandations concrètes pour être cité par les IA.
             </p>
 
@@ -252,15 +252,15 @@ export default function Home() {
                   onChange={e => setUrl(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && analyze()}
                   placeholder="https://www.votre-site.fr"
-                  style={{ flex: 1, border: 'none', outline: 'none', padding: '16px 20px', fontSize: 16, fontFamily: 'system-ui', color: '#1A1916', background: 'transparent', minWidth: 0 }}
+                  style={{ flex: 1, border: 'none', outline: 'none', padding: '13px 20px', fontSize: 16, fontFamily: 'system-ui', color: '#1A1916', background: 'transparent', minWidth: 0 }}
                 />
                 <button
                   onClick={analyze}
-                  style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', padding: '16px 32px', borderRadius: '0 10px 10px 0', fontWeight: 600, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                  style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', padding: '13px 32px', borderRadius: '0 10px 10px 0', fontWeight: 600, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', flexShrink: 0 }}>
                   Analyser →
                 </button>
               </div>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 1, marginTop: 10 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 1, marginTop: 8 }}>
                 Gratuit · Sans inscription · Résultat en 30 secondes
               </div>
             </div>
@@ -273,7 +273,7 @@ export default function Home() {
       </section>
 
       {/* ── MICRO BANDEAU PREUVE D'USAGE — MOD 9 ────────────── */}
-      <div style={{ background: '#fff', borderTop: '1px solid rgba(26,25,22,0.07)', borderBottom: '1px solid rgba(26,25,22,0.07)', padding: '16px 48px' }}>
+      <div style={{ background: '#fff', borderTop: '1px solid rgba(26,25,22,0.07)', borderBottom: '1px solid rgba(26,25,22,0.07)', padding: '12px 48px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', gap: 48, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
           {[
             ['1 247', 'analyses réalisées'],

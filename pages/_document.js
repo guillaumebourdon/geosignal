@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="fr">
       <Head>
         <meta charSet="utf-8" />
-        <meta name="description" content="Detekia analyse votre site et vous donne un score GEO sur 100 — optimisez votre présence sur ChatGPT, Claude, Gemini et Perplexity en 20 secondes." />
+        <meta name="description" content="Detekia analyse votre site et vous donne un score GEO sur 100 — optimisez votre présence sur ChatGPT, Claude, Gemini et Perplexity en 30 secondes." />
         <meta name="keywords" content="GEO, Generative Engine Optimization, audit GEO, score GEO, optimisation IA, ChatGPT SEO, visibilité IA, référencement IA" />
         <meta name="author" content="Detekia" />
         <meta name="robots" content="index, follow" />
@@ -14,7 +14,7 @@ export default function Document() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://detekia.fr" />
         <meta property="og:title" content="Detekia — Votre site est-il visible par les IA ?" />
-        <meta property="og:description" content="Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 100 + recommandations personnalisées en 20 secondes." />
+        <meta property="og:description" content="Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 100 + recommandations personnalisées en 30 secondes." />
         <meta property="og:locale" content="fr_FR" />
 
         {/* Twitter */}
