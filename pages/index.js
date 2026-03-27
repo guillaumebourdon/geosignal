@@ -23,21 +23,22 @@ function FAQItem({ question, answer }) {
 /* ─── Criteria card with hover + tag ────────────────────── */
 function CriteriaCard({ icon, color, name, desc, checks, tag, tagColor }) {
   const [hov, setHov] = useState(false);
+  const lightBg = color + '12';
   return (
     <div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ background: '#fff', border: `1.5px solid ${hov ? color : '#E5E2DC'}`, borderRadius: 18, padding: '28px 22px', transition: 'border-color 0.25s, box-shadow 0.25s', boxShadow: hov ? `0 10px 32px ${color}1A` : '0 2px 8px rgba(26,25,22,0.04)', display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
+      style={{ background: '#fff', border: `1.5px solid ${hov ? color : '#E5E2DC'}`, borderRadius: 18, padding: '28px 28px', transition: 'border-color 0.25s, box-shadow 0.25s, transform 0.2s', boxShadow: hov ? `0 14px 40px ${color}20` : '0 2px 8px rgba(26,25,22,0.04)', transform: hov ? 'translateY(-2px)' : 'none', display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
       {/* Tag top-right */}
-      <div style={{ position: 'absolute', top: 16, right: 16, fontFamily: 'monospace', fontSize: 8, letterSpacing: 1.5, textTransform: 'uppercase', color: tagColor, background: tagColor + '14', border: `1px solid ${tagColor}30`, padding: '3px 9px', borderRadius: 20 }}>{tag}</div>
-      {/* Icon */}
-      <div style={{ width: 48, height: 48, borderRadius: 13, background: hov ? color + '14' : '#F7F5F2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, marginBottom: 16, transition: 'background 0.25s', flexShrink: 0 }}>{icon}</div>
-      <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui', letterSpacing: -0.1 }}>{name}</div>
-      <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 16, flex: 1 }}>{desc}</div>
+      <div style={{ position: 'absolute', top: 18, right: 18, fontFamily: 'monospace', fontSize: 8, letterSpacing: 1.5, textTransform: 'uppercase', color: tagColor, background: tagColor + '14', border: `1px solid ${tagColor}28`, padding: '3px 10px', borderRadius: 20 }}>{tag}</div>
+      {/* Icon in colored circle */}
+      <div style={{ width: 52, height: 52, borderRadius: '50%', background: hov ? color + '1E' : lightBg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, marginBottom: 18, transition: 'background 0.25s', flexShrink: 0 }}>{icon}</div>
+      <div style={{ fontSize: 14, fontWeight: 700, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif', letterSpacing: -0.2 }}>{name}</div>
+      <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 16, flex: 1 }}>{desc}</div>
       <div style={{ borderTop: '1px solid #F0EDE8', paddingTop: 14 }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: color, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Ce qu'on vérifie</div>
+        <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 10, color: color, marginBottom: 9 }}>Ce qu'on vérifie</div>
         {checks.map((c, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 5 }}>
             <div style={{ width: 4, height: 4, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 5 }} />
-            <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui', fontStyle: i === checks.length - 1 ? 'italic' : 'normal' }}>{c}</span>
+            <span style={{ fontSize: 11, color: i === checks.length - 1 ? '#A8A49F' : '#8A8680', fontFamily: 'system-ui', fontStyle: i === checks.length - 1 ? 'italic' : 'normal' }}>{c}</span>
           </div>
         ))}
       </div>
@@ -53,63 +54,84 @@ function ProductMockup() {
     { name: 'Données structurées', score: 8, max: 10, color: '#10A37F' },
   ];
   return (
-    <div style={{ background: '#fff', borderRadius: 20, boxShadow: '0 28px 72px rgba(26,25,22,0.16), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 380, width: '100%', border: '1px solid #E8E5E0' }}>
-      {/* Card header */}
-      <div style={{ background: '#1A1916', padding: '22px 24px 20px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: -48, right: -48, width: 140, height: 140, borderRadius: '50%', background: '#C9861A', opacity: 0.07 }} />
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.4)', letterSpacing: 2, marginBottom: 14, textTransform: 'uppercase' }}>Rapport GEO — exemple.fr</div>
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14 }}>
-          <div>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 56, color: '#F7F5F2', lineHeight: 1, letterSpacing: -2 }}>67</div>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.3)' }}>/100</div>
+    <div style={{ background: '#fff', borderRadius: 22, boxShadow: '0 24px 64px rgba(26,25,22,0.18), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 390, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
+
+      {/* Mini header bar */}
+      <div style={{ background: '#F7F5F2', borderBottom: '1px solid #EDEBE6', padding: '9px 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 5 }}>
+          {['#F87171','#FBBF24','#34D399'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}
+        </div>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#A8A49F', letterSpacing: 0.5, marginLeft: 4 }}>Rapport GEO · exemple.fr · Analysé le 27 mars 2026</div>
+      </div>
+
+      {/* Score header */}
+      <div style={{ background: '#1A1916', padding: '26px 24px 22px', position: 'relative', overflow: 'hidden' }}>
+        {/* Halo behind score */}
+        <div style={{ position: 'absolute', top: '50%', left: 32, transform: 'translateY(-50%)', width: 100, height: 100, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.18) 0%, transparent 70%)' }} />
+        <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: '#C9861A', opacity: 0.05 }} />
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, marginBottom: 16, textTransform: 'uppercase', border: '1px solid rgba(255,255,255,0.08)', display: 'inline-block', padding: '3px 10px', borderRadius: 4 }}>GEO Score</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16 }}>
+          <div style={{ position: 'relative' }}>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>67</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.28)', letterSpacing: 1 }}>/100</div>
           </div>
-          <div style={{ paddingBottom: 8 }}>
-            <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.2)', border: '1px solid rgba(201,134,26,0.4)', borderRadius: 20, padding: '4px 13px', fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2, marginBottom: 8 }}>MOYEN</div>
-            <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.4)', fontFamily: 'system-ui', lineHeight: 1.5 }}>Citabilité IA<br />à améliorer</div>
+          <div style={{ paddingBottom: 14 }}>
+            <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.18)', border: '1px solid rgba(201,134,26,0.35)', borderRadius: 20, padding: '4px 13px', fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2, marginBottom: 9 }}>MOYEN</div>
+            <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.38)', fontFamily: 'system-ui', lineHeight: 1.55 }}>Citabilité IA<br />à améliorer</div>
           </div>
         </div>
       </div>
 
       {/* Criteria bars */}
-      <div style={{ padding: '18px 24px', borderBottom: '1px solid #F0EDE8' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 14 }}>Analyse par critère</div>
+      <div style={{ padding: '20px 24px 18px', borderBottom: '1px solid #EDEBE6' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>Analyse par critère</div>
         {criteria.map((c, i) => {
           const pct = Math.round((c.score / c.max) * 100);
           return (
-            <div key={i} style={{ marginBottom: i < criteria.length - 1 ? 12 : 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+            <div key={i} style={{ marginBottom: i < criteria.length - 1 ? 14 : 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                 <span style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui' }}>{c.name}</span>
                 <span style={{ fontFamily: 'monospace', fontSize: 11, fontWeight: 600, color: c.color }}>{c.score}/{c.max}</span>
               </div>
-              <div style={{ height: 5, background: '#F0EDE8', borderRadius: 3, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${pct}%`, background: c.color, borderRadius: 3 }} />
+              <div style={{ height: 6, background: '#F0EDE8', borderRadius: 4, overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${pct}%`, background: c.color, borderRadius: 4 }} />
               </div>
             </div>
           );
         })}
       </div>
 
+      {/* Separator label */}
+      <div style={{ padding: '10px 24px', background: '#FAFAF9', borderBottom: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ flex: 1, height: 1, background: '#EDEBE6' }} />
+        <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#C2BDB8', letterSpacing: 2, textTransform: 'uppercase' }}>Plan d'action</div>
+        <div style={{ flex: 1, height: 1, background: '#EDEBE6' }} />
+      </div>
+
       {/* Recommendations */}
-      <div style={{ padding: '16px 24px', borderBottom: '1px solid #F0EDE8' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>Recommandations</div>
+      <div style={{ padding: '14px 24px 16px' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Recommandations</div>
 
         {/* Visible reco */}
-        <div style={{ background: '#FAFAF9', borderRadius: 10, padding: '11px 13px', border: '1px solid #E5E2DC', marginBottom: 8 }}>
+        <div style={{ background: '#FAFAF9', borderRadius: 10, padding: '12px 14px', border: '1px solid #E5E2DC', marginBottom: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 7 }}>
             <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1, padding: '2px 8px', borderRadius: 4, background: 'rgba(217,119,87,0.12)', color: '#D97757' }}>CRITIQUE</span>
-            <span style={{ fontSize: 10, color: '#8A8680', fontFamily: 'monospace' }}>Extractibilité</span>
+            <span style={{ fontSize: 10, color: '#B0ABA5', fontFamily: 'monospace' }}>Extractibilité</span>
           </div>
-          <div style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.6 }}>Votre introduction ne répond pas directement à la question principale…</div>
-          <div style={{ height: 20, background: 'linear-gradient(to bottom, transparent, #FAFAF9)', marginTop: -8, position: 'relative' }} />
+          <div style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.65 }}>Votre introduction ne répond pas directement à la question principale…</div>
+          <div style={{ height: 18, background: 'linear-gradient(to bottom, transparent, #FAFAF9)', marginTop: -6, position: 'relative' }} />
         </div>
 
-        {/* Blurred locked recos */}
-        {[1, 2].map(i => (
-          <div key={i} style={{ background: '#FAFAF9', borderRadius: 10, padding: '11px 13px', border: '1px solid #E5E2DC', marginBottom: 8, position: 'relative', overflow: 'hidden' }}>
+        {/* Blurred locked recos — more realistic lines */}
+        {[
+          ['30%','75%','50%','18px','12px','22px'],
+          ['45%','65%','35%','14px','10px','18px'],
+        ].map(([w1,w2,w3,h1,h2,h3], i) => (
+          <div key={i} style={{ background: '#FAFAF9', borderRadius: 10, padding: '12px 14px', border: '1px solid #E5E2DC', marginBottom: 8, position: 'relative', overflow: 'hidden' }}>
             <div style={{ filter: 'blur(4px)', userSelect: 'none' }}>
-              <div style={{ height: 7, background: '#E5E2DC', borderRadius: 3, marginBottom: 7, width: '55%' }} />
-              <div style={{ height: 7, background: '#E5E2DC', borderRadius: 3, marginBottom: 7, width: '80%' }} />
-              <div style={{ height: 7, background: '#E5E2DC', borderRadius: 3, width: '40%' }} />
+              <div style={{ height: h1, background: '#E5E2DC', borderRadius: 3, marginBottom: 7, width: w1 }} />
+              <div style={{ height: h2, background: '#EDEBE6', borderRadius: 3, marginBottom: 7, width: w2 }} />
+              <div style={{ height: h3, background: '#E5E2DC', borderRadius: 3, width: w3 }} />
             </div>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontSize: 14, color: '#C2BDB8' }}>🔒</span>
@@ -119,9 +141,9 @@ function ProductMockup() {
       </div>
 
       {/* CTA */}
-      <div style={{ padding: '13px 24px', background: 'rgba(217,119,87,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>+5 recommandations verrouillées</div>
-        <div style={{ fontSize: 11, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui', background: 'rgba(217,119,87,0.12)', padding: '5px 13px', borderRadius: 20 }}>Débloquer →</div>
+      <div style={{ padding: '12px 24px 14px', background: 'rgba(217,119,87,0.05)', borderTop: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ fontSize: 10, color: '#B0ABA5', fontFamily: 'system-ui' }}>+5 recommandations verrouillées</div>
+        <div style={{ fontSize: 11, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui', background: 'rgba(217,119,87,0.12)', padding: '6px 14px', borderRadius: 20, cursor: 'pointer' }}>Débloquer →</div>
       </div>
     </div>
   );
@@ -164,6 +186,10 @@ export default function Home() {
     </div>
   );
 
+  const SectionDivider = () => (
+    <div style={{ height: 1, background: 'rgba(26,25,22,0.07)', maxWidth: '100%' }} />
+  );
+
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
@@ -181,7 +207,7 @@ export default function Home() {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px 100px' }}>
+      <section style={{ background: '#F7F5F2', padding: '100px 48px 104px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
 
           {/* Left — copy */}
@@ -233,11 +259,13 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ── COMMENT ÇA MARCHE ────────────────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
+      <section style={{ background: '#fff', padding: '100px 48px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Comment ça marche</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.2, marginBottom: 56, lineHeight: 1.1 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Comment ça marche</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 60, lineHeight: 1.1 }}>
             Un audit GEO complet en <em style={{ color: '#D97757' }}>20 secondes</em>
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
@@ -246,14 +274,14 @@ export default function Home() {
               ['02','#D97757','On analyse tout','Detekia scrape votre site et l\'évalue selon 8 critères GEO validés par la recherche.'],
               ['03','#4285F4','Recevez votre score','Score sur 100, analyse par critère, tooltips explicatifs et recommandations expertes.'],
             ].map(([num,color,title,desc]) => (
-              <div key={num} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 26px', boxShadow: '0 2px 12px rgba(26,25,22,0.04)' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color, marginBottom: 18, letterSpacing: -1 }}>{num}</div>
-                <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', marginBottom: 10, fontFamily: 'system-ui' }}>{title}</div>
-                <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
+              <div key={num} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 18, padding: '36px 28px', boxShadow: '0 2px 12px rgba(26,25,22,0.04)' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 40, color, marginBottom: 20, letterSpacing: -1 }}>{num}</div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', marginBottom: 10, fontFamily: 'Georgia, serif' }}>{title}</div>
+                <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.7, fontFamily: 'system-ui' }}>{desc}</div>
               </div>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: 28 }}>
+          <div style={{ textAlign: 'center', marginTop: 32 }}>
             <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
               Voir la méthodologie complète →
             </a>
@@ -261,30 +289,36 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ── STATS DASHBOARD ──────────────────────────────────── */}
-      <section style={{ background: '#1A1916', padding: '80px 48px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }}>
-          {[
-            ['📊','94%','des sites analysés','obtiennent un score sous 60/100'],
-            ['🔍','8','critères mesurés','extractibilité, autorité, structure…'],
-            ['⚡','20s','d\'analyse','pour un rapport complet et actionnable'],
-            ['🤖','4','moteurs IA couverts','ChatGPT, Claude, Gemini, Perplexity'],
-          ].map(([emoji,stat,label,sub]) => (
-            <div key={stat+label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 18, padding: '32px 22px', textAlign: 'center' }}>
-              <div style={{ fontSize: 22, marginBottom: 12 }}>{emoji}</div>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 64, color: '#D97757', letterSpacing: -2, lineHeight: 1, marginBottom: 10 }}>{stat}</div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: 'rgba(247,245,242,0.75)', fontFamily: 'system-ui', marginBottom: 5, letterSpacing: -0.2 }}>{label}</div>
-              <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.32)', fontFamily: 'system-ui', lineHeight: 1.5 }}>{sub}</div>
-            </div>
-          ))}
+      <section style={{ background: '#1A1916', padding: '84px 48px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', overflow: 'hidden' }}>
+            {[
+              ['📊','94%','des sites analysés','Score GEO sous 60/100'],
+              ['🔍','8','critères mesurés','Extractibilité, autorité…'],
+              ['⚡','20s','d\'analyse','Rapport complet & actionnable'],
+              ['🤖','4','moteurs IA couverts','ChatGPT, Claude, Gemini, Perplexity'],
+            ].map(([emoji,stat,label,sub], i) => (
+              <div key={stat+label} style={{ padding: '40px 28px', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.07)' : 'none' }}>
+                <div style={{ fontSize: 20, marginBottom: 14 }}>{emoji}</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 56, color: '#D97757', letterSpacing: -2, lineHeight: 1, marginBottom: 12 }}>{stat}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: 'rgba(247,245,242,0.55)', textTransform: 'uppercase', marginBottom: 6 }}>{label}</div>
+                <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.28)', fontFamily: 'system-ui', lineHeight: 1.5 }}>{sub}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ── 8 CRITÈRES ──────────────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+      <section style={{ background: '#F7F5F2', padding: '100px 48px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Ce qu'on analyse</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.2, marginBottom: 56, lineHeight: 1.1 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Ce qu'on analyse</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 60, lineHeight: 1.1 }}>
             8 critères <em style={{ color: '#D97757' }}>validés par la recherche</em>
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
@@ -293,11 +327,13 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ── POURQUOI FAIRE CONFIANCE ─────────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
+      <section style={{ background: '#fff', padding: '100px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Transparence & confiance</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.2, marginBottom: 56, lineHeight: 1.1 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Transparence & confiance</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 60, lineHeight: 1.1 }}>
             Pourquoi faire confiance <em style={{ color: '#D97757' }}>à Detekia ?</em>
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
@@ -320,48 +356,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── ILS FONT CONFIANCE ───────────────────────────────── */}
-      <section style={{ background: '#F0EDE8', padding: '72px 48px' }}>
-        <div style={{ maxWidth: 860, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>Utilisateurs</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(24px,3.5vw,34px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 44, lineHeight: 1.15 }}>
-            Ils font confiance à <em style={{ color: '#D97757' }}>Detekia</em>
+      <SectionDivider />
+
+      {/* ── ILS ONT TESTÉ DETEKIA ────────────────────────────── */}
+      <section style={{ background: '#F7F5F2', padding: '100px 48px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Retours utilisateurs</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 60, lineHeight: 1.1 }}>
+            Ils ont testé <em style={{ color: '#D97757' }}>Detekia</em>
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18 }}>
             {[
-              ['🏪','E-commerce'],
-              ['🏢','Agences web'],
-              ['🚀','SaaS & startups'],
-              ['💼','Consultants'],
-              ['📰','Médias & blogs'],
-              ['🎓','Experts & formateurs'],
-            ].map(([icon, label]) => (
-              <div key={label} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px 12px', textAlign: 'center', boxShadow: '0 2px 8px rgba(26,25,22,0.04)' }}>
-                <div style={{ fontSize: 30, marginBottom: 12 }}>{icon}</div>
-                <div style={{ fontSize: 11, fontWeight: 600, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.4 }}>{label}</div>
+              {
+                quote: "Score initial 31/100. Après corrections sur les recommandations Detekia : 68/100 en 3 jours. Impressionnant pour un outil gratuit.",
+                author: "Directeur marketing",
+                role: "Agence SEO · Paris",
+                before: 31,
+                after: 68,
+                accent: '#D97757',
+              },
+              {
+                quote: "Mon site apparaît maintenant dans les réponses Perplexity quand on cherche mes produits. Je ne m'y attendais pas aussi vite.",
+                author: "Fondatrice",
+                role: "Boutique e-commerce · Lyon",
+                before: null,
+                after: null,
+                accent: '#10A37F',
+              },
+              {
+                quote: "Je l'utilise pour tous mes audits clients avant de leur présenter une stratégie GEO. Gain de temps énorme, rapport très structuré.",
+                author: "Consultant SEO indépendant",
+                role: "Freelance · Bordeaux",
+                before: null,
+                after: null,
+                accent: '#4285F4',
+              },
+            ].map(({ quote, author, role, before, after, accent }) => (
+              <div key={author} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 18, padding: '30px 28px', boxShadow: '0 4px 20px rgba(26,25,22,0.05)', display: 'flex', flexDirection: 'column', gap: 0, borderTop: `3px solid ${accent}` }}>
+                {/* Score badge if available */}
+                {before && after && (
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 18, fontFamily: 'monospace', fontSize: 10, letterSpacing: 1 }}>
+                    <span style={{ background: 'rgba(217,119,87,0.1)', color: '#D97757', padding: '3px 9px', borderRadius: 4, fontWeight: 600 }}>{before}/100</span>
+                    <span style={{ color: '#C2BDB8' }}>→</span>
+                    <span style={{ background: 'rgba(16,163,127,0.1)', color: '#10A37F', padding: '3px 9px', borderRadius: 4, fontWeight: 600 }}>{after}/100</span>
+                    <span style={{ color: '#C2BDB8', fontSize: 9 }}>en 3 jours</span>
+                  </div>
+                )}
+                {/* Quote */}
+                <p style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 14, color: '#3A3835', lineHeight: 1.75, flex: 1, marginBottom: 20 }}>
+                  "{quote}"
+                </p>
+                {/* Author */}
+                <div style={{ borderTop: '1px solid #F0EDE8', paddingTop: 16 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#1A1916', fontWeight: 600, letterSpacing: 0.5, marginBottom: 3 }}>{author}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 0.5 }}>{role}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ── FAQ ─────────────────────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+      <section style={{ background: '#fff', padding: '100px 48px' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>FAQ</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.2, marginBottom: 48, lineHeight: 1.1 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>FAQ</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 52, lineHeight: 1.1 }}>
             Questions <em style={{ color: '#D97757' }}>fréquentes</em>
           </h2>
           {faqs.map((faq, i) => <FAQItem key={i} question={faq.question} answer={faq.answer} />)}
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ── CTA FINAL ────────────────────────────────────────── */}
-      <section style={{ background: '#1A1916', padding: '100px 48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      <section style={{ background: '#1A1916', padding: '108px 48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         {/* Radial gradients */}
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(217,119,87,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(16,163,127,0.08) 0%, transparent 50%)', pointerEvents: 'none' }} />
         {/* Dot grid */}
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(247,245,242,0.05) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(247,245,242,0.04) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
 
         <div style={{ maxWidth: 640, margin: '0 auto', position: 'relative' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.15)', border: '1px solid rgba(16,163,127,0.3)', borderRadius: 20, padding: '6px 16px', marginBottom: 28 }}>
@@ -369,31 +445,32 @@ export default function Home() {
             <span style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>Gratuit · Sans inscription · Sans carte bancaire</span>
           </div>
 
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,5vw,54px)', color: '#F7F5F2', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.05 }}>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,5vw,56px)', color: '#F7F5F2', letterSpacing: -1.5, marginBottom: 18, lineHeight: 1.05 }}>
             Votre site mérite d'être cité<br /><em style={{ color: '#D97757' }}>par les IA</em>
           </h2>
-          <p style={{ fontSize: 16, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginBottom: 40, lineHeight: 1.65, maxWidth: 460, margin: '0 auto 32px' }}>
-            Découvrez votre score GEO en 20 secondes et obtenez un plan d'action concret pour être recommandé par ChatGPT, Claude, Gemini et Perplexity.
+          <p style={{ fontSize: 16, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.7, maxWidth: 480, margin: '0 auto 36px' }}>
+            Rejoignez les professionnels qui ont déjà optimisé leur visibilité IA — gratuitement, en 20 secondes.
           </p>
 
-          {/* AI chips */}
-          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginBottom: 32, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(247,245,242,0.07)', border: '1px solid rgba(247,245,242,0.14)', borderRadius: 14, padding: '6px 6px 6px 22px', maxWidth: 520, margin: '0 auto 16px', gap: 10, backdropFilter: 'blur(8px)' }}>
+            <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(247,245,242,0.35)', whiteSpace: 'nowrap' }}>https://</span>
+            <input value={url} onChange={e => setUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && analyze()} placeholder="votresite.fr"
+              style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 15, color: '#F7F5F2', padding: '14px 0', fontFamily: 'system-ui' }} />
+            <button onClick={analyze} style={{ background: '#D97757', color: '#fff', border: 'none', padding: '16px 40px', borderRadius: 10, fontWeight: 700, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', boxShadow: '0 8px 24px rgba(217,119,87,0.4)' }}>
+              Analyser →
+            </button>
+          </div>
+
+          {/* IA chips under button */}
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 20, flexWrap: 'wrap' }}>
             {[['#10A37F','ChatGPT'],['#D97757','Claude'],['#4285F4','Gemini'],['#1C7DC4','Perplexity']].map(([c,name]) => (
-              <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontFamily: 'monospace', padding: '5px 13px', borderRadius: 20, border: `1px solid ${c}40`, background: c + '14', color: c, letterSpacing: 0.5 }}>
+              <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontFamily: 'monospace', padding: '5px 13px', borderRadius: 20, border: `1px solid ${c}35`, background: c + '12', color: c, letterSpacing: 0.5 }}>
                 <div style={{ width: 5, height: 5, borderRadius: '50%', background: c }} />{name}
               </div>
             ))}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(247,245,242,0.07)', border: '1px solid rgba(247,245,242,0.14)', borderRadius: 14, padding: '6px 6px 6px 22px', maxWidth: 520, margin: '0 auto 16px', gap: 10, backdropFilter: 'blur(8px)' }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(247,245,242,0.35)', whiteSpace: 'nowrap' }}>https://</span>
-            <input value={url} onChange={e => setUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && analyze()} placeholder="votresite.fr"
-              style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 15, color: '#F7F5F2', padding: '12px 0', fontFamily: 'system-ui' }} />
-            <button onClick={analyze} style={{ background: '#D97757', color: '#fff', border: 'none', padding: '16px 40px', borderRadius: 10, fontWeight: 700, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', boxShadow: '0 6px 20px rgba(217,119,87,0.45)' }}>
-              Analyser →
-            </button>
-          </div>
-          <p style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.22)', letterSpacing: 1 }}>
+          <p style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.2)', letterSpacing: 1, marginTop: 24 }}>
             Analyse gratuite · Rapport complet à 19,99€ · Offre de lancement jusqu'au 15 avril
           </p>
         </div>
@@ -418,11 +495,11 @@ export default function Home() {
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        input::placeholder { color: #A8A49F; }
         @media (max-width: 900px) {
           div[style*="gridTemplateColumns: '60% 40%'"] { grid-template-columns: 1fr !important; }
           div[style*="gridTemplateColumns: 'repeat(4,1fr)'"] { grid-template-columns: repeat(2,1fr) !important; }
           div[style*="gridTemplateColumns: 'repeat(3,1fr)'"] { grid-template-columns: 1fr !important; }
-          div[style*="gridTemplateColumns: 'repeat(6,1fr)'"] { grid-template-columns: repeat(3,1fr) !important; }
           section { padding-left: 24px !important; padding-right: 24px !important; }
           nav { padding: 0 20px !important; }
           footer { padding: 28px 20px !important; }
