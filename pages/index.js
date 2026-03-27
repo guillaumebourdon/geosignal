@@ -220,15 +220,15 @@ export default function Home() {
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '56px 48px 96px' }}>
+      <section style={{ background: '#F7F5F2', padding: '28px 48px 48px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
           <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 20, padding: '6px 14px', marginBottom: 28 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 20, padding: '6px 14px', marginBottom: 14 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
               <span style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>Analyse 100% gratuite — aucune inscription</span>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, marginBottom: 28, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
               {[['#10A37F','ChatGPT'],['#D97757','Claude'],['#4285F4','Gemini'],['#1C7DC4','Perplexity']].map(([c,name]) => (
                 <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontFamily: 'monospace', padding: '5px 12px', borderRadius: 20, border: '1px solid #E5E2DC', background: '#fff', color: '#8A8680' }}>
                   <div style={{ width: 6, height: 6, borderRadius: '50%', background: c }} />{name}
@@ -236,11 +236,11 @@ export default function Home() {
               ))}
             </div>
 
-            <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 20, color: '#1A1916', maxWidth: 540 }}>
+            <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 14, color: '#1A1916', maxWidth: 540 }}>
               Vos concurrents apparaissent dans ChatGPT.<br /><span style={{ color: '#D97757' }}>Pas vous.</span>
             </h1>
 
-            <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 28 }}>
+            <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.6, fontFamily: 'system-ui', marginBottom: 20 }}>
               Analysez votre site en 30 secondes. Score sur 100, 8 critères, recommandations concrètes pour être cité par les IA.
             </p>
 
