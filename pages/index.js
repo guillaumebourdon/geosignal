@@ -236,11 +236,11 @@ export default function Home() {
             </div>
 
             <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 20, color: '#1A1916', maxWidth: 540 }}>
-              Pourquoi les IA ne citent <em style={{ color: '#D97757' }}>pas votre site ?</em>
+              Vos concurrents apparaissent dans ChatGPT.<br /><span style={{ color: '#D97757' }}>Pas vous.</span>
             </h1>
 
             <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 28 }}>
-              Découvrez ce qui empêche ChatGPT, Claude et Perplexity de vous recommander — et obtenez un plan d'action concret pour y remédier.
+              Analysez votre site en 30 secondes. Score sur 100, 8 critères, recommandations concrètes pour être cité par les IA.
             </p>
 
             {/* ── URL input principal ──────────────────────────── */}
