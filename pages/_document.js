@@ -43,7 +43,7 @@ export default function Document() {
               {
                 "@type": "Offer",
                 "name": "Rapport complet",
-                "price": "19.99",
+                "price": "29",
                 "priceCurrency": "EUR"
               }
             ],
@@ -113,7 +113,7 @@ export default function Document() {
                 "name": "Combien coûte un audit GEO avec Detekia ?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "L'analyse de base est gratuite et sans inscription : score GEO sur 100, analyse des 8 critères, 1 recommandation experte en aperçu. Le rapport complet avec toutes les recommandations détaillées est disponible à 19,99€ (offre de lancement)."
+                  "text": "L'analyse de base est gratuite et sans inscription : score GEO sur 100, analyse des 8 critères, 1 recommandation experte en aperçu. Le rapport complet avec toutes les recommandations détaillées est disponible à 29 €, paiement unique."
                 }
               }
             ]

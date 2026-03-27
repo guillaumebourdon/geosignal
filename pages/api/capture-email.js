@@ -73,11 +73,10 @@ export default async function handler(req, res) {
 
   <!-- CTA rapport complet -->
   <div style="background:#FBF0EB;border:1px solid rgba(217,119,87,0.2);border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;">
-    <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Offre de lancement · jusqu'au 15 avril 2026</div>
     <div style="font-family:Georgia,serif;font-size:16px;color:#1A1916;margin-bottom:6px;">Rapport complet avec toutes les recommandations</div>
     <div style="font-size:12px;color:#8A8680;font-family:system-ui;margin-bottom:16px;">Diagnostic · méthode · exemple concret · impact attendu pour chaque critère</div>
-    <a href="${resultsLink}" style="display:inline-block;background:#D97757;color:#fff;padding:13px 28px;border-radius:9px;font-family:system-ui,sans-serif;font-size:14px;font-weight:700;text-decoration:none;">Voir le rapport complet — 19,99€ →</a>
-    <div style="font-family:monospace;font-size:9px;color:#C2BDB8;margin-top:10px;letter-spacing:1px;">au lieu de 59,99€ · paiement unique</div>
+    <a href="${resultsLink}" style="display:inline-block;background:#D97757;color:#fff;padding:13px 28px;border-radius:9px;font-family:system-ui,sans-serif;font-size:14px;font-weight:700;text-decoration:none;">Voir le rapport complet — 29 € →</a>
+    <div style="font-family:monospace;font-size:9px;color:#C2BDB8;margin-top:10px;letter-spacing:1px;">paiement unique</div>
   </div>
 
   <!-- Footer -->

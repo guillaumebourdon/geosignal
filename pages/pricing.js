@@ -41,20 +41,8 @@ export default function Pricing() {
         </div>
       </nav>
 
-      {/* BANNIÈRE PROMO */}
-      <div style={{ background: '#1A1916', padding: '12px 24px', textAlign: 'center' }}>
-        <span style={{ fontFamily: 'system-ui', fontSize: 13, color: '#F7F5F2' }}>
-          🎉 <strong>Offre de lancement</strong> — Prix réduit jusqu'au{' '}
-          <span style={{ color: '#D97757', fontWeight: 600 }}>15 avril 2026</span>
-          {' '}· Plus que quelques jours
-        </span>
-      </div>
-
       {/* HERO */}
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '64px 24px 0', textAlign: 'center' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'monospace', fontSize: 11, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', border: '1px solid rgba(217,119,87,0.3)', padding: '5px 14px', borderRadius: 20, marginBottom: 24, background: 'rgba(217,119,87,0.06)' }}>
-          <span>🎉</span> Offre de lancement limitée
-        </div>
         <h1 style={{ fontSize: 'clamp(30px, 5vw, 48px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 14, color: '#1A1916' }}>
           Débloquez votre rapport GEO complet
         </h1>
@@ -93,33 +81,20 @@ export default function Pricing() {
 
         {/* RAPPORT — featured */}
         <div style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)' }}>
-          {/* Badge populaire */}
-          <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: '#D97757', color: '#fff', fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, padding: '4px 14px', borderRadius: 20, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-            Offre de lancement
-          </div>
-
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>Rapport complet</div>
 
-          {/* Prix avec barré */}
           <div style={{ marginBottom: 4 }}>
-            <span style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.35)', textDecoration: 'line-through', marginRight: 8 }}>59,99€</span>
-            <span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>19,99€</span>
+            <span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>29 €</span>
           </div>
-          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>
+          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 20 }}>
             Paiement unique · Par analyse
-          </div>
-
-          {/* Urgence */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(217,119,87,0.15)', border: '1px solid rgba(217,119,87,0.3)', borderRadius: 8, padding: '5px 10px', marginBottom: 20 }}>
-            <span style={{ fontSize: 10 }}>⏳</span>
-            <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1 }}>Prix normal reprend le 15 avril 2026</span>
           </div>
 
           <button
             onClick={handleCheckout}
             disabled={loading}
             style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, border: 'none', cursor: loading ? 'wait' : 'pointer', fontFamily: 'system-ui', marginBottom: 24, opacity: loading ? 0.7 : 1, transition: 'opacity 0.2s' }}>
-            {loading ? 'Chargement…' : 'Débloquer mon rapport — 19,99€ →'}
+            {loading ? 'Chargement…' : 'Débloquer mon rapport — 29 € →'}
           </button>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
