@@ -8,6 +8,7 @@ const CONTENT_MAP = {
   'seo-vs-geo-differences-2026': require('../../content/articles/seo-vs-geo-differences-2026').default,
   'score-geo-mesurer-visibilite-ia': require('../../content/articles/score-geo-mesurer-visibilite-ia').default,
   'schema-org-ia-guide-pratique': require('../../content/articles/schema-org-ia-guide-pratique').default,
+  'ecommerce-recommandations-ia': require('../../content/articles/ecommerce-recommandations-ia').default,
 };
 
 const CATEGORY_COLORS = {
