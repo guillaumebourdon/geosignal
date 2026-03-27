@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
@@ -195,7 +195,7 @@ function RecoCard({ r, index, isPaid, onCheckout }) {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 5, flexShrink: 0 }}>
               <button onClick={onCheckout} style={{ background: tag.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 12, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui' }}>Débloquer →</button>
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757' }}>
-                19,99€{' '}<span style={{ textDecoration: 'line-through', color: '#C2BDB8' }}>59,99€</span>{' '}· lancement
+                29 € · paiement unique
               </div>
             </div>
           </div>
@@ -249,6 +249,9 @@ export default function Results() {
   const [captureEmail, setCaptureEmail] = useState('');
   const [captureSent, setCaptureSent] = useState(false);
   const [captureLoading, setCaptureLoading] = useState(false);
+  const [showShare, setShowShare] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const shareRef = useRef(null);
 
   async function handleCaptureEmail(e) {
     e.preventDefault();
@@ -318,6 +321,17 @@ export default function Results() {
     }, 400);
     return () => clearInterval(dotsInterval);
   }, []);
+
+  useEffect(() => {
+    if (!showShare) return;
+    function handleClickOutside(e) {
+      if (shareRef.current && !shareRef.current.contains(e.target)) {
+        setShowShare(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showShare]);
 
   useEffect(() => {
     if (!url) return;
@@ -482,6 +496,63 @@ export default function Results() {
             </div>
           </div>
 
+          {/* SHARE BUTTON */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, position: 'relative' }} ref={shareRef}>
+            <button
+              onClick={() => setShowShare(v => !v)}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'transparent', border: '1px solid #E5E2DC', borderRadius: 8, padding: '10px 20px', color: '#8A8680', fontSize: 13, fontFamily: 'system-ui', cursor: 'pointer', transition: 'border-color 0.15s, color 0.15s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#1A1916'; e.currentTarget.style.color = '#1A1916'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E2DC'; e.currentTarget.style.color = '#8A8680'; }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              Partagez votre score
+            </button>
+            {showShare && (
+              <div style={{ position: 'absolute', top: 'calc(100% + 8px)', left: '50%', transform: 'translateX(-50%)', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.08)', padding: 8, zIndex: 50, minWidth: 220 }}>
+                {[
+                  {
+                    label: 'LinkedIn',
+                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>,
+                    action: () => {
+                      const text = encodeURIComponent(`Mon site obtient ${result.score}/100 en citabilité IA 🤖 Et le vôtre ? → https://www.detekia.fr`);
+                      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://www.detekia.fr&summary=${text}`, '_blank');
+                      setShowShare(false);
+                    },
+                  },
+                  {
+                    label: 'Twitter / X',
+                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>,
+                    action: () => {
+                      const text = encodeURIComponent(`Mon site obtient ${result.score}/100 en citabilité IA 🤖 Et le vôtre ? → https://www.detekia.fr`);
+                      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+                      setShowShare(false);
+                    },
+                  },
+                  {
+                    label: copied ? '✓ Copié !' : 'Copier le lien',
+                    icon: copied ? null : <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>,
+                    action: () => {
+                      navigator.clipboard.writeText(`Mon site obtient ${result.score}/100 en citabilité IA. Et le vôtre ? → https://www.detekia.fr`);
+                      setCopied(true);
+                      setTimeout(() => { setCopied(false); setShowShare(false); }, 2000);
+                    },
+                  },
+                ].map(({ label, icon, action }) => (
+                  <button
+                    key={label}
+                    onClick={action}
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '10px 16px', background: 'transparent', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontFamily: 'system-ui', color: '#3A3835', textAlign: 'left', transition: 'background 0.1s' }}
+                    onMouseEnter={e => e.currentTarget.style.background = '#F7F5F2'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    {icon && <span style={{ color: '#8A8680', flexShrink: 0 }}>{icon}</span>}
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Analyse détaillée</div>
           {groups.map(group => (
             <GroupAccordion key={group.id} group={group} getCriteriaForGroup={getCriteriaForGroup} getLevelColor={getLevelColor} />
@@ -542,16 +613,13 @@ export default function Results() {
               {!isPaid && (
                 <div style={{ marginTop: 16, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, boxShadow: '0 8px 32px rgba(26,25,22,0.12)' }}>
                   <div>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(217,119,87,0.15)', border: '1px solid rgba(217,119,87,0.25)', borderRadius: 6, padding: '3px 9px', marginBottom: 10 }}>
-                      <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1 }}>🎉 Offre de lancement</span>
-                    </div>
                     <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#F7F5F2', marginBottom: 6 }}>Rapport complet disponible</div>
                     <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6 }}>{recommendations.length - 1} recommandations expertes avec méthodes, exemples et impact attendu.</div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, flexShrink: 0 }}>
-                    <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', opacity: checkoutLoading ? 0.7 : 1 }}>{checkoutLoading ? 'Chargement...' : 'Débloquer — 19,99€ →'}</button>
+                    <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', opacity: checkoutLoading ? 0.7 : 1 }}>{checkoutLoading ? 'Chargement...' : 'Débloquer — 29 € →'}</button>
                     <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
-                      au lieu de <span style={{ textDecoration: 'line-through' }}>59,99€</span> · jusqu'au 15 avril 2026
+                      Paiement unique · Accès immédiat
                     </div>
                   </div>
                 </div>
@@ -575,7 +643,7 @@ export default function Results() {
             <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>Rapport GEO complet</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>19,99€ · Accès immédiat · Offre de lancement</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>29 € · Accès immédiat · Paiement unique</div>
               </div>
               <button
                 onClick={closeCheckout}
