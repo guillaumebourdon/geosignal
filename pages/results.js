@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { loadStripe } from '@stripe/stripe-js';
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const CRITERIA_INFO = {
   'Extractibilité & réponse directe': {
@@ -240,22 +244,37 @@ export default function Results() {
   const [error, setError] = useState(null);
   const [loadingDots, setLoadingDots] = useState('');
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [clientSecret, setClientSecret] = useState(null);
+
+  const fetchClientSecret = useCallback(() =>
+    fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan: 'rapport', url, score: result?.score }),
+    })
+    .then(r => r.json())
+    .then(d => d.clientSecret),
+  [url, result]);
 
   async function handleCheckout() {
     setCheckoutLoading(true);
     try {
-      const res = await fetch('/api/create-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: 'rapport', url }),
-      });
-      const data = await res.json();
-      if (data.url) window.location.href = data.url;
+      const secret = await fetchClientSecret();
+      if (secret) {
+        setClientSecret(secret);
+        setShowCheckout(true);
+      }
     } catch (e) {
       console.error('Checkout error:', e);
     } finally {
       setCheckoutLoading(false);
     }
+  }
+
+  function closeCheckout() {
+    setShowCheckout(false);
+    setClientSecret(null);
   }
 
   const steps = [
@@ -484,6 +503,37 @@ export default function Results() {
               )}
             </div>
           )}
+        </div>
+      )}
+
+      {/* ── STRIPE EMBEDDED CHECKOUT MODAL ──────────────────── */}
+      {showCheckout && clientSecret && (
+        <div
+          onClick={closeCheckout}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ background: '#fff', borderRadius: 14, maxWidth: 500, width: '100%', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}
+          >
+            {/* Header */}
+            <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>Rapport GEO complet</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>19,99€ · Accès immédiat · Offre de lancement</div>
+              </div>
+              <button
+                onClick={closeCheckout}
+                style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
+              >×</button>
+            </div>
+            {/* Embedded Checkout */}
+            <div style={{ padding: '16px 0 0' }}>
+              <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
+                <EmbeddedCheckout />
+              </EmbeddedCheckoutProvider>
+            </div>
+          </div>
         </div>
       )}
 
