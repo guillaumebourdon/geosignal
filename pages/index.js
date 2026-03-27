@@ -56,16 +56,8 @@ export default function Home() {
       answer: "Sur Detekia, un score supérieur à 70/100 est considéré comme bon. Entre 45 et 70, votre site a des bases solides mais nécessite des optimisations ciblées. En dessous de 45, des actions prioritaires s'imposent. La majorité des sites analysés obtiennent un score entre 15 et 45 — même les grandes marques comme Apple ou Amazon obtiennent des scores faibles car leurs sites sont optimisés pour vendre, pas pour être cités par les IA.",
     },
     {
-      question: "Mon score GEO peut-il vraiment s'améliorer rapidement ?",
-      answer: "Oui, et souvent beaucoup plus vite qu'en SEO. L'ajout de schema.org (FAQPage, Organization) peut se faire en quelques heures et avoir un impact immédiat. La restructuration du contenu pour le rendre plus citable, l'ajout d'une page auteur avec biographie, ou la mise en place d'une FAQ visible sont des actions réalisables en une journée qui peuvent faire progresser votre score de 10 à 20 points.",
-    },
-    {
       question: "Les données de mon site sont-elles conservées ?",
       answer: "Non. Detekia analyse votre site en temps réel et ne conserve aucune donnée de votre site sur nos serveurs. Les résultats d'analyse sont mis en cache 24h pour accélérer les analyses successives du même site, mais aucune donnée personnelle n'est stockée.",
-    },
-    {
-      question: "Quelle est la différence entre le plan à 9€ et le plan Pro à 29€/mois ?",
-      answer: "Le rapport à 9€ est un paiement unique pour débloquer toutes les recommandations expertes d'une analyse spécifique. Le plan Pro à 29€/mois vous donne accès à des analyses illimitées, idéal pour les agences, freelances ou entreprises qui souhaitent suivre l'évolution de leur score GEO sur plusieurs sites au fil du temps.",
     },
     {
       question: "Detekia fonctionne-t-il pour tous les types de sites ?",
