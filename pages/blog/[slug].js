@@ -4,6 +4,7 @@ import { articles, getArticleBySlug, getRelatedArticles, formatDate } from '../.
 // Map of slug → content component. Add an entry here each time an article is written.
 const CONTENT_MAP = {
   'geo-guide-complet-2026': require('../../content/articles/geo-guide-complet-2026').default,
+  'pourquoi-chatgpt-ne-cite-pas-votre-site': require('../../content/articles/pourquoi-chatgpt-ne-cite-pas-votre-site').default,
 };
 
 const CATEGORY_COLORS = {
