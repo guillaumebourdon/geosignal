@@ -66,7 +66,7 @@ function ProductMockup() {
     { name: 'Données structurées', score: 8, max: 10, color: '#10A37F' },
   ];
   return (
-    <div style={{ background: '#fff', borderRadius: 22, boxShadow: '0 32px 80px rgba(26,25,22,0.20), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 390, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
+    <div style={{ background: '#fff', borderRadius: 22, boxShadow: '0 8px 32px rgba(0,0,0,0.12), 0 32px 80px rgba(26,25,22,0.18), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 390, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
 
       {/* macOS-style mini header */}
       <div style={{ background: '#F0EDE8', borderBottom: '1px solid #E5E2DC', padding: '8px 18px', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -77,7 +77,7 @@ function ProductMockup() {
       </div>
 
       {/* Score block */}
-      <div style={{ background: '#1A1916', padding: '28px 26px 22px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ background: '#1A1916', padding: '36px 32px 28px', position: 'relative', overflow: 'hidden' }}>
         {/* Halo derrière le score */}
         <div style={{ position: 'absolute', top: '40%', left: 24, transform: 'translateY(-50%)', width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.16) 0%, transparent 70%)' }} />
         <div style={{ position: 'absolute', top: -50, right: -50, width: 180, height: 180, borderRadius: '50%', background: '#C9861A', opacity: 0.04 }} />
@@ -88,8 +88,8 @@ function ProductMockup() {
 
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 18, position: 'relative' }}>
           <div>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 80, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>67</div>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)', letterSpacing: 1 }}>/100</div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 96, color: '#F7F5F2', lineHeight: 1, letterSpacing: -4 }}>67</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.25)', letterSpacing: 1 }}>/100</div>
           </div>
           <div style={{ paddingBottom: 16 }}>
             <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.18)', border: '1px solid rgba(201,134,26,0.32)', borderRadius: 20, padding: '4px 13px', fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2, marginBottom: 10 }}>MOYEN</div>
@@ -99,18 +99,18 @@ function ProductMockup() {
       </div>
 
       {/* Criteria */}
-      <div style={{ padding: '20px 26px', borderBottom: '1px solid #EDEBE6' }}>
+      <div style={{ padding: '24px 32px', borderBottom: '1px solid #EDEBE6' }}>
         <Label>Analyse par critère</Label>
         {criteria.map((c, i) => {
           const pct = Math.round((c.score / c.max) * 100);
           return (
-            <div key={i} style={{ marginBottom: i < criteria.length - 1 ? 14 : 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                <span style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui' }}>{c.name}</span>
-                <span style={{ fontFamily: 'monospace', fontSize: 11, fontWeight: 600, color: c.color }}>{c.score}/{c.max}</span>
+            <div key={i} style={{ marginBottom: i < criteria.length - 1 ? 16 : 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+                <span style={{ fontSize: 9, color: '#8A8680', fontFamily: 'monospace', letterSpacing: 0.5, textTransform: 'uppercase' }}>{c.name}</span>
+                <span style={{ fontFamily: 'monospace', fontSize: 10, fontWeight: 600, color: c.color }}>{c.score}/{c.max}</span>
               </div>
-              <div style={{ height: 6, background: '#F0EDE8', borderRadius: 4, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${pct}%`, background: c.color, borderRadius: 4, transition: 'width 0.6s ease' }} />
+              <div style={{ height: 4, background: '#F0EDE8', borderRadius: 99, overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${pct}%`, background: c.color, borderRadius: 99, transition: 'width 0.6s ease' }} />
               </div>
             </div>
           );
@@ -125,7 +125,7 @@ function ProductMockup() {
       </div>
 
       {/* Recommendations */}
-      <div style={{ padding: '14px 26px 16px' }}>
+      <div style={{ padding: '18px 32px 20px' }}>
         <Label>Recommandations</Label>
         {/* Visible reco */}
         <div style={{ background: '#FAFAF9', borderRadius: 10, padding: '12px 14px', border: '1px solid #E5E2DC', marginBottom: 8 }}>
@@ -159,7 +159,7 @@ function ProductMockup() {
       </div>
 
       {/* Footer CTA */}
-      <div style={{ padding: '11px 26px 13px', background: 'rgba(217,119,87,0.05)', borderTop: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ padding: '13px 32px 15px', background: 'rgba(217,119,87,0.05)', borderTop: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1 }}>+5 recommandations verrouillées</div>
         <div style={{ fontSize: 11, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui', background: 'rgba(217,119,87,0.12)', padding: '6px 14px', borderRadius: 20 }}>Débloquer →</div>
       </div>
@@ -295,13 +295,13 @@ export default function Home() {
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Comment ça marche</div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            Un audit GEO complet en <em style={{ color: '#D97757' }}>20 secondes</em>
+            Un audit GEO complet en <em style={{ color: '#D97757' }}>30 secondes</em>
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {[
               ['01','#10A37F','Entrez votre URL','Collez l\'adresse de votre site. Zéro inscription, zéro configuration, zéro carte bancaire.'],
               ['02','#D97757','On analyse tout','Detekia scrape votre site et l\'évalue selon 8 critères GEO validés par la recherche.'],
-              ['03','#4285F4','Recevez votre score','Score sur 100, analyse par critère et recommandations expertes en moins de 20 secondes.'],
+              ['03','#4285F4','Recevez votre score','Score sur 100, analyse par critère et recommandations expertes en moins de 30 secondes.'],
             ].map(([num,color,title,desc]) => (
               <div key={num} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 38, color, marginBottom: 16, letterSpacing: -1 }}>{num}</div>
@@ -420,16 +420,18 @@ export default function Home() {
                   <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.65, fontFamily: 'system-ui' }}>{problem}</div>
                 </div>
                 {/* Reco */}
-                <div style={{ flex: 1, marginBottom: 20 }}>
+                <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 6 }}>✅ Recommandation</div>
                   <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.65, fontFamily: 'system-ui' }}>{reco}</div>
                 </div>
-                {/* CTA */}
-                <a href="/" style={{ display: 'block', textAlign: 'center', background: '#1A1916', color: '#F7F5F2', padding: '11px 0', borderRadius: 9, fontWeight: 600, fontSize: 12, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                  Analyser mon site →
-                </a>
               </div>
             ))}
+          </div>
+          {/* Single CTA */}
+          <div style={{ textAlign: 'center', marginTop: 44 }}>
+            <a href="/" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '14px 32px', borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui' }}>
+              Analyser mon site →
+            </a>
           </div>
         </div>
       </section>
@@ -446,7 +448,7 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
             {[
               { icon: '🔬', accent: '#4285F4', title: 'Méthode transparente', desc: 'Méthodologie entièrement documentée. Vous savez comment chaque point de votre score est calculé.', link: '/methodologie' },
-              { icon: '⚡', accent: '#10A37F', title: 'Résultats en 20 secondes', desc: 'Aucun devis, aucun rendez-vous. Votre rapport disponible immédiatement, à toute heure.', link: null },
+              { icon: '⚡', accent: '#10A37F', title: 'Résultats en 30 secondes', desc: 'Aucun devis, aucun rendez-vous. Votre rapport disponible immédiatement, à toute heure.', link: null },
               { icon: '🔓', accent: '#D97757', title: 'Zéro inscription requise', desc: "Pas d'email, pas de mot de passe pour l'analyse gratuite. Essayez sans aucun engagement.", link: null },
               { icon: '🔒', accent: '#1C7DC4', title: 'Paiement sécurisé Stripe', desc: 'Paiements traités par Stripe. Aucune donnée bancaire ne transite par nos serveurs.', link: null },
               { icon: '↩️', accent: '#C9861A', title: 'Remboursement sous 24h', desc: "Rapport inaccessible suite à un problème technique ? Remboursement intégral garanti sous 24h.", link: null },
@@ -473,7 +475,7 @@ export default function Home() {
             Ce que vous recevez <em style={{ color: '#D97757' }}>dans le rapport complet</em>
           </h2>
           <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 48px' }}>
-            Un plan d'action GEO détaillé, priorisé et personnalisé pour votre site — livré en moins de 20 secondes.
+            Un plan d'action GEO détaillé, priorisé et personnalisé pour votre site — livré en moins de 30 secondes.
           </p>
 
           {/* 4 bullets */}
@@ -604,7 +606,7 @@ export default function Home() {
             Votre site mérite d'être cité<br /><em style={{ color: '#D97757' }}>par les IA</em>
           </h2>
           <p style={{ fontSize: 16, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.7, maxWidth: 480, margin: '0 auto 36px' }}>
-            Rejoignez les professionnels qui ont déjà optimisé leur visibilité IA — gratuitement, en 20 secondes.
+            Rejoignez les professionnels qui ont déjà optimisé leur visibilité IA — gratuitement, en 30 secondes.
           </p>
 
           <a href="/" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 10, fontWeight: 700, fontSize: 16, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.4)', letterSpacing: -0.2 }}>
