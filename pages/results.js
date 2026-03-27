@@ -477,7 +477,7 @@ export default function Results() {
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, flexShrink: 0 }}>
                     <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', opacity: checkoutLoading ? 0.7 : 1 }}>{checkoutLoading ? 'Chargement...' : 'Débloquer — 19,99€ →'}</button>
                     <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
-                      au lieu de <span style={{ textDecoration: 'line-through' }}>59,99€</span> · jusqu'au 15 avril
+                      au lieu de <span style={{ textDecoration: 'line-through' }}>59,99€</span> · jusqu'au 15 avril 2026
                     </div>
                   </div>
                 </div>

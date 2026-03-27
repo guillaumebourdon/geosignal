@@ -102,6 +102,31 @@ export default function Contact() {
             <a href="mailto:hello@detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>hello@detekia.fr</a>
           </div>
         </div>
+
+        {/* Motifs de contact */}
+        <div style={{ marginTop: 40, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '28px 28px 20px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 18 }}>Vous pouvez nous contacter pour</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 20 }}>
+            {[
+              ['💬', 'Question sur un rapport ou un score', 'Vous avez reçu un score qui vous interroge ? On vous explique.'],
+              ['🐛', 'Bug ou problème technique', 'Erreur d\'analyse, rapport non reçu, problème de paiement.'],
+              ['🏢', 'Demande entreprise ou volume', 'Analyses en masse, intégration, besoins spécifiques équipe.'],
+              ['🤝', 'Partenariat ou presse', 'Collaboration éditoriale, mention presse, affiliation.'],
+            ].map(([icon, title, desc]) => (
+              <div key={title} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', borderBottom: '1px solid #F0EDE8', paddingBottom: 14 }}>
+                <div style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{icon}</div>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 3, fontFamily: 'system-ui' }}>{title}</div>
+                  <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.5 }}>{desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 0.5 }}>
+            Nous répondons en général en moins de 24h ouvrées —{' '}
+            <a href="mailto:hello@detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>hello@detekia.fr</a>
+          </div>
+        </div>
       </div>
 
       <style>{`* { box-sizing: border-box; margin: 0; padding: 0; }`}</style>

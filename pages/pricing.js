@@ -112,7 +112,7 @@ export default function Pricing() {
           {/* Urgence */}
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(217,119,87,0.15)', border: '1px solid rgba(217,119,87,0.3)', borderRadius: 8, padding: '5px 10px', marginBottom: 20 }}>
             <span style={{ fontSize: 10 }}>⏳</span>
-            <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1 }}>Prix normal reprend le 15 avril</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1 }}>Prix normal reprend le 15 avril 2026</span>
           </div>
 
           <button
