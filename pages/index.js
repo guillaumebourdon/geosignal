@@ -20,21 +20,24 @@ function FAQItem({ question, answer }) {
   );
 }
 
-/* ─── Criteria card with hover ───────────────────────────── */
-function CriteriaCard({ icon, color, name, desc, checks }) {
+/* ─── Criteria card with hover + tag ────────────────────── */
+function CriteriaCard({ icon, color, name, desc, checks, tag, tagColor }) {
   const [hov, setHov] = useState(false);
   return (
     <div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ background: '#fff', border: `1.5px solid ${hov ? color : '#E5E2DC'}`, borderRadius: 16, padding: '24px 20px', transition: 'border-color 0.25s, box-shadow 0.25s', boxShadow: hov ? `0 8px 28px ${color}18` : '0 2px 8px rgba(26,25,22,0.04)', display: 'flex', flexDirection: 'column', gap: 0 }}>
-      <div style={{ width: 44, height: 44, borderRadius: 12, background: hov ? color + '14' : '#F7F5F2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, marginBottom: 14, transition: 'background 0.25s', flexShrink: 0 }}>{icon}</div>
-      <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1916', marginBottom: 7, fontFamily: 'system-ui', letterSpacing: -0.1 }}>{name}</div>
-      <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 14, flex: 1 }}>{desc}</div>
-      <div style={{ borderTop: '1px solid #F0EDE8', paddingTop: 12 }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: color, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 7 }}>Ce qu'on vérifie</div>
+      style={{ background: '#fff', border: `1.5px solid ${hov ? color : '#E5E2DC'}`, borderRadius: 18, padding: '28px 22px', transition: 'border-color 0.25s, box-shadow 0.25s', boxShadow: hov ? `0 10px 32px ${color}1A` : '0 2px 8px rgba(26,25,22,0.04)', display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
+      {/* Tag top-right */}
+      <div style={{ position: 'absolute', top: 16, right: 16, fontFamily: 'monospace', fontSize: 8, letterSpacing: 1.5, textTransform: 'uppercase', color: tagColor, background: tagColor + '14', border: `1px solid ${tagColor}30`, padding: '3px 9px', borderRadius: 20 }}>{tag}</div>
+      {/* Icon */}
+      <div style={{ width: 48, height: 48, borderRadius: 13, background: hov ? color + '14' : '#F7F5F2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, marginBottom: 16, transition: 'background 0.25s', flexShrink: 0 }}>{icon}</div>
+      <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui', letterSpacing: -0.1 }}>{name}</div>
+      <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 16, flex: 1 }}>{desc}</div>
+      <div style={{ borderTop: '1px solid #F0EDE8', paddingTop: 14 }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: color, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Ce qu'on vérifie</div>
         {checks.map((c, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-            <div style={{ width: 4, height: 4, borderRadius: '50%', background: color, flexShrink: 0 }} />
-            <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>{c}</span>
+          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 5 }}>
+            <div style={{ width: 4, height: 4, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 5 }} />
+            <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui', fontStyle: i === checks.length - 1 ? 'italic' : 'normal' }}>{c}</span>
           </div>
         ))}
       </div>
@@ -45,36 +48,36 @@ function CriteriaCard({ icon, color, name, desc, checks }) {
 /* ─── Hero product mockup ────────────────────────────────── */
 function ProductMockup() {
   const criteria = [
-    { name: 'Extractibilité', score: 14, max: 25, color: '#C9861A' },
-    { name: 'Données structurées', score: 2, max: 10, color: '#D97757' },
-    { name: 'Autorité E-E-A-T', score: 12, max: 15, color: '#10A37F' },
+    { name: 'Extractibilité', score: 12, max: 25, color: '#D97757' },
+    { name: 'Crawlabilité IA', score: 11, max: 15, color: '#C9861A' },
+    { name: 'Données structurées', score: 8, max: 10, color: '#10A37F' },
   ];
   return (
-    <div style={{ background: '#fff', borderRadius: 20, boxShadow: '0 24px 64px rgba(26,25,22,0.14), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 360, width: '100%' }}>
+    <div style={{ background: '#fff', borderRadius: 20, boxShadow: '0 28px 72px rgba(26,25,22,0.16), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 380, width: '100%', border: '1px solid #E8E5E0' }}>
       {/* Card header */}
-      <div style={{ background: '#1A1916', padding: '20px 22px 18px', position: 'relative' }}>
-        <div style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, borderRadius: '50%', background: '#C9861A', opacity: 0.08 }} />
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.4)', letterSpacing: 2, marginBottom: 10 }}>votresite.fr</div>
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10 }}>
+      <div style={{ background: '#1A1916', padding: '22px 24px 20px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: -48, right: -48, width: 140, height: 140, borderRadius: '50%', background: '#C9861A', opacity: 0.07 }} />
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.4)', letterSpacing: 2, marginBottom: 14, textTransform: 'uppercase' }}>Rapport GEO — exemple.fr</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14 }}>
           <div>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 52, color: '#F7F5F2', lineHeight: 1, letterSpacing: -2 }}>67</div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 56, color: '#F7F5F2', lineHeight: 1, letterSpacing: -2 }}>67</div>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.3)' }}>/100</div>
           </div>
-          <div style={{ paddingBottom: 6 }}>
-            <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.2)', border: '1px solid rgba(201,134,26,0.35)', borderRadius: 20, padding: '3px 12px', fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2 }}>MOYEN</div>
-            <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.4)', fontFamily: 'system-ui', marginTop: 6, lineHeight: 1.4 }}>Citabilité IA<br />à améliorer</div>
+          <div style={{ paddingBottom: 8 }}>
+            <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.2)', border: '1px solid rgba(201,134,26,0.4)', borderRadius: 20, padding: '4px 13px', fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2, marginBottom: 8 }}>MOYEN</div>
+            <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.4)', fontFamily: 'system-ui', lineHeight: 1.5 }}>Citabilité IA<br />à améliorer</div>
           </div>
         </div>
       </div>
 
       {/* Criteria bars */}
-      <div style={{ padding: '16px 22px', borderBottom: '1px solid #F0EDE8' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>Analyse par critère</div>
+      <div style={{ padding: '18px 24px', borderBottom: '1px solid #F0EDE8' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 14 }}>Analyse par critère</div>
         {criteria.map((c, i) => {
           const pct = Math.round((c.score / c.max) * 100);
           return (
-            <div key={i} style={{ marginBottom: i < criteria.length - 1 ? 10 : 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+            <div key={i} style={{ marginBottom: i < criteria.length - 1 ? 12 : 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
                 <span style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui' }}>{c.name}</span>
                 <span style={{ fontFamily: 'monospace', fontSize: 11, fontWeight: 600, color: c.color }}>{c.score}/{c.max}</span>
               </div>
@@ -86,39 +89,39 @@ function ProductMockup() {
         })}
       </div>
 
-      {/* Recommendation preview */}
-      <div style={{ padding: '14px 22px', borderBottom: '1px solid #F0EDE8' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Recommandations</div>
+      {/* Recommendations */}
+      <div style={{ padding: '16px 24px', borderBottom: '1px solid #F0EDE8' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>Recommandations</div>
 
-        {/* Visible first reco */}
-        <div style={{ background: '#FAFAF9', borderRadius: 9, padding: '10px 12px', border: '1px solid #E5E2DC', marginBottom: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 6 }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1, padding: '2px 7px', borderRadius: 4, background: 'rgba(217,119,87,0.12)', color: '#D97757' }}>CRITIQUE</span>
+        {/* Visible reco */}
+        <div style={{ background: '#FAFAF9', borderRadius: 10, padding: '11px 13px', border: '1px solid #E5E2DC', marginBottom: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 7 }}>
+            <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1, padding: '2px 8px', borderRadius: 4, background: 'rgba(217,119,87,0.12)', color: '#D97757' }}>CRITIQUE</span>
             <span style={{ fontSize: 10, color: '#8A8680', fontFamily: 'monospace' }}>Extractibilité</span>
           </div>
-          <div style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.6 }}>Votre introduction ne répond pas directement à la question principale...</div>
-          <div style={{ height: 24, background: 'linear-gradient(to bottom, transparent, #FAFAF9)', marginTop: -12, position: 'relative' }} />
+          <div style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.6 }}>Votre introduction ne répond pas directement à la question principale…</div>
+          <div style={{ height: 20, background: 'linear-gradient(to bottom, transparent, #FAFAF9)', marginTop: -8, position: 'relative' }} />
         </div>
 
         {/* Blurred locked recos */}
         {[1, 2].map(i => (
-          <div key={i} style={{ background: '#FAFAF9', borderRadius: 9, padding: '10px 12px', border: '1px solid #E5E2DC', marginBottom: 8, position: 'relative', overflow: 'hidden' }}>
+          <div key={i} style={{ background: '#FAFAF9', borderRadius: 10, padding: '11px 13px', border: '1px solid #E5E2DC', marginBottom: 8, position: 'relative', overflow: 'hidden' }}>
             <div style={{ filter: 'blur(4px)', userSelect: 'none' }}>
-              <div style={{ height: 8, background: '#E5E2DC', borderRadius: 3, marginBottom: 6, width: '60%' }} />
-              <div style={{ height: 8, background: '#E5E2DC', borderRadius: 3, marginBottom: 6, width: '85%' }} />
-              <div style={{ height: 8, background: '#E5E2DC', borderRadius: 3, width: '45%' }} />
+              <div style={{ height: 7, background: '#E5E2DC', borderRadius: 3, marginBottom: 7, width: '55%' }} />
+              <div style={{ height: 7, background: '#E5E2DC', borderRadius: 3, marginBottom: 7, width: '80%' }} />
+              <div style={{ height: 7, background: '#E5E2DC', borderRadius: 3, width: '40%' }} />
             </div>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: 13, color: '#C2BDB8' }}>🔒</span>
+              <span style={{ fontSize: 14, color: '#C2BDB8' }}>🔒</span>
             </div>
           </div>
         ))}
       </div>
 
       {/* CTA */}
-      <div style={{ padding: '12px 22px', background: 'rgba(217,119,87,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ padding: '13px 24px', background: 'rgba(217,119,87,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>+5 recommandations verrouillées</div>
-        <div style={{ fontSize: 11, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui', background: 'rgba(217,119,87,0.1)', padding: '5px 12px', borderRadius: 20 }}>Débloquer →</div>
+        <div style={{ fontSize: 11, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui', background: 'rgba(217,119,87,0.12)', padding: '5px 13px', borderRadius: 20 }}>Débloquer →</div>
       </div>
     </div>
   );
@@ -145,14 +148,14 @@ export default function Home() {
   ];
 
   const features = [
-    { icon: '🎯', color: '#4285F4', name: 'Extractibilité', desc: "Votre contenu répond-il clairement dès les premières lignes ? Les IA cherchent des réponses 'prêtes à citer'.", checks: ['Intro directe en 1-2 phrases', 'Listes et tableaux présents', 'Structure H2/H3 logique'] },
-    { icon: '🔬', color: '#10A37F', name: 'Vérifiabilité', desc: "Chiffres sourcés, dates, liens vers preuves — les IA citent ce qu'elles peuvent vérifier.", checks: ['Données chiffrées avec source', 'Liens vers sources externes', 'Dates de publication visibles'] },
-    { icon: '🏆', color: '#D97757', name: 'Autorité E-E-A-T', desc: "Expérience, Expertise, Autorité, Confiance — les 4 piliers que les IA évaluent en priorité.", checks: ['Auteur identifié avec biographie', 'Page À propos + Contact', 'Schema Organization en JSON-LD'] },
-    { icon: '🤖', color: '#4285F4', name: 'Crawlabilité IA', desc: "GPTBot, ClaudeBot, OAI-SearchBot — votre site leur est-il accessible ?", checks: ['Pas de noindex bloquant', 'Balise lang définie', 'Contenu accessible sans JS'] },
-    { icon: '🧩', color: '#1C7DC4', name: 'Données structurées', desc: "Schema.org FAQPage, Organization, Article — le langage natif des IA.", checks: ['Schema FAQPage ou HowTo', 'Schema Article ou BlogPosting', 'Schema Organization présent'] },
-    { icon: '⚖️', color: '#10A37F', name: 'Neutralité éditoriale', desc: "Un contenu factuel et nuancé est 3x plus cité qu'un contenu promotionnel.", checks: ['Ton informatif et factuel', 'Claims sourcés', 'Absence de superlatifs non prouvés'] },
-    { icon: '🌐', color: '#8B5CF6', name: 'Présence externe', desc: "Mentions presse, réseaux sociaux, citations tierces — les signaux d'autorité croisés.", checks: ['Mentions presse avec liens', 'Réseaux sociaux actifs', 'Citations dans articles tiers'] },
-    { icon: '📅', color: '#C9861A', name: 'Fraîcheur', desc: "Les IA privilégient les contenus récents et maintenus pour les sujets qui évoluent.", checks: ['dateModified en JSON-LD', 'Copyright de l\'année en cours', 'Contenu mis à jour récemment'] },
+    { icon: '🎯', color: '#4285F4', tag: 'Contenu', tagColor: '#4285F4', name: 'Extractibilité', desc: "Votre contenu répond-il clairement dès les premières lignes ? Les IA cherchent des réponses prêtes à citer.", checks: ['Intro directe en 1-2 phrases', 'Listes et tableaux présents', 'ex. : "X est… car…" dès le H1'] },
+    { icon: '🔬', color: '#10A37F', tag: 'Contenu', tagColor: '#4285F4', name: 'Vérifiabilité', desc: "Chiffres sourcés, dates, liens vers preuves — les IA citent ce qu'elles peuvent vérifier.", checks: ['Données chiffrées avec source', 'Liens vers sources externes', 'ex. : "Étude Nielsen 2024…"'] },
+    { icon: '🏆', color: '#D97757', tag: 'Autorité', tagColor: '#C9861A', name: 'Autorité E-E-A-T', desc: "Expérience, Expertise, Autorité, Confiance — les 4 piliers que les IA évaluent en priorité.", checks: ['Auteur identifié avec biographie', 'Page À propos + Contact', 'ex. : Schema Organization JSON-LD'] },
+    { icon: '🤖', color: '#4285F4', tag: 'Technique', tagColor: '#10A37F', name: 'Crawlabilité IA', desc: "GPTBot, ClaudeBot, OAI-SearchBot — votre site leur est-il accessible sans friction ?", checks: ['Pas de noindex bloquant', 'Balise lang définie', 'ex. : robots.txt permissif pour bots IA'] },
+    { icon: '🧩', color: '#1C7DC4', tag: 'Technique', tagColor: '#10A37F', name: 'Données structurées', desc: "Schema.org FAQPage, Organization, Article — le langage natif des IA pour comprendre votre contenu.", checks: ['Schema FAQPage ou HowTo', 'Schema Article ou BlogPosting', 'ex. : <script type="application/ld+json">'] },
+    { icon: '⚖️', color: '#10A37F', tag: 'Contenu', tagColor: '#4285F4', name: 'Neutralité éditoriale', desc: "Un contenu factuel et nuancé est 3× plus cité qu'un contenu promotionnel ou superlatif.", checks: ['Ton informatif et factuel', 'Claims sourcés', 'ex. : éviter "le meilleur du marché"'] },
+    { icon: '🌐', color: '#8B5CF6', tag: 'Autorité', tagColor: '#C9861A', name: 'Présence externe', desc: "Mentions presse, réseaux sociaux, citations tierces — les signaux d'autorité croisés.", checks: ['Mentions presse avec liens', 'Réseaux sociaux actifs', 'ex. : badge "Vu dans Les Echos"'] },
+    { icon: '📅', color: '#C9861A', tag: 'Contenu', tagColor: '#4285F4', name: 'Fraîcheur', desc: "Les IA privilégient les contenus récents et maintenus pour les sujets qui évoluent.", checks: ['dateModified en JSON-LD', 'Copyright de l\'année en cours', 'ex. : "Mis à jour : mars 2026"'] },
   ];
 
   const Logo = () => (
@@ -179,7 +182,7 @@ export default function Home() {
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section style={{ background: '#F7F5F2', padding: '96px 48px 100px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr auto', gap: 64, alignItems: 'center' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
 
           {/* Left — copy */}
           <div>
@@ -224,7 +227,7 @@ export default function Home() {
           </div>
 
           {/* Right — product mockup */}
-          <div style={{ flexShrink: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <ProductMockup />
           </div>
         </div>
@@ -243,14 +246,14 @@ export default function Home() {
               ['02','#D97757','On analyse tout','Detekia scrape votre site et l\'évalue selon 8 critères GEO validés par la recherche.'],
               ['03','#4285F4','Recevez votre score','Score sur 100, analyse par critère, tooltips explicatifs et recommandations expertes.'],
             ].map(([num,color,title,desc]) => (
-              <div key={num} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
+              <div key={num} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 26px', boxShadow: '0 2px 12px rgba(26,25,22,0.04)' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color, marginBottom: 18, letterSpacing: -1 }}>{num}</div>
                 <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', marginBottom: 10, fontFamily: 'system-ui' }}>{title}</div>
                 <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
               </div>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: 24 }}>
+          <div style={{ textAlign: 'center', marginTop: 28 }}>
             <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
               Voir la méthodologie complète →
             </a>
@@ -258,19 +261,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── STATS ────────────────────────────────────────────── */}
+      {/* ── STATS DASHBOARD ──────────────────────────────────── */}
       <section style={{ background: '#1A1916', padding: '80px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }}>
           {[
-            ['94%','des sites analysés','ont un score GEO sous 60/100'],
-            ['8','critères mesurés','extractibilité, autorité, structure…'],
-            ['20s','d\'analyse','pour un rapport complet et actionnable'],
-            ['4','moteurs IA','ChatGPT, Claude, Gemini, Perplexity'],
-          ].map(([stat,label,sub]) => (
-            <div key={stat} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '28px 20px', textAlign: 'center' }}>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 52, color: '#D97757', letterSpacing: -2, lineHeight: 1, marginBottom: 8 }}>{stat}</div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: 'rgba(247,245,242,0.7)', fontFamily: 'system-ui', marginBottom: 4 }}>{label}</div>
-              <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', lineHeight: 1.5 }}>{sub}</div>
+            ['📊','94%','des sites analysés','obtiennent un score sous 60/100'],
+            ['🔍','8','critères mesurés','extractibilité, autorité, structure…'],
+            ['⚡','20s','d\'analyse','pour un rapport complet et actionnable'],
+            ['🤖','4','moteurs IA couverts','ChatGPT, Claude, Gemini, Perplexity'],
+          ].map(([emoji,stat,label,sub]) => (
+            <div key={stat+label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 18, padding: '32px 22px', textAlign: 'center' }}>
+              <div style={{ fontSize: 22, marginBottom: 12 }}>{emoji}</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 64, color: '#D97757', letterSpacing: -2, lineHeight: 1, marginBottom: 10 }}>{stat}</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'rgba(247,245,242,0.75)', fontFamily: 'system-ui', marginBottom: 5, letterSpacing: -0.2 }}>{label}</div>
+              <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.32)', fontFamily: 'system-ui', lineHeight: 1.5 }}>{sub}</div>
             </div>
           ))}
         </div>
@@ -298,17 +302,17 @@ export default function Home() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {[
-              ['🔬','Méthode transparente','Notre méthodologie est entièrement documentée et publique. Vous savez exactement comment chaque point de votre score est calculé.','/methodologie'],
-              ['⚡','Analyse immédiate','Aucune attente de devis, aucun rendez-vous. Votre rapport est disponible en 20 secondes, à toute heure.',null],
-              ['🔓','Aucun compte requis','Pas d\'inscription, pas de mot de passe, pas d\'email demandé pour l\'analyse gratuite. Essayez sans engagement.',null],
-              ['🔒','Paiement sécurisé Stripe','Les paiements sont traités par Stripe, leader mondial du paiement en ligne. Aucune donnée bancaire ne transite par nos serveurs.',null],
-              ['↩️','Remboursement sous 24h','Si votre rapport n\'est pas accessible suite à un problème technique, nous vous remboursons intégralement sous 24 heures.',null],
-              ['🛡️','Données non conservées','Votre URL est analysée en temps réel. Aucune donnée de votre site n\'est stockée au-delà de 24h de cache technique.',null],
-            ].map(([icon,title,desc,link]) => (
-              <div key={title} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '24px 22px' }}>
-                <div style={{ fontSize: 24, marginBottom: 12 }}>{icon}</div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui' }}>{title}</div>
-                <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.7, fontFamily: 'system-ui' }}>{desc}</div>
+              { icon: '🔬', accent: '#4285F4', title: 'Méthode transparente', desc: 'Méthodologie entièrement documentée et publique. Vous savez comment chaque point est calculé.', link: '/methodologie' },
+              { icon: '⚡', accent: '#10A37F', title: 'Résultats en 20 secondes', desc: 'Aucun devis, aucun rendez-vous. Votre rapport est disponible immédiatement, à toute heure.', link: null },
+              { icon: '🔓', accent: '#D97757', title: 'Zéro inscription requise', desc: "Pas d'inscription, pas de mot de passe, pas d'email pour l'analyse gratuite.", link: null },
+              { icon: '🔒', accent: '#1C7DC4', title: 'Paiement sécurisé Stripe', desc: 'Paiements traités par Stripe. Aucune donnée bancaire ne transite par nos serveurs.', link: null },
+              { icon: '↩️', accent: '#C9861A', title: 'Remboursement sous 24h', desc: "Si votre rapport est inaccessible suite à un problème technique, remboursement intégral garanti.", link: null },
+              { icon: '🛡️', accent: '#10A37F', title: 'Données non conservées', desc: 'Votre URL est analysée en temps réel. Aucune donnée de votre site stockée au-delà de 24h.', link: null },
+            ].map(({ icon, accent, title, desc, link }) => (
+              <div key={title} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px', borderLeft: `4px solid ${accent}`, boxShadow: '0 2px 12px rgba(26,25,22,0.04)' }}>
+                <div style={{ fontSize: 28, marginBottom: 14 }}>{icon}</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{title}</div>
+                <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
                 {link && <a href={link} style={{ display: 'inline-block', marginTop: 12, fontSize: 12, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>Voir la méthodologie →</a>}
               </div>
             ))}
@@ -332,8 +336,8 @@ export default function Home() {
               ['📰','Médias & blogs'],
               ['🎓','Experts & formateurs'],
             ].map(([icon, label]) => (
-              <div key={label} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 12px', textAlign: 'center', boxShadow: '0 2px 8px rgba(26,25,22,0.04)' }}>
-                <div style={{ fontSize: 28, marginBottom: 10 }}>{icon}</div>
+              <div key={label} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px 12px', textAlign: 'center', boxShadow: '0 2px 8px rgba(26,25,22,0.04)' }}>
+                <div style={{ fontSize: 30, marginBottom: 12 }}>{icon}</div>
                 <div style={{ fontSize: 11, fontWeight: 600, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.4 }}>{label}</div>
               </div>
             ))}
@@ -342,7 +346,7 @@ export default function Home() {
       </section>
 
       {/* ── FAQ ─────────────────────────────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
+      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>FAQ</div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.2, marginBottom: 48, lineHeight: 1.1 }}>
@@ -354,27 +358,38 @@ export default function Home() {
 
       {/* ── CTA FINAL ────────────────────────────────────────── */}
       <section style={{ background: '#1A1916', padding: '100px 48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        {/* Subtle radial pattern */}
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(217,119,87,0.07) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(16,163,127,0.07) 0%, transparent 50%)', pointerEvents: 'none' }} />
+        {/* Radial gradients */}
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(217,119,87,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(16,163,127,0.08) 0%, transparent 50%)', pointerEvents: 'none' }} />
         {/* Dot grid */}
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(247,245,242,0.06) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(247,245,242,0.05) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
 
         <div style={{ maxWidth: 640, margin: '0 auto', position: 'relative' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.15)', border: '1px solid rgba(16,163,127,0.3)', borderRadius: 20, padding: '6px 16px', marginBottom: 28 }}>
             <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
             <span style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>Gratuit · Sans inscription · Sans carte bancaire</span>
           </div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,5vw,52px)', color: '#F7F5F2', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.05 }}>
-            Découvrez pourquoi les IA<br /><em style={{ color: '#D97757' }}>ne citent pas votre site</em>
+
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,5vw,54px)', color: '#F7F5F2', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.05 }}>
+            Votre site mérite d'être cité<br /><em style={{ color: '#D97757' }}>par les IA</em>
           </h2>
-          <p style={{ fontSize: 16, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginBottom: 40, lineHeight: 1.65, maxWidth: 480, margin: '0 auto 40px' }}>
-            Analyse gratuite en 20 secondes. Recommandations concrètes et actionnables immédiatement.
+          <p style={{ fontSize: 16, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginBottom: 40, lineHeight: 1.65, maxWidth: 460, margin: '0 auto 32px' }}>
+            Découvrez votre score GEO en 20 secondes et obtenez un plan d'action concret pour être recommandé par ChatGPT, Claude, Gemini et Perplexity.
           </p>
+
+          {/* AI chips */}
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginBottom: 32, flexWrap: 'wrap' }}>
+            {[['#10A37F','ChatGPT'],['#D97757','Claude'],['#4285F4','Gemini'],['#1C7DC4','Perplexity']].map(([c,name]) => (
+              <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontFamily: 'monospace', padding: '5px 13px', borderRadius: 20, border: `1px solid ${c}40`, background: c + '14', color: c, letterSpacing: 0.5 }}>
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: c }} />{name}
+              </div>
+            ))}
+          </div>
+
           <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(247,245,242,0.07)', border: '1px solid rgba(247,245,242,0.14)', borderRadius: 14, padding: '6px 6px 6px 22px', maxWidth: 520, margin: '0 auto 16px', gap: 10, backdropFilter: 'blur(8px)' }}>
             <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(247,245,242,0.35)', whiteSpace: 'nowrap' }}>https://</span>
             <input value={url} onChange={e => setUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && analyze()} placeholder="votresite.fr"
               style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 15, color: '#F7F5F2', padding: '12px 0', fontFamily: 'system-ui' }} />
-            <button onClick={analyze} style={{ background: '#D97757', color: '#fff', border: 'none', padding: '14px 28px', borderRadius: 10, fontWeight: 700, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', boxShadow: '0 4px 16px rgba(217,119,87,0.4)' }}>
+            <button onClick={analyze} style={{ background: '#D97757', color: '#fff', border: 'none', padding: '16px 40px', borderRadius: 10, fontWeight: 700, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', boxShadow: '0 6px 20px rgba(217,119,87,0.45)' }}>
               Analyser →
             </button>
           </div>
@@ -391,13 +406,12 @@ export default function Home() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 15, fontWeight: 'bold', color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 5 }}>
               <Logo />Detekia
             </div>
-            <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>© 2026 Detekia — Beeleven SASU · Paris</div>
+            <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>© 2026 Detekia — Beeleven SASU</div>
           </div>
-          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'center' }}>
-            {[['Tarifs','/pricing'],['Méthodologie','/methodologie'],['FAQ','/#faq'],['Contact','/contact'],['Mentions légales','/legal'],['CGU','/legal']].map(([label,href]) => (
+          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'center' }}>
+            {[['Tarifs','/pricing'],['Méthodologie','/methodologie'],['Contact','/contact'],['FAQ','/#faq'],['Mentions légales','/legal'],['Confidentialité','/legal'],['CGU','/legal']].map(([label,href]) => (
               <a key={label} href={href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{label}</a>
             ))}
-            <a href="https://linkedin.com/company/detekia" target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>LinkedIn</a>
           </div>
         </div>
       </footer>
@@ -405,7 +419,10 @@ export default function Home() {
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @media (max-width: 900px) {
-          section[style*="grid-template-columns: 1fr auto"] { grid-template-columns: 1fr !important; }
+          div[style*="gridTemplateColumns: '60% 40%'"] { grid-template-columns: 1fr !important; }
+          div[style*="gridTemplateColumns: 'repeat(4,1fr)'"] { grid-template-columns: repeat(2,1fr) !important; }
+          div[style*="gridTemplateColumns: 'repeat(3,1fr)'"] { grid-template-columns: 1fr !important; }
+          div[style*="gridTemplateColumns: 'repeat(6,1fr)'"] { grid-template-columns: repeat(3,1fr) !important; }
           section { padding-left: 24px !important; padding-right: 24px !important; }
           nav { padding: 0 20px !important; }
           footer { padding: 28px 20px !important; }
