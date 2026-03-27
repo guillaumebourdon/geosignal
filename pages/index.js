@@ -327,7 +327,7 @@ export default function Home() {
             {[
               { emoji: '📊', stat: '94%', label: 'Sites sous 60/100', sub: 'Benchmark interne' },
               { emoji: '🔍', stat: '8',   label: 'Critères mesurés',  sub: 'Contenu, autorité, technique' },
-              { emoji: '⚡', stat: '20s', label: "Temps d'analyse",   sub: 'Rapport immédiat' },
+              { emoji: '⚡', stat: '30s', label: "Temps d'analyse",   sub: 'Rapport immédiat' },
               { emoji: '🤖', stat: '4',   label: 'Moteurs couverts',  sub: 'ChatGPT, Claude, Gemini, Perplexity' },
             ].map(({ emoji, stat, label, sub }, i) => (
               <div key={stat} style={{ padding: '40px 24px', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.07)' : 'none' }}>
