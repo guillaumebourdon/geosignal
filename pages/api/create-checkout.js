@@ -9,14 +9,9 @@ export default async function handler(req, res) {
 
   const prices = {
     rapport: {
-      name: 'Detekia — Rapport complet',
-      amount: 900, // 9€ en centimes
+      name: 'Detekia — Rapport complet (offre de lancement)',
+      amount: 1999, // 19,99€ en centimes
       mode: 'payment',
-    },
-    pro: {
-      name: 'Detekia Pro',
-      amount: 2900, // 29€ en centimes
-      mode: 'subscription',
     },
   };
 
