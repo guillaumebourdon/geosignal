@@ -259,7 +259,7 @@ export default function Methodologie() {
           <span style={{ fontSize: 11, fontWeight: 400, color: '#C2BDB8', fontFamily: 'system-ui', marginLeft: 8 }}>par Beeleven SASU</span>
         </div>
         <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
-          {[['Tarifs','/pricing'],['Méthodologie','/methodologie'],['Mentions légales','/legal'],['Contact','/contact']].map(([label, href]) => (
+          {[['Tarifs','/pricing'],['Méthodologie','/methodologie'],['Contact','/contact'],['Mentions légales','/mentions-legales'],['Confidentialité','/confidentialite'],['CGU','/cgu']].map(([label, href]) => (
             <a key={label} href={href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{label}</a>
           ))}
         </div>

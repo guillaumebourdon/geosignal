@@ -176,7 +176,7 @@ export default function ArticlePage({ article, related }) {
           <div style={{ maxWidth: 900, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
             <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>Detekia</span>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
-              {[['Blog', '/blog'], ['Tarifs', '/pricing'], ['Méthodologie', '/methodologie'], ['Contact', '/contact'], ['Mentions légales', '/legal']].map(([label, href]) => (
+              {[['Blog', '/blog'], ['Tarifs', '/pricing'], ['Méthodologie', '/methodologie'], ['Contact', '/contact'], ['Mentions légales', '/mentions-legales'], ['Confidentialité', '/confidentialite'], ['CGU', '/cgu']].map(([label, href]) => (
                 <a key={label} href={href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', textDecoration: 'none' }}>{label}</a>
               ))}
             </div>
