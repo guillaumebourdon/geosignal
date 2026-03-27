@@ -203,58 +203,54 @@ function scoreFreshness($, html) {
 async function runClaudeAnalysis(url, textContent, scores) {
   const total = Object.values(scores).reduce((s, c) => s + c.score, 0);
 
-  const prompt = `Tu es un consultant GEO (Generative Engine Optimization) senior qui rédige un rapport d'audit professionnel pour le site ${url}.
+  const prompt = `Tu es un consultant GEO senior. Audite le site ${url}.
 
-SCORES OBTENUS :
-- Extractibilité & réponse directe : ${scores.extractibility.score}/25 — ${scores.extractibility.detail}
-- Vérifiabilité & preuves : ${scores.verifiability.score}/20 — ${scores.verifiability.detail}
-- Autorité & E-E-A-T : ${scores.authority.score}/15 — ${scores.authority.detail}
+SCORES :
+- Extractibilité : ${scores.extractibility.score}/25 — ${scores.extractibility.detail}
+- Vérifiabilité : ${scores.verifiability.score}/20 — ${scores.verifiability.detail}
+- Autorité E-E-A-T : ${scores.authority.score}/15 — ${scores.authority.detail}
 - Crawlabilité IA : ${scores.crawlability.score}/15 — ${scores.crawlability.detail}
 - Données structurées : ${scores.structuredData.score}/10 — ${scores.structuredData.detail}
 - Présence externe : ${scores.externalPresence.score}/5 — ${scores.externalPresence.detail}
 - Fraîcheur : ${scores.freshness.score}/5 — ${scores.freshness.detail}
-SCORE TOTAL : ${total}/100
+TOTAL : ${total}/100
 
-EXTRAIT DU CONTENU DU SITE :
-${textContent.slice(0, 800)}
+CONTENU (extrait) :
+${textContent.slice(0, 400)}
 
-Ta mission : rédiger un rapport d'audit GEO professionnel de niveau cabinet de conseil.
+Pour chaque critère sous 80% du max, génère une recommandation. Structure :
+- CRITIQUE (high) : diagnostic, whyCritical, whatToDo, howToDoIt, concreteExample, expectedImpact, expertTip
+- IMPORTANT (medium) : diagnostic, whyCritical, whatToDo, howToDoIt, expectedImpact
+- BONUS (low) : diagnostic, whatToDo, expectedImpact
 
-Pour CHAQUE critère dont le score est inférieur à 80% du maximum, génère une recommandation structurée.
+Chaque champ : 1-2 phrases max et concises.
 
-Structure selon la priorité :
-- CRITIQUE (high) : 7 sections complètes
-- IMPORTANT (medium) : 5 sections (sans exemple et tips)
-- BONUS (low) : 3 sections (diagnostic + quoi faire + impact)
-
-Évalue aussi la NEUTRALITÉ ÉDITORIALE (0 à 10).
-
-Réponds UNIQUEMENT en JSON valide :
+JSON uniquement :
 {
-  "neutralityScore": <0 à 10>,
-  "neutralityDetail": "<diagnostic précis>",
+  "neutralityScore": <0-10>,
+  "neutralityDetail": "<1 phrase>",
   "recommendations": [
     {
       "priority": "high",
-      "criterion": "<nom du critère>",
-      "title": "<titre court et percutant de la recommandation>",
-      "diagnostic": "<ce qu'on a détecté concrètement sur CE site spécifique>",
-      "whyCritical": "<pourquoi c'est critique pour la visibilité IA, avec chiffres>",
-      "whatToDo": "<actions concrètes et priorisées>",
-      "howToDoIt": "<étapes précises, exemples de code JSON-LD ou contenu si pertinent>",
-      "concreteExample": "<exemple avant/après ou exemple du secteur — uniquement pour high>",
-      "expectedImpact": "<gain de points estimé et délai de mise en oeuvre>",
-      "expertTip": "<ce que la plupart des gens ratent sur ce point — uniquement pour high>"
+      "criterion": "<nom>",
+      "title": "<titre court>",
+      "diagnostic": "<1-2 phrases>",
+      "whyCritical": "<1-2 phrases>",
+      "whatToDo": "<1-2 phrases>",
+      "howToDoIt": "<1-2 phrases>",
+      "concreteExample": "<1-2 phrases>",
+      "expectedImpact": "<1 phrase>",
+      "expertTip": "<1 phrase>"
     }
   ],
-  "verdict": "<2 phrases de synthèse percutantes>",
-  "strengths": ["<point fort 1>", "<point fort 2>"],
-  "topPriority": "<l'action la plus urgente à faire en premier>"
+  "verdict": "<2 phrases>",
+  "strengths": ["<point 1>", "<point 2>"],
+  "topPriority": "<1 phrase>"
 }`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 4096,
+    max_tokens: 3000,
     temperature: 0,
     messages: [{ role: 'user', content: prompt }],
   });
@@ -270,7 +266,7 @@ export default async function handler(req, res) {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: 'URL manquante' });
 
-  const cacheKey = `detekia:v6:${url.toLowerCase().trim()}`;
+  const cacheKey = `detekia:v7:${url.toLowerCase().trim()}`;
 
   try {
     const cached = await redis.get(cacheKey);
@@ -279,7 +275,7 @@ export default async function handler(req, res) {
       return res.status(200).json(cached);
     }
   } catch (e) {
-    console.error('Cache read error:', e);
+    console.error('Cache read error:', e.message);
   }
 
   try {
@@ -332,13 +328,13 @@ export default async function handler(req, res) {
     try {
       await redis.set(cacheKey, responseData, { ex: CACHE_DURATION });
     } catch (e) {
-      console.error('Cache write error:', e);
+      console.error('Cache write error:', e.message);
     }
 
     return res.status(200).json(responseData);
 
   } catch (err) {
-    console.error(err);
+    console.error('Analysis error:', err.message);
     res.status(500).json({ error: "Erreur lors de l'analyse", detail: err.message });
   }
 }
