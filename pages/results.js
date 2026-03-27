@@ -246,6 +246,27 @@ export default function Results() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState(null);
+  const [captureEmail, setCaptureEmail] = useState('');
+  const [captureSent, setCaptureSent] = useState(false);
+  const [captureLoading, setCaptureLoading] = useState(false);
+
+  async function handleCaptureEmail(e) {
+    e.preventDefault();
+    if (!captureEmail || !captureEmail.includes('@')) return;
+    setCaptureLoading(true);
+    try {
+      await fetch('/api/capture-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: captureEmail, url, score: result?.score }),
+      });
+      setCaptureSent(true);
+    } catch (_) {
+      setCaptureSent(true); // ne pas bloquer l'UX sur erreur
+    } finally {
+      setCaptureLoading(false);
+    }
+  }
 
   const fetchClientSecret = useCallback(() =>
     fetch('/api/create-checkout', {
@@ -465,6 +486,40 @@ export default function Results() {
           {groups.map(group => (
             <GroupAccordion key={group.id} group={group} getCriteriaForGroup={getCriteriaForGroup} getLevelColor={getLevelColor} />
           ))}
+
+          {/* ── CAPTURE EMAIL ─────────────────────────────────── */}
+          <div style={{ margin: '24px 0', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '24px 28px' }}>
+            {captureSent ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: 18 }}>✓</span>
+                <span style={{ fontFamily: 'system-ui', fontSize: 14, color: '#10A37F', fontWeight: 500 }}>Envoyé ! Vérifiez votre boîte mail.</span>
+              </div>
+            ) : (
+              <>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 4 }}>Recevez votre rapport par email</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', marginBottom: 16 }}>Score actuel + alertes si votre score évolue</div>
+                <form onSubmit={handleCaptureEmail} style={{ display: 'flex', gap: 8 }}>
+                  <input
+                    type="email"
+                    value={captureEmail}
+                    onChange={e => setCaptureEmail(e.target.value)}
+                    placeholder="votre@email.fr"
+                    required
+                    style={{ flex: 1, border: '1px solid #E5E2DC', borderRadius: 8, padding: '12px 16px', fontSize: 14, fontFamily: 'system-ui', color: '#1A1916', background: '#fff', outline: 'none' }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={captureLoading}
+                    style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', borderRadius: 8, padding: '12px 24px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, cursor: captureLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', opacity: captureLoading ? 0.7 : 1 }}>
+                    {captureLoading ? '…' : 'Envoyer'}
+                  </button>
+                </form>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1, marginTop: 10 }}>
+                  Pas de spam. Désabonnement en un clic.
+                </div>
+              </>
+            )}
+          </div>
 
           {recommendations.length > 0 && (
             <div style={{ marginTop: 32 }}>
