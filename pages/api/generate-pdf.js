@@ -183,7 +183,7 @@ export default async function handler(req, res) {
     const html = generateReportHTML({ url, ...reportData });
 
     const { data, error } = await resend.emails.send({
-      from: 'Detekia <onboarding@resend.dev>',
+     from: 'Detekia <hello@detekia.fr>',
       to: email,
       subject: `Votre rapport GEO complet — ${url} · Score ${reportData.score}/100`,
       html: `
