@@ -9,6 +9,7 @@ export default function Document() {
         <meta name="keywords" content="GEO, Generative Engine Optimization, audit GEO, score GEO, optimisation IA, ChatGPT SEO, visibilité IA, référencement IA" />
         <meta name="author" content="Detekia" />
         <meta name="robots" content="index, follow" />
+        <meta name="google-site-verification" content="YePnIMt60J4133bRkWArTiV7c4-e_vqwYVELQEzD80I" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
