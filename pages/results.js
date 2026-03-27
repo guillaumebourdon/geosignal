@@ -140,7 +140,7 @@ function GroupAccordion({ group, getCriteriaForGroup, getLevelColor }) {
   );
 }
 
-function RecoCard({ r, index, isPaid }) {
+function RecoCard({ r, index, isPaid, onCheckout }) {
   const tagColors = {
     high:   { bg: 'rgba(217,119,87,0.12)', color: '#D97757', border: 'rgba(217,119,87,0.3)' },
     medium: { bg: 'rgba(201,134,26,0.12)', color: '#C9861A', border: 'rgba(201,134,26,0.3)' },
@@ -188,7 +188,7 @@ function RecoCard({ r, index, isPaid }) {
               <div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>🔒 Recommandation complète masquée</div>
               <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>Méthode, exemples et impact détaillé dans le rapport complet.</div>
             </div>
-            <a href="/pricing" style={{ background: tag.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 12, textDecoration: 'none', whiteSpace: 'nowrap', fontFamily: 'system-ui', flexShrink: 0 }}>Débloquer →</a>
+            <button onClick={onCheckout} style={{ background: tag.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 12, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', flexShrink: 0 }}>Débloquer →</button>
           </div>
         </div>
       </div>
@@ -234,6 +234,24 @@ export default function Results() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [loadingDots, setLoadingDots] = useState('');
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  async function handleCheckout() {
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: 'rapport', url }),
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch (e) {
+      console.error('Checkout error:', e);
+    } finally {
+      setCheckoutLoading(false);
+    }
+  }
 
   const steps = [
     { icon: '🔍', text: 'Récupération du site', sub: 'Connexion et scraping du contenu...' },
@@ -439,7 +457,7 @@ export default function Results() {
               </div>
 
               {recommendations.map((r, i) => (
-                <RecoCard key={i} r={r} index={i} isPaid={isPaid} />
+                <RecoCard key={i} r={r} index={i} isPaid={isPaid} onCheckout={handleCheckout} />
               ))}
 
               {!isPaid && (
@@ -448,7 +466,7 @@ export default function Results() {
                     <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#F7F5F2', marginBottom: 6 }}>Rapport complet disponible</div>
                     <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6 }}>{recommendations.length - 1} recommandations expertes avec méthodes, exemples et impact attendu.</div>
                   </div>
-                  <a href="/pricing" style={{ background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: 14, textDecoration: 'none', whiteSpace: 'nowrap', fontFamily: 'system-ui', flexShrink: 0 }}>Débloquer — 9€ →</a>
+                  <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', flexShrink: 0, opacity: checkoutLoading ? 0.7 : 1 }}>{checkoutLoading ? 'Chargement...' : 'Débloquer — 9€ →'}</button>
                 </div>
               )}
             </div>

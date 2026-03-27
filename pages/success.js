@@ -18,21 +18,22 @@ export default function Success() {
         if (!data.email) { setStatus('error'); return; }
         setEmail(data.email);
 
-        // Récupérer le rapport depuis le cache
-        if (url) {
+        // url depuis query params ou depuis les metadata Stripe (fallback)
+        const reportUrl = url || data.url;
+
+        if (reportUrl) {
           const res = await fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url }),
+            body: JSON.stringify({ url: reportUrl }),
           });
           const report = await res.json();
           if (!report.error) {
             setReportData(report);
-            // Envoyer le rapport par email
             await fetch('/api/generate-pdf', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: data.email, url, reportData: report }),
+              body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report }),
             });
             setEmailSent(true);
           }

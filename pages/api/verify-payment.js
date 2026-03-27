@@ -25,29 +25,7 @@ export default async function handler(req, res) {
         plan: session.amount_total >= 2900 ? 'pro' : 'rapport',
       }, { ex: 30 * 24 * 60 * 60 });
 
-      // Récupérer le rapport depuis le cache Redis
-      if (url) {
-        const cacheKey = `detekia:${url.toLowerCase().trim()}`;
-        const cached = await redis.get(cacheKey);
-
-        if (cached) {
-          // Envoyer l'email avec le rapport
-          await fetch(`${req.headers.origin}/api/send-email`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              email,
-              url,
-              score: cached.score,
-              criteria: cached.criteria,
-              recommendations: cached.recommendations,
-              verdict: cached.verdict,
-            }),
-          });
-        }
-      }
-
-      return res.status(200).json({ email, success: true });
+      return res.status(200).json({ email, url: url || null, success: true });
     }
 
     return res.status(400).json({ error: 'Email non trouvé' });
