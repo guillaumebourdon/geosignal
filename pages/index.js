@@ -235,27 +235,30 @@ export default function Home() {
               Pourquoi les IA ne citent <em style={{ color: '#D97757' }}>pas votre site ?</em>
             </h1>
 
-            <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 12 }}>
+            <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 28 }}>
               Découvrez ce qui empêche ChatGPT, Claude et Perplexity de vous recommander — et obtenez un plan d'action concret pour y remédier.
             </p>
 
-            <div style={{ display: 'flex', gap: 16, marginBottom: 28, flexWrap: 'wrap' }}>
-              {['✓ Gratuit & sans inscription','✓ Score sur 100','✓ Résultats en ~20 secondes'].map(b => (
-                <span key={b} style={{ fontSize: 12, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 500 }}>{b}</span>
-              ))}
+            {/* ── URL input principal ──────────────────────────── */}
+            <div style={{ maxWidth: 600, width: '100%' }}>
+              <div className="hero-input-wrap" style={{ display: 'flex', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
+                <input
+                  value={url}
+                  onChange={e => setUrl(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && analyze()}
+                  placeholder="https://www.votre-site.fr"
+                  style={{ flex: 1, border: 'none', outline: 'none', padding: '16px 20px', fontSize: 16, fontFamily: 'system-ui', color: '#1A1916', background: 'transparent', minWidth: 0 }}
+                />
+                <button
+                  onClick={analyze}
+                  style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', padding: '16px 32px', borderRadius: '0 10px 10px 0', fontWeight: 600, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                  Analyser →
+                </button>
+              </div>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 1, marginTop: 10 }}>
+                Gratuit · Sans inscription · Résultat en 30 secondes
+              </div>
             </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', background: '#fff', border: '1.5px solid #E5E2DC', borderRadius: 14, padding: '6px 6px 6px 20px', maxWidth: 520, gap: 8, boxShadow: '0 4px 24px rgba(26,25,22,0.07)' }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#A8A49F', whiteSpace: 'nowrap' }}>https://</span>
-              <input value={url} onChange={e => setUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && analyze()} placeholder="votresite.fr"
-                style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 15, color: '#1A1916', padding: '11px 0', fontFamily: 'system-ui' }} />
-              <button onClick={analyze} style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', padding: '13px 26px', borderRadius: 10, fontWeight: 600, fontSize: 14, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap' }}>
-                Analyser gratuitement →
-              </button>
-            </div>
-            <p style={{ fontFamily: 'monospace', fontSize: 11, color: '#C2BDB8', marginTop: 12 }}>
-              Aucune carte bancaire · Aucun compte · Résultats immédiats
-            </p>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -570,18 +573,12 @@ export default function Home() {
             Rejoignez les professionnels qui ont déjà optimisé leur visibilité IA — gratuitement, en 20 secondes.
           </p>
 
-          <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(247,245,242,0.07)', border: '1px solid rgba(247,245,242,0.14)', borderRadius: 14, padding: '6px 6px 6px 22px', maxWidth: 520, margin: '0 auto', gap: 10, backdropFilter: 'blur(8px)' }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(247,245,242,0.35)', whiteSpace: 'nowrap' }}>https://</span>
-            <input value={url} onChange={e => setUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && analyze()} placeholder="votresite.fr"
-              style={{ flex: 1, background: 'none', border: 'none', outline: 'none', fontSize: 15, color: '#F7F5F2', padding: '14px 0', fontFamily: 'system-ui' }} />
-            <button onClick={analyze} style={{ background: '#D97757', color: '#fff', border: 'none', padding: '16px 40px', borderRadius: 10, fontWeight: 700, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', boxShadow: '0 8px 24px rgba(217,119,87,0.4)' }}>
-              Analyser →
-            </button>
-          </div>
+          <a href="/" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 10, fontWeight: 700, fontSize: 16, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.4)', letterSpacing: -0.2 }}>
+            Analyser mon site gratuitement →
+          </a>
 
-          {/* Réassurance */}
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.3)', letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 16 }}>
-            Analyse gratuite · Sans inscription · Résultat immédiat
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.3)', letterSpacing: 1, marginTop: 16 }}>
+            Gratuit · Sans inscription · Résultat en 30 secondes
           </div>
 
           {/* 4 IA chips */}
@@ -618,7 +615,12 @@ export default function Home() {
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        input::placeholder { color: #A8A49F; }
+        input::placeholder { color: #8A8680; }
+        @media (max-width: 640px) {
+          .hero-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
+          .hero-input-wrap input { border-radius: 10px 10px 0 0 !important; }
+          .hero-input-wrap button { border-radius: 0 0 10px 10px !important; width: 100% !important; justify-content: center; }
+        }
         @media (max-width: 900px) {
           div[style*="gridTemplateColumns: '60% 40%'"] { grid-template-columns: 1fr !important; }
           div[style*="gridTemplateColumns: 'repeat(4,1fr)'"] { grid-template-columns: repeat(2,1fr) !important; }
