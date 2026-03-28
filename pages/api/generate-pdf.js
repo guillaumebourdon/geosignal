@@ -1,4 +1,8 @@
 import { Resend } from 'resend';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
+
+export const config = { maxDuration: 60 };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -182,6 +186,22 @@ export default async function handler(req, res) {
   try {
     const html = generateReportHTML({ url, ...reportData });
 
+    // Génération du PDF via Puppeteer + Chromium
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: { top: '20mm', bottom: '20mm', left: '15mm', right: '15mm' },
+    });
+    await browser.close();
+
     const { data, error } = await resend.emails.send({
      from: 'Detekia <hello@detekia.fr>',
       to: email,
@@ -210,9 +230,9 @@ export default async function handler(req, res) {
       `,
       attachments: [
         {
-          filename: `rapport-geo-${url.replace(/[^a-z0-9]/gi, '-')}.html`,
-          content: Buffer.from(html).toString('base64'),
-          content_type: 'text/html',
+          filename: `rapport-geo-${url.replace(/[^a-z0-9]/gi, '-')}.pdf`,
+          content: Buffer.from(pdfBuffer).toString('base64'),
+          content_type: 'application/pdf',
         },
       ],
     });
