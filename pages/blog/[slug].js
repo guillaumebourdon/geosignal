@@ -12,6 +12,10 @@ const CONTENT_MAP = {
   '8-criteres-geo-methodologie-detekia': require('../../content/articles/8-criteres-geo-methodologie-detekia').default,
   'llms-txt-robots-crawlabilite-ia': require('../../content/articles/llms-txt-robots-crawlabilite-ia').default,
   'geo-agences-seo-audit-ia': require('../../content/articles/geo-agences-seo-audit-ia').default,
+  'ai-overviews-google-2026': require('../../content/articles/ai-overviews-google-2026').default,
+  'audit-geo-visibilite-ia': require('../../content/articles/audit-geo-visibilite-ia').default,
+  'reddit-geo-source-ia': require('../../content/articles/reddit-geo-source-ia').default,
+  'concurrents-chatgpt-visibilite': require('../../content/articles/concurrents-chatgpt-visibilite').default,
 };
 
 const CATEGORY_COLORS = {
