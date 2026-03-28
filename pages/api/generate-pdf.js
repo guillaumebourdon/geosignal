@@ -570,6 +570,7 @@ export default async function handler(req, res) {
     const html = generateReportHTML({ url, ...reportData });
 
     // Génération du PDF via Puppeteer + Chromium
+    console.log('Starting Puppeteer/Chromium...');
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -584,6 +585,7 @@ export default async function handler(req, res) {
       margin: { top: '0', bottom: '0', left: '0', right: '0' },
     });
     await browser.close();
+    console.log('PDF generated, size:', pdfBuffer.length);
 
     const { data, error } = await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
@@ -624,6 +626,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true });
 
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    console.error('generate-pdf error:', e);
+    return res.status(500).json({ error: e.message, stack: e.stack });
   }
 }
