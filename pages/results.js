@@ -569,7 +569,7 @@ export default function Results() {
             ) : (
               <>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 4 }}>Recevez votre rapport par email</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', marginBottom: 16 }}>Score actuel + alertes si votre score évolue</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', marginBottom: 16 }}>Recevez votre score détaillé par email</div>
                 <form onSubmit={handleCaptureEmail} style={{ display: 'flex', gap: 8 }}>
                   <input
                     type="email"
