@@ -164,6 +164,115 @@ function scoreFreshness($, html) {
   return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') || 'Fraîcheur non détectable' };
 }
 
+async function collectEvidence($, textContent, rawContent, url) {
+  // 1. intro
+  const intro = textContent.slice(0, 300);
+
+  // 2. headings
+  const headings = [];
+  $('h1, h2, h3').each((_, el) => {
+    const level = el.tagName.toLowerCase();
+    const text = $(el).text().trim();
+    if (text) headings.push({ level, text });
+  });
+
+  // 3. metaTitle & metaDescription
+  const metaTitle = $('title').first().text().trim() || '';
+  const metaDescription = $('meta[name="description"]').attr('content') || '';
+
+  // 4. wordCount
+  const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
+
+  // 5. schemas with properties
+  const schemas = [];
+  $('script[type="application/ld+json"]').each((_, el) => {
+    try {
+      const data = JSON.parse($(el).html());
+      const processSchema = (obj) => {
+        if (obj && obj['@type']) {
+          schemas.push({
+            type: obj['@type'],
+            properties: Object.keys(obj).filter(k => !k.startsWith('@')),
+          });
+        }
+        if (Array.isArray(obj['@graph'])) obj['@graph'].forEach(processSchema);
+      };
+      processSchema(data);
+    } catch {}
+  });
+
+  // 6. socialLinks
+  const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'];
+  const socialLinks = [];
+  $('a[href]').each((_, el) => {
+    const href = $(el).attr('href') || '';
+    if (href.startsWith('http') && socialDomains.some(d => href.includes(d)) && !socialLinks.includes(href)) {
+      socialLinks.push(href);
+    }
+  });
+
+  // 7. images
+  const totalImages = $('img').length;
+  const imagesWithAlt = $('img[alt]').filter((_, el) => ($(el).attr('alt') || '').trim().length > 0).length;
+  const images = { withAlt: imagesWithAlt, total: totalImages };
+
+  // 8. externalLinks count
+  let externalLinksCount = 0;
+  try {
+    const hostname = new URL(url).hostname;
+    $('a[href]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      if (href.startsWith('http') && !href.includes(hostname)) externalLinksCount++;
+    });
+  } catch {}
+
+  // 9. dates
+  const dates = {};
+  $('script[type="application/ld+json"]').each((_, el) => {
+    try {
+      const data = JSON.parse($(el).html());
+      if (data.datePublished) dates.datePublished = data.datePublished;
+      if (data.dateModified)  dates.dateModified  = data.dateModified;
+    } catch {}
+  });
+  const copyrightMatch = rawContent.match(/©\s*(20\d{2})/);
+  if (copyrightMatch) dates.copyright = copyrightMatch[1];
+  const yearMatch = textContent.match(/\b(20\d{2})\b/);
+  if (yearMatch) dates.yearFound = yearMatch[1];
+
+  // 10. robots.txt + llms.txt — parallel fetches, 3s timeout each
+  let robotsTxt = 'Non accessible';
+  let hasLlmsTxt = false;
+  try {
+    const origin = new URL(url).origin;
+    const [robotsRes, llmsRes] = await Promise.allSettled([
+      axios.get(`${origin}/robots.txt`, { timeout: 3000 }),
+      axios.get(`${origin}/llms.txt`,   { timeout: 3000 }),
+    ]);
+    if (robotsRes.status === 'fulfilled') {
+      robotsTxt = String(robotsRes.value.data || '').slice(0, 500);
+    }
+    if (llmsRes.status === 'fulfilled' && llmsRes.value.status === 200) {
+      hasLlmsTxt = true;
+    }
+  } catch {}
+
+  return {
+    intro,
+    headings,
+    metaTitle,
+    metaDescription,
+    wordCount,
+    schemas,
+    robotsTxt,
+    socialLinks,
+    hasLlmsTxt,
+    images,
+    externalLinks: externalLinksCount,
+    dates,
+  };
+}
+
 async function runClaudeAnalysis(url, textContent, scores) {
   const total = Object.values(scores).reduce((s, c) => s + c.score, 0);
 
@@ -221,7 +330,7 @@ export default async function handler(req, res) {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: 'URL manquante' });
 
-  const cacheKey = `detekia:v8:${url.toLowerCase().trim()}`;
+  const cacheKey = `detekia:v9:${url.toLowerCase().trim()}`;
 
   try {
     const cached = await redis.get(cacheKey);
@@ -257,7 +366,10 @@ export default async function handler(req, res) {
       freshness:        scoreFreshness($, rawContent),
     };
 
-    const claude = await runClaudeAnalysis(url, textContent, scores);
+    const [claude, evidence] = await Promise.all([
+      runClaudeAnalysis(url, textContent, scores),
+      collectEvidence($, textContent, rawContent, url),
+    ]);
     const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
     const neutralityBonus = Math.round((claude.neutralityScore / 10) * 10) - 5;
     const totalScore = Math.max(0, Math.min(100, baseScore + neutralityBonus));
@@ -278,6 +390,7 @@ export default async function handler(req, res) {
         { name: 'Fraîcheur & maintenance',          ...scores.freshness },
       ],
       recommendations: claude.recommendations,
+      evidence,
     };
 
     try {
