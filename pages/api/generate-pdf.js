@@ -1,8 +1,6 @@
 import { Resend } from 'resend';
-import puppeteer from 'puppeteer-core';
-import chromium from '@sparticuz/chromium';
 
-export const config = { maxDuration: 60 };
+export const config = { maxDuration: 30 };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -569,22 +567,27 @@ export default async function handler(req, res) {
   try {
     const html = generateReportHTML({ url, ...reportData });
 
-    // Génération du PDF via Puppeteer + Chromium
-    console.log('Starting Puppeteer/Chromium...');
-    const browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
+    // Génération du PDF via PDFShift
+    console.log('Starting PDFShift...');
+    const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + Buffer.from('api:' + process.env.PDFSHIFT_API_KEY).toString('base64'),
+      },
+      body: JSON.stringify({
+        source: html,
+        landscape: false,
+        use_print: true,
+      }),
     });
-    const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: 'networkidle0' });
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      margin: { top: '0', bottom: '0', left: '0', right: '0' },
-    });
-    await browser.close();
+
+    if (!pdfResponse.ok) {
+      const errText = await pdfResponse.text();
+      throw new Error(`PDFShift error: ${pdfResponse.status} ${errText}`);
+    }
+
+    const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
     console.log('PDF generated, size:', pdfBuffer.length);
 
     const { data, error } = await resend.emails.send({
