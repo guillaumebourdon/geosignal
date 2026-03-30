@@ -93,6 +93,11 @@
   .blog-grid {
     grid-template-columns: 1fr !important;
   }
+
+  /* ── PROMO BLOCK ───────────────────────────────────────────────── */
+  .promo-block {
+    flex-direction: column !important;
+  }
 }
 
 /* ── CRITERIA + STATS: 2 cols on tablet, 1 col on small mobile ─── */

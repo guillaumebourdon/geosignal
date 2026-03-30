@@ -500,6 +500,34 @@ export default function Results() {
             </div>
           </div>
 
+          {/* PROMO BLOCK */}
+          {!isPaid && (
+            <div className="promo-block" style={{ display: 'flex', alignItems: 'center', gap: 28, background: 'linear-gradient(to right, #fff, rgba(217,119,87,0.06))', border: '1px solid rgba(217,119,87,0.15)', borderRadius: 16, padding: '28px 32px', marginBottom: 20 }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6 }}>🎯 Votre score peut s'améliorer.</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.6, marginBottom: 14 }}>
+                  Nous avons identifié {recommendations.length} points d'amélioration sur votre site. Le rapport complet vous donne les actions exactes à mettre en place, avec méthodes, exemples concrets et cas réels documentés.
+                </div>
+                <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#10A37F' }}>✓ Test de visibilité IA</span>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#4285F4' }}>✓ Preuves techniques</span>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#D97757' }}>✓ Cas réels sourcés</span>
+                </div>
+              </div>
+              <div style={{ flexShrink: 0, textAlign: 'center' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#D97757', fontWeight: 'bold', lineHeight: 1 }}>29 €</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1 }}>paiement unique</div>
+                <button
+                  onClick={handleCheckout}
+                  disabled={checkoutLoading}
+                  style={{ display: 'block', background: '#D97757', color: '#fff', border: 'none', borderRadius: 10, padding: '12px 28px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', cursor: checkoutLoading ? 'wait' : 'pointer', marginTop: 10, whiteSpace: 'nowrap', opacity: checkoutLoading ? 0.7 : 1 }}
+                >
+                  {checkoutLoading ? 'Chargement...' : 'Débloquer mon rapport →'}
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* SHARE BUTTON */}
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, position: 'relative' }} ref={shareRef}>
             <button
