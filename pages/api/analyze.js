@@ -366,28 +366,28 @@ JSON uniquement, sans markdown :
   return JSON.parse(jsonMatch[0]);
 }
 
-async function runCitationTest(url, textContent, metaTitle) {
+async function runCitationTest(url, textContent, metaTitle, metaDescription) {
   const hostname = new URL(url).hostname.replace(/^www\./, '');
   const brand = metaTitle ? metaTitle.split(/[-|–·]/)[0].trim() : hostname;
-  const intro = textContent.slice(0, 400);
+  const intro = textContent.slice(0, 300);
 
-  const prompt = `Tu es un moteur de recherche IA. En te basant sur le contenu suivant, génère une question pertinente qu'un utilisateur pourrait poser (type "Quelle agence X recommandes-tu à Paris ?" ou "Quel outil Y choisir pour Z ?"), puis réponds naturellement comme ChatGPT ou Perplexity en citant des sources réelles dans ce domaine.
+  const prompt = `Tu es un expert en visibilité IA. On analyse le site ${url}. Voici son titre : ${brand}. Voici sa description : ${metaDescription || 'Non disponible'}. Voici les 300 premiers caractères de son contenu : ${intro}
 
-Site : ${url}
-Titre : ${brand}
-Extrait : ${intro}
+Étape 1 — Génère 5 requêtes que des utilisateurs poseraient à ChatGPT ou Perplexity et pour lesquelles ce site DEVRAIT apparaître. Varie les niveaux de difficulté :
+- 2 requêtes génériques (forte concurrence)
+- 2 requêtes de niche (concurrence moyenne)
+- 1 requête longue traîne (faible concurrence)
 
-Ensuite, analyse ta propre réponse :
-1. Est-ce que le site ${hostname} ou la marque "${brand}" apparaît dans ta réponse ?
-2. Si non, quels sites/marques apparaissent à la place ?
-3. Pourquoi ce site n'est-il pas cité ? (1 phrase courte)
+Étape 2 — Pour CHAQUE requête, simule la réponse que donnerait un moteur IA (ChatGPT/Perplexity). Cite les sources que tu recommanderais naturellement.
+
+Étape 3 — Pour CHAQUE requête, analyse si le site ${hostname} ou la marque "${brand}" apparaît dans ta réponse, quels concurrents sont cités à la place, et la difficulté estimée pour être cité (facile/moyen/difficile).
 
 Réponds UNIQUEMENT en JSON sans markdown :
-{"cited":true,"competitors_cited":[],"reason_not_cited":"","test_query":"","ai_response_excerpt":""}`;
+{"tests":[{"query":"","difficulty":"générique|niche|longue_traîne","cited":false,"competitors_cited":[],"difficulty_to_rank":"facile|moyen|difficile","recommendation":"1 phrase concrète","ai_response_excerpt":"150 premiers caractères de la réponse simulée"}],"summary":{"cited_count":0,"total_tests":5,"best_opportunity":"requête où le site a le plus de chances","main_blocker":"raison principale"}}`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 1024,
+    max_tokens: 2500,
     temperature: 0.3,
     messages: [{ role: 'user', content: prompt }],
   });
@@ -434,6 +434,7 @@ export default async function handler(req, res) {
     }
 
     const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || '';
+    const metaDescription = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content') || '';
 
     const scores = {
       extractibility:   scoreExtractibility($, textContent),
@@ -448,7 +449,7 @@ export default async function handler(req, res) {
     const [claude, evidence, citationTest] = await Promise.all([
       runClaudeAnalysis(url, textContent, scores),
       collectEvidence($, textContent, rawContent, url),
-      runCitationTest(url, textContent, metaTitle).catch(e => { console.error('citationTest error:', e.message); return null; }),
+      runCitationTest(url, textContent, metaTitle, metaDescription).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
     const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
     const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;

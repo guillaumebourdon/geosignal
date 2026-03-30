@@ -220,7 +220,7 @@ function recoSections(reco) {
 // ─── Main HTML generator ──────────────────────────────────────────────────────
 
 function generateReportHTML(data) {
-  const { url, score, verdict, strengths = [], topPriority, criteria = [], recommendations = [], evidence } = data;
+  const { url, score, verdict, strengths = [], topPriority, criteria = [], recommendations = [], evidence, citationTest } = data;
   const g        = grade(score);
   const date     = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const projected = projectedScore(score, criteria);
@@ -534,6 +534,78 @@ function generateReportHTML(data) {
     </div>
   </div>`;
 
+  // ── CITATION TEST PAGE ───────────────────────────────────────────────────────
+  const citationTestPage = (() => {
+    if (!citationTest || !Array.isArray(citationTest.tests) || !citationTest.tests.length) return '';
+
+    const ct = citationTest;
+    const citedCount = ct.summary?.cited_count ?? ct.tests.filter(t => t.cited).length;
+    const totalTests  = ct.summary?.total_tests ?? ct.tests.length;
+    const bc = citedCount >= 3
+      ? { color: '#10A37F', bg: 'rgba(16,163,127,0.12)', border: 'rgba(16,163,127,0.3)' }
+      : citedCount >= 1
+      ? { color: '#C9861A', bg: 'rgba(201,134,26,0.12)',  border: 'rgba(201,134,26,0.3)' }
+      : { color: '#D97757', bg: 'rgba(217,119,87,0.12)',  border: 'rgba(217,119,87,0.3)' };
+
+    const diffColor = {
+      'générique':     { color: '#D97757', bg: 'rgba(217,119,87,0.10)' },
+      'niche':         { color: '#C9861A', bg: 'rgba(201,134,26,0.10)' },
+      'longue_traîne': { color: '#10A37F', bg: 'rgba(16,163,127,0.10)' },
+    };
+
+    const cards = ct.tests.map(t => {
+      const dc = diffColor[t.difficulty] || { color: '#8A8680', bg: 'rgba(138,134,128,0.10)' };
+      const citedColor = t.cited ? '#10A37F' : '#D97757';
+      const citedBg    = t.cited ? 'rgba(16,163,127,0.10)' : 'rgba(217,119,87,0.10)';
+      const diffLabel  = (t.difficulty || '').toUpperCase().replace('_', ' ');
+      const competitorsLine = !t.cited && t.competitors_cited?.length
+        ? `<div style="font-family:system-ui;font-size:11px;color:#8A8680;margin-bottom:4px;">Cités à votre place : <strong style="color:#1A1916;">${t.competitors_cited.map(esc).join(', ')}</strong></div>`
+        : '';
+      const excerptBlock = t.ai_response_excerpt
+        ? `<div style="background:#F7F5F2;border-left:3px solid #E5E2DC;padding:8px 12px;font-family:monospace;font-size:11px;color:#8A8680;line-height:1.5;margin-top:8px;">${esc(t.ai_response_excerpt)}</div>`
+        : '';
+      return `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:16px;margin-bottom:12px;">
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;font-family:system-ui;font-size:13px;font-weight:600;color:#1A1916;line-height:1.4;">${esc(t.query)}</div>
+          <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${dc.bg};color:${dc.color};white-space:nowrap;">${diffLabel}</span>
+          <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${citedBg};color:${citedColor};white-space:nowrap;">${t.cited ? '✓ Cité' : '✗ Non cité'}</span>
+        </div>
+        ${competitorsLine}
+        <div style="font-family:system-ui;font-size:11px;color:#8A8680;margin-bottom:4px;">Difficulté pour être cité : <strong style="color:#1A1916;">${esc(t.difficulty_to_rank || '')}</strong></div>
+        <div style="font-family:system-ui;font-size:11px;color:#1A1916;margin-bottom:4px;line-height:1.5;"><em>Recommandation :</em> ${esc(t.recommendation || '')}</div>
+        ${excerptBlock}
+      </div>`;
+    }).join('');
+
+    const summaryBlock = ct.summary
+      ? `<div style="font-family:system-ui;font-size:13px;color:#1A1916;margin-top:12px;line-height:1.8;">
+          <span style="color:#8A8680;">Meilleure opportunité :</span> ${esc(ct.summary.best_opportunity || '—')}<br>
+          <span style="color:#8A8680;">Blocage principal :</span> ${esc(ct.summary.main_blocker || '—')}
+        </div>`
+      : '';
+
+    return `
+  <div style="page-break-before:always;padding:60px 56px 64px;background:#fff;min-height:100vh;box-sizing:border-box;">
+    <div style="font-family:monospace;font-size:10px;color:#D97757;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">Test IA</div>
+    <h1 style="font-family:Georgia,serif;font-size:34px;color:#1A1916;letter-spacing:-1px;margin-bottom:8px;line-height:1.1;">Test de visibilité IA</h1>
+    <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:28px;line-height:1.6;">Nous avons simulé 5 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
+
+    <div style="display:inline-flex;align-items:center;gap:16px;background:${bc.bg};border:1px solid ${bc.border};border-radius:12px;padding:18px 28px;margin-bottom:4px;">
+      <div style="font-family:Georgia,serif;font-size:44px;color:${bc.color};line-height:1;letter-spacing:-2px;">${citedCount}/${totalTests}</div>
+      <div style="font-family:system-ui;font-size:13px;color:${bc.color};font-weight:600;line-height:1.4;">requêtes<br>citent votre site</div>
+    </div>
+    ${summaryBlock}
+
+    <div style="margin-top:28px;">
+      ${cards}
+    </div>
+
+    <div style="margin-top:24px;background:#F7F5F2;border-radius:8px;padding:16px 20px;">
+      <p style="font-family:system-ui;font-size:11px;color:#8A8680;line-height:1.65;">Ce test simule des requêtes utilisateur sur un moteur IA (Claude, Anthropic). Il reflète la visibilité actuelle de votre marque dans les connaissances des IA. Les résultats peuvent varier selon le moteur IA, la formulation de la requête et le moment du test.</p>
+    </div>
+  </div>`;
+  })();
+
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -549,6 +621,7 @@ function generateReportHTML(data) {
 <body>
 ${cover}
 ${execSummary}
+${citationTestPage}
 ${criteriaPages}
 ${actionPlan}
 ${methodology}
