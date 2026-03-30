@@ -401,6 +401,7 @@ export default function Results() {
         <div className="nav-links" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
           <a href="/blog" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
           <a href="/pricing" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
+          <a href="/a-propos" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>À propos</a>
           <a href="/" className="nav-cta" style={{ fontSize: 12, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '7px 16px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>+ Nouvelle analyse</a>
         </div>
       </nav>

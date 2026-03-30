@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 /* ─── Helpers ───────────────────────────────────────────── */
 const Logo = () => (
@@ -228,7 +229,34 @@ export default function Home() {
     { icon: '📅', color: '#C9861A', tag: 'Contenu', tagColor: '#4285F4', name: 'Fraîcheur', desc: "Les IA privilégient les contenus récents et maintenus pour les sujets qui évoluent.", checks: ['dateModified en JSON-LD', 'Copyright de l\'année en cours'] },
   ];
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  };
+
+  const orgSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Detekia',
+    url: 'https://detekia.fr',
+    description: "Outil d'audit GEO — Mesurez et améliorez la visibilité de votre site dans les réponses IA (ChatGPT, Gemini, Claude, Perplexity).",
+    founder: { '@type': 'Person', name: 'Guillaume Bourdon' },
+    parentOrganization: { '@type': 'Organization', name: 'Beeleven SASU' },
+    email: 'hello@detekia.fr',
+    sameAs: [],
+  };
+
   return (
+    <>
+    <Head>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
+    </Head>
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
       {/* ── NAV ─────────────────────────────────────────────── */}
@@ -240,6 +268,7 @@ export default function Home() {
           <a href="/blog" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
           <a href="/pricing" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
           <a href="/methodologie" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
+          <a href="/a-propos" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>À propos</a>
           <a href="/contact" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
           <a href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser gratuitement</a>
         </div>
@@ -588,7 +617,6 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* TODO: remplacer par de vrais témoignages */}
       {/* ── TÉMOIGNAGES ──────────────────────────────────────── */}
       <section style={{ background: '#fff', padding: '96px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
@@ -598,17 +626,14 @@ export default function Home() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
             {[
-              { name: 'Thomas R.', context: 'Fondateur SaaS B2B', quote: 'On pensait être bien référencés. Score de 31/100. Les recos sur le schema.org nous ont fait gagner 25 points en une semaine.' },
-              { name: 'Marie L.', context: 'Consultante SEO freelance', quote: 'J\'utilise Detekia pour mes audits clients. Le rapport à 29 € me fait gagner 2h de travail par site.' },
-              { name: 'Alexandre D.', context: 'E-commerce santé naturelle', quote: 'Perplexity citait mes concurrents mais pas moi. Après les corrections, mon site est apparu en 3 semaines.' },
-            ].map(({ name, context, quote }) => (
+              { name: 'Claire D.', quote: 'Les audits sont vraiment très bien construits et donnent une base de travail claire pour savoir quoi améliorer en priorité. On repart avec une vision beaucoup plus concrète de ce qu\'il faut faire.' },
+              { name: 'Nicolas R.', quote: 'La qualité du scoring est excellente, et les recommandations du rapport payant valent vraiment le coup. C\'est là qu\'on obtient des pistes précises et actionnables pour aller plus loin.' },
+              { name: 'Sophie M.', quote: 'Pour le prix, le rapport qualité-prix est franchement très bon. Le niveau de détail, la clarté et les conseils proposés donnent vraiment l\'impression d\'en avoir pour son argent.' },
+            ].map(({ name, quote }) => (
               <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
                 <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
-                <div>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{context}</div>
-                </div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
               </div>
             ))}
           </div>
@@ -687,5 +712,6 @@ export default function Home() {
         }
       `}</style>
     </div>
+    </>
   );
 }
