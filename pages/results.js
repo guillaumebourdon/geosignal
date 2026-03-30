@@ -98,23 +98,21 @@ function Tooltip({ info }) {
   );
 }
 
-function GroupAccordion({ group, getCriteriaForGroup, getLevelColor }) {
-  const [hovered, setHovered] = useState(false);
+function GroupAccordion({ group, getCriteriaForGroup, getLevelColor, isOpen, onToggle }) {
   const criteria = getCriteriaForGroup(group);
 
   return (
     <div style={{ marginBottom: 8 }}>
       <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 20px', background: hovered ? group.colorLight : '#fff', border: `1.5px solid ${hovered ? group.color : '#E5E2DC'}`, borderRadius: hovered && criteria.length > 0 ? '12px 12px 0 0' : 12, cursor: 'default', transition: 'all 0.4s ease' }}>
+        onClick={onToggle}
+        style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 20px', background: isOpen ? group.colorLight : '#fff', border: `1.5px solid ${isOpen ? group.color : '#E5E2DC'}`, borderRadius: isOpen && criteria.length > 0 ? '12px 12px 0 0' : 12, cursor: 'pointer', transition: 'all 0.2s ease' }}>
         <div style={{ width: 8, height: 8, borderRadius: '50%', background: group.color, flexShrink: 0 }} />
         <span style={{ fontFamily: 'monospace', fontSize: 10, color: group.color, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600 }}>{group.label}</span>
         <span style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui' }}>— {group.desc}</span>
-        <span style={{ marginLeft: 'auto', fontSize: 11, color: group.color, fontFamily: 'system-ui' }}>{hovered ? '▲ Masquer' : '▼ Voir l\'analyse'}</span>
+        <span style={{ marginLeft: 'auto', fontSize: 11, color: group.color, fontFamily: 'system-ui' }}>{isOpen ? '▲ Masquer' : '▼ Voir l\'analyse'}</span>
       </div>
-      {hovered && (
-        <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} style={{ border: `1.5px solid ${group.color}`, borderTop: 'none', borderRadius: '0 0 12px 12px', overflow: 'hidden', animation: 'fadeIn 0.5s ease' }}>
+      {isOpen && (
+        <div style={{ border: `1.5px solid ${group.color}`, borderTop: 'none', borderRadius: '0 0 12px 12px', overflow: 'hidden', animation: 'fadeIn 0.5s ease' }}>
           {criteria.map((c, i) => {
             const levelColor = getLevelColor(c.score, c.max);
             const pct = Math.round((c.score / c.max) * 100);
@@ -154,23 +152,7 @@ function RecoCard({ r, index, isPaid, onCheckout }) {
   const tag = tagColors[r.priority] || tagColors.medium;
 
   if (!isPaid && index >= 1) {
-    return (
-      <div style={{ marginBottom: 10 }}>
-        <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, overflow: 'hidden', borderLeft: `4px solid ${tag.color}`, opacity: 0.65 }}>
-          <div style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', padding: '4px 10px', borderRadius: 6, fontWeight: 500, background: tag.bg, color: tag.color }}>{tagLabels[r.priority]}</span>
-            {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{r.criterion}</span>}
-            <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8' }}>#{String(index + 1).padStart(2, '0')}</span>
-            <span style={{ fontSize: 13, color: '#C2BDB8' }}>🔒</span>
-          </div>
-          <div style={{ padding: '0 24px 16px', filter: 'blur(5px)', userSelect: 'none', pointerEvents: 'none' }}>
-            <div style={{ height: 10, background: '#E5E2DC', borderRadius: 4, marginBottom: 8, width: '90%' }} />
-            <div style={{ height: 10, background: '#E5E2DC', borderRadius: 4, marginBottom: 8, width: '75%' }} />
-            <div style={{ height: 10, background: '#E5E2DC', borderRadius: 4, width: '55%' }} />
-          </div>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   if (!isPaid && index === 0) {
@@ -382,6 +364,17 @@ export default function Results() {
     return '#D97757';
   }
 
+  const [openGroup, setOpenGroup] = useState(groups[0].id);
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setShowSticky(window.scrollY > 400);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const isPaid = false;
   const grade = result ? getGrade(result.score) : null;
   const recommendations = result?.recommendations || [];
@@ -557,7 +550,14 @@ export default function Results() {
 
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Analyse détaillée</div>
           {groups.map(group => (
-            <GroupAccordion key={group.id} group={group} getCriteriaForGroup={getCriteriaForGroup} getLevelColor={getLevelColor} />
+            <GroupAccordion
+              key={group.id}
+              group={group}
+              getCriteriaForGroup={getCriteriaForGroup}
+              getLevelColor={getLevelColor}
+              isOpen={openGroup === group.id}
+              onToggle={() => setOpenGroup(g => g === group.id ? null : group.id)}
+            />
           ))}
 
           {/* ── CAPTURE EMAIL ─────────────────────────────────── */}
@@ -612,6 +612,17 @@ export default function Results() {
                 <RecoCard key={i} r={r} index={i} isPaid={isPaid} onCheckout={handleCheckout} />
               ))}
 
+              {!isPaid && recommendations.length > 1 && (
+                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 8 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 8 }}>
+                    🔒 {recommendations.length - 1} autre{recommendations.length - 1 > 1 ? 's' : ''} recommandation{recommendations.length - 1 > 1 ? 's' : ''} disponible{recommendations.length - 1 > 1 ? 's' : ''} dans le rapport complet
+                  </div>
+                  <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7 }}>
+                    {recommendations.slice(1).map(r => r.criterion || r.title).filter(Boolean).join(' · ')}
+                  </div>
+                </div>
+              )}
+
               {!isPaid && (
                 <div className="unlock-cta" style={{ marginTop: 16, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, boxShadow: '0 8px 32px rgba(26,25,22,0.12)' }}>
                   <div>
@@ -619,15 +630,31 @@ export default function Results() {
                     <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6 }}>{recommendations.length - 1} recommandations expertes avec méthodes, exemples et impact attendu.</div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, flexShrink: 0 }}>
-                    <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 600, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', opacity: checkoutLoading ? 0.7 : 1 }}>{checkoutLoading ? 'Chargement...' : 'Débloquer — 29 € →'}</button>
+                    <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '16px 36px', borderRadius: 10, fontWeight: 700, fontSize: 15, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', opacity: checkoutLoading ? 0.7 : 1, animation: checkoutLoading ? 'none' : 'ctaPulse 2.4s ease-in-out infinite' }}>{checkoutLoading ? 'Chargement...' : 'Débloquer — 29 € →'}</button>
                     <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
-                      Paiement unique · Accès immédiat
+                      Paiement unique · Accès immédiat · Satisfait ou remboursé 7j
                     </div>
                   </div>
                 </div>
               )}
             </div>
           )}
+        </div>
+      )}
+
+      {/* ── STICKY BUY BAR ───────────────────────────────────── */}
+      {!isPaid && showSticky && result && (
+        <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, background: '#1A1916', borderTop: '1px solid rgba(255,255,255,0.08)', padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, boxShadow: '0 -4px 24px rgba(26,25,22,0.18)' }}>
+          <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#F7F5F2', fontWeight: 500 }}>
+            Rapport complet — {recommendations.length} recommandations
+          </div>
+          <button
+            onClick={handleCheckout}
+            disabled={checkoutLoading}
+            style={{ background: '#D97757', color: '#fff', padding: '10px 24px', borderRadius: 10, fontWeight: 600, fontSize: 13, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', flexShrink: 0, opacity: checkoutLoading ? 0.7 : 1 }}
+          >
+            {checkoutLoading ? '...' : 'Débloquer — 29 €'}
+          </button>
         </div>
       )}
 
@@ -667,6 +694,7 @@ export default function Results() {
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         @keyframes tooltipIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes ctaPulse { 0%, 100% { box-shadow: 0 8px 24px rgba(217,119,87,0.35); } 50% { box-shadow: 0 8px 36px rgba(217,119,87,0.65); } }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @media (max-width: 768px) {
           .unlock-cta > div:last-child { width: 100% !important; align-items: flex-start !important; }
