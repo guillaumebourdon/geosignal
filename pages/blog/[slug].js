@@ -89,16 +89,16 @@ export default function ArticlePage({ article, related }) {
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
         {/* NAV */}
-        <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
+        <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
           <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
             <Logo />Detekia
           </a>
-          <div style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
+          <div className="nav-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
             <a href="/blog" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
-            <a href="/pricing" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
-            <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
-            <a href="/contact" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
-            <a href="/" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser gratuitement</a>
+            <a href="/pricing" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
+            <a href="/methodologie" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
+            <a href="/contact" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
+            <a href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser gratuitement</a>
           </div>
         </nav>
 
@@ -177,7 +177,7 @@ export default function ArticlePage({ article, related }) {
 
         {/* FOOTER */}
         <footer style={{ borderTop: '1px solid #E5E2DC', padding: '36px 48px', background: '#fff' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+          <div className="footer-inner" style={{ maxWidth: 900, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
             <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>Detekia</span>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
               {[['Blog', '/blog'], ['Tarifs', '/pricing'], ['Méthodologie', '/methodologie'], ['Contact', '/contact'], ['Mentions légales', '/mentions-legales'], ['Confidentialité', '/confidentialite'], ['CGU', '/cgu']].map(([label, href]) => (
@@ -205,10 +205,9 @@ export default function ArticlePage({ article, related }) {
         .article-body a:hover { text-decoration: underline; }
         .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .related-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-        @media (max-width: 640px) {
-          nav { padding: 0 20px !important; }
-          h1 { font-size: 28px !important; }
+        @media (max-width: 768px) {
           .related-grid { grid-template-columns: 1fr; }
+          article { padding: 40px 20px 60px !important; }
         }
       `}</style>
     </>

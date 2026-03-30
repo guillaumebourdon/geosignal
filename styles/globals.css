@@ -1,26 +1,114 @@
-@import "tailwindcss";
+/* ─── Detekia — Global responsive styles ─────────────────────────── */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ── NAV ─────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .detekia-nav {
+    padding: 0 20px !important;
+  }
+  .nav-link-secondary {
+    display: none !important;
+  }
+  .nav-cta {
+    font-size: 12px !important;
+    padding: 7px 12px !important;
+  }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* ── SECTION PADDING ──────────────────────────────────────────── */
+  section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  footer {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .footer-inner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* ── HERO ─────────────────────────────────────────────────────── */
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .hero-grid h1 {
+    font-size: clamp(26px, 8vw, 34px) !important;
+    letter-spacing: -1px !important;
+  }
+  .hero-mockup {
+    justify-content: center !important;
+  }
+  .hero-mockup > div {
+    max-width: 290px !important;
+    width: 100% !important;
+  }
+
+  /* ── GRIDS → 1 column ────────────────────────────────────────── */
+  .steps-grid,
+  .reports-grid,
+  .trust-grid,
+  .testimonials-grid,
+  .bullets-grid,
+  .reco-example-grid,
+  .before-after-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── RESULTS PAGE ─────────────────────────────────────────────── */
+  .score-header {
+    grid-template-columns: 1fr !important;
+  }
+  .score-left {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    padding: 28px 20px !important;
+    align-items: flex-start !important;
+  }
+  .score-right {
+    padding: 24px 20px !important;
+  }
+  .group-bars {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .capture-form {
+    flex-direction: column !important;
+  }
+  .capture-form input {
+    width: 100% !important;
+  }
+  .unlock-cta {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .unlock-cta button {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* ── BLOG ─────────────────────────────────────────────────────── */
+  .blog-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── CRITERIA + STATS: 2 cols on tablet, 1 col on small mobile ─── */
+@media (max-width: 900px) {
+  .criteria-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .criteria-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

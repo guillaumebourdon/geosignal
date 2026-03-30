@@ -187,7 +187,7 @@ function RecoCard({ r, index, isPaid, onCheckout }) {
             <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.8, fontFamily: 'system-ui' }}>{preview}...</div>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, background: 'linear-gradient(to bottom, transparent, #ffffff)', pointerEvents: 'none' }} />
           </div>
-          <div style={{ margin: '12px 24px 20px', padding: '14px 18px', background: '#F7F5F2', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+          <div className="reco-preview-cta" style={{ margin: '12px 24px 20px', padding: '14px 18px', background: '#F7F5F2', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
             <div>
               <div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>🔒 Recommandation complète masquée</div>
               <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>Méthode, exemples et impact détaillé dans le rapport complet.</div>
@@ -389,7 +389,7 @@ export default function Results() {
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
-      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
+      <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
             {['#10A37F','#D97757','#4285F4','#1C7DC4'].map((c,i) => (
@@ -398,10 +398,10 @@ export default function Results() {
           </div>
           Detekia
         </a>
-        <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-          <a href="/blog" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
-          <a href="/pricing" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
-          <a href="/" style={{ fontSize: 12, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '7px 16px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>+ Nouvelle analyse</a>
+        <div className="nav-links" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+          <a href="/blog" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
+          <a href="/pricing" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
+          <a href="/" className="nav-cta" style={{ fontSize: 12, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '7px 16px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>+ Nouvelle analyse</a>
         </div>
       </nav>
 
@@ -464,19 +464,19 @@ export default function Results() {
 
           <div style={{ background: '#1A1916', borderRadius: 24, overflow: 'hidden', marginBottom: 20, boxShadow: '0 12px 48px rgba(26,25,22,0.18)', position: 'relative' }}>
             <div style={{ position: 'absolute', top: -60, right: -60, width: 200, height: 200, borderRadius: '50%', background: grade.color, opacity: 0.06, pointerEvents: 'none' }} />
-            <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '36px 20px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+            <div className="score-header" style={{ display: 'grid', gridTemplateColumns: '160px 1fr' }}>
+              <div className="score-left" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '36px 20px', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 68, lineHeight: 1, color: '#F7F5F2', letterSpacing: -3, marginBottom: 4 }}>{result.score}</div>
                 <div style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(247,245,242,0.25)', letterSpacing: 1 }}>/100</div>
                 <div style={{ marginTop: 14, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, padding: '4px 12px', borderRadius: 20, background: grade.bg, color: grade.color }}>{grade.label}</div>
               </div>
-              <div style={{ padding: '32px 36px' }}>
+              <div className="score-right" style={{ padding: '32px 36px' }}>
                 <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 8 }}>{url}</div>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 12, lineHeight: 1.2 }}>
                   {grade.label === 'BON' ? 'Excellente citabilité IA' : grade.label === 'MOYEN' ? 'Citabilité IA à améliorer' : 'Citabilité IA insuffisante'}
                 </div>
                 <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', lineHeight: 1.7, fontFamily: 'system-ui' }}>{result.verdict}</div>
-                <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
+                <div className="group-bars" style={{ display: 'flex', gap: 12, marginTop: 20 }}>
                   {groups.map(g => {
                     const { score, max } = getGroupScore(g);
                     const pct = Math.round((score / max) * 100);
@@ -570,7 +570,7 @@ export default function Results() {
               <>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 4 }}>Recevez votre rapport par email</div>
                 <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', marginBottom: 16 }}>Recevez votre score détaillé par email</div>
-                <form onSubmit={handleCaptureEmail} style={{ display: 'flex', gap: 8 }}>
+                <form onSubmit={handleCaptureEmail} className="capture-form" style={{ display: 'flex', gap: 8 }}>
                   <input
                     type="email"
                     value={captureEmail}
@@ -612,7 +612,7 @@ export default function Results() {
               ))}
 
               {!isPaid && (
-                <div style={{ marginTop: 16, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, boxShadow: '0 8px 32px rgba(26,25,22,0.12)' }}>
+                <div className="unlock-cta" style={{ marginTop: 16, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, boxShadow: '0 8px 32px rgba(26,25,22,0.12)' }}>
                   <div>
                     <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#F7F5F2', marginBottom: 6 }}>Rapport complet disponible</div>
                     <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6 }}>{recommendations.length - 1} recommandations expertes avec méthodes, exemples et impact attendu.</div>
@@ -667,6 +667,13 @@ export default function Results() {
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         @keyframes tooltipIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        @media (max-width: 768px) {
+          .unlock-cta > div:last-child { width: 100% !important; align-items: flex-start !important; }
+          .unlock-cta > div:last-child button { width: 100% !important; text-align: center !important; }
+          .reco-preview-cta { flex-direction: column !important; }
+          .reco-preview-cta > div:last-child { align-items: flex-start !important; width: 100% !important; }
+          .reco-preview-cta > div:last-child button { width: 100% !important; }
+        }
       `}</style>
     </div>
   );

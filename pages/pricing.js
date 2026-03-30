@@ -24,7 +24,7 @@ export default function Pricing() {
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
       {/* NAV */}
-      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
+      <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
             {['#10A37F','#D97757','#4285F4','#1C7DC4'].map((c,i) => (
@@ -33,12 +33,12 @@ export default function Pricing() {
           </div>
           Detekia
         </a>
-        <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
-          <a href="/blog" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
-          <a href="/pricing" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
-          <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
-          <a href="/contact" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
-          <a href="/" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '8px 18px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser mon site</a>
+        <div className="nav-links" style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+          <a href="/blog" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
+          <a href="/pricing" className="nav-link-secondary" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
+          <a href="/methodologie" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
+          <a href="/contact" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
+          <a href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '8px 18px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser mon site</a>
         </div>
       </nav>
 
@@ -53,7 +53,7 @@ export default function Pricing() {
       </div>
 
       {/* PLANS — 2 colonnes */}
-      <div style={{ maxWidth: 700, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 80 }}>
+      <div className="pricing-cards" style={{ maxWidth: 700, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 80 }}>
 
         {/* FREE */}
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
@@ -147,8 +147,7 @@ export default function Pricing() {
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @media (max-width: 600px) {
-          nav { padding: 0 20px !important; }
-          div[style*="gridTemplateColumns: '1fr 1fr'"] { grid-template-columns: 1fr !important; }
+          .pricing-cards { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>

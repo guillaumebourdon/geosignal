@@ -1,3 +1,4 @@
+import '../styles/globals.css';
 import CookieBanner from '../components/CookieBanner';
 import { Analytics } from '@vercel/analytics/react';
 

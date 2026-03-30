@@ -188,22 +188,22 @@ export default function Home() {
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
       {/* ── NAV ─────────────────────────────────────────────── */}
-      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 58, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
+      <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 58, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
           <Logo />Detekia
         </a>
-        <div style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
-          <a href="/blog" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
-          <a href="/pricing" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
-          <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
-          <a href="/contact" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
-          <a href="/" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser gratuitement</a>
+        <div className="nav-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
+          <a href="/blog" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
+          <a href="/pricing" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
+          <a href="/methodologie" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
+          <a href="/contact" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
+          <a href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser gratuitement</a>
         </div>
       </nav>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '20px 48px 32px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
+      <section className="hero-section" style={{ background: '#F7F5F2', padding: '20px 48px 32px' }}>
+        <div className="hero-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.12)', border: '1.5px solid rgba(16,163,127,0.35)', borderRadius: 20, padding: '8px 18px', marginBottom: 10 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
@@ -248,7 +248,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <div className="hero-mockup" style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <ProductMockup />
           </div>
         </div>
@@ -279,7 +279,7 @@ export default function Home() {
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
             Un audit GEO complet en <em style={{ color: '#D97757' }}>30 secondes</em>
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+          <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {[
               ['01','#10A37F','Entrez votre URL','Collez l\'adresse de votre site. Zéro inscription, zéro configuration, zéro carte bancaire.'],
               ['02','#D97757','On analyse tout','Detekia scrape votre site et l\'évalue selon 8 critères GEO validés par la recherche.'],
@@ -305,7 +305,7 @@ export default function Home() {
       {/* ── STATS DASHBOARD — MOD 5 ──────────────────────────── */}
       <section style={{ background: '#1A1916', padding: '80px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', overflow: 'hidden' }}>
+          <div className="stats-grid" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', overflow: 'hidden' }}>
             {[
               { emoji: '📊', stat: '94%', label: 'Sites sous 60/100', sub: 'Benchmark interne' },
               { emoji: '🔍', stat: '8',   label: 'Critères mesurés',  sub: 'Contenu, autorité, technique' },
@@ -332,7 +332,7 @@ export default function Home() {
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
             8 critères <em style={{ color: '#D97757' }}>validés par la recherche</em>
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
+          <div className="criteria-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
             {features.map(f => <CriteriaCard key={f.name} {...f} />)}
           </div>
           <div style={{ textAlign: 'center', marginTop: 28 }}>
@@ -352,7 +352,7 @@ export default function Home() {
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
             Exemples de <em style={{ color: '#D97757' }}>rapports analysés</em>
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+          <div className="reports-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {[
               {
                 type: 'Site e-commerce',
@@ -427,7 +427,7 @@ export default function Home() {
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
             Pourquoi faire confiance <em style={{ color: '#D97757' }}>à Detekia ?</em>
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+          <div className="trust-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
             {[
               { icon: '🔬', accent: '#4285F4', title: 'Méthode transparente', desc: 'Méthodologie entièrement documentée. Vous savez comment chaque point de votre score est calculé.', link: '/methodologie' },
               { icon: '⚡', accent: '#10A37F', title: 'Résultats en 30 secondes', desc: 'Aucun devis, aucun rendez-vous. Votre rapport disponible immédiatement, à toute heure.', link: null },
@@ -461,7 +461,7 @@ export default function Home() {
           </p>
 
           {/* 4 bullets */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 12, marginBottom: 40 }}>
+          <div className="bullets-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 12, marginBottom: 40 }}>
             {[
               ['📋', 'Toutes les recommandations par critère', 'Chaque critère sous 80% de son score maximum génère une recommandation dédiée.'],
               ['🎯', 'Ordre de priorité actionnable', 'Les recommandations sont classées par impact : Critique, Important, Bonus.'],
@@ -490,7 +490,7 @@ export default function Home() {
             </div>
             {/* Body */}
             <div style={{ padding: '24px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+              <div className="reco-example-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
                 <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px' }}>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>🔍 Diagnostic</div>
                   <div style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.65 }}>Votre page d'accueil commence par "Bienvenue chez…" — les IA ne peuvent pas extraire de réponse directe à une requête utilisateur.</div>
@@ -503,7 +503,7 @@ export default function Home() {
               {/* Avant/après */}
               <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px' }}>
                 <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4285F4', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>💡 Exemple concret</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div className="before-after-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                   <div style={{ background: 'rgba(217,119,87,0.06)', borderRadius: 8, padding: '12px', border: '1px solid rgba(217,119,87,0.15)' }}>
                     <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#D97757', letterSpacing: 1.5, marginBottom: 6 }}>AVANT</div>
                     <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic' }}>"Bienvenue chez Acme, leader de la gestion RH."</div>
@@ -616,7 +616,7 @@ export default function Home() {
 
       {/* ── FOOTER ───────────────────────────────────────────── */}
       <footer style={{ borderTop: '1px solid #E5E2DC', padding: '36px 48px', background: '#fff' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
+        <div className="footer-inner" style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 15, fontWeight: 'bold', color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 5 }}>
               <Logo />Detekia
@@ -638,18 +638,6 @@ export default function Home() {
           .hero-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
           .hero-input-wrap input { border-radius: 10px 10px 0 0 !important; }
           .hero-input-wrap button { border-radius: 0 0 10px 10px !important; width: 100% !important; justify-content: center; }
-        }
-        @media (max-width: 700px) {
-          .testimonials-grid { grid-template-columns: 1fr !important; }
-        }
-        @media (max-width: 900px) {
-          div[style*="gridTemplateColumns: '60% 40%'"] { grid-template-columns: 1fr !important; }
-          div[style*="gridTemplateColumns: 'repeat(4,1fr)'"] { grid-template-columns: repeat(2,1fr) !important; }
-          div[style*="gridTemplateColumns: 'repeat(3,1fr)'"] { grid-template-columns: 1fr !important; }
-          div[style*="gridTemplateColumns: 'repeat(2,1fr)'"] { grid-template-columns: 1fr !important; }
-          section { padding-left: 24px !important; padding-right: 24px !important; }
-          nav { padding: 0 20px !important; }
-          footer { padding: 28px 20px !important; }
         }
       `}</style>
     </div>
