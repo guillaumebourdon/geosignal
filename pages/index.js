@@ -522,72 +522,71 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* ── CE QUE VOUS RECEVEZ — MOD 3 ──────────────────────── */}
+      {/* ── UN RAPPORT QUI VAUT LE DÉTOUR ─────────────────────── */}
       <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Rapport complet</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.1 }}>
-            Ce que vous recevez <em style={{ color: '#D97757' }}>dans le rapport complet</em>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.1 }}>
+            Un rapport qui <em style={{ color: '#D97757' }}>vaut le détour</em>
           </h2>
-          <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 48px' }}>
-            Un plan d'action GEO détaillé, priorisé et personnalisé pour votre site — livré en moins de 30 secondes.
+          <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 56px' }}>
+            14 pages d'analyse approfondie avec des données exclusives que vous ne trouverez nulle part ailleurs.
           </p>
 
-          {/* 4 bullets */}
-          <div className="bullets-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 12, marginBottom: 40 }}>
-            {[
-              ['📋', 'Toutes les recommandations par critère', 'Chaque critère sous 80% de son score maximum génère une recommandation dédiée.'],
-              ['🎯', 'Ordre de priorité actionnable', 'Les recommandations sont classées par impact : Critique, Important, Bonus.'],
-              ['💡', 'Exemples concrets pour chaque action', 'Avant / après, extraits de code, formulations types — rien d\'abstrait.'],
-              ['📈', 'Impact attendu estimé', 'Pour chaque recommandation : gain estimé sur votre score GEO et citabilité IA.'],
-            ].map(([icon, title, desc]) => (
-              <div key={title} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px' }}>
-                <div style={{ fontSize: 22, flexShrink: 0, marginTop: 2 }}>{icon}</div>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 5, fontFamily: 'Georgia, serif' }}>{title}</div>
-                  <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.6, fontFamily: 'system-ui' }}>{desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* 3 cards */}
+          <div className="reports-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginBottom: 48 }}>
 
-          {/* Extrait d'une recommandation réelle */}
-          <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, overflow: 'hidden', marginBottom: 32 }}>
-            {/* Header */}
-            <div style={{ background: '#1A1916', padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, padding: '3px 10px', borderRadius: 4, background: 'rgba(217,119,87,0.2)', color: '#D97757', textTransform: 'uppercase' }}>CRITIQUE</span>
-                <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 1 }}>Extractibilité</span>
+            {/* Card 1 — Test de visibilité IA */}
+            <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(217,119,87,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>🔭</div>
+              <div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 700, color: '#1A1916', marginBottom: 8, lineHeight: 1.2 }}>Test de visibilité IA</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6A6660', lineHeight: 1.7 }}>Vos concurrents directs sont-ils cités par ChatGPT et Gemini sur vos requêtes clés ? Le rapport révèle votre position réelle dans les réponses IA par rapport à votre marché.</div>
               </div>
-              <span style={{ fontFamily: 'Georgia, serif', fontSize: 14, color: 'rgba(247,245,242,0.6)' }}>Exemple de recommandation</span>
-            </div>
-            {/* Body */}
-            <div style={{ padding: '24px' }}>
-              <div className="reco-example-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>🔍 Diagnostic</div>
-                  <div style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.65 }}>Votre page d'accueil commence par "Bienvenue chez…" — les IA ne peuvent pas extraire de réponse directe à une requête utilisateur.</div>
-                </div>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>✅ Ce qu'il faut faire</div>
-                  <div style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.65 }}>Remplacer le titre générique par une phrase qui répond directement à "Qu'est-ce que [votre service] ?"</div>
-                </div>
-              </div>
-              {/* Avant/après */}
-              <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4285F4', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>💡 Exemple concret</div>
-                <div className="before-after-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <div style={{ background: 'rgba(217,119,87,0.06)', borderRadius: 8, padding: '12px', border: '1px solid rgba(217,119,87,0.15)' }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#D97757', letterSpacing: 1.5, marginBottom: 6 }}>AVANT</div>
-                    <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic' }}>"Bienvenue chez Acme, leader de la gestion RH."</div>
+              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 7 }}>
+                {['Requêtes testées sur 4 moteurs IA', 'Comparatif avec 3 concurrents', 'Extraits de réponses réelles'].map(item => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#D97757', flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'system-ui', fontSize: 12, color: '#3A3835' }}>{item}</span>
                   </div>
-                  <div style={{ background: 'rgba(16,163,127,0.06)', borderRadius: 8, padding: '12px', border: '1px solid rgba(16,163,127,0.15)' }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#10A37F', letterSpacing: 1.5, marginBottom: 6 }}>APRÈS</div>
-                    <div style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui', fontStyle: 'italic' }}>"Acme est un logiciel RH qui automatise la gestion des congés pour les PME de 10 à 200 salariés."</div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
+
+            {/* Card 2 — Preuves techniques */}
+            <div style={{ background: '#1A1916', border: '1px solid #1A1916', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(217,119,87,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>⚙️</div>
+              <div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 700, color: '#F7F5F2', marginBottom: 8, lineHeight: 1.2 }}>Preuves techniques</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.6)', lineHeight: 1.7 }}>Chaque point faible est documenté avec la source exacte dans votre HTML. Vous savez précisément quoi modifier, à quelle ligne, et pourquoi ça bloque votre citabilité.</div>
+              </div>
+              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 7 }}>
+                {['Extraits de code annotés', 'Avant / après pour chaque fix', 'Priorité Critique / Important / Bonus'].map(item => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#D97757', flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.75)' }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Card 3 — Cas réels documentés */}
+            <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(16,163,127,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>📚</div>
+              <div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 700, color: '#1A1916', marginBottom: 8, lineHeight: 1.2 }}>Cas réels documentés</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6A6660', lineHeight: 1.7 }}>Chaque recommandation est illustrée par un cas concret issu de sites ayant amélioré leur citabilité IA. Pas de théorie — des preuves que ça fonctionne, avec les résultats mesurés.</div>
+              </div>
+              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 7 }}>
+                {['Études de cas avec résultats chiffrés', 'Sources académiques (KDD 2024)', 'Impact estimé sur votre score'].map(item => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#10A37F', flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'system-ui', fontSize: 12, color: '#3A3835' }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
 
           {/* CTA */}
@@ -596,7 +595,7 @@ export default function Home() {
               Débloquer mon rapport — 29 € →
             </a>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', marginTop: 12, letterSpacing: 1 }}>
-              Paiement unique · Accès immédiat
+              Paiement unique · Accès immédiat · Satisfait ou remboursé 7 jours
             </div>
           </div>
         </div>
