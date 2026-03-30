@@ -167,6 +167,9 @@ function scoreFreshness($, html) {
 }
 
 async function collectEvidence($, textContent, rawContent, url) {
+  console.log('collectEvidence URL:', url);
+  const normalizedUrl = url.startsWith('http') ? url : `https://${url}`;
+
   // 1. intro
   const intro = textContent.slice(0, 300);
 
@@ -221,7 +224,7 @@ async function collectEvidence($, textContent, rawContent, url) {
   // 8. externalLinks count
   let externalLinksCount = 0;
   try {
-    const hostname = new URL(url).hostname;
+    const hostname = new URL(normalizedUrl).hostname;
     $('a[href]').each((_, el) => {
       const href = $(el).attr('href') || '';
       if (href.startsWith('http') && !href.includes(hostname)) externalLinksCount++;
@@ -245,7 +248,7 @@ async function collectEvidence($, textContent, rawContent, url) {
   // 10. robots.txt + llms.txt — parallel fetches with hard 2s deadline
   const robotsLlmsPromise = Promise.race([
     (async () => {
-      const origin = new URL(url).origin;
+      const origin = new URL(normalizedUrl).origin;
       const [robotsRes, llmsRes] = await Promise.allSettled([
         axios.get(`${origin}/robots.txt`, { timeout: 2000 }),
         axios.get(`${origin}/llms.txt`,   { timeout: 2000 }),
@@ -331,11 +334,13 @@ JSON uniquement, sans markdown :
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { url } = req.body;
-  if (!url) return res.status(400).json({ error: 'URL manquante' });
+  const rawUrl = req.body.url;
+  console.log('URL received:', rawUrl);
+  if (!rawUrl) return res.status(400).json({ error: 'URL manquante' });
+  const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   console.log('analyze: starting for', url);
 
-  const cacheKey = `detekia:v9:${url.toLowerCase().trim()}`;
+  const cacheKey = `detekia:v9:${url.toLowerCase()}`;
 
   try {
     const cached = await redis.get(cacheKey);
