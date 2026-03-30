@@ -3,6 +3,8 @@ import { Redis } from '@upstash/redis';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
+export const config = { maxDuration: 30 };
+
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -240,22 +242,24 @@ async function collectEvidence($, textContent, rawContent, url) {
   const yearMatch = textContent.match(/\b(20\d{2})\b/);
   if (yearMatch) dates.yearFound = yearMatch[1];
 
-  // 10. robots.txt + llms.txt — parallel fetches, 3s timeout each
-  let robotsTxt = 'Non accessible';
-  let hasLlmsTxt = false;
-  try {
-    const origin = new URL(url).origin;
-    const [robotsRes, llmsRes] = await Promise.allSettled([
-      axios.get(`${origin}/robots.txt`, { timeout: 3000 }),
-      axios.get(`${origin}/llms.txt`,   { timeout: 3000 }),
-    ]);
-    if (robotsRes.status === 'fulfilled') {
-      robotsTxt = String(robotsRes.value.data || '').slice(0, 500);
-    }
-    if (llmsRes.status === 'fulfilled' && llmsRes.value.status === 200) {
-      hasLlmsTxt = true;
-    }
-  } catch {}
+  // 10. robots.txt + llms.txt — parallel fetches with hard 2s deadline
+  const robotsLlmsPromise = Promise.race([
+    (async () => {
+      const origin = new URL(url).origin;
+      const [robotsRes, llmsRes] = await Promise.allSettled([
+        axios.get(`${origin}/robots.txt`, { timeout: 2000 }),
+        axios.get(`${origin}/llms.txt`,   { timeout: 2000 }),
+      ]);
+      return {
+        robotsTxt: robotsRes.status === 'fulfilled' ? String(robotsRes.value.data || '').slice(0, 500) : 'Non accessible',
+        hasLlmsTxt: llmsRes.status === 'fulfilled' && llmsRes.value.status === 200,
+      };
+    })(),
+    new Promise(resolve => setTimeout(() => resolve({ robotsTxt: 'Non accessible (timeout)', hasLlmsTxt: false }), 2000)),
+  ]);
+  const { robotsTxt: rt, hasLlmsTxt: lt } = await robotsLlmsPromise;
+  const robotsTxt = rt;
+  const hasLlmsTxt = lt;
 
   return {
     intro,
@@ -329,6 +333,7 @@ export default async function handler(req, res) {
 
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: 'URL manquante' });
+  console.log('analyze: starting for', url);
 
   const cacheKey = `detekia:v9:${url.toLowerCase().trim()}`;
 
