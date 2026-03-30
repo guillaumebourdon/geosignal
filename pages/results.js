@@ -98,14 +98,13 @@ function Tooltip({ info }) {
   );
 }
 
-function GroupAccordion({ group, getCriteriaForGroup, getLevelColor, isOpen, onToggle }) {
+function GroupAccordion({ group, getCriteriaForGroup, getLevelColor, isOpen, onMouseEnter, onMouseLeave }) {
   const criteria = getCriteriaForGroup(group);
 
   return (
-    <div style={{ marginBottom: 8 }}>
+    <div style={{ marginBottom: 2 }} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <div
-        onClick={onToggle}
-        style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 20px', background: isOpen ? group.colorLight : '#fff', border: `1.5px solid ${isOpen ? group.color : '#E5E2DC'}`, borderRadius: isOpen && criteria.length > 0 ? '12px 12px 0 0' : 12, cursor: 'pointer', transition: 'all 0.2s ease' }}>
+        style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 20px', background: isOpen ? group.colorLight : '#fff', border: `1.5px solid ${isOpen ? group.color : '#E5E2DC'}`, borderRadius: isOpen && criteria.length > 0 ? '12px 12px 0 0' : 12, cursor: 'default', transition: 'all 0.2s ease' }}>
         <div style={{ width: 8, height: 8, borderRadius: '50%', background: group.color, flexShrink: 0 }} />
         <span style={{ fontFamily: 'monospace', fontSize: 10, color: group.color, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600 }}>{group.label}</span>
         <span style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui' }}>— {group.desc}</span>
@@ -364,8 +363,18 @@ export default function Results() {
     return '#D97757';
   }
 
-  const [openGroup, setOpenGroup] = useState(groups[0].id);
+  const [openGroup, setOpenGroup] = useState(null);
+  const closeTimeoutRef = useRef(null);
   const [showSticky, setShowSticky] = useState(false);
+
+  function handleGroupEnter(groupId) {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    setOpenGroup(groupId);
+  }
+
+  function handleGroupLeave() {
+    closeTimeoutRef.current = setTimeout(() => setOpenGroup(null), 150);
+  }
 
   useEffect(() => {
     function onScroll() {
@@ -556,7 +565,8 @@ export default function Results() {
               getCriteriaForGroup={getCriteriaForGroup}
               getLevelColor={getLevelColor}
               isOpen={openGroup === group.id}
-              onToggle={() => setOpenGroup(g => g === group.id ? null : group.id)}
+              onMouseEnter={() => handleGroupEnter(group.id)}
+              onMouseLeave={handleGroupLeave}
             />
           ))}
 
