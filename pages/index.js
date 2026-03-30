@@ -253,7 +253,7 @@ export default function Home() {
             </div>
 
             <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 10, color: '#1A1916', maxWidth: 540 }}>
-              Vos concurrents apparaissent dans <span style={{ display: 'inline-block', minWidth: '10.5ch', whiteSpace: 'nowrap' }}><span id="ai-engine-name" style={{ color: '#D97757' }}>ChatGPT</span><span id="ai-cursor" style={{ color: '#D97757' }}>|</span></span>.<br /><span style={{ color: '#D97757' }}>Pas vous.</span>
+              Vos concurrents apparaissent dans <span id="ai-engine-name">ChatGPT</span><span id="ai-cursor" style={{ color: '#D97757' }}>|</span>.<br /><span style={{ color: '#D97757' }}>Pas vous.</span>
             </h1>
 
             <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
