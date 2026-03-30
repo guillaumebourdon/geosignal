@@ -378,18 +378,24 @@ export default function Home() {
       {/* ── STATS DASHBOARD — MOD 5 ──────────────────────────── */}
       <section style={{ background: '#1A1916', padding: '80px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div className="stats-grid" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', overflow: 'hidden' }}>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,40px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1, marginBottom: 10, lineHeight: 1.1 }}>
+            Le GEO en chiffres
+          </h2>
+          <p style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.4)', textAlign: 'center', marginBottom: 48 }}>
+            Pourquoi votre visibilité IA est devenue critique en 2026
+          </p>
+          <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 0, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, overflow: 'hidden' }}>
             {[
-              { emoji: '📊', stat: '94%', label: 'Sites sous 60/100', sub: 'Benchmark interne' },
-              { emoji: '🔍', stat: '8',   label: 'Critères mesurés',  sub: 'Contenu, autorité, technique' },
-              { emoji: '⚡', stat: '30s', label: "Temps d'analyse",   sub: 'Rapport immédiat' },
-              { emoji: '🤖', stat: '4',   label: 'Moteurs couverts',  sub: 'ChatGPT, Claude, Gemini, Perplexity' },
-            ].map(({ emoji, stat, label, sub }, i) => (
-              <div key={stat} style={{ padding: '40px 24px', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.07)' : 'none' }}>
-                <div style={{ fontSize: 20, marginBottom: 12 }}>{emoji}</div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 64, color: '#D97757', letterSpacing: -2, lineHeight: 1, marginBottom: 12 }}>{stat}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: 'rgba(247,245,242,0.55)', textTransform: 'uppercase', marginBottom: 6 }}>{label}</div>
-                <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.28)', fontFamily: 'system-ui', lineHeight: 1.5 }}>{sub}</div>
+              { stat: '+527%', label: 'DE TRAFIC IA EN 2025', desc: 'Le trafic référé par les moteurs IA a explosé entre janvier et mai 2025.', source: 'Previsible, 2025', color: '#D97757' },
+              { stat: '4.4x', label: 'MEILLEUR TAUX DE CONVERSION', desc: 'Les visiteurs référés par les IA convertissent 4,4 fois mieux que les visiteurs organiques.', source: 'Semrush, 2025', color: '#10A37F' },
+              { stat: '80%', label: 'HORS TOP 100 GOOGLE', desc: '80% des URLs citées par ChatGPT ne sont pas dans le top 100 de Google. Le SEO seul ne suffit plus.', source: 'Ahrefs, 2025', color: '#4285F4' },
+              { stat: '73%', label: 'DE SITES NON CRAWLABLES', desc: '73% des sites ne sont pas accessibles aux bots IA à cause de robots.txt ou JavaScript.', source: 'Otterly.AI, 2026', color: '#C9861A' },
+            ].map(({ stat, label, desc, source, color }, i) => (
+              <div key={stat} style={{ padding: '32px 28px', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,5vw,52px)', color, letterSpacing: -1.5, lineHeight: 1, marginBottom: 10 }}>{stat}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: 'rgba(247,245,242,0.5)', textTransform: 'uppercase', marginBottom: 12 }}>{label}</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.45)', lineHeight: 1.6, marginBottom: 8 }}>{desc}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.2)' }}>{source}</div>
               </div>
             ))}
           </div>
