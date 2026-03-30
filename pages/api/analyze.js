@@ -16,54 +16,73 @@ const CACHE_DURATION = 24 * 60 * 60;
 function scoreExtractibility($, text) {
   let score = 0;
   const details = [];
+  // Base : site a du contenu lisible (garanti par le check 200 chars en amont)
+  score += 3; details.push('Contenu présent ✓');
+  // Intro quality
   const intro = text.slice(0, 300);
-  const hasDirectAnswer = intro.split(' ').length > 30;
-  if (hasDirectAnswer) { score += 5; details.push('Intro substantielle ✓'); }
+  const introWords = intro.split(/\s+/).filter(w => w.length > 1).length;
+  if (introWords > 30) { score += 5; details.push('Intro substantielle ✓'); }
+  else if (introWords > 15) { score += 3; details.push('Intro correcte'); }
+  else if (introWords > 5) { score += 1; details.push('Intro courte'); }
   else details.push('Intro trop courte ✗');
+  // Lists
   const listCount = $('ul li, ol li').length;
   if (listCount >= 10) { score += 5; details.push(`${listCount} éléments de liste ✓`); }
   else if (listCount >= 4) { score += 3; details.push(`${listCount} éléments de liste`); }
+  else if (listCount >= 1) { score += 1; details.push(`${listCount} élément de liste`); }
   else details.push('Peu de listes ✗');
+  // Tables
   const tableCount = $('table').length;
-  if (tableCount >= 2) { score += 5; details.push(`${tableCount} tableaux ✓`); }
-  else if (tableCount === 1) { score += 3; details.push('1 tableau'); }
-  else details.push('Aucun tableau ✗');
+  if (tableCount >= 2) { score += 4; details.push(`${tableCount} tableaux ✓`); }
+  else if (tableCount === 1) { score += 2; details.push('1 tableau'); }
+  // H2 structure
   const h2Count = $('h2').length;
-  if (h2Count >= 4) { score += 5; details.push('Structure H2/H3 riche ✓'); }
-  else if (h2Count >= 2) { score += 3; details.push('Structure H2/H3 correcte'); }
-  else details.push('Structure de titres faible ✗');
+  if (h2Count >= 4) { score += 5; details.push('Structure H2 riche ✓'); }
+  else if (h2Count >= 2) { score += 3; details.push('Structure H2 correcte'); }
+  else if (h2Count >= 1) { score += 1; details.push('1 H2 présent'); }
+  else details.push('Aucun H2 ✗');
+  // Short paragraphs
   const paragraphs = $('p');
   const shortParas = Array.from(paragraphs).filter(p => {
     const txt = $(p).text().trim();
     return txt.length > 50 && txt.length < 300;
   }).length;
-  if (shortParas >= 5) { score += 5; details.push(`${shortParas} paragraphes bien calibrés ✓`); }
-  else if (shortParas >= 3) { score += 3; details.push(`${shortParas} paragraphes corrects`); }
-  else details.push('Paragraphes trop longs ou absents ✗');
+  if (shortParas >= 5) { score += 5; details.push(`${shortParas} paragraphes calibrés ✓`); }
+  else if (shortParas >= 2) { score += 3; details.push(`${shortParas} paragraphes corrects`); }
+  else if (shortParas >= 1) { score += 1; details.push(`${shortParas} paragraphe`); }
+  else details.push('Paragraphes longs ou absents ✗');
   return { score: Math.min(score, 25), max: 25, detail: details.slice(0, 3).join(' · ') };
 }
 
 function scoreVerifiability($, text, html) {
   let score = 0;
   const details = [];
+  // Base : contenu vérifiable minimum
+  score += 2; details.push('Contenu vérifiable');
+  // Chiffres et données
   const numbers = text.match(/\d+[.,]?\d*\s*(%|€|\$|k|M|pts?|points?|fois|ans?|mois|jours?)/gi) || [];
   if (numbers.length >= 5) { score += 5; details.push(`${numbers.length} données chiffrées ✓`); }
   else if (numbers.length >= 2) { score += 3; details.push(`${numbers.length} données chiffrées`); }
+  else if (numbers.length >= 1) { score += 1; details.push(`${numbers.length} donnée chiffrée`); }
   else details.push('Peu de données chiffrées ✗');
+  // Liens externes
   const externalLinks = [];
   $('a[href]').each((_, el) => {
     const href = $(el).attr('href') || '';
     if (href.startsWith('http')) externalLinks.push(href);
   });
-  if (externalLinks.length >= 5) { score += 5; details.push(`${externalLinks.length} liens vers sources ✓`); }
+  if (externalLinks.length >= 5) { score += 5; details.push(`${externalLinks.length} liens externes ✓`); }
   else if (externalLinks.length >= 2) { score += 3; details.push(`${externalLinks.length} liens externes`); }
-  else details.push('Peu de sources citées ✗');
+  else if (externalLinks.length >= 1) { score += 1; details.push(`${externalLinks.length} lien externe`); }
+  else details.push('Aucun lien externe ✗');
+  // Dates
   const hasDate = html.includes('datePublished') || html.includes('dateModified') ||
     /\b(20\d{2})\b/.test(text.slice(0, 500)) || $('time[datetime]').length > 0;
   if (hasDate) { score += 4; details.push('Dates présentes ✓'); }
   else details.push('Aucune date visible ✗');
-  if ($('table').length > 0) { score += 4; details.push('Tableaux de données ✓'); }
-  if ($('blockquote').length > 0) { score += 2; details.push('Citations présentes ✓'); }
+  // Tableaux et citations
+  if ($('table').length > 0) { score += 3; details.push('Tableaux de données ✓'); }
+  if ($('blockquote').length > 0) { score += 1; details.push('Citations ✓'); }
   return { score: Math.min(score, 20), max: 20, detail: details.slice(0, 3).join(' · ') };
 }
 
@@ -72,21 +91,23 @@ function scoreAuthority($, html) {
   const details = [];
   const links = [];
   $('a[href]').each((_, el) => links.push(($(el).attr('href') || '').toLowerCase()));
-  const hasAuthorPage = links.some(l => l.includes('author') || l.includes('auteur') || l.includes('equipe') || l.includes('team'));
-  if (hasAuthorPage) { score += 3; details.push('Page auteur ✓'); }
-  else details.push('Pas de page auteur ✗');
-  const hasAuthorSchema = html.includes('"author"') || html.includes('rel="author"');
-  const hasAuthorText = /par\s+[A-Z][a-z]+|by\s+[A-Z][a-z]+|rédigé par|written by/i.test(html);
-  if (hasAuthorSchema || hasAuthorText) { score += 3; details.push('Auteur identifié ✓'); }
-  else details.push('Auteur non identifié ✗');
+  // Base : site avec navigation
+  score += 2; details.push('Site structuré ✓');
+  // Contact
+  const hasContact = links.some(l => l.includes('contact'));
+  if (hasContact) { score += 3; details.push('Page Contact ✓'); }
+  // Légal
+  const hasLegal = links.some(l => l.includes('legal') || l.includes('mention') || l.includes('cgu') || l.includes('privacy') || l.includes('confidential'));
+  if (hasLegal) { score += 2; details.push('Mentions légales ✓'); }
+  // À propos
   const hasAbout = links.some(l => l.includes('about') || l.includes('propos'));
   if (hasAbout) { score += 2; details.push('Page À propos ✓'); }
-  const hasContact = links.some(l => l.includes('contact'));
-  const hasLegal = links.some(l => l.includes('legal') || l.includes('mention') || l.includes('cgu') || l.includes('privacy'));
-  if (hasContact) score += 2;
-  if (hasLegal) score += 2;
-  if (hasContact && hasLegal) details.push('Contact + Légal ✓');
-  else if (hasContact || hasLegal) details.push('Contact ou Légal ✓');
+  // Auteur (page, schema ou texte)
+  const hasAuthorPage = links.some(l => l.includes('author') || l.includes('auteur') || l.includes('equipe') || l.includes('team'));
+  const hasAuthorSchema = html.includes('"author"') || html.includes('rel="author"');
+  const hasAuthorText = /par\s+[A-Z][a-z]+|by\s+[A-Z][a-z]+|rédigé par|written by/i.test(html);
+  if (hasAuthorPage || hasAuthorSchema || hasAuthorText) { score += 3; details.push('Auteur identifié ✓'); }
+  // Schema Organization/Person
   const hasOrgSchema = html.includes('"Organization"') || html.includes('"Person"');
   if (hasOrgSchema) { score += 3; details.push('Schema Organization/Person ✓'); }
   return { score: Math.min(score, 15), max: 15, detail: details.slice(0, 3).join(' · ') };
@@ -95,9 +116,12 @@ function scoreAuthority($, html) {
 function scoreCrawlability($, html) {
   let score = 0;
   const details = [];
+  // Base : site accessible
+  score += 1;
   const textLength = $('body').text().replace(/\s+/g, ' ').trim().length;
   if (textLength > 3000) { score += 4; details.push(`${textLength} chars ✓`); }
-  else if (textLength > 1000) { score += 2; details.push(`${textLength} chars`); }
+  else if (textLength > 1000) { score += 3; details.push(`${textLength} chars`); }
+  else if (textLength > 500) { score += 1; details.push(`${textLength} chars`); }
   else details.push('Contenu trop court ✗');
   if ($('html[lang]').length > 0) { score += 2; details.push('Lang défini ✓'); }
   if ($('link[rel="canonical"]').length > 0) { score += 2; details.push('Canonical ✓'); }
@@ -106,7 +130,7 @@ function scoreCrawlability($, html) {
   else details.push('NOINDEX détecté ✗');
   if (html.includes('sitemap')) { score += 2; details.push('Sitemap ✓'); }
   if (html.includes('GPTBot') || html.includes('OAI-SearchBot') || html.includes('ClaudeBot')) {
-    score += 2; details.push('Bots IA mentionnés ✓');
+    score += 1; details.push('Bots IA mentionnés ✓');
   }
   return { score: Math.min(score, 15), max: 15, detail: details.slice(0, 3).join(' · ') };
 }
@@ -114,6 +138,11 @@ function scoreCrawlability($, html) {
 function scoreStructuredData($, html) {
   let score = 0;
   const details = [];
+  // Base : HTML sémantique même sans JSON-LD
+  const semanticCount = $('nav, main, article, section, header, footer').length;
+  if (semanticCount >= 3) { score += 2; details.push('HTML sémantique ✓'); }
+  else if (semanticCount >= 1) { score += 1; details.push('HTML partiellement sémantique'); }
+  // JSON-LD schemas
   const schemaTypes = [];
   $('script[type="application/ld+json"]').each((_, el) => {
     try {
@@ -131,8 +160,7 @@ function scoreStructuredData($, html) {
   if (hasHighValue) { score += 5; details.push(`Schema prioritaire : ${schemaTypes.filter(t => highValueTypes.includes(t)).join(', ')} ✓`); }
   if (hasMedValue) { score += 3; details.push(`Schema entité : ${schemaTypes.filter(t => medValueTypes.includes(t)).join(', ')} ✓`); }
   if (schemaTypes.length > 0 && !hasHighValue && !hasMedValue) { score += 1; details.push(`Schema : ${schemaTypes[0]}`); }
-  if (schemaTypes.length === 0) details.push('Aucun schema.org ✗');
-  if (hasHighValue && $('h2').length > 2) { score += 2; details.push('Schema cohérent ✓'); }
+  if (schemaTypes.length === 0) details.push('Aucun schema.org JSON-LD ✗');
   return { score: Math.min(score, 10), max: 10, detail: details.slice(0, 2).join(' · ') || 'Aucun schema.org détecté' };
 }
 
@@ -144,8 +172,10 @@ function scoreExternalPresence($, html) {
     const href = $(el).attr('href') || '';
     if (href.startsWith('http')) externalLinks.push(href.toLowerCase());
   });
+  // Base : a des liens externes
+  if (externalLinks.length > 0) { score += 1; details.push('Liens externes présents ✓'); }
   const hasPress = /presse|média|press|featured|vu dans|as seen/i.test(html);
-  const hasSocial = externalLinks.some(l => l.includes('linkedin') || l.includes('twitter') || l.includes('facebook') || l.includes('instagram'));
+  const hasSocial = externalLinks.some(l => l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube'));
   const hasTestimonials = /témoignage|avis client|review|testimonial/i.test(html);
   if (hasPress) { score += 2; details.push('Mentions presse ✓'); }
   if (hasSocial) { score += 2; details.push('Réseaux sociaux ✓'); }
@@ -158,10 +188,15 @@ function scoreFreshness($, html) {
   let score = 0;
   const details = [];
   const currentYear = new Date().getFullYear();
-  if (html.includes('dateModified')) { score += 2; details.push('Date de mise à jour ✓'); }
+  // Base : une année quelconque est mentionnée
+  if (/\b20\d{2}\b/.test(html)) { score += 1; details.push('Année présente'); }
+  // Année récente
   const recentYearRegex = new RegExp(`\\b(${currentYear}|${currentYear - 1})\\b`);
-  if (recentYearRegex.test(html)) { score += 2; details.push(`Contenu récent (${currentYear}) ✓`); }
+  if (recentYearRegex.test(html)) { score += 1; details.push(`Contenu récent (${currentYear}) ✓`); }
   else details.push('Contenu possiblement daté ✗');
+  // Date de mise à jour schema
+  if (html.includes('dateModified')) { score += 2; details.push('Date de mise à jour ✓'); }
+  // Copyright à jour
   if (new RegExp(`©\\s*${currentYear}`).test(html)) { score += 1; details.push('Copyright à jour ✓'); }
   return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') || 'Fraîcheur non détectable' };
 }
@@ -331,6 +366,38 @@ JSON uniquement, sans markdown :
   return JSON.parse(jsonMatch[0]);
 }
 
+async function runCitationTest(url, textContent, metaTitle) {
+  const hostname = new URL(url).hostname.replace(/^www\./, '');
+  const brand = metaTitle ? metaTitle.split(/[-|–·]/)[0].trim() : hostname;
+  const intro = textContent.slice(0, 400);
+
+  const prompt = `Tu es un moteur de recherche IA. En te basant sur le contenu suivant, génère une question pertinente qu'un utilisateur pourrait poser (type "Quelle agence X recommandes-tu à Paris ?" ou "Quel outil Y choisir pour Z ?"), puis réponds naturellement comme ChatGPT ou Perplexity en citant des sources réelles dans ce domaine.
+
+Site : ${url}
+Titre : ${brand}
+Extrait : ${intro}
+
+Ensuite, analyse ta propre réponse :
+1. Est-ce que le site ${hostname} ou la marque "${brand}" apparaît dans ta réponse ?
+2. Si non, quels sites/marques apparaissent à la place ?
+3. Pourquoi ce site n'est-il pas cité ? (1 phrase courte)
+
+Réponds UNIQUEMENT en JSON sans markdown :
+{"cited":true,"competitors_cited":[],"reason_not_cited":"","test_query":"","ai_response_excerpt":""}`;
+
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1024,
+    temperature: 0.3,
+    messages: [{ role: 'user', content: prompt }],
+  });
+
+  const raw = message.content[0].text;
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) return null;
+  return JSON.parse(jsonMatch[0]);
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -340,7 +407,7 @@ export default async function handler(req, res) {
   const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   console.log('analyze: starting for', url);
 
-  const cacheKey = `detekia:v9:${url.toLowerCase()}`;
+  const cacheKey = `detekia:v10:${url.toLowerCase()}`;
 
   try {
     const cached = await redis.get(cacheKey);
@@ -366,6 +433,8 @@ export default async function handler(req, res) {
       return res.status(422).json({ error: "Impossible d'analyser ce site. Contenu trop court ou inaccessible." });
     }
 
+    const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || '';
+
     const scores = {
       extractibility:   scoreExtractibility($, textContent),
       verifiability:    scoreVerifiability($, textContent, rawContent),
@@ -376,12 +445,13 @@ export default async function handler(req, res) {
       freshness:        scoreFreshness($, rawContent),
     };
 
-    const [claude, evidence] = await Promise.all([
+    const [claude, evidence, citationTest] = await Promise.all([
       runClaudeAnalysis(url, textContent, scores),
       collectEvidence($, textContent, rawContent, url),
+      runCitationTest(url, textContent, metaTitle).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
     const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
-    const neutralityBonus = Math.round((claude.neutralityScore / 10) * 10) - 5;
+    const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;
     const totalScore = Math.max(0, Math.min(100, baseScore + neutralityBonus));
 
     const responseData = {
@@ -401,6 +471,7 @@ export default async function handler(req, res) {
       ],
       recommendations: claude.recommendations,
       evidence,
+      citationTest: citationTest || null,
     };
 
     try {
