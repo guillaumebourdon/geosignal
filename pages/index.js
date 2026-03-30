@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 /* ─── Helpers ───────────────────────────────────────────── */
@@ -154,6 +154,40 @@ export default function Home() {
   const [url, setUrl] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    const engines = ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'];
+    let engineIndex = 0;
+    let charIndex = engines[0].length; // ChatGPT already fully typed
+    let isDeleting = true;
+    let timeoutId;
+
+    function tick() {
+      const nameEl = document.getElementById('ai-engine-name');
+      if (!nameEl) return;
+      const current = engines[engineIndex];
+
+      if (isDeleting && charIndex > 0) {
+        charIndex--;
+        nameEl.textContent = current.slice(0, charIndex);
+        timeoutId = setTimeout(tick, 40);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        engineIndex = (engineIndex + 1) % engines.length;
+        timeoutId = setTimeout(tick, 300);
+      } else if (!isDeleting && charIndex < engines[engineIndex].length) {
+        charIndex++;
+        nameEl.textContent = engines[engineIndex].slice(0, charIndex);
+        timeoutId = setTimeout(tick, 80);
+      } else {
+        isDeleting = true;
+        timeoutId = setTimeout(tick, 1500);
+      }
+    }
+
+    timeoutId = setTimeout(tick, 2000);
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   async function analyze() {
     if (!url) return;
     const cleanUrl = url.replace(/^https?:\/\//, '');
@@ -219,7 +253,7 @@ export default function Home() {
             </div>
 
             <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 10, color: '#1A1916', maxWidth: 540 }}>
-              Vos concurrents apparaissent dans ChatGPT.<br /><span style={{ color: '#D97757' }}>Pas vous.</span>
+              Vos concurrents apparaissent dans <span style={{ display: 'inline-block', minWidth: '10.5ch', whiteSpace: 'nowrap' }}><span id="ai-engine-name" style={{ color: '#D97757' }}>ChatGPT</span><span id="ai-cursor" style={{ color: '#D97757' }}>|</span></span>.<br /><span style={{ color: '#D97757' }}>Pas vous.</span>
             </h1>
 
             <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
@@ -634,6 +668,8 @@ export default function Home() {
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: #8A8680; }
+        @keyframes ai-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        #ai-cursor { animation: ai-blink 1.06s step-end infinite; font-weight: 300; }
         @media (max-width: 640px) {
           .hero-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
           .hero-input-wrap input { border-radius: 10px 10px 0 0 !important; }
