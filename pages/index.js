@@ -179,10 +179,20 @@ export default function Home() {
         nameEl.textContent = engines[engineIndex].slice(0, charIndex);
         timeoutId = setTimeout(tick, 80);
       } else {
+        // Word complete — show dot
+        nameEl.textContent = engines[engineIndex] + '.';
         isDeleting = true;
-        timeoutId = setTimeout(tick, 1500);
+        timeoutId = setTimeout(() => {
+          // Remove dot before deleting
+          nameEl.textContent = engines[engineIndex];
+          tick();
+        }, 1500);
       }
     }
+
+    // Show dot on initial ChatGPT
+    const nameEl = document.getElementById('ai-engine-name');
+    if (nameEl) nameEl.textContent = 'ChatGPT.';
 
     timeoutId = setTimeout(tick, 2000);
     return () => clearTimeout(timeoutId);
@@ -253,7 +263,7 @@ export default function Home() {
             </div>
 
             <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 10, color: '#1A1916', maxWidth: 540 }}>
-              Vos concurrents apparaissent dans <span id="ai-engine-name">ChatGPT</span>.<span id="ai-cursor" style={{ color: '#D97757' }}>|</span><br /><span style={{ color: '#D97757' }}>Pas vous.</span>
+              Vos concurrents apparaissent dans <span id="ai-engine-name">ChatGPT.</span><span id="ai-cursor" style={{ color: '#D97757' }}>|</span><br /><span style={{ color: '#D97757' }}>Pas vous.</span>
             </h1>
 
             <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
