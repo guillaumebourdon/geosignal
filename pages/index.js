@@ -616,7 +616,9 @@ export default function Home() {
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 52, lineHeight: 1.1 }}>
             Questions <em style={{ color: '#D97757' }}>fréquentes</em>
           </h2>
-          {faqs.map((faq, i) => <FAQItem key={i} question={faq.question} answer={faq.answer} />)}
+          <div className="faq-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
+            {faqs.map((faq, i) => <FAQItem key={i} question={faq.question} answer={faq.answer} />)}
+          </div>
         </div>
       </section>
 
