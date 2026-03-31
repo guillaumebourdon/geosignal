@@ -1,7 +1,10 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { Redis } from '@upstash/redis';
+import { Resend } from 'resend';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const config = { maxDuration: 30 };
 
@@ -479,6 +482,31 @@ export default async function handler(req, res) {
       await redis.set(cacheKey, responseData, { ex: CACHE_DURATION });
     } catch (e) {
       console.error('Cache write error:', e.message);
+    }
+
+    // Notification admin
+    try {
+      await resend.emails.send({
+        from: 'Detekia <hello@detekia.fr>',
+        to: 'guillaume@beeleven.fr',
+        subject: `🔍 Nouveau scan — ${url} — Score ${totalScore}/100`,
+        html: `
+          <div style="font-family: system-ui; max-width: 500px;">
+            <h2 style="color: #1A1916;">Nouveau scan Detekia</h2>
+            <p><strong>URL :</strong> ${url}</p>
+            <p><strong>Score :</strong> ${totalScore}/100</p>
+            <p><strong>Verdict :</strong> ${claude.verdict}</p>
+            <p><strong>Date :</strong> ${new Date().toLocaleString('fr-FR')}</p>
+            <hr style="border: 1px solid #E5E2DC;" />
+            <p style="color: #8A8680; font-size: 12px;">Détails des critères :</p>
+            ${responseData.criteria.map(c =>
+              `<p style="font-size: 12px; margin: 4px 0;"><strong>${c.name}</strong> : ${c.score}/${c.max}</p>`
+            ).join('')}
+          </div>
+        `,
+      });
+    } catch (emailErr) {
+      console.log('Admin notification failed:', emailErr.message);
     }
 
     return res.status(200).json(responseData);
