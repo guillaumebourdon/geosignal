@@ -61,7 +61,7 @@ export default function BlogIndex() {
         {/* ARTICLE GRID */}
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 24px 100px' }}>
           <div className="blog-grid">
-            {articles.map(article => {
+            {articles.slice().reverse().map(article => {
               const catColor = CATEGORY_COLORS[article.category] || '#8A8680';
               return (
                 <a
