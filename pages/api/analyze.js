@@ -83,14 +83,23 @@ function scoreExtractibility($, text, raw) {
   const tableCount = htmlTableCount > 0 ? htmlTableCount : (mdTableLines >= 3 ? 1 : 0);
   if (tableCount >= 2) { score += 4; details.push(`${tableCount} tableaux ✓`); }
   else if (tableCount === 1) { score += 2; details.push('1 tableau'); }
-  // H2 structure — HTML or markdown fallback
+  // Heading structure — HTML or markdown fallback
+  const htmlH1Count = $('h1').length;
+  const mdH1Count = (raw.match(/^# .+/gm) || []).length;
+  const h1Count = Math.max(htmlH1Count, mdH1Count);
   const htmlH2Count = $('h2').length;
-  const mdH2Count = (raw.match(/^##\s+/gm) || []).length;
+  const mdH2Count = (raw.match(/^## .+/gm) || []).length;
   const h2Count = Math.max(htmlH2Count, mdH2Count);
-  if (h2Count >= 4) { score += 5; details.push('Structure H2 riche ✓'); }
-  else if (h2Count >= 2) { score += 3; details.push('Structure H2 correcte'); }
-  else if (h2Count >= 1) { score += 1; details.push('1 H2 présent'); }
+  const htmlH3Count = $('h3').length;
+  const mdH3Count = (raw.match(/^### .+/gm) || []).length;
+  const h3Count = Math.max(htmlH3Count, mdH3Count);
+  if (h1Count >= 1) details.push(`H1 présent ✓`);
+  else details.push('Aucun H1 détecté ✗');
+  if (h2Count >= 4) { score += 5; details.push(`${h2Count} H2 ✓`); }
+  else if (h2Count >= 2) { score += 3; details.push(`${h2Count} H2`); }
+  else if (h2Count >= 1) { score += 1; details.push('1 H2'); }
   else details.push('Aucun H2 ✗');
+  if (h3Count >= 3) { score += 1; details.push(`${h3Count} H3 ✓`); }
   // Short paragraphs — HTML or markdown fallback
   const htmlShortParas = Array.from($('p')).filter(p => {
     const txt = $(p).text().trim();
@@ -108,7 +117,7 @@ function scoreExtractibility($, text, raw) {
   return { score: Math.min(score, 25), max: 25, detail: details.slice(0, 3).join(' · ') };
 }
 
-function scoreVerifiability($, text, html) {
+function scoreVerifiability($, text, html, siteHostname) {
   let score = 0;
   const details = [];
   // Base : contenu vérifiable minimum
@@ -125,7 +134,7 @@ function scoreVerifiability($, text, html) {
     const href = $(el).attr('href') || '';
     if (href.startsWith('http')) htmlExtLinks.push(href);
   });
-  const externalLinks = htmlExtLinks.length > 0 ? htmlExtLinks : mdExternalLinks(html, null);
+  const externalLinks = htmlExtLinks.length > 0 ? htmlExtLinks : mdExternalLinks(html, siteHostname);
   if (externalLinks.length >= 5) { score += 5; details.push(`${externalLinks.length} liens externes ✓`); }
   else if (externalLinks.length >= 2) { score += 3; details.push(`${externalLinks.length} liens externes`); }
   else if (externalLinks.length >= 1) { score += 1; details.push(`${externalLinks.length} lien externe`); }
@@ -202,7 +211,7 @@ function scoreStructuredData($, html) {
   const semanticCount = $('nav, main, article, section, header, footer').length;
   if (semanticCount >= 3) { score += 2; details.push('HTML sémantique ✓'); }
   else if (semanticCount >= 1) { score += 1; details.push('HTML partiellement sémantique'); }
-  // JSON-LD schemas
+  // JSON-LD schemas — HTML parser or rawContent regex fallback (Jina strips <script> tags)
   const schemaTypes = [];
   $('script[type="application/ld+json"]').each((_, el) => {
     try {
@@ -213,6 +222,14 @@ function scoreStructuredData($, html) {
       }
     } catch {}
   });
+  if (schemaTypes.length === 0) {
+    // Fallback: look for "@type" in raw markdown/text content
+    const rawTypeMatches = html.match(/"@type"\s*:\s*"([^"]+)"/g) || [];
+    rawTypeMatches.forEach(m => {
+      const t = m.match(/"@type"\s*:\s*"([^"]+)"/)?.[1];
+      if (t && !schemaTypes.includes(t)) schemaTypes.push(t);
+    });
+  }
   const highValueTypes = ['FAQPage', 'QAPage', 'HowTo', 'Article', 'BlogPosting'];
   const medValueTypes = ['Organization', 'Person', 'Product', 'Service', 'WebSite'];
   const hasHighValue = schemaTypes.some(t => highValueTypes.includes(t));
@@ -220,7 +237,7 @@ function scoreStructuredData($, html) {
   if (hasHighValue) { score += 5; details.push(`Schema prioritaire : ${schemaTypes.filter(t => highValueTypes.includes(t)).join(', ')} ✓`); }
   if (hasMedValue) { score += 3; details.push(`Schema entité : ${schemaTypes.filter(t => medValueTypes.includes(t)).join(', ')} ✓`); }
   if (schemaTypes.length > 0 && !hasHighValue && !hasMedValue) { score += 1; details.push(`Schema : ${schemaTypes[0]}`); }
-  if (schemaTypes.length === 0) details.push('Aucun schema JSON-LD identifié ✗');
+  if (schemaTypes.length === 0) details.push('Aucun schema JSON-LD identifié dans le contenu analysé ✗');
   return { score: Math.min(score, 10), max: 10, detail: details.slice(0, 2).join(' · ') || 'Aucun schema JSON-LD identifié dans le contenu analysé' };
 }
 
@@ -523,9 +540,12 @@ export default async function handler(req, res) {
     const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || jinaTitle(rawContent) || '';
     const metaDescription = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content') || jinaDescription(rawContent) || '';
 
+    let siteHostname = null;
+    try { siteHostname = new URL(url).hostname; } catch {}
+
     const scores = {
       extractibility:   scoreExtractibility($, textContent, rawContent),
-      verifiability:    scoreVerifiability($, textContent, rawContent),
+      verifiability:    scoreVerifiability($, textContent, rawContent, siteHostname),
       authority:        scoreAuthority($, rawContent),
       crawlability:     scoreCrawlability($, rawContent),
       structuredData:   scoreStructuredData($, rawContent),
