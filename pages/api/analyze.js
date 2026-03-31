@@ -6,7 +6,7 @@ import * as cheerio from 'cheerio';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const config = { maxDuration: 30 };
+export const config = { maxDuration: 60 };
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const redis = new Redis({
@@ -395,7 +395,7 @@ Réponds UNIQUEMENT en JSON sans markdown :
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 2500,
+    max_tokens: 1500,
     temperature: 0.3,
     messages: [{ role: 'user', content: prompt }],
   });
@@ -431,7 +431,7 @@ export default async function handler(req, res) {
     const jinaUrl = `https://r.jina.ai/${url}`;
     const { data: rawContent } = await axios.get(jinaUrl, {
       headers: { Accept: 'text/html' },
-      timeout: 20000,
+      timeout: 10000,
     });
 
     const $ = cheerio.load(rawContent);
