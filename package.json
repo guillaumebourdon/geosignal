@@ -14,7 +14,6 @@
     "@stripe/stripe-js": "^9.0.0",
     "@upstash/redis": "^1.37.0",
     "@vercel/analytics": "^2.0.1",
-    "@vercel/functions": "^3.4.3",
     "axios": "^1.13.6",
     "cheerio": "^1.2.0",
     "micro": "^10.0.1",
