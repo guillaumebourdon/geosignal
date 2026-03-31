@@ -669,29 +669,35 @@ export default async function handler(req, res) {
   // ── Enrich recommendations with detailed Claude analysis ──────────────────
   const enrichedData = { ...data };
   try {
-    const enrichPrompt = `Tu es un expert en GEO (Generative Engine Optimization). Voici les résultats d'un audit GEO pour le site ${url} (score ${data.score}/100).
+    const enrichPrompt = `Tu es un consultant expert en GEO (Generative Engine Optimization) avec 15 ans d'expérience en SEO technique. Tu rédiges un rapport premium facturé 29€.
 
-Voici les recommandations courtes générées par l'audit :
+Site analysé : ${url} (score ${data.score}/100)
+
+Voici les recommandations courtes de l'audit :
 ${JSON.stringify(data.recommendations)}
 
-Voici les preuves techniques collectées :
+Voici les preuves techniques collectées sur le site :
 ${JSON.stringify(data.evidence)}
 
-Pour CHAQUE recommandation, enrichis-la avec des textes LONGS et DÉTAILLÉS, SPÉCIFIQUES au site analysé :
-- "diagnostic" : 2-3 phrases décrivant précisément le problème trouvé sur CE site, avec des exemples tirés du contenu réel
-- "whyCritical" : 2-3 phrases expliquant l'impact business concret
-- "whatToDo" : 2-3 phrases avec l'action précise à mener
-- "howToDoIt" : 3-4 phrases avec les étapes techniques détaillées, incluant du code HTML ou des balises quand pertinent
-- "concreteExample" : Un exemple CONCRET et SPÉCIFIQUE au site analysé, pas générique
-- "expectedImpact" : Quantifier l'impact attendu ("+X points sur ce critère", "Yx plus de chances d'être cité")
-- "expertTip" : Un conseil avancé que seul un expert donnerait
+MISSION : Pour CHAQUE recommandation, réécris-la avec des textes LONGS, DÉTAILLÉS et SPÉCIFIQUES au site analysé. Ce rapport est payant, le client attend de la profondeur et de la valeur.
 
-Réponds UNIQUEMENT en JSON, un tableau de recommandations enrichies :
+RÈGLES STRICTES pour chaque champ :
+- "diagnostic" : MINIMUM 3 phrases. Décris précisément le problème trouvé sur CE site. Cite des éléments réels du site (balises, contenu, structure). Explique pourquoi c'est un problème.
+- "whyCritical" : MINIMUM 2 phrases. Explique l'impact business concret avec des données chiffrées si possible. Fais le lien avec la visibilité IA.
+- "whatToDo" : MINIMUM 2 phrases. Donne l'action précise à mener, pas du générique. Sois spécifique au site analysé.
+- "howToDoIt" : MINIMUM 3 phrases. Donne les étapes techniques détaillées. Inclus du code HTML, des exemples de balises, des noms de fichiers quand c'est pertinent. Le client doit pouvoir donner ça à son développeur.
+- "concreteExample" : MINIMUM 2 phrases. Un exemple CONCRET tiré du vrai contenu du site, pas un exemple générique. Montre le avant/après.
+- "expectedImpact" : MINIMUM 2 phrases. Quantifie l'impact attendu en points de score ET en bénéfice business (trafic, citations, conversions).
+- "expertTip" : MINIMUM 2 phrases. Un conseil avancé que seul un expert senior donnerait. Pas du basique.
+
+Garde les champs "priority", "criterion" et "title" identiques aux originaux.
+
+Réponds UNIQUEMENT en JSON valide, un tableau de recommandations enrichies. Pas de markdown, pas de commentaires, juste le JSON :
 [{"priority":"...","criterion":"...","title":"...","diagnostic":"...","whyCritical":"...","whatToDo":"...","howToDoIt":"...","concreteExample":"...","expectedImpact":"...","expertTip":"..."}]`;
 
     const enrichMessage = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 6000,
+      max_tokens: 8000,
       temperature: 0.2,
       messages: [{ role: 'user', content: enrichPrompt }],
     });
