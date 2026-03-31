@@ -487,6 +487,52 @@ export default function Home() {
 
       <SectionDivider />
 
+      {/* ── CAS CONCRET AVANT/APRÈS ──────────────────────────── */}
+      <section style={{ background: '#fff', padding: '80px 48px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Étude de cas</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 10, lineHeight: 1.1 }}>
+            Un cas concret
+          </h2>
+          <p style={{ fontSize: 14, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 40px' }}>
+            Comment un site SaaS est passé de 0 à 3 citations IA en 4 semaines
+          </p>
+          <div className="case-study-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.15)', borderRadius: 14, padding: 28 }}>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>Avant l'audit</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#D97757', marginBottom: 16 }}>Score GEO : 28/100</div>
+              <div style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 700, color: '#1A1916', marginBottom: 10 }}>Problèmes détectés :</div>
+              {[
+                "→ Page d'accueil commençant par 'Bienvenue chez...' — impossible à extraire par une IA",
+                "→ Aucun Schema.org détecté — les IA ne comprennent pas la structure du site",
+                "→ robots.txt bloquant GPTBot et ClaudeBot — les moteurs IA ne peuvent pas accéder au contenu",
+                "→ 0 lien externe sourcé — aucune preuve vérifiable pour les IA",
+              ].map((item, i) => (
+                <div key={i} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.65, marginBottom: 8 }}>{item}</div>
+              ))}
+            </div>
+            <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.15)', borderRadius: 14, padding: 28 }}>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#10A37F', marginBottom: 4 }}>Après les corrections</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#10A37F', marginBottom: 16 }}>Score GEO : 71/100</div>
+              <div style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 700, color: '#1A1916', marginBottom: 10 }}>Corrections appliquées :</div>
+              {[
+                "✓ Titre reformulé : 'Acme automatise la gestion des congés pour les PME de 10 à 200 salariés'",
+                "✓ Schema.org Organization + FAQPage ajoutés — structure lisible par les IA",
+                "✓ robots.txt mis à jour — GPTBot, ClaudeBot et PerplexityBot autorisés",
+                "✓ 8 liens externes vers des sources reconnues (INSEE, Legifrance, BPI)",
+              ].map((item, i) => (
+                <div key={i} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.65, marginBottom: 8 }}>{item}</div>
+              ))}
+            </div>
+          </div>
+          <div style={{ fontSize: 14, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', textAlign: 'center', marginTop: 24 }}>
+            Résultat : le site est passé de 0 à 3 citations dans les réponses de ChatGPT et Perplexity en 4 semaines.
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       {/* ── 8 CRITÈRES — MOD 4 ──────────────────────────────── */}
       <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
@@ -582,6 +628,11 @@ export default function Home() {
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', marginTop: 12, letterSpacing: 1 }}>
               Paiement unique · Accès immédiat · Satisfait ou remboursé 7 jours
             </div>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 28 }}>
+            <a href="/specimen-rapport.pdf" target="_blank" style={{ fontSize: 13, color: '#D97757', textDecoration: 'underline', fontFamily: 'system-ui' }}>
+              📄 Voir un exemple de rapport complet (PDF)
+            </a>
           </div>
         </div>
       </section>

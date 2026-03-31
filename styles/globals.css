@@ -54,7 +54,8 @@
   .reco-example-grid,
   .before-after-grid,
   .target-grid,
-  .diff-grid {
+  .diff-grid,
+  .case-study-grid {
     grid-template-columns: 1fr !important;
   }
 

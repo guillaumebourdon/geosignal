@@ -516,6 +516,9 @@ export default function Results() {
                   <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#4285F4' }}>✓ Preuves techniques</span>
                   <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#D97757' }}>✓ Cas réels sourcés</span>
                 </div>
+                <a href="/specimen-rapport.pdf" target="_blank" style={{ fontSize: 11, color: '#D97757', textDecoration: 'underline', fontFamily: 'system-ui', marginTop: 8, display: 'inline-block' }}>
+                  Voir un exemple de rapport →
+                </a>
               </div>
               <div style={{ flexShrink: 0, textAlign: 'center' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#D97757', fontWeight: 'bold', lineHeight: 1 }}>29 €</div>
