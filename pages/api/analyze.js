@@ -340,34 +340,25 @@ async function runClaudeAnalysis(url, textContent, scores) {
 
   const prompt = `Tu es un consultant GEO senior. Audite ${url}.
 
-URL ANALYSÉE : ${url}
-SCORES GLOBAL : ${total}/100
+URL : ${url}
+SCORE : ${total}/100
 CRITÈRES SOUS LE SEUIL :
 ${criteriaList}
 
-EXTRAIT DU CONTENU DU SITE (600 premiers caractères) :
-${textContent.slice(0, 600)}
+CONTENU (300 premiers caractères) :
+${textContent.slice(0, 300)}
 
 RÈGLES :
-1. Par critère sous 80%, génère : score 0–40% → 3 recommandations ; score 40–60% → 2 ; score 60–80% → 1.
-2. Génère aussi 1 recommandation pour la Neutralité éditoriale.
-3. Total : entre 8 et 15 recommandations.
-4. Chaque recommandation doit être SPÉCIFIQUE à ce site. Utilise l'URL, le contenu réel et les scores observés.
-5. Longueur des champs (respecte ces minimums) :
-   - diagnostic : 2 à 3 phrases décrivant précisément le problème constaté sur CE site
-   - whyCritical : 2 à 3 phrases sur l'impact business concret si ce problème n'est pas corrigé
-   - whatToDo : 2 à 3 phrases décrivant l'action précise à mener
-   - howToDoIt : 3 à 4 phrases avec les étapes techniques détaillées ; inclure un exemple de code HTML ou JSON-LD quand pertinent
-   - concreteExample : 1 exemple CONCRET et SPÉCIFIQUE à ce site (citer le vrai contenu ou la vraie URL)
-   - expectedImpact : quantifier l'impact attendu (ex: "+12 points sur ce critère", "2× plus de chances d'être cité par ChatGPT")
-   - expertTip : conseil avancé qu'un expert SEO/GEO donnerait en consultation payante
+1. Génère EXACTEMENT 8 recommandations : 1 par critère sous le seuil + 1 pour la Neutralité éditoriale.
+2. Chaque champ doit tenir en 1 phrase max (sauf howToDoIt : 2 phrases max).
+3. Sois spécifique à ce site.
 
 JSON uniquement, sans markdown :
-{"neutralityScore":<0-10>,"neutralityDetail":"<2 phrases>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<5 mots max>","diagnostic":"<2-3 phrases>","whyCritical":"<2-3 phrases>","whatToDo":"<2-3 phrases>","howToDoIt":"<3-4 phrases avec code si pertinent>","concreteExample":"<exemple spécifique au site>","expectedImpact":"<impact quantifié>","expertTip":"<conseil expert>"}],"verdict":"<2 phrases>","strengths":["<1 phrase>","<1 phrase>"],"topPriority":"<1 phrase>"}`;
+{"neutralityScore":<0-10>,"neutralityDetail":"<1 phrase>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<5 mots max>","diagnostic":"<1 phrase>","whyCritical":"<1 phrase>","whatToDo":"<1 phrase>","howToDoIt":"<2 phrases>","concreteExample":"<1 phrase>","expectedImpact":"<1 phrase>","expertTip":"<1 phrase>"}],"verdict":"<1 phrase>","strengths":["<1 phrase>","<1 phrase>"],"topPriority":"<1 phrase>"}`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 8192,
+    max_tokens: 4096,
     temperature: 0.2,
     messages: [{ role: 'user', content: prompt }],
   });
@@ -492,38 +483,31 @@ export default async function handler(req, res) {
       citationTest: citationTest || null,
     };
 
-    try {
-      await redis.set(cacheKey, responseData, { ex: CACHE_DURATION });
-    } catch (e) {
-      console.error('Cache write error:', e.message);
-    }
+    // Réponse envoyée au client en premier — cache et email en fire-and-forget
+    res.status(200).json(responseData);
 
-    // Notification admin
-    try {
-      await resend.emails.send({
-        from: 'Detekia <hello@detekia.fr>',
-        to: 'guillaume@beeleven.fr',
-        subject: `🔍 Nouveau scan — ${url} — Score ${totalScore}/100`,
-        html: `
-          <div style="font-family: system-ui; max-width: 500px;">
-            <h2 style="color: #1A1916;">Nouveau scan Detekia</h2>
-            <p><strong>URL :</strong> ${url}</p>
-            <p><strong>Score :</strong> ${totalScore}/100</p>
-            <p><strong>Verdict :</strong> ${claude.verdict}</p>
-            <p><strong>Date :</strong> ${new Date().toLocaleString('fr-FR')}</p>
-            <hr style="border: 1px solid #E5E2DC;" />
-            <p style="color: #8A8680; font-size: 12px;">Détails des critères :</p>
-            ${responseData.criteria.map(c =>
-              `<p style="font-size: 12px; margin: 4px 0;"><strong>${c.name}</strong> : ${c.score}/${c.max}</p>`
-            ).join('')}
-          </div>
-        `,
-      });
-    } catch (emailErr) {
-      console.log('Admin notification failed:', emailErr.message);
-    }
+    redis.set(cacheKey, responseData, { ex: CACHE_DURATION })
+      .catch(e => console.error('Cache write error:', e.message));
 
-    return res.status(200).json(responseData);
+    resend.emails.send({
+      from: 'Detekia <hello@detekia.fr>',
+      to: 'guillaume@beeleven.fr',
+      subject: `🔍 Nouveau scan — ${url} — Score ${totalScore}/100`,
+      html: `
+        <div style="font-family: system-ui; max-width: 500px;">
+          <h2 style="color: #1A1916;">Nouveau scan Detekia</h2>
+          <p><strong>URL :</strong> ${url}</p>
+          <p><strong>Score :</strong> ${totalScore}/100</p>
+          <p><strong>Verdict :</strong> ${claude.verdict}</p>
+          <p><strong>Date :</strong> ${new Date().toLocaleString('fr-FR')}</p>
+          <hr style="border: 1px solid #E5E2DC;" />
+          <p style="color: #8A8680; font-size: 12px;">Détails des critères :</p>
+          ${responseData.criteria.map(c =>
+            `<p style="font-size: 12px; margin: 4px 0;"><strong>${c.name}</strong> : ${c.score}/${c.max}</p>`
+          ).join('')}
+        </div>
+      `,
+    }).catch(e => console.log('Admin notification failed:', e.message));
 
   } catch (err) {
     console.error('Analysis error:', err.message);
