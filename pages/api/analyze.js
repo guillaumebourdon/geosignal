@@ -424,7 +424,7 @@ export default async function handler(req, res) {
   const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   console.log('analyze: starting for', url);
 
-  const cacheKey = `detekia:v10:${url.toLowerCase()}`;
+  const cacheKey = `detekia:v11:${url.toLowerCase()}`;
 
   try {
     const cached = await redis.get(cacheKey);
