@@ -16,6 +16,7 @@ const CONTENT_MAP = {
   'audit-geo-visibilite-ia': require('../../content/articles/audit-geo-visibilite-ia').default,
   'reddit-geo-source-ia': require('../../content/articles/reddit-geo-source-ia').default,
   'concurrents-chatgpt-visibilite': require('../../content/articles/concurrents-chatgpt-visibilite').default,
+  'pourquoi-trafic-google-baisse-2026': require('../../content/articles/pourquoi-trafic-google-baisse-2026').default,
 };
 
 const CATEGORY_COLORS = {
@@ -48,7 +49,7 @@ export default function ArticlePage({ article, related }) {
   if (!article) return null;
 
   const catColor = CATEGORY_COLORS[article.category] || '#8A8680';
-  const canonicalUrl = `https://www.detekia.fr/blog/${article.slug}`;
+  const canonicalUrl = `https://detekia.fr/blog/${article.slug}`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -62,7 +63,7 @@ export default function ArticlePage({ article, related }) {
     publisher: {
       '@type': 'Organization',
       name: 'Detekia',
-      url: 'https://www.detekia.fr',
+      url: 'https://detekia.fr',
     },
     datePublished: article.date,
     dateModified: article.date,
