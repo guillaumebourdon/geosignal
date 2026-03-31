@@ -1,8 +1,10 @@
 import { Resend } from 'resend';
+import Anthropic from '@anthropic-ai/sdk';
 
-export const config = { maxDuration: 30 };
+export const config = { maxDuration: 60 };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -663,7 +665,47 @@ export default async function handler(req, res) {
   if (!email || !reportData) return res.status(400).json({ error: 'Données manquantes' });
 
   try {
-    const html = generateReportHTML({ url, ...reportData });
+    // ── Enrich recommendations with detailed Claude analysis ────────────────
+    const enrichedData = { ...reportData };
+    try {
+      const enrichPrompt = `Tu es un expert en GEO (Generative Engine Optimization). Voici les résultats d'un audit GEO pour le site ${url} (score ${reportData.score}/100).
+
+Voici les recommandations courtes générées par l'audit :
+${JSON.stringify(reportData.recommendations)}
+
+Voici les preuves techniques collectées :
+${JSON.stringify(reportData.evidence)}
+
+Pour CHAQUE recommandation, enrichis-la avec des textes LONGS et DÉTAILLÉS, SPÉCIFIQUES au site analysé :
+- "diagnostic" : 2-3 phrases décrivant précisément le problème trouvé sur CE site, avec des exemples tirés du contenu réel
+- "whyCritical" : 2-3 phrases expliquant l'impact business concret
+- "whatToDo" : 2-3 phrases avec l'action précise à mener
+- "howToDoIt" : 3-4 phrases avec les étapes techniques détaillées, incluant du code HTML ou des balises quand pertinent
+- "concreteExample" : Un exemple CONCRET et SPÉCIFIQUE au site analysé, pas générique
+- "expectedImpact" : Quantifier l'impact attendu ("+X points sur ce critère", "Yx plus de chances d'être cité")
+- "expertTip" : Un conseil avancé que seul un expert donnerait
+
+Réponds UNIQUEMENT en JSON, un tableau de recommandations enrichies :
+[{"priority":"...","criterion":"...","title":"...","diagnostic":"...","whyCritical":"...","whatToDo":"...","howToDoIt":"...","concreteExample":"...","expectedImpact":"...","expertTip":"..."}]`;
+
+      const enrichMessage = await client.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 6000,
+        temperature: 0.2,
+        messages: [{ role: 'user', content: enrichPrompt }],
+      });
+
+      const enrichedRaw = enrichMessage.content[0].text;
+      const enrichedMatch = enrichedRaw.match(/\[[\s\S]*\]/);
+      if (enrichedMatch) {
+        const enrichedRecos = JSON.parse(enrichedMatch[0]);
+        enrichedData.recommendations = enrichedRecos;
+      }
+    } catch (e) {
+      console.log('Enrichment failed, using original recommendations:', e.message);
+    }
+
+    const html = generateReportHTML({ url, ...enrichedData });
 
     console.log('Starting PDFShift...');
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
