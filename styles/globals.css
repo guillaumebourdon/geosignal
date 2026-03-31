@@ -1,5 +1,8 @@
 /* ─── Detekia — Global responsive styles ─────────────────────────── */
 
+/* ── MOBILE BREAK ───────────────────────────────────────────────── */
+.mobile-break { display: none; }
+
 /* ── NAV ─────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .detekia-nav {
@@ -29,6 +32,7 @@
   }
 
   /* ── HERO ─────────────────────────────────────────────────────── */
+  .mobile-break { display: block !important; }
   .hero-grid {
     grid-template-columns: 1fr !important;
     gap: 36px !important;
