@@ -653,10 +653,12 @@ ${methodology}
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end();
 
-  const { url } = req.query;
-  if (!url) return res.status(400).json({ error: 'Paramètre url manquant' });
+  const rawUrl = req.query.url;
+  if (!rawUrl) return res.status(400).json({ error: 'Paramètre url manquant' });
 
+  const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   const cacheKey = `detekia:v11:${url.toLowerCase()}`;
+  console.log('preview-report: looking for cacheKey', cacheKey);
   const cached = await redis.get(cacheKey);
 
   if (!cached) {
