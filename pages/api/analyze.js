@@ -365,20 +365,12 @@ RÈGLES :
 JSON uniquement, sans markdown :
 {"neutralityScore":<0-10>,"neutralityDetail":"<2 phrases>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<5 mots max>","diagnostic":"<2-3 phrases>","whyCritical":"<2-3 phrases>","whatToDo":"<2-3 phrases>","howToDoIt":"<3-4 phrases avec code si pertinent>","concreteExample":"<exemple spécifique au site>","expectedImpact":"<impact quantifié>","expertTip":"<conseil expert>"}],"verdict":"<2 phrases>","strengths":["<1 phrase>","<1 phrase>"],"topPriority":"<1 phrase>"}`;
 
-  let message;
-  try {
-    message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 8000,
-      temperature: 0.2,
-      messages: [{ role: 'user', content: prompt }],
-    });
-  } catch (claudeErr) {
-    const status = claudeErr.status ?? claudeErr.response?.status;
-    const body = JSON.stringify(claudeErr.error ?? claudeErr.response?.data ?? '').slice(0, 400);
-    console.error(`[Claude/analysis] FAILED: status=${status}, body=${body}, msg=${claudeErr.message}`);
-    throw claudeErr;
-  }
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 8192,
+    temperature: 0.2,
+    messages: [{ role: 'user', content: prompt }],
+  });
 
   if (message.stop_reason !== 'end_turn') {
     throw new Error(`Claude response truncated (stop_reason: ${message.stop_reason})`);
@@ -410,20 +402,12 @@ async function runCitationTest(url, textContent, metaTitle, metaDescription) {
 Réponds UNIQUEMENT en JSON sans markdown :
 {"tests":[{"query":"","difficulty":"générique|niche|longue_traîne","cited":false,"competitors_cited":[],"difficulty_to_rank":"facile|moyen|difficile","recommendation":"1 phrase concrète","ai_response_excerpt":"150 premiers caractères de la réponse simulée"}],"summary":{"cited_count":0,"total_tests":5,"best_opportunity":"requête où le site a le plus de chances","main_blocker":"raison principale"}}`;
 
-  let message;
-  try {
-    message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 2500,
-      temperature: 0.3,
-      messages: [{ role: 'user', content: prompt }],
-    });
-  } catch (claudeErr) {
-    const status = claudeErr.status ?? claudeErr.response?.status;
-    const body = JSON.stringify(claudeErr.error ?? claudeErr.response?.data ?? '').slice(0, 400);
-    console.error(`[Claude/citationTest] FAILED: status=${status}, body=${body}, msg=${claudeErr.message}`);
-    throw claudeErr;
-  }
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 2500,
+    temperature: 0.3,
+    messages: [{ role: 'user', content: prompt }],
+  });
 
   const raw = message.content[0].text;
   const jsonMatch = raw.match(/\{[\s\S]*\}/);
@@ -453,24 +437,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    // ── Jina AI scrape ───────────────────────────────────────────────────────
     const jinaUrl = `https://r.jina.ai/${url}`;
-    const jinaHeaders = { Accept: 'application/json' };
-    if (process.env.JINA_API_KEY) jinaHeaders['Authorization'] = `Bearer ${process.env.JINA_API_KEY}`;
-
-    let rawContent;
-    try {
-      const { data: jinaData } = await axios.get(jinaUrl, { headers: jinaHeaders, timeout: 12000 });
-      // Jina JSON response: { code, data: { url, title, content, html, ... } }
-      rawContent = (typeof jinaData === 'object' && jinaData?.data?.html)
-        ? jinaData.data.html
-        : typeof jinaData === 'string' ? jinaData : JSON.stringify(jinaData);
-    } catch (jinaErr) {
-      const status = jinaErr.response?.status;
-      const body = JSON.stringify(jinaErr.response?.data ?? '').slice(0, 400);
-      console.error(`[Jina] FAILED: status=${status}, body=${body}, msg=${jinaErr.message}`);
-      throw jinaErr;
-    }
+    const { data: rawContent } = await axios.get(jinaUrl, {
+      headers: { Accept: 'text/html' },
+      timeout: 12000,
+    });
 
     const $ = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
@@ -548,9 +519,7 @@ export default async function handler(req, res) {
     }).catch(e => console.log('Admin notification failed:', e.message));
 
   } catch (err) {
-    const status = err.status ?? err.response?.status ?? 'n/a';
-    const body = JSON.stringify(err.error ?? err.response?.data ?? '').slice(0, 400);
-    console.error(`Analysis error: status=${status}, msg=${err.message}, body=${body}`);
+    console.error('Analysis error:', err.message);
     res.status(500).json({ error: "Erreur lors de l'analyse", detail: err.message });
   }
 }
