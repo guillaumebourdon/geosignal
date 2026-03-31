@@ -433,130 +433,6 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* ── 8 CRITÈRES — MOD 4 ──────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Ce qu'on analyse</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            8 critères <em style={{ color: '#D97757' }}>validés par la recherche</em>
-          </h2>
-          <div className="criteria-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
-            {features.map(f => <CriteriaCard key={f.name} {...f} />)}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 28 }}>
-            <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
-              Voir le détail complet → Méthodologie
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── EXEMPLES DE RAPPORTS — MOD 1 ─────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Exemples réels</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            Exemples de <em style={{ color: '#D97757' }}>rapports analysés</em>
-          </h2>
-          <div className="reports-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
-            {[
-              {
-                type: 'Site e-commerce',
-                score: 42,
-                grade: 'FAIBLE',
-                gradeColor: '#D97757',
-                gradeBg: 'rgba(217,119,87,0.1)',
-                problem: 'Intro trop promotionnelle, aucune réponse directe à la requête principale.',
-                reco: 'Ajouter une réponse claire sous le H1, reformuler le contenu en factuel.',
-              },
-              {
-                type: 'Blog expert',
-                score: 71,
-                grade: 'BON',
-                gradeColor: '#10A37F',
-                gradeBg: 'rgba(16,163,127,0.1)',
-                problem: 'Manque de sources externes vérifiables pour les affirmations clés.',
-                reco: 'Ajouter citations sourcées et liens vers études scientifiques ou sectorielles.',
-              },
-              {
-                type: 'SaaS B2B',
-                score: 55,
-                grade: 'MOYEN',
-                gradeColor: '#C9861A',
-                gradeBg: 'rgba(201,134,26,0.1)',
-                problem: 'Données structurées insuffisantes — pas de Schema.org détecté.',
-                reco: 'Implémenter Article et FAQPage en JSON-LD sur les pages principales.',
-              },
-            ].map(({ type, score, grade, gradeColor, gradeBg, problem, reco }) => (
-              <div key={type} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)', display: 'flex', flexDirection: 'column', gap: 0 }}>
-                {/* Header */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase' }}>{type}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: gradeColor, letterSpacing: -1, fontWeight: 400 }}>{score}</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(26,25,22,0.3)' }}>/100</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1.5, color: gradeColor, background: gradeBg, padding: '3px 9px', borderRadius: 20, textTransform: 'uppercase' }}>{grade}</span>
-                  </div>
-                </div>
-                {/* Score bar */}
-                <div style={{ height: 5, background: '#F0EDE8', borderRadius: 3, overflow: 'hidden', marginBottom: 20 }}>
-                  <div style={{ height: '100%', width: `${score}%`, background: gradeColor, borderRadius: 3 }} />
-                </div>
-                {/* Problem */}
-                <div style={{ marginBottom: 14 }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 6 }}>🔍 Problème détecté</div>
-                  <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.65, fontFamily: 'system-ui' }}>{problem}</div>
-                </div>
-                {/* Reco */}
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 6 }}>✅ Recommandation</div>
-                  <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.65, fontFamily: 'system-ui' }}>{reco}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* Single CTA */}
-          <div style={{ textAlign: 'center', marginTop: 44 }}>
-            <a href="/" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '14px 32px', borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui' }}>
-              Analyser mon site →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── POURQUOI FAIRE CONFIANCE ─────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Transparence & confiance</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            Pourquoi faire confiance <em style={{ color: '#D97757' }}>à Detekia ?</em>
-          </h2>
-          <div className="trust-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
-            {[
-              { icon: '🔬', accent: '#4285F4', title: 'Méthode transparente', desc: 'Méthodologie entièrement documentée. Vous savez comment chaque point de votre score est calculé.', link: '/methodologie' },
-              { icon: '⚡', accent: '#10A37F', title: 'Résultats en 30 secondes', desc: 'Aucun devis, aucun rendez-vous. Votre rapport disponible immédiatement, à toute heure.', link: null },
-              { icon: '🔓', accent: '#D97757', title: 'Zéro inscription requise', desc: "Pas d'email, pas de mot de passe pour l'analyse gratuite. Essayez sans aucun engagement.", link: null },
-              { icon: '🔒', accent: '#1C7DC4', title: 'Paiement sécurisé Stripe', desc: 'Paiements traités par Stripe. Aucune donnée bancaire ne transite par nos serveurs.', link: null },
-              { icon: '↩️', accent: '#C9861A', title: 'Remboursement sous 24h', desc: "Rapport inaccessible suite à un problème technique ? Remboursement intégral garanti sous 24h.", link: null },
-              { icon: '🛡️', accent: '#10A37F', title: 'Données non conservées', desc: 'Votre URL analysée en temps réel. Aucune donnée de votre site stockée au-delà de 24h.', link: null },
-            ].map(({ icon, accent, title, desc, link }) => (
-              <div key={title} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', borderLeft: `4px solid ${accent}`, boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
-                <div style={{ fontSize: 26, marginBottom: 12 }}>{icon}</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{title}</div>
-                <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
-                {link && <a href={link} style={{ display: 'inline-block', marginTop: 10, fontSize: 12, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>Voir la méthodologie →</a>}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
       {/* ── POURQUOI PAS UN SIMPLE PROMPT ────────────────────── */}
       <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
@@ -580,6 +456,51 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ── TÉMOIGNAGES ──────────────────────────────────────── */}
+      <section style={{ background: '#fff', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Témoignages</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48, lineHeight: 1.1 }}>
+            Ils ont audité leur site
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
+            {[
+              { name: 'Claire D.', quote: 'Les audits sont vraiment très bien construits et donnent une base de travail claire pour savoir quoi améliorer en priorité. On repart avec une vision beaucoup plus concrète de ce qu\'il faut faire.' },
+              { name: 'Nicolas R.', quote: 'La qualité du scoring est excellente, et les recommandations du rapport payant valent vraiment le coup. C\'est là qu\'on obtient des pistes précises et actionnables pour aller plus loin.' },
+              { name: 'Sophie M.', quote: 'Pour le prix, le rapport qualité-prix est franchement très bon. Le niveau de détail, la clarté et les conseils proposés donnent vraiment l\'impression d\'en avoir pour son argent.' },
+            ].map(({ name, quote }) => (
+              <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
+                <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
+                <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ── 8 CRITÈRES — MOD 4 ──────────────────────────────── */}
+      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Ce qu'on analyse</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
+            8 critères <em style={{ color: '#D97757' }}>validés par la recherche</em>
+          </h2>
+          <div className="criteria-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
+            {features.map(f => <CriteriaCard key={f.name} {...f} />)}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 28 }}>
+            <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
+              Voir le détail complet → Méthodologie
+            </a>
           </div>
         </div>
       </section>
@@ -667,6 +588,35 @@ export default function Home() {
 
       <SectionDivider />
 
+      {/* ── POURQUOI FAIRE CONFIANCE ─────────────────────────── */}
+      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Transparence & confiance</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
+            Pourquoi faire confiance <em style={{ color: '#D97757' }}>à Detekia ?</em>
+          </h2>
+          <div className="trust-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+            {[
+              { icon: '🔬', accent: '#4285F4', title: 'Méthode transparente', desc: 'Méthodologie entièrement documentée. Vous savez comment chaque point de votre score est calculé.', link: '/methodologie' },
+              { icon: '⚡', accent: '#10A37F', title: 'Résultats en 30 secondes', desc: 'Aucun devis, aucun rendez-vous. Votre rapport disponible immédiatement, à toute heure.', link: null },
+              { icon: '🔓', accent: '#D97757', title: 'Zéro inscription requise', desc: "Pas d'email, pas de mot de passe pour l'analyse gratuite. Essayez sans aucun engagement.", link: null },
+              { icon: '🔒', accent: '#1C7DC4', title: 'Paiement sécurisé Stripe', desc: 'Paiements traités par Stripe. Aucune donnée bancaire ne transite par nos serveurs.', link: null },
+              { icon: '↩️', accent: '#C9861A', title: 'Remboursement sous 24h', desc: "Rapport inaccessible suite à un problème technique ? Remboursement intégral garanti sous 24h.", link: null },
+              { icon: '🛡️', accent: '#10A37F', title: 'Données non conservées', desc: 'Votre URL analysée en temps réel. Aucune donnée de votre site stockée au-delà de 24h.', link: null },
+            ].map(({ icon, accent, title, desc, link }) => (
+              <div key={title} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', borderLeft: `4px solid ${accent}`, boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
+                <div style={{ fontSize: 26, marginBottom: 12 }}>{icon}</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{title}</div>
+                <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
+                {link && <a href={link} style={{ display: 'inline-block', marginTop: 10, fontSize: 12, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>Voir la méthodologie →</a>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       {/* ── FAQ ─────────────────────────────────────────────── */}
       <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
@@ -676,31 +626,6 @@ export default function Home() {
           </h2>
           <div className="faq-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
             {faqs.map((faq, i) => <FAQItem key={i} question={faq.question} answer={faq.answer} />)}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── TÉMOIGNAGES ──────────────────────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Témoignages</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48, lineHeight: 1.1 }}>
-            Ils ont audité leur site
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
-            {[
-              { name: 'Claire D.', quote: 'Les audits sont vraiment très bien construits et donnent une base de travail claire pour savoir quoi améliorer en priorité. On repart avec une vision beaucoup plus concrète de ce qu\'il faut faire.' },
-              { name: 'Nicolas R.', quote: 'La qualité du scoring est excellente, et les recommandations du rapport payant valent vraiment le coup. C\'est là qu\'on obtient des pistes précises et actionnables pour aller plus loin.' },
-              { name: 'Sophie M.', quote: 'Pour le prix, le rapport qualité-prix est franchement très bon. Le niveau de détail, la clarté et les conseils proposés donnent vraiment l\'impression d\'en avoir pour son argent.' },
-            ].map(({ name, quote }) => (
-              <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
-                <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
-                <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

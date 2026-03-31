@@ -141,7 +141,7 @@ function GroupAccordion({ group, getCriteriaForGroup, getLevelColor, isOpen, onM
   );
 }
 
-function RecoCard({ r, index, isPaid, onCheckout }) {
+function RecoCard({ r, index, isPaid, onCheckout, total }) {
   const tagColors = {
     high:   { bg: 'rgba(217,119,87,0.12)', color: '#D97757', border: 'rgba(217,119,87,0.3)' },
     medium: { bg: 'rgba(201,134,26,0.12)', color: '#C9861A', border: 'rgba(201,134,26,0.3)' },
@@ -168,7 +168,7 @@ function RecoCard({ r, index, isPaid, onCheckout }) {
             <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.8, fontFamily: 'system-ui' }}>{preview}...</div>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, background: 'linear-gradient(to bottom, transparent, #ffffff)', pointerEvents: 'none' }} />
           </div>
-          <div className="reco-preview-cta" style={{ margin: '12px 24px 20px', padding: '14px 18px', background: '#F7F5F2', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+          <div className="reco-preview-cta" style={{ margin: '12px 24px 0', padding: '14px 18px', background: '#F7F5F2', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
             <div>
               <div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>🔒 Recommandation complète masquée</div>
               <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>Méthode, exemples et impact détaillé dans le rapport complet.</div>
@@ -179,6 +179,9 @@ function RecoCard({ r, index, isPaid, onCheckout }) {
                 29 € · paiement unique
               </div>
             </div>
+          </div>
+          <div style={{ margin: '0 24px 20px', paddingTop: 12, borderTop: '1px solid #E5E2DC', fontSize: 11, color: '#8A8680', fontStyle: 'italic', fontFamily: 'system-ui' }}>
+            👆 Ceci est un aperçu gratuit. Le rapport complet contient {total} recommandations détaillées avec méthodes, exemples et cas réels.
           </div>
         </div>
       </div>
@@ -647,7 +650,7 @@ export default function Results() {
               </div>
 
               {recommendations.map((r, i) => (
-                <RecoCard key={i} r={r} index={i} isPaid={isPaid} onCheckout={handleCheckout} />
+                <RecoCard key={i} r={r} index={i} isPaid={isPaid} onCheckout={handleCheckout} total={recommendations.length} />
               ))}
 
               {!isPaid && recommendations.length > 1 && (
