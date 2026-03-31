@@ -1,10 +1,8 @@
 import { Resend } from 'resend';
-import Anthropic from '@anthropic-ai/sdk';
 
 export const config = { maxDuration: 60 };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -439,6 +437,17 @@ function generateReportHTML(data) {
     fraîcheur:             "79% des pages visitées par les bots IA ont été publiées dans les 2 dernières années (Seer Interactive, 2025). Mettre à jour un article avec des données 2026 peut multiplier par 3 ses chances d'être cité.",
   };
 
+  const GUIDES = {
+    extractibilité:        "Pour améliorer votre extractibilité, commencez par restructurer votre page d'accueil pour répondre directement à la question principale de votre audience dès les 2 premières phrases. Utilisez des listes à puces (<ul><li>) pour énumérer vos avantages, services ou fonctionnalités — les IA extraient les listes 3x plus facilement que le texte continu. Ajoutez des sous-titres H2/H3 descriptifs qui contiennent les mots-clés de vos requêtes cibles. Évitez les introductions vagues type 'Bienvenue chez...' ou 'Leader de...' — préférez un format 'question-réponse' que les IA peuvent directement citer. Testez votre extractibilité en copiant vos 300 premiers caractères dans ChatGPT et en demandant 'De quoi parle ce site ?' — si la réponse est floue, votre intro doit être réécrite.",
+    vérifiabilité:         "Les IA privilégient les contenus sourcés et vérifiables. Pour chaque donnée chiffrée de votre site, ajoutez un lien externe vers la source originale (étude, rapport, article de presse). Visez 5 à 10 liens externes par page principale vers des sources reconnues dans votre secteur (instituts, études universitaires, rapports gouvernementaux). Ajoutez des dates explicites à vos contenus (datePublished, dateModified en JSON-LD). Incluez des tableaux comparatifs avec des données factuelles plutôt que des affirmations marketing. Les pages avec des citations sourcées sont citées 2,8x plus souvent par les IA que les pages sans sources (AirOps, 2026).",
+    autorité:              "Renforcez votre E-E-A-T en créant une page 'À propos' détaillée avec les qualifications de votre équipe, vos certifications, vos années d'expérience et vos publications. Ajoutez un schema Organization en JSON-LD avec votre nom, adresse, logo, et liens vers vos réseaux sociaux. Créez des pages auteur pour chaque contributeur avec biographie, photo, et liens LinkedIn. Obtenez des mentions dans la presse ou sur des sites d'autorité de votre secteur — les backlinks éditoriaux comptent plus que les backlinks techniques. Publiez du contenu expert (études de cas, guides techniques, analyses de données propriétaires) plutôt que du contenu générique.",
+    crawlabilité:          "Vérifiez votre fichier robots.txt : les bots GPTBot (OpenAI), ClaudeBot (Anthropic), PerplexityBot et Google-Extended doivent être autorisés. Ajoutez un fichier llms.txt à la racine de votre site pour guider les IA vers vos pages prioritaires — format : une URL par ligne avec une brève description. Assurez-vous que votre contenu principal n'est pas rendu en JavaScript côté client (CSR) — les bots IA ne l'exécutent pas. Utilisez le Server-Side Rendering (SSR) ou le Static Site Generation (SSG). Vérifiez que votre sitemap.xml est à jour et soumis dans Google Search Console. Testez l'accessibilité de votre site aux bots IA avec : curl -A 'GPTBot' https://votre-site.com",
+    "données structurées": "Implémentez au minimum ces schemas JSON-LD : Organization (nom, logo, contact, réseaux sociaux), FAQPage (vos questions fréquentes), Article ou BlogPosting (pour chaque contenu éditorial). Pour les e-commerces, ajoutez Product avec prix, disponibilité, avis agrégés (AggregateRating). Pour les services, utilisez Service avec description, zone géographique, tarifs. Insérez les balises <script type='application/ld+json'> dans le <head> de chaque page. Validez avec le Google Rich Results Test (search.google.com/test/rich-results). Les pages avec Schema structuré sont citées 3 à 5x plus souvent par les IA (Otterly.AI, 2026).",
+    neutralité:            "Les IA déprioritisent le contenu ouvertement promotionnel. Remplacez les superlatifs ('le meilleur', 'n°1', 'leader') par des données factuelles ('utilisé par 5 000 entreprises', '98% de satisfaction client'). Ajoutez une section 'Limites' ou 'Pour qui ce n'est PAS fait' — paradoxalement, reconnaître vos limites renforce votre crédibilité. Comparez honnêtement votre offre avec les alternatives, y compris les gratuites. Adoptez un ton informatif et éducatif plutôt que commercial. L'étude Princeton/KDD 2024 montre que la 'Fluency Optimization' (réécriture factuelle) améliore la visibilité IA de 30 à 40%.",
+    présence:              "90% des citations IA proviennent de médias earned et owned, pas de placements payants (Edelman, 2026). Créez un profil actif sur Reddit — c'est la source n°1 pour Perplexity (6,6% des citations) et n°2 pour ChatGPT. Participez aux discussions de votre secteur avec expertise, pas avec de la promotion. Obtenez des mentions dans des articles de presse, podcasts, interviews — chaque mention externe est un signal d'autorité pour les IA. Créez des liens vers vos réseaux sociaux depuis votre site (LinkedIn, Twitter/X, YouTube minimum). Publiez des études originales ou des données propriétaires que d'autres sites voudront citer.",
+    fraîcheur:             "Les bots IA privilégient le contenu récent : 65% des visites de bots IA ciblent du contenu publié dans les 12 derniers mois (Seer Interactive, 2025). Ajoutez datePublished et dateModified en schema.org sur chaque page de contenu. Mettez à jour vos articles existants avec des données de l'année en cours — une mise à jour peut multiplier par 3 les chances d'être cité. Affichez la date de dernière mise à jour visiblement sur vos pages. Publiez régulièrement (2-4 contenus/mois) pour signaler aux IA que votre site est actif et maintenu. Un copyright à jour dans le footer est un signal basique mais important.",
+  };
+
   function lookup(map, criterionName) {
     const n = criterionName.toLowerCase();
     for (const [k, v] of Object.entries(map)) { if (n.includes(k)) return v; }
@@ -453,6 +462,7 @@ function generateReportHTML(data) {
     const ev    = evidenceBlock(c.name, evidence);
     const why   = lookup(WHY, c.name);
     const study = lookup(CASES, c.name);
+    const guide = lookup(GUIDES, c.name);
 
     const evidenceSection = evidence
       ? (ev ? `<div style="margin-top:16px;">${ev}</div>` : '')
@@ -514,6 +524,11 @@ function generateReportHTML(data) {
         <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Recommandation${recos.length > 1 ? 's' : ''}</div>
         ${recosHTML}
       </div>
+
+      ${guide ? `<div style="background:rgba(217,119,87,0.04);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:16px;">
+        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Guide technique</div>
+        <p style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.8;">${esc(guide)}</p>
+      </div>` : ''}
 
       ${study ? `<div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:18px 22px;">
         <div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Cas réel documenté</div>
@@ -665,53 +680,7 @@ export default async function handler(req, res) {
   if (!email || !reportData) return res.status(400).json({ error: 'Données manquantes' });
 
   try {
-    // ── Enrich recommendations with detailed Claude analysis ────────────────
-    const enrichedData = { ...reportData };
-    try {
-      const enrichPrompt = `Tu es un consultant expert en GEO (Generative Engine Optimization) avec 15 ans d'expérience en SEO technique. Tu rédiges un rapport premium facturé 29€.
-
-Site analysé : ${url} (score ${reportData.score}/100)
-
-Voici les recommandations courtes de l'audit :
-${JSON.stringify(reportData.recommendations)}
-
-Voici les preuves techniques collectées sur le site :
-${JSON.stringify(reportData.evidence)}
-
-MISSION : Pour CHAQUE recommandation, réécris-la avec des textes LONGS, DÉTAILLÉS et SPÉCIFIQUES au site analysé. Ce rapport est payant, le client attend de la profondeur et de la valeur.
-
-RÈGLES STRICTES pour chaque champ :
-- "diagnostic" : MINIMUM 3 phrases. Décris précisément le problème trouvé sur CE site. Cite des éléments réels du site (balises, contenu, structure). Explique pourquoi c'est un problème.
-- "whyCritical" : MINIMUM 2 phrases. Explique l'impact business concret avec des données chiffrées si possible. Fais le lien avec la visibilité IA.
-- "whatToDo" : MINIMUM 2 phrases. Donne l'action précise à mener, pas du générique. Sois spécifique au site analysé.
-- "howToDoIt" : MINIMUM 3 phrases. Donne les étapes techniques détaillées. Inclus du code HTML, des exemples de balises, des noms de fichiers quand c'est pertinent. Le client doit pouvoir donner ça à son développeur.
-- "concreteExample" : MINIMUM 2 phrases. Un exemple CONCRET tiré du vrai contenu du site, pas un exemple générique. Montre le avant/après.
-- "expectedImpact" : MINIMUM 2 phrases. Quantifie l'impact attendu en points de score ET en bénéfice business (trafic, citations, conversions).
-- "expertTip" : MINIMUM 2 phrases. Un conseil avancé que seul un expert senior donnerait. Pas du basique.
-
-Garde les champs "priority", "criterion" et "title" identiques aux originaux.
-
-Réponds UNIQUEMENT en JSON valide, un tableau de recommandations enrichies. Pas de markdown, pas de commentaires, juste le JSON :
-[{"priority":"...","criterion":"...","title":"...","diagnostic":"...","whyCritical":"...","whatToDo":"...","howToDoIt":"...","concreteExample":"...","expectedImpact":"...","expertTip":"..."}]`;
-
-      const enrichMessage = await client.messages.create({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 8000,
-        temperature: 0.2,
-        messages: [{ role: 'user', content: enrichPrompt }],
-      });
-
-      const enrichedRaw = enrichMessage.content[0].text;
-      const enrichedMatch = enrichedRaw.match(/\[[\s\S]*\]/);
-      if (enrichedMatch) {
-        const enrichedRecos = JSON.parse(enrichedMatch[0]);
-        enrichedData.recommendations = enrichedRecos;
-      }
-    } catch (e) {
-      console.log('Enrichment failed, using original recommendations:', e.message);
-    }
-
-    const html = generateReportHTML({ url, ...enrichedData });
+    const html = generateReportHTML({ url, ...reportData });
 
     console.log('Starting PDFShift...');
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
