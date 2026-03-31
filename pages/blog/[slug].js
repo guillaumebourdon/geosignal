@@ -76,11 +76,28 @@ export default function ArticlePage({ article, related }) {
       <Head>
         <title>{article.title} | Detekia</title>
         <meta name="description" content={article.description} />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Open Graph */}
         <meta property="og:title" content={article.title} />
         <meta property="og:description" content={article.description} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
-        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:site_name" content="Detekia" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:image" content="https://detekia.fr/og-default.png" />
+        <meta property="article:published_time" content={article.date} />
+        <meta property="article:modified_time" content={article.date} />
+        <meta property="article:author" content={article.author} />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:description" content={article.description} />
+        <meta name="twitter:image" content="https://detekia.fr/og-default.png" />
+
+        {/* Schema Article JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
