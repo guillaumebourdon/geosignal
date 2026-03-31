@@ -440,7 +440,7 @@ export default async function handler(req, res) {
     const jinaUrl = `https://r.jina.ai/${url}`;
     const { data: rawContent } = await axios.get(jinaUrl, {
       headers: { Accept: 'text/html' },
-      timeout: 20000,
+      timeout: 12000,
     });
 
     const $ = cheerio.load(rawContent);
@@ -492,38 +492,31 @@ export default async function handler(req, res) {
       citationTest: citationTest || null,
     };
 
-    try {
-      await redis.set(cacheKey, responseData, { ex: CACHE_DURATION });
-    } catch (e) {
-      console.error('Cache write error:', e.message);
-    }
+    // Retourner la réponse immédiatement — cache write et email en fire-and-forget
+    res.status(200).json(responseData);
 
-    // Notification admin
-    try {
-      await resend.emails.send({
-        from: 'Detekia <hello@detekia.fr>',
-        to: 'guillaume@beeleven.fr',
-        subject: `🔍 Nouveau scan — ${url} — Score ${totalScore}/100`,
-        html: `
-          <div style="font-family: system-ui; max-width: 500px;">
-            <h2 style="color: #1A1916;">Nouveau scan Detekia</h2>
-            <p><strong>URL :</strong> ${url}</p>
-            <p><strong>Score :</strong> ${totalScore}/100</p>
-            <p><strong>Verdict :</strong> ${claude.verdict}</p>
-            <p><strong>Date :</strong> ${new Date().toLocaleString('fr-FR')}</p>
-            <hr style="border: 1px solid #E5E2DC;" />
-            <p style="color: #8A8680; font-size: 12px;">Détails des critères :</p>
-            ${responseData.criteria.map(c =>
-              `<p style="font-size: 12px; margin: 4px 0;"><strong>${c.name}</strong> : ${c.score}/${c.max}</p>`
-            ).join('')}
-          </div>
-        `,
-      });
-    } catch (emailErr) {
-      console.log('Admin notification failed:', emailErr.message);
-    }
+    redis.set(cacheKey, responseData, { ex: CACHE_DURATION })
+      .catch(e => console.error('Cache write error:', e.message));
 
-    return res.status(200).json(responseData);
+    resend.emails.send({
+      from: 'Detekia <hello@detekia.fr>',
+      to: 'guillaume@beeleven.fr',
+      subject: `🔍 Nouveau scan — ${url} — Score ${totalScore}/100`,
+      html: `
+        <div style="font-family: system-ui; max-width: 500px;">
+          <h2 style="color: #1A1916;">Nouveau scan Detekia</h2>
+          <p><strong>URL :</strong> ${url}</p>
+          <p><strong>Score :</strong> ${totalScore}/100</p>
+          <p><strong>Verdict :</strong> ${claude.verdict}</p>
+          <p><strong>Date :</strong> ${new Date().toLocaleString('fr-FR')}</p>
+          <hr style="border: 1px solid #E5E2DC;" />
+          <p style="color: #8A8680; font-size: 12px;">Détails des critères :</p>
+          ${responseData.criteria.map(c =>
+            `<p style="font-size: 12px; margin: 4px 0;"><strong>${c.name}</strong> : ${c.score}/${c.max}</p>`
+          ).join('')}
+        </div>
+      `,
+    }).catch(e => console.log('Admin notification failed:', e.message));
 
   } catch (err) {
     console.error('Analysis error:', err.message);
