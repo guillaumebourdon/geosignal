@@ -446,7 +446,7 @@ export default function Results() {
                 );
               })}
             </div>
-            <p style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: 11, color: '#C2BDB8', marginTop: 20 }}>Analyse complète · ~20-30 secondes</p>
+            <p style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: 11, color: '#C2BDB8', marginTop: 20 }}>Analyse complète · 30 secondes</p>
           </div>
         </div>
       )}
