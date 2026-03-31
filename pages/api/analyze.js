@@ -16,7 +16,48 @@ const redis = new Redis({
 
 const CACHE_DURATION = 24 * 60 * 60;
 
-function scoreExtractibility($, text) {
+// ── Markdown helpers (Jina returns markdown when HTML parsing fails) ──────────
+
+function mdHeadings(raw) {
+  const result = [];
+  for (const line of raw.split('\n')) {
+    const h3 = line.match(/^###\s+(.+)/); if (h3) { result.push({ level: 'h3', text: h3[1].trim() }); continue; }
+    const h2 = line.match(/^##\s+(.+)/);  if (h2) { result.push({ level: 'h2', text: h2[1].trim() }); continue; }
+    const h1 = line.match(/^#\s+(.+)/);   if (h1) { result.push({ level: 'h1', text: h1[1].trim() }); }
+  }
+  return result;
+}
+
+function mdExternalLinks(raw, hostname) {
+  const regex = /\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g;
+  const links = [];
+  let match;
+  while ((match = regex.exec(raw)) !== null) {
+    const href = match[2];
+    if (!hostname || !href.includes(hostname)) links.push(href);
+  }
+  return links;
+}
+
+function mdAllLinks(raw) {
+  const regex = /\[([^\]]*)\]\(((?:https?:\/\/|\/)[^)\s]+)\)/g;
+  const links = [];
+  let match;
+  while ((match = regex.exec(raw)) !== null) links.push(match[2].toLowerCase());
+  return links;
+}
+
+function jinaTitle(raw) {
+  return raw.match(/^Title:\s*(.+)/m)?.[1]?.trim() || '';
+}
+
+function jinaDescription(raw) {
+  return raw.match(/^Description:\s*(.+)/m)?.[1]?.trim() || '';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+function scoreExtractibility($, text, raw) {
   let score = 0;
   const details = [];
   // Base : site a du contenu lisible (garanti par le check 200 chars en amont)
@@ -28,28 +69,38 @@ function scoreExtractibility($, text) {
   else if (introWords > 15) { score += 3; details.push('Intro correcte'); }
   else if (introWords > 5) { score += 1; details.push('Intro courte'); }
   else details.push('Intro trop courte ✗');
-  // Lists
-  const listCount = $('ul li, ol li').length;
+  // Lists — HTML or markdown fallback
+  const htmlListCount = $('ul li, ol li').length;
+  const mdListCount = (raw.match(/^[\-\*\+]\s+\S/gm) || []).length + (raw.match(/^\d+\.\s+\S/gm) || []).length;
+  const listCount = Math.max(htmlListCount, mdListCount);
   if (listCount >= 10) { score += 5; details.push(`${listCount} éléments de liste ✓`); }
   else if (listCount >= 4) { score += 3; details.push(`${listCount} éléments de liste`); }
   else if (listCount >= 1) { score += 1; details.push(`${listCount} élément de liste`); }
   else details.push('Peu de listes ✗');
-  // Tables
-  const tableCount = $('table').length;
+  // Tables — HTML or markdown fallback
+  const htmlTableCount = $('table').length;
+  const mdTableLines = (raw.match(/^\|.+\|/gm) || []).length;
+  const tableCount = htmlTableCount > 0 ? htmlTableCount : (mdTableLines >= 3 ? 1 : 0);
   if (tableCount >= 2) { score += 4; details.push(`${tableCount} tableaux ✓`); }
   else if (tableCount === 1) { score += 2; details.push('1 tableau'); }
-  // H2 structure
-  const h2Count = $('h2').length;
+  // H2 structure — HTML or markdown fallback
+  const htmlH2Count = $('h2').length;
+  const mdH2Count = (raw.match(/^##\s+/gm) || []).length;
+  const h2Count = Math.max(htmlH2Count, mdH2Count);
   if (h2Count >= 4) { score += 5; details.push('Structure H2 riche ✓'); }
   else if (h2Count >= 2) { score += 3; details.push('Structure H2 correcte'); }
   else if (h2Count >= 1) { score += 1; details.push('1 H2 présent'); }
   else details.push('Aucun H2 ✗');
-  // Short paragraphs
-  const paragraphs = $('p');
-  const shortParas = Array.from(paragraphs).filter(p => {
+  // Short paragraphs — HTML or markdown fallback
+  const htmlShortParas = Array.from($('p')).filter(p => {
     const txt = $(p).text().trim();
     return txt.length > 50 && txt.length < 300;
   }).length;
+  const mdShortParas = raw.split('\n').filter(l => {
+    const t = l.trim();
+    return t.length > 50 && t.length < 300 && !/^[#|\-\*\d]/.test(t);
+  }).length;
+  const shortParas = htmlShortParas > 0 ? htmlShortParas : Math.min(mdShortParas, 10);
   if (shortParas >= 5) { score += 5; details.push(`${shortParas} paragraphes calibrés ✓`); }
   else if (shortParas >= 2) { score += 3; details.push(`${shortParas} paragraphes corrects`); }
   else if (shortParas >= 1) { score += 1; details.push(`${shortParas} paragraphe`); }
@@ -68,23 +119,25 @@ function scoreVerifiability($, text, html) {
   else if (numbers.length >= 2) { score += 3; details.push(`${numbers.length} données chiffrées`); }
   else if (numbers.length >= 1) { score += 1; details.push(`${numbers.length} donnée chiffrée`); }
   else details.push('Peu de données chiffrées ✗');
-  // Liens externes
-  const externalLinks = [];
+  // Liens externes — HTML or markdown fallback
+  const htmlExtLinks = [];
   $('a[href]').each((_, el) => {
     const href = $(el).attr('href') || '';
-    if (href.startsWith('http')) externalLinks.push(href);
+    if (href.startsWith('http')) htmlExtLinks.push(href);
   });
+  const externalLinks = htmlExtLinks.length > 0 ? htmlExtLinks : mdExternalLinks(html, null);
   if (externalLinks.length >= 5) { score += 5; details.push(`${externalLinks.length} liens externes ✓`); }
   else if (externalLinks.length >= 2) { score += 3; details.push(`${externalLinks.length} liens externes`); }
   else if (externalLinks.length >= 1) { score += 1; details.push(`${externalLinks.length} lien externe`); }
-  else details.push('Aucun lien externe ✗');
+  else details.push('Aucun lien externe identifié dans le contenu analysé ✗');
   // Dates
   const hasDate = html.includes('datePublished') || html.includes('dateModified') ||
     /\b(20\d{2})\b/.test(text.slice(0, 500)) || $('time[datetime]').length > 0;
   if (hasDate) { score += 4; details.push('Dates présentes ✓'); }
   else details.push('Aucune date visible ✗');
-  // Tableaux et citations
-  if ($('table').length > 0) { score += 3; details.push('Tableaux de données ✓'); }
+  // Tableaux et citations — HTML or markdown fallback
+  const hasTable = $('table').length > 0 || (html.match(/^\|.+\|/gm) || []).length >= 3;
+  if (hasTable) { score += 3; details.push('Tableaux de données ✓'); }
   if ($('blockquote').length > 0) { score += 1; details.push('Citations ✓'); }
   return { score: Math.min(score, 20), max: 20, detail: details.slice(0, 3).join(' · ') };
 }
@@ -92,8 +145,10 @@ function scoreVerifiability($, text, html) {
 function scoreAuthority($, html) {
   let score = 0;
   const details = [];
-  const links = [];
-  $('a[href]').each((_, el) => links.push(($(el).attr('href') || '').toLowerCase()));
+  // Links — HTML or markdown fallback
+  const htmlLinks = [];
+  $('a[href]').each((_, el) => htmlLinks.push(($(el).attr('href') || '').toLowerCase()));
+  const links = htmlLinks.length > 0 ? htmlLinks : mdAllLinks(html);
   // Base : site avec navigation
   score += 2; details.push('Site structuré ✓');
   // Contact
@@ -121,7 +176,9 @@ function scoreCrawlability($, html) {
   const details = [];
   // Base : site accessible
   score += 1;
-  const textLength = $('body').text().replace(/\s+/g, ' ').trim().length;
+  // Content length — HTML or raw fallback (markdown mode)
+  const htmlTextLength = $('body').text().replace(/\s+/g, ' ').trim().length;
+  const textLength = htmlTextLength > 100 ? htmlTextLength : html.replace(/\s+/g, ' ').trim().length;
   if (textLength > 3000) { score += 4; details.push(`${textLength} chars ✓`); }
   else if (textLength > 1000) { score += 3; details.push(`${textLength} chars`); }
   else if (textLength > 500) { score += 1; details.push(`${textLength} chars`); }
@@ -163,18 +220,20 @@ function scoreStructuredData($, html) {
   if (hasHighValue) { score += 5; details.push(`Schema prioritaire : ${schemaTypes.filter(t => highValueTypes.includes(t)).join(', ')} ✓`); }
   if (hasMedValue) { score += 3; details.push(`Schema entité : ${schemaTypes.filter(t => medValueTypes.includes(t)).join(', ')} ✓`); }
   if (schemaTypes.length > 0 && !hasHighValue && !hasMedValue) { score += 1; details.push(`Schema : ${schemaTypes[0]}`); }
-  if (schemaTypes.length === 0) details.push('Aucun schema.org JSON-LD ✗');
-  return { score: Math.min(score, 10), max: 10, detail: details.slice(0, 2).join(' · ') || 'Aucun schema.org détecté' };
+  if (schemaTypes.length === 0) details.push('Aucun schema JSON-LD identifié ✗');
+  return { score: Math.min(score, 10), max: 10, detail: details.slice(0, 2).join(' · ') || 'Aucun schema JSON-LD identifié dans le contenu analysé' };
 }
 
 function scoreExternalPresence($, html) {
   let score = 0;
   const details = [];
-  const externalLinks = [];
+  // External links — HTML or markdown fallback
+  const htmlExtLinks = [];
   $('a[href]').each((_, el) => {
     const href = $(el).attr('href') || '';
-    if (href.startsWith('http')) externalLinks.push(href.toLowerCase());
+    if (href.startsWith('http')) htmlExtLinks.push(href.toLowerCase());
   });
+  const externalLinks = htmlExtLinks.length > 0 ? htmlExtLinks : mdExternalLinks(html, null).map(l => l.toLowerCase());
   // Base : a des liens externes
   if (externalLinks.length > 0) { score += 1; details.push('Liens externes présents ✓'); }
   const hasPress = /presse|média|press|featured|vu dans|as seen/i.test(html);
@@ -183,7 +242,7 @@ function scoreExternalPresence($, html) {
   if (hasPress) { score += 2; details.push('Mentions presse ✓'); }
   if (hasSocial) { score += 2; details.push('Réseaux sociaux ✓'); }
   if (hasTestimonials) { score += 1; details.push('Témoignages ✓'); }
-  if (details.length === 0) details.push('Peu de présence externe détectée');
+  if (details.length === 0) details.push('Peu de présence externe identifiée dans le contenu analysé');
   return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') };
 }
 
@@ -211,17 +270,20 @@ async function collectEvidence($, textContent, rawContent, url) {
   // 1. intro
   const intro = textContent.slice(0, 300);
 
-  // 2. headings
+  // 2. headings — HTML or markdown fallback
   const headings = [];
   $('h1, h2, h3').each((_, el) => {
     const level = el.tagName.toLowerCase();
     const text = $(el).text().trim();
     if (text) headings.push({ level, text });
   });
+  if (headings.length === 0) {
+    mdHeadings(rawContent).forEach(h => headings.push(h));
+  }
 
-  // 3. metaTitle & metaDescription
-  const metaTitle = $('title').first().text().trim() || '';
-  const metaDescription = $('meta[name="description"]').attr('content') || '';
+  // 3. metaTitle & metaDescription — HTML or Jina header fallback
+  const metaTitle = $('title').first().text().trim() || jinaTitle(rawContent) || '';
+  const metaDescription = $('meta[name="description"]').attr('content') || jinaDescription(rawContent) || '';
 
   // 4. wordCount
   const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
@@ -244,7 +306,7 @@ async function collectEvidence($, textContent, rawContent, url) {
     } catch {}
   });
 
-  // 6. socialLinks
+  // 6. socialLinks — HTML or markdown fallback
   const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'];
   const socialLinks = [];
   $('a[href]').each((_, el) => {
@@ -253,13 +315,18 @@ async function collectEvidence($, textContent, rawContent, url) {
       socialLinks.push(href);
     }
   });
+  if (socialLinks.length === 0) {
+    mdExternalLinks(rawContent, null).forEach(href => {
+      if (socialDomains.some(d => href.includes(d)) && !socialLinks.includes(href)) socialLinks.push(href);
+    });
+  }
 
   // 7. images
   const totalImages = $('img').length;
   const imagesWithAlt = $('img[alt]').filter((_, el) => ($(el).attr('alt') || '').trim().length > 0).length;
   const images = { withAlt: imagesWithAlt, total: totalImages };
 
-  // 8. externalLinks count
+  // 8. externalLinks count — HTML or markdown fallback
   let externalLinksCount = 0;
   try {
     const hostname = new URL(normalizedUrl).hostname;
@@ -267,6 +334,9 @@ async function collectEvidence($, textContent, rawContent, url) {
       const href = $(el).attr('href') || '';
       if (href.startsWith('http') && !href.includes(hostname)) externalLinksCount++;
     });
+    if (externalLinksCount === 0) {
+      externalLinksCount = mdExternalLinks(rawContent, hostname).length;
+    }
   } catch {}
 
   // 9. dates
@@ -352,6 +422,15 @@ RÈGLES :
 1. Génère EXACTEMENT 8 recommandations : 1 par critère sous le seuil + 1 pour la Neutralité éditoriale.
 2. Chaque champ doit tenir en 1 phrase max (sauf howToDoIt : 2 phrases max).
 3. Sois spécifique à ce site.
+4. IMPORTANT : Utilise des formulations nuancées. Ne dis jamais "aucun X détecté" de façon absolue. Préfère "aucun X identifié dans le contenu analysé" ou "non trouvé dans le HTML accessible". Reconnais que le scraping peut être partiel.
+5. Adapte tes recommandations de schemas au TYPE de site analysé. Par exemple :
+   - Site e-commerce → Product, AggregateOffer, AggregateRating
+   - SaaS/service → SoftwareApplication, Service, Organization
+   - Blog/média → Article, BlogPosting, NewsArticle
+   - Site corporate → Organization, Service, FAQPage
+   - Site santé/assurance → MedicalOrganization, Service, FAQPage
+   NE recommande PAS LocalBusiness pour un site qui n'est pas un commerce physique local.
+6. Sois honnête dans ton verdict. Si le score semble bas à cause de limites de détection du scraping, mentionne-le.
 
 JSON uniquement, sans markdown :
 {"neutralityScore":<0-10>,"neutralityDetail":"<1 phrase>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<5 mots max>","diagnostic":"<1 phrase>","whyCritical":"<1 phrase>","whatToDo":"<1 phrase>","howToDoIt":"<2 phrases>","concreteExample":"<1 phrase>","expectedImpact":"<1 phrase>","expertTip":"<1 phrase>"}],"verdict":"<1 phrase>","strengths":["<1 phrase>","<1 phrase>"],"topPriority":"<1 phrase>"}`;
@@ -441,11 +520,11 @@ export default async function handler(req, res) {
       return res.status(422).json({ error: "Impossible d'analyser ce site. Contenu trop court ou inaccessible." });
     }
 
-    const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || '';
-    const metaDescription = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content') || '';
+    const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || jinaTitle(rawContent) || '';
+    const metaDescription = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content') || jinaDescription(rawContent) || '';
 
     const scores = {
-      extractibility:   scoreExtractibility($, textContent),
+      extractibility:   scoreExtractibility($, textContent, rawContent),
       verifiability:    scoreVerifiability($, textContent, rawContent),
       authority:        scoreAuthority($, rawContent),
       crawlability:     scoreCrawlability($, rawContent),
@@ -462,6 +541,16 @@ export default async function handler(req, res) {
     const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
     const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;
     const totalScore = Math.max(0, Math.min(100, baseScore + neutralityBonus));
+
+    // Sanity checks — detect likely scraping gaps
+    const hasSubstantialContent = textContent.length > 1000;
+    const sanityWarnings = [];
+    if (hasSubstantialContent && scores.structuredData.score === 0) {
+      sanityWarnings.push("Les données structurées n'ont peut-être pas été détectées si elles sont chargées en JavaScript côté client.");
+    }
+    if (hasSubstantialContent && scores.extractibility.score < 5) {
+      sanityWarnings.push("Le score d'extractibilité est très bas — le contenu est peut-être rendu en JavaScript et partiellement inaccessible au scraper.");
+    }
 
     const responseData = {
       score: totalScore,
@@ -481,6 +570,7 @@ export default async function handler(req, res) {
       recommendations: claude.recommendations,
       evidence,
       citationTest: citationTest || null,
+      sanityWarnings: sanityWarnings.length > 0 ? sanityWarnings : undefined,
     };
 
     // Réponse envoyée au client en premier — cache et email en fire-and-forget

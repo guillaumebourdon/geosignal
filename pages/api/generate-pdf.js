@@ -614,6 +614,9 @@ function generateReportHTML(data) {
   <div style="${P}min-height:100vh;">
     ${sLabel('Transparence')}
     ${H1('Méthodologie')}
+    <div style="background:rgba(217,119,87,0.06);border-left:3px solid #D97757;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:28px;">
+      <p style="font-family:system-ui;font-size:12px;color:#3A3835;line-height:1.7;">⚠️ LIMITES DE L'ANALYSE : Ce rapport est généré par analyse automatisée du contenu accessible via scraping (Jina AI). Certains éléments rendus en JavaScript côté client, protégés par authentification, ou chargés dynamiquement peuvent ne pas être détectés. Les scores et recommandations reflètent le contenu accessible au moment de l'analyse. En cas de doute sur un résultat spécifique, une vérification manuelle est recommandée.</p>
+    </div>
     <div style="background:#F7F5F2;border-radius:10px;padding:22px 26px;margin-bottom:32px;">
       <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;margin-bottom:10px;">Ce rapport est généré par analyse automatisée du DOM de votre page via <strong>Jina AI</strong> (scraping HTML) et évaluation sur <strong>8 critères pondérés</strong>.</p>
       <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;margin-bottom:10px;">Le critère <strong>Neutralité éditoriale</strong> est évalué par intelligence artificielle (Claude Haiku, Anthropic). Les 7 autres critères sont évalués par analyse technique du HTML.</p>
