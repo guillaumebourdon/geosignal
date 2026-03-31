@@ -340,21 +340,35 @@ async function runClaudeAnalysis(url, textContent, scores) {
 
   const prompt = `Tu es un consultant GEO senior. Audite ${url}.
 
-SCORES : ${total}/100
+URL ANALYSÉE : ${url}
+SCORES GLOBAL : ${total}/100
+CRITÈRES SOUS LE SEUIL :
 ${criteriaList}
 
-CONTENU : ${textContent.slice(0, 300)}
+EXTRAIT DU CONTENU DU SITE (600 premiers caractères) :
+${textContent.slice(0, 600)}
 
-Génère 1 recommandation par critère ci-dessus + 1 sur la Neutralité éditoriale.
-RÈGLE ABSOLUE : chaque valeur de champ = exactement 1 phrase courte (max 15 mots). Zéro exception.
+RÈGLES :
+1. Par critère sous 80%, génère : score 0–40% → 3 recommandations ; score 40–60% → 2 ; score 60–80% → 1.
+2. Génère aussi 1 recommandation pour la Neutralité éditoriale.
+3. Total : entre 8 et 15 recommandations.
+4. Chaque recommandation doit être SPÉCIFIQUE à ce site. Utilise l'URL, le contenu réel et les scores observés.
+5. Longueur des champs (respecte ces minimums) :
+   - diagnostic : 2 à 3 phrases décrivant précisément le problème constaté sur CE site
+   - whyCritical : 2 à 3 phrases sur l'impact business concret si ce problème n'est pas corrigé
+   - whatToDo : 2 à 3 phrases décrivant l'action précise à mener
+   - howToDoIt : 3 à 4 phrases avec les étapes techniques détaillées ; inclure un exemple de code HTML ou JSON-LD quand pertinent
+   - concreteExample : 1 exemple CONCRET et SPÉCIFIQUE à ce site (citer le vrai contenu ou la vraie URL)
+   - expectedImpact : quantifier l'impact attendu (ex: "+12 points sur ce critère", "2× plus de chances d'être cité par ChatGPT")
+   - expertTip : conseil avancé qu'un expert SEO/GEO donnerait en consultation payante
 
 JSON uniquement, sans markdown :
-{"neutralityScore":<0-10>,"neutralityDetail":"<1 phrase>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<5 mots max>","diagnostic":"<1 phrase>","whyCritical":"<1 phrase>","whatToDo":"<1 phrase>","howToDoIt":"<1 phrase>","concreteExample":"<1 phrase>","expectedImpact":"<1 phrase>","expertTip":"<1 phrase>"}],"verdict":"<1 phrase>","strengths":["<1 phrase>","<1 phrase>"],"topPriority":"<1 phrase>"}`;
+{"neutralityScore":<0-10>,"neutralityDetail":"<2 phrases>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<5 mots max>","diagnostic":"<2-3 phrases>","whyCritical":"<2-3 phrases>","whatToDo":"<2-3 phrases>","howToDoIt":"<3-4 phrases avec code si pertinent>","concreteExample":"<exemple spécifique au site>","expectedImpact":"<impact quantifié>","expertTip":"<conseil expert>"}],"verdict":"<2 phrases>","strengths":["<1 phrase>","<1 phrase>"],"topPriority":"<1 phrase>"}`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 4096,
-    temperature: 0,
+    max_tokens: 8192,
+    temperature: 0.2,
     messages: [{ role: 'user', content: prompt }],
   });
 

@@ -41,6 +41,15 @@ function matchReco(recs, criterionName) {
   );
 }
 
+function matchRecos(recs, criterionName) {
+  if (!recs?.length) return [];
+  const name = criterionName.toLowerCase();
+  const primary = recs.filter(r => r.criterion && name.includes(r.criterion.toLowerCase()));
+  if (primary.length) return primary;
+  return recs.filter(r => r.criterion && r.criterion.toLowerCase().split(/[\s&]/)[0].trim().length > 3 &&
+                          name.includes(r.criterion.toLowerCase().split(/[\s&]/)[0].trim()));
+}
+
 function delayLabel(p) {
   return p === 'high' ? '1–2 sem.' : p === 'medium' ? '1 mois' : '2–3 mois';
 }
@@ -438,24 +447,38 @@ function generateReportHTML(data) {
     const cg    = criterionGrade(c.score, c.max);
     const group = criterionGroup(c.name);
     const pct   = Math.round((c.score / c.max) * 100);
-    const reco  = matchReco(recommendations, c.name);
+    const recos = matchRecos(recommendations, c.name);
     const ev    = evidenceBlock(c.name, evidence);
     const why   = lookup(WHY, c.name);
     const study = lookup(CASES, c.name);
-
-    const recoMeta = reco
-      ? `<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
-           <span style="display:inline-block;padding:4px 12px;border-radius:20px;font-family:monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;background:${cg.bg};color:${cg.color};">${cg.label}</span>
-           <span style="font-family:system-ui;font-size:12px;color:#8A8680;">${impactLabel(reco.priority)} impact · ${delayLabel(reco.priority)}</span>
-         </div>`
-      : '';
 
     const evidenceSection = evidence
       ? (ev ? `<div style="margin-top:16px;">${ev}</div>` : '')
       : `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.2);border-radius:8px;padding:12px 16px;margin-top:12px;font-family:system-ui;font-size:12px;color:#C9861A;">Relancez l'analyse pour voir les données détaillées.</div>`;
 
+    const recosHTML = recos.length > 0
+      ? recos.map((reco, ri) => {
+          const rc = reco.priority === 'high'   ? { color: '#D97757', bg: 'rgba(217,119,87,0.08)', label: 'CRITIQUE'  }
+                   : reco.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.08)', label: 'IMPORTANT' }
+                   :                              { color: '#10A37F', bg: 'rgba(16,163,127,0.08)', label: 'BONUS'     };
+          const header = recos.length > 1
+            ? `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;${ri > 0 ? 'margin-top:20px;' : ''}">
+                 <span style="font-family:monospace;font-size:9px;letter-spacing:1.5px;color:${rc.color};text-transform:uppercase;">Recommandation ${ri + 1} / ${recos.length}</span>
+                 <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${rc.bg};color:${rc.color};">${rc.label}</span>
+                 <span style="font-family:system-ui;font-size:11px;color:#8A8680;">${impactLabel(reco.priority)} · ${delayLabel(reco.priority)}</span>
+               </div>`
+            : `<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+                 <span style="display:inline-block;padding:4px 12px;border-radius:20px;font-family:monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;background:${cg.bg};color:${cg.color};">${cg.label}</span>
+                 <span style="font-family:system-ui;font-size:12px;color:#8A8680;">${impactLabel(reco.priority)} impact · ${delayLabel(reco.priority)}</span>
+               </div>`;
+          return header
+            + (reco.title ? `<div style="font-family:Georgia,serif;font-size:16px;color:${rc.color};margin-bottom:12px;font-weight:bold;">${esc(reco.title)}</div>` : '')
+            + recoSections(reco);
+        }).join('<div style="height:1px;background:#E5E2DC;margin:16px 0;"></div>')
+      : recoSections(null);
+
     return `
-    <div style="${P}min-height:100vh;">
+    <div style="${P}">
       <div style="margin-bottom:28px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
           <span style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:2px;text-transform:uppercase;">${esc(group)}</span>
@@ -486,10 +509,8 @@ function generateReportHTML(data) {
       </div>` : ''}
 
       <div style="margin-bottom:24px;">
-        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Recommandation</div>
-        ${recoMeta}
-        ${reco ? `<div style="font-family:Georgia,serif;font-size:16px;color:${cg.color};margin-bottom:14px;font-weight:bold;">${esc(reco.title || '')}</div>` : ''}
-        ${recoSections(reco)}
+        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Recommandation${recos.length > 1 ? 's' : ''}</div>
+        ${recosHTML}
       </div>
 
       ${study ? `<div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:18px 22px;">
@@ -618,7 +639,7 @@ function generateReportHTML(data) {
 <style>
   @page { margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { background: #1A1916; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 </style>
 </head>
 <body>
