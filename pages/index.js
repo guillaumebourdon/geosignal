@@ -375,6 +375,35 @@ export default function Home() {
 
       <SectionDivider />
 
+      {/* ── POUR QUI ─────────────────────────────────────────── */}
+      <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Public cible</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+            Pour qui est Detekia ?
+          </h2>
+          <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 48px' }}>
+            Que vous soyez fondateur, marketeur ou consultant, votre visibilité IA est un enjeu business.
+          </p>
+          <div className="target-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20 }}>
+            {[
+              { emoji: '🚀', title: 'Fondateurs SaaS & startups', desc: "Vos concurrents lèvent des millions en visibilité. Assurez-vous que les IA recommandent votre produit quand un prospect pose la question." },
+              { emoji: '🛒', title: 'E-commerçants', desc: "Les IA recommandent des produits à des millions d'utilisateurs chaque jour. Si votre catalogue n'est pas citable, vous perdez des ventes." },
+              { emoji: '🔍', title: 'Consultants & agences SEO', desc: "Ajoutez le GEO à votre offre. Utilisez Detekia pour auditer vos clients et leur proposer un plan d'optimisation IA concret." },
+              { emoji: '🏢', title: 'Sites vitrines & services', desc: "Quand quelqu'un demande à ChatGPT 'quel prestataire pour X', votre site doit apparaître. Detekia vous montre comment." },
+            ].map(({ emoji, title, desc }) => (
+              <div key={title} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28 }}>
+                <div style={{ fontSize: 28, marginBottom: 12 }}>{emoji}</div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 10 }}>{title}</div>
+                <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       {/* ── STATS DASHBOARD — MOD 5 ──────────────────────────── */}
       <section style={{ background: '#1A1916', padding: '80px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
@@ -520,6 +549,35 @@ export default function Home() {
                 <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{title}</div>
                 <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
                 {link && <a href={link} style={{ display: 'inline-block', marginTop: 10, fontSize: 12, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>Voir la méthodologie →</a>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ── POURQUOI PAS UN SIMPLE PROMPT ────────────────────── */}
+      <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 48, lineHeight: 1.1 }}>
+            Pourquoi Detekia n&apos;est pas un simple prompt ChatGPT
+          </h2>
+          <div className="diff-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+            {[
+              { title: 'Un prompt ChatGPT', bg: 'rgba(217,119,87,0.06)', border: 'rgba(217,119,87,0.15)', icon: '✗', items: ["Analyse subjective et non reproductible", "Pas d'accès au DOM réel de votre site", "Pas de scoring chiffré ni de benchmark", "Recommandations génériques sans preuves"] },
+              { title: 'Un audit SEO classique', bg: 'rgba(66,133,244,0.06)', border: 'rgba(66,133,244,0.15)', icon: '✗', items: ["Optimisé pour Google, pas pour les IA", "Ne mesure pas la citabilité IA", "Ignore les critères GEO spécifiques", "Pas de test de citation réel"] },
+              { title: 'Detekia', bg: 'rgba(16,163,127,0.06)', border: 'rgba(16,163,127,0.15)', icon: '✓', items: ["Scoring reproductible sur 8 critères mesurés", "Analyse du DOM réel via scraping Jina AI", "Test de citation IA sur 5 requêtes réelles", "Recommandations sourcées avec cas réels documentés"] },
+            ].map(({ title, bg, border, icon, items }) => (
+              <div key={title} style={{ background: bg, border: `1px solid ${border}`, borderRadius: 14, padding: 28 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 20 }}>{title}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {items.map((item, i) => (
+                    <div key={i} style={{ fontSize: 13, color: icon === '✓' ? '#10A37F' : '#8A8680', fontFamily: 'system-ui', lineHeight: 1.5 }}>
+                      <span style={{ marginRight: 8, fontWeight: 700 }}>{icon}</span>{item}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

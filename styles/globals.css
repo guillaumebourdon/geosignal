@@ -52,7 +52,9 @@
   .testimonials-grid,
   .bullets-grid,
   .reco-example-grid,
-  .before-after-grid {
+  .before-after-grid,
+  .target-grid,
+  .diff-grid {
     grid-template-columns: 1fr !important;
   }
 

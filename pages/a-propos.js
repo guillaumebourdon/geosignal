@@ -92,8 +92,11 @@ export default function APropos() {
           </Section>
 
           <Section title="Qui est derrière Detekia">
-            <P>Detekia est un produit de Beeleven SASU, une société française spécialisée dans le marketing digital, l'IA et la stratégie digitale. Fondée par Guillaume Bourdon, Beeleven accompagne les PME et entrepreneurs dans leur transformation digitale.</P>
-            <P>Contact : <a href="mailto:hello@detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>hello@detekia.fr</a></P>
+            <P>Detekia est un produit de Beeleven SASU, fondée par Guillaume Bourdon.</P>
+            <P>Après plus de 10 ans dans le marketing digital, l'acquisition et la stratégie de croissance, Guillaume a accompagné des dizaines d'entreprises — de la startup early-stage à la PME établie — sur leurs enjeux de visibilité en ligne.</P>
+            <P>En 2025, face à l'explosion du trafic référé par les IA (+527% en quelques mois), il crée Detekia pour répondre à un besoin que personne ne couvrait encore en France : donner aux entreprises un outil simple, transparent et actionnable pour mesurer et améliorer leur visibilité dans les réponses de ChatGPT, Claude, Gemini et Perplexity.</P>
+            <P>La méthodologie de Detekia repose sur la recherche académique (Princeton / Georgia Tech, KDD 2024) et sur une veille constante des évolutions des moteurs IA.</P>
+            <P>Contact : <a href="mailto:guillaume@beeleven.fr" style={{ color: '#D97757', textDecoration: 'none' }}>guillaume@beeleven.fr</a></P>
           </Section>
 
           <Section title="Méthodologie">
