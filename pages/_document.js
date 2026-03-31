@@ -78,49 +78,6 @@ export default function Document() {
           })}}
         />
 
-        {/* FAQ Schema — boost GEO massif */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "Qu'est-ce que le GEO (Generative Engine Optimization) ?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Le GEO est l'optimisation d'un site web pour apparaître dans les réponses des intelligences artificielles génératives comme ChatGPT, Claude, Gemini et Perplexity. C'est l'équivalent du SEO mais pour les moteurs d'IA."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Comment améliorer la visibilité de mon site sur les IA ?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Pour améliorer votre visibilité sur les IA, il faut : ajouter des données structurées Schema.org, rédiger un contenu clair et factuel facilement citable, structurer votre site avec des pages About, Contact et Blog, et développer votre présence externe sur des sites d'autorité."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Qu'est-ce qu'un bon score GEO ?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Sur Detekia, un score GEO supérieur à 70/100 est considéré comme bon. Entre 45 et 70 est moyen, en dessous de 45 est faible. La majorité des sites analysés obtiennent un score inférieur à 60/100."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Combien coûte un audit GEO avec Detekia ?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "L'analyse de base est gratuite et sans inscription : score GEO sur 100, analyse des 8 critères, 1 recommandation experte en aperçu. Le rapport complet avec toutes les recommandations détaillées est disponible à 29 €, paiement unique."
-                }
-              }
-            ]
-          })}}
-        />
-
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
