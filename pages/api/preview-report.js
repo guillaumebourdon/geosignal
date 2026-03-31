@@ -658,22 +658,10 @@ export default async function handler(req, res) {
 
   const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   const cacheKey = `detekia:v11:${url.toLowerCase()}`;
-  console.log('PREVIEW rawUrl:', rawUrl);
-  console.log('PREVIEW url normalized:', url);
-  console.log('PREVIEW looking for key:', cacheKey);
-
-  let cached;
-  try {
-    cached = await redis.get(cacheKey);
-  } catch (e) {
-    console.error('PREVIEW redis.get error:', e.message);
-    return res.status(500).json({ error: 'Redis error', detail: e.message });
-  }
-
-  console.log('PREVIEW cached type:', typeof cached, '| is null:', cached === null);
+  const cached = await redis.get(cacheKey);
 
   if (!cached) {
-    return res.status(404).send(`Aucune analyse trouvée pour la clé : ${cacheKey}. Scannez d'abord le site sur detekia.fr`);
+    return res.status(404).send(`Aucune analyse trouvée pour cette URL. Scannez d'abord le site sur detekia.fr`);
   }
 
   const data = typeof cached === 'string' ? JSON.parse(cached) : cached;
