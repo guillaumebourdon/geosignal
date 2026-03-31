@@ -346,6 +346,7 @@ export default function Results() {
       pollInterval = setInterval(async () => {
         try {
           const r = await fetch(`/api/analyze-status?url=${encodeURIComponent(url)}`);
+          if (!r.ok) return; // erreur HTTP transitoire — on reessaie au prochain tick
           const d = await r.json();
           if (d.status === 'done')  { finishWithData(d.data); return; }
           if (d.status === 'error') { finishWithError("Une erreur est survenue pendant l'analyse. Réessayez."); return; }
@@ -363,9 +364,12 @@ export default function Results() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url }),
     })
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`Erreur serveur (${r.status})`);
+        return r.json();
+      })
       .then(data => {
-        if (data.error)                { finishWithError(data.error); return; }
+        if (data.error)                   { finishWithError(data.error); return; }
         if (data.status === 'processing') { startPolling(); return; }
         finishWithData(data); // cache hit — résultat immédiat
       })
