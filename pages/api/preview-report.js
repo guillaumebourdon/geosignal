@@ -116,7 +116,7 @@ function evidenceBlock(criterionName, evidence) {
 
   if (/données structurées/i.test(name)) {
     if (!evidence.schemas?.length) {
-      return `<div style="${blockStyle}"><div style="${labelStyle}">Schemas JSON-LD détectés</div><div style="font-family:system-ui;font-size:13px;font-weight:600;color:#D97757;">Aucun schema JSON-LD détecté</div></div>`;
+      return `<div style="${blockStyle}"><div style="${labelStyle}">Schemas JSON-LD détectés</div><div style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">Aucun schema JSON-LD identifié dans le contenu analysé. Les schemas chargés dynamiquement en JavaScript ne sont pas détectables par analyse statique.</div></div>`;
     }
     const schemaRows = evidence.schemas.map(s =>
       `<tr><td style="padding:8px 10px;font-family:monospace;font-size:11px;color:#1A1916;border-bottom:1px solid #F0EDE8;">${esc(s.type)}</td><td style="padding:8px 10px;font-family:system-ui;font-size:11px;color:#8A8680;border-bottom:1px solid #F0EDE8;">${(s.properties || []).join(', ')}</td></tr>`
@@ -177,7 +177,7 @@ function recoSections(reco) {
 // ─── Main HTML generator ──────────────────────────────────────────────────────
 
 function generateReportHTML(data) {
-  const { url, score, verdict, strengths = [], topPriority, criteria = [], recommendations = [], evidence, citationTest } = data;
+  const { url, score, verdict, strengths = [], topPriority, criteria = [], recommendations = [], evidence, citationTest, sanityWarnings } = data;
   const g         = grade(score);
   const date      = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const projected = projectedScore(score, criteria);
@@ -295,6 +295,12 @@ function generateReportHTML(data) {
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-top:28px;margin-bottom:14px;">Points forts identifiés</h2>
     <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;">${strengthsHTML}</div>
     ${noEvidence ? `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.25);border-radius:8px;padding:14px 18px;margin-top:28px;font-family:system-ui;font-size:12px;color:#C9861A;line-height:1.5;">⚠️ Données détaillées non disponibles pour ce scan. Relancez l'analyse pour un rapport enrichi.</div>` : ''}
+    ${(sanityWarnings && sanityWarnings.length > 0) ? `
+      <div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.25);border-radius:8px;padding:14px 18px;margin-top:20px;">
+        <div style="font-family:monospace;font-size:9px;color:#C9861A;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">⚠️ Notes sur l'analyse</div>
+        ${sanityWarnings.map(w => `<p style="font-family:system-ui;font-size:12px;color:#C9861A;line-height:1.6;margin-bottom:4px;">${esc(w)}</p>`).join('')}
+      </div>
+    ` : ''}
   </div>`;
 
   // ── PAGE 3 : CONTEXT ────────────────────────────────────────────────────────
