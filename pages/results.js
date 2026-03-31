@@ -319,9 +319,44 @@ export default function Results() {
 
   useEffect(() => {
     if (!url) return;
+
     let stepInterval = setInterval(() => {
       setStep(s => s < steps.length - 1 ? s + 1 : s);
     }, 1200);
+
+    let pollInterval = null;
+    let pollTimeout  = null;
+
+    function finishWithData(data) {
+      clearInterval(stepInterval);
+      clearInterval(pollInterval);
+      clearTimeout(pollTimeout);
+      setStep(steps.length);
+      setResult(data);
+    }
+
+    function finishWithError(msg) {
+      clearInterval(stepInterval);
+      clearInterval(pollInterval);
+      clearTimeout(pollTimeout);
+      setError(msg);
+    }
+
+    function startPolling() {
+      pollInterval = setInterval(async () => {
+        try {
+          const r = await fetch(`/api/analyze-status?url=${encodeURIComponent(url)}`);
+          const d = await r.json();
+          if (d.status === 'done')  { finishWithData(d.data); return; }
+          if (d.status === 'error') { finishWithError("Une erreur est survenue pendant l'analyse. Réessayez."); return; }
+          // 'processing' / 'not_found' → keep polling
+        } catch (_) { /* network blip — keep polling */ }
+      }, 3000);
+
+      pollTimeout = setTimeout(() => {
+        finishWithError("L'analyse prend plus de temps que prévu. Réessayez dans quelques instants.");
+      }, 90000);
+    }
 
     fetch('/api/analyze', {
       method: 'POST',
@@ -330,17 +365,17 @@ export default function Results() {
     })
       .then(r => r.json())
       .then(data => {
-        clearInterval(stepInterval);
-        setStep(steps.length);
-        if (data.error) setError(data.error);
-        else setResult(data);
+        if (data.error)                { finishWithError(data.error); return; }
+        if (data.status === 'processing') { startPolling(); return; }
+        finishWithData(data); // cache hit — résultat immédiat
       })
-      .catch(e => {
-        clearInterval(stepInterval);
-        setError(e.message);
-      });
+      .catch(e => finishWithError(e.message));
 
-    return () => clearInterval(stepInterval);
+    return () => {
+      clearInterval(stepInterval);
+      if (pollInterval) clearInterval(pollInterval);
+      if (pollTimeout)  clearTimeout(pollTimeout);
+    };
   }, [url]);
 
   function getGrade(score) {
@@ -449,7 +484,7 @@ export default function Results() {
                 );
               })}
             </div>
-            <p style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: 11, color: '#C2BDB8', marginTop: 20 }}>Analyse complète · 30 secondes</p>
+            <p style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: 11, color: '#C2BDB8', marginTop: 20 }}>Analyse complète · jusqu'à 60 secondes</p>
           </div>
         </div>
       )}

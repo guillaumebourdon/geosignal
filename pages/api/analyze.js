@@ -1,3 +1,4 @@
+import { waitUntil } from '@vercel/functions';
 import Anthropic from '@anthropic-ai/sdk';
 import { Redis } from '@upstash/redis';
 import { Resend } from 'resend';
@@ -14,7 +15,8 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-const CACHE_DURATION = 24 * 60 * 60;
+const CACHE_DURATION  = 24 * 60 * 60;
+const STATUS_DURATION = 5 * 60;        // 5 minutes
 
 function scoreExtractibility($, text) {
   let score = 0;
@@ -431,44 +433,28 @@ Réponds UNIQUEMENT en JSON sans markdown :
   return JSON.parse(jsonMatch[0]);
 }
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+// ─── Background analysis (runs via waitUntil, no HTTP response limit) ─────────
 
-  const rawUrl = req.body.url;
-  console.log('URL received:', rawUrl);
-  if (!rawUrl) return res.status(400).json({ error: 'URL manquante' });
-  const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
-  console.log('analyze: starting for', url);
-
-  const cacheKey = `detekia:v10:${url.toLowerCase()}`;
+async function runAnalysis(url) {
+  const cacheKey  = `detekia:v11:${url.toLowerCase()}`;
+  const statusKey = `detekia:status:${url.toLowerCase()}`;
 
   try {
-    const cached = await redis.get(cacheKey);
-    if (cached) {
-      console.log(`Cache hit : ${cacheKey}`);
-      return res.status(200).json(cached);
-    }
-  } catch (e) {
-    console.error('Cache read error:', e.message);
-  }
-
-  try {
-    // ── Jina AI scrape ───────────────────────────────────────────────────────
+    // ── Jina AI scrape ─────────────────────────────────────────────────────
     const jinaUrl = `https://r.jina.ai/${url}`;
     const jinaHeaders = { Accept: 'application/json' };
     if (process.env.JINA_API_KEY) jinaHeaders['Authorization'] = `Bearer ${process.env.JINA_API_KEY}`;
 
     let rawContent;
     try {
-      const { data: jinaData } = await axios.get(jinaUrl, { headers: jinaHeaders, timeout: 12000 });
-      // Jina JSON response: { code, data: { url, title, content, html, ... } }
+      const { data: jinaData } = await axios.get(jinaUrl, { headers: jinaHeaders, timeout: 20000 });
       rawContent = (typeof jinaData === 'object' && jinaData?.data?.html)
         ? jinaData.data.html
         : typeof jinaData === 'string' ? jinaData : JSON.stringify(jinaData);
     } catch (jinaErr) {
-      const status = jinaErr.response?.status;
+      const st = jinaErr.response?.status;
       const body = JSON.stringify(jinaErr.response?.data ?? '').slice(0, 400);
-      console.error(`[Jina] FAILED: status=${status}, body=${body}, msg=${jinaErr.message}`);
+      console.error(`[Jina] FAILED: status=${st}, body=${body}, msg=${jinaErr.message}`);
       throw jinaErr;
     }
 
@@ -476,10 +462,10 @@ export default async function handler(req, res) {
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
 
     if (textContent.length < 200) {
-      return res.status(422).json({ error: "Impossible d'analyser ce site. Contenu trop court ou inaccessible." });
+      throw new Error("Contenu trop court ou inaccessible");
     }
 
-    const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || '';
+    const metaTitle       = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || '';
     const metaDescription = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content') || '';
 
     const scores = {
@@ -497,9 +483,10 @@ export default async function handler(req, res) {
       collectEvidence($, textContent, rawContent, url),
       runCitationTest(url, textContent, metaTitle, metaDescription).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
-    const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
+
+    const baseScore       = Object.values(scores).reduce((s, c) => s + c.score, 0);
     const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;
-    const totalScore = Math.max(0, Math.min(100, baseScore + neutralityBonus));
+    const totalScore      = Math.max(0, Math.min(100, baseScore + neutralityBonus));
 
     const responseData = {
       score: totalScore,
@@ -521,12 +508,12 @@ export default async function handler(req, res) {
       citationTest: citationTest || null,
     };
 
-    // Retourner la réponse immédiatement — cache write et email en fire-and-forget
-    res.status(200).json(responseData);
+    // Persist result, then mark status as done
+    await redis.set(cacheKey, responseData, { ex: CACHE_DURATION });
+    await redis.set(statusKey, 'done', { ex: STATUS_DURATION });
+    console.log(`[runAnalysis] done: ${url} — score ${totalScore}`);
 
-    redis.set(cacheKey, responseData, { ex: CACHE_DURATION })
-      .catch(e => console.error('Cache write error:', e.message));
-
+    // Admin notification — fire-and-forget
     resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: 'guillaume@beeleven.fr',
@@ -548,9 +535,44 @@ export default async function handler(req, res) {
     }).catch(e => console.log('Admin notification failed:', e.message));
 
   } catch (err) {
-    const status = err.status ?? err.response?.status ?? 'n/a';
+    const st   = err.status ?? err.response?.status ?? 'n/a';
     const body = JSON.stringify(err.error ?? err.response?.data ?? '').slice(0, 400);
-    console.error(`Analysis error: status=${status}, msg=${err.message}, body=${body}`);
-    res.status(500).json({ error: "Erreur lors de l'analyse", detail: err.message });
+    console.error(`[runAnalysis] ERROR for ${url}: status=${st}, msg=${err.message}, body=${body}`);
+    await redis.set(statusKey, 'error', { ex: STATUS_DURATION }).catch(() => {});
   }
+}
+
+// ─── HTTP Handler ──────────────────────────────────────────────────────────────
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  const rawUrl = req.body.url;
+  if (!rawUrl) return res.status(400).json({ error: 'URL manquante' });
+  const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
+  console.log('analyze: request for', url);
+
+  const cacheKey  = `detekia:v11:${url.toLowerCase()}`;
+  const statusKey = `detekia:status:${url.toLowerCase()}`;
+
+  // ── Cache hit → return immediately ─────────────────────────────────────────
+  try {
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      console.log(`Cache hit: ${cacheKey}`);
+      return res.status(200).json(cached);
+    }
+  } catch (e) {
+    console.error('Cache read error:', e.message);
+  }
+
+  // ── No cache → start background analysis, return "processing" right away ───
+  try {
+    await redis.set(statusKey, 'processing', { ex: STATUS_DURATION });
+  } catch (e) {
+    console.error('Status set error:', e.message);
+  }
+
+  waitUntil(runAnalysis(url));
+  return res.status(200).json({ status: 'processing' });
 }
