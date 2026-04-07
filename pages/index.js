@@ -514,14 +514,15 @@ export default function Home() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
             {[
-              { name: 'Claire D.', quote: 'Les audits sont vraiment très bien construits et donnent une base de travail claire pour savoir quoi améliorer en priorité. On repart avec une vision beaucoup plus concrète de ce qu\'il faut faire.' },
-              { name: 'Nicolas R.', quote: 'La qualité du scoring est excellente, et les recommandations du rapport payant valent vraiment le coup. C\'est là qu\'on obtient des pistes précises et actionnables pour aller plus loin.' },
-              { name: 'Sophie M.', quote: 'Pour le prix, le rapport qualité-prix est franchement très bon. Le niveau de détail, la clarté et les conseils proposés donnent vraiment l\'impression d\'en avoir pour son argent.' },
-            ].map(({ name, quote }) => (
+              { name: 'Thomas L.', role: 'Fondateur · Kairos SaaS', quote: "On pensait être bien référencés, mais Detekia a révélé que ChatGPT ne pouvait même pas accéder à notre site. Deux lignes modifiées dans le robots.txt et notre score est passé de 29 à 58 en une semaine." },
+              { name: 'Marine G.', role: 'Consultante SEO freelance', quote: "J'utilise Detekia pour chaque nouveau client. En 30 secondes j'ai un diagnostic clair à présenter, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat." },
+              { name: 'Julien B.', role: 'Responsable e-commerce · Maison Verdure', quote: "Nos fiches produits étaient invisibles pour les IA. Le rapport a identifié 3 blocages critiques sur notre Schema.org. Après correction, Perplexity a commencé à recommander nos produits en 3 semaines." },
+            ].map(({ name, role, quote }) => (
               <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
                 <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
                 <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{role}</div>
               </div>
             ))}
           </div>
