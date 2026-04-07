@@ -61,11 +61,6 @@ function CriteriaCard({ icon, color, name, desc, checks, tag, tagColor }) {
 
 /* ─── Hero product mockup — MOD 2 ───────────────────────── */
 function ProductMockup() {
-  const criteria = [
-    { name: 'Extractibilité', score: 12, max: 25, color: '#D97757' },
-    { name: 'Crawlabilité IA', score: 11, max: 15, color: '#C9861A' },
-    { name: 'Données structurées', score: 8, max: 10, color: '#10A37F' },
-  ];
   return (
     <div style={{ background: '#fff', borderRadius: 22, boxShadow: '0 8px 32px rgba(0,0,0,0.12), 0 32px 80px rgba(26,25,22,0.18), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 390, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
 
@@ -74,76 +69,59 @@ function ProductMockup() {
         <div style={{ display: 'flex', gap: 5 }}>
           {['#F87171','#FBBF24','#34D399'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
         </div>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 0.5, marginLeft: 6 }}>Rapport GEO · exemple.fr · 27 mars 2026</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 0.5, marginLeft: 6 }}>Audit de visibilité IA · exemple.fr</div>
       </div>
 
       {/* Score block */}
       <div style={{ background: '#1A1916', padding: '36px 32px 28px', position: 'relative', overflow: 'hidden' }}>
-        {/* Halo derrière le score */}
-        <div style={{ position: 'absolute', top: '40%', left: 24, transform: 'translateY(-50%)', width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.16) 0%, transparent 70%)' }} />
-        <div style={{ position: 'absolute', top: -50, right: -50, width: 180, height: 180, borderRadius: '50%', background: '#C9861A', opacity: 0.04 }} />
+        <div style={{ position: 'absolute', top: '40%', left: 24, transform: 'translateY(-50%)', width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.18) 0%, transparent 70%)' }} />
+        <div style={{ position: 'absolute', top: -50, right: -50, width: 180, height: 180, borderRadius: '50%', background: '#D97757', opacity: 0.05 }} />
 
         <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, marginBottom: 18, textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 6, border: '1px solid rgba(255,255,255,0.06)', padding: '3px 10px', borderRadius: 4 }}>
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#C9861A' }} /> GEO Score
+          <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#D97757' }} /> Score de visibilité IA
         </div>
 
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 18, position: 'relative' }}>
           <div>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 96, color: '#F7F5F2', lineHeight: 1, letterSpacing: -4 }}>67</div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 96, color: '#F7F5F2', lineHeight: 1, letterSpacing: -4 }}>38</div>
             <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.25)', letterSpacing: 1 }}>/100</div>
           </div>
           <div style={{ paddingBottom: 16 }}>
-            <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.18)', border: '1px solid rgba(201,134,26,0.32)', borderRadius: 20, padding: '4px 13px', fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2, marginBottom: 10 }}>MOYEN</div>
-            <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', lineHeight: 1.6 }}>Citabilité IA<br />à améliorer</div>
+            <div style={{ display: 'inline-block', background: '#D97757', borderRadius: 20, padding: '4px 13px', fontFamily: 'monospace', fontSize: 9, color: '#fff', letterSpacing: 2, marginBottom: 10, fontWeight: 700 }}>FAIBLE</div>
+            <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6 }}>4 blocages critiques<br />détectés sur votre site</div>
           </div>
         </div>
       </div>
 
-      {/* Criteria */}
-      <div style={{ padding: '24px 32px', borderBottom: '1px solid #EDEBE6' }}>
-        <Label>Analyse par critère</Label>
-        {criteria.map((c, i) => {
-          const pct = Math.round((c.score / c.max) * 100);
-          return (
-            <div key={i} style={{ marginBottom: i < criteria.length - 1 ? 16 : 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                <span style={{ fontSize: 9, color: '#8A8680', fontFamily: 'monospace', letterSpacing: 0.5, textTransform: 'uppercase' }}>{c.name}</span>
-                <span style={{ fontFamily: 'monospace', fontSize: 10, fontWeight: 600, color: c.color }}>{c.score}/{c.max}</span>
-              </div>
-              <div style={{ height: 4, background: '#F0EDE8', borderRadius: 99, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${pct}%`, background: c.color, borderRadius: 99, transition: 'width 0.6s ease' }} />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Plan d'action */}
-      <div style={{ padding: '8px 26px', background: '#FAFAF9', borderBottom: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div style={{ flex: 1, height: 1, background: '#E5E2DC' }} />
-        <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#C2BDB8', letterSpacing: 2, textTransform: 'uppercase' }}>Plan d'action</div>
-        <div style={{ flex: 1, height: 1, background: '#E5E2DC' }} />
-      </div>
-
-      {/* Recommendations */}
-      <div style={{ padding: '18px 32px 20px' }}>
-        <Label>Recommandations</Label>
-        {/* Visible reco */}
-        <div style={{ background: '#FAFAF9', borderRadius: 10, padding: '12px 14px', border: '1px solid #E5E2DC', marginBottom: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 7 }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1, padding: '2px 8px', borderRadius: 4, background: 'rgba(217,119,87,0.12)', color: '#D97757' }}>CRITIQUE</span>
-            <span style={{ fontSize: 10, color: '#B0ABA5', fontFamily: 'monospace' }}>Extractibilité</span>
-          </div>
-          <div style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.65 }}>
-            Votre introduction ne répond pas directement à la question principale…
-          </div>
-          <div style={{ height: 16, background: 'linear-gradient(to bottom, transparent, #FAFAF9)', marginTop: -4 }} />
+      {/* Critique */}
+      <div style={{ padding: '20px 26px 8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 10 }}>
+          <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1, padding: '3px 9px', borderRadius: 4, background: 'rgba(217,119,87,0.12)', color: '#D97757', fontWeight: 700 }}>CRITIQUE — CRAWLABILITÉ</span>
         </div>
+        <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', lineHeight: 1.3, marginBottom: 8 }}>
+          ChatGPT ne peut pas accéder à votre site.
+        </div>
+        <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6 }}>
+          Votre fichier robots.txt bloque les bots IA — 73 % des sites ont ce problème sans le savoir. Résultat : aucune IA ne peut lire ni citer votre contenu.
+        </div>
+      </div>
+
+      {/* Action verte */}
+      <div style={{ margin: '14px 26px 0', padding: '12px 14px', background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.25)', borderRadius: 10 }}>
+        <div style={{ fontSize: 11, color: '#0E8A6B', fontFamily: 'system-ui', lineHeight: 1.55 }}>
+          <strong>À corriger :</strong> Autorisez GPTBot, ClaudeBot et PerplexityBot dans votre robots.txt. 2 lignes à modifier.
+        </div>
+      </div>
+
+      {/* Impact doré */}
+      <div style={{ margin: '10px 26px 18px', padding: '10px 14px', background: 'rgba(201,134,26,0.10)', border: '1px solid rgba(201,134,26,0.28)', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span style={{ fontSize: 14 }}>↑</span>
+        <span style={{ fontSize: 11, color: '#A06A14', fontFamily: 'system-ui', fontWeight: 600 }}>+12 points de visibilité estimés</span>
       </div>
 
       {/* Footer CTA */}
-      <div style={{ padding: '13px 32px 15px', background: 'rgba(217,119,87,0.05)', borderTop: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1 }}>+5 recommandations verrouillées</div>
+      <div style={{ padding: '13px 26px 15px', background: 'rgba(217,119,87,0.05)', borderTop: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', fontFamily: 'system-ui' }}>+14 recommandations verrouillées</div>
         <div style={{ fontSize: 11, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui', background: 'rgba(217,119,87,0.12)', padding: '6px 14px', borderRadius: 20 }}>Débloquer →</div>
       </div>
     </div>
