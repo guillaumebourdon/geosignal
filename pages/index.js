@@ -400,18 +400,6 @@ export default function Home() {
             ))}
           </div>
 
-          <div style={{ marginTop: 40, display: 'flex', gap: 48, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
-            {[
-              ['1 247', 'sites analysés'],
-              ['38/100', 'score moyen observé'],
-              ['Crawlabilité', 'critère le plus bloquant'],
-            ].map(([val, lbl]) => (
-              <div key={lbl} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{val}</span>
-                <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase' }}>{lbl}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
