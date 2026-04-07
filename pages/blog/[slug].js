@@ -87,7 +87,7 @@ export default function ArticlePage({ article, related }) {
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:site_name" content="Detekia" />
         <meta property="og:locale" content="fr_FR" />
-        <meta property="og:image" content="https://detekia.fr/og-default.png" />
+        <meta property="og:image" content={`https://detekia.fr/og-${article.slug}.png`} />
         <meta property="article:published_time" content={article.date} />
         <meta property="article:modified_time" content={article.date} />
         <meta property="article:author" content={article.author} />
@@ -96,7 +96,7 @@ export default function ArticlePage({ article, related }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={article.title} />
         <meta name="twitter:description" content={article.description} />
-        <meta name="twitter:image" content="https://detekia.fr/og-default.png" />
+        <meta name="twitter:image" content={`https://detekia.fr/og-${article.slug}.png`} />
 
         {/* Schema Article JSON-LD */}
         <script
