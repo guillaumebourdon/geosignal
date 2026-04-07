@@ -317,29 +317,29 @@ export default function Home() {
       <SectionDivider />
 
       {/* ── PLUS QU'UN AVIS IA ───────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
-        <div style={{ maxWidth: 1040, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Pourquoi Detekia</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
-            Plus qu&apos;un avis IA : un diagnostic reproductible
+      <section style={{ background: '#1A1916', padding: '80px 48px', position: 'relative', backgroundImage: 'radial-gradient(rgba(247,245,242,0.03) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
+        <div style={{ maxWidth: 1040, margin: '0 auto', position: 'relative' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Pourquoi Detekia</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
+            Plus qu&apos;un avis IA : <em style={{ color: '#D97757' }}>un diagnostic reproductible</em>
           </h2>
-          <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 620, margin: '0 auto 48px' }}>
+          <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.5)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 620, margin: '0 auto 48px' }}>
             Demander à ChatGPT &laquo;&nbsp;mon site est-il bien optimisé&nbsp;?&raquo; donne un avis vague. Detekia analyse le code réel de votre site.
           </p>
 
           <div className="diff-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {[
               {
-                bg: '#FAFAF9',
-                border: '#E5E2DC',
+                bg: 'rgba(217,119,87,0.08)',
+                border: 'rgba(217,119,87,0.2)',
                 icon: '💬',
                 title: 'Demander à ChatGPT',
-                titleColor: '#1A1916',
+                titleColor: '#F7F5F2',
                 subtitle: 'Avis subjectif',
-                subtitleColor: '#8A8680',
+                subtitleColor: 'rgba(247,245,242,0.4)',
                 mark: '✗',
                 markColor: '#D97757',
-                itemColor: '#6B6762',
+                itemColor: 'rgba(247,245,242,0.7)',
                 items: [
                   'Réponse générique et non reproductible',
                   'Aucun accès au code de votre site',
@@ -348,7 +348,7 @@ export default function Home() {
                 ],
               },
               {
-                bg: '#1A1916',
+                bg: 'rgba(255,255,255,0.03)',
                 border: 'rgba(255,255,255,0.08)',
                 icon: '⚡',
                 title: 'Analyser avec Detekia',
@@ -366,16 +366,16 @@ export default function Home() {
                 ],
               },
               {
-                bg: 'rgba(16,163,127,0.03)',
-                border: 'rgba(16,163,127,0.18)',
+                bg: 'rgba(16,163,127,0.06)',
+                border: 'rgba(16,163,127,0.22)',
                 icon: '📊',
                 title: 'Ce que vous obtenez',
-                titleColor: '#1A1916',
+                titleColor: '#F7F5F2',
                 subtitle: 'Actionnable',
                 subtitleColor: '#10A37F',
                 mark: '✓',
                 markColor: '#10A37F',
-                itemColor: '#3A3835',
+                itemColor: 'rgba(247,245,242,0.78)',
                 items: [
                   'Votre score de visibilité IA exact',
                   'Les blocages qui vous rendent invisible',
@@ -551,13 +551,15 @@ export default function Home() {
       <SectionDivider />
 
       {/* ── RÉSULTATS / TÉMOIGNAGES ──────────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Résultats</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
+      <section style={{ background: '#1A1916', padding: '96px 48px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '20%', left: '20%', width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '60%', left: '80%', width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Résultats</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
             Ils ont analysé leur site
           </h2>
-          <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 48px' }}>
+          <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 48px' }}>
             Des résultats concrets, mesurables, en quelques jours.
           </p>
 
@@ -594,23 +596,23 @@ export default function Home() {
                 before: 34, after: 71, delta: '+37 pts',
               },
             ].map((t, i) => (
-              <div key={i} className="testimonial-card" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, display: 'flex', flexDirection: 'column', overflow: 'hidden', transition: 'all 0.2s ease' }}>
+              <div key={i} className="testimonial-card" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, display: 'flex', flexDirection: 'column', overflow: 'hidden', transition: 'all 0.2s ease' }}>
                 <div style={{ padding: '24px 24px 0', display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{ width: 44, height: 44, borderRadius: '50%', background: t.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, flexShrink: 0 }}>{t.initials}</div>
                   <div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 15, fontWeight: 700, color: '#1A1916' }}>{t.name}</div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{t.role}</div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 15, fontWeight: 700, color: '#F7F5F2' }}>{t.name}</div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.4)', marginTop: 2 }}>{t.role}</div>
                   </div>
                 </div>
 
-                <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#3A3835', lineHeight: 1.75, padding: '20px 24px 24px', margin: 0, flex: 1 }}>{t.quote}</p>
+                <p className="testimonial-quote" style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.7)', lineHeight: 1.75, padding: '20px 24px 24px', margin: 0, flex: 1 }}>{t.quote}</p>
 
-                <div style={{ background: t.footerBg, borderTop: '1px solid #E5E2DC', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   {t.footerType === 'score' ? (
                     <>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                         <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', opacity: 0.5, textDecoration: 'line-through', fontWeight: 600 }}>Score {t.before}</span>
-                        <span style={{ color: '#8A8680', fontSize: 12 }}>→</span>
+                        <span style={{ color: 'rgba(247,245,242,0.25)', fontSize: 12 }}>→</span>
                         <span style={{ fontFamily: 'monospace', fontSize: 14, color: '#10A37F', fontWeight: 700 }}>{t.after}</span>
                       </div>
                       <span style={{ background: '#10A37F', color: '#fff', fontFamily: 'system-ui', fontSize: 11, fontWeight: 700, padding: '5px 11px', borderRadius: 8, boxShadow: '0 2px 6px rgba(16,163,127,0.3)' }}>{t.delta}</span>
@@ -708,7 +710,8 @@ export default function Home() {
         input::placeholder { color: #8A8680; }
         @keyframes ai-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         #ai-cursor { animation: ai-blink 1.06s step-end infinite; font-weight: 300; }
-        .testimonial-card:hover { box-shadow: 0 12px 32px rgba(26,25,22,0.10); transform: translateY(-3px); }
+        .testimonial-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.35); transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
+        .testimonial-quote strong { color: #F7F5F2; font-weight: 700; }
         @media (max-width: 640px) {
           .hero-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
           .hero-input-wrap input { border-radius: 10px 10px 0 0 !important; }
