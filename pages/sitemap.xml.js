@@ -10,9 +10,6 @@ function generateSiteMap() {
     { loc: '/a-propos', changefreq: 'monthly', priority: '0.7' },
     { loc: '/contact', changefreq: 'monthly', priority: '0.7' },
     { loc: '/blog', changefreq: 'daily', priority: '0.9' },
-    { loc: '/mentions-legales', changefreq: 'yearly', priority: '0.3' },
-    { loc: '/cgu', changefreq: 'yearly', priority: '0.3' },
-    { loc: '/confidentialite', changefreq: 'yearly', priority: '0.3' },
   ];
 
   const today = new Date().toISOString().split('T')[0];
