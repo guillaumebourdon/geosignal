@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Head from 'next/head';
 
 export default function Pricing() {
   const [loading, setLoading] = useState(false);
@@ -22,6 +23,9 @@ export default function Pricing() {
 
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
+      <Head>
+        <link rel="canonical" href="https://detekia.fr/pricing" />
+      </Head>
 
       {/* NAV */}
       <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>

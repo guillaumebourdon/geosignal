@@ -30,6 +30,7 @@ export default function Confidentialite() {
         <title>Politique de confidentialité | Detekia</title>
         <meta name="description" content="Politique de confidentialité de Detekia — données collectées, sous-traitants, vos droits RGPD." />
         <meta name="robots" content="noindex" />
+        <link rel="canonical" href="https://detekia.fr/confidentialite" />
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>

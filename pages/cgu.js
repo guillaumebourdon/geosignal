@@ -30,6 +30,7 @@ export default function CGU() {
         <title>Conditions Générales d'Utilisation et de Vente | Detekia</title>
         <meta name="description" content="CGU/CGV de Detekia — conditions d'utilisation du service et de vente du rapport GEO complet." />
         <meta name="robots" content="noindex" />
+        <link rel="canonical" href="https://detekia.fr/cgu" />
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>

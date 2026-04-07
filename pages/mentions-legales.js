@@ -17,6 +17,7 @@ export default function MentionsLegales() {
         <title>Mentions légales | Detekia</title>
         <meta name="description" content="Mentions légales de Detekia — éditeur, hébergeur, propriété intellectuelle." />
         <meta name="robots" content="noindex" />
+        <link rel="canonical" href="https://detekia.fr/mentions-legales" />
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>

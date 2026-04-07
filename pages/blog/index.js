@@ -26,8 +26,8 @@ export default function BlogIndex() {
         <meta property="og:title" content="Blog GEO — Guides & Stratégies Visibilité IA | Detekia" />
         <meta property="og:description" content="Guides pratiques, analyses techniques et stratégies pour optimiser la visibilité de votre site dans les IA." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.detekia.fr/blog" />
-        <link rel="canonical" href="https://www.detekia.fr/blog" />
+        <meta property="og:url" content="https://detekia.fr/blog" />
+        <link rel="canonical" href="https://detekia.fr/blog" />
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>

@@ -32,15 +32,15 @@ export default function APropos() {
         <meta property="og:title" content="À propos de Detekia" />
         <meta property="og:description" content="Outil d'audit GEO développé par Beeleven SASU — fondé par Guillaume Bourdon." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.detekia.fr/a-propos" />
-        <link rel="canonical" href="https://www.detekia.fr/a-propos" />
+        <meta property="og:url" content="https://detekia.fr/a-propos" />
+        <link rel="canonical" href="https://detekia.fr/a-propos" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'AboutPage',
             name: 'À propos de Detekia',
-            url: 'https://www.detekia.fr/a-propos',
+            url: 'https://detekia.fr/a-propos',
             description: "Detekia est un outil d'audit GEO développé par Beeleven SASU, fondée par Guillaume Bourdon.",
             publisher: {
               '@type': 'Organization',
