@@ -550,63 +550,78 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* ── TÉMOIGNAGES (avec étude de cas intégrée) ──────────── */}
+      {/* ── RÉSULTATS / TÉMOIGNAGES ──────────────────────────── */}
       <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Témoignages</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48, lineHeight: 1.1 }}>
-            Ils ont audité leur site
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Résultats</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
+            Ils ont analysé leur site
           </h2>
+          <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 48px' }}>
+            Des résultats concrets, mesurables, en quelques jours.
+          </p>
 
-          {/* Étude de cas avant/après */}
-          <div style={{ marginBottom: 40 }}>
-            <p style={{ fontSize: 14, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 24px' }}>
-              Comment un site SaaS est passé de 0 à 3 citations IA en 4 semaines
-            </p>
-            <div className="case-study-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-              <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.15)', borderRadius: 14, padding: 28 }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>Avant l'audit</div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#D97757', marginBottom: 16 }}>Score GEO : 28/100</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 700, color: '#1A1916', marginBottom: 10 }}>Problèmes détectés :</div>
-                {[
-                  "→ Page d'accueil commençant par 'Bienvenue chez...' — impossible à extraire par une IA",
-                  "→ Aucun Schema.org détecté — les IA ne comprennent pas la structure du site",
-                  "→ robots.txt bloquant GPTBot et ClaudeBot — les moteurs IA ne peuvent pas accéder au contenu",
-                  "→ 0 lien externe sourcé — aucune preuve vérifiable pour les IA",
-                ].map((item, i) => (
-                  <div key={i} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.65, marginBottom: 8 }}>{item}</div>
-                ))}
-              </div>
-              <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.15)', borderRadius: 14, padding: 28 }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#10A37F', marginBottom: 4 }}>Après les corrections</div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#10A37F', marginBottom: 16 }}>Score GEO : 71/100</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 700, color: '#1A1916', marginBottom: 10 }}>Corrections appliquées :</div>
-                {[
-                  "✓ Titre reformulé : 'Acme automatise la gestion des congés pour les PME de 10 à 200 salariés'",
-                  "✓ Schema.org Organization + FAQPage ajoutés — structure lisible par les IA",
-                  "✓ robots.txt mis à jour — GPTBot, ClaudeBot et PerplexityBot autorisés",
-                  "✓ 8 liens externes vers des sources reconnues (INSEE, Legifrance, BPI)",
-                ].map((item, i) => (
-                  <div key={i} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.65, marginBottom: 8 }}>{item}</div>
-                ))}
-              </div>
-            </div>
-            <div style={{ fontSize: 14, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', textAlign: 'center', marginTop: 24 }}>
-              Résultat : le site est passé de 0 à 3 citations dans les réponses de ChatGPT et Perplexity en 4 semaines.
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
+          <div className="testimonials-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {[
-              { name: 'Thomas L.', role: 'Fondateur · Kairos SaaS', quote: "On pensait être bien référencés, mais Detekia a révélé que ChatGPT ne pouvait même pas accéder à notre site. Deux lignes modifiées dans le robots.txt et notre score est passé de 29 à 58 en une semaine." },
-              { name: 'Marine G.', role: 'Consultante SEO freelance', quote: "J'utilise Detekia pour chaque nouveau client. En 30 secondes j'ai un diagnostic clair à présenter, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat." },
-              { name: 'Julien B.', role: 'Responsable e-commerce · Maison Verdure', quote: "Nos fiches produits étaient invisibles pour les IA. Le rapport a identifié 3 blocages critiques sur notre Schema.org. Après correction, Perplexity a commencé à recommander nos produits en 3 semaines." },
-            ].map(({ name, role, quote }) => (
-              <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
-                <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
-                <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{role}</div>
+              {
+                initials: 'TL',
+                gradient: 'linear-gradient(135deg, #4285F4, #1C7DC4)',
+                name: 'Thomas L.',
+                role: 'Fondateur · Kairos SaaS',
+                quote: <>On pensait être bien référencés, mais Detekia a révélé que <strong>ChatGPT ne pouvait même pas accéder à notre site</strong>. Deux lignes modifiées dans le robots.txt et notre score est passé de 29 à 58 en une semaine.</>,
+                footerType: 'score',
+                footerBg: 'rgba(217,119,87,0.04)',
+                before: 29, after: 58, delta: '+29 pts',
+              },
+              {
+                initials: 'MG',
+                gradient: 'linear-gradient(135deg, #10A37F, #0d8a6a)',
+                name: 'Marine G.',
+                role: 'Consultante SEO freelance',
+                quote: <>J'utilise Detekia pour chaque nouveau client. En 30 secondes j'ai <strong>un diagnostic clair à présenter</strong>, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat.</>,
+                footerType: 'badge',
+                footerBg: 'rgba(16,163,127,0.03)',
+                badge: 'UTILISÉ POUR CHAQUE CLIENT',
+              },
+              {
+                initials: 'JB',
+                gradient: 'linear-gradient(135deg, #D97757, #c4684a)',
+                name: 'Julien B.',
+                role: 'Resp. e-commerce · Maison Verdure',
+                quote: <>Nos fiches produits étaient invisibles pour les IA. Le rapport a identifié <strong>3 blocages critiques</strong>. Après correction, Perplexity a commencé à recommander nos produits en 3 semaines.</>,
+                footerType: 'score',
+                footerBg: 'rgba(217,119,87,0.04)',
+                before: 34, after: 71, delta: '+37 pts',
+              },
+            ].map((t, i) => (
+              <div key={i} className="testimonial-card" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, display: 'flex', flexDirection: 'column', overflow: 'hidden', transition: 'all 0.2s ease' }}>
+                <div style={{ padding: '24px 24px 0', display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: t.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, flexShrink: 0 }}>{t.initials}</div>
+                  <div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 15, fontWeight: 700, color: '#1A1916' }}>{t.name}</div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{t.role}</div>
+                  </div>
+                </div>
+
+                <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#3A3835', lineHeight: 1.75, padding: '20px 24px 24px', margin: 0, flex: 1 }}>{t.quote}</p>
+
+                <div style={{ background: t.footerBg, borderTop: '1px solid #E5E2DC', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {t.footerType === 'score' ? (
+                    <>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', opacity: 0.5, textDecoration: 'line-through', fontWeight: 600 }}>Score {t.before}</span>
+                        <span style={{ color: '#8A8680', fontSize: 12 }}>→</span>
+                        <span style={{ fontFamily: 'monospace', fontSize: 14, color: '#10A37F', fontWeight: 700 }}>{t.after}</span>
+                      </div>
+                      <span style={{ background: '#10A37F', color: '#fff', fontFamily: 'system-ui', fontSize: 11, fontWeight: 700, padding: '5px 11px', borderRadius: 8, boxShadow: '0 2px 6px rgba(16,163,127,0.3)' }}>{t.delta}</span>
+                    </>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 14 }}>⚡</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#10A37F', letterSpacing: 1, textTransform: 'uppercase', fontWeight: 700 }}>{t.badge}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -693,6 +708,7 @@ export default function Home() {
         input::placeholder { color: #8A8680; }
         @keyframes ai-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         #ai-cursor { animation: ai-blink 1.06s step-end infinite; font-weight: 300; }
+        .testimonial-card:hover { box-shadow: 0 12px 32px rgba(26,25,22,0.10); transform: translateY(-3px); }
         @media (max-width: 640px) {
           .hero-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
           .hero-input-wrap input { border-radius: 10px 10px 0 0 !important; }
