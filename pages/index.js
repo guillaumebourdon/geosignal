@@ -439,7 +439,7 @@ export default function Home() {
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Comment ça marche</div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            Un audit GEO complet en <em style={{ color: '#D97757' }}>30 secondes</em>
+            L&apos;analyse de visibilité IA complète en <em style={{ color: '#D97757' }}>30 secondes</em>
           </h2>
           <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {[
