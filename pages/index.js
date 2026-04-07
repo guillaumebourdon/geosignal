@@ -316,6 +316,107 @@ export default function Home() {
 
       <SectionDivider />
 
+      {/* ── PLUS QU'UN AVIS IA ───────────────────────────────── */}
+      <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
+        <div style={{ maxWidth: 1040, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Pourquoi Detekia</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
+            Plus qu&apos;un avis IA : un diagnostic reproductible
+          </h2>
+          <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 620, margin: '0 auto 48px' }}>
+            Demander à ChatGPT &laquo;&nbsp;mon site est-il bien optimisé&nbsp;?&raquo; donne un avis vague. Detekia analyse le code réel de votre site.
+          </p>
+
+          <div className="diff-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+            {[
+              {
+                bg: '#FAFAF9',
+                border: '#E5E2DC',
+                icon: '💬',
+                title: 'Demander à ChatGPT',
+                titleColor: '#1A1916',
+                subtitle: 'Avis subjectif',
+                subtitleColor: '#8A8680',
+                mark: '✗',
+                markColor: '#D97757',
+                itemColor: '#6B6762',
+                items: [
+                  'Réponse générique et non reproductible',
+                  'Aucun accès au code de votre site',
+                  'Pas de scoring chiffré',
+                  'Recommandations vagues',
+                ],
+              },
+              {
+                bg: '#1A1916',
+                border: 'rgba(255,255,255,0.08)',
+                icon: '⚡',
+                title: 'Analyser avec Detekia',
+                titleColor: '#F7F5F2',
+                subtitle: 'Diagnostic technique',
+                subtitleColor: 'rgba(247,245,242,0.4)',
+                mark: '→',
+                markColor: '#D97757',
+                itemColor: 'rgba(247,245,242,0.75)',
+                items: [
+                  'Analyse du HTML réel de votre site',
+                  '8 critères mesurés objectivement',
+                  'Score sur 100, reproductible',
+                  'Recommandations classées par impact',
+                ],
+              },
+              {
+                bg: 'rgba(16,163,127,0.03)',
+                border: 'rgba(16,163,127,0.18)',
+                icon: '📊',
+                title: 'Ce que vous obtenez',
+                titleColor: '#1A1916',
+                subtitle: 'Actionnable',
+                subtitleColor: '#10A37F',
+                mark: '✓',
+                markColor: '#10A37F',
+                itemColor: '#3A3835',
+                items: [
+                  'Votre score de visibilité IA exact',
+                  'Les blocages qui vous rendent invisible',
+                  'Quoi corriger en premier',
+                  "L'impact estimé de chaque correction",
+                ],
+              },
+            ].map(({ bg, border, icon, title, titleColor, subtitle, subtitleColor, mark, markColor, itemColor, items }) => (
+              <div key={title} style={{ background: bg, border: `1px solid ${border}`, borderRadius: 16, padding: 28 }}>
+                <div style={{ fontSize: 26, marginBottom: 14 }}>{icon}</div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: titleColor, fontFamily: 'Georgia, serif', marginBottom: 4 }}>{title}</div>
+                <div style={{ fontSize: 11, color: subtitleColor, fontFamily: 'monospace', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 18 }}>{subtitle}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {items.map((item, i) => (
+                    <div key={i} style={{ fontSize: 13, color: itemColor, fontFamily: 'system-ui', lineHeight: 1.55, display: 'flex', gap: 8 }}>
+                      <span style={{ color: markColor, fontWeight: 700, flexShrink: 0 }}>{mark}</span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 40, display: 'flex', gap: 48, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+            {[
+              ['1 247', 'sites analysés'],
+              ['38/100', 'score moyen observé'],
+              ['Crawlabilité', 'critère le plus bloquant'],
+            ].map(([val, lbl]) => (
+              <div key={lbl} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{val}</span>
+                <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase' }}>{lbl}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       {/* ── COMMENT ÇA MARCHE ────────────────────────────────── */}
       <section style={{ background: '#fff', padding: '96px 48px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
@@ -396,35 +497,6 @@ export default function Home() {
                 <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: 'rgba(247,245,242,0.5)', textTransform: 'uppercase', marginBottom: 12 }}>{label}</div>
                 <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.45)', lineHeight: 1.6, marginBottom: 8 }}>{desc}</div>
                 <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.2)' }}>{source}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── POURQUOI PAS UN SIMPLE PROMPT ────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 48, lineHeight: 1.1 }}>
-            Pourquoi Detekia n&apos;est pas un simple prompt ChatGPT
-          </h2>
-          <div className="diff-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
-            {[
-              { title: 'Un prompt ChatGPT', bg: 'rgba(217,119,87,0.06)', border: 'rgba(217,119,87,0.15)', icon: '✗', items: ["Analyse subjective et non reproductible", "Pas d'accès au DOM réel de votre site", "Pas de scoring chiffré ni de benchmark", "Recommandations génériques sans preuves"] },
-              { title: 'Un audit SEO classique', bg: 'rgba(66,133,244,0.06)', border: 'rgba(66,133,244,0.15)', icon: '✗', items: ["Optimisé pour Google, pas pour les IA", "Ne mesure pas la citabilité IA", "Ignore les critères GEO spécifiques", "Pas de test de citation réel"] },
-              { title: 'Detekia', bg: 'rgba(16,163,127,0.06)', border: 'rgba(16,163,127,0.15)', icon: '✓', items: ["Scoring reproductible sur 8 critères mesurés", "Analyse du DOM réel via scraping Jina AI", "Test de citation IA sur 5 requêtes réelles", "Recommandations sourcées avec cas réels documentés"] },
-            ].map(({ title, bg, border, icon, items }) => (
-              <div key={title} style={{ background: bg, border: `1px solid ${border}`, borderRadius: 14, padding: 28 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 20 }}>{title}</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  {items.map((item, i) => (
-                    <div key={i} style={{ fontSize: 13, color: icon === '✓' ? '#10A37F' : '#8A8680', fontFamily: 'system-ui', lineHeight: 1.5 }}>
-                      <span style={{ marginRight: 8, fontWeight: 700 }}>{icon}</span>{item}
-                    </div>
-                  ))}
-                </div>
               </div>
             ))}
           </div>
