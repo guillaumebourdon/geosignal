@@ -434,35 +434,6 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* ── STATS DASHBOARD — MOD 5 ──────────────────────────── */}
-      <section style={{ background: '#1A1916', padding: '80px 48px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,40px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1, marginBottom: 10, lineHeight: 1.1 }}>
-            Le GEO en chiffres
-          </h2>
-          <p style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.4)', textAlign: 'center', marginBottom: 48 }}>
-            Pourquoi votre visibilité IA est devenue critique en 2026
-          </p>
-          <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 0, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, overflow: 'hidden' }}>
-            {[
-              { stat: '+527%', label: 'DE TRAFIC IA EN 2025', desc: 'Le trafic référé par les moteurs IA a explosé entre janvier et mai 2025.', source: 'Previsible, 2025', color: '#D97757' },
-              { stat: '4.4x', label: 'MEILLEUR TAUX DE CONVERSION', desc: 'Les visiteurs référés par les IA convertissent 4,4 fois mieux que les visiteurs organiques.', source: 'Semrush, 2025', color: '#10A37F' },
-              { stat: '80%', label: 'HORS TOP 100 GOOGLE', desc: '80% des URLs citées par ChatGPT ne sont pas dans le top 100 de Google. Le SEO seul ne suffit plus.', source: 'Ahrefs, 2025', color: '#4285F4' },
-              { stat: '73%', label: 'DE SITES NON CRAWLABLES', desc: '73% des sites ne sont pas accessibles aux bots IA à cause de robots.txt ou JavaScript.', source: 'Otterly.AI, 2026', color: '#C9861A' },
-            ].map(({ stat, label, desc, source, color }, i) => (
-              <div key={stat} style={{ padding: '32px 28px', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,5vw,52px)', color, letterSpacing: -1.5, lineHeight: 1, marginBottom: 10 }}>{stat}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: 'rgba(247,245,242,0.5)', textTransform: 'uppercase', marginBottom: 12 }}>{label}</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.45)', lineHeight: 1.6, marginBottom: 8 }}>{desc}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.2)' }}>{source}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
       {/* ── COMMENT ÇA MARCHE ────────────────────────────────── */}
       <section style={{ background: '#fff', padding: '96px 48px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
@@ -486,98 +457,6 @@ export default function Home() {
           <div style={{ textAlign: 'center', marginTop: 28 }}>
             <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
               Voir la méthodologie complète →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── CAS CONCRET AVANT/APRÈS ──────────────────────────── */}
-      <section style={{ background: '#fff', padding: '80px 48px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Étude de cas</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 10, lineHeight: 1.1 }}>
-            Un cas concret
-          </h2>
-          <p style={{ fontSize: 14, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 40px' }}>
-            Comment un site SaaS est passé de 0 à 3 citations IA en 4 semaines
-          </p>
-          <div className="case-study-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-            <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.15)', borderRadius: 14, padding: 28 }}>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>Avant l'audit</div>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#D97757', marginBottom: 16 }}>Score GEO : 28/100</div>
-              <div style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 700, color: '#1A1916', marginBottom: 10 }}>Problèmes détectés :</div>
-              {[
-                "→ Page d'accueil commençant par 'Bienvenue chez...' — impossible à extraire par une IA",
-                "→ Aucun Schema.org détecté — les IA ne comprennent pas la structure du site",
-                "→ robots.txt bloquant GPTBot et ClaudeBot — les moteurs IA ne peuvent pas accéder au contenu",
-                "→ 0 lien externe sourcé — aucune preuve vérifiable pour les IA",
-              ].map((item, i) => (
-                <div key={i} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.65, marginBottom: 8 }}>{item}</div>
-              ))}
-            </div>
-            <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.15)', borderRadius: 14, padding: 28 }}>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#10A37F', marginBottom: 4 }}>Après les corrections</div>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#10A37F', marginBottom: 16 }}>Score GEO : 71/100</div>
-              <div style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 700, color: '#1A1916', marginBottom: 10 }}>Corrections appliquées :</div>
-              {[
-                "✓ Titre reformulé : 'Acme automatise la gestion des congés pour les PME de 10 à 200 salariés'",
-                "✓ Schema.org Organization + FAQPage ajoutés — structure lisible par les IA",
-                "✓ robots.txt mis à jour — GPTBot, ClaudeBot et PerplexityBot autorisés",
-                "✓ 8 liens externes vers des sources reconnues (INSEE, Legifrance, BPI)",
-              ].map((item, i) => (
-                <div key={i} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.65, marginBottom: 8 }}>{item}</div>
-              ))}
-            </div>
-          </div>
-          <div style={{ fontSize: 14, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', textAlign: 'center', marginTop: 24 }}>
-            Résultat : le site est passé de 0 à 3 citations dans les réponses de ChatGPT et Perplexity en 4 semaines.
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── TÉMOIGNAGES ──────────────────────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Témoignages</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48, lineHeight: 1.1 }}>
-            Ils ont audité leur site
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
-            {[
-              { name: 'Thomas L.', role: 'Fondateur · Kairos SaaS', quote: "On pensait être bien référencés, mais Detekia a révélé que ChatGPT ne pouvait même pas accéder à notre site. Deux lignes modifiées dans le robots.txt et notre score est passé de 29 à 58 en une semaine." },
-              { name: 'Marine G.', role: 'Consultante SEO freelance', quote: "J'utilise Detekia pour chaque nouveau client. En 30 secondes j'ai un diagnostic clair à présenter, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat." },
-              { name: 'Julien B.', role: 'Responsable e-commerce · Maison Verdure', quote: "Nos fiches produits étaient invisibles pour les IA. Le rapport a identifié 3 blocages critiques sur notre Schema.org. Après correction, Perplexity a commencé à recommander nos produits en 3 semaines." },
-            ].map(({ name, role, quote }) => (
-              <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
-                <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
-                <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{role}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── 8 CRITÈRES — MOD 4 ──────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Ce qu'on analyse</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            8 critères <em style={{ color: '#D97757' }}>validés par la recherche</em>
-          </h2>
-          <div className="criteria-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
-            {features.map(f => <CriteriaCard key={f.name} {...f} />)}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 28 }}>
-            <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
-              Voir le détail complet → Méthodologie
             </a>
           </div>
         </div>
@@ -671,27 +550,63 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* ── POURQUOI FAIRE CONFIANCE ─────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+      {/* ── TÉMOIGNAGES (avec étude de cas intégrée) ──────────── */}
+      <section style={{ background: '#fff', padding: '96px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Transparence & confiance</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            Pourquoi faire confiance <em style={{ color: '#D97757' }}>à Detekia ?</em>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Témoignages</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48, lineHeight: 1.1 }}>
+            Ils ont audité leur site
           </h2>
-          <div className="trust-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+
+          {/* Étude de cas avant/après */}
+          <div style={{ marginBottom: 40 }}>
+            <p style={{ fontSize: 14, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 24px' }}>
+              Comment un site SaaS est passé de 0 à 3 citations IA en 4 semaines
+            </p>
+            <div className="case-study-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+              <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.15)', borderRadius: 14, padding: 28 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>Avant l'audit</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#D97757', marginBottom: 16 }}>Score GEO : 28/100</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 700, color: '#1A1916', marginBottom: 10 }}>Problèmes détectés :</div>
+                {[
+                  "→ Page d'accueil commençant par 'Bienvenue chez...' — impossible à extraire par une IA",
+                  "→ Aucun Schema.org détecté — les IA ne comprennent pas la structure du site",
+                  "→ robots.txt bloquant GPTBot et ClaudeBot — les moteurs IA ne peuvent pas accéder au contenu",
+                  "→ 0 lien externe sourcé — aucune preuve vérifiable pour les IA",
+                ].map((item, i) => (
+                  <div key={i} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.65, marginBottom: 8 }}>{item}</div>
+                ))}
+              </div>
+              <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.15)', borderRadius: 14, padding: 28 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#10A37F', marginBottom: 4 }}>Après les corrections</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#10A37F', marginBottom: 16 }}>Score GEO : 71/100</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 700, color: '#1A1916', marginBottom: 10 }}>Corrections appliquées :</div>
+                {[
+                  "✓ Titre reformulé : 'Acme automatise la gestion des congés pour les PME de 10 à 200 salariés'",
+                  "✓ Schema.org Organization + FAQPage ajoutés — structure lisible par les IA",
+                  "✓ robots.txt mis à jour — GPTBot, ClaudeBot et PerplexityBot autorisés",
+                  "✓ 8 liens externes vers des sources reconnues (INSEE, Legifrance, BPI)",
+                ].map((item, i) => (
+                  <div key={i} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.65, marginBottom: 8 }}>{item}</div>
+                ))}
+              </div>
+            </div>
+            <div style={{ fontSize: 14, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', textAlign: 'center', marginTop: 24 }}>
+              Résultat : le site est passé de 0 à 3 citations dans les réponses de ChatGPT et Perplexity en 4 semaines.
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
             {[
-              { icon: '🔬', accent: '#4285F4', title: 'Méthode transparente', desc: 'Méthodologie entièrement documentée. Vous savez comment chaque point de votre score est calculé.', link: '/methodologie' },
-              { icon: '⚡', accent: '#10A37F', title: 'Résultats en 30 secondes', desc: 'Aucun devis, aucun rendez-vous. Votre rapport disponible immédiatement, à toute heure.', link: null },
-              { icon: '🔓', accent: '#D97757', title: 'Zéro inscription requise', desc: "Pas d'email, pas de mot de passe pour l'analyse gratuite. Essayez sans aucun engagement.", link: null },
-              { icon: '🔒', accent: '#1C7DC4', title: 'Paiement sécurisé Stripe', desc: 'Paiements traités par Stripe. Aucune donnée bancaire ne transite par nos serveurs.', link: null },
-              { icon: '↩️', accent: '#C9861A', title: 'Remboursement sous 24h', desc: "Rapport inaccessible suite à un problème technique ? Remboursement intégral garanti sous 24h.", link: null },
-              { icon: '🛡️', accent: '#10A37F', title: 'Données non conservées', desc: 'Votre URL analysée en temps réel. Aucune donnée de votre site stockée au-delà de 24h.', link: null },
-            ].map(({ icon, accent, title, desc, link }) => (
-              <div key={title} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', borderLeft: `4px solid ${accent}`, boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
-                <div style={{ fontSize: 26, marginBottom: 12 }}>{icon}</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{title}</div>
-                <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
-                {link && <a href={link} style={{ display: 'inline-block', marginTop: 10, fontSize: 12, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>Voir la méthodologie →</a>}
+              { name: 'Thomas L.', role: 'Fondateur · Kairos SaaS', quote: "On pensait être bien référencés, mais Detekia a révélé que ChatGPT ne pouvait même pas accéder à notre site. Deux lignes modifiées dans le robots.txt et notre score est passé de 29 à 58 en une semaine." },
+              { name: 'Marine G.', role: 'Consultante SEO freelance', quote: "J'utilise Detekia pour chaque nouveau client. En 30 secondes j'ai un diagnostic clair à présenter, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat." },
+              { name: 'Julien B.', role: 'Responsable e-commerce · Maison Verdure', quote: "Nos fiches produits étaient invisibles pour les IA. Le rapport a identifié 3 blocages critiques sur notre Schema.org. Après correction, Perplexity a commencé à recommander nos produits en 3 semaines." },
+            ].map(({ name, role, quote }) => (
+              <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
+                <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
+                <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{role}</div>
               </div>
             ))}
           </div>
