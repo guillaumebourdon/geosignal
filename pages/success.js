@@ -288,17 +288,33 @@ export default function Success() {
             {/* ── EMAIL BADGE ── */}
             {emailSent && (
               <div style={{
-                background: 'rgba(16,163,127,0.07)', border: '1px solid rgba(16,163,127,0.2)',
-                borderRadius: 12, padding: '14px 20px', marginBottom: 20,
-                display: 'flex', alignItems: 'center', gap: 12,
+                background: '#fff', border: '2px solid #10A37F',
+                borderRadius: 16, padding: '28px 24px', marginBottom: 20,
+                textAlign: 'center',
               }}>
-                <span style={{ fontSize: 18 }}>📧</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#10A37F', fontFamily: 'system-ui', marginBottom: 2 }}>
-                    Rapport envoyé par email
-                  </div>
-                  <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui' }}>
-                    Le rapport HTML complet a été envoyé à <strong>{email}</strong>
+                <div style={{
+                  width: 48, height: 48, borderRadius: '50%',
+                  background: 'rgba(16,163,127,0.1)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  margin: '0 auto 14px', fontSize: 22,
+                }}>📧</div>
+                <div style={{
+                  fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700,
+                  color: '#1A1916', marginBottom: 8,
+                }}>
+                  Votre rapport complet a été envoyé par email
+                </div>
+                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', marginBottom: 18 }}>
+                  Le rapport PDF détaillé avec toutes vos recommandations a été envoyé à <strong style={{ color: '#1A1916' }}>{email}</strong>
+                </div>
+                <div style={{
+                  background: '#FFF8F0', border: '1px solid #E8C97A',
+                  borderRadius: 10, padding: '12px 16px',
+                  display: 'flex', alignItems: 'flex-start', gap: 10, textAlign: 'left',
+                }}>
+                  <span style={{ color: '#C9A84C', fontSize: 18, lineHeight: 1, flexShrink: 0 }}>⚠️</span>
+                  <div style={{ fontSize: 12, color: '#8A6D20', fontFamily: 'system-ui', lineHeight: 1.5 }}>
+                    <strong>Pensez à vérifier vos spams</strong> — l'email peut parfois atterrir dans votre dossier courrier indésirable ou promotions.
                   </div>
                 </div>
               </div>
