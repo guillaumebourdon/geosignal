@@ -109,7 +109,7 @@ export default function Pricing() {
               ['✓', 'Toutes les recommandations (5 à 8 selon le site)'],
               ['✓', 'Diagnostic, méthode, exemple concret par reco'],
               ['✓', 'Impact attendu et tip d\'expert pour chaque action'],
-              ['✓', 'Rapport HTML complet envoyé par email'],
+              ['✓', 'Rapport PDF complet envoyé par email'],
               ['✓', 'Accès immédiat en ligne, à vie'],
             ].map(([check, text], i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -139,7 +139,7 @@ export default function Pricing() {
           ['Qu\'est-ce que le GEO ?', 'Le GEO (Generative Engine Optimization) est l\'optimisation de votre site pour apparaître dans les réponses de ChatGPT, Claude, Gemini et Perplexity.'],
           ['Combien de recommandations vais-je recevoir ?', 'Toutes les recommandations générées pour les critères sous 80% de leur score max — en général entre 5 et 8 recommandations détaillées avec méthode, exemple et impact attendu.'],
           ['Le paiement est-il par site ou par analyse ?', 'Par analyse. Chaque rapport débloqué correspond à l\'analyse d\'un site à un instant donné.'],
-          ['Comment est délivré le rapport ?', 'Immédiatement en ligne sur la page de confirmation, et envoyé par email en HTML pour être consulté hors ligne.'],
+          ['Comment est délivré le rapport ?', 'Immédiatement en ligne sur la page de confirmation, et envoyé par email en PDF pour être consulté hors ligne.'],
           ['Les données de mon site sont-elles conservées ?', 'Non. Detekia analyse votre site en temps réel. Seul le rapport est mis en cache 24h pour vous éviter d\'attendre si vous revenez sur la même URL.'],
         ].map(([q, a], i) => (
           <div key={i} style={{ borderBottom: '1px solid #E5E2DC', padding: '20px 0' }}>
