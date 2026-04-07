@@ -297,7 +297,7 @@ export default function Home() {
             </h1>
 
             <p style={{ fontSize: 18, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
-              Detekia analyse votre site sur les 8 critères qui comptent pour les IA. Score sur 100, recommandations concrètes, gratuitement et en 30 secondes.
+              Découvrez en 30 secondes comment être cité par les IA.
             </p>
 
             {/* ── URL input principal ──────────────────────────── */}
