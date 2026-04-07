@@ -405,36 +405,6 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* ── COMMENT ÇA MARCHE ────────────────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Comment ça marche</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            Un audit GEO complet en <em style={{ color: '#D97757' }}>30 secondes</em>
-          </h2>
-          <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
-            {[
-              ['01','#10A37F','Entrez votre URL','Collez l\'adresse de votre site. Zéro inscription, zéro configuration, zéro carte bancaire.'],
-              ['02','#D97757','On analyse tout','Detekia scrape votre site et l\'évalue selon 8 critères GEO validés par la recherche.'],
-              ['03','#4285F4','Recevez votre score','Score sur 100, analyse par critère et recommandations expertes en moins de 30 secondes.'],
-            ].map(([num,color,title,desc]) => (
-              <div key={num} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 38, color, marginBottom: 16, letterSpacing: -1 }}>{num}</div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{title}</div>
-                <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 28 }}>
-            <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
-              Voir la méthodologie complète →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
       {/* ── POUR QUI ─────────────────────────────────────────── */}
       <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
@@ -493,26 +463,30 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* ── TÉMOIGNAGES ──────────────────────────────────────── */}
+      {/* ── COMMENT ÇA MARCHE ────────────────────────────────── */}
       <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Témoignages</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48, lineHeight: 1.1 }}>
-            Ils ont audité leur site
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Comment ça marche</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
+            Un audit GEO complet en <em style={{ color: '#D97757' }}>30 secondes</em>
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
+          <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {[
-              { name: 'Thomas L.', role: 'Fondateur · Kairos SaaS', quote: "On pensait être bien référencés, mais Detekia a révélé que ChatGPT ne pouvait même pas accéder à notre site. Deux lignes modifiées dans le robots.txt et notre score est passé de 29 à 58 en une semaine." },
-              { name: 'Marine G.', role: 'Consultante SEO freelance', quote: "J'utilise Detekia pour chaque nouveau client. En 30 secondes j'ai un diagnostic clair à présenter, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat." },
-              { name: 'Julien B.', role: 'Responsable e-commerce · Maison Verdure', quote: "Nos fiches produits étaient invisibles pour les IA. Le rapport a identifié 3 blocages critiques sur notre Schema.org. Après correction, Perplexity a commencé à recommander nos produits en 3 semaines." },
-            ].map(({ name, role, quote }) => (
-              <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
-                <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
-                <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{role}</div>
+              ['01','#10A37F','Entrez votre URL','Collez l\'adresse de votre site. Zéro inscription, zéro configuration, zéro carte bancaire.'],
+              ['02','#D97757','On analyse tout','Detekia scrape votre site et l\'évalue selon 8 critères GEO validés par la recherche.'],
+              ['03','#4285F4','Recevez votre score','Score sur 100, analyse par critère et recommandations expertes en moins de 30 secondes.'],
+            ].map(([num,color,title,desc]) => (
+              <div key={num} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 38, color, marginBottom: 16, letterSpacing: -1 }}>{num}</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{title}</div>
+                <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{desc}</div>
               </div>
             ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 28 }}>
+            <a href="/methodologie" style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
+              Voir la méthodologie complète →
+            </a>
           </div>
         </div>
       </section>
@@ -559,6 +533,32 @@ export default function Home() {
           </div>
           <div style={{ fontSize: 14, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', textAlign: 'center', marginTop: 24 }}>
             Résultat : le site est passé de 0 à 3 citations dans les réponses de ChatGPT et Perplexity en 4 semaines.
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ── TÉMOIGNAGES ──────────────────────────────────────── */}
+      <section style={{ background: '#fff', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>Témoignages</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48, lineHeight: 1.1 }}>
+            Ils ont audité leur site
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="testimonials-grid">
+            {[
+              { name: 'Thomas L.', role: 'Fondateur · Kairos SaaS', quote: "On pensait être bien référencés, mais Detekia a révélé que ChatGPT ne pouvait même pas accéder à notre site. Deux lignes modifiées dans le robots.txt et notre score est passé de 29 à 58 en une semaine." },
+              { name: 'Marine G.', role: 'Consultante SEO freelance', quote: "J'utilise Detekia pour chaque nouveau client. En 30 secondes j'ai un diagnostic clair à présenter, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat." },
+              { name: 'Julien B.', role: 'Responsable e-commerce · Maison Verdure', quote: "Nos fiches produits étaient invisibles pour les IA. Le rapport a identifié 3 blocages critiques sur notre Schema.org. Après correction, Perplexity a commencé à recommander nos produits en 3 semaines." },
+            ].map(({ name, role, quote }) => (
+              <div key={name} style={{ background: '#FFFFFF', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 48, color: '#E5E2DC', lineHeight: 1, marginBottom: 8, marginTop: -8 }}>"</div>
+                <p style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916', lineHeight: 1.65, fontStyle: 'italic', flex: 1, margin: '0 0 20px' }}>{quote}</p>
+                <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916' }}>{name}</div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', marginTop: 2 }}>{role}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
