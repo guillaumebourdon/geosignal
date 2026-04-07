@@ -17,6 +17,7 @@ const CONTENT_MAP = {
   'reddit-geo-source-ia': require('../../content/articles/reddit-geo-source-ia').default,
   'concurrents-chatgpt-visibilite': require('../../content/articles/concurrents-chatgpt-visibilite').default,
   'pourquoi-trafic-google-baisse-2026': require('../../content/articles/pourquoi-trafic-google-baisse-2026').default,
+  'sites-bloquent-bots-ia': require('../../content/articles/sites-bloquent-bots-ia').default,
 };
 
 const CATEGORY_COLORS = {
