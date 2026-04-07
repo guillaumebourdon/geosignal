@@ -254,6 +254,7 @@ export default function Home() {
   return (
     <>
     <Head>
+      <link rel="canonical" href="https://detekia.fr" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
     </Head>
