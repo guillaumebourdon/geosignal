@@ -35,13 +35,13 @@ export default function handler(req) {
           <div
             style={{
               position: 'absolute',
-              bottom: '-100px',
-              right: '-100px',
-              width: '400px',
-              height: '400px',
+              bottom: '-150px',
+              right: '-150px',
+              width: '300px',
+              height: '300px',
               borderRadius: '50%',
               background: accent,
-              opacity: 0.12,
+              opacity: 0.06,
               display: 'flex',
             }}
           />
@@ -58,22 +58,23 @@ export default function handler(req) {
 
           <div style={{ flex: 1, display: 'flex' }} />
 
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              background: accent + '24',
-              color: accent,
-              padding: '8px 18px',
-              borderRadius: '999px',
-              fontSize: '18px',
-              fontWeight: 700,
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              marginBottom: '28px',
-            }}
-          >
-            {category}
+          <div style={{ display: 'flex', marginBottom: '28px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                background: accent + '24',
+                color: accent,
+                padding: '8px 18px',
+                borderRadius: '999px',
+                fontSize: '18px',
+                fontWeight: 700,
+                letterSpacing: '3px',
+                textTransform: 'uppercase',
+              }}
+            >
+              {category}
+            </div>
           </div>
 
           <div
