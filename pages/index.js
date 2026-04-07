@@ -297,7 +297,7 @@ export default function Home() {
             </h1>
 
             <p style={{ fontSize: 18, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
-              Découvrez en 30 secondes comment être cité par les IA.
+              Detekia audite votre site en 30 secondes et vous montre quoi corriger pour être cité par les IA.
             </p>
 
             {/* ── URL input principal ──────────────────────────── */}
