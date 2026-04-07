@@ -296,8 +296,8 @@ export default function Home() {
               Vos concurrents apparaissent dans<br className="mobile-break" /> <span id="ai-engine-name">ChatGPT.</span><span id="ai-cursor" style={{ color: '#D97757' }}>|</span><br /><span style={{ color: '#D97757' }}>Pas vous.</span>
             </h1>
 
-            <p style={{ fontSize: 16, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
-              Analysez votre site en 30 secondes. Score sur 100, 8 critères, recommandations concrètes pour être cité par les IA.
+            <p style={{ fontSize: 18, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
+              Detekia analyse votre site sur les 8 critères qui comptent pour les IA. Score sur 100, recommandations concrètes, gratuitement et en 30 secondes.
             </p>
 
             {/* ── URL input principal ──────────────────────────── */}
