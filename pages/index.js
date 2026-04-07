@@ -455,14 +455,14 @@ export default function Home() {
             Pour qui est Detekia ?
           </h2>
           <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 48px' }}>
-            Que vous soyez fondateur, marketeur ou consultant, votre visibilité IA est un enjeu business.
+            Que vous soyez fondateur, marketeur ou créateur de contenu, votre visibilité IA est un enjeu business.
           </p>
           <div className="target-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20 }}>
             {[
-              { emoji: '🚀', title: 'Fondateurs SaaS & startups', desc: "Vos concurrents lèvent des millions en visibilité. Assurez-vous que les IA recommandent votre produit quand un prospect pose la question." },
-              { emoji: '🛒', title: 'E-commerçants', desc: "Les IA recommandent des produits à des millions d'utilisateurs chaque jour. Si votre catalogue n'est pas citable, vous perdez des ventes." },
-              { emoji: '🔍', title: 'Consultants & agences SEO', desc: "Ajoutez le GEO à votre offre. Utilisez Detekia pour auditer vos clients et leur proposer un plan d'optimisation IA concret." },
-              { emoji: '🏢', title: 'Sites vitrines & services', desc: "Quand quelqu'un demande à ChatGPT 'quel prestataire pour X', votre site doit apparaître. Detekia vous montre comment." },
+              { emoji: '🚀', title: 'Fondateurs SaaS / B2B', desc: "Vos concurrents sont cités par les IA, pas vous. Découvrez pourquoi — et comment reprendre votre place dans les réponses de ChatGPT et Perplexity." },
+              { emoji: '🛒', title: 'E-commerçants', desc: "Les IA recommandent des produits à des millions d'utilisateurs chaque jour. Assurez-vous que les vôtres apparaissent dans ces recommandations." },
+              { emoji: '✍️', title: 'Blogueurs & créateurs de contenu', desc: "Vous produisez du contenu de qualité. Mais les IA le citent-elles ? Identifiez ce qui manque pour que votre expertise soit reprise et recommandée." },
+              { emoji: '📈', title: 'Agences & freelances marketing', desc: "Ajoutez l'audit de visibilité IA à votre offre client. Detekia vous donne un diagnostic structuré à présenter en quelques clics." },
             ].map(({ emoji, title, desc }) => (
               <div key={title} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28 }}>
                 <div style={{ fontSize: 28, marginBottom: 12 }}>{emoji}</div>
