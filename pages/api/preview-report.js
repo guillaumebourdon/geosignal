@@ -64,7 +64,7 @@ function evidenceBlock(criterionName, evidence) {
   if (!evidence) return '';
   const name = criterionName.toLowerCase();
 
-  const blockStyle = 'background:#F7F5F2;border-left:3px solid #E5E2DC;padding:14px 18px;border-radius:0 6px 6px 0;margin:10px 0;';
+  const blockStyle = 'background:#F7F5F2;border-left:3px solid #E5E2DC;padding:14px 18px;border-radius:0 6px 6px 0;margin:10px 0;page-break-inside:avoid;';
   const labelStyle = 'font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;';
   const codeStyle  = 'background:#1A1916;color:#F7F5F2;border-radius:8px;padding:16px;font-family:monospace;font-size:11px;line-height:1.6;white-space:pre-wrap;word-break:break-all;margin:10px 0;';
   const valStyle   = 'font-family:monospace;font-size:12px;color:#1A1916;line-height:1.6;';
@@ -167,7 +167,7 @@ function recoSections(reco) {
 
   return ALL
     .filter(s => (KEYS[reco.priority] || KEYS.medium).includes(s.key) && s.content)
-    .map(s => `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:13px 16px;margin-bottom:8px;">
+    .map(s => `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:13px 16px;margin-bottom:8px;page-break-inside:avoid;">
       <div style="font-family:system-ui;font-size:11px;font-weight:600;color:#1A1916;margin-bottom:5px;">${s.icon} ${s.title}</div>
       <div style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.65;">${esc(s.content)}</div>
     </div>`)
@@ -249,7 +249,7 @@ function generateReportHTML(data) {
     const rc = r.priority === 'high' ? { color: '#D97757', bg: 'rgba(217,119,87,0.07)' }
              : r.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.07)' }
              : { color: '#10A37F', bg: 'rgba(16,163,127,0.07)' };
-    return `<div style="display:flex;gap:16px;align-items:flex-start;padding:14px 16px;background:${rc.bg};border-radius:8px;margin-bottom:8px;">
+    return `<div style="display:flex;gap:16px;align-items:flex-start;padding:14px 16px;background:${rc.bg};border-radius:8px;margin-bottom:8px;page-break-inside:avoid;">
       <div style="font-family:Georgia,serif;font-size:22px;color:${rc.color};line-height:1;flex-shrink:0;min-width:24px;">${i + 1}</div>
       <div style="flex:1;">
         <div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:3px;">${esc(r.title || r.criterion || '')}</div>
@@ -282,7 +282,7 @@ function generateReportHTML(data) {
       </div>
     </div>
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">Les 8 critères GEO</h2>
-    <table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:36px;">
+    <table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:36px;page-break-inside:avoid;">
       <thead><tr style="background:#F7F5F2;">
         <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Critère</th>
         <th style="padding:9px 12px;text-align:center;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Score</th>
@@ -294,8 +294,8 @@ function generateReportHTML(data) {
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">3 actions prioritaires</h2>
     ${top3HTML}
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-top:28px;margin-bottom:14px;">Points forts identifiés</h2>
-    <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;">${strengthsHTML}</div>
-    ${noEvidence ? `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.25);border-radius:8px;padding:14px 18px;margin-top:28px;font-family:system-ui;font-size:12px;color:#C9861A;line-height:1.5;">⚠️ Données détaillées non disponibles pour ce scan. Relancez l'analyse pour un rapport enrichi.</div>` : ''}
+    <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;page-break-inside:avoid;">${strengthsHTML}</div>
+    ${noEvidence ? `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.25);border-radius:8px;padding:14px 18px;margin-top:28px;page-break-inside:avoid;font-family:system-ui;font-size:12px;color:#C9861A;line-height:1.5;">⚠️ Données détaillées non disponibles pour ce scan. Relancez l'analyse pour un rapport enrichi.</div>` : ''}
     ${(sanityWarnings && sanityWarnings.length > 0) ? `
       <div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.25);border-radius:8px;padding:14px 18px;margin-top:20px;">
         <div style="font-family:monospace;font-size:9px;color:#C9861A;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">⚠️ Notes sur l'analyse</div>
@@ -345,7 +345,7 @@ function generateReportHTML(data) {
     <div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;margin-bottom:20px;">
       <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.7;"><strong>Seulement 11%</strong> des domaines sont cités à la fois par ChatGPT ET Perplexity. <span style="color:#8A8680;">(Profound, 2025)</span> Chaque plateforme IA a ses propres préférences — une raison supplémentaire de travailler votre citabilité de façon transversale.</p>
     </div>
-    <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;">
+    <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;page-break-inside:avoid;">
       <div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Source académique de référence</div>
       <p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.7;">"Generative Engine Optimization" — Aggarwal et al., Princeton University / Georgia Tech, KDD 2024. Cette étude démontre que l'ajout de citations sourcées, de statistiques et de structure dans le contenu augmente la visibilité IA jusqu'à <strong>40%</strong>. C'est le fondement méthodologique de ce rapport.</p>
     </div>
@@ -378,7 +378,7 @@ function generateReportHTML(data) {
       const excerptBlock = t.ai_response_excerpt
         ? `<div style="background:#F7F5F2;border-left:3px solid #E5E2DC;padding:8px 12px;font-family:monospace;font-size:11px;color:#8A8680;line-height:1.5;margin-top:8px;">${esc(t.ai_response_excerpt)}</div>`
         : '';
-      return `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:16px;margin-bottom:12px;">
+      return `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:16px;margin-bottom:12px;page-break-inside:avoid;">
         <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
           <div style="flex:1;min-width:200px;font-family:system-ui;font-size:13px;font-weight:600;color:#1A1916;line-height:1.4;">${esc(t.query)}</div>
           <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${dc.bg};color:${dc.color};white-space:nowrap;">${diffLabel}</span>
@@ -525,7 +525,7 @@ function generateReportHTML(data) {
         ${recosHTML}
       </div>
 
-      ${guide ? `<div style="background:rgba(217,119,87,0.04);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:16px;">
+      ${guide ? `<div style="background:rgba(217,119,87,0.04);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:18px 22px;page-break-inside:avoid;margin-bottom:16px;">
         <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Guide technique</div>
         <p style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.8;">${esc(guide)}</p>
       </div>` : ''}
@@ -573,7 +573,7 @@ function generateReportHTML(data) {
       </tr></thead>
       <tbody>${actionRows}</tbody>
     </table>
-    <div style="background:#1A1916;border-radius:14px;padding:30px 36px;display:flex;align-items:center;gap:32px;">
+    <div style="background:#1A1916;border-radius:14px;padding:30px 36px;page-break-inside:avoid;display:flex;align-items:center;gap:32px;">
       <div style="text-align:center;flex-shrink:0;">
         <div style="font-family:monospace;font-size:9px;color:rgba(247,245,242,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">Score actuel</div>
         <div style="font-family:Georgia,serif;font-size:52px;color:#F7F5F2;line-height:1;letter-spacing:-2px;">${score}</div>
