@@ -267,7 +267,7 @@ function generateReportHTML(data) {
   ).join('') || `<div style="font-family:system-ui;font-size:13px;color:#8A8680;">—</div>`;
 
   const execSummary = `
-  <div style="${P}min-height:100vh;">
+  <div style="${P}">
     ${sLabel('Synthèse exécutive')}
     ${H1("Résultats de l'analyse")}
     <div style="background:#1A1916;border-radius:12px;padding:24px 28px;margin-bottom:36px;display:flex;align-items:center;gap:24px;">
@@ -306,7 +306,7 @@ function generateReportHTML(data) {
 
   // ── PAGE 3 : CONTEXT ────────────────────────────────────────────────────────
   const context = `
-  <div style="${P}min-height:100vh;">
+  <div style="${P}">
     ${sLabel('Contexte 2026')}
     ${H1('Pourquoi la visibilité IA est critique en 2026')}
     <p style="font-family:system-ui;font-size:13px;color:#8A8680;line-height:1.7;margin-bottom:28px;">Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information. Voici les données clés qui expliquent pourquoi votre visibilité IA est devenue un enjeu business direct.</p>
@@ -397,7 +397,7 @@ function generateReportHTML(data) {
         </div>`
       : '';
     return `
-    <div style="${P}min-height:100vh;">
+    <div style="${P}">
       ${sLabel('Test IA')}
       <h1 style="font-family:Georgia,serif;font-size:34px;color:#1A1916;letter-spacing:-1px;margin-bottom:8px;line-height:1.1;">Test de visibilité IA</h1>
       <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:28px;line-height:1.6;">Nous avons simulé 5 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
@@ -558,7 +558,7 @@ function generateReportHTML(data) {
   }).join('');
 
   const actionPlan = `
-  <div style="${P}min-height:100vh;">
+  <div style="${P}">
     ${sLabel("Plan d'action")}
     ${H1('Récapitulatif des actions')}
     <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:36px;line-height:1.6;">${recommendations.length} recommandations classées par priorité d'impact.</p>
@@ -611,7 +611,7 @@ function generateReportHTML(data) {
     </tr>`).join('');
 
   const methodology = `
-  <div style="${P}min-height:100vh;">
+  <div style="${P}">
     ${sLabel('Transparence')}
     ${H1('Méthodologie')}
     <div style="background:rgba(217,119,87,0.06);border-left:3px solid #D97757;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:28px;">
