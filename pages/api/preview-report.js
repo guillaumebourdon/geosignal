@@ -189,6 +189,7 @@ function generateReportHTML(data) {
   });
 
   const P  = 'page-break-before:always;padding:52px 56px 64px;background:#fff;box-sizing:border-box;';
+  const PC = 'padding:40px 56px 32px;background:#fff;box-sizing:border-box;';
   const LS = 'font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;';
 
   const sLabel = (txt, color = '#D97757') =>
@@ -453,6 +454,7 @@ function generateReportHTML(data) {
   }
 
   const criteriaPages = criteria.map((c, idx) => {
+    const cStyle = idx === 0 ? P : PC;
     const cg    = criterionGrade(c.score, c.max);
     const group = criterionGroup(c.name);
     const pct   = Math.round((c.score / c.max) * 100);
@@ -488,7 +490,7 @@ function generateReportHTML(data) {
       : recoSections(null);
 
     return `
-    <div style="${P}">
+    <div style="${cStyle}">
       <div style="margin-bottom:28px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
           <span style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:2px;text-transform:uppercase;">${esc(group)}</span>
