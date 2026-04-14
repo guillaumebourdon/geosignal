@@ -131,6 +131,7 @@ function ProductMockup() {
 /* ─── Main page ──────────────────────────────────────────── */
 export default function Home() {
   const [url, setUrl] = useState('');
+  const [easterEgg, setEasterEgg] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -179,6 +180,11 @@ export default function Home() {
 
   async function analyze() {
     if (!url) return;
+    if (/detekia\.(fr|com)/i.test(url)) {
+      setEasterEgg(true);
+      return;
+    }
+    setEasterEgg(false);
     const cleanUrl = url.replace(/^https?:\/\//, '');
     router.push(`/results?url=${encodeURIComponent(cleanUrl)}`);
   }
@@ -286,6 +292,11 @@ export default function Home() {
                   Analyser mon site →
                 </button>
               </div>
+              {easterEgg && (
+                <div style={{ marginTop: 14, padding: '14px 20px', background: '#FFF8F0', border: '1px solid #F0D9B5', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', color: '#1A1916', lineHeight: 1.6 }}>
+                  Sympa d'essayer 😏 Mais on ne se note pas soi-même — ce serait trop facile de se mettre 100/100. Essayez avec un autre site !
+                </div>
+              )}
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 1, marginTop: 8 }}>
                 Gratuit · Sans inscription · Résultat en 30 secondes
               </div>
