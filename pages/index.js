@@ -552,8 +552,8 @@ export default function Home() {
             </div>
           </div>
           <div style={{ textAlign: 'center', marginTop: 28 }}>
-            <a href="/api/preview-report?url=qonto.com" target="_blank" style={{ fontSize: 13, color: '#D97757', textDecoration: 'underline', fontFamily: 'system-ui' }}>
-              📄 Voir un exemple de rapport complet (HTML)
+            <a href="/exemple-rapport.html" target="_blank" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', padding: '10px 24px', borderRadius: 9, textDecoration: 'none' }}>
+              Voir un exemple de rapport →
             </a>
           </div>
         </div>
