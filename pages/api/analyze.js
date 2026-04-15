@@ -602,13 +602,7 @@ export default async function handler(req, res) {
       sanityWarnings: sanityWarnings.length > 0 ? sanityWarnings : undefined,
     };
 
-    // Réponse envoyée au client en premier — cache et email en fire-and-forget
-    res.status(200).json(responseData);
-
-    redis.set(cacheKey, responseData, { ex: CACHE_DURATION })
-      .catch(e => console.error('Cache write error:', e.message));
-
-    resend.emails.send({
+    await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: 'guillaume@beeleven.fr',
       subject: `🔍 Nouveau scan — ${url} — Score ${totalScore}/100`,
@@ -628,8 +622,26 @@ export default async function handler(req, res) {
       `,
     }).catch(e => console.log('Admin notification failed:', e.message));
 
+    res.status(200).json(responseData);
+
+    redis.set(cacheKey, responseData, { ex: CACHE_DURATION })
+      .catch(e => console.error('Cache write error:', e.message));
+
   } catch (err) {
     console.error('Analysis error:', err.message);
+    await resend.emails.send({
+      from: 'Detekia <hello@detekia.fr>',
+      to: 'guillaume@beeleven.fr',
+      subject: `❌ Scan échoué — ${url}`,
+      html: `
+        <div style="font-family: system-ui; max-width: 500px;">
+          <h2 style="color: #D97757;">Scan échoué</h2>
+          <p><strong>URL :</strong> ${url}</p>
+          <p><strong>Erreur :</strong> ${err.message}</p>
+          <p><strong>Date :</strong> ${new Date().toLocaleString('fr-FR')}</p>
+        </div>
+      `,
+    }).catch(e => console.log('Error notification failed:', e.message));
     res.status(500).json({ error: "Erreur lors de l'analyse", detail: err.message });
   }
 }
