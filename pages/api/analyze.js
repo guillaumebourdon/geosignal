@@ -571,6 +571,17 @@ export default async function handler(req, res) {
     const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;
     const totalScore = Math.max(0, Math.min(100, baseScore + neutralityBonus));
 
+    // Regenerate verdict with final score (includes neutrality bonus)
+    if (totalScore !== baseScore) {
+      const verdictMsg = await client.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 150,
+        temperature: 0.2,
+        messages: [{ role: 'user', content: `Tu es un consultant GEO senior. Le site ${url} obtient un score final de ${totalScore}/100. Ses forces : ${(claude.strengths || []).join(', ')}. Sa priorité : ${claude.topPriority || 'aucune'}. Génère un verdict en 1 phrase concise. Réponds UNIQUEMENT avec la phrase, sans guillemets ni JSON.` }],
+      });
+      claude.verdict = verdictMsg.content[0].text.trim();
+    }
+
     // Sanity checks — detect likely scraping gaps
     const hasSubstantialContent = textContent.length > 1000;
     const sanityWarnings = [];
