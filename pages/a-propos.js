@@ -96,7 +96,7 @@ export default function APropos() {
             <P>Après plus de 10 ans dans le marketing digital, l'acquisition et la stratégie de croissance, Guillaume a accompagné des dizaines d'entreprises — de la startup early-stage à la PME établie — sur leurs enjeux de visibilité en ligne.</P>
             <P>En 2025, face à l'explosion du trafic référé par les IA (+527% en quelques mois), il crée Detekia pour répondre à un besoin que personne ne couvrait encore en France : donner aux entreprises un outil simple, transparent et actionnable pour mesurer et améliorer leur visibilité dans les réponses de ChatGPT, Claude, Gemini et Perplexity.</P>
             <P>La méthodologie de Detekia repose sur la recherche académique (Princeton / Georgia Tech, KDD 2024) et sur une veille constante des évolutions des moteurs IA.</P>
-            <P>Contact : <a href="mailto:guillaume@beeleven.fr" style={{ color: '#D97757', textDecoration: 'none' }}>guillaume@beeleven.fr</a></P>
+            <P>Contact : <a href="mailto:hello@detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>hello@detekia.fr</a></P>
           </Section>
 
           <Section title="Méthodologie">
