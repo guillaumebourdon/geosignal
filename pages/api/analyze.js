@@ -525,10 +525,19 @@ export default async function handler(req, res) {
 
   try {
     const jinaUrl = `https://r.jina.ai/${url}`;
-    const { data: rawContent } = await axios.get(jinaUrl, {
-      headers: { Accept: 'text/html' },
-      timeout: 10000,
-    });
+    let rawContent;
+    try {
+      ({ data: rawContent } = await axios.get(jinaUrl, {
+        headers: { Accept: 'text/html' },
+        timeout: 15000,
+      }));
+    } catch (firstErr) {
+      await new Promise(r => setTimeout(r, 2000));
+      ({ data: rawContent } = await axios.get(jinaUrl, {
+        headers: { Accept: 'text/html' },
+        timeout: 15000,
+      }));
+    }
 
     const $ = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
