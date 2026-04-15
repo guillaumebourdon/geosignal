@@ -19,6 +19,7 @@ const CONTENT_MAP = {
   'concurrents-chatgpt-visibilite': require('../../content/articles/concurrents-chatgpt-visibilite').default,
   'pourquoi-trafic-google-baisse-2026': require('../../content/articles/pourquoi-trafic-google-baisse-2026').default,
   'sites-bloquent-bots-ia': require('../../content/articles/sites-bloquent-bots-ia').default,
+  'comment-chatgpt-choisit-ses-sources': require('../../content/articles/comment-chatgpt-choisit-ses-sources').default,
 };
 
 const CATEGORY_COLORS = {
