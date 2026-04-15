@@ -42,7 +42,7 @@ export default function Custom404() {
           </h1>
 
           <p style={{ fontSize: 15, fontFamily: 'system-ui', color: '#8A8680', margin: '0 0 40px', lineHeight: 1.6 }}>
-            Même les IA ne la trouvent pas — c&apos;est dire.
+            Vous cherchez quelque chose ? Cette page a dû se perdre en chemin.
           </p>
 
           <a href="/" style={{ display: 'inline-block', background: '#D97757', color: '#fff', fontSize: 15, fontWeight: 600, fontFamily: 'system-ui', padding: '14px 36px', borderRadius: 10, textDecoration: 'none', marginBottom: 16 }}>
