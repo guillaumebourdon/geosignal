@@ -14,11 +14,17 @@ export default function CookieBanner() {
 
   function accept() {
     try { localStorage.setItem('detekia-cookies', 'accepted'); } catch (e) {}
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
     setVisible(false);
   }
 
   function refuse() {
     try { localStorage.setItem('detekia-cookies', 'refused'); } catch (e) {}
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', { analytics_storage: 'denied' });
+    }
     setVisible(false);
   }
 
