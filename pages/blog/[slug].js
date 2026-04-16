@@ -20,6 +20,7 @@ const CONTENT_MAP = {
   'pourquoi-trafic-google-baisse-2026': require('../../content/articles/pourquoi-trafic-google-baisse-2026').default,
   'sites-bloquent-bots-ia': require('../../content/articles/sites-bloquent-bots-ia').default,
   'comment-chatgpt-choisit-ses-sources': require('../../content/articles/comment-chatgpt-choisit-ses-sources').default,
+  'perplexity-comment-apparaitre': require('../../content/articles/perplexity-comment-apparaitre').default,
 };
 
 const CATEGORY_COLORS = {
