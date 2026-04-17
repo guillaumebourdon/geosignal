@@ -21,6 +21,7 @@ const CONTENT_MAP = {
   'sites-bloquent-bots-ia': require('../../content/articles/sites-bloquent-bots-ia').default,
   'comment-chatgpt-choisit-ses-sources': require('../../content/articles/comment-chatgpt-choisit-ses-sources').default,
   'perplexity-comment-apparaitre': require('../../content/articles/perplexity-comment-apparaitre').default,
+  'gemini-visibilite-site-france': require('../../content/articles/gemini-visibilite-site-france').default,
 };
 
 const CATEGORY_COLORS = {
