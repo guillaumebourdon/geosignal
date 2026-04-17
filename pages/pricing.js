@@ -53,7 +53,7 @@ export default function Pricing() {
           Débloquez votre rapport GEO complet
         </h1>
         <p style={{ fontSize: 15, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>
-          Toutes les recommandations expertes pour booster votre citabilité dans ChatGPT, Claude et Perplexity.
+          Toutes les recommandations expertes pour booster votre citabilité dans ChatGPT, Gemini, Claude et Perplexity.
         </p>
       </div>
 
@@ -110,7 +110,7 @@ export default function Pricing() {
               ['✓', 'Diagnostic, méthode, exemple concret par reco'],
               ['✓', 'Impact attendu et tip d\'expert pour chaque action'],
               ['✓', 'Rapport PDF complet envoyé par email'],
-              ['✓', 'Accès immédiat en ligne, à vie'],
+              ['✓', 'Accès immédiat en ligne'],
             ].map(([check, text], i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 12, color: '#10A37F', flexShrink: 0 }}>{check}</span>

@@ -113,6 +113,9 @@ export default function Methodologie() {
         <p style={{ fontSize: 15, color: '#8A8680', lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 64, maxWidth: 560, margin: '0 auto 64px' }}>
           Notre score GEO est calculé à partir de 8 critères mesurables et vérifiables, basés sur les recherches académiques en Generative Engine Optimization et les guidelines publiques des principaux modèles d'IA.
         </p>
+        <p style={{ textAlign: 'center', marginTop: 24, marginBottom: 0, fontFamily: 'system-ui', fontSize: 14 }}>
+          <a href="/" style={{ color: '#D97757', textDecoration: 'none' }}>→ Testez votre score gratuitement sur les 8 critères</a>
+        </p>
       </div>
 
       {/* COMMENT ÇA MARCHE */}
