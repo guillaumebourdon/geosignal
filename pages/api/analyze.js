@@ -502,6 +502,30 @@ Réponds UNIQUEMENT en JSON sans markdown :
   return JSON.parse(jsonMatch[0]);
 }
 
+async function fetchJina(jinaUrl) {
+  const attempts = [
+    { timeout: 20000, waitBefore: 0 },
+    { timeout: 20000, waitBefore: 2000 },
+    { timeout: 25000, waitBefore: 5000 },
+  ];
+
+  let lastError;
+  for (const attempt of attempts) {
+    if (attempt.waitBefore > 0) await new Promise(r => setTimeout(r, attempt.waitBefore));
+    try {
+      const { data } = await axios.get(jinaUrl, {
+        headers: { Accept: 'text/html' },
+        timeout: attempt.timeout,
+      });
+      return data;
+    } catch (err) {
+      lastError = err;
+      console.log(`Jina attempt failed (timeout ${attempt.timeout}ms):`, err.message);
+    }
+  }
+  throw lastError;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -525,19 +549,7 @@ export default async function handler(req, res) {
 
   try {
     const jinaUrl = `https://r.jina.ai/${url}`;
-    let rawContent;
-    try {
-      ({ data: rawContent } = await axios.get(jinaUrl, {
-        headers: { Accept: 'text/html' },
-        timeout: 20000,
-      }));
-    } catch (firstErr) {
-      await new Promise(r => setTimeout(r, 2000));
-      ({ data: rawContent } = await axios.get(jinaUrl, {
-        headers: { Accept: 'text/html' },
-        timeout: 20000,
-      }));
-    }
+    const rawContent = await fetchJina(jinaUrl);
 
     const $ = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
