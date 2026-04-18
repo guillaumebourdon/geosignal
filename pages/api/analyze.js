@@ -529,13 +529,13 @@ export default async function handler(req, res) {
     try {
       ({ data: rawContent } = await axios.get(jinaUrl, {
         headers: { Accept: 'text/html' },
-        timeout: 15000,
+        timeout: 20000,
       }));
     } catch (firstErr) {
       await new Promise(r => setTimeout(r, 2000));
       ({ data: rawContent } = await axios.get(jinaUrl, {
         headers: { Accept: 'text/html' },
-        timeout: 15000,
+        timeout: 20000,
       }));
     }
 
