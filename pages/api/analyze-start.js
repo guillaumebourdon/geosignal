@@ -1,7 +1,7 @@
 import { Redis } from '@upstash/redis';
 import { runAnalysis } from '../../lib/analyzer';
 
-export const config = { maxDuration: 60 };
+export const config = { maxDuration: 120 };
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
