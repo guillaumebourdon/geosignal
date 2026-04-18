@@ -323,21 +323,27 @@ export default function Results() {
       setStep(s => s < steps.length - 1 ? s + 1 : s);
     }, 1200);
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 90000);
+
     fetch('/api/analyze', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url }),
+      signal: controller.signal,
     })
       .then(r => r.json())
       .then(data => {
+        clearTimeout(timeoutId);
         clearInterval(stepInterval);
         setStep(steps.length);
         if (data.error) setError(data.error);
         else setResult(data);
       })
       .catch(e => {
+        clearTimeout(timeoutId);
         clearInterval(stepInterval);
-        setError(e.message);
+        setError(e.name === 'AbortError' ? 'L\'analyse a pris trop de temps. Veuillez réessayer.' : e.message);
       });
 
     return () => clearInterval(stepInterval);
@@ -420,7 +426,7 @@ export default function Results() {
                 <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#8A8680' }}>{url}</span>
               </div>
               <h1 style={{ fontSize: 32, color: '#1A1916', letterSpacing: -1, marginBottom: 8, lineHeight: 1.1 }}>Audit GEO en cours{loadingDots}</h1>
-              <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui' }}>Analyse complète de votre citabilité IA</p>
+              <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui' }}>Analyse en cours, merci de patienter jusqu'à 60 secondes...</p>
             </div>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 20, padding: '32px 36px', boxShadow: '0 4px 32px rgba(26,25,22,0.06)' }}>
               <div style={{ marginBottom: 32 }}>

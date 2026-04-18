@@ -119,11 +119,15 @@ export default function Success() {
         const reportUrl = url || data.url;
 
         if (reportUrl) {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 90000);
           const res = await fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url: reportUrl }),
+            signal: controller.signal,
           });
+          clearTimeout(timeoutId);
           const report = await res.json();
           if (!report.error) {
             setReportData(report);
