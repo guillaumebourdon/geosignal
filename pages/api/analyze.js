@@ -517,13 +517,35 @@ async function fetchJina(jinaUrl) {
         headers: { Accept: 'text/html' },
         timeout: attempt.timeout,
       });
-      return data;
+      return { data, source: 'jina' };
     } catch (err) {
       lastError = err;
       console.log(`Jina attempt failed (timeout ${attempt.timeout}ms):`, err.message);
     }
   }
-  throw lastError;
+
+  // Fallback: direct HTML fetch
+  console.log('Jina totally failed, attempting direct HTML fallback');
+  const directUrl = jinaUrl.replace('https://r.jina.ai/', '');
+  try {
+    const { data } = await axios.get(directUrl, {
+      timeout: 15000,
+      maxRedirects: 5,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; DetekiaBot/1.0; +https://detekia.fr)',
+      },
+    });
+    const $fallback = cheerio.load(data);
+    $fallback('script, style, nav, footer').remove();
+    const title = $fallback('title').text() || $fallback('h1').first().text() || '';
+    const description = $fallback('meta[name="description"]').attr('content') || '';
+    const bodyText = $fallback('body').text().replace(/\s+/g, ' ').trim();
+    const fallbackContent = `Title: ${title}\n\nURL Source: ${directUrl}\n\nDescription: ${description}\n\nMarkdown Content:\n${bodyText}`;
+    return { data: fallbackContent, source: 'direct' };
+  } catch (directErr) {
+    console.log('Direct fetch also failed:', directErr.message);
+    throw lastError;
+  }
 }
 
 export default async function handler(req, res) {
@@ -549,7 +571,7 @@ export default async function handler(req, res) {
 
   try {
     const jinaUrl = `https://r.jina.ai/${url}`;
-    const rawContent = await fetchJina(jinaUrl);
+    const { data: rawContent, source: scrapeSource } = await fetchJina(jinaUrl);
 
     const $ = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
@@ -623,6 +645,7 @@ export default async function handler(req, res) {
       evidence,
       citationTest: citationTest || null,
       sanityWarnings: sanityWarnings.length > 0 ? sanityWarnings : undefined,
+      scrapeSource,
     };
 
     await resend.emails.send({
