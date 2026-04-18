@@ -322,85 +322,31 @@ export default function Results() {
     let stepInterval = setInterval(() => {
       setStep(s => s < steps.length - 1 ? s + 1 : s);
     }, 1200);
-    let pollInterval = null;
-    let globalTimeout = null;
-    let cancelled = false;
 
-    function cleanup() {
-      cancelled = true;
-      clearInterval(stepInterval);
-      if (pollInterval) clearInterval(pollInterval);
-      if (globalTimeout) clearTimeout(globalTimeout);
-    }
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 90000);
 
-    function handleResult(data) {
-      if (cancelled) return;
-      cleanup();
-      setStep(steps.length);
-      if (data.error) setError(data.error);
-      else setResult(data);
-    }
-
-    function handleError(msg) {
-      if (cancelled) return;
-      cleanup();
-      setError(msg);
-    }
-
-    // Fallback: call /api/analyze directly (sync route)
-    function fallbackSync() {
-      if (cancelled) return;
-      const controller = new AbortController();
-      const fallbackTimeout = setTimeout(() => controller.abort(), 120000);
-      fetch('/api/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
-        signal: controller.signal,
-      })
-        .then(r => r.json())
-        .then(data => { clearTimeout(fallbackTimeout); handleResult(data); })
-        .catch(e => { clearTimeout(fallbackTimeout); handleError(e.name === 'AbortError' ? "L'analyse a pris trop de temps. Veuillez réessayer." : e.message); });
-    }
-
-    // Start async flow
-    fetch('/api/analyze-start', {
+    fetch('/api/analyze', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url }),
+      signal: controller.signal,
     })
-      .then(r => {
-        if (!r.ok) throw new Error('analyze-start failed');
-        return r.json();
+      .then(r => r.json())
+      .then(data => {
+        clearTimeout(timeoutId);
+        clearInterval(stepInterval);
+        setStep(steps.length);
+        if (data.error) setError(data.error);
+        else setResult(data);
       })
-      .then(({ jobId }) => {
-        if (cancelled) return;
-
-        // Global timeout: 120s
-        globalTimeout = setTimeout(() => {
-          if (pollInterval) clearInterval(pollInterval);
-          handleError("L'analyse prend plus de temps que prévu. Veuillez réessayer.");
-        }, 120000);
-
-        // Poll every 3s
-        pollInterval = setInterval(() => {
-          if (cancelled) return;
-          fetch(`/api/analyze-status?jobId=${jobId}`)
-            .then(r => r.json())
-            .then(job => {
-              if (cancelled) return;
-              if (job.status === 'done') handleResult(job.data);
-              else if (job.status === 'error') handleError(job.error || "Erreur lors de l'analyse.");
-            })
-            .catch(() => {}); // Ignore transient poll errors
-        }, 3000);
-      })
-      .catch(() => {
-        // Fallback to sync route if analyze-start fails
-        fallbackSync();
+      .catch(e => {
+        clearTimeout(timeoutId);
+        clearInterval(stepInterval);
+        setError(e.name === 'AbortError' ? 'L\'analyse a pris trop de temps. Veuillez réessayer.' : e.message);
       });
 
-    return () => cleanup();
+    return () => clearInterval(stepInterval);
   }, [url]);
 
   function getGrade(score) {

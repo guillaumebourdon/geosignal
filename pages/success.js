@@ -119,41 +119,17 @@ export default function Success() {
         const reportUrl = url || data.url;
 
         if (reportUrl) {
-          let report = null;
-
-          // Try async route first
-          try {
-            const startRes = await fetch('/api/analyze-start', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ url: reportUrl }),
-            });
-            if (!startRes.ok) throw new Error('analyze-start failed');
-            const { jobId } = await startRes.json();
-
-            // Poll for result with 120s timeout
-            report = await new Promise((resolve, reject) => {
-              const deadline = setTimeout(() => { clearInterval(poll); reject(new Error('timeout')); }, 120000);
-              const poll = setInterval(async () => {
-                try {
-                  const statusRes = await fetch(`/api/analyze-status?jobId=${jobId}`);
-                  const job = await statusRes.json();
-                  if (job.status === 'done') { clearInterval(poll); clearTimeout(deadline); resolve(job.data); }
-                  else if (job.status === 'error') { clearInterval(poll); clearTimeout(deadline); reject(new Error(job.error)); }
-                } catch {}
-              }, 3000);
-            });
-          } catch {
-            // Fallback to sync route
-            const fallbackRes = await fetch('/api/analyze', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ url: reportUrl }),
-            });
-            report = await fallbackRes.json();
-          }
-
-          if (report && !report.error) {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 90000);
+          const res = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: reportUrl }),
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+          const report = await res.json();
+          if (!report.error) {
             setReportData(report);
             await fetch('/api/generate-pdf', {
               method: 'POST',
