@@ -1,0 +1,14 @@
+{
+  "common": {
+    "siteName": "Detekia",
+    "tagline": "Votre site est-il visible pour les IA ?"
+  },
+  "nav": {
+    "home": "Accueil",
+    "methodology": "Méthodologie",
+    "pricing": "Tarifs",
+    "about": "À propos",
+    "contact": "Contact",
+    "blog": "Blog"
+  }
+}
