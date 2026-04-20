@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import SEO from '../components/SEO';
 
 /* ─── Helpers ───────────────────────────────────────────── */
 const Logo = () => (
@@ -237,8 +238,41 @@ export default function Home() {
 
   return (
     <>
+    <SEO
+      title="Detekia — Votre site est-il visible par les IA ?"
+      description="Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 100 + recommandations personnalisées en 30 secondes."
+      schema={{
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Detekia",
+        "description": "Outil d'audit GEO (Generative Engine Optimization) qui analyse la visibilité d'un site web sur les moteurs d'IA comme ChatGPT, Claude, Gemini et Perplexity.",
+        "url": "https://detekia.fr",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": [
+          { "@type": "Offer", "name": "Analyse gratuite", "price": "0", "priceCurrency": "EUR" },
+          { "@type": "Offer", "name": "Rapport complet", "price": "29", "priceCurrency": "EUR" }
+        ],
+        "featureList": [
+          "Score GEO sur 100",
+          "Analyse des 8 critères GEO",
+          "Analyse des données structurées",
+          "Évaluation de la citabilité",
+          "Vérification de la présence externe",
+          "Recommandations personnalisées et priorisées"
+        ],
+        "inLanguage": "fr",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Beeleven SASU",
+          "legalName": "Beeleven SASU",
+          "url": "https://detekia.fr",
+          "address": { "@type": "PostalAddress", "streetAddress": "7 rue Curial", "postalCode": "75019", "addressLocality": "Paris", "addressCountry": "FR" },
+          "contactPoint": { "@type": "ContactPoint", "email": "hello@detekia.fr", "contactType": "customer support" }
+        }
+      }}
+    />
     <Head>
-      <link rel="canonical" href="https://detekia.fr" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
     </Head>

@@ -1,108 +1,48 @@
-import { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-export default function Document() {
-  return (
-    <Html lang="fr">
-      <Head>
-        <meta charSet="utf-8" />
-        <meta name="description" content="Detekia analyse votre site et vous donne un score GEO sur 100 — optimisez votre présence sur ChatGPT, Claude, Gemini et Perplexity en 30 secondes." />
-        <meta name="keywords" content="GEO, Generative Engine Optimization, audit GEO, score GEO, optimisation IA, ChatGPT SEO, visibilité IA, référencement IA" />
-        <meta name="author" content="Detekia" />
-        <meta name="robots" content="index, follow" />
-        <meta name="google-site-verification" content="YePnIMt60J4133bRkWArTiV7c4-e_vqwYVELQEzD80I" />
+class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps, locale: ctx.locale || 'fr' };
+  }
 
-        {/* Open Graph */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://detekia.fr" />
-        <meta property="og:title" content="Detekia — Votre site est-il visible par les IA ?" />
-        <meta property="og:description" content="Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 100 + recommandations personnalisées en 30 secondes." />
-        <meta property="og:locale" content="fr_FR" />
+  render() {
+    return (
+      <Html lang={this.props.locale}>
+        <Head>
+          <meta charSet="utf-8" />
+          <meta name="author" content="Detekia" />
+          <meta name="robots" content="index, follow" />
+          <meta name="google-site-verification" content="YePnIMt60J4133bRkWArTiV7c4-e_vqwYVELQEzD80I" />
 
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Detekia — Votre site est-il visible par les IA ?" />
-        <meta name="twitter:description" content="Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 100 + recommandations personnalisées." />
-
-        {/* Schema.org — ce que les IA lisent en priorité */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "Detekia",
-            "description": "Outil d'audit GEO (Generative Engine Optimization) qui analyse la visibilité d'un site web sur les moteurs d'IA comme ChatGPT, Claude, Gemini et Perplexity.",
-            "url": "https://detekia.fr",
-            "applicationCategory": "BusinessApplication",
-            "operatingSystem": "Web",
-            "offers": [
-              {
-                "@type": "Offer",
-                "name": "Analyse gratuite",
-                "price": "0",
-                "priceCurrency": "EUR"
-              },
-              {
-                "@type": "Offer",
-                "name": "Rapport complet",
-                "price": "29",
-                "priceCurrency": "EUR"
+          {/* Google Analytics 4 — consent-aware */}
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-79M2G4CP1C" />
+          <script dangerouslySetInnerHTML={{ __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              analytics_storage: 'denied'
+            });
+            gtag('js', new Date());
+            gtag('config', 'G-79M2G4CP1C');
+            try {
+              if (localStorage.getItem('detekia-cookies') === 'accepted') {
+                gtag('consent', 'update', { analytics_storage: 'granted' });
               }
-            ],
-            "featureList": [
-              "Score GEO sur 100",
-              "Analyse des 8 critères GEO",
-              "Analyse des données structurées",
-              "Évaluation de la citabilité",
-              "Vérification de la présence externe",
-              "Recommandations personnalisées et priorisées"
-            ],
-            "inLanguage": "fr",
-            "publisher": {
-              "@type": "Organization",
-              "name": "Beeleven SASU",
-              "legalName": "Beeleven SASU",
-              "url": "https://detekia.fr",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "7 rue Curial",
-                "postalCode": "75019",
-                "addressLocality": "Paris",
-                "addressCountry": "FR"
-              },
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "email": "hello@detekia.fr",
-                "contactType": "customer support"
-              }
-            }
-          })}}
-        />
+            } catch(e) {}
+          `}} />
 
-        {/* Google Analytics 4 — consent-aware */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-79M2G4CP1C" />
-        <script dangerouslySetInnerHTML={{ __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('consent', 'default', {
-            analytics_storage: 'denied'
-          });
-          gtag('js', new Date());
-          gtag('config', 'G-79M2G4CP1C');
-          try {
-            if (localStorage.getItem('detekia-cookies') === 'accepted') {
-              gtag('consent', 'update', { analytics_storage: 'granted' });
-            }
-          } catch(e) {}
-        `}} />
-
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-      </Head>
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
+
+export default MyDocument;
