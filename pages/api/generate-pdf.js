@@ -401,7 +401,7 @@ function generateReportHTML(data) {
     <div style="${P}min-height:100vh;">
       ${sLabel('Test IA')}
       <h1 style="font-family:Georgia,serif;font-size:34px;color:#1A1916;letter-spacing:-1px;margin-bottom:8px;line-height:1.1;">Test de visibilité IA</h1>
-      <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:28px;line-height:1.6;">Nous avons simulé 5 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
+      <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:28px;line-height:1.6;">Nous avons simulé 10 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
       <div style="display:inline-flex;align-items:center;gap:16px;background:${bc.bg};border:1px solid ${bc.border};border-radius:12px;padding:18px 28px;margin-bottom:4px;">
         <div style="font-family:Georgia,serif;font-size:44px;color:${bc.color};line-height:1;letter-spacing:-2px;">${citedCount}/${totalTests}</div>
         <div style="font-family:system-ui;font-size:13px;color:${bc.color};font-weight:600;line-height:1.4;">requêtes<br>citent votre site</div>
@@ -620,7 +620,7 @@ function generateReportHTML(data) {
     <div style="background:#F7F5F2;border-radius:10px;padding:22px 26px;margin-bottom:32px;">
       <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;margin-bottom:10px;">Ce rapport est généré par analyse automatisée du DOM de votre page via <strong>Jina AI</strong> (scraping HTML) et évaluation sur <strong>8 critères pondérés</strong>.</p>
       <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;margin-bottom:10px;">Le critère <strong>Neutralité éditoriale</strong> est évalué par intelligence artificielle (Claude Haiku, Anthropic). Les 7 autres critères sont évalués par analyse technique du HTML.</p>
-      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;">Le <strong>test de visibilité IA</strong> est réalisé par simulation de 5 requêtes via Claude (Anthropic). Les résultats varient selon le moteur IA, la requête et le moment du test.</p>
+      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;">Le <strong>test de visibilité IA</strong> est réalisé par simulation de 10 requêtes via Claude (Anthropic). Les résultats varient selon le moteur IA, la requête et le moment du test.</p>
     </div>
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">Les 8 critères et leur pondération</h2>
     <table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:32px;">
