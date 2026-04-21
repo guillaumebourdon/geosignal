@@ -19,7 +19,7 @@
     },
     "hero": {
       "badge": "100% free analysis — no signup required",
-      "titleLine1": "Your competitors show up in",
+      "titleLine1": "Your competitors are showing up on",
       "titleLine2": "You don't.",
       "subtitle": "Detekia audits your website in 30 seconds and shows you what to fix to get cited by AI — and capture the traffic Google no longer sends you.",
       "inputPlaceholder": "https://www.your-website.com",
@@ -135,7 +135,7 @@
           "checks": ["Case studies with quantified results", "Academic sources (KDD 2024)", "Estimated impact on your score"]
         }
       ],
-      "cta": "Unlock my report — 29 ��� →",
+      "cta": "Unlock my report — 29 € →",
       "ctaSubtext": "One-time payment · Instant access · 7-day money-back guarantee",
       "exampleLink": "See a sample report →"
     },
