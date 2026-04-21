@@ -6,8 +6,12 @@ import { useTranslation } from '../../lib/useTranslation';
 import { articles, getArticleBySlug, getRelatedArticles, formatDate } from '../../lib/articles';
 
 // EN content overrides — add require lines here as EN articles are created in content/articles/en/
-// Example: CONTENT_MAP_EN['slug'] = require('../../content/articles/en/slug').default;
 const CONTENT_MAP_EN = {};
+CONTENT_MAP_EN['geo-guide-complet-2026'] = require('../../content/articles/en/geo-guide-complet-2026').default;
+CONTENT_MAP_EN['pourquoi-chatgpt-ne-cite-pas-votre-site'] = require('../../content/articles/en/pourquoi-chatgpt-ne-cite-pas-votre-site').default;
+CONTENT_MAP_EN['seo-vs-geo-differences-2026'] = require('../../content/articles/en/seo-vs-geo-differences-2026').default;
+CONTENT_MAP_EN['score-geo-mesurer-visibilite-ia'] = require('../../content/articles/en/score-geo-mesurer-visibilite-ia').default;
+CONTENT_MAP_EN['schema-org-ia-guide-pratique'] = require('../../content/articles/en/schema-org-ia-guide-pratique').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
