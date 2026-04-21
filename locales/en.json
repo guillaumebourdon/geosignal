@@ -422,5 +422,297 @@
       ]
     },
     "errorAlert": "Payment error, please try again."
+  },
+  "about": {
+    "seo": {
+      "title": "About Detekia — GEO, Beeleven SASU",
+      "description": "Detekia is a GEO audit tool developed by Beeleven SASU. Measure and improve your website's visibility in AI responses (ChatGPT, Gemini, Claude, Perplexity)."
+    },
+    "breadcrumbHome": "Home",
+    "breadcrumbCurrent": "About",
+    "title": "About Detekia",
+    "why": {
+      "title": "Why Detekia exists",
+      "p1": "AI search engines (ChatGPT, Gemini, Claude, Perplexity) are changing how people find businesses. AI-referred traffic increased by 527% in 2025. Yet most websites are not optimized to be cited by these engines.",
+      "p2": "Detekia was born from this observation: businesses need a simple tool to measure and improve their visibility in AI responses. Not another SEO tool — a tool specifically designed for GEO (Generative Engine Optimization)."
+    },
+    "how": {
+      "title": "How it works",
+      "p1": "Detekia analyzes your website across 8 AI citability criteria validated by academic research (Princeton/Georgia Tech study, KDD 2024). In 30 seconds, you get a score out of 100 and personalized recommendations.",
+      "p2": "Our analysis is transparent: 7 criteria are evaluated through technical HTML analysis, 1 criterion (editorial neutrality) is evaluated by artificial intelligence. Each recommendation is sourced and accompanied by a documented real-world case."
+    },
+    "who": {
+      "title": "Who's behind Detekia",
+      "p1": "Detekia is a product of Beeleven SASU, founded by Guillaume Bourdon.",
+      "p2": "With over 10 years in digital marketing, acquisition and growth strategy, Guillaume has helped dozens of companies — from early-stage startups to established SMBs — with their online visibility challenges.",
+      "p3": "In 2025, facing the explosion of AI-referred traffic (+527% in just a few months), he created Detekia to address a need that nobody was covering yet: giving businesses a simple, transparent and actionable tool to measure and improve their visibility in ChatGPT, Claude, Gemini and Perplexity responses.",
+      "p4": "Detekia's methodology is based on academic research (Princeton / Georgia Tech, KDD 2024) and constant monitoring of AI engine developments.",
+      "p5": "Contact: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+    },
+    "methodologySection": {
+      "title": "Methodology",
+      "intro": "Our scoring is based on 8 weighted criteria according to their demonstrated impact on AI visibility:",
+      "criteria": [
+        "Extractability & direct answer (25 pts)",
+        "Verifiability & evidence (20 pts)",
+        "Authority & E-E-A-T (15 pts)",
+        "AI Crawlability (15 pts)",
+        "Structured data (10 pts)",
+        "Editorial neutrality (10 pts)",
+        "External presence (5 pts)",
+        "Freshness & maintenance (5 pts)"
+      ],
+      "source": "Source: Aggarwal et al., \"Generative Engine Optimization\", Princeton / Georgia Tech, KDD 2024."
+    },
+    "cta": {
+      "title": "Test your GEO Score for free",
+      "subtitle": "Full analysis in 30 seconds, no signup required",
+      "button": "Analyze my website →"
+    },
+    "schema": {
+      "name": "About Detekia",
+      "description": "Detekia is a GEO audit tool developed by Beeleven SASU, founded by Guillaume Bourdon."
+    },
+    "footer": {
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "About", "href": "/a-propos" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "contact": {
+    "seo": {
+      "title": "Contact — Detekia",
+      "description": "Contact the Detekia team. Questions about a report, bugs, enterprise requests or partnerships — we respond within 24 hours."
+    },
+    "hero": {
+      "badge": "We respond within 24h",
+      "title": "Got a question?",
+      "subtitle": "A suggestion, a bug, a partnership request — we read every message."
+    },
+    "success": {
+      "title": "Message sent!",
+      "subtitle": "Thank you for your message. We'll get back to you within 24 hours."
+    },
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "John Smith",
+      "emailLabel": "Email",
+      "emailPlaceholder": "john@example.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Hello, I'd like to...",
+      "submit": "Send message →"
+    },
+    "emailDirect": "Or directly by email:",
+    "reasons": {
+      "label": "You can contact us about",
+      "items": [
+        { "icon": "💬", "title": "Question about a report or score", "desc": "Got a score that puzzles you? We'll explain." },
+        { "icon": "🐛", "title": "Bug or technical issue", "desc": "Analysis error, report not received, payment issue." },
+        { "icon": "🏢", "title": "Enterprise or volume request", "desc": "Bulk analyses, integration, specific team needs." },
+        { "icon": "🤝", "title": "Partnership or press", "desc": "Editorial collaboration, press mention, affiliation." }
+      ],
+      "responseTime": "We typically respond within 24 business hours —"
+    }
+  },
+  "legalNotices": {
+    "seo": {
+      "title": "Legal Notice | Detekia",
+      "description": "Legal notice for Detekia — publisher, hosting, intellectual property."
+    },
+    "disclaimer": "<strong>Important notice:</strong> This English version is a courtesy translation. The French version remains the legally binding document. In case of any discrepancy, the French version prevails.",
+    "title": "Legal Notice",
+    "editor": {
+      "title": "Website publisher",
+      "p1": "The website detekia.fr is published by <strong>Beeleven SASU</strong>, a simplified joint-stock company (société par actions simplifiée unipersonnelle) with a share capital of €1,000, registered with the Paris Trade and Companies Registry under number <strong>102 307 345</strong>.",
+      "p2": "Registered office: 7 rue Curial, 75019 Paris, France.",
+      "p3": "Publication director: Guillaume Bourdon.",
+      "p4": "Email: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+    },
+    "hosting": {
+      "title": "Hosting provider",
+      "p1": "The website detekia.fr is hosted by <strong>Vercel Inc.</strong>, located at 340 S Lemon Ave #4133, Walnut, CA 91789, United States.",
+      "p2": "Website: <a href='https://vercel.com' style='color:#D97757;text-decoration:none' target='_blank' rel='noopener noreferrer'>vercel.com</a>"
+    },
+    "ip": {
+      "title": "Intellectual property",
+      "p1": "All content on the detekia.fr website (texts, images, graphics, logo, icons, structure) is the exclusive property of Beeleven SASU or is used under license. Any reproduction, representation, modification, publication or adaptation of all or part of the website's elements, by any means or process, is prohibited without the prior written consent of Beeleven SASU."
+    },
+    "liability": {
+      "title": "Liability",
+      "p1": "The information provided by Detekia, including GEO scores and recommendations, is provided for informational purposes only and does not constitute professional advice. Beeleven SASU cannot be held liable for decisions made based on analysis results provided by the website.",
+      "p2": "Detekia strives to provide information that is as accurate as possible. However, Beeleven SASU cannot be held liable for omissions, inaccuracies or deficiencies in updating the information."
+    },
+    "credits": {
+      "title": "Credits",
+      "p1": "Design and development: Beeleven SASU.<br/>Fonts: Georgia, system-ui, DM Mono (Google Fonts)."
+    },
+    "footer": {
+      "copyright": "© 2026 Detekia — Beeleven SASU",
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "terms": {
+    "seo": {
+      "title": "Terms and Conditions of Use and Sale | Detekia",
+      "description": "Terms and conditions for Detekia — terms of use and sale conditions for the full GEO report."
+    },
+    "disclaimer": "<strong>Important notice:</strong> This English version is a courtesy translation. The French version remains the legally binding document. In case of any discrepancy, the French version prevails.",
+    "title": "Terms and Conditions of Use and Sale",
+    "lastUpdate": "Last updated: March 27, 2026",
+    "sections": [
+      { "title": "Purpose", "paragraphs": [
+        "These Terms and Conditions of Use and Sale (hereinafter \"T&Cs\") govern the use of the detekia.fr website and the sale conditions for the full GEO report. By using the website or purchasing a report, you accept these terms in their entirety.",
+        "The detekia.fr website is published by Beeleven SASU (see <a href='/mentions-legales' style='color:#D97757;text-decoration:none'>Legal Notice</a> for full details)."
+      ]},
+      { "title": "Free service — GEO Analysis", "paragraphs": [
+        "Detekia offers a free GEO analysis service accessible without registration or account creation. This service includes an overall score out of 100, evaluation of 8 GEO criteria, and a preview of one recommendation.",
+        "The user enters the URL of a website they wish to analyze. Detekia scrapes the publicly accessible content of this URL and evaluates it using its proprietary methodology. The analysis is performed in real time. Results are cached for 24 hours.",
+        "The free service is provided \"as is\", with no guarantee of availability or accuracy of results. Detekia reserves the right to modify, suspend or discontinue the free service at any time."
+      ]},
+      { "title": "Paid service — Full GEO Report", "paragraphs": [
+        "The full GEO report is sold at the price of <strong>€29 including VAT</strong> per analysis. This report includes all detailed recommendations, structured in sections (diagnosis, actions, concrete examples, estimated impact), for each of the 8 GEO criteria.",
+        "The report is accessible immediately after payment on the results page and is sent by email to the address associated with the Stripe payment."
+      ]},
+      { "title": "Payment", "paragraphs": [
+        "Payment is made online by credit card, Apple Pay or PayPal via the secure Stripe platform. Beeleven SASU does not collect or store any banking data. All payment processing is handled by Stripe Payments Europe, Ltd.",
+        "Payment is due immediately upon order. The transaction is considered effective upon payment confirmation by Stripe."
+      ]},
+      { "title": "Refund policy — Money-back guarantee", "paragraphs": [
+        "If the full GEO report does not provide any actionable improvement insights, you may request a full refund within 7 days of purchase.",
+        "To request a refund, send an email to <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a> specifying the analyzed URL and the reason for your dissatisfaction. The refund will be processed within 5 business days via the same payment method used for the purchase."
+      ]},
+      { "title": "Right of withdrawal", "paragraphs": [
+        "In accordance with Article L221-28 of the Code de la consommation (French Consumer Code), the right of withdrawal cannot be exercised for contracts for the supply of digital content not provided on a tangible medium whose performance has begun with the consumer's consent. By purchasing the report, you acknowledge that the delivery of digital content begins immediately after payment and you expressly waive your right of withdrawal.",
+        "However, the \"Money-back guarantee\" refund policy described above applies and goes beyond legal obligations."
+      ]},
+      { "title": "Intellectual property", "paragraphs": [
+        "The GEO report is provided for the buyer's personal and professional use. It may not be resold, redistributed or published without the written consent of Beeleven SASU. The analysis methodology and GEO scoring are the intellectual property of Beeleven SASU."
+      ]},
+      { "title": "Limitation of liability", "paragraphs": [
+        "The analysis results and recommendations provided by Detekia are automatically generated and provided for informational purposes only. They do not constitute professional advice in SEO, marketing or digital strategy.",
+        "Beeleven SASU does not guarantee that implementing the recommendations will result in improved website visibility in AI responses. Visibility in AI engines depends on numerous external factors beyond the control of Beeleven SASU.",
+        "Under no circumstances shall Beeleven SASU's liability exceed the amount of the purchased report (€29)."
+      ]},
+      { "title": "Modification of terms", "paragraphs": [
+        "Beeleven SASU reserves the right to modify these T&Cs at any time. Modifications take effect upon publication on the website. The last update date is indicated at the top of this page."
+      ]},
+      { "title": "Applicable law and disputes", "paragraphs": [
+        "These terms are governed by French law. In case of dispute, the parties shall endeavor to reach an amicable resolution. Failing that, the competent courts of Paris shall have exclusive jurisdiction."
+      ]},
+      { "title": "Contact", "paragraphs": [
+        "For any questions regarding these terms: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+      ]}
+    ],
+    "footer": {
+      "copyright": "© 2026 Detekia — Beeleven SASU",
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "privacy": {
+    "seo": {
+      "title": "Privacy Policy | Detekia",
+      "description": "Detekia privacy policy — data collected, processors, your GDPR rights."
+    },
+    "disclaimer": "<strong>Important notice:</strong> This English version is a courtesy translation. The French version remains the legally binding document. In case of any discrepancy, the French version prevails.",
+    "title": "Privacy Policy",
+    "lastUpdate": "Last updated: March 27, 2026",
+    "sections": [
+      { "title": "Data controller", "paragraphs": [
+        "<strong>Beeleven SASU</strong>, a simplified joint-stock company (société par actions simplifiée unipersonnelle), registered with the Paris Trade and Companies Registry under number 102 307 345.",
+        "Registered office: 7 rue Curial, 75019 Paris, France.",
+        "Email: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>",
+        "Publication director: Guillaume Bourdon."
+      ]},
+      { "title": "Data collected and purposes", "paragraphs": [
+        "Detekia collects a minimal amount of data, strictly necessary for the operation of the service.",
+        "<strong>Analyzed URL</strong> — When you launch a GEO analysis, the URL you enter is processed in real time to generate your score. The URL and results are cached in our database (Upstash Redis) for 24 hours to speed up subsequent analyses of the same website. After 24 hours, this data is automatically deleted. <em>Legal basis: legitimate interest (provision of the requested service).</em>",
+        "<strong>Email address (optional)</strong> — If you choose to receive your report by email via the capture form, your email address is stored in our database along with the analyzed URL and the score obtained. This data is used to send you your report and, if you consent, alerts about changes to your score. <em>Legal basis: consent.</em>",
+        "<strong>Payment data</strong> — When you purchase the full GEO report, payment is entirely processed by Stripe Payments Europe, Ltd. Beeleven SASU does not collect, store or process any banking data (card number, expiration date, CVV). Only the information transmitted by Stripe after payment is processed: buyer's email, transaction ID, amount. <em>Legal basis: contract performance.</em>",
+        "<strong>Browsing data</strong> — Detekia uses Vercel Analytics to measure website traffic (page views, visit duration, geographic origin). Vercel Analytics does not set cookies, does not use third-party trackers and does not collect personally identifiable data. The data is aggregated and anonymous. <em>Legal basis: legitimate interest (service improvement).</em>"
+      ]},
+      { "title": "Data Detekia does not collect", "paragraphs": [
+        "Detekia does not create user accounts and does not collect passwords. Detekia does not collect banking data. Detekia does not collect IP addresses for identification purposes. Detekia does not use advertising cookies or third-party trackers. Detekia does not sell any data to third parties."
+      ]},
+      { "title": "Cookies", "paragraphs": [
+        "Detekia only uses cookies strictly necessary for the operation of the website (session cookies, consent preferences). No advertising or third-party tracking cookies are set.",
+        "Vercel Analytics, used for audience measurement, operates without cookies.",
+        "The cookie consent banner allows you to accept or refuse non-essential cookies."
+      ]},
+      { "title": "Processors and data recipients", "content": [
+        "The data collected by Detekia is processed by the following processors, all compliant with GDPR or the EU-US data protection framework:",
+        ["<strong>Vercel Inc.</strong> (United States) — website hosting and analytics. Compliant with the EU-US Data Privacy Framework.",
+         "<strong>Upstash</strong> (hosted in the EU, eu-west-1 region) — temporary storage of analysis results and email leads. Data hosted in the European Union.",
+         "<strong>Stripe Payments Europe, Ltd.</strong> (Ireland) — payment processing. PCI DSS Level 1 certified, GDPR compliant.",
+         "<strong>Resend</strong> (United States) — transactional email delivery (report by email, confirmation). Compliant with the EU-US Data Privacy Framework.",
+         "<strong>Anthropic</strong> (United States) — editorial neutrality analysis of scanned content via the Claude API. No personal data is transmitted to Anthropic; only the textual content of the analyzed page is sent for evaluation. Compliant with the EU-US Data Privacy Framework."],
+        "No personal data is transmitted to any third parties other than those listed above."
+      ]},
+      { "title": "Data retention", "list": [
+        "Analyzed URL and results: 24 hours (automatic cache).",
+        "Email address (optional capture): retained until deletion is requested by the user.",
+        "Stripe transaction data: retained for the legally required accounting document retention period (10 years).",
+        "Vercel Analytics data: aggregated and anonymous, retained by Vercel according to its retention policy."
+      ]},
+      { "title": "Your rights", "content": [
+        "In accordance with the General Data Protection Regulation (GDPR), you have the following rights regarding your personal data:",
+        ["<strong>Right of access</strong> — You may request a copy of all personal data we hold about you.",
+         "<strong>Right to rectification</strong> — You may request the correction of inaccurate or incomplete data.",
+         "<strong>Right to erasure</strong> — You may request the deletion of your personal data. For emails collected via the capture form, deletion is immediate upon request.",
+         "<strong>Right to object</strong> — You may object to the processing of your data at any time.",
+         "<strong>Right to data portability</strong> — You may request to receive your data in a structured, machine-readable format.",
+         "<strong>Right to withdraw consent</strong> — For processing based on consent (email capture), you may withdraw your consent at any time."],
+        "To exercise any of these rights, send an email to <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a> specifying your request. We will respond within a maximum of 30 days.",
+        "If you believe that the processing of your data does not comply with regulations, you may file a complaint with the CNIL (French data protection authority): <a href='https://www.cnil.fr' style='color:#D97757;text-decoration:none' target='_blank' rel='noopener noreferrer'>www.cnil.fr</a>."
+      ]},
+      { "title": "Data transfers outside the EU", "paragraphs": [
+        "Some of our processors are located in the United States (Vercel, Resend, Anthropic). These transfers are governed by the EU-US Data Privacy Framework, recognized by the European Commission as providing an adequate level of protection (adequacy decision of July 10, 2023).",
+        "Payment data is processed by Stripe Payments Europe, Ltd., established in Ireland (EU).",
+        "Cache data (URLs, analysis results) is stored by Upstash in the eu-west-1 region (EU)."
+      ]},
+      { "title": "Security", "paragraphs": [
+        "Beeleven SASU implements appropriate technical and organizational measures to protect personal data against loss, theft, unauthorized access, disclosure or destruction. Communications are encrypted via HTTPS/TLS. Database access is protected by authentication."
+      ]},
+      { "title": "Changes to this policy", "paragraphs": [
+        "This privacy policy may be updated at any time. The last update date is indicated at the top of this page. We encourage you to check this page regularly."
+      ]},
+      { "title": "Contact", "paragraphs": [
+        "For any questions regarding the protection of your data: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+      ]}
+    ],
+    "footer": {
+      "copyright": "© 2026 Detekia — Beeleven SASU",
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
   }
 }
