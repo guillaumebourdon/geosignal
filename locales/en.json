@@ -472,7 +472,16 @@
         { "q": "Is my website data stored?", "a": "No. Detekia analyzes your website in real time. Only the report is cached for 24 hours so you don't have to wait if you return to the same URL." }
       ]
     },
-    "errorAlert": "Payment error, please try again."
+    "errorAlert": "Payment error, please try again.",
+    "modal": {
+      "title": "Unlock your full report",
+      "subtitle": "Enter your website URL. We'll generate your full 14-page GEO report after payment (takes a few minutes). You'll receive it by email.",
+      "urlPlaceholder": "https://www.your-website.com",
+      "submitButton": "Pay $29 and receive my report",
+      "cancelButton": "Cancel",
+      "urlInvalidError": "Invalid URL, please check the format",
+      "errorGeneric": "Something went wrong, please try again"
+    }
   },
   "about": {
     "seo": {
