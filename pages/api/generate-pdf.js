@@ -567,7 +567,7 @@ function generateReportHTML(data, locale = 'fr') {
     const rc = r.priority === 'high' ? { color: '#D97757', bg: 'rgba(217,119,87,0.07)' } : r.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.07)' } : { color: '#10A37F', bg: 'rgba(16,163,127,0.07)' };
     return `<div style="display:flex;gap:16px;align-items:flex-start;padding:14px 16px;background:${rc.bg};border-radius:8px;margin-bottom:8px;">
       <div style="font-family:Georgia,serif;font-size:22px;color:${rc.color};line-height:1;flex-shrink:0;min-width:24px;">${i + 1}</div>
-      <div style="flex:1;"><div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:3px;">${esc(r.title || r.criterion || '')}</div><div style="font-family:system-ui;font-size:11px;color:#8A8680;line-height:1.5;">${esc(r.whatToDo || r.diagnostic || '')}</div></div>
+      <div style="flex:1;"><div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:3px;">${esc(r.title || translateCriterionName(r.criterion || '', locale))}</div><div style="font-family:system-ui;font-size:11px;color:#8A8680;line-height:1.5;">${esc(r.whatToDo || r.diagnostic || '')}</div></div>
       <div style="font-family:monospace;font-size:9px;color:${rc.color};background:${rc.bg};padding:3px 9px;border-radius:12px;white-space:nowrap;flex-shrink:0;border:1px solid ${rc.color}33;">${impactLabel(r.priority)}</div>
     </div>`;
   }).join('');
@@ -760,7 +760,7 @@ function generateReportHTML(data, locale = 'fr') {
       <td style="padding:9px 12px;font-family:monospace;font-size:11px;color:#B0ABA5;border-bottom:1px solid #F0EDE8;white-space:nowrap;">${i + 1}</td>
       <td style="padding:9px 12px;border-bottom:1px solid #F0EDE8;white-space:nowrap;"><span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${rc.bg};color:${rc.color};">${priorityLabel(r.priority)}</span></td>
       <td style="padding:9px 12px;border-bottom:1px solid #F0EDE8;"><div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:2px;">${esc(r.title || '')}</div><div style="font-family:system-ui;font-size:11px;color:#8A8680;">${esc(r.whatToDo || '')}</div></td>
-      <td style="padding:9px 12px;font-family:system-ui;font-size:11px;color:#8A8680;border-bottom:1px solid #F0EDE8;">${esc(r.criterion || '')}</td>
+      <td style="padding:9px 12px;font-family:system-ui;font-size:11px;color:#8A8680;border-bottom:1px solid #F0EDE8;">${esc(translateCriterionName(r.criterion || '', locale))}</td>
       <td style="padding:9px 12px;font-family:system-ui;font-size:11px;color:${rc.color};font-weight:600;border-bottom:1px solid #F0EDE8;white-space:nowrap;">${impactLabel(r.priority)}</td>
       <td style="padding:9px 12px;font-family:monospace;font-size:11px;color:#8A8680;border-bottom:1px solid #F0EDE8;white-space:nowrap;">${delayLabel(r.priority)}</td>
     </tr>`;
