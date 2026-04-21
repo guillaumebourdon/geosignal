@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { loadStripe } from '@stripe/stripe-js';
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import SEO from '../components/SEO';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useTranslation } from '../lib/useTranslation';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Logo = () => (
   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
@@ -13,38 +17,106 @@ const Logo = () => (
   </div>
 );
 
+function isValidUrl(input) {
+  let url = input.trim();
+  if (!url) return false;
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  try { new URL(url); return true; } catch { return false; }
+}
+
+function normalizeUrl(input) {
+  let url = input.trim();
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  return url;
+}
+
 export default function Pricing() {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { t } = useTranslation();
 
-  async function handleCheckout() {
-    setLoading(true);
-    try {
-      const res = await fetch('/api/create-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: 'rapport', locale: router.locale }),
-      });
-      const data = await res.json();
-      if (data.url) window.location.href = data.url;
-    } catch (e) {
-      alert(t('pricing.errorAlert'));
-    } finally {
-      setLoading(false);
-    }
-  }
+  const [showModal, setShowModal] = useState(false);
+  const [modalUrl, setModalUrl] = useState('');
+  const [urlError, setUrlError] = useState('');
+  const [modalError, setModalError] = useState('');
+  const [modalLoading, setModalLoading] = useState(false);
+
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [clientSecret, setClientSecret] = useState(null);
+
+  const inputRef = useRef(null);
+  const triggerRef = useRef(null);
 
   const freeFeatures = t('pricing.free.features');
   const reportFeatures = t('pricing.report.features');
   const faqItems = t('pricing.faq.items');
 
+  // Focus input when modal opens
+  useEffect(() => {
+    if (showModal && inputRef.current) inputRef.current.focus();
+  }, [showModal]);
+
+  // Escape key closes modal
+  useEffect(() => {
+    if (!showModal) return;
+    function onKey(e) { if (e.key === 'Escape') closeModal(); }
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [showModal]);
+
+  function openModal() {
+    setShowModal(true);
+    setModalUrl('');
+    setUrlError('');
+    setModalError('');
+  }
+
+  function closeModal() {
+    setShowModal(false);
+    setModalUrl('');
+    setUrlError('');
+    setModalError('');
+    if (triggerRef.current) triggerRef.current.focus();
+  }
+
+  function closeCheckout() {
+    setShowCheckout(false);
+    setClientSecret(null);
+  }
+
+  async function handleModalSubmit() {
+    if (!isValidUrl(modalUrl)) {
+      setUrlError(t('pricing.modal.urlInvalidError'));
+      return;
+    }
+    setUrlError('');
+    setModalError('');
+    setModalLoading(true);
+
+    try {
+      const url = normalizeUrl(modalUrl);
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: 'rapport', url, locale: router.locale }),
+      });
+      const data = await res.json();
+      if (data.clientSecret) {
+        setShowModal(false);
+        setClientSecret(data.clientSecret);
+        setShowCheckout(true);
+      } else {
+        setModalError(t('pricing.modal.errorGeneric'));
+      }
+    } catch {
+      setModalError(t('pricing.modal.errorGeneric'));
+    } finally {
+      setModalLoading(false);
+    }
+  }
+
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
-      <SEO
-        title={t('pricing.seo.title')}
-        description={t('pricing.seo.description')}
-      />
+      <SEO title={t('pricing.seo.title')} description={t('pricing.seo.description')} />
 
       {/* NAV */}
       <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
@@ -64,25 +136,18 @@ export default function Pricing() {
 
       {/* HERO */}
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '64px 24px 0', textAlign: 'center' }}>
-        <h1 style={{ fontSize: 'clamp(30px, 5vw, 48px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 14, color: '#1A1916' }}>
-          {t('pricing.hero.title')}
-        </h1>
-        <p style={{ fontSize: 15, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>
-          {t('pricing.hero.subtitle')}
-        </p>
+        <h1 style={{ fontSize: 'clamp(30px, 5vw, 48px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 14, color: '#1A1916' }}>{t('pricing.hero.title')}</h1>
+        <p style={{ fontSize: 15, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>{t('pricing.hero.subtitle')}</p>
       </div>
 
-      {/* PLANS — 2 colonnes */}
+      {/* PLANS */}
       <div className="pricing-cards" style={{ maxWidth: 700, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 80 }}>
-
         {/* FREE */}
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
           <div style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#1A1916', letterSpacing: -1, marginBottom: 4 }}>{t('pricing.free.price')}</div>
           <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', marginBottom: 24, lineHeight: 1.4 }}>{t('pricing.free.subtitle')}</div>
-          <Link href="/" style={{ display: 'block', textAlign: 'center', background: '#F0EDE8', color: '#1A1916', padding: '11px 0', borderRadius: 9, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui', marginBottom: 24 }}>
-            {t('pricing.free.cta')}
-          </Link>
+          <Link href="/" style={{ display: 'block', textAlign: 'center', background: '#F0EDE8', color: '#1A1916', padding: '11px 0', borderRadius: 9, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui', marginBottom: 24 }}>{t('pricing.free.cta')}</Link>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {freeFeatures.map((feat, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -93,24 +158,17 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* RAPPORT — featured */}
+        {/* RAPPORT */}
         <div style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.report.label')}</div>
-
-          <div style={{ marginBottom: 4 }}>
-            <span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.report.price')}</span>
-          </div>
-          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 20 }}>
-            {t('pricing.report.paymentInfo')}
-          </div>
-
+          <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.report.price')}</span></div>
+          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 20 }}>{t('pricing.report.paymentInfo')}</div>
           <button
-            onClick={handleCheckout}
-            disabled={loading}
-            style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, border: 'none', cursor: loading ? 'wait' : 'pointer', fontFamily: 'system-ui', marginBottom: 24, opacity: loading ? 0.7 : 1, transition: 'opacity 0.2s' }}>
-            {loading ? t('pricing.report.ctaLoading') : t('pricing.report.cta')}
+            ref={triggerRef}
+            onClick={openModal}
+            style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 24 }}>
+            {t('pricing.report.cta')}
           </button>
-
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {reportFeatures.map((feat, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -143,6 +201,76 @@ export default function Pricing() {
           </div>
         ))}
       </div>
+
+      {/* URL MODAL */}
+      {showModal && (
+        <div
+          onClick={closeModal}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            onClick={e => e.stopPropagation()}
+            style={{ background: '#fff', borderRadius: 16, maxWidth: 460, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}
+          >
+            <button onClick={closeModal} style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>x</button>
+            <h2 id="modal-title" style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 10, lineHeight: 1.2 }}>{t('pricing.modal.title')}</h2>
+            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, marginBottom: 24 }}>{t('pricing.modal.subtitle')}</p>
+
+            <div style={{ marginBottom: 20 }}>
+              <input
+                ref={inputRef}
+                type="url"
+                value={modalUrl}
+                onChange={e => { setModalUrl(e.target.value); setUrlError(''); setModalError(''); }}
+                onKeyDown={e => { if (e.key === 'Enter') handleModalSubmit(); }}
+                placeholder={t('pricing.modal.urlPlaceholder')}
+                style={{ width: '100%', background: '#F7F5F2', border: urlError ? '1.5px solid #D97757' : '1px solid #E5E2DC', borderRadius: 10, padding: '14px 16px', fontSize: 15, fontFamily: 'system-ui', color: '#1A1916', outline: 'none' }}
+              />
+              {urlError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{urlError}</div>}
+              {modalError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{modalError}</div>}
+            </div>
+
+            <button
+              onClick={handleModalSubmit}
+              disabled={modalLoading || !modalUrl.trim()}
+              style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
+              {modalLoading ? '...' : t('pricing.modal.submitButton')}
+            </button>
+            <button onClick={closeModal} style={{ display: 'block', width: '100%', background: 'transparent', color: '#8A8680', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
+              {t('pricing.modal.cancelButton')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STRIPE EMBEDDED CHECKOUT MODAL */}
+      {showCheckout && clientSecret && (
+        <div
+          onClick={closeCheckout}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ background: '#fff', borderRadius: 14, maxWidth: 500, width: '100%', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}
+          >
+            <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{t('pricing.report.label')}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{t('pricing.report.price')} &middot; {t('pricing.report.paymentInfo')}</div>
+              </div>
+              <button onClick={closeCheckout} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>x</button>
+            </div>
+            <div style={{ padding: '16px 0 0' }}>
+              <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
+                <EmbeddedCheckout />
+              </EmbeddedCheckoutProvider>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
