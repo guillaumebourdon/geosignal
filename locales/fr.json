@@ -16,6 +16,12 @@
     ],
     "recoFallbackLabel": "Recommandation"
   },
+  "cookieBanner": {
+    "message": "On utilise des cookies pour analyser l'usage du site et améliorer votre expérience.",
+    "learnMore": "En savoir plus",
+    "decline": "Refuser",
+    "accept": "Accepter ✓"
+  },
   "nav": {
     "home": "Accueil",
     "methodology": "Méthodologie",

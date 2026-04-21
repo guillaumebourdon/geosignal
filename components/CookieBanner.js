@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useTranslation } from '../lib/useTranslation';
 
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     try {
@@ -50,8 +53,8 @@ export default function CookieBanner() {
       </div>
 
       <p style={{ fontSize: 12, color: 'rgba(247,245,242,0.55)', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 16 }}>
-        On utilise des cookies pour analyser l'usage du site et améliorer votre expérience.{' '}
-        <a href="/legal" style={{ color: '#D97757', textDecoration: 'none' }}>En savoir plus</a>
+        {t('cookieBanner.message')}{' '}
+        <Link href="/confidentialite" style={{ color: '#D97757', textDecoration: 'none' }}>{t('cookieBanner.learnMore')}</Link>
       </p>
 
       <div style={{ display: 'flex', gap: 8 }}>
@@ -59,13 +62,13 @@ export default function CookieBanner() {
           onClick={refuse}
           style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(247,245,242,0.5)', padding: '9px 0', borderRadius: 8, fontSize: 12, fontFamily: 'system-ui', cursor: 'pointer' }}
         >
-          Refuser
+          {t('cookieBanner.decline')}
         </button>
         <button
           onClick={accept}
           style={{ flex: 2, background: '#F7F5F2', border: 'none', color: '#1A1916', padding: '9px 0', borderRadius: 8, fontSize: 12, fontFamily: 'system-ui', fontWeight: 600, cursor: 'pointer' }}
         >
-          Accepter ✓
+          {t('cookieBanner.accept')}
         </button>
       </div>
 
