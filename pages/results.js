@@ -368,7 +368,7 @@ export default function Results() {
                   <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#4285F4' }}>{t('results.promo.feat2')}</span>
                   <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#D97757' }}>{t('results.promo.feat3')}</span>
                 </div>
-                <a href="/exemple-rapport.html" target="_blank" rel="noopener" style={{ fontSize: 11, color: '#D97757', textDecoration: 'underline', fontFamily: 'system-ui', marginTop: 8, display: 'inline-block' }}>{t('results.promo.exampleLink')}</a>
+                <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener" style={{ fontSize: 11, color: '#D97757', textDecoration: 'underline', fontFamily: 'system-ui', marginTop: 8, display: 'inline-block' }}>{t('results.promo.exampleLink')}</a>
               </div>
               <div style={{ flexShrink: 0, textAlign: 'center' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#D97757', fontWeight: 'bold', lineHeight: 1 }}>{t('results.promo.price')}</div>

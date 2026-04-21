@@ -489,7 +489,7 @@ export default function Home() {
             </div>
           </div>
           <div style={{ textAlign: 'center', marginTop: 28 }}>
-            <a href="/exemple-rapport.html" target="_blank" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', padding: '10px 24px', borderRadius: 9, textDecoration: 'none' }}>
+            <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', padding: '10px 24px', borderRadius: 9, textDecoration: 'none' }}>
               {t('homepage.report.exampleLink')}
             </a>
           </div>
