@@ -791,7 +791,17 @@
       "title": "Audit GEO en cours",
       "subtitle": "Analyse en cours, merci de patienter jusqu'à 60 secondes...",
       "progress": "Progression",
-      "complete": "Analyse complète · 30 secondes",
+      "finalizing": "Finalisation de votre rapport...",
+      "stats": [
+        {"text": "80% des URL citees par ChatGPT ne sont pas dans le top 100 Google.", "source": "Ahrefs, 2025"},
+        {"text": "810 millions de personnes utilisent ChatGPT chaque jour en 2026.", "source": "Superlines, 2026"},
+        {"text": "Les pages avec donnees structurees sont citees 3 a 5x plus par les IA.", "source": "Otterly.AI, 2026"},
+        {"text": "Un visiteur venant d'une IA convertit 4,4x mieux qu'un visiteur organique.", "source": "Semrush, 2025"},
+        {"text": "44% des citations IA proviennent des 30% premiers caracteres d'une page.", "source": "Growth Memo, 2026"},
+        {"text": "44% des marques top-10 sur Google obtiennent zero citation sur ChatGPT.", "source": "EMGI, 2026"},
+        {"text": "93% des recherches IA se terminent sans clic vers un site web.", "source": "AirOps, 2026"},
+        {"text": "48% des citations IA proviennent de plateformes comme Reddit ou YouTube.", "source": "AirOps, 2026"}
+      ],
       "steps": [
         { "icon": "🔍", "text": "Récupération du site", "sub": "Connexion et scraping du contenu..." },
         { "icon": "🧩", "text": "Données structurées", "sub": "Analyse des schemas et balises..." },
