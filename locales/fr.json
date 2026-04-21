@@ -10,7 +10,8 @@
     "about": "À propos",
     "contact": "Contact",
     "blog": "Blog",
-    "cta": "Analyser gratuitement"
+    "cta": "Analyser gratuitement",
+    "ctaAnalyze": "Analyser mon site"
   },
   "homepage": {
     "seo": {
@@ -227,5 +228,199 @@
         "Recommandations personnalisées et priorisées"
       ]
     }
+  },
+  "methodology": {
+    "seo": {
+      "title": "Méthodologie — Comment Detekia calcule votre score GEO",
+      "description": "Découvrez les 8 critères GEO mesurés par Detekia : extractibilité, vérifiabilité, E-E-A-T, crawlabilité IA, données structurées, neutralité, présence externe et fraîcheur."
+    },
+    "hero": {
+      "badge": "Transparence totale",
+      "titleLine1": "Comment Detekia",
+      "titleEm": "calcule votre score",
+      "subtitle": "Notre score GEO est calculé à partir de 8 critères mesurables et vérifiables, basés sur les recherches académiques en Generative Engine Optimization et les guidelines publiques des principaux modèles d'IA.",
+      "ctaLink": "→ Testez votre score gratuitement sur les 8 critères"
+    },
+    "process": {
+      "label": "Le processus",
+      "title": "3 étapes d'analyse automatisée",
+      "steps": [
+        { "num": "01", "title": "Scraping du contenu", "desc": "Detekia récupère le HTML complet de votre page via Jina Reader — un service de scraping optimisé pour les IA. Le HTML brut, le texte et les métadonnées sont extraits." },
+        { "num": "02", "title": "Analyse heuristique", "desc": "Notre moteur d'analyse calcule 7 scores heuristiques en inspectant le DOM : balises, attributs, ratios, comptages. Ces scores sont reproductibles et déterministes." },
+        { "num": "03", "title": "Analyse IA (Claude)", "desc": "Claude Haiku analyse le contenu textuel pour évaluer la neutralité éditoriale et générer des recommandations contextualisées. Le score final intègre ce résultat." }
+      ]
+    },
+    "score": {
+      "label": "Calcul du score",
+      "title": "Score sur 100 = 7 heuristiques + neutralité IA",
+      "subtitle": "Les 7 premiers critères sont calculés par des règles déterministes sur le HTML. Le 8e critère (neutralité éditoriale) est noté par Claude sur 10, puis converti en bonus/malus ±5 points ajouté au total.",
+      "ptsLabel": "pts",
+      "items": [
+        { "pts": "25", "name": "Extractibilité" },
+        { "pts": "20", "name": "Vérifiabilité" },
+        { "pts": "15", "name": "Autorité E-E-A-T" },
+        { "pts": "15", "name": "Crawlabilité" },
+        { "pts": "10", "name": "Données structurées" },
+        { "pts": "10", "name": "Neutralité éditoriale" },
+        { "pts": "5", "name": "Présence externe" },
+        { "pts": "5", "name": "Fraîcheur" }
+      ]
+    },
+    "criteria": {
+      "label": "Détail des critères",
+      "titleStart": "Les 8 critères ",
+      "titleEm": "expliqués",
+      "whatLabel": "Ce qu'on mesure",
+      "goodLabel": "✓ Bon signal",
+      "badLabel": "✗ Mauvais signal",
+      "items": [
+        {
+          "icon": "🎯", "color": "#4285F4",
+          "name": "Extractibilité & réponse directe", "weight": "25 pts",
+          "what": "Les IA cherchent des réponses \"prêtes à citer\" dans votre contenu. Un bon site répond à la question dès les premières lignes, avec des listes, des tableaux, des titres clairs.",
+          "good": "Intro qui répond directement en 1-2 phrases, listes à puces, tableaux de données, structure H2/H3 logique, paragraphes courts (50-300 caractères).",
+          "bad": "Introduction généraliste sans réponse directe, blocs de texte denses, absence de listes ou tableaux, structure plate sans hiérarchie."
+        },
+        {
+          "icon": "🔬", "color": "#10A37F",
+          "name": "Vérifiabilité & preuves", "weight": "20 pts",
+          "what": "Les IA citent en priorité les contenus qui prouvent ce qu'ils avancent : chiffres sourcés, dates précises, liens vers des sources primaires, citations.",
+          "good": "Chiffres avec sources, dates explicites, liens externes vers études ou organismes de référence, tableaux comparatifs, citations d'experts.",
+          "bad": "Affirmations sans sources (\"il est prouvé que...\"), absence de chiffres ou chiffres sans source, aucun lien externe, pas de date de publication."
+        },
+        {
+          "icon": "🏆", "color": "#D97757",
+          "name": "Autorité E-E-A-T", "weight": "15 pts",
+          "what": "E-E-A-T (Expérience, Expertise, Autorité, Confiance) est le cadre que les IA utilisent pour évaluer la crédibilité d'un site et de ses auteurs.",
+          "good": "Page auteur avec biographie et photo, schéma \"author\" en JSON-LD, page À propos détaillée, page Contact, mentions légales complètes, schema Organization.",
+          "bad": "Contenu anonyme sans auteur identifié, absence de page À propos ou Contact, pas de mentions légales, aucun schema.org sur les entités."
+        },
+        {
+          "icon": "🤖", "color": "#4285F4",
+          "name": "Crawlabilité IA", "weight": "15 pts",
+          "what": "Les robots des IA (GPTBot, ClaudeBot, OAI-SearchBot) doivent pouvoir lire votre site. Un site bloqué ou peu accessible ne peut pas être indexé.",
+          "good": "Balise lang définie, canonical correct, contenu non bloqué par JavaScript, mention des bots IA dans robots.txt ou headers, sitemap.xml.",
+          "bad": "Meta robots noindex, contenu chargé uniquement en JS sans SSR, balise lang absente, redirection infinie, pas de canonical."
+        },
+        {
+          "icon": "🧩", "color": "#4285F4",
+          "name": "Données structurées", "weight": "10 pts",
+          "what": "Le Schema.org est le langage que les IA lisent en priorité pour comprendre ce qu'est votre site, qui l'a écrit, et de quoi il parle.",
+          "good": "Schema FAQPage, Article, HowTo, Organization, Person en JSON-LD. Les schemas prioritaires (FAQPage, HowTo) sont particulièrement valorisés.",
+          "bad": "Aucun schema.org, schemas incorrects ou incomplets, absence de schema sur les entités clés (Organisation, Auteur)."
+        },
+        {
+          "icon": "⚖️", "color": "#10A37F",
+          "name": "Neutralité éditoriale", "weight": "10 pts",
+          "what": "Les IA évitent de citer des contenus trop promotionnels ou biaisés. Un texte factuel et nuancé sera beaucoup plus souvent repris comme source.",
+          "good": "Ton informatif et factuel, nuances présentes, claims sourcés, vocabulaire précis sans superlatifs excessifs.",
+          "bad": "Superlatifs non sourcés (\"le meilleur\", \"révolutionnaire\"), claims sans preuve, ton exclusivement publicitaire, absence de nuance."
+        },
+        {
+          "icon": "🌐", "color": "#10A37F",
+          "name": "Présence externe", "weight": "5 pts",
+          "what": "Les IA croisent plusieurs sources pour évaluer votre crédibilité. Être mentionné dans la presse ou cité sur d'autres sites renforce votre autorité perçue.",
+          "good": "Mentions presse avec liens, présence active sur LinkedIn/Twitter, témoignages et avis référencés, citations dans des articles tiers.",
+          "bad": "Aucun lien entrant identifiable, absence de réseaux sociaux, aucune mention presse ou tierce."
+        },
+        {
+          "icon": "📅", "color": "#C9861A",
+          "name": "Fraîcheur & maintenance", "weight": "5 pts",
+          "what": "Pour les sujets qui évoluent, les IA préfèrent les contenus récents. Une date de mise à jour visible et un copyright récent signalent que le site est actif.",
+          "good": "dateModified en JSON-LD, date de mise à jour visible, copyright de l'année en cours, contenu récent dans les balises meta.",
+          "bad": "Aucune date visible, copyright daté d'il y a 3+ ans, schéma dateModified absent, articles sans date de publication."
+        }
+      ]
+    },
+    "limits": {
+      "label": "Limites de l'analyse",
+      "items": [
+        { "title": "Analyse de surface", "desc": "Detekia analyse la page d'accueil ou la page soumise, pas l'intégralité du site. Un site peut avoir du contenu excellent sur d'autres pages non analysées." },
+        { "title": "Facteurs non mesurables", "desc": "La qualité intrinsèque du contenu, la réputation hors-ligne, les backlinks entrants, et l'historique de citation par les IA ne sont pas mesurables par notre analyse technique." },
+        { "title": "Évolution des algorithmes", "desc": "Les critères de citation des IA évoluent régulièrement. Notre méthodologie est mise à jour mais peut présenter un décalage avec les dernières pratiques des modèles." },
+        { "title": "Sites dynamiques", "desc": "Les sites qui chargent leur contenu entièrement en JavaScript côté client (SPA sans SSR) peuvent obtenir des scores sous-évalués car le contenu n'est pas accessible au scraper." }
+      ]
+    },
+    "sources": {
+      "label": "Sources & références",
+      "items": [
+        "Aggarwal et al. (2023) — \"GEO: Generative Engine Optimization\" — arXiv:2311.09735",
+        "Google Search Essentials — E-E-A-T guidelines (2024)",
+        "OpenAI — GPTBot documentation & robots.txt guidelines",
+        "Anthropic — ClaudeBot crawling policies",
+        "Schema.org — Documentation officielle FAQPage, Article, Organization"
+      ]
+    },
+    "cta": {
+      "titleLine1": "Testez votre site",
+      "titleEm": "gratuitement",
+      "subtitle": "Analyse complète en 30 secondes. Aucune inscription requise.",
+      "button": "Analyser mon site →"
+    },
+    "footer": {
+      "byLine": "par Beeleven SASU",
+      "links": [
+        { "label": "Tarifs", "href": "/pricing" },
+        { "label": "Méthodologie", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Mentions légales", "href": "/mentions-legales" },
+        { "label": "Confidentialité", "href": "/confidentialite" },
+        { "label": "CGU", "href": "/cgu" }
+      ]
+    }
+  },
+  "pricing": {
+    "seo": {
+      "title": "Tarifs — Rapport GEO complet | Detekia",
+      "description": "Débloquez votre rapport GEO complet pour 29 € : recommandations expertes, preuves techniques, cas concrets. Paiement unique, accès immédiat, satisfait ou remboursé."
+    },
+    "hero": {
+      "title": "Débloquez votre rapport GEO complet",
+      "subtitle": "Toutes les recommandations expertes pour booster votre citabilité dans ChatGPT, Gemini, Claude et Perplexity."
+    },
+    "free": {
+      "label": "Gratuit",
+      "price": "0€",
+      "subtitle": "Pour découvrir Detekia",
+      "cta": "Commencer gratuitement",
+      "features": [
+        { "included": true, "text": "Score GEO /100" },
+        { "included": true, "text": "Analyse des 8 critères" },
+        { "included": true, "text": "1 recommandation aperçu" },
+        { "included": false, "text": "Recommandations complètes" },
+        { "included": false, "text": "Méthodes & exemples concrets" },
+        { "included": false, "text": "Rapport envoyé par email" }
+      ]
+    },
+    "report": {
+      "label": "Rapport complet",
+      "price": "29 €",
+      "paymentInfo": "Paiement unique · Par analyse",
+      "ctaLoading": "Chargement…",
+      "cta": "Débloquer mon rapport — 29 € →",
+      "features": [
+        { "text": "Score GEO /100 + analyse des 8 critères" },
+        { "text": "Toutes les recommandations (5 à 8 selon le site)" },
+        { "text": "Diagnostic, méthode, exemple concret par reco" },
+        { "text": "Impact attendu et tip d'expert pour chaque action" },
+        { "text": "Rapport PDF complet envoyé par email" },
+        { "text": "Accès immédiat en ligne" }
+      ]
+    },
+    "guarantee": {
+      "title": "Paiement sécurisé via Stripe",
+      "subtitle": "Aucune donnée de carte stockée · Remboursement sous 24h si problème"
+    },
+    "faq": {
+      "label": "Questions fréquentes",
+      "items": [
+        { "q": "Qu'est-ce que le GEO ?", "a": "Le GEO (Generative Engine Optimization) est l'optimisation de votre site pour apparaître dans les réponses de ChatGPT, Claude, Gemini et Perplexity." },
+        { "q": "Combien de recommandations vais-je recevoir ?", "a": "Toutes les recommandations générées pour les critères sous 80% de leur score max — en général entre 5 et 8 recommandations détaillées avec méthode, exemple et impact attendu." },
+        { "q": "Le paiement est-il par site ou par analyse ?", "a": "Par analyse. Chaque rapport débloqué correspond à l'analyse d'un site à un instant donné." },
+        { "q": "Comment est délivré le rapport ?", "a": "Immédiatement en ligne sur la page de confirmation, et envoyé par email en PDF pour être consulté hors ligne." },
+        { "q": "Les données de mon site sont-elles conservées ?", "a": "Non. Detekia analyse votre site en temps réel. Seul le rapport est mis en cache 24h pour vous éviter d'attendre si vous revenez sur la même URL." }
+      ]
+    },
+    "errorAlert": "Erreur de paiement, réessayez."
   }
 }

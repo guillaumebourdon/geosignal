@@ -10,7 +10,8 @@
     "about": "About",
     "contact": "Contact",
     "blog": "Blog",
-    "cta": "Free analysis"
+    "cta": "Free analysis",
+    "ctaAnalyze": "Analyze my website"
   },
   "homepage": {
     "seo": {
@@ -227,5 +228,199 @@
         "Personalized and prioritized recommendations"
       ]
     }
+  },
+  "methodology": {
+    "seo": {
+      "title": "Methodology — How Detekia calculates your GEO Score",
+      "description": "Discover the 8 GEO criteria measured by Detekia: extractability, verifiability, E-E-A-T, AI crawlability, structured data, neutrality, external presence and freshness."
+    },
+    "hero": {
+      "badge": "Full transparency",
+      "titleLine1": "How Detekia",
+      "titleEm": "calculates your score",
+      "subtitle": "Our GEO Score is calculated from 8 measurable and verifiable criteria, based on academic research in Generative Engine Optimization and the public guidelines of major AI models.",
+      "ctaLink": "→ Test your score for free across all 8 criteria"
+    },
+    "process": {
+      "label": "The process",
+      "title": "3 automated analysis steps",
+      "steps": [
+        { "num": "01", "title": "Content scraping", "desc": "Detekia retrieves the full HTML of your page via Jina Reader — a scraping service optimized for AI. The raw HTML, text and metadata are extracted." },
+        { "num": "02", "title": "Heuristic analysis", "desc": "Our analysis engine computes 7 heuristic scores by inspecting the DOM: tags, attributes, ratios, counts. These scores are reproducible and deterministic." },
+        { "num": "03", "title": "AI analysis (Claude)", "desc": "Claude Haiku analyzes the text content to assess editorial neutrality and generate contextualized recommendations. The final score incorporates this result." }
+      ]
+    },
+    "score": {
+      "label": "Score calculation",
+      "title": "Score out of 100 = 7 heuristics + AI neutrality",
+      "subtitle": "The first 7 criteria are calculated by deterministic rules on the HTML. The 8th criterion (editorial neutrality) is scored by Claude out of 10, then converted into a ±5 point bonus/penalty added to the total.",
+      "ptsLabel": "pts",
+      "items": [
+        { "pts": "25", "name": "Extractability" },
+        { "pts": "20", "name": "Verifiability" },
+        { "pts": "15", "name": "E-E-A-T Authority" },
+        { "pts": "15", "name": "Crawlability" },
+        { "pts": "10", "name": "Structured data" },
+        { "pts": "10", "name": "Editorial neutrality" },
+        { "pts": "5", "name": "External presence" },
+        { "pts": "5", "name": "Freshness" }
+      ]
+    },
+    "criteria": {
+      "label": "Criteria details",
+      "titleStart": "The 8 criteria ",
+      "titleEm": "explained",
+      "whatLabel": "What we measure",
+      "goodLabel": "✓ Good signal",
+      "badLabel": "✗ Bad signal",
+      "items": [
+        {
+          "icon": "🎯", "color": "#4285F4",
+          "name": "Extractability & direct answer", "weight": "25 pts",
+          "what": "AI models look for \"ready-to-cite\" answers in your content. A good website answers the question in the first few lines, with lists, tables and clear headings.",
+          "good": "Intro that directly answers in 1-2 sentences, bullet lists, data tables, logical H2/H3 structure, short paragraphs (50-300 characters).",
+          "bad": "Generic introduction with no direct answer, dense text blocks, no lists or tables, flat structure with no hierarchy."
+        },
+        {
+          "icon": "🔬", "color": "#10A37F",
+          "name": "Verifiability & evidence", "weight": "20 pts",
+          "what": "AI models prioritize content that backs up its claims: sourced figures, precise dates, links to primary sources, citations.",
+          "good": "Figures with sources, explicit dates, external links to studies or reference organizations, comparison tables, expert quotes.",
+          "bad": "Unsourced claims (\"it has been proven that...\"), missing or unsourced figures, no external links, no publication date."
+        },
+        {
+          "icon": "🏆", "color": "#D97757",
+          "name": "E-E-A-T Authority", "weight": "15 pts",
+          "what": "E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) is the framework AI models use to evaluate the credibility of a website and its authors.",
+          "good": "Author page with bio and photo, \"author\" schema in JSON-LD, detailed About page, Contact page, complete legal notices, Organization schema.",
+          "bad": "Anonymous content with no identified author, no About or Contact page, no legal notices, no schema.org for entities."
+        },
+        {
+          "icon": "🤖", "color": "#4285F4",
+          "name": "AI Crawlability", "weight": "15 pts",
+          "what": "AI bots (GPTBot, ClaudeBot, OAI-SearchBot) need to be able to read your website. A blocked or poorly accessible site cannot be indexed.",
+          "good": "Lang attribute defined, correct canonical, content not blocked by JavaScript, AI bots mentioned in robots.txt or headers, sitemap.xml.",
+          "bad": "Meta robots noindex, content loaded only via client-side JS without SSR, missing lang attribute, redirect loops, no canonical."
+        },
+        {
+          "icon": "🧩", "color": "#4285F4",
+          "name": "Structured data", "weight": "10 pts",
+          "what": "Schema.org is the language AI models read first to understand what your website is about, who wrote it, and what it covers.",
+          "good": "FAQPage, Article, HowTo, Organization, Person schemas in JSON-LD. Priority schemas (FAQPage, HowTo) are particularly valued.",
+          "bad": "No schema.org, incorrect or incomplete schemas, missing schemas for key entities (Organization, Author)."
+        },
+        {
+          "icon": "⚖️", "color": "#10A37F",
+          "name": "Editorial neutrality", "weight": "10 pts",
+          "what": "AI models avoid citing overly promotional or biased content. Factual, nuanced text is far more likely to be used as a source.",
+          "good": "Informative and factual tone, nuances present, sourced claims, precise vocabulary without excessive superlatives.",
+          "bad": "Unsourced superlatives (\"the best\", \"revolutionary\"), unproven claims, purely promotional tone, lack of nuance."
+        },
+        {
+          "icon": "🌐", "color": "#10A37F",
+          "name": "External presence", "weight": "5 pts",
+          "what": "AI models cross-reference multiple sources to evaluate your credibility. Being mentioned in the press or cited on other websites strengthens your perceived authority.",
+          "good": "Press mentions with links, active presence on LinkedIn/Twitter, referenced testimonials and reviews, citations in third-party articles.",
+          "bad": "No identifiable inbound links, no social media presence, no press or third-party mentions."
+        },
+        {
+          "icon": "📅", "color": "#C9861A",
+          "name": "Freshness & maintenance", "weight": "5 pts",
+          "what": "For evolving topics, AI models prefer recent content. A visible update date and current copyright signal that the website is actively maintained.",
+          "good": "dateModified in JSON-LD, visible update date, current year copyright, recent content in meta tags.",
+          "bad": "No visible date, copyright from 3+ years ago, missing dateModified schema, articles without publication date."
+        }
+      ]
+    },
+    "limits": {
+      "label": "Analysis limitations",
+      "items": [
+        { "title": "Surface-level analysis", "desc": "Detekia analyzes the homepage or the submitted page, not the entire website. A site may have excellent content on other pages that weren't analyzed." },
+        { "title": "Non-measurable factors", "desc": "Intrinsic content quality, offline reputation, inbound backlinks, and AI citation history cannot be measured by our technical analysis." },
+        { "title": "Algorithm evolution", "desc": "AI citation criteria evolve regularly. Our methodology is updated but may lag behind the latest practices of AI models." },
+        { "title": "Dynamic websites", "desc": "Websites that load their content entirely via client-side JavaScript (SPA without SSR) may receive underestimated scores because the content isn't accessible to the scraper." }
+      ]
+    },
+    "sources": {
+      "label": "Sources & references",
+      "items": [
+        "Aggarwal et al. (2023) — \"GEO: Generative Engine Optimization\" — arXiv:2311.09735",
+        "Google Search Essentials — E-E-A-T guidelines (2024)",
+        "OpenAI — GPTBot documentation & robots.txt guidelines",
+        "Anthropic — ClaudeBot crawling policies",
+        "Schema.org — Official FAQPage, Article, Organization documentation"
+      ]
+    },
+    "cta": {
+      "titleLine1": "Test your website",
+      "titleEm": "for free",
+      "subtitle": "Full analysis in 30 seconds. No signup required.",
+      "button": "Analyze my website →"
+    },
+    "footer": {
+      "byLine": "by Beeleven SASU",
+      "links": [
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "pricing": {
+    "seo": {
+      "title": "Pricing — Full GEO Report | Detekia",
+      "description": "Unlock your full GEO report for 29 €: expert recommendations, technical evidence, real case studies. One-time payment, instant access, money-back guarantee."
+    },
+    "hero": {
+      "title": "Unlock your full GEO report",
+      "subtitle": "All the expert recommendations to boost your citability on ChatGPT, Gemini, Claude and Perplexity."
+    },
+    "free": {
+      "label": "Free",
+      "price": "0€",
+      "subtitle": "To discover Detekia",
+      "cta": "Start for free",
+      "features": [
+        { "included": true, "text": "GEO Score /100" },
+        { "included": true, "text": "Analysis of 8 criteria" },
+        { "included": true, "text": "1 recommendation preview" },
+        { "included": false, "text": "Full recommendations" },
+        { "included": false, "text": "Methods & concrete examples" },
+        { "included": false, "text": "Report sent by email" }
+      ]
+    },
+    "report": {
+      "label": "Full report",
+      "price": "29 €",
+      "paymentInfo": "One-time payment · Per analysis",
+      "ctaLoading": "Loading…",
+      "cta": "Unlock my report — 29 € →",
+      "features": [
+        { "text": "GEO Score /100 + 8 criteria analysis" },
+        { "text": "All recommendations (5 to 8 depending on site)" },
+        { "text": "Diagnosis, method, concrete example per reco" },
+        { "text": "Expected impact and expert tip for each action" },
+        { "text": "Full PDF report sent by email" },
+        { "text": "Instant online access" }
+      ]
+    },
+    "guarantee": {
+      "title": "Secure payment via Stripe",
+      "subtitle": "No card data stored · Refund within 24h if there's an issue"
+    },
+    "faq": {
+      "label": "Frequently asked questions",
+      "items": [
+        { "q": "What is GEO?", "a": "GEO (Generative Engine Optimization) is the practice of optimizing your website to appear in AI-generated responses from ChatGPT, Claude, Gemini and Perplexity." },
+        { "q": "How many recommendations will I receive?", "a": "All recommendations generated for criteria below 80% of their max score — typically between 5 and 8 detailed recommendations with method, example and expected impact." },
+        { "q": "Is the payment per website or per analysis?", "a": "Per analysis. Each unlocked report corresponds to one website's analysis at a given point in time." },
+        { "q": "How is the report delivered?", "a": "Immediately online on the confirmation page, and sent by email as a PDF for offline viewing." },
+        { "q": "Is my website data stored?", "a": "No. Detekia analyzes your website in real time. Only the report is cached for 24 hours so you don't have to wait if you return to the same URL." }
+      ]
+    },
+    "errorAlert": "Payment error, please try again."
   }
 }
