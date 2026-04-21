@@ -19,6 +19,12 @@ export default async function handler(req, res) {
   const selected = prices[plan];
   if (!selected) return res.status(400).json({ error: 'Plan invalide' });
 
+  const origin = req.headers.origin
+    || (req.headers.host ? `https://${req.headers.host}` : null)
+    || 'https://www.detekia.fr';
+  const returnUrl = `${origin}${locale === 'en' ? '/en' : ''}/success?session_id={CHECKOUT_SESSION_ID}`;
+  console.log('Stripe return_url:', returnUrl);
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -39,7 +45,7 @@ export default async function handler(req, res) {
         score: score != null ? String(score) : '',
         locale,
       },
-      return_url: `https://www.detekia.fr${locale === 'en' ? '/en' : ''}/success?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: returnUrl,
     });
 
     res.json({ clientSecret: session.client_secret });
