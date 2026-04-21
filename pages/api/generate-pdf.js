@@ -1,8 +1,67 @@
 import { Resend } from 'resend';
+import Stripe from 'stripe';
 
 export const config = { maxDuration: 60 };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// ─── Loyalty promo code generation ──────────────────────────────────────────
+
+const LOYALTY_STRINGS = {
+  fr: {
+    mentionInBody: "Tu veux analyser une autre URL ? J'ai glisse un code -50% plus bas, valable 30 jours.",
+    eyebrow: 'Pour votre prochaine analyse',
+    title: '50% de reduction',
+    body: "Envie d'analyser une autre page de votre site, ou un autre projet ? Utilisez ce code au checkout sur detekia.fr/pricing.",
+    footerNote: 'Valable 30 jours · Utilisable une seule fois',
+  },
+  en: {
+    mentionInBody: "Want to analyze another URL? I've tucked a -50% discount code below, valid for 30 days.",
+    eyebrow: 'For your next analysis',
+    title: '50% off',
+    body: 'Want to analyze another page of your site, or a different project? Use this code at checkout on detekia.fr/pricing.',
+    footerNote: 'Valid 30 days · Single use',
+  },
+};
+
+async function generateLoyaltyCode(sessionId, url, email, locale) {
+  const COUPON_ID = process.env.STRIPE_LOYALTY_COUPON_ID;
+  if (!COUPON_ID) {
+    console.error('[loyalty] STRIPE_LOYALTY_COUPON_ID not set, skipping promo code generation');
+    return null;
+  }
+
+  const expiresAt = Math.floor(Date.now() / 1000) + (30 * 24 * 60 * 60);
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const promoCode = `DETK-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    try {
+      await stripe.promotionCodes.create({
+        coupon: COUPON_ID,
+        code: promoCode,
+        max_redemptions: 1,
+        expires_at: expiresAt,
+        metadata: {
+          type: 'post_purchase_loyalty',
+          original_session_id: sessionId || 'unknown',
+          original_url: url || 'unknown',
+          locale: locale || 'fr',
+        },
+      });
+      console.log(`[loyalty] Generated code ${promoCode} for ${email} (url: ${url}, locale: ${locale})`);
+      return promoCode;
+    } catch (err) {
+      if (err.code === 'resource_already_exists' && attempt < 2) {
+        console.log(`[loyalty] Code collision on attempt ${attempt + 1}, retrying...`);
+        continue;
+      }
+      console.error('[loyalty] Failed to create promo code:', err.message);
+      return null;
+    }
+  }
+  return null;
+}
 
 // ─── i18n strings ────────────────────────────────────────────────────────────
 
@@ -892,6 +951,58 @@ export default async function handler(req, res) {
     const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
     console.log('PDF generated, size:', pdfBuffer.length);
 
+    // Generate loyalty promo code (non-blocking if it fails)
+    const loyaltyCode = await generateLoyaltyCode(null, url, email, locale);
+    const ls = LOYALTY_STRINGS[locale] || LOYALTY_STRINGS.fr;
+
+    const EMAIL_BODY = locale === 'en' ? {
+      greeting: 'Hi there,',
+      thanks: `Thanks so much for your trust — your full GEO report for <strong>${url}</strong> is attached.`,
+      insideTitle: "Inside your report:",
+      inside: [
+        'A detailed score across 8 GEO criteria',
+        'A real AI visibility test on 10 simulated queries',
+        'Precise recommendations ranked by impact priority',
+        'A concrete action plan',
+      ],
+      whereToStart: "Where to start? Tackle the top priority identified in your report first. It was selected because it offers the best impact-to-effort ratio for your site specifically.",
+      stuckLine: "If you get stuck anywhere: reply directly to this email, I'll answer personally.",
+      feedbackLine: "Detekia is a young project — your feedback is worth its weight in gold.",
+      signoff: 'Happy optimizing!',
+      name: 'Guillaume',
+      role: 'Founder of Detekia — detekia.fr',
+      ps: "P.S. — The GEO landscape moves fast. I write regularly on the blog: detekia.fr/blog",
+    } : {
+      greeting: 'Salut,',
+      thanks: `Merci beaucoup pour ta confiance — ton rapport GEO complet pour <strong>${url}</strong> est en piece jointe.`,
+      insideTitle: 'Tu y trouveras :',
+      inside: [
+        'Un score detaille sur les 8 criteres GEO',
+        'Un test reel de visibilite IA sur 10 requetes simulees',
+        'Des recommandations precises, classees par priorite d\'impact',
+        'Un plan d\'action concret',
+      ],
+      whereToStart: "Par ou commencer ? Attaque-toi d'abord a la priorite absolue identifiee dans ton rapport. Elle a ete selectionnee parce qu'elle offre le meilleur ratio impact/effort pour ton site specifiquement.",
+      stuckLine: "Si tu bloques quelque part : reponds directement a cet email, je te reponds moi-meme.",
+      feedbackLine: "Detekia est un jeune projet — ton feedback vaut de l'or.",
+      signoff: 'Bonne optimisation !',
+      name: 'Guillaume',
+      role: 'Fondateur de Detekia — detekia.fr',
+      ps: 'P.S. — Le monde du GEO evolue vite. J\'ecris regulierement sur le blog : detekia.fr/blog',
+    };
+
+    const promoMention = loyaltyCode ? `<p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 16px">${ls.mentionInBody}</p>` : '';
+
+    const promoBlock = loyaltyCode ? `
+      <div style="margin:32px 0;padding:24px;background:#F7F5F2;border-left:4px solid #C9A84C;border-radius:8px">
+        <div style="font-family:monospace;font-size:11px;color:#8A8680;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">${ls.eyebrow}</div>
+        <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:8px">${ls.title}</div>
+        <div style="font-family:system-ui;font-size:14px;color:#3A3835;line-height:1.6;margin-bottom:16px">${ls.body}</div>
+        <div style="background:#1A1916;color:#C9A84C;font-family:monospace;font-size:20px;font-weight:bold;padding:16px 24px;border-radius:6px;text-align:center;letter-spacing:3px">${loyaltyCode}</div>
+        <div style="font-family:system-ui;font-size:12px;color:#8A8680;margin-top:12px;text-align:center">${ls.footerNote}</div>
+      </div>
+    ` : '';
+
     const { data, error } = await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: email,
@@ -899,21 +1010,43 @@ export default async function handler(req, res) {
       html: `
         <div style="background:#F7F5F2;padding:40px 20px;font-family:system-ui">
           <div style="max-width:560px;margin:0 auto">
+            <!-- Header -->
             <div style="text-align:center;margin-bottom:32px">
               <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:8px">Detekia</div>
               <div style="font-family:monospace;font-size:10px;color:#8A8680;letter-spacing:2px">${t.email.headerLabel}</div>
             </div>
-            <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:24px">
+            <!-- Score card -->
+            <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:28px">
               <div style="font-family:Georgia,serif;font-size:64px;color:#F7F5F2;line-height:1;letter-spacing:-2px">${reportData.score}</div>
-              <div style="font-family:monospace;font-size:12px;color:rgba(247,245,242,0.4)">/100 — ${url}</div>
+              <div style="font-family:monospace;font-size:12px;color:rgba(247,245,242,0.4);margin-top:4px">/100 — ${url}</div>
               <div style="font-size:13px;color:rgba(247,245,242,0.55);margin-top:12px;font-family:system-ui;line-height:1.6">${reportData.verdict}</div>
             </div>
-            <div style="background:#fff;border-radius:12px;padding:24px;border:1px solid #E5E2DC;margin-bottom:24px">
+            <!-- Body text -->
+            <div style="background:#fff;border-radius:12px;padding:28px;border:1px solid #E5E2DC;margin-bottom:28px">
+              <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 16px">${EMAIL_BODY.greeting}</p>
+              <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 16px">${EMAIL_BODY.thanks}</p>
+              <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 8px;font-weight:600">${EMAIL_BODY.insideTitle}</p>
+              <ul style="font-size:14px;color:#3A3835;line-height:1.8;margin:0 0 16px;padding-left:20px">
+                ${EMAIL_BODY.inside.map(item => `<li>${item}</li>`).join('')}
+              </ul>
+              <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 16px">${EMAIL_BODY.whereToStart}</p>
+              ${promoMention}
+              <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 16px">${EMAIL_BODY.stuckLine}</p>
+              <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 16px">${EMAIL_BODY.feedbackLine}</p>
+              <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 4px">${EMAIL_BODY.signoff}</p>
+              <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 4px;font-weight:600">${EMAIL_BODY.name}</p>
+              <p style="font-size:12px;color:#8A8680;line-height:1.5;margin:0">${EMAIL_BODY.role}</p>
+            </div>
+            <!-- Promo block -->
+            ${promoBlock}
+            <!-- Top priority reminder -->
+            <div style="background:#fff;border-radius:12px;padding:20px 24px;border:1px solid #E5E2DC;margin-bottom:20px">
               <div style="font-size:13px;color:#1A1916;font-weight:600;margin-bottom:8px;font-family:system-ui">\u{1F3AF} ${t.email.topPriority}</div>
               <div style="font-size:13px;color:#8A8680;line-height:1.6;font-family:system-ui">${reportData.topPriority || ''}</div>
             </div>
-            <div style="text-align:center;font-size:13px;color:#8A8680;font-family:system-ui;line-height:1.6">
-              ${t.email.pdfNote}
+            <!-- PS -->
+            <div style="text-align:center;font-size:12px;color:#8A8680;font-family:system-ui;line-height:1.6;padding-top:8px">
+              ${EMAIL_BODY.ps}
             </div>
           </div>
         </div>
