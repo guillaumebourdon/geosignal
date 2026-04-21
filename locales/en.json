@@ -9,6 +9,223 @@
     "pricing": "Pricing",
     "about": "About",
     "contact": "Contact",
-    "blog": "Blog"
+    "blog": "Blog",
+    "cta": "Free analysis"
+  },
+  "homepage": {
+    "seo": {
+      "title": "Detekia — Is your website visible to AI?",
+      "description": "Analyze your presence on ChatGPT, Claude, Gemini and Perplexity. GEO Score out of 100 + personalized recommendations in 30 seconds."
+    },
+    "hero": {
+      "badge": "100% free analysis — no signup required",
+      "titleLine1": "Your competitors show up in",
+      "titleLine2": "You don't.",
+      "subtitle": "Detekia audits your website in 30 seconds and shows you what to fix to get cited by AI — and capture the traffic Google no longer sends you.",
+      "inputPlaceholder": "https://www.your-website.com",
+      "cta": "Analyze my website →",
+      "easterEgg": "Nice try 😏 But we don't grade ourselves — it would be too easy to give a 100/100. Try with another website!",
+      "trustBadge": "Free · No signup · Results in 30 seconds"
+    },
+    "mockup": {
+      "headerLabel": "AI Visibility Audit · example.com",
+      "scoreBadge": "AI Visibility Score",
+      "score": "38",
+      "scoreMax": "/100",
+      "level": "LOW",
+      "levelDesc": "4 critical issues<br/>detected on your website",
+      "criticalTag": "CRITICAL — CRAWLABILITY",
+      "criticalTitle": "ChatGPT can't access your website.",
+      "criticalDesc": "Your robots.txt file blocks AI bots — 73% of websites have this problem without knowing it. Result: no AI can read or cite your content.",
+      "fixText": "<strong>Fix needed:</strong> Allow GPTBot, ClaudeBot and PerplexityBot in your robots.txt. Just 2 lines to change.",
+      "impactPoints": "+12 estimated visibility points",
+      "lockedCount": "+14 locked recommendations",
+      "unlock": "Unlock →"
+    },
+    "stats": [
+      { "value": "1,247", "label": "analyses completed" },
+      { "value": "38/100", "label": "average score observed" },
+      { "value": "Extractability", "label": "most common bottleneck" }
+    ],
+    "comparison": {
+      "label": "Why Detekia",
+      "titleStart": "More than an AI opinion: ",
+      "titleEm": "a reproducible diagnosis",
+      "subtitle": "Asking ChatGPT \"is my website well optimized?\" gives a vague answer. Detekia analyzes your actual source code.",
+      "columns": [
+        {
+          "icon": "💬",
+          "title": "Asking ChatGPT",
+          "subtitle": "Subjective opinion",
+          "items": [
+            "Generic, non-reproducible answer",
+            "No access to your source code",
+            "No quantified scoring",
+            "Vague recommendations"
+          ]
+        },
+        {
+          "icon": "⚡",
+          "title": "Analyzing with Detekia",
+          "subtitle": "Technical diagnosis",
+          "items": [
+            "Analysis of your actual HTML",
+            "8 objectively measured criteria",
+            "Reproducible score out of 100",
+            "Recommendations ranked by impact"
+          ]
+        },
+        {
+          "icon": "📊",
+          "title": "What you get",
+          "subtitle": "Actionable",
+          "items": [
+            "Your exact AI visibility score",
+            "The issues making you invisible",
+            "What to fix first",
+            "Estimated impact of each fix"
+          ]
+        }
+      ]
+    },
+    "targetAudience": {
+      "label": "Who it's for",
+      "title": "Who is Detekia for?",
+      "subtitle": "Whether you're a founder, marketer or content creator, your AI visibility is a business imperative.",
+      "items": [
+        { "emoji": "🚀", "title": "SaaS / B2B Founders", "desc": "Your competitors are cited by AI, you're not. Find out why — and how to reclaim your place in ChatGPT and Perplexity responses." },
+        { "emoji": "🛒", "title": "E-commerce businesses", "desc": "AI recommends products to millions of users every day. Make sure yours show up in those recommendations." },
+        { "emoji": "✍️", "title": "Bloggers & content creators", "desc": "You produce quality content. But do AI models cite it? Identify what's missing so your expertise gets picked up and recommended." },
+        { "emoji": "📈", "title": "Agencies & marketing freelancers", "desc": "Add AI visibility audits to your client offering. Detekia gives you a structured diagnosis to present in just a few clicks." }
+      ]
+    },
+    "howItWorks": {
+      "label": "How it works",
+      "titleStart": "The complete AI visibility analysis in ",
+      "titleEm": "30 seconds",
+      "steps": [
+        { "num": "01", "title": "Enter your URL", "desc": "Paste your website address. Zero signup, zero setup, zero credit card." },
+        { "num": "02", "title": "We analyze everything", "desc": "Detekia scrapes your website and evaluates it against 8 research-backed GEO criteria." },
+        { "num": "03", "title": "Get your score", "desc": "Score out of 100, per-criteria analysis and expert recommendations in under 30 seconds." }
+      ],
+      "methodologyLink": "See our full methodology →"
+    },
+    "report": {
+      "label": "Full report",
+      "titleStart": "A report that's ",
+      "titleEm": "worth every cent",
+      "subtitle": "14 pages of in-depth analysis with exclusive data you won't find anywhere else.",
+      "cards": [
+        {
+          "icon": "🔭",
+          "title": "AI Visibility Test",
+          "desc": "Are your direct competitors cited by ChatGPT and Gemini on your key queries? The report reveals your actual position in AI responses compared to your market.",
+          "checks": ["Queries tested on 4 AI engines", "Comparison with 3 competitors", "Real response excerpts"]
+        },
+        {
+          "icon": "⚙️",
+          "title": "Technical evidence",
+          "desc": "Every weakness is documented with the exact source in your HTML. You know precisely what to change, on which line, and why it's blocking your citability.",
+          "checks": ["Annotated code excerpts", "Before / after for each fix", "Priority: Critical / Important / Bonus"]
+        },
+        {
+          "icon": "📚",
+          "title": "Documented real cases",
+          "desc": "Every recommendation is illustrated with a concrete case from websites that improved their AI citability. No theory — proof that it works, with measured results.",
+          "checks": ["Case studies with quantified results", "Academic sources (KDD 2024)", "Estimated impact on your score"]
+        }
+      ],
+      "cta": "Unlock my report — 29 ��� →",
+      "ctaSubtext": "One-time payment · Instant access · 7-day money-back guarantee",
+      "exampleLink": "See a sample report →"
+    },
+    "testimonials": {
+      "label": "Results",
+      "title": "They analyzed their website",
+      "subtitle": "Concrete, measurable results in just a few days.",
+      "items": [
+        {
+          "initials": "TL",
+          "name": "Thomas L.",
+          "role": "Founder · Kairos SaaS",
+          "quote": "We thought we had good SEO, but Detekia revealed that <strong>ChatGPT couldn't even access our website</strong>. Two lines changed in robots.txt and our score jumped from 29 to 58 in one week.",
+          "footerType": "score",
+          "before": 29,
+          "after": 58,
+          "delta": "+29 pts"
+        },
+        {
+          "initials": "MG",
+          "name": "Marine G.",
+          "role": "Freelance SEO consultant",
+          "quote": "I use Detekia for every new client. In 30 seconds I have <strong>a clear diagnosis to present</strong>, and it lets me upsell an AI optimization service. The ROI is immediate.",
+          "footerType": "badge",
+          "badge": "USED FOR EVERY CLIENT"
+        },
+        {
+          "initials": "JB",
+          "name": "Julien B.",
+          "role": "E-commerce Manager · Maison Verdure",
+          "quote": "Our product pages were invisible to AI. The report identified <strong>3 critical issues</strong>. After fixing them, Perplexity started recommending our products within 3 weeks.",
+          "footerType": "score",
+          "before": 34,
+          "after": 71,
+          "delta": "+37 pts"
+        }
+      ]
+    },
+    "faq": {
+      "label": "FAQ",
+      "titleStart": "Frequently asked ",
+      "titleEm": "questions",
+      "items": [
+        { "q": "Is this different from asking ChatGPT directly?", "a": "Yes, fundamentally. Asking ChatGPT 'is my website well optimized?' gives a generic opinion based on what it knows about your URL — often approximate and non-reproducible. Detekia analyzes the actual DOM of your page: HTML structure, schema.org, metadata, links, content. The result is a quantified score out of 100, 8 objectively measured criteria, and recommendations prioritized by impact. It's the difference between an opinion and a diagnosis." },
+        { "q": "What is GEO and how is it different from SEO?", "a": "GEO (Generative Engine Optimization) is the practice of optimizing your website to appear in AI-generated responses — ChatGPT, Claude, Gemini, Perplexity. Unlike SEO which aims to rank on Google, GEO aims to be cited and recommended directly in AI answers. The criteria are different: AI models value clarity, citability, credibility and structured data." },
+        { "q": "How does the Detekia analysis work?", "a": "Enter your website URL, and Detekia scrapes your content and analyzes it against 8 GEO criteria: extractability, verifiability, E-E-A-T authority, AI crawlability, structured data, editorial neutrality, external presence and freshness. Our AI then generates personalized expert recommendations for your website. The full methodology is available on our Methodology page." },
+        { "q": "Why is the analysis really free?", "a": "The basic analysis — score out of 100, 8 detailed criteria, one expert recommendation preview — is completely free with no signup required. No credit card needed. We believe everyone should be able to know if their website is visible to AI. The full report with all detailed recommendations and action plans is available for 29 €, one-time payment." },
+        { "q": "What's a good GEO Score?", "a": "On Detekia, a score above 70/100 is considered good. Between 45 and 70, your website has solid foundations but needs targeted optimizations. Below 45, priority actions are needed. Most analyzed websites score between 15 and 45 — even major brands often score low because their websites are optimized to sell, not to be cited by AI." },
+        { "q": "Is my website data stored?", "a": "No. Detekia analyzes your website in real time and doesn't store any of your website data beyond 24 hours. Analysis results are cached for 24 hours to speed up successive analyses of the same website, but no personal data is stored." },
+        { "q": "Does Detekia work for all types of websites?", "a": "Yes — e-commerce, blogs, SaaS, business websites, portfolios, institutional sites. GEO criteria are universal. Some types of websites do have a natural advantage: blogs with rich editorial content, websites with strong press coverage, and platforms that publish original data. But all websites can improve significantly with the right optimizations." },
+        { "q": "What if my score doesn't improve?", "a": "The report's recommendations are concrete and prioritized by impact. If you implement them and your score doesn't change, contact us at hello@detekia.fr — we'll analyze your case with you for free." },
+        { "q": "Who's behind Detekia?", "a": "Detekia is developed by Beeleven, a digital strategy and AI agency based in Paris. The tool is built by SEO, GEO and artificial intelligence experts who work daily with generative engines." },
+        { "q": "Money-back guarantee?", "a": "Yes. If the report doesn't provide any actionable improvement insights, send us an email within 7 days of purchase at hello@detekia.fr and we'll refund you in full, no questions asked." }
+      ]
+    },
+    "finalCta": {
+      "badge": "Free · No signup · No credit card",
+      "titleLine1": "Your website deserves to be cited",
+      "titleEm": "by AI",
+      "subtitle": "Join the professionals who have already optimized their AI visibility — for free, in 30 seconds.",
+      "cta": "Analyze my website for free →",
+      "trustBadge": "Free · No signup · Results in 30 seconds",
+      "priceNote": "Full report 29 € · One-time payment"
+    },
+    "footer": {
+      "copyright": "© 2026 Detekia — Beeleven SASU",
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "FAQ", "href": "/#faq" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    },
+    "schema": {
+      "appDescription": "GEO (Generative Engine Optimization) audit tool that analyzes website visibility on AI engines like ChatGPT, Claude, Gemini and Perplexity.",
+      "orgDescription": "GEO audit tool — Measure and improve your website's visibility in AI responses (ChatGPT, Gemini, Claude, Perplexity).",
+      "freeOffer": "Free analysis",
+      "paidOffer": "Full report",
+      "featureList": [
+        "GEO Score out of 100",
+        "Analysis of 8 GEO criteria",
+        "Structured data analysis",
+        "Citability assessment",
+        "External presence verification",
+        "Personalized and prioritized recommendations"
+      ]
+    }
   }
 }
