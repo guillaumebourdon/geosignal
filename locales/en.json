@@ -791,7 +791,17 @@
       "title": "GEO Audit in progress",
       "subtitle": "Analysis in progress, please wait up to 60 seconds...",
       "progress": "Progress",
-      "complete": "Full analysis · 30 seconds",
+      "finalizing": "Finalizing your report...",
+      "stats": [
+        {"text": "80% of URLs cited by ChatGPT are not in Google's top 100.", "source": "Ahrefs, 2025"},
+        {"text": "810 million people use ChatGPT every day in 2026.", "source": "Superlines, 2026"},
+        {"text": "Pages with structured data are cited 3 to 5x more often by AI.", "source": "Otterly.AI, 2026"},
+        {"text": "AI-referred visitors convert 4.4x better than organic visitors.", "source": "Semrush, 2025"},
+        {"text": "44% of AI citations come from the first 30% of a page's text.", "source": "Growth Memo, 2026"},
+        {"text": "44% of Google's top-10 brands get zero citations on ChatGPT.", "source": "EMGI, 2026"},
+        {"text": "93% of AI search sessions end without a click to a website.", "source": "AirOps, 2026"},
+        {"text": "48% of AI citations come from community platforms like Reddit.", "source": "AirOps, 2026"}
+      ],
       "steps": [
         { "icon": "🔍", "text": "Fetching website", "sub": "Connecting and scraping content..." },
         { "icon": "🧩", "text": "Structured data", "sub": "Analyzing schemas and tags..." },

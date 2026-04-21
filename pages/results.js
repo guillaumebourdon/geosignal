@@ -7,6 +7,67 @@ import { useTranslation } from '../lib/useTranslation';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
+function RotatingStats({ stats, finalizingText }) {
+  const [shuffled, setShuffled] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const [showFinalizing, setShowFinalizing] = useState(false);
+
+  useEffect(() => {
+    if (!stats || !stats.length) return;
+    const arr = [...stats];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    setShuffled(arr);
+  }, [stats]);
+
+  useEffect(() => {
+    if (!shuffled.length) return;
+    const timer = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIndex(prev => {
+          if (showFinalizing) {
+            setShowFinalizing(false);
+            return 0;
+          }
+          if (prev >= shuffled.length - 1) {
+            setShowFinalizing(true);
+            return prev;
+          }
+          return prev + 1;
+        });
+        setVisible(true);
+      }, 200);
+    }, 7500);
+    return () => clearInterval(timer);
+  }, [shuffled, showFinalizing]);
+
+  if (!shuffled.length) return null;
+  const current = shuffled[index];
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: 24, minHeight: 60 }}>
+      <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 300ms ease' }}>
+        {showFinalizing ? (
+          <p style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic' }}>{finalizingText}</p>
+        ) : (
+          <>
+            <p style={{ fontSize: 14, color: '#1A1916', lineHeight: 1.6, maxWidth: 520, margin: '0 auto', fontFamily: 'system-ui' }}>
+              {current.text}
+            </p>
+            <p style={{ fontSize: 11, color: '#B0ABA5', fontStyle: 'italic', marginTop: 6, fontFamily: 'system-ui' }}>
+              — {current.source}
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function Tooltip({ info }) {
   const [visible, setVisible] = useState(false);
   const [pos, setPos] = useState({ top: 0, left: 0 });
@@ -306,7 +367,7 @@ export default function Results() {
                 );
               })}
             </div>
-            <p style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: 11, color: '#C2BDB8', marginTop: 20 }}>{t('results.loading.complete')}</p>
+            <RotatingStats stats={t('results.loading.stats')} finalizingText={t('results.loading.finalizing')} />
           </div>
         </div>
       )}
