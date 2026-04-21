@@ -12,6 +12,11 @@ CONTENT_MAP_EN['pourquoi-chatgpt-ne-cite-pas-votre-site'] = require('../../conte
 CONTENT_MAP_EN['seo-vs-geo-differences-2026'] = require('../../content/articles/en/seo-vs-geo-differences-2026').default;
 CONTENT_MAP_EN['score-geo-mesurer-visibilite-ia'] = require('../../content/articles/en/score-geo-mesurer-visibilite-ia').default;
 CONTENT_MAP_EN['schema-org-ia-guide-pratique'] = require('../../content/articles/en/schema-org-ia-guide-pratique').default;
+CONTENT_MAP_EN['ecommerce-recommandations-ia'] = require('../../content/articles/en/ecommerce-recommandations-ia').default;
+CONTENT_MAP_EN['8-criteres-geo-methodologie-detekia'] = require('../../content/articles/en/8-criteres-geo-methodologie-detekia').default;
+CONTENT_MAP_EN['llms-txt-robots-crawlabilite-ia'] = require('../../content/articles/en/llms-txt-robots-crawlabilite-ia').default;
+CONTENT_MAP_EN['geo-agences-seo-audit-ia'] = require('../../content/articles/en/geo-agences-seo-audit-ia').default;
+CONTENT_MAP_EN['ai-overviews-google-2026'] = require('../../content/articles/en/ai-overviews-google-2026').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
