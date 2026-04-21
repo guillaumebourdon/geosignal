@@ -6,6 +6,40 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ─── i18n strings ────────────────────────────────────────────────────────────
 
+// Strip accents for key lookup matching
+function stripAccents(s) {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+const CRITERIA_NAMES = {
+  fr: {
+    'Extractibilite & reponse directe': 'Extractibilite & reponse directe',
+    'Verifiabilite & preuves': 'Verifiabilite & preuves',
+    'Autorite & E-E-A-T': 'Autorite & E-E-A-T',
+    'Crawlabilite IA': 'Crawlabilite IA',
+    'Donnees structurees': 'Donnees structurees',
+    'Neutralite editoriale': 'Neutralite editoriale',
+    'Presence externe': 'Presence externe',
+    'Fraicheur & maintenance': 'Fraicheur & maintenance',
+  },
+  en: {
+    'Extractibilite & reponse directe': 'Extractability & direct answer',
+    'Verifiabilite & preuves': 'Verifiability & evidence',
+    'Autorite & E-E-A-T': 'Authority & E-E-A-T',
+    'Crawlabilite IA': 'AI Crawlability',
+    'Donnees structurees': 'Structured data',
+    'Neutralite editoriale': 'Editorial neutrality',
+    'Presence externe': 'External presence',
+    'Fraicheur & maintenance': 'Freshness & maintenance',
+  },
+};
+
+function translateCriterionName(name, locale) {
+  const stripped = stripAccents(name);
+  const map = CRITERIA_NAMES[locale] || CRITERIA_NAMES.fr;
+  return map[stripped] || name;
+}
+
 const S = {
   fr: {
     grade: { good: 'BON', average: 'MOYEN', poor: 'FAIBLE' },
@@ -481,7 +515,7 @@ function generateReportHTML(data, locale = 'fr') {
     `<h1 style="font-family:Georgia,serif;font-size:34px;color:#1A1916;letter-spacing:-1px;margin-bottom:28px;line-height:1.1;">${txt}</h1>`;
 
   function lookup(map, criterionName) {
-    const n = criterionName.toLowerCase();
+    const n = stripAccents(criterionName).toLowerCase();
     for (const [k, v] of Object.entries(map)) { if (n.includes(k)) return v; }
     return '';
   }
@@ -522,7 +556,7 @@ function generateReportHTML(data, locale = 'fr') {
     const pct = Math.round((c.score / c.max) * 100);
     const cg  = criterionGrade(c.score, c.max, t);
     return `<tr>
-      <td style="padding:10px 12px;font-family:system-ui;font-size:12px;color:#1A1916;border-bottom:1px solid #F0EDE8;">${esc(c.name)}</td>
+      <td style="padding:10px 12px;font-family:system-ui;font-size:12px;color:#1A1916;border-bottom:1px solid #F0EDE8;">${esc(translateCriterionName(c.name, locale))}</td>
       <td style="padding:10px 12px;text-align:center;border-bottom:1px solid #F0EDE8;"><span style="font-family:monospace;font-size:12px;font-weight:600;color:${cg.color};">${c.score}/${c.max}</span></td>
       <td style="padding:10px 16px;border-bottom:1px solid #F0EDE8;width:120px;"><div style="height:6px;background:#E5E2DC;border-radius:3px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${cg.color};border-radius:3px;"></div></div></td>
       <td style="padding:10px 12px;border-bottom:1px solid #F0EDE8;"><span style="display:inline-block;padding:2px 9px;border-radius:12px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${cg.bg};color:${cg.color};">${cg.label}</span></td>
@@ -690,7 +724,7 @@ function generateReportHTML(data, locale = 'fr') {
           <span style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:2px;text-transform:uppercase;">${t.criteriaPage.criterionOf} ${idx + 1} ${t.criteriaPage.of} 8</span>
         </div>
         <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px;gap:16px;">
-          <h1 style="font-family:Georgia,serif;font-size:26px;color:#1A1916;letter-spacing:-0.5px;line-height:1.2;">${esc(c.name)}</h1>
+          <h1 style="font-family:Georgia,serif;font-size:26px;color:#1A1916;letter-spacing:-0.5px;line-height:1.2;">${esc(translateCriterionName(c.name, locale))}</h1>
           <div style="text-align:right;flex-shrink:0;">
             <div style="font-family:Georgia,serif;font-size:38px;color:${cg.color};line-height:1;letter-spacing:-1px;">${c.score}<span style="font-size:16px;color:#C0BBB5;font-weight:400;">/${c.max}</span></div>
             <div style="font-family:monospace;font-size:9px;color:#B0ABA5;">${pct}%</div>
@@ -836,6 +870,10 @@ export default async function handler(req, res) {
   try {
     const html = generateReportHTML({ url, ...reportData }, locale);
 
+    console.log('[generate-pdf] locale:', locale);
+    console.log('[generate-pdf] HTML length:', html.length);
+    console.log('[generate-pdf] First criteria name:', reportData.criteria?.[0]?.name);
+    console.log('[generate-pdf] Last criteria name:', reportData.criteria?.[reportData.criteria.length - 1]?.name);
     console.log('Starting PDFShift...');
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
       method: 'POST',

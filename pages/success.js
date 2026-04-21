@@ -46,6 +46,7 @@ export default function Success() {
 
   const grades = t('common.grades');
   const priorities = t('common.priorities');
+  const criteriaInfo = t('results.criteriaInfo');
 
   function getGrade(score) {
     if (score >= 70) return { label: grades.good, color: '#10A37F' };
@@ -199,7 +200,7 @@ export default function Success() {
                       return (
                         <div key={i}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                            <span style={{ fontSize: 12, color: '#1A1916', fontFamily: 'system-ui' }}>{c.name}</span>
+                            <span style={{ fontSize: 12, color: '#1A1916', fontFamily: 'system-ui' }}>{criteriaInfo[c.name]?.title || c.name}</span>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                               <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 7px', borderRadius: 4, background: col + '18', color: col }}>{gradeLabel}</span>
                               <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{c.score}/{c.max}</span>
