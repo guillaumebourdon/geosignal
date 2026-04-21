@@ -16,6 +16,38 @@
     ],
     "recoFallbackLabel": "Recommandation"
   },
+  "blog": {
+    "index": {
+      "seo": {
+        "title": "Blog GEO — Guides & Stratégies Visibilité IA | Detekia",
+        "description": "Guides pratiques, analyses techniques et stratégies pour optimiser la visibilité de votre site dans les IA : ChatGPT, Claude, Perplexity."
+      },
+      "sectionLabel": "Ressources",
+      "h1": "Blog — GEO, SEO & Visibilité IA",
+      "subtitle": "Guides pratiques pour être cité par les IA"
+    },
+    "article": {
+      "breadcrumbHome": "Accueil",
+      "breadcrumbBlog": "Blog",
+      "readTimeSuffix": "de lecture",
+      "ctaTitle": "Testez votre score GEO gratuitement",
+      "ctaSubtitle": "Analyse complète en 30 secondes, sans inscription",
+      "ctaButton": "Analyser mon site →",
+      "relatedTitle": "Articles recommandés",
+      "fallbackContent": "Contenu de l'article à venir"
+    },
+    "footer": {
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Tarifs", "href": "/pricing" },
+        { "label": "Méthodologie", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Mentions légales", "href": "/mentions-legales" },
+        { "label": "Confidentialité", "href": "/confidentialite" },
+        { "label": "CGU", "href": "/cgu" }
+      ]
+    }
+  },
   "cookieBanner": {
     "message": "On utilise des cookies pour analyser l'usage du site et améliorer votre expérience.",
     "learnMore": "En savoir plus",
