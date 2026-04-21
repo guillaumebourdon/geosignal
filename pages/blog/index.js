@@ -2,7 +2,7 @@ import Link from 'next/link';
 import SEO from '../../components/SEO';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import { useTranslation } from '../../lib/useTranslation';
-import { articles, formatDate } from '../../lib/articles';
+import { getAllArticles, formatDate } from '../../lib/articles';
 
 const CATEGORY_COLORS = {
   'GUIDE': '#10A37F',
@@ -19,7 +19,8 @@ const Logo = () => (
 );
 
 export default function BlogIndex() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
+  const localizedArticles = getAllArticles(locale);
 
   return (
     <>
@@ -60,7 +61,7 @@ export default function BlogIndex() {
         {/* ARTICLE GRID */}
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 24px 100px' }}>
           <div className="blog-grid">
-            {articles.slice().reverse().map(article => {
+            {localizedArticles.slice().reverse().map(article => {
               const catColor = CATEGORY_COLORS[article.category] || '#8A8680';
               return (
                 <Link
@@ -81,7 +82,7 @@ export default function BlogIndex() {
                     {article.description}
                   </p>
                   <div style={{ display: 'flex', gap: 16, marginTop: 'auto', paddingTop: 8, borderTop: '1px solid #F0EDE8' }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5' }}>{formatDate(article.date)}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5' }}>{formatDate(article.date, locale)}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5' }}>{article.readTime}</span>
                   </div>
                 </Link>

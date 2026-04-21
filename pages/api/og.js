@@ -13,9 +13,11 @@ export default function handler(req) {
   try {
     const { searchParams } = new URL(req.url);
     const slug = searchParams.get('slug');
+    const locale = searchParams.get('locale') || 'fr';
     const article = articles.find((a) => a.slug === slug);
 
-    const title = article?.title || 'Detekia — Audit de visibilité IA';
+    const localized = article ? (article[locale] || article.fr) : null;
+    const title = localized?.title || 'Detekia — Audit de visibilité IA';
     const category = article?.category || 'GUIDE';
     const accent = CATEGORY_COLORS[category] || '#D97757';
 

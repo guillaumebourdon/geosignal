@@ -5,6 +5,10 @@ import LanguageSwitcher from '../../components/LanguageSwitcher';
 import { useTranslation } from '../../lib/useTranslation';
 import { articles, getArticleBySlug, getRelatedArticles, formatDate } from '../../lib/articles';
 
+// EN content overrides — add require lines here as EN articles are created in content/articles/en/
+// Example: CONTENT_MAP_EN['slug'] = require('../../content/articles/en/slug').default;
+const CONTENT_MAP_EN = {};
+
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
   'geo-guide-complet-2026': require('../../content/articles/geo-guide-complet-2026').default,
@@ -41,8 +45,10 @@ const Logo = () => (
   </div>
 );
 
-function ArticleContent({ slug, fallbackText }) {
-  const Content = CONTENT_MAP[slug];
+function ArticleContent({ slug, locale, fallbackText }) {
+  const ContentEN = locale === 'en' ? CONTENT_MAP_EN[slug] : null;
+  const ContentFR = CONTENT_MAP[slug];
+  const Content = ContentEN || ContentFR;
   if (Content) return <Content />;
   return (
     <div style={{ color: '#8A8680', fontFamily: 'system-ui', fontSize: 15, lineHeight: 1.75, padding: '48px 0', textAlign: 'center', border: '1px dashed #E5E2DC', borderRadius: 10 }}>
@@ -144,7 +150,7 @@ export default function ArticlePage({ article, related }) {
               {article.title}
             </h1>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5', marginBottom: 28 }}>
-              <span>{formatDate(article.date)}</span>
+              <span>{formatDate(article.date, locale)}</span>
               <span>·</span>
               <span>{article.readTime} {t('blog.article.readTimeSuffix')}</span>
               <span>·</span>
@@ -155,7 +161,7 @@ export default function ArticlePage({ article, related }) {
 
           {/* ARTICLE BODY */}
           <div className="article-body">
-            <ArticleContent slug={article.slug} fallbackText={t('blog.article.fallbackContent')} />
+            <ArticleContent slug={article.slug} locale={locale} fallbackText={t('blog.article.fallbackContent')} />
           </div>
 
           {/* CTA */}
@@ -242,9 +248,9 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
-  const article = getArticleBySlug(params.slug);
+export async function getStaticProps({ params, locale }) {
+  const article = getArticleBySlug(params.slug, locale);
   if (!article) return { notFound: true };
-  const related = getRelatedArticles(params.slug, 3);
+  const related = getRelatedArticles(params.slug, 3, locale);
   return { props: { article, related } };
 }
