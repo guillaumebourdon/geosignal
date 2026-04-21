@@ -692,7 +692,6 @@ function generateReportHTML(data, locale = 'fr') {
     const why   = lookup(t.why, c.name) || '';
     const study = lookup(t.cases, c.name) || '';
     const guide = lookup(t.guides, c.name) || '';
-    console.log(`[generate-pdf] Criterion ${idx}: ${c.name} | ev:${ev.length}c | why:${why.length}c | study:${study.length}c | guide:${guide.length}c | recos:${recos.length}`);
 
     const evidenceSection = evidence
       ? (ev ? `<div style="margin-top:16px;">${ev}</div>` : '')
@@ -870,35 +869,11 @@ export default async function handler(req, res) {
   const { email, url, reportData, locale: reqLocale } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';
   const t = S[locale] || S.fr;
-  console.log('generate-pdf locale:', locale);
   if (!email || !reportData) return res.status(400).json({ error: 'Missing data' });
-
-  // Debug mode: return raw HTML if ?debug=html
-  const debugMode = req.query?.debug === 'html';
 
   try {
     const html = generateReportHTML({ url, ...reportData }, locale);
 
-    console.log('[generate-pdf] locale:', locale);
-    console.log('[generate-pdf] HTML length:', html.length, 'chars');
-    console.log('[generate-pdf] criteria count:', reportData.criteria?.length);
-    console.log('[generate-pdf] First criteria:', reportData.criteria?.[0]?.name);
-    console.log('[generate-pdf] Last criteria:', reportData.criteria?.[reportData.criteria.length - 1]?.name);
-    console.log('[generate-pdf] recos count:', reportData.recommendations?.length);
-
-    // Log the HTML around each page-break to find where rendering stops
-    const pageBreaks = [...html.matchAll(/page-break-before:always/g)];
-    console.log('[generate-pdf] page-break count:', pageBreaks.length);
-
-    if (debugMode) {
-      res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      return res.status(200).send(html);
-    }
-
-    console.log('[gp] html_length:', html.length);
-    console.log('[gp] criterion_3_full:', JSON.stringify(reportData.criteria?.[2] ?? reportData.criteria?.find(c => c.name?.toLowerCase().includes('autorit')) ?? 'not_found', null, 2));
-    console.log('[gp] html_slice_c3_before:', html.substring(html.indexOf('CRITERION 3'), html.indexOf('CRITERION 3') + 3000));
-    console.log('[gp] html_slice_c3_after:', html.substring(html.indexOf('CRITERION 4') - 500, html.indexOf('CRITERION 4') + 500));
     console.log('Starting PDFShift...');
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
       method: 'POST',

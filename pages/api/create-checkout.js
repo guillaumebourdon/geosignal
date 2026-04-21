@@ -23,7 +23,6 @@ export default async function handler(req, res) {
     || (req.headers.host ? `https://${req.headers.host}` : null)
     || 'https://www.detekia.fr';
   const returnUrl = `${origin}${locale === 'en' ? '/en' : ''}/success?session_id={CHECKOUT_SESSION_ID}`;
-  console.log('Stripe return_url:', returnUrl);
 
   try {
     const session = await stripe.checkout.sessions.create({

@@ -7,7 +7,6 @@ export default async function handler(req, res) {
 
   const { email, url, score, criteria, recommendations, verdict, locale: reqLocale } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';
-  console.log('send-email locale:', locale);
   if (!email || !score) return res.status(400).json({ error: 'Données manquantes' });
 
   const tagColors = {
