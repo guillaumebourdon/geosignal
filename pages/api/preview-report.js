@@ -680,10 +680,11 @@ export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end();
 
   const rawUrl = req.query.url;
+  const locale = req.query.locale === 'en' ? 'en' : 'fr';
   if (!rawUrl) return res.status(400).json({ error: 'Paramètre url manquant' });
 
   const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
-  const cacheKey = `detekia:v11:${url.toLowerCase()}`;
+  const cacheKey = `detekia:v11:${url.toLowerCase()}:${locale}`;
   const cached = await redis.get(cacheKey);
 
   if (!cached) {

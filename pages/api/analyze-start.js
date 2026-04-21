@@ -12,15 +12,16 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const url = req.body.url;
+  const locale = req.body.locale === 'en' ? 'en' : 'fr';
   if (!url) return res.status(400).json({ error: 'URL manquante' });
 
   const jobId = `job_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
   const jobKey = `detekia:v11:job:${jobId}`;
 
-  await redis.set(jobKey, { status: 'pending', url, createdAt: Date.now() }, { ex: 600 });
+  await redis.set(jobKey, { status: 'pending', url, locale, createdAt: Date.now() }, { ex: 600 });
 
   // Fire-and-forget: launch analysis in background
-  runAnalysis(url)
+  runAnalysis(url, locale)
     .then(async (data) => {
       await redis.set(jobKey, { status: 'done', data, completedAt: Date.now() }, { ex: 600 });
     })
