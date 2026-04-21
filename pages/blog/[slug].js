@@ -104,7 +104,7 @@ export default function ArticlePage({ article, related }) {
   return (
     <>
       <Head>
-        <title>{article.title} | Detekia</title>
+        <title>{`${article.title} | Detekia`}</title>
         <meta name="description" content={article.description} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
@@ -118,7 +118,7 @@ export default function ArticlePage({ article, related }) {
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:site_name" content="Detekia" />
         <meta property="og:locale" content={ogLocale} />
-        <meta property="og:image" content={`https://detekia.fr/api/og?slug=${article.slug}`} />
+        <meta property="og:image" content={`https://detekia.fr/api/og?slug=${article.slug}&locale=${locale}`} />
         <meta property="article:published_time" content={article.date} />
         <meta property="article:modified_time" content={article.date} />
         <meta property="article:author" content={article.author} />
@@ -126,7 +126,7 @@ export default function ArticlePage({ article, related }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={article.title} />
         <meta name="twitter:description" content={article.description} />
-        <meta name="twitter:image" content={`https://detekia.fr/api/og?slug=${article.slug}`} />
+        <meta name="twitter:image" content={`https://detekia.fr/api/og?slug=${article.slug}&locale=${locale}`} />
 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </Head>
