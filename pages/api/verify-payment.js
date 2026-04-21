@@ -15,6 +15,7 @@ export default async function handler(req, res) {
     const session = await stripe.checkout.sessions.retrieve(session_id);
     const email   = session.customer_details?.email;
     const url     = session.metadata?.url;
+    const locale  = session.metadata?.locale === 'en' ? 'en' : 'fr';
 
     if (email) {
       // Stocker le paiement dans Redis
@@ -25,7 +26,7 @@ export default async function handler(req, res) {
         plan: session.amount_total >= 2900 ? 'pro' : 'rapport',
       }, { ex: 30 * 24 * 60 * 60 });
 
-      return res.status(200).json({ email, url: url || null, success: true });
+      return res.status(200).json({ email, url: url || null, locale, success: true });
     }
 
     return res.status(400).json({ error: 'Email non trouvé' });

@@ -2,32 +2,57 @@ import { articles } from '../lib/articles';
 
 const SITE_URL = 'https://detekia.fr';
 
+function hreflangBlock(frPath) {
+  const frUrl = `${SITE_URL}${frPath}`;
+  const enUrl = `${SITE_URL}/en${frPath}`;
+  return `    <xhtml:link rel="alternate" hreflang="fr" href="${frUrl}" />
+    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${frUrl}" />`;
+}
+
+function urlEntry(path, locale, { changefreq, priority, lastmod }) {
+  const loc = locale === 'en' ? `${SITE_URL}/en${path}` : `${SITE_URL}${path}`;
+  return `  <url>
+    <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+${hreflangBlock(path)}
+  </url>`;
+}
+
 function generateSiteMap() {
   const staticPages = [
-    { loc: '', changefreq: 'weekly', priority: '1.0' },
-    { loc: '/pricing', changefreq: 'monthly', priority: '0.8' },
-    { loc: '/methodologie', changefreq: 'monthly', priority: '0.8' },
-    { loc: '/a-propos', changefreq: 'monthly', priority: '0.7' },
-    { loc: '/contact', changefreq: 'monthly', priority: '0.7' },
-    { loc: '/blog', changefreq: 'daily', priority: '0.9' },
+    { path: '', changefreq: 'weekly', priority: '1.0' },
+    { path: '/pricing', changefreq: 'monthly', priority: '0.8' },
+    { path: '/methodologie', changefreq: 'monthly', priority: '0.8' },
+    { path: '/a-propos', changefreq: 'monthly', priority: '0.7' },
+    { path: '/contact', changefreq: 'monthly', priority: '0.7' },
+    { path: '/blog', changefreq: 'daily', priority: '0.9' },
   ];
 
   const today = new Date().toISOString().split('T')[0];
 
+  const staticEntries = staticPages.flatMap(p =>
+    ['fr', 'en'].map(locale =>
+      urlEntry(p.path, locale, { ...p, lastmod: today })
+    )
+  );
+
+  const blogEntries = articles.flatMap(a =>
+    ['fr', 'en'].map(locale =>
+      urlEntry(`/blog/${a.slug}`, locale, {
+        changefreq: 'weekly',
+        priority: '0.8',
+        lastmod: a.date || today,
+      })
+    )
+  );
+
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${staticPages.map(p => `  <url>
-    <loc>${SITE_URL}${p.loc}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${p.changefreq}</changefreq>
-    <priority>${p.priority}</priority>
-  </url>`).join('\n')}
-${articles.map(a => `  <url>
-    <loc>${SITE_URL}/blog/${a.slug}</loc>
-    <lastmod>${a.date || today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>`).join('\n')}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${[...staticEntries, ...blogEntries].join('\n')}
 </urlset>`;
 }
 

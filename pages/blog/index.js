@@ -1,5 +1,8 @@
-import Head from 'next/head';
-import { articles, formatDate } from '../../lib/articles';
+import Link from 'next/link';
+import SEO from '../../components/SEO';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
+import { useTranslation } from '../../lib/useTranslation';
+import { getAllArticles, formatDate } from '../../lib/articles';
 
 const CATEGORY_COLORS = {
   'GUIDE': '#10A37F',
@@ -7,64 +10,61 @@ const CATEGORY_COLORS = {
   'STRATÉGIE': '#D97757',
 };
 
-function Logo() {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
-      {['#10A37F', '#D97757', '#4285F4', '#1C7DC4'].map((c, i) => (
-        <div key={i} style={{ background: c, borderRadius: '50%' }} />
-      ))}
-    </div>
-  );
-}
+const Logo = () => (
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
+    {['#10A37F', '#D97757', '#4285F4', '#1C7DC4'].map((c, i) => (
+      <div key={i} style={{ background: c, borderRadius: '50%' }} />
+    ))}
+  </div>
+);
 
 export default function BlogIndex() {
+  const { t, locale } = useTranslation();
+  const localizedArticles = getAllArticles(locale);
+
   return (
     <>
-      <Head>
-        <title>Blog GEO — Guides & Stratégies Visibilité IA | Detekia</title>
-        <meta name="description" content="Guides pratiques, analyses techniques et stratégies pour optimiser la visibilité de votre site dans les IA : ChatGPT, Claude, Perplexity." />
-        <meta property="og:title" content="Blog GEO — Guides & Stratégies Visibilité IA | Detekia" />
-        <meta property="og:description" content="Guides pratiques, analyses techniques et stratégies pour optimiser la visibilité de votre site dans les IA." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://detekia.fr/blog" />
-        <link rel="canonical" href="https://detekia.fr/blog" />
-      </Head>
+      <SEO
+        title={t('blog.index.seo.title')}
+        description={t('blog.index.seo.description')}
+      />
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
         {/* NAV */}
         <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
-          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
-            <Logo />Detekia
-          </a>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
+            <Logo />{t('common.siteName')}
+          </Link>
           <div className="nav-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
-            <a href="/blog" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
-            <a href="/pricing" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
-            <a href="/methodologie" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
-          <a href="/a-propos" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>À propos</a>
-            <a href="/contact" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
-            <a href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser gratuitement</a>
+            <Link href="/blog" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.blog')}</Link>
+            <Link href="/pricing" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.pricing')}</Link>
+            <Link href="/methodologie" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.methodology')}</Link>
+            <Link href="/a-propos" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.about')}</Link>
+            <Link href="/contact" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.contact')}</Link>
+            <LanguageSwitcher />
+            <Link href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.cta')}</Link>
           </div>
         </nav>
 
         {/* HEADER */}
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '72px 24px 48px', textAlign: 'center' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>Ressources</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('blog.index.sectionLabel')}</div>
           <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#1A1916', letterSpacing: -1, marginBottom: 14, lineHeight: 1.1 }}>
-            Blog — GEO, SEO & Visibilité IA
+            {t('blog.index.h1')}
           </h1>
           <p style={{ fontFamily: 'system-ui', fontSize: 15, color: '#8A8680', lineHeight: 1.65 }}>
-            Guides pratiques pour être cité par les IA
+            {t('blog.index.subtitle')}
           </p>
         </div>
 
         {/* ARTICLE GRID */}
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 24px 100px' }}>
           <div className="blog-grid">
-            {articles.slice().reverse().map(article => {
+            {localizedArticles.slice().reverse().map(article => {
               const catColor = CATEGORY_COLORS[article.category] || '#8A8680';
               return (
-                <a
+                <Link
                   key={article.slug}
                   href={`/blog/${article.slug}`}
                   className="blog-card"
@@ -82,10 +82,10 @@ export default function BlogIndex() {
                     {article.description}
                   </p>
                   <div style={{ display: 'flex', gap: 16, marginTop: 'auto', paddingTop: 8, borderTop: '1px solid #F0EDE8' }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5' }}>{formatDate(article.date)}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5' }}>{formatDate(article.date, locale)}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5' }}>{article.readTime}</span>
                   </div>
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -94,10 +94,10 @@ export default function BlogIndex() {
         {/* FOOTER */}
         <footer style={{ borderTop: '1px solid #E5E2DC', padding: '36px 48px', background: '#fff' }}>
           <div className="footer-inner" style={{ maxWidth: 900, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-            <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>Detekia</span>
+            <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>{t('common.siteName')}</span>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
-              {[['Blog', '/blog'], ['Tarifs', '/pricing'], ['Méthodologie', '/methodologie'], ['Contact', '/contact'], ['Mentions légales', '/mentions-legales'], ['Confidentialité', '/confidentialite'], ['CGU', '/cgu']].map(([label, href]) => (
-                <a key={label} href={href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', textDecoration: 'none' }}>{label}</a>
+              {t('blog.footer.links').map((link) => (
+                <Link key={link.href} href={link.href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', textDecoration: 'none' }}>{link.label}</Link>
               ))}
             </div>
           </div>

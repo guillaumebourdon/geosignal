@@ -1,0 +1,889 @@
+{
+  "common": {
+    "siteName": "Detekia",
+    "tagline": "Is your website visible to AI?",
+    "grades": { "good": "GOOD", "average": "FAIR", "poor": "LOW" },
+    "verdicts": { "good": "Excellent AI citability", "average": "AI citability needs improvement", "poor": "Insufficient AI citability" },
+    "priorities": { "high": "Critical", "medium": "Important", "low": "Bonus" },
+    "recoSections": [
+      { "key": "diagnostic", "icon": "🔍", "label": "Diagnosis" },
+      { "key": "whyCritical", "icon": "⚠️", "label": "Why it's critical" },
+      { "key": "whatToDo", "icon": "✅", "label": "What to do" },
+      { "key": "howToDoIt", "icon": "🛠️", "label": "How to do it" },
+      { "key": "concreteExample", "icon": "💡", "label": "Concrete example" },
+      { "key": "expectedImpact", "icon": "📈", "label": "Expected impact" },
+      { "key": "expertTip", "icon": "🎯", "label": "Expert tip" }
+    ],
+    "recoFallbackLabel": "Recommendation"
+  },
+  "blog": {
+    "index": {
+      "seo": {
+        "title": "GEO Blog — AI Visibility Guides & Strategies | Detekia",
+        "description": "Practical guides, technical analysis and strategies to optimize your website's visibility in AI: ChatGPT, Claude, Perplexity."
+      },
+      "sectionLabel": "Resources",
+      "h1": "Blog — GEO, SEO & AI Visibility",
+      "subtitle": "Practical guides to get cited by AI"
+    },
+    "article": {
+      "breadcrumbHome": "Home",
+      "breadcrumbBlog": "Blog",
+      "readTimeSuffix": "read",
+      "ctaTitle": "Test your GEO Score for free",
+      "ctaSubtitle": "Full analysis in 30 seconds, no signup required",
+      "ctaButton": "Analyze my website →",
+      "relatedTitle": "Recommended articles",
+      "fallbackContent": "Article content coming soon"
+    },
+    "footer": {
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "cookieBanner": {
+    "message": "We use cookies to analyze site usage and improve your experience.",
+    "learnMore": "Learn more",
+    "decline": "Decline",
+    "accept": "Accept ✓"
+  },
+  "nav": {
+    "home": "Home",
+    "methodology": "Methodology",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact",
+    "blog": "Blog",
+    "cta": "Free analysis",
+    "ctaAnalyze": "Analyze my website"
+  },
+  "homepage": {
+    "seo": {
+      "title": "Detekia — Is your website visible to AI?",
+      "description": "Analyze your presence on ChatGPT, Claude, Gemini and Perplexity. GEO Score out of 100 + personalized recommendations in 30 seconds."
+    },
+    "hero": {
+      "badge": "100% free analysis — no signup required",
+      "titleLine1": "Your competitors are showing up on",
+      "titleLine2": "You don't.",
+      "subtitle": "Detekia audits your website in 30 seconds and shows you what to fix to get cited by AI — and capture the traffic Google no longer sends you.",
+      "inputPlaceholder": "https://www.your-website.com",
+      "cta": "Analyze my website →",
+      "easterEgg": "Nice try 😏 But we don't grade ourselves — it would be too easy to give a 100/100. Try with another website!",
+      "trustBadge": "Free · No signup · Results in 30 seconds"
+    },
+    "mockup": {
+      "headerLabel": "AI Visibility Audit · example.com",
+      "scoreBadge": "AI Visibility Score",
+      "score": "38",
+      "scoreMax": "/100",
+      "level": "LOW",
+      "levelDesc": "4 critical issues<br/>detected on your website",
+      "criticalTag": "CRITICAL — CRAWLABILITY",
+      "criticalTitle": "ChatGPT can't access your website.",
+      "criticalDesc": "Your robots.txt file blocks AI bots — 73% of websites have this problem without knowing it. Result: no AI can read or cite your content.",
+      "fixText": "<strong>Fix needed:</strong> Allow GPTBot, ClaudeBot and PerplexityBot in your robots.txt. Just 2 lines to change.",
+      "impactPoints": "+12 estimated visibility points",
+      "lockedCount": "+14 locked recommendations",
+      "unlock": "Unlock →"
+    },
+    "stats": [
+      { "value": "1,247", "label": "analyses completed" },
+      { "value": "38/100", "label": "average score observed" },
+      { "value": "Extractability", "label": "most common bottleneck" }
+    ],
+    "comparison": {
+      "label": "Why Detekia",
+      "titleStart": "More than an AI opinion: ",
+      "titleEm": "a reproducible diagnosis",
+      "subtitle": "Asking ChatGPT \"is my website well optimized?\" gives a vague answer. Detekia analyzes your actual source code.",
+      "columns": [
+        {
+          "icon": "💬",
+          "title": "Asking ChatGPT",
+          "subtitle": "Subjective opinion",
+          "items": [
+            "Generic, non-reproducible answer",
+            "No access to your source code",
+            "No quantified scoring",
+            "Vague recommendations"
+          ]
+        },
+        {
+          "icon": "⚡",
+          "title": "Analyzing with Detekia",
+          "subtitle": "Technical diagnosis",
+          "items": [
+            "Analysis of your actual HTML",
+            "8 objectively measured criteria",
+            "Reproducible score out of 100",
+            "Recommendations ranked by impact"
+          ]
+        },
+        {
+          "icon": "📊",
+          "title": "What you get",
+          "subtitle": "Actionable",
+          "items": [
+            "Your exact AI visibility score",
+            "The issues making you invisible",
+            "What to fix first",
+            "Estimated impact of each fix"
+          ]
+        }
+      ]
+    },
+    "targetAudience": {
+      "label": "Who it's for",
+      "title": "Who is Detekia for?",
+      "subtitle": "Whether you're a founder, marketer or content creator, your AI visibility is a business imperative.",
+      "items": [
+        { "emoji": "🚀", "title": "SaaS / B2B Founders", "desc": "Your competitors are cited by AI, you're not. Find out why — and how to reclaim your place in ChatGPT and Perplexity responses." },
+        { "emoji": "🛒", "title": "E-commerce businesses", "desc": "AI recommends products to millions of users every day. Make sure yours show up in those recommendations." },
+        { "emoji": "✍️", "title": "Bloggers & content creators", "desc": "You produce quality content. But do AI models cite it? Identify what's missing so your expertise gets picked up and recommended." },
+        { "emoji": "📈", "title": "Agencies & marketing freelancers", "desc": "Add AI visibility audits to your client offering. Detekia gives you a structured diagnosis to present in just a few clicks." }
+      ]
+    },
+    "howItWorks": {
+      "label": "How it works",
+      "titleStart": "The complete AI visibility analysis in ",
+      "titleEm": "30 seconds",
+      "steps": [
+        { "num": "01", "title": "Enter your URL", "desc": "Paste your website address. Zero signup, zero setup, zero credit card." },
+        { "num": "02", "title": "We analyze everything", "desc": "Detekia scrapes your website and evaluates it against 8 research-backed GEO criteria." },
+        { "num": "03", "title": "Get your score", "desc": "Score out of 100, per-criteria analysis and expert recommendations in under 30 seconds." }
+      ],
+      "methodologyLink": "See our full methodology →"
+    },
+    "report": {
+      "label": "Full report",
+      "titleStart": "A report that's ",
+      "titleEm": "worth every cent",
+      "subtitle": "14 pages of in-depth analysis with exclusive data you won't find anywhere else.",
+      "cards": [
+        {
+          "icon": "🔭",
+          "title": "AI Visibility Test",
+          "desc": "Are your direct competitors cited by ChatGPT and Gemini on your key queries? The report reveals your actual position in AI responses compared to your market.",
+          "checks": ["Queries tested on 4 AI engines", "Comparison with 3 competitors", "Real response excerpts"]
+        },
+        {
+          "icon": "⚙️",
+          "title": "Technical evidence",
+          "desc": "Every weakness is documented with the exact source in your HTML. You know precisely what to change, on which line, and why it's blocking your citability.",
+          "checks": ["Annotated code excerpts", "Before / after for each fix", "Priority: Critical / Important / Bonus"]
+        },
+        {
+          "icon": "📚",
+          "title": "Documented real cases",
+          "desc": "Every recommendation is illustrated with a concrete case from websites that improved their AI citability. No theory — proof that it works, with measured results.",
+          "checks": ["Case studies with quantified results", "Academic sources (KDD 2024)", "Estimated impact on your score"]
+        }
+      ],
+      "cta": "Unlock my report — 29 € →",
+      "ctaSubtext": "One-time payment · Instant access · 7-day money-back guarantee",
+      "exampleLink": "See a sample report →"
+    },
+    "testimonials": {
+      "label": "Results",
+      "title": "They analyzed their website",
+      "subtitle": "Concrete, measurable results in just a few days.",
+      "items": [
+        {
+          "initials": "TL",
+          "name": "Thomas L.",
+          "role": "Founder · Kairos SaaS",
+          "quote": "We thought we had good SEO, but Detekia revealed that <strong>ChatGPT couldn't even access our website</strong>. Two lines changed in robots.txt and our score jumped from 29 to 58 in one week.",
+          "footerType": "score",
+          "before": 29,
+          "after": 58,
+          "delta": "+29 pts"
+        },
+        {
+          "initials": "MG",
+          "name": "Marine G.",
+          "role": "Freelance SEO consultant",
+          "quote": "I use Detekia for every new client. In 30 seconds I have <strong>a clear diagnosis to present</strong>, and it lets me upsell an AI optimization service. The ROI is immediate.",
+          "footerType": "badge",
+          "badge": "USED FOR EVERY CLIENT"
+        },
+        {
+          "initials": "JB",
+          "name": "Julien B.",
+          "role": "E-commerce Manager · Maison Verdure",
+          "quote": "Our product pages were invisible to AI. The report identified <strong>3 critical issues</strong>. After fixing them, Perplexity started recommending our products within 3 weeks.",
+          "footerType": "score",
+          "before": 34,
+          "after": 71,
+          "delta": "+37 pts"
+        }
+      ]
+    },
+    "faq": {
+      "label": "FAQ",
+      "titleStart": "Frequently asked ",
+      "titleEm": "questions",
+      "items": [
+        { "q": "Is this different from asking ChatGPT directly?", "a": "Yes, fundamentally. Asking ChatGPT 'is my website well optimized?' gives a generic opinion based on what it knows about your URL — often approximate and non-reproducible. Detekia analyzes the actual DOM of your page: HTML structure, schema.org, metadata, links, content. The result is a quantified score out of 100, 8 objectively measured criteria, and recommendations prioritized by impact. It's the difference between an opinion and a diagnosis." },
+        { "q": "What is GEO and how is it different from SEO?", "a": "GEO (Generative Engine Optimization) is the practice of optimizing your website to appear in AI-generated responses — ChatGPT, Claude, Gemini, Perplexity. Unlike SEO which aims to rank on Google, GEO aims to be cited and recommended directly in AI answers. The criteria are different: AI models value clarity, citability, credibility and structured data." },
+        { "q": "How does the Detekia analysis work?", "a": "Enter your website URL, and Detekia scrapes your content and analyzes it against 8 GEO criteria: extractability, verifiability, E-E-A-T authority, AI crawlability, structured data, editorial neutrality, external presence and freshness. Our AI then generates personalized expert recommendations for your website. The full methodology is available on our Methodology page." },
+        { "q": "Why is the analysis really free?", "a": "The basic analysis — score out of 100, 8 detailed criteria, one expert recommendation preview — is completely free with no signup required. No credit card needed. We believe everyone should be able to know if their website is visible to AI. The full report with all detailed recommendations and action plans is available for 29 €, one-time payment." },
+        { "q": "What's a good GEO Score?", "a": "On Detekia, a score above 70/100 is considered good. Between 45 and 70, your website has solid foundations but needs targeted optimizations. Below 45, priority actions are needed. Most analyzed websites score between 15 and 45 — even major brands often score low because their websites are optimized to sell, not to be cited by AI." },
+        { "q": "Is my website data stored?", "a": "No. Detekia analyzes your website in real time and doesn't store any of your website data beyond 24 hours. Analysis results are cached for 24 hours to speed up successive analyses of the same website, but no personal data is stored." },
+        { "q": "Does Detekia work for all types of websites?", "a": "Yes — e-commerce, blogs, SaaS, business websites, portfolios, institutional sites. GEO criteria are universal. Some types of websites do have a natural advantage: blogs with rich editorial content, websites with strong press coverage, and platforms that publish original data. But all websites can improve significantly with the right optimizations." },
+        { "q": "What if my score doesn't improve?", "a": "The report's recommendations are concrete and prioritized by impact. If you implement them and your score doesn't change, contact us at hello@detekia.fr — we'll analyze your case with you for free." },
+        { "q": "Who's behind Detekia?", "a": "Detekia is developed by Beeleven, a digital strategy and AI agency based in Paris. The tool is built by SEO, GEO and artificial intelligence experts who work daily with generative engines." },
+        { "q": "Money-back guarantee?", "a": "Yes. If the report doesn't provide any actionable improvement insights, send us an email within 7 days of purchase at hello@detekia.fr and we'll refund you in full, no questions asked." }
+      ]
+    },
+    "finalCta": {
+      "badge": "Free · No signup · No credit card",
+      "titleLine1": "Your website deserves to be cited",
+      "titleEm": "by AI",
+      "subtitle": "Join the professionals who have already optimized their AI visibility — for free, in 30 seconds.",
+      "cta": "Analyze my website for free →",
+      "trustBadge": "Free · No signup · Results in 30 seconds",
+      "priceNote": "Full report 29 € · One-time payment"
+    },
+    "footer": {
+      "copyright": "© 2026 Detekia — Beeleven SASU",
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "FAQ", "href": "/#faq" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    },
+    "schema": {
+      "appDescription": "GEO (Generative Engine Optimization) audit tool that analyzes website visibility on AI engines like ChatGPT, Claude, Gemini and Perplexity.",
+      "orgDescription": "GEO audit tool — Measure and improve your website's visibility in AI responses (ChatGPT, Gemini, Claude, Perplexity).",
+      "freeOffer": "Free analysis",
+      "paidOffer": "Full report",
+      "featureList": [
+        "GEO Score out of 100",
+        "Analysis of 8 GEO criteria",
+        "Structured data analysis",
+        "Citability assessment",
+        "External presence verification",
+        "Personalized and prioritized recommendations"
+      ]
+    }
+  },
+  "methodology": {
+    "seo": {
+      "title": "Methodology — How Detekia calculates your GEO Score",
+      "description": "Discover the 8 GEO criteria measured by Detekia: extractability, verifiability, E-E-A-T, AI crawlability, structured data, neutrality, external presence and freshness."
+    },
+    "hero": {
+      "badge": "Full transparency",
+      "titleLine1": "How Detekia",
+      "titleEm": "calculates your score",
+      "subtitle": "Our GEO Score is calculated from 8 measurable and verifiable criteria, based on academic research in Generative Engine Optimization and the public guidelines of major AI models.",
+      "ctaLink": "→ Test your score for free across all 8 criteria"
+    },
+    "process": {
+      "label": "The process",
+      "title": "3 automated analysis steps",
+      "steps": [
+        { "num": "01", "title": "Content scraping", "desc": "Detekia retrieves the full HTML of your page via Jina Reader — a scraping service optimized for AI. The raw HTML, text and metadata are extracted." },
+        { "num": "02", "title": "Heuristic analysis", "desc": "Our analysis engine computes 7 heuristic scores by inspecting the DOM: tags, attributes, ratios, counts. These scores are reproducible and deterministic." },
+        { "num": "03", "title": "AI analysis (Claude)", "desc": "Claude Haiku analyzes the text content to assess editorial neutrality and generate contextualized recommendations. The final score incorporates this result." }
+      ]
+    },
+    "score": {
+      "label": "Score calculation",
+      "title": "Score out of 100 = 7 heuristics + AI neutrality",
+      "subtitle": "The first 7 criteria are calculated by deterministic rules on the HTML. The 8th criterion (editorial neutrality) is scored by Claude out of 10, then converted into a ±5 point bonus/penalty added to the total.",
+      "ptsLabel": "pts",
+      "items": [
+        { "pts": "25", "name": "Extractability" },
+        { "pts": "20", "name": "Verifiability" },
+        { "pts": "15", "name": "E-E-A-T Authority" },
+        { "pts": "15", "name": "Crawlability" },
+        { "pts": "10", "name": "Structured data" },
+        { "pts": "10", "name": "Editorial neutrality" },
+        { "pts": "5", "name": "External presence" },
+        { "pts": "5", "name": "Freshness" }
+      ]
+    },
+    "criteria": {
+      "label": "Criteria details",
+      "titleStart": "The 8 criteria ",
+      "titleEm": "explained",
+      "whatLabel": "What we measure",
+      "goodLabel": "✓ Good signal",
+      "badLabel": "✗ Bad signal",
+      "items": [
+        {
+          "icon": "🎯", "color": "#4285F4",
+          "name": "Extractability & direct answer", "weight": "25 pts",
+          "what": "AI models look for \"ready-to-cite\" answers in your content. A good website answers the question in the first few lines, with lists, tables and clear headings.",
+          "good": "Intro that directly answers in 1-2 sentences, bullet lists, data tables, logical H2/H3 structure, short paragraphs (50-300 characters).",
+          "bad": "Generic introduction with no direct answer, dense text blocks, no lists or tables, flat structure with no hierarchy."
+        },
+        {
+          "icon": "🔬", "color": "#10A37F",
+          "name": "Verifiability & evidence", "weight": "20 pts",
+          "what": "AI models prioritize content that backs up its claims: sourced figures, precise dates, links to primary sources, citations.",
+          "good": "Figures with sources, explicit dates, external links to studies or reference organizations, comparison tables, expert quotes.",
+          "bad": "Unsourced claims (\"it has been proven that...\"), missing or unsourced figures, no external links, no publication date."
+        },
+        {
+          "icon": "🏆", "color": "#D97757",
+          "name": "E-E-A-T Authority", "weight": "15 pts",
+          "what": "E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) is the framework AI models use to evaluate the credibility of a website and its authors.",
+          "good": "Author page with bio and photo, \"author\" schema in JSON-LD, detailed About page, Contact page, complete legal notices, Organization schema.",
+          "bad": "Anonymous content with no identified author, no About or Contact page, no legal notices, no schema.org for entities."
+        },
+        {
+          "icon": "🤖", "color": "#4285F4",
+          "name": "AI Crawlability", "weight": "15 pts",
+          "what": "AI bots (GPTBot, ClaudeBot, OAI-SearchBot) need to be able to read your website. A blocked or poorly accessible site cannot be indexed.",
+          "good": "Lang attribute defined, correct canonical, content not blocked by JavaScript, AI bots mentioned in robots.txt or headers, sitemap.xml.",
+          "bad": "Meta robots noindex, content loaded only via client-side JS without SSR, missing lang attribute, redirect loops, no canonical."
+        },
+        {
+          "icon": "🧩", "color": "#4285F4",
+          "name": "Structured data", "weight": "10 pts",
+          "what": "Schema.org is the language AI models read first to understand what your website is about, who wrote it, and what it covers.",
+          "good": "FAQPage, Article, HowTo, Organization, Person schemas in JSON-LD. Priority schemas (FAQPage, HowTo) are particularly valued.",
+          "bad": "No schema.org, incorrect or incomplete schemas, missing schemas for key entities (Organization, Author)."
+        },
+        {
+          "icon": "⚖️", "color": "#10A37F",
+          "name": "Editorial neutrality", "weight": "10 pts",
+          "what": "AI models avoid citing overly promotional or biased content. Factual, nuanced text is far more likely to be used as a source.",
+          "good": "Informative and factual tone, nuances present, sourced claims, precise vocabulary without excessive superlatives.",
+          "bad": "Unsourced superlatives (\"the best\", \"revolutionary\"), unproven claims, purely promotional tone, lack of nuance."
+        },
+        {
+          "icon": "🌐", "color": "#10A37F",
+          "name": "External presence", "weight": "5 pts",
+          "what": "AI models cross-reference multiple sources to evaluate your credibility. Being mentioned in the press or cited on other websites strengthens your perceived authority.",
+          "good": "Press mentions with links, active presence on LinkedIn/Twitter, referenced testimonials and reviews, citations in third-party articles.",
+          "bad": "No identifiable inbound links, no social media presence, no press or third-party mentions."
+        },
+        {
+          "icon": "📅", "color": "#C9861A",
+          "name": "Freshness & maintenance", "weight": "5 pts",
+          "what": "For evolving topics, AI models prefer recent content. A visible update date and current copyright signal that the website is actively maintained.",
+          "good": "dateModified in JSON-LD, visible update date, current year copyright, recent content in meta tags.",
+          "bad": "No visible date, copyright from 3+ years ago, missing dateModified schema, articles without publication date."
+        }
+      ]
+    },
+    "limits": {
+      "label": "Analysis limitations",
+      "items": [
+        { "title": "Surface-level analysis", "desc": "Detekia analyzes the homepage or the submitted page, not the entire website. A site may have excellent content on other pages that weren't analyzed." },
+        { "title": "Non-measurable factors", "desc": "Intrinsic content quality, offline reputation, inbound backlinks, and AI citation history cannot be measured by our technical analysis." },
+        { "title": "Algorithm evolution", "desc": "AI citation criteria evolve regularly. Our methodology is updated but may lag behind the latest practices of AI models." },
+        { "title": "Dynamic websites", "desc": "Websites that load their content entirely via client-side JavaScript (SPA without SSR) may receive underestimated scores because the content isn't accessible to the scraper." }
+      ]
+    },
+    "sources": {
+      "label": "Sources & references",
+      "items": [
+        "Aggarwal et al. (2023) — \"GEO: Generative Engine Optimization\" — arXiv:2311.09735",
+        "Google Search Essentials — E-E-A-T guidelines (2024)",
+        "OpenAI — GPTBot documentation & robots.txt guidelines",
+        "Anthropic — ClaudeBot crawling policies",
+        "Schema.org — Official FAQPage, Article, Organization documentation"
+      ]
+    },
+    "cta": {
+      "titleLine1": "Test your website",
+      "titleEm": "for free",
+      "subtitle": "Full analysis in 30 seconds. No signup required.",
+      "button": "Analyze my website →"
+    },
+    "footer": {
+      "byLine": "by Beeleven SASU",
+      "links": [
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "pricing": {
+    "seo": {
+      "title": "Pricing — Full GEO Report | Detekia",
+      "description": "Unlock your full GEO report for 29 €: expert recommendations, technical evidence, real case studies. One-time payment, instant access, money-back guarantee."
+    },
+    "hero": {
+      "title": "Unlock your full GEO report",
+      "subtitle": "All the expert recommendations to boost your citability on ChatGPT, Gemini, Claude and Perplexity."
+    },
+    "free": {
+      "label": "Free",
+      "price": "0€",
+      "subtitle": "To discover Detekia",
+      "cta": "Start for free",
+      "features": [
+        { "included": true, "text": "GEO Score /100" },
+        { "included": true, "text": "Analysis of 8 criteria" },
+        { "included": true, "text": "1 recommendation preview" },
+        { "included": false, "text": "Full recommendations" },
+        { "included": false, "text": "Methods & concrete examples" },
+        { "included": false, "text": "Report sent by email" }
+      ]
+    },
+    "report": {
+      "label": "Full report",
+      "price": "29 €",
+      "paymentInfo": "One-time payment · Per analysis",
+      "ctaLoading": "Loading…",
+      "cta": "Unlock my report — 29 € →",
+      "features": [
+        { "text": "GEO Score /100 + 8 criteria analysis" },
+        { "text": "All recommendations (5 to 8 depending on site)" },
+        { "text": "Diagnosis, method, concrete example per reco" },
+        { "text": "Expected impact and expert tip for each action" },
+        { "text": "Full PDF report sent by email" },
+        { "text": "Instant online access" }
+      ]
+    },
+    "guarantee": {
+      "title": "Secure payment via Stripe",
+      "subtitle": "No card data stored · Refund within 24h if there's an issue"
+    },
+    "faq": {
+      "label": "Frequently asked questions",
+      "items": [
+        { "q": "What is GEO?", "a": "GEO (Generative Engine Optimization) is the practice of optimizing your website to appear in AI-generated responses from ChatGPT, Claude, Gemini and Perplexity." },
+        { "q": "How many recommendations will I receive?", "a": "All recommendations generated for criteria below 80% of their max score — typically between 5 and 8 detailed recommendations with method, example and expected impact." },
+        { "q": "Is the payment per website or per analysis?", "a": "Per analysis. Each unlocked report corresponds to one website's analysis at a given point in time." },
+        { "q": "How is the report delivered?", "a": "Immediately online on the confirmation page, and sent by email as a PDF for offline viewing." },
+        { "q": "Is my website data stored?", "a": "No. Detekia analyzes your website in real time. Only the report is cached for 24 hours so you don't have to wait if you return to the same URL." }
+      ]
+    },
+    "errorAlert": "Payment error, please try again."
+  },
+  "about": {
+    "seo": {
+      "title": "About Detekia — GEO, Beeleven SASU",
+      "description": "Detekia is a GEO audit tool developed by Beeleven SASU. Measure and improve your website's visibility in AI responses (ChatGPT, Gemini, Claude, Perplexity)."
+    },
+    "breadcrumbHome": "Home",
+    "breadcrumbCurrent": "About",
+    "title": "About Detekia",
+    "why": {
+      "title": "Why Detekia exists",
+      "p1": "AI search engines (ChatGPT, Gemini, Claude, Perplexity) are changing how people find businesses. AI-referred traffic increased by 527% in 2025. Yet most websites are not optimized to be cited by these engines.",
+      "p2": "Detekia was born from this observation: businesses need a simple tool to measure and improve their visibility in AI responses. Not another SEO tool — a tool specifically designed for GEO (Generative Engine Optimization)."
+    },
+    "how": {
+      "title": "How it works",
+      "p1": "Detekia analyzes your website across 8 AI citability criteria validated by academic research (Princeton/Georgia Tech study, KDD 2024). In 30 seconds, you get a score out of 100 and personalized recommendations.",
+      "p2": "Our analysis is transparent: 7 criteria are evaluated through technical HTML analysis, 1 criterion (editorial neutrality) is evaluated by artificial intelligence. Each recommendation is sourced and accompanied by a documented real-world case."
+    },
+    "who": {
+      "title": "Who's behind Detekia",
+      "p1": "Detekia is a product of Beeleven SASU, founded by Guillaume Bourdon.",
+      "p2": "With over 10 years in digital marketing, acquisition and growth strategy, Guillaume has helped dozens of companies — from early-stage startups to established SMBs — with their online visibility challenges.",
+      "p3": "In 2025, facing the explosion of AI-referred traffic (+527% in just a few months), he created Detekia to address a need that nobody was covering yet: giving businesses a simple, transparent and actionable tool to measure and improve their visibility in ChatGPT, Claude, Gemini and Perplexity responses.",
+      "p4": "Detekia's methodology is based on academic research (Princeton / Georgia Tech, KDD 2024) and constant monitoring of AI engine developments.",
+      "p5": "Contact: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+    },
+    "methodologySection": {
+      "title": "Methodology",
+      "intro": "Our scoring is based on 8 weighted criteria according to their demonstrated impact on AI visibility:",
+      "criteria": [
+        "Extractability & direct answer (25 pts)",
+        "Verifiability & evidence (20 pts)",
+        "Authority & E-E-A-T (15 pts)",
+        "AI Crawlability (15 pts)",
+        "Structured data (10 pts)",
+        "Editorial neutrality (10 pts)",
+        "External presence (5 pts)",
+        "Freshness & maintenance (5 pts)"
+      ],
+      "source": "Source: Aggarwal et al., \"Generative Engine Optimization\", Princeton / Georgia Tech, KDD 2024."
+    },
+    "cta": {
+      "title": "Test your GEO Score for free",
+      "subtitle": "Full analysis in 30 seconds, no signup required",
+      "button": "Analyze my website →"
+    },
+    "schema": {
+      "name": "About Detekia",
+      "description": "Detekia is a GEO audit tool developed by Beeleven SASU, founded by Guillaume Bourdon."
+    },
+    "footer": {
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "About", "href": "/a-propos" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "contact": {
+    "seo": {
+      "title": "Contact — Detekia",
+      "description": "Contact the Detekia team. Questions about a report, bugs, enterprise requests or partnerships — we respond within 24 hours."
+    },
+    "hero": {
+      "badge": "We respond within 24h",
+      "title": "Got a question?",
+      "subtitle": "A suggestion, a bug, a partnership request — we read every message."
+    },
+    "success": {
+      "title": "Message sent!",
+      "subtitle": "Thank you for your message. We'll get back to you within 24 hours."
+    },
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "John Smith",
+      "emailLabel": "Email",
+      "emailPlaceholder": "john@example.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Hello, I'd like to...",
+      "submit": "Send message →"
+    },
+    "emailDirect": "Or directly by email:",
+    "reasons": {
+      "label": "You can contact us about",
+      "items": [
+        { "icon": "💬", "title": "Question about a report or score", "desc": "Got a score that puzzles you? We'll explain." },
+        { "icon": "🐛", "title": "Bug or technical issue", "desc": "Analysis error, report not received, payment issue." },
+        { "icon": "🏢", "title": "Enterprise or volume request", "desc": "Bulk analyses, integration, specific team needs." },
+        { "icon": "🤝", "title": "Partnership or press", "desc": "Editorial collaboration, press mention, affiliation." }
+      ],
+      "responseTime": "We typically respond within 24 business hours —"
+    }
+  },
+  "legalNotices": {
+    "seo": {
+      "title": "Legal Notice | Detekia",
+      "description": "Legal notice for Detekia — publisher, hosting, intellectual property."
+    },
+    "disclaimer": "<strong>Important notice:</strong> This English version is a courtesy translation. The French version remains the legally binding document. In case of any discrepancy, the French version prevails.",
+    "title": "Legal Notice",
+    "editor": {
+      "title": "Website publisher",
+      "p1": "The website detekia.fr is published by <strong>Beeleven SASU</strong>, a simplified joint-stock company (société par actions simplifiée unipersonnelle) with a share capital of €1,000, registered with the Paris Trade and Companies Registry under number <strong>102 307 345</strong>.",
+      "p2": "Registered office: 7 rue Curial, 75019 Paris, France.",
+      "p3": "Publication director: Guillaume Bourdon.",
+      "p4": "Email: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+    },
+    "hosting": {
+      "title": "Hosting provider",
+      "p1": "The website detekia.fr is hosted by <strong>Vercel Inc.</strong>, located at 340 S Lemon Ave #4133, Walnut, CA 91789, United States.",
+      "p2": "Website: <a href='https://vercel.com' style='color:#D97757;text-decoration:none' target='_blank' rel='noopener noreferrer'>vercel.com</a>"
+    },
+    "ip": {
+      "title": "Intellectual property",
+      "p1": "All content on the detekia.fr website (texts, images, graphics, logo, icons, structure) is the exclusive property of Beeleven SASU or is used under license. Any reproduction, representation, modification, publication or adaptation of all or part of the website's elements, by any means or process, is prohibited without the prior written consent of Beeleven SASU."
+    },
+    "liability": {
+      "title": "Liability",
+      "p1": "The information provided by Detekia, including GEO scores and recommendations, is provided for informational purposes only and does not constitute professional advice. Beeleven SASU cannot be held liable for decisions made based on analysis results provided by the website.",
+      "p2": "Detekia strives to provide information that is as accurate as possible. However, Beeleven SASU cannot be held liable for omissions, inaccuracies or deficiencies in updating the information."
+    },
+    "credits": {
+      "title": "Credits",
+      "p1": "Design and development: Beeleven SASU.<br/>Fonts: Georgia, system-ui, DM Mono (Google Fonts)."
+    },
+    "footer": {
+      "copyright": "© 2026 Detekia — Beeleven SASU",
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "terms": {
+    "seo": {
+      "title": "Terms and Conditions of Use and Sale | Detekia",
+      "description": "Terms and conditions for Detekia — terms of use and sale conditions for the full GEO report."
+    },
+    "disclaimer": "<strong>Important notice:</strong> This English version is a courtesy translation. The French version remains the legally binding document. In case of any discrepancy, the French version prevails.",
+    "title": "Terms and Conditions of Use and Sale",
+    "lastUpdate": "Last updated: March 27, 2026",
+    "sections": [
+      { "title": "Purpose", "paragraphs": [
+        "These Terms and Conditions of Use and Sale (hereinafter \"T&Cs\") govern the use of the detekia.fr website and the sale conditions for the full GEO report. By using the website or purchasing a report, you accept these terms in their entirety.",
+        "The detekia.fr website is published by Beeleven SASU (see <a href='/mentions-legales' style='color:#D97757;text-decoration:none'>Legal Notice</a> for full details)."
+      ]},
+      { "title": "Free service — GEO Analysis", "paragraphs": [
+        "Detekia offers a free GEO analysis service accessible without registration or account creation. This service includes an overall score out of 100, evaluation of 8 GEO criteria, and a preview of one recommendation.",
+        "The user enters the URL of a website they wish to analyze. Detekia scrapes the publicly accessible content of this URL and evaluates it using its proprietary methodology. The analysis is performed in real time. Results are cached for 24 hours.",
+        "The free service is provided \"as is\", with no guarantee of availability or accuracy of results. Detekia reserves the right to modify, suspend or discontinue the free service at any time."
+      ]},
+      { "title": "Paid service — Full GEO Report", "paragraphs": [
+        "The full GEO report is sold at the price of <strong>€29 including VAT</strong> per analysis. This report includes all detailed recommendations, structured in sections (diagnosis, actions, concrete examples, estimated impact), for each of the 8 GEO criteria.",
+        "The report is accessible immediately after payment on the results page and is sent by email to the address associated with the Stripe payment."
+      ]},
+      { "title": "Payment", "paragraphs": [
+        "Payment is made online by credit card, Apple Pay or PayPal via the secure Stripe platform. Beeleven SASU does not collect or store any banking data. All payment processing is handled by Stripe Payments Europe, Ltd.",
+        "Payment is due immediately upon order. The transaction is considered effective upon payment confirmation by Stripe."
+      ]},
+      { "title": "Refund policy — Money-back guarantee", "paragraphs": [
+        "If the full GEO report does not provide any actionable improvement insights, you may request a full refund within 7 days of purchase.",
+        "To request a refund, send an email to <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a> specifying the analyzed URL and the reason for your dissatisfaction. The refund will be processed within 5 business days via the same payment method used for the purchase."
+      ]},
+      { "title": "Right of withdrawal", "paragraphs": [
+        "In accordance with Article L221-28 of the Code de la consommation (French Consumer Code), the right of withdrawal cannot be exercised for contracts for the supply of digital content not provided on a tangible medium whose performance has begun with the consumer's consent. By purchasing the report, you acknowledge that the delivery of digital content begins immediately after payment and you expressly waive your right of withdrawal.",
+        "However, the \"Money-back guarantee\" refund policy described above applies and goes beyond legal obligations."
+      ]},
+      { "title": "Intellectual property", "paragraphs": [
+        "The GEO report is provided for the buyer's personal and professional use. It may not be resold, redistributed or published without the written consent of Beeleven SASU. The analysis methodology and GEO scoring are the intellectual property of Beeleven SASU."
+      ]},
+      { "title": "Limitation of liability", "paragraphs": [
+        "The analysis results and recommendations provided by Detekia are automatically generated and provided for informational purposes only. They do not constitute professional advice in SEO, marketing or digital strategy.",
+        "Beeleven SASU does not guarantee that implementing the recommendations will result in improved website visibility in AI responses. Visibility in AI engines depends on numerous external factors beyond the control of Beeleven SASU.",
+        "Under no circumstances shall Beeleven SASU's liability exceed the amount of the purchased report (€29)."
+      ]},
+      { "title": "Modification of terms", "paragraphs": [
+        "Beeleven SASU reserves the right to modify these T&Cs at any time. Modifications take effect upon publication on the website. The last update date is indicated at the top of this page."
+      ]},
+      { "title": "Applicable law and disputes", "paragraphs": [
+        "These terms are governed by French law. In case of dispute, the parties shall endeavor to reach an amicable resolution. Failing that, the competent courts of Paris shall have exclusive jurisdiction."
+      ]},
+      { "title": "Contact", "paragraphs": [
+        "For any questions regarding these terms: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+      ]}
+    ],
+    "footer": {
+      "copyright": "© 2026 Detekia — Beeleven SASU",
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "privacy": {
+    "seo": {
+      "title": "Privacy Policy | Detekia",
+      "description": "Detekia privacy policy — data collected, processors, your GDPR rights."
+    },
+    "disclaimer": "<strong>Important notice:</strong> This English version is a courtesy translation. The French version remains the legally binding document. In case of any discrepancy, the French version prevails.",
+    "title": "Privacy Policy",
+    "lastUpdate": "Last updated: March 27, 2026",
+    "sections": [
+      { "title": "Data controller", "paragraphs": [
+        "<strong>Beeleven SASU</strong>, a simplified joint-stock company (société par actions simplifiée unipersonnelle), registered with the Paris Trade and Companies Registry under number 102 307 345.",
+        "Registered office: 7 rue Curial, 75019 Paris, France.",
+        "Email: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>",
+        "Publication director: Guillaume Bourdon."
+      ]},
+      { "title": "Data collected and purposes", "paragraphs": [
+        "Detekia collects a minimal amount of data, strictly necessary for the operation of the service.",
+        "<strong>Analyzed URL</strong> — When you launch a GEO analysis, the URL you enter is processed in real time to generate your score. The URL and results are cached in our database (Upstash Redis) for 24 hours to speed up subsequent analyses of the same website. After 24 hours, this data is automatically deleted. <em>Legal basis: legitimate interest (provision of the requested service).</em>",
+        "<strong>Email address (optional)</strong> — If you choose to receive your report by email via the capture form, your email address is stored in our database along with the analyzed URL and the score obtained. This data is used to send you your report and, if you consent, alerts about changes to your score. <em>Legal basis: consent.</em>",
+        "<strong>Payment data</strong> — When you purchase the full GEO report, payment is entirely processed by Stripe Payments Europe, Ltd. Beeleven SASU does not collect, store or process any banking data (card number, expiration date, CVV). Only the information transmitted by Stripe after payment is processed: buyer's email, transaction ID, amount. <em>Legal basis: contract performance.</em>",
+        "<strong>Browsing data</strong> — Detekia uses Vercel Analytics to measure website traffic (page views, visit duration, geographic origin). Vercel Analytics does not set cookies, does not use third-party trackers and does not collect personally identifiable data. The data is aggregated and anonymous. <em>Legal basis: legitimate interest (service improvement).</em>"
+      ]},
+      { "title": "Data Detekia does not collect", "paragraphs": [
+        "Detekia does not create user accounts and does not collect passwords. Detekia does not collect banking data. Detekia does not collect IP addresses for identification purposes. Detekia does not use advertising cookies or third-party trackers. Detekia does not sell any data to third parties."
+      ]},
+      { "title": "Cookies", "paragraphs": [
+        "Detekia only uses cookies strictly necessary for the operation of the website (session cookies, consent preferences). No advertising or third-party tracking cookies are set.",
+        "Vercel Analytics, used for audience measurement, operates without cookies.",
+        "The cookie consent banner allows you to accept or refuse non-essential cookies."
+      ]},
+      { "title": "Processors and data recipients", "content": [
+        "The data collected by Detekia is processed by the following processors, all compliant with GDPR or the EU-US data protection framework:",
+        ["<strong>Vercel Inc.</strong> (United States) — website hosting and analytics. Compliant with the EU-US Data Privacy Framework.",
+         "<strong>Upstash</strong> (hosted in the EU, eu-west-1 region) — temporary storage of analysis results and email leads. Data hosted in the European Union.",
+         "<strong>Stripe Payments Europe, Ltd.</strong> (Ireland) — payment processing. PCI DSS Level 1 certified, GDPR compliant.",
+         "<strong>Resend</strong> (United States) — transactional email delivery (report by email, confirmation). Compliant with the EU-US Data Privacy Framework.",
+         "<strong>Anthropic</strong> (United States) — editorial neutrality analysis of scanned content via the Claude API. No personal data is transmitted to Anthropic; only the textual content of the analyzed page is sent for evaluation. Compliant with the EU-US Data Privacy Framework."],
+        "No personal data is transmitted to any third parties other than those listed above."
+      ]},
+      { "title": "Data retention", "list": [
+        "Analyzed URL and results: 24 hours (automatic cache).",
+        "Email address (optional capture): retained until deletion is requested by the user.",
+        "Stripe transaction data: retained for the legally required accounting document retention period (10 years).",
+        "Vercel Analytics data: aggregated and anonymous, retained by Vercel according to its retention policy."
+      ]},
+      { "title": "Your rights", "content": [
+        "In accordance with the General Data Protection Regulation (GDPR), you have the following rights regarding your personal data:",
+        ["<strong>Right of access</strong> — You may request a copy of all personal data we hold about you.",
+         "<strong>Right to rectification</strong> — You may request the correction of inaccurate or incomplete data.",
+         "<strong>Right to erasure</strong> — You may request the deletion of your personal data. For emails collected via the capture form, deletion is immediate upon request.",
+         "<strong>Right to object</strong> — You may object to the processing of your data at any time.",
+         "<strong>Right to data portability</strong> — You may request to receive your data in a structured, machine-readable format.",
+         "<strong>Right to withdraw consent</strong> — For processing based on consent (email capture), you may withdraw your consent at any time."],
+        "To exercise any of these rights, send an email to <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a> specifying your request. We will respond within a maximum of 30 days.",
+        "If you believe that the processing of your data does not comply with regulations, you may file a complaint with the CNIL (French data protection authority): <a href='https://www.cnil.fr' style='color:#D97757;text-decoration:none' target='_blank' rel='noopener noreferrer'>www.cnil.fr</a>."
+      ]},
+      { "title": "Data transfers outside the EU", "paragraphs": [
+        "Some of our processors are located in the United States (Vercel, Resend, Anthropic). These transfers are governed by the EU-US Data Privacy Framework, recognized by the European Commission as providing an adequate level of protection (adequacy decision of July 10, 2023).",
+        "Payment data is processed by Stripe Payments Europe, Ltd., established in Ireland (EU).",
+        "Cache data (URLs, analysis results) is stored by Upstash in the eu-west-1 region (EU)."
+      ]},
+      { "title": "Security", "paragraphs": [
+        "Beeleven SASU implements appropriate technical and organizational measures to protect personal data against loss, theft, unauthorized access, disclosure or destruction. Communications are encrypted via HTTPS/TLS. Database access is protected by authentication."
+      ]},
+      { "title": "Changes to this policy", "paragraphs": [
+        "This privacy policy may be updated at any time. The last update date is indicated at the top of this page. We encourage you to check this page regularly."
+      ]},
+      { "title": "Contact", "paragraphs": [
+        "For any questions regarding the protection of your data: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+      ]}
+    ],
+    "footer": {
+      "copyright": "© 2026 Detekia — Beeleven SASU",
+      "links": [
+        { "label": "Blog", "href": "/blog" },
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
+      ]
+    }
+  },
+  "results": {
+    "nav": { "newAnalysis": "+ New analysis" },
+    "criteriaInfo": {
+      "Extractibilité & réponse directe": { "emoji": "🎯", "title": "Extractability & direct answer", "desc": "AI models look for \"ready-to-cite\" answers in your content. If your text answers clearly in the first few lines, with lists and tables, AI can extract and reuse it easily.", "impact": "Criterion #1 — 25 points", "color": "#4285F4" },
+      "Vérifiabilité & preuves": { "emoji": "🔬", "title": "Verifiability & evidence", "desc": "AI models prioritize content that backs up its claims: sourced figures, precise dates, links to primary sources.", "impact": "20 points", "color": "#10A37F" },
+      "Autorité & E-E-A-T": { "emoji": "🏆", "title": "Authority & E-E-A-T", "desc": "E-E-A-T stands for Experience, Expertise, Authoritativeness, Trustworthiness. AI models favor websites with identified authors, bios, and clear About/Contact pages.", "impact": "15 points", "color": "#10A37F" },
+      "Crawlabilité IA": { "emoji": "🤖", "title": "AI Crawlability", "desc": "AI models like ChatGPT use bots (GPTBot, OAI-SearchBot) to read your website. If your content is hidden behind JavaScript or blocked in robots.txt, these bots can't index it.", "impact": "15 points", "color": "#4285F4" },
+      "Données structurées": { "emoji": "🧩", "title": "Structured data (Schema.org)", "desc": "Schema.org is a language AI models read first. It explicitly tells them what your website is about, who wrote it, and what it covers.", "impact": "10 points", "color": "#4285F4" },
+      "Neutralité éditoriale": { "emoji": "⚖️", "title": "Editorial neutrality", "desc": "AI models avoid citing overly promotional or biased content. Factual, nuanced text is far more likely to be used as a source.", "impact": "10 points", "color": "#10A37F" },
+      "Présence externe": { "emoji": "🌐", "title": "External presence", "desc": "AI models cross-reference multiple sources to evaluate your credibility. Being mentioned in the press or on social media strengthens your perceived authority.", "impact": "5 points", "color": "#10A37F" },
+      "Fraîcheur & maintenance": { "emoji": "📅", "title": "Freshness & maintenance", "desc": "For evolving topics, AI models prefer recent content. A visible update date and current copyright signal that your website is actively maintained.", "impact": "5 points", "color": "#C9861A" }
+    },
+    "loading": {
+      "title": "GEO Audit in progress",
+      "subtitle": "Analysis in progress, please wait up to 60 seconds...",
+      "progress": "Progress",
+      "complete": "Full analysis · 30 seconds",
+      "steps": [
+        { "icon": "🔍", "text": "Fetching website", "sub": "Connecting and scraping content..." },
+        { "icon": "🧩", "text": "Structured data", "sub": "Analyzing schemas and tags..." },
+        { "icon": "💬", "text": "Citability & evidence", "sub": "Evaluating content quality..." },
+        { "icon": "🌐", "text": "External presence", "sub": "Checking authority signals..." },
+        { "icon": "🤖", "text": "AI analysis", "sub": "Our system evaluates and generates recommendations..." }
+      ]
+    },
+    "groups": [
+      { "id": "lisibility", "label": "AI Readability", "desc": "Can your website be read and understood by AI?", "color": "#4285F4", "colorLight": "rgba(66,133,244,0.08)", "criteria": ["Extractibilité & réponse directe", "Crawlabilité IA", "Données structurées"] },
+      { "id": "credibility", "label": "Credibility", "desc": "Can AI models trust you?", "color": "#10A37F", "colorLight": "rgba(16,163,127,0.08)", "criteria": ["Vérifiabilité & preuves", "Autorité & E-E-A-T", "Neutralité éditoriale", "Présence externe"] },
+      { "id": "freshness", "label": "Freshness", "desc": "Is your content recent and maintained?", "color": "#C9861A", "colorLight": "rgba(201,134,26,0.08)", "criteria": ["Fraîcheur & maintenance"] }
+    ],
+    "error": { "title": "Analysis failed", "timeout": "The analysis took too long. Please try again.", "retry": "← Try again" },
+    "accordion": { "hide": "▲ Hide", "show": "▼ View analysis" },
+    "detailedAnalysis": "Detailed analysis",
+    "promo": {
+      "title": "🎯 Your score can improve.",
+      "desc": "We identified {count} areas for improvement on your website. The full report gives you the exact actions to implement, with methods, concrete examples and documented real cases.",
+      "feat1": "✓ AI visibility test",
+      "feat2": "✓ Technical evidence",
+      "feat3": "✓ Sourced real cases",
+      "exampleLink": "See a sample report →",
+      "price": "29 €",
+      "priceNote": "one-time payment",
+      "ctaLoading": "Loading...",
+      "cta": "Unlock my report →"
+    },
+    "share": {
+      "button": "Share your score",
+      "copyLink": "Copy link",
+      "copied": "✓ Copied!",
+      "text": "My website scored {score}/100 in AI citability 🤖 What about yours? → https://www.detekia.fr"
+    },
+    "capture": {
+      "title": "Get your report by email",
+      "subtitle": "Receive your detailed score by email",
+      "placeholder": "your@email.com",
+      "sent": "Sent! Check your inbox.",
+      "submit": "Send",
+      "noSpam": "No spam. Unsubscribe in one click."
+    },
+    "recos": {
+      "label": "GEO Action Plan",
+      "title": "{count} expert recommendations",
+      "previewLocked": "🔒 Full recommendation hidden",
+      "previewSubtext": "Method, examples and detailed impact in the full report.",
+      "previewUnlock": "Unlock →",
+      "previewPrice": "29 € · one-time payment",
+      "previewFooter": "👆 This is a free preview. The full report contains {count} detailed recommendations with methods, examples and real cases.",
+      "lockedCount": "{preview} preview · {locked} locked",
+      "lockedReco1": "🔒 1 more recommendation available in the full report",
+      "lockedRecoN": "🔒 {count} more recommendations available in the full report"
+    },
+    "unlock": {
+      "title": "Full report available",
+      "desc": "{count} expert recommendations with methods, examples and expected impact.",
+      "ctaLoading": "Loading...",
+      "cta": "Unlock — 29 € →",
+      "subtext": "One-time payment · Instant access · 7-day money-back guarantee"
+    },
+    "sticky": {
+      "title": "Full report — {count} recommendations",
+      "cta": "Unlock — 29 €"
+    },
+    "checkout": {
+      "title": "Full GEO Report",
+      "subtext": "29 € · Instant access · One-time payment"
+    }
+  },
+  "success": {
+    "loading": { "title": "Generating report…", "subtitle": "Verifying payment and loading analysis" },
+    "error": { "title": "An error occurred", "desc": "Your payment may have been processed successfully. Contact us at", "cta": "Back to home" },
+    "hero": { "title": "Payment confirmed — Report unlocked", "emailSent": "Full report sent to {email}", "emailPreparing": "Preparing report for {email}…" },
+    "emailBadge": {
+      "title": "Your full report has been sent by email",
+      "desc": "The detailed PDF report with all your recommendations has been sent to",
+      "spamBold": "Check your spam folder",
+      "spamText": "— the email may sometimes end up in your junk or promotions folder."
+    },
+    "strengths": "✓ Strengths",
+    "topPriority": "🎯 Top priority",
+    "criteriaAnalysis": "Criteria analysis",
+    "recos": {
+      "label": "GEO Action Plan",
+      "title": "{count} expert recommendations",
+      "countCritical": "{count} critical",
+      "countImportant": "{count} important",
+      "countBonus": "{count} bonus",
+      "criticalLabel": "— Critical",
+      "importantLabel": "— Important",
+      "bonusLabel": "— Bonus"
+    },
+    "cta": "Analyze another website →"
+  },
+  "notFound": {
+    "seo": { "title": "404 — Page not found | Detekia" },
+    "code": "404",
+    "title": "This page doesn't exist",
+    "subtitle": "Looking for something? This page seems to have gotten lost along the way.",
+    "cta": "Back to home →",
+    "ctaSub": "Or analyze your website →"
+  }
+}

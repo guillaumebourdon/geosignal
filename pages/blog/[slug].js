@@ -1,7 +1,32 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
+import { useTranslation } from '../../lib/useTranslation';
 import { articles, getArticleBySlug, getRelatedArticles, formatDate } from '../../lib/articles';
 
-// Map of slug → content component. Add an entry here each time an article is written.
+// EN content overrides — add require lines here as EN articles are created in content/articles/en/
+const CONTENT_MAP_EN = {};
+CONTENT_MAP_EN['geo-guide-complet-2026'] = require('../../content/articles/en/geo-guide-complet-2026').default;
+CONTENT_MAP_EN['pourquoi-chatgpt-ne-cite-pas-votre-site'] = require('../../content/articles/en/pourquoi-chatgpt-ne-cite-pas-votre-site').default;
+CONTENT_MAP_EN['seo-vs-geo-differences-2026'] = require('../../content/articles/en/seo-vs-geo-differences-2026').default;
+CONTENT_MAP_EN['score-geo-mesurer-visibilite-ia'] = require('../../content/articles/en/score-geo-mesurer-visibilite-ia').default;
+CONTENT_MAP_EN['schema-org-ia-guide-pratique'] = require('../../content/articles/en/schema-org-ia-guide-pratique').default;
+CONTENT_MAP_EN['ecommerce-recommandations-ia'] = require('../../content/articles/en/ecommerce-recommandations-ia').default;
+CONTENT_MAP_EN['8-criteres-geo-methodologie-detekia'] = require('../../content/articles/en/8-criteres-geo-methodologie-detekia').default;
+CONTENT_MAP_EN['llms-txt-robots-crawlabilite-ia'] = require('../../content/articles/en/llms-txt-robots-crawlabilite-ia').default;
+CONTENT_MAP_EN['geo-agences-seo-audit-ia'] = require('../../content/articles/en/geo-agences-seo-audit-ia').default;
+CONTENT_MAP_EN['ai-overviews-google-2026'] = require('../../content/articles/en/ai-overviews-google-2026').default;
+CONTENT_MAP_EN['audit-geo-visibilite-ia'] = require('../../content/articles/en/audit-geo-visibilite-ia').default;
+CONTENT_MAP_EN['reddit-geo-source-ia'] = require('../../content/articles/en/reddit-geo-source-ia').default;
+CONTENT_MAP_EN['concurrents-chatgpt-visibilite'] = require('../../content/articles/en/concurrents-chatgpt-visibilite').default;
+CONTENT_MAP_EN['pourquoi-trafic-google-baisse-2026'] = require('../../content/articles/en/pourquoi-trafic-google-baisse-2026').default;
+CONTENT_MAP_EN['sites-bloquent-bots-ia'] = require('../../content/articles/en/sites-bloquent-bots-ia').default;
+CONTENT_MAP_EN['visibilite-ia-guide-debutant'] = require('../../content/articles/en/visibilite-ia-guide-debutant').default;
+CONTENT_MAP_EN['comment-chatgpt-choisit-ses-sources'] = require('../../content/articles/en/comment-chatgpt-choisit-ses-sources').default;
+CONTENT_MAP_EN['perplexity-comment-apparaitre'] = require('../../content/articles/en/perplexity-comment-apparaitre').default;
+CONTENT_MAP_EN['gemini-visibilite-site-france'] = require('../../content/articles/en/gemini-visibilite-site-france').default;
+
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
   'geo-guide-complet-2026': require('../../content/articles/geo-guide-complet-2026').default,
@@ -30,46 +55,44 @@ const CATEGORY_COLORS = {
   'STRATÉGIE': '#D97757',
 };
 
-function Logo() {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
-      {['#10A37F', '#D97757', '#4285F4', '#1C7DC4'].map((c, i) => (
-        <div key={i} style={{ background: c, borderRadius: '50%' }} />
-      ))}
-    </div>
-  );
-}
+const Logo = () => (
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
+    {['#10A37F', '#D97757', '#4285F4', '#1C7DC4'].map((c, i) => (
+      <div key={i} style={{ background: c, borderRadius: '50%' }} />
+    ))}
+  </div>
+);
 
-function ArticleContent({ slug }) {
-  const Content = CONTENT_MAP[slug];
+function ArticleContent({ slug, locale, fallbackText }) {
+  const ContentEN = locale === 'en' ? CONTENT_MAP_EN[slug] : null;
+  const ContentFR = CONTENT_MAP[slug];
+  const Content = ContentEN || ContentFR;
   if (Content) return <Content />;
   return (
     <div style={{ color: '#8A8680', fontFamily: 'system-ui', fontSize: 15, lineHeight: 1.75, padding: '48px 0', textAlign: 'center', border: '1px dashed #E5E2DC', borderRadius: 10 }}>
-      Contenu de l'article à venir — <code style={{ fontFamily: 'monospace', fontSize: 13, background: 'rgba(229,226,220,0.5)', padding: '2px 6px', borderRadius: 4 }}>content/articles/{slug}.js</code>
+      {fallbackText} — <code style={{ fontFamily: 'monospace', fontSize: 13, background: 'rgba(229,226,220,0.5)', padding: '2px 6px', borderRadius: 4 }}>content/articles/{slug}.js</code>
     </div>
   );
 }
 
 export default function ArticlePage({ article, related }) {
+  const { t, locale } = useTranslation();
+  const router = useRouter();
+
   if (!article) return null;
 
   const catColor = CATEGORY_COLORS[article.category] || '#8A8680';
-  const canonicalUrl = `https://detekia.fr/blog/${article.slug}`;
+  const canonicalUrl = `https://detekia.fr${locale === 'fr' ? '' : '/en'}/blog/${article.slug}`;
+  const ogLocale = locale === 'fr' ? 'fr_FR' : 'en_US';
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: article.title,
     description: article.description,
-    author: {
-      '@type': 'Person',
-      name: article.author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Detekia',
-      url: 'https://detekia.fr',
-    },
+    inLanguage: locale,
+    author: { '@type': 'Person', name: article.author },
+    publisher: { '@type': 'Organization', name: 'Detekia', url: 'https://detekia.fr' },
     datePublished: article.date,
     dateModified: article.date,
     url: canonicalUrl,
@@ -83,46 +106,44 @@ export default function ArticlePage({ article, related }) {
         <meta name="description" content={article.description} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="alternate" hrefLang="fr" href={`https://detekia.fr/blog/${article.slug}`} />
+        <link rel="alternate" hrefLang="en" href={`https://detekia.fr/en/blog/${article.slug}`} />
+        <link rel="alternate" hrefLang="x-default" href={`https://detekia.fr/blog/${article.slug}`} />
 
-        {/* Open Graph */}
         <meta property="og:title" content={article.title} />
         <meta property="og:description" content={article.description} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:site_name" content="Detekia" />
-        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:locale" content={ogLocale} />
         <meta property="og:image" content={`https://detekia.fr/api/og?slug=${article.slug}`} />
         <meta property="article:published_time" content={article.date} />
         <meta property="article:modified_time" content={article.date} />
         <meta property="article:author" content={article.author} />
 
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={article.title} />
         <meta name="twitter:description" content={article.description} />
         <meta name="twitter:image" content={`https://detekia.fr/api/og?slug=${article.slug}`} />
 
-        {/* Schema Article JSON-LD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
         {/* NAV */}
         <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
-          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
-            <Logo />Detekia
-          </a>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
+            <Logo />{t('common.siteName')}
+          </Link>
           <div className="nav-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
-            <a href="/blog" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>Blog</a>
-            <a href="/pricing" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Tarifs</a>
-            <a href="/methodologie" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Méthodologie</a>
-          <a href="/a-propos" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>À propos</a>
-            <a href="/contact" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>Contact</a>
-            <a href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>Analyser gratuitement</a>
+            <Link href="/blog" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.blog')}</Link>
+            <Link href="/pricing" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.pricing')}</Link>
+            <Link href="/methodologie" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.methodology')}</Link>
+            <Link href="/a-propos" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.about')}</Link>
+            <Link href="/contact" className="nav-link-secondary" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.contact')}</Link>
+            <LanguageSwitcher />
+            <Link href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.cta')}</Link>
           </div>
         </nav>
 
@@ -131,9 +152,9 @@ export default function ArticlePage({ article, related }) {
 
           {/* BREADCRUMB */}
           <nav aria-label="breadcrumb" style={{ fontFamily: 'system-ui', fontSize: 12, color: '#B0ABA5', marginBottom: 32, display: 'flex', gap: 8, alignItems: 'center' }}>
-            <a href="/" style={{ color: '#B0ABA5', textDecoration: 'none' }}>Accueil</a>
+            <Link href="/" style={{ color: '#B0ABA5', textDecoration: 'none' }}>{t('blog.article.breadcrumbHome')}</Link>
             <span>›</span>
-            <a href="/blog" style={{ color: '#B0ABA5', textDecoration: 'none' }}>Blog</a>
+            <Link href="/blog" style={{ color: '#B0ABA5', textDecoration: 'none' }}>{t('blog.article.breadcrumbBlog')}</Link>
             <span>›</span>
             <span style={{ color: '#8A8680' }}>{article.title}</span>
           </nav>
@@ -147,9 +168,9 @@ export default function ArticlePage({ article, related }) {
               {article.title}
             </h1>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5', marginBottom: 28 }}>
-              <span>{formatDate(article.date)}</span>
+              <span>{formatDate(article.date, locale)}</span>
               <span>·</span>
-              <span>{article.readTime} de lecture</span>
+              <span>{article.readTime} {t('blog.article.readTimeSuffix')}</span>
               <span>·</span>
               <span>{article.author}</span>
             </div>
@@ -158,31 +179,31 @@ export default function ArticlePage({ article, related }) {
 
           {/* ARTICLE BODY */}
           <div className="article-body">
-            <ArticleContent slug={article.slug} />
+            <ArticleContent slug={article.slug} locale={locale} fallbackText={t('blog.article.fallbackContent')} />
           </div>
 
           {/* CTA */}
           <div style={{ background: '#1A1916', borderRadius: 14, padding: '40px 36px', textAlign: 'center', marginTop: 64 }}>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#F7F5F2', marginBottom: 10, lineHeight: 1.2 }}>
-              Testez votre score GEO gratuitement
+              {t('blog.article.ctaTitle')}
             </h2>
             <p style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.6)', marginBottom: 24, lineHeight: 1.6 }}>
-              Analyse complète en 30 secondes, sans inscription
+              {t('blog.article.ctaSubtitle')}
             </p>
-            <a href="/" style={{ display: 'inline-block', background: '#D97757', color: '#FFFFFF', borderRadius: 8, padding: '14px 32px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
-              Analyser mon site →
-            </a>
+            <Link href="/" style={{ display: 'inline-block', background: '#D97757', color: '#FFFFFF', borderRadius: 8, padding: '14px 32px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+              {t('blog.article.ctaButton')}
+            </Link>
           </div>
 
           {/* RELATED ARTICLES */}
           {related && related.length > 0 && (
             <div style={{ marginTop: 64 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>Articles recommandés</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>{t('blog.article.relatedTitle')}</div>
               <div className="related-grid">
                 {related.map(rel => {
                   const rc = CATEGORY_COLORS[rel.category] || '#8A8680';
                   return (
-                    <a
+                    <Link
                       key={rel.slug}
                       href={`/blog/${rel.slug}`}
                       className="related-card"
@@ -191,7 +212,7 @@ export default function ArticlePage({ article, related }) {
                       <span style={{ fontFamily: 'monospace', fontSize: 9, color: rc, letterSpacing: 2, textTransform: 'uppercase' }}>{rel.category}</span>
                       <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', lineHeight: 1.3 }}>{rel.title}</span>
                       <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5', marginTop: 4 }}>{rel.readTime}</span>
-                    </a>
+                    </Link>
                   );
                 })}
               </div>
@@ -202,10 +223,10 @@ export default function ArticlePage({ article, related }) {
         {/* FOOTER */}
         <footer style={{ borderTop: '1px solid #E5E2DC', padding: '36px 48px', background: '#fff' }}>
           <div className="footer-inner" style={{ maxWidth: 900, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-            <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>Detekia</span>
+            <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>{t('common.siteName')}</span>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
-              {[['Blog', '/blog'], ['Tarifs', '/pricing'], ['Méthodologie', '/methodologie'], ['Contact', '/contact'], ['Mentions légales', '/mentions-legales'], ['Confidentialité', '/confidentialite'], ['CGU', '/cgu']].map(([label, href]) => (
-                <a key={label} href={href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', textDecoration: 'none' }}>{label}</a>
+              {t('blog.footer.links').map((link) => (
+                <Link key={link.href} href={link.href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', textDecoration: 'none' }}>{link.label}</Link>
               ))}
             </div>
           </div>
@@ -238,16 +259,18 @@ export default function ArticlePage({ article, related }) {
   );
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
   return {
-    paths: articles.map(a => ({ params: { slug: a.slug } })),
+    paths: articles.flatMap(a =>
+      locales.map(locale => ({ params: { slug: a.slug }, locale }))
+    ),
     fallback: false,
   };
 }
 
-export async function getStaticProps({ params }) {
-  const article = getArticleBySlug(params.slug);
+export async function getStaticProps({ params, locale }) {
+  const article = getArticleBySlug(params.slug, locale);
   if (!article) return { notFound: true };
-  const related = getRelatedArticles(params.slug, 3);
+  const related = getRelatedArticles(params.slug, 3, locale);
   return { props: { article, related } };
 }
