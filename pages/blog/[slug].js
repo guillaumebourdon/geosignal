@@ -17,6 +17,11 @@ CONTENT_MAP_EN['8-criteres-geo-methodologie-detekia'] = require('../../content/a
 CONTENT_MAP_EN['llms-txt-robots-crawlabilite-ia'] = require('../../content/articles/en/llms-txt-robots-crawlabilite-ia').default;
 CONTENT_MAP_EN['geo-agences-seo-audit-ia'] = require('../../content/articles/en/geo-agences-seo-audit-ia').default;
 CONTENT_MAP_EN['ai-overviews-google-2026'] = require('../../content/articles/en/ai-overviews-google-2026').default;
+CONTENT_MAP_EN['audit-geo-visibilite-ia'] = require('../../content/articles/en/audit-geo-visibilite-ia').default;
+CONTENT_MAP_EN['reddit-geo-source-ia'] = require('../../content/articles/en/reddit-geo-source-ia').default;
+CONTENT_MAP_EN['concurrents-chatgpt-visibilite'] = require('../../content/articles/en/concurrents-chatgpt-visibilite').default;
+CONTENT_MAP_EN['pourquoi-trafic-google-baisse-2026'] = require('../../content/articles/en/pourquoi-trafic-google-baisse-2026').default;
+CONTENT_MAP_EN['sites-bloquent-bots-ia'] = require('../../content/articles/en/sites-bloquent-bots-ia').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
