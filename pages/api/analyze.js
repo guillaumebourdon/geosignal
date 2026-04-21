@@ -447,6 +447,15 @@ RULES:
    - Health/insurance site → MedicalOrganization, Service, FAQPage
    Do NOT recommend LocalBusiness for a site that is not a local physical business.
 6. Be honest in your verdict. If the score seems low due to scraping detection limits, mention it.
+7. TOP PRIORITY SELECTION — This is critical. The "topPriority" field must NOT automatically be the criterion with the worst ratio. Instead, pick the ONE action that offers the best impact × effort × site context trade-off:
+   - For an e-commerce site with reviews → prioritize AggregateRating or Product schema, NOT 10 schema types at once
+   - For a media/blog site with thin articles → prioritize content depth (extractibility, internal linking) BEFORE schema
+   - For a site with strong content but no JSON-LD → yes, schema is the top priority
+   - For a site with weak extractibility (short intros, no H2/H3 structure, no lists) → prioritize restructuring content BEFORE adding schema
+   - For a site already cited by AI engines → prioritize external presence and freshness over schema
+   - Small schema additions (FAQPage only, Organization only) are quick wins; full schema overhaul is a bigger project — prefer quick wins if applicable
+   Always prefer the action that will produce VISIBLE impact in 2-4 weeks with minimum effort.
+8. AVOID REPEATING THE SAME TOP PRIORITY. If the lowest-scoring criterion is "Données structurées" (JSON-LD), do NOT automatically make it the topPriority. Instead, look at the site's content quality first and find a different angle that's equally valid for THIS specific site — for example, adding FAQPage specifically, restructuring headings, or improving a criterion where a small fix yields outsized gains. The goal is for each audit to feel tailored, not generic.
 
 JSON only, no markdown:
 {"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","criterion":"<French criterion name>","title":"<5 words max>","diagnostic":"<1 sentence>","whyCritical":"<1 sentence>","whatToDo":"<1 sentence>","howToDoIt":"<2 sentences>","concreteExample":"<1 sentence>","expectedImpact":"<1 sentence>","expertTip":"<1 sentence>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
