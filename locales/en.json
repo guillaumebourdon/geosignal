@@ -788,7 +788,7 @@
         { "icon": "🧩", "text": "Structured data", "sub": "Analyzing schemas and tags..." },
         { "icon": "💬", "text": "Citability & evidence", "sub": "Evaluating content quality..." },
         { "icon": "🌐", "text": "External presence", "sub": "Checking authority signals..." },
-        { "icon": "🤖", "text": "AI analysis", "sub": "Claude evaluates and generates recommendations..." }
+        { "icon": "🤖", "text": "AI analysis", "sub": "Our system evaluates and generates recommendations..." }
       ]
     },
     "groups": [

@@ -788,7 +788,7 @@
         { "icon": "🧩", "text": "Données structurées", "sub": "Analyse des schemas et balises..." },
         { "icon": "💬", "text": "Citabilité & preuves", "sub": "Évaluation de la qualité du contenu..." },
         { "icon": "🌐", "text": "Présence externe", "sub": "Vérification des signaux d'autorité..." },
-        { "icon": "🤖", "text": "Analyse par IA", "sub": "Claude évalue et génère les recommandations..." }
+        { "icon": "🤖", "text": "Analyse par IA", "sub": "Notre système évalue et génère les recommandations..." }
       ]
     },
     "groups": [
