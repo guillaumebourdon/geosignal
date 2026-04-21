@@ -22,6 +22,10 @@ CONTENT_MAP_EN['reddit-geo-source-ia'] = require('../../content/articles/en/redd
 CONTENT_MAP_EN['concurrents-chatgpt-visibilite'] = require('../../content/articles/en/concurrents-chatgpt-visibilite').default;
 CONTENT_MAP_EN['pourquoi-trafic-google-baisse-2026'] = require('../../content/articles/en/pourquoi-trafic-google-baisse-2026').default;
 CONTENT_MAP_EN['sites-bloquent-bots-ia'] = require('../../content/articles/en/sites-bloquent-bots-ia').default;
+CONTENT_MAP_EN['visibilite-ia-guide-debutant'] = require('../../content/articles/en/visibilite-ia-guide-debutant').default;
+CONTENT_MAP_EN['comment-chatgpt-choisit-ses-sources'] = require('../../content/articles/en/comment-chatgpt-choisit-ses-sources').default;
+CONTENT_MAP_EN['perplexity-comment-apparaitre'] = require('../../content/articles/en/perplexity-comment-apparaitre').default;
+CONTENT_MAP_EN['gemini-visibilite-site-france'] = require('../../content/articles/en/gemini-visibilite-site-france').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
