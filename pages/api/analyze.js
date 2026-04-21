@@ -425,32 +425,39 @@ async function runClaudeAnalysis(url, textContent, scores, locale = 'fr') {
     `- ${c.label} : ${scores[c.key].score}/${c.max} — ${scores[c.key].detail}`
   ).join('\n');
 
-  const prompt = `Tu es un consultant GEO senior. Audite ${url}.
+  const langInstruction = locale === 'en'
+    ? `OUTPUT LANGUAGE: English (US). ALL text values in the JSON (verdict, recommendations, strengths, topPriority, neutralityDetail) MUST be in American English. Use natural, direct, conversational phrasing.
+CRITICAL: The "criterion" field MUST always use the FRENCH criterion name from this exact list (used as a matching key in the frontend): 'Extractibilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Crawlabilité IA', 'Données structurées', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & maintenance'.`
+    : `LANGUE DE SORTIE : Français. Toutes les valeurs texte du JSON doivent être en français professionnel et direct.`;
 
-URL : ${url}
-SCORE : ${total}/100
-CRITÈRES SOUS LE SEUIL :
+  const prompt = `${langInstruction}
+
+You are a senior GEO consultant. Audit ${url}.
+
+URL: ${url}
+SCORE: ${total}/100
+CRITERIA BELOW THRESHOLD:
 ${criteriaList}
 
-CONTENU (300 premiers caractères) :
+CONTENT (first 300 characters):
 ${textContent.slice(0, 300)}
 
-RÈGLES :
-1. Génère EXACTEMENT 8 recommandations : 1 par critère sous le seuil + 1 pour la Neutralité éditoriale.
-2. Chaque champ doit tenir en 1 phrase max (sauf howToDoIt : 2 phrases max).
-3. Sois spécifique à ce site.
-4. IMPORTANT : Utilise des formulations nuancées. Ne dis jamais "aucun X détecté" de façon absolue. Préfère "aucun X identifié dans le contenu analysé" ou "non trouvé dans le HTML accessible". Reconnais que le scraping peut être partiel.
-5. Adapte tes recommandations de schemas au TYPE de site analysé. Par exemple :
-   - Site e-commerce → Product, AggregateOffer, AggregateRating
+RULES:
+1. Generate EXACTLY 8 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
+2. Each field must fit in 1 sentence max (except howToDoIt: 2 sentences max).
+3. Be specific to this site.
+4. IMPORTANT: Use nuanced phrasing. Never say "no X detected" as an absolute. Prefer "no X identified in the analyzed content" or "not found in the accessible HTML". Acknowledge that scraping may be partial.
+5. Adapt schema recommendations to the SITE TYPE being analyzed. For example:
+   - E-commerce site → Product, AggregateOffer, AggregateRating
    - SaaS/service → SoftwareApplication, Service, Organization
-   - Blog/média → Article, BlogPosting, NewsArticle
-   - Site corporate → Organization, Service, FAQPage
-   - Site santé/assurance → MedicalOrganization, Service, FAQPage
-   NE recommande PAS LocalBusiness pour un site qui n'est pas un commerce physique local.
-6. Sois honnête dans ton verdict. Si le score semble bas à cause de limites de détection du scraping, mentionne-le.
+   - Blog/media → Article, BlogPosting, NewsArticle
+   - Corporate site → Organization, Service, FAQPage
+   - Health/insurance site → MedicalOrganization, Service, FAQPage
+   Do NOT recommend LocalBusiness for a site that is not a local physical business.
+6. Be honest in your verdict. If the score seems low due to scraping detection limits, mention it.
 
-JSON uniquement, sans markdown :
-{"neutralityScore":<0-10>,"neutralityDetail":"<1 phrase>","recommendations":[{"priority":"high|medium|low","criterion":"<nom>","title":"<5 mots max>","diagnostic":"<1 phrase>","whyCritical":"<1 phrase>","whatToDo":"<1 phrase>","howToDoIt":"<2 phrases>","concreteExample":"<1 phrase>","expectedImpact":"<1 phrase>","expertTip":"<1 phrase>"}],"verdict":"<1 phrase>","strengths":["<1 phrase>","<1 phrase>"],"topPriority":"<1 phrase>"}`;
+JSON only, no markdown:
+{"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","criterion":"<French criterion name>","title":"<5 words max>","diagnostic":"<1 sentence>","whyCritical":"<1 sentence>","whatToDo":"<1 sentence>","howToDoIt":"<2 sentences>","concreteExample":"<1 sentence>","expectedImpact":"<1 sentence>","expertTip":"<1 sentence>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
@@ -475,19 +482,34 @@ async function runCitationTest(url, textContent, metaTitle, metaDescription, loc
   const brand = metaTitle ? metaTitle.split(/[-|–·]/)[0].trim() : hostname;
   const intro = textContent.slice(0, 300);
 
-  const prompt = `Tu es un expert en visibilité IA. On analyse le site ${url}. Voici son titre : ${brand}. Voici sa description : ${metaDescription || 'Non disponible'}. Voici les 300 premiers caractères de son contenu : ${intro}
+  const userContext = locale === 'en'
+    ? 'User context: American users searching in English on ChatGPT/Perplexity. Generate queries naturally in English as a US user would phrase them.'
+    : 'Contexte utilisateur : utilisateurs français recherchant en français sur ChatGPT/Perplexity. Génère les requêtes naturellement en français.';
 
-Étape 1 — Génère 10 requêtes que des utilisateurs poseraient à ChatGPT ou Perplexity et pour lesquelles ce site DEVRAIT apparaître. Varie les niveaux de difficulté :
-- 3 requêtes génériques (forte concurrence)
-- 4 requêtes de niche (concurrence moyenne)
-- 3 requêtes longue traîne (faible concurrence)
+  const langInstruction = locale === 'en'
+    ? 'OUTPUT LANGUAGE: English (US). ALL text values (queries, recommendations, excerpts, summary) MUST be in American English.'
+    : 'LANGUE DE SORTIE : Français. Toutes les valeurs texte doivent être en français.';
 
-Étape 2 — Pour CHAQUE requête, simule la réponse que donnerait un moteur IA (ChatGPT/Perplexity). Cite les sources que tu recommanderais naturellement.
+  const difficultyValues = locale === 'en'
+    ? { generic: 'generic', niche: 'niche', longTail: 'long_tail', easy: 'easy', medium: 'medium', hard: 'hard' }
+    : { generic: 'générique', niche: 'niche', longTail: 'longue_traîne', easy: 'facile', medium: 'moyen', hard: 'difficile' };
 
-Étape 3 — Pour CHAQUE requête, analyse si le site ${hostname} ou la marque "${brand}" apparaît dans ta réponse, quels concurrents sont cités à la place, et la difficulté estimée pour être cité (facile/moyen/difficile).
+  const prompt = `${langInstruction}
+${userContext}
 
-Réponds UNIQUEMENT en JSON sans markdown :
-{"tests":[{"query":"","difficulty":"générique|niche|longue_traîne","cited":false,"competitors_cited":[],"difficulty_to_rank":"facile|moyen|difficile","recommendation":"1 phrase concrète","ai_response_excerpt":"150 premiers caractères de la réponse simulée"}],"summary":{"cited_count":0,"total_tests":10,"best_opportunity":"requête où le site a le plus de chances","main_blocker":"raison principale"}}`;
+You are an AI visibility expert. We are analyzing the site ${url}. Title: ${brand}. Description: ${metaDescription || 'Not available'}. First 300 characters of content: ${intro}
+
+Step 1 — Generate 10 queries that users would ask ChatGPT or Perplexity and for which this site SHOULD appear. Vary difficulty levels:
+- 3 ${difficultyValues.generic} queries (high competition)
+- 4 ${difficultyValues.niche} queries (medium competition)
+- 3 ${difficultyValues.longTail} queries (low competition)
+
+Step 2 — For EACH query, simulate the response an AI engine (ChatGPT/Perplexity) would give. Cite the sources you would naturally recommend.
+
+Step 3 — For EACH query, analyze whether the site ${hostname} or the brand "${brand}" appears in your response, which competitors are cited instead, and the estimated difficulty to get cited (${difficultyValues.easy}/${difficultyValues.medium}/${difficultyValues.hard}).
+
+Reply ONLY in JSON without markdown:
+{"tests":[{"query":"","difficulty":"${difficultyValues.generic}|${difficultyValues.niche}|${difficultyValues.longTail}","cited":false,"competitors_cited":[],"difficulty_to_rank":"${difficultyValues.easy}|${difficultyValues.medium}|${difficultyValues.hard}","recommendation":"1 concrete sentence","ai_response_excerpt":"first 150 characters of the simulated response"}],"summary":{"cited_count":0,"total_tests":10,"best_opportunity":"query where the site has the best chance","main_blocker":"main reason"}}`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
@@ -608,11 +630,14 @@ export default async function handler(req, res) {
 
     // Regenerate verdict with final score (includes neutrality bonus)
     if (totalScore !== baseScore) {
+      const verdictLang = locale === 'en'
+        ? `OUTPUT LANGUAGE: English (US). Respond in American English only.`
+        : `LANGUE DE SORTIE : Français.`;
       const verdictMsg = await client.messages.create({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 150,
         temperature: 0.2,
-        messages: [{ role: 'user', content: `Tu es un consultant GEO senior. Le site ${url} obtient un score final de ${totalScore}/100. Ses forces : ${(claude.strengths || []).join(', ')}. Sa priorité : ${claude.topPriority || 'aucune'}. Génère un verdict en 1 phrase concise. Réponds UNIQUEMENT avec la phrase, sans guillemets ni JSON.` }],
+        messages: [{ role: 'user', content: `${verdictLang}\nYou are a senior GEO consultant. The site ${url} gets a final score of ${totalScore}/100. Strengths: ${(claude.strengths || []).join(', ')}. Priority: ${claude.topPriority || 'none'}. Generate a verdict in 1 concise sentence. Reply ONLY with the sentence, no quotes, no JSON.` }],
       });
       claude.verdict = verdictMsg.content[0].text.trim();
     }
