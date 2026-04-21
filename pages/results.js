@@ -259,7 +259,7 @@ export default function Results() {
     fetch('/api/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan: 'rapport', url, score: result?.score }),
+      body: JSON.stringify({ plan: 'rapport', url, score: result?.score, locale: router.locale }),
     })
     .then(r => r.json())
     .then(d => d.clientSecret),

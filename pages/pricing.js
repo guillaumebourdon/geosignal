@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 export default function Pricing() {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   async function handleCheckout() {
     setLoading(true);
@@ -10,7 +12,7 @@ export default function Pricing() {
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: 'rapport' }),
+        body: JSON.stringify({ plan: 'rapport', locale: router.locale }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;

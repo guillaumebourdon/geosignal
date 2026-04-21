@@ -5,11 +5,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { plan, url, score } = req.body;
+  const { plan, url, score, locale: reqLocale } = req.body;
+  const locale = reqLocale === 'en' ? 'en' : 'fr';
 
   const prices = {
     rapport: {
-      name: 'Detekia — Rapport GEO complet',
+      name: locale === 'en' ? 'Detekia — Full AI Visibility Report' : 'Detekia — Rapport GEO complet',
       amount: 2900, // 29€ en centimes
       mode: 'payment',
     },
@@ -22,6 +23,7 @@ export default async function handler(req, res) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       allow_promotion_codes: true,
+      locale,
       mode: selected.mode,
       ui_mode: 'embedded',
       line_items: [{
@@ -36,7 +38,7 @@ export default async function handler(req, res) {
         url: url || '',
         score: score != null ? String(score) : '',
       },
-      return_url: `https://www.detekia.fr/success?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `https://www.detekia.fr${locale === 'en' ? '/en' : ''}/success?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     res.json({ clientSecret: session.client_secret });
