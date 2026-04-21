@@ -258,7 +258,9 @@ export default function Results() {
         <div className="nav-links" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
           <Link href="/blog" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.blog')}</Link>
           <Link href="/pricing" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.pricing')}</Link>
+          <Link href="/methodologie" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.methodology')}</Link>
           <Link href="/a-propos" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.about')}</Link>
+          <Link href="/contact" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.contact')}</Link>
           <Link href="/" className="nav-cta" style={{ fontSize: 12, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '7px 16px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>{t('results.nav.newAnalysis')}</Link>
         </div>
       </nav>
