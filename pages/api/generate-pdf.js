@@ -895,6 +895,10 @@ export default async function handler(req, res) {
       return res.status(200).send(html);
     }
 
+    console.log('[gp] html_length:', html.length);
+    console.log('[gp] criterion_3_full:', JSON.stringify(reportData.criteria?.[2] ?? reportData.criteria?.find(c => c.name?.toLowerCase().includes('autorit')) ?? 'not_found', null, 2));
+    console.log('[gp] html_slice_c3_before:', html.substring(html.indexOf('CRITERION 3'), html.indexOf('CRITERION 3') + 3000));
+    console.log('[gp] html_slice_c3_after:', html.substring(html.indexOf('CRITERION 4') - 500, html.indexOf('CRITERION 4') + 500));
     console.log('Starting PDFShift...');
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
       method: 'POST',
