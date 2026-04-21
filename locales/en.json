@@ -1,7 +1,20 @@
 {
   "common": {
     "siteName": "Detekia",
-    "tagline": "Is your website visible to AI?"
+    "tagline": "Is your website visible to AI?",
+    "grades": { "good": "GOOD", "average": "FAIR", "poor": "LOW" },
+    "verdicts": { "good": "Excellent AI citability", "average": "AI citability needs improvement", "poor": "Insufficient AI citability" },
+    "priorities": { "high": "Critical", "medium": "Important", "low": "Bonus" },
+    "recoSections": [
+      { "key": "diagnostic", "icon": "🔍", "label": "Diagnosis" },
+      { "key": "whyCritical", "icon": "⚠️", "label": "Why it's critical" },
+      { "key": "whatToDo", "icon": "✅", "label": "What to do" },
+      { "key": "howToDoIt", "icon": "🛠️", "label": "How to do it" },
+      { "key": "concreteExample", "icon": "💡", "label": "Concrete example" },
+      { "key": "expectedImpact", "icon": "📈", "label": "Expected impact" },
+      { "key": "expertTip", "icon": "🎯", "label": "Expert tip" }
+    ],
+    "recoFallbackLabel": "Recommendation"
   },
   "nav": {
     "home": "Home",
@@ -714,5 +727,125 @@
         { "label": "Terms", "href": "/cgu" }
       ]
     }
+  },
+  "results": {
+    "nav": { "newAnalysis": "+ New analysis" },
+    "criteriaInfo": {
+      "Extractibilité & réponse directe": { "emoji": "🎯", "title": "Extractability & direct answer", "desc": "AI models look for \"ready-to-cite\" answers in your content. If your text answers clearly in the first few lines, with lists and tables, AI can extract and reuse it easily.", "impact": "Criterion #1 — 25 points", "color": "#4285F4" },
+      "Vérifiabilité & preuves": { "emoji": "🔬", "title": "Verifiability & evidence", "desc": "AI models prioritize content that backs up its claims: sourced figures, precise dates, links to primary sources.", "impact": "20 points", "color": "#10A37F" },
+      "Autorité & E-E-A-T": { "emoji": "🏆", "title": "Authority & E-E-A-T", "desc": "E-E-A-T stands for Experience, Expertise, Authoritativeness, Trustworthiness. AI models favor websites with identified authors, bios, and clear About/Contact pages.", "impact": "15 points", "color": "#10A37F" },
+      "Crawlabilité IA": { "emoji": "🤖", "title": "AI Crawlability", "desc": "AI models like ChatGPT use bots (GPTBot, OAI-SearchBot) to read your website. If your content is hidden behind JavaScript or blocked in robots.txt, these bots can't index it.", "impact": "15 points", "color": "#4285F4" },
+      "Données structurées": { "emoji": "🧩", "title": "Structured data (Schema.org)", "desc": "Schema.org is a language AI models read first. It explicitly tells them what your website is about, who wrote it, and what it covers.", "impact": "10 points", "color": "#4285F4" },
+      "Neutralité éditoriale": { "emoji": "⚖️", "title": "Editorial neutrality", "desc": "AI models avoid citing overly promotional or biased content. Factual, nuanced text is far more likely to be used as a source.", "impact": "10 points", "color": "#10A37F" },
+      "Présence externe": { "emoji": "🌐", "title": "External presence", "desc": "AI models cross-reference multiple sources to evaluate your credibility. Being mentioned in the press or on social media strengthens your perceived authority.", "impact": "5 points", "color": "#10A37F" },
+      "Fraîcheur & maintenance": { "emoji": "📅", "title": "Freshness & maintenance", "desc": "For evolving topics, AI models prefer recent content. A visible update date and current copyright signal that your website is actively maintained.", "impact": "5 points", "color": "#C9861A" }
+    },
+    "loading": {
+      "title": "GEO Audit in progress",
+      "subtitle": "Analysis in progress, please wait up to 60 seconds...",
+      "progress": "Progress",
+      "complete": "Full analysis · 30 seconds",
+      "steps": [
+        { "icon": "🔍", "text": "Fetching website", "sub": "Connecting and scraping content..." },
+        { "icon": "🧩", "text": "Structured data", "sub": "Analyzing schemas and tags..." },
+        { "icon": "💬", "text": "Citability & evidence", "sub": "Evaluating content quality..." },
+        { "icon": "🌐", "text": "External presence", "sub": "Checking authority signals..." },
+        { "icon": "🤖", "text": "AI analysis", "sub": "Claude evaluates and generates recommendations..." }
+      ]
+    },
+    "groups": [
+      { "id": "lisibility", "label": "AI Readability", "desc": "Can your website be read and understood by AI?", "color": "#4285F4", "colorLight": "rgba(66,133,244,0.08)", "criteria": ["Extractibilité & réponse directe", "Crawlabilité IA", "Données structurées"] },
+      { "id": "credibility", "label": "Credibility", "desc": "Can AI models trust you?", "color": "#10A37F", "colorLight": "rgba(16,163,127,0.08)", "criteria": ["Vérifiabilité & preuves", "Autorité & E-E-A-T", "Neutralité éditoriale", "Présence externe"] },
+      { "id": "freshness", "label": "Freshness", "desc": "Is your content recent and maintained?", "color": "#C9861A", "colorLight": "rgba(201,134,26,0.08)", "criteria": ["Fraîcheur & maintenance"] }
+    ],
+    "error": { "title": "Analysis failed", "timeout": "The analysis took too long. Please try again.", "retry": "← Try again" },
+    "accordion": { "hide": "▲ Hide", "show": "▼ View analysis" },
+    "detailedAnalysis": "Detailed analysis",
+    "promo": {
+      "title": "🎯 Your score can improve.",
+      "desc": "We identified {count} areas for improvement on your website. The full report gives you the exact actions to implement, with methods, concrete examples and documented real cases.",
+      "feat1": "✓ AI visibility test",
+      "feat2": "✓ Technical evidence",
+      "feat3": "✓ Sourced real cases",
+      "exampleLink": "See a sample report →",
+      "price": "29 €",
+      "priceNote": "one-time payment",
+      "ctaLoading": "Loading...",
+      "cta": "Unlock my report →"
+    },
+    "share": {
+      "button": "Share your score",
+      "copyLink": "Copy link",
+      "copied": "✓ Copied!",
+      "text": "My website scored {score}/100 in AI citability 🤖 What about yours? → https://www.detekia.fr"
+    },
+    "capture": {
+      "title": "Get your report by email",
+      "subtitle": "Receive your detailed score by email",
+      "placeholder": "your@email.com",
+      "sent": "Sent! Check your inbox.",
+      "submit": "Send",
+      "noSpam": "No spam. Unsubscribe in one click."
+    },
+    "recos": {
+      "label": "GEO Action Plan",
+      "title": "{count} expert recommendations",
+      "previewLocked": "🔒 Full recommendation hidden",
+      "previewSubtext": "Method, examples and detailed impact in the full report.",
+      "previewUnlock": "Unlock →",
+      "previewPrice": "29 € · one-time payment",
+      "previewFooter": "👆 This is a free preview. The full report contains {count} detailed recommendations with methods, examples and real cases.",
+      "lockedCount": "{preview} preview · {locked} locked",
+      "lockedReco1": "🔒 1 more recommendation available in the full report",
+      "lockedRecoN": "🔒 {count} more recommendations available in the full report"
+    },
+    "unlock": {
+      "title": "Full report available",
+      "desc": "{count} expert recommendations with methods, examples and expected impact.",
+      "ctaLoading": "Loading...",
+      "cta": "Unlock — 29 € →",
+      "subtext": "One-time payment · Instant access · 7-day money-back guarantee"
+    },
+    "sticky": {
+      "title": "Full report — {count} recommendations",
+      "cta": "Unlock — 29 €"
+    },
+    "checkout": {
+      "title": "Full GEO Report",
+      "subtext": "29 € · Instant access · One-time payment"
+    }
+  },
+  "success": {
+    "loading": { "title": "Generating report…", "subtitle": "Verifying payment and loading analysis" },
+    "error": { "title": "An error occurred", "desc": "Your payment may have been processed successfully. Contact us at", "cta": "Back to home" },
+    "hero": { "title": "Payment confirmed — Report unlocked", "emailSent": "Full report sent to {email}", "emailPreparing": "Preparing report for {email}…" },
+    "emailBadge": {
+      "title": "Your full report has been sent by email",
+      "desc": "The detailed PDF report with all your recommendations has been sent to",
+      "spamBold": "Check your spam folder",
+      "spamText": "— the email may sometimes end up in your junk or promotions folder."
+    },
+    "strengths": "✓ Strengths",
+    "topPriority": "🎯 Top priority",
+    "criteriaAnalysis": "Criteria analysis",
+    "recos": {
+      "label": "GEO Action Plan",
+      "title": "{count} expert recommendations",
+      "countCritical": "{count} critical",
+      "countImportant": "{count} important",
+      "countBonus": "{count} bonus",
+      "criticalLabel": "— Critical",
+      "importantLabel": "— Important",
+      "bonusLabel": "— Bonus"
+    },
+    "cta": "Analyze another website →"
+  },
+  "notFound": {
+    "seo": { "title": "404 — Page not found | Detekia" },
+    "code": "404",
+    "title": "This page doesn't exist",
+    "subtitle": "Looking for something? This page seems to have gotten lost along the way.",
+    "cta": "Back to home →",
+    "ctaSub": "Or analyze your website →"
   }
 }

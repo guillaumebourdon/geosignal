@@ -1,7 +1,20 @@
 {
   "common": {
     "siteName": "Detekia",
-    "tagline": "Votre site est-il visible pour les IA ?"
+    "tagline": "Votre site est-il visible pour les IA ?",
+    "grades": { "good": "BON", "average": "MOYEN", "poor": "FAIBLE" },
+    "verdicts": { "good": "Excellente citabilité IA", "average": "Citabilité IA à améliorer", "poor": "Citabilité IA insuffisante" },
+    "priorities": { "high": "Critique", "medium": "Important", "low": "Bonus" },
+    "recoSections": [
+      { "key": "diagnostic", "icon": "🔍", "label": "Diagnostic" },
+      { "key": "whyCritical", "icon": "⚠️", "label": "Pourquoi c'est critique" },
+      { "key": "whatToDo", "icon": "✅", "label": "Ce qu'il faut faire" },
+      { "key": "howToDoIt", "icon": "🛠️", "label": "Comment le faire" },
+      { "key": "concreteExample", "icon": "💡", "label": "Exemple concret" },
+      { "key": "expectedImpact", "icon": "📈", "label": "Impact attendu" },
+      { "key": "expertTip", "icon": "🎯", "label": "Tip d'expert" }
+    ],
+    "recoFallbackLabel": "Recommandation"
   },
   "nav": {
     "home": "Accueil",
@@ -714,5 +727,125 @@
         { "label": "CGU", "href": "/cgu" }
       ]
     }
+  },
+  "results": {
+    "nav": { "newAnalysis": "+ Nouvelle analyse" },
+    "criteriaInfo": {
+      "Extractibilité & réponse directe": { "emoji": "🎯", "title": "Extractibilité & réponse directe", "desc": "Les IA cherchent des réponses \"prêtes à citer\" dans votre contenu. Si votre texte répond clairement dès les premières lignes, avec des listes et des tableaux, les IA peuvent l'extraire et le réutiliser facilement.", "impact": "Critère n°1 — 25 points", "color": "#4285F4" },
+      "Vérifiabilité & preuves": { "emoji": "🔬", "title": "Vérifiabilité & preuves", "desc": "Les IA citent en priorité les contenus qui prouvent ce qu'ils avancent : chiffres sourcés, dates précises, liens vers des sources primaires.", "impact": "20 points", "color": "#10A37F" },
+      "Autorité & E-E-A-T": { "emoji": "🏆", "title": "Autorité & E-E-A-T", "desc": "E-E-A-T signifie Expérience, Expertise, Autorité, Confiance. Les IA favorisent les sites dont l'auteur est identifié, avec une biographie et des pages About/Contact claires.", "impact": "15 points", "color": "#10A37F" },
+      "Crawlabilité IA": { "emoji": "🤖", "title": "Crawlabilité IA", "desc": "Les IA comme ChatGPT utilisent des robots (GPTBot, OAI-SearchBot) pour lire votre site. Si votre contenu est caché derrière du JavaScript ou bloqué dans robots.txt, ces robots ne peuvent pas l'indexer.", "impact": "15 points", "color": "#4285F4" },
+      "Données structurées": { "emoji": "🧩", "title": "Données structurées (Schema.org)", "desc": "Le Schema.org est un langage que les IA lisent en priorité. Il leur dit explicitement ce qu'est votre site, qui l'a écrit, et de quoi il parle.", "impact": "10 points", "color": "#4285F4" },
+      "Neutralité éditoriale": { "emoji": "⚖️", "title": "Neutralité éditoriale", "desc": "Les IA évitent de citer des contenus trop promotionnels ou biaisés. Un texte factuel et nuancé sera beaucoup plus souvent repris comme source.", "impact": "10 points", "color": "#10A37F" },
+      "Présence externe": { "emoji": "🌐", "title": "Présence externe", "desc": "Les IA croisent plusieurs sources pour évaluer votre crédibilité. Être mentionné dans la presse ou sur les réseaux sociaux renforce votre autorité perçue.", "impact": "5 points", "color": "#10A37F" },
+      "Fraîcheur & maintenance": { "emoji": "📅", "title": "Fraîcheur & maintenance", "desc": "Pour les sujets qui évoluent, les IA préfèrent les contenus récents. Une date de mise à jour visible et un copyright récent signalent que votre site est actif.", "impact": "5 points", "color": "#C9861A" }
+    },
+    "loading": {
+      "title": "Audit GEO en cours",
+      "subtitle": "Analyse en cours, merci de patienter jusqu'à 60 secondes...",
+      "progress": "Progression",
+      "complete": "Analyse complète · 30 secondes",
+      "steps": [
+        { "icon": "🔍", "text": "Récupération du site", "sub": "Connexion et scraping du contenu..." },
+        { "icon": "🧩", "text": "Données structurées", "sub": "Analyse des schemas et balises..." },
+        { "icon": "💬", "text": "Citabilité & preuves", "sub": "Évaluation de la qualité du contenu..." },
+        { "icon": "🌐", "text": "Présence externe", "sub": "Vérification des signaux d'autorité..." },
+        { "icon": "🤖", "text": "Analyse par IA", "sub": "Claude évalue et génère les recommandations..." }
+      ]
+    },
+    "groups": [
+      { "id": "lisibility", "label": "Lisibilité IA", "desc": "Votre site peut-il être lu et compris par les IA ?", "color": "#4285F4", "colorLight": "rgba(66,133,244,0.08)", "criteria": ["Extractibilité & réponse directe", "Crawlabilité IA", "Données structurées"] },
+      { "id": "credibility", "label": "Crédibilité", "desc": "Les IA peuvent-elles vous faire confiance ?", "color": "#10A37F", "colorLight": "rgba(16,163,127,0.08)", "criteria": ["Vérifiabilité & preuves", "Autorité & E-E-A-T", "Neutralité éditoriale", "Présence externe"] },
+      { "id": "freshness", "label": "Fraîcheur", "desc": "Votre contenu est-il récent et maintenu ?", "color": "#C9861A", "colorLight": "rgba(201,134,26,0.08)", "criteria": ["Fraîcheur & maintenance"] }
+    ],
+    "error": { "title": "Analyse impossible", "timeout": "L'analyse a pris trop de temps. Veuillez réessayer.", "retry": "← Réessayer" },
+    "accordion": { "hide": "▲ Masquer", "show": "▼ Voir l'analyse" },
+    "detailedAnalysis": "Analyse détaillée",
+    "promo": {
+      "title": "🎯 Votre score peut s'améliorer.",
+      "desc": "Nous avons identifié {count} points d'amélioration sur votre site. Le rapport complet vous donne les actions exactes à mettre en place, avec méthodes, exemples concrets et cas réels documentés.",
+      "feat1": "✓ Test de visibilité IA",
+      "feat2": "✓ Preuves techniques",
+      "feat3": "✓ Cas réels sourcés",
+      "exampleLink": "Voir un exemple de rapport →",
+      "price": "29 €",
+      "priceNote": "paiement unique",
+      "ctaLoading": "Chargement...",
+      "cta": "Débloquer mon rapport →"
+    },
+    "share": {
+      "button": "Partagez votre score",
+      "copyLink": "Copier le lien",
+      "copied": "✓ Copié !",
+      "text": "Mon site obtient {score}/100 en citabilité IA 🤖 Et le vôtre ? → https://www.detekia.fr"
+    },
+    "capture": {
+      "title": "Recevez votre rapport par email",
+      "subtitle": "Recevez votre score détaillé par email",
+      "placeholder": "votre@email.fr",
+      "sent": "Envoyé ! Vérifiez votre boîte mail.",
+      "submit": "Envoyer",
+      "noSpam": "Pas de spam. Désabonnement en un clic."
+    },
+    "recos": {
+      "label": "Plan d'action GEO",
+      "title": "{count} recommandations expertes",
+      "previewLocked": "🔒 Recommandation complète masquée",
+      "previewSubtext": "Méthode, exemples et impact détaillé dans le rapport complet.",
+      "previewUnlock": "Débloquer →",
+      "previewPrice": "29 € · paiement unique",
+      "previewFooter": "👆 Ceci est un aperçu gratuit. Le rapport complet contient {count} recommandations détaillées avec méthodes, exemples et cas réels.",
+      "lockedCount": "{preview} aperçu · {locked} verrouillées",
+      "lockedReco1": "🔒 1 autre recommandation disponible dans le rapport complet",
+      "lockedRecoN": "🔒 {count} autres recommandations disponibles dans le rapport complet"
+    },
+    "unlock": {
+      "title": "Rapport complet disponible",
+      "desc": "{count} recommandations expertes avec méthodes, exemples et impact attendu.",
+      "ctaLoading": "Chargement...",
+      "cta": "Débloquer — 29 € →",
+      "subtext": "Paiement unique · Accès immédiat · Satisfait ou remboursé 7j"
+    },
+    "sticky": {
+      "title": "Rapport complet — {count} recommandations",
+      "cta": "Débloquer — 29 €"
+    },
+    "checkout": {
+      "title": "Rapport GEO complet",
+      "subtext": "29 € · Accès immédiat · Paiement unique"
+    }
+  },
+  "success": {
+    "loading": { "title": "Génération du rapport…", "subtitle": "Vérification du paiement et chargement de l'analyse" },
+    "error": { "title": "Une erreur est survenue", "desc": "Votre paiement a peut-être bien été effectué. Contactez-nous à", "cta": "Retour à l'accueil" },
+    "hero": { "title": "Paiement confirmé — Rapport débloqué", "emailSent": "Rapport complet envoyé à {email}", "emailPreparing": "Préparation du rapport pour {email}…" },
+    "emailBadge": {
+      "title": "Votre rapport complet a été envoyé par email",
+      "desc": "Le rapport PDF détaillé avec toutes vos recommandations a été envoyé à",
+      "spamBold": "Pensez à vérifier vos spams",
+      "spamText": "— l'email peut parfois atterrir dans votre dossier courrier indésirable ou promotions."
+    },
+    "strengths": "✓ Points forts",
+    "topPriority": "🎯 Priorité absolue",
+    "criteriaAnalysis": "Analyse par critère",
+    "recos": {
+      "label": "Plan d'action GEO",
+      "title": "{count} recommandations expertes",
+      "countCritical": "{count} critiques",
+      "countImportant": "{count} importantes",
+      "countBonus": "{count} bonus",
+      "criticalLabel": "— Critique",
+      "importantLabel": "— Important",
+      "bonusLabel": "— Bonus"
+    },
+    "cta": "Analyser un autre site →"
+  },
+  "notFound": {
+    "seo": { "title": "404 — Page introuvable | Detekia" },
+    "code": "404",
+    "title": "Cette page n'existe pas",
+    "subtitle": "Vous cherchez quelque chose ? Cette page a dû se perdre en chemin.",
+    "cta": "Retour à l'accueil →",
+    "ctaSub": "Ou analysez votre site →"
   }
 }
