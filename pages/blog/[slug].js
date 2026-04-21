@@ -245,9 +245,11 @@ export default function ArticlePage({ article, related }) {
   );
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
   return {
-    paths: articles.map(a => ({ params: { slug: a.slug } })),
+    paths: articles.flatMap(a =>
+      locales.map(locale => ({ params: { slug: a.slug }, locale }))
+    ),
     fallback: false,
   };
 }
