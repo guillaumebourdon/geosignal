@@ -37,6 +37,7 @@ export default async function handler(req, res) {
       metadata: {
         url: url || '',
         score: score != null ? String(score) : '',
+        locale,
       },
       return_url: `https://www.detekia.fr${locale === 'en' ? '/en' : ''}/success?session_id={CHECKOUT_SESSION_ID}`,
     });

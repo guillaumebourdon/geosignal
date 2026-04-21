@@ -60,6 +60,7 @@ export default function Success() {
       .then(async data => {
         if (!data.email) { setStatus('error'); return; }
         setEmail(data.email);
+        const reportLocale = data.locale || locale;
         const reportUrl = url || data.url;
         if (reportUrl) {
           const controller = new AbortController();
@@ -67,7 +68,7 @@ export default function Success() {
           const res = await fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: reportUrl }),
+            body: JSON.stringify({ url: reportUrl, locale: reportLocale }),
             signal: controller.signal,
           });
           clearTimeout(timeoutId);
@@ -77,7 +78,7 @@ export default function Success() {
             await fetch('/api/generate-pdf', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report }),
+              body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report, locale: reportLocale }),
             });
             setEmailSent(true);
           }

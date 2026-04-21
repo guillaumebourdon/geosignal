@@ -405,7 +405,7 @@ async function collectEvidence($, textContent, rawContent, url) {
   };
 }
 
-async function runClaudeAnalysis(url, textContent, scores) {
+async function runClaudeAnalysis(url, textContent, scores, locale = 'fr') {
   const total = Object.values(scores).reduce((s, c) => s + c.score, 0);
 
   // All criteria below 80% threshold, sorted by worst score first
@@ -470,7 +470,7 @@ JSON uniquement, sans markdown :
   return JSON.parse(jsonMatch[0]);
 }
 
-async function runCitationTest(url, textContent, metaTitle, metaDescription) {
+async function runCitationTest(url, textContent, metaTitle, metaDescription, locale = 'fr') {
   const hostname = new URL(url).hostname.replace(/^www\./, '');
   const brand = metaTitle ? metaTitle.split(/[-|–·]/)[0].trim() : hostname;
   const intro = textContent.slice(0, 300);
@@ -552,7 +552,8 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const rawUrl = req.body.url;
-  console.log('URL received:', rawUrl);
+  const locale = req.body.locale === 'en' ? 'en' : 'fr';
+  console.log('URL received:', rawUrl, '| locale:', locale);
   if (!rawUrl) return res.status(400).json({ error: 'URL manquante' });
   const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   console.log('analyze: starting for', url);
@@ -597,9 +598,9 @@ export default async function handler(req, res) {
     };
 
     const [claude, evidence, citationTest] = await Promise.all([
-      runClaudeAnalysis(url, textContent, scores),
+      runClaudeAnalysis(url, textContent, scores, locale),
       collectEvidence($, textContent, rawContent, url),
-      runCitationTest(url, textContent, metaTitle, metaDescription).catch(e => { console.error('citationTest error:', e.message); return null; }),
+      runCitationTest(url, textContent, metaTitle, metaDescription, locale).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
     const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
     const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;

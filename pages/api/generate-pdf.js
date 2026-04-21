@@ -679,7 +679,9 @@ ${methodology}
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { email, url, reportData } = req.body;
+  const { email, url, reportData, locale: reqLocale } = req.body;
+  const locale = reqLocale === 'en' ? 'en' : 'fr';
+  console.log('generate-pdf locale:', locale);
   if (!email || !reportData) return res.status(400).json({ error: 'Données manquantes' });
 
   try {

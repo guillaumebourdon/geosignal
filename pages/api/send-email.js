@@ -5,7 +5,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { email, url, score, criteria, recommendations, verdict } = req.body;
+  const { email, url, score, criteria, recommendations, verdict, locale: reqLocale } = req.body;
+  const locale = reqLocale === 'en' ? 'en' : 'fr';
+  console.log('send-email locale:', locale);
   if (!email || !score) return res.status(400).json({ error: 'Données manquantes' });
 
   const tagColors = {
