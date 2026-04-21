@@ -683,14 +683,15 @@ function generateReportHTML(data, locale = 'fr') {
 
   // ── PAGES 5-12 : CRITERIA
   const criteriaPages = criteria.map((c, idx) => {
+   try {
     const cg    = criterionGrade(c.score, c.max, t);
     const group = criterionGroup(c.name, t);
     const pct   = Math.round((c.score / c.max) * 100);
     const recos = matchRecos(recommendations, c.name);
     const ev    = evidenceBlock(c.name, evidence, t);
-    const why   = lookup(t.why, c.name);
-    const study = lookup(t.cases, c.name);
-    const guide = lookup(t.guides, c.name);
+    const why   = lookup(t.why, c.name) || '';
+    const study = lookup(t.cases, c.name) || '';
+    const guide = lookup(t.guides, c.name) || '';
 
     const evidenceSection = evidence
       ? (ev ? `<div style="margin-top:16px;">${ev}</div>` : '')
@@ -745,6 +746,10 @@ function generateReportHTML(data, locale = 'fr') {
       ${guide ? `<div style="background:rgba(217,119,87,0.04);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:16px;"><div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.criteriaPage.technicalGuide}</div><p style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.8;">${esc(guide)}</p></div>` : ''}
       ${study ? `<div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:18px 22px;"><div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.criteriaPage.realCase}</div><p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.7;">${esc(study)}</p></div>` : ''}
     </div>`;
+   } catch (err) {
+    console.error(`[generate-pdf] Error rendering criterion ${idx} (${c?.name}):`, err.message);
+    return `<div style="${P}"><p style="color:#D97757;font-family:system-ui;">Error rendering criterion: ${esc(c?.name || 'unknown')}</p></div>`;
+   }
   }).join('');
 
   // ── PAGE 13 : ACTION PLAN
@@ -871,9 +876,11 @@ export default async function handler(req, res) {
     const html = generateReportHTML({ url, ...reportData }, locale);
 
     console.log('[generate-pdf] locale:', locale);
-    console.log('[generate-pdf] HTML length:', html.length);
-    console.log('[generate-pdf] First criteria name:', reportData.criteria?.[0]?.name);
-    console.log('[generate-pdf] Last criteria name:', reportData.criteria?.[reportData.criteria.length - 1]?.name);
+    console.log('[generate-pdf] HTML length:', html.length, 'chars');
+    console.log('[generate-pdf] criteria count:', reportData.criteria?.length);
+    console.log('[generate-pdf] First criteria:', reportData.criteria?.[0]?.name);
+    console.log('[generate-pdf] Last criteria:', reportData.criteria?.[reportData.criteria.length - 1]?.name);
+    console.log('[generate-pdf] recos count:', reportData.recommendations?.length);
     console.log('Starting PDFShift...');
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
       method: 'POST',

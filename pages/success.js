@@ -6,6 +6,7 @@ import { useTranslation } from '../lib/useTranslation';
 function RecoCard({ r, index, t }) {
   const priorities = t('common.priorities');
   const recoSections = t('common.recoSections');
+  const ci = t('results.criteriaInfo');
   const tag = {
     high:   { bg: 'rgba(217,119,87,0.12)',  color: '#D97757' },
     medium: { bg: 'rgba(201,134,26,0.12)',  color: '#C9861A' },
@@ -17,7 +18,7 @@ function RecoCard({ r, index, t }) {
     <div style={{ background: '#fff', border: `1px solid ${tag.color}28`, borderLeft: `4px solid ${tag.color}`, borderRadius: 14, overflow: 'hidden', marginBottom: 14 }}>
       <div style={{ padding: '14px 20px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
         <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', padding: '3px 9px', borderRadius: 5, fontWeight: 600, background: tag.bg, color: tag.color, flexShrink: 0 }}>{priorities[r.priority] || priorities.medium}</span>
-        {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{r.criterion}</span>}
+        {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{ci[r.criterion]?.title || r.criterion}</span>}
         {r.title && <span style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginLeft: 4 }}>{r.title}</span>}
         <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', flexShrink: 0 }}>#{String(index + 1).padStart(2, '0')}</span>
       </div>

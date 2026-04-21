@@ -80,6 +80,8 @@ function GroupAccordion({ group, getCriteriaForGroup, getLevelColor, isOpen, onM
 function RecoCard({ r, index, isPaid, onCheckout, total, t }) {
   const priorities = t('common.priorities');
   const recoSections = t('common.recoSections');
+  const ci = t('results.criteriaInfo');
+  const translateCrit = (name) => ci[name]?.title || name;
   const tagColors = {
     high:   { bg: 'rgba(217,119,87,0.12)', color: '#D97757', border: 'rgba(217,119,87,0.3)' },
     medium: { bg: 'rgba(201,134,26,0.12)', color: '#C9861A', border: 'rgba(201,134,26,0.3)' },
@@ -96,7 +98,7 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t }) {
         <div style={{ background: '#fff', border: `1px solid ${tag.border}`, borderRadius: 14, overflow: 'hidden', borderLeft: `4px solid ${tag.color}` }}>
           <div style={{ padding: '16px 24px 14px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', padding: '4px 10px', borderRadius: 6, fontWeight: 500, background: tag.bg, color: tag.color }}>{priorities[r.priority] || priorities.medium}</span>
-            {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{r.criterion}</span>}
+            {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{translateCrit(r.criterion)}</span>}
             <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8' }}>#01</span>
           </div>
           <div style={{ padding: '16px 24px 0', position: 'relative' }}>
@@ -132,7 +134,7 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t }) {
       <div style={{ background: '#fff', border: `1px solid ${tag.border}`, borderRadius: 14, overflow: 'hidden', borderLeft: `4px solid ${tag.color}` }}>
         <div style={{ padding: '16px 24px 14px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', padding: '4px 10px', borderRadius: 6, fontWeight: 500, background: tag.bg, color: tag.color }}>{priorities[r.priority] || priorities.medium}</span>
-          {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{r.criterion}</span>}
+          {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{translateCrit(r.criterion)}</span>}
           {r.title && <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui' }}>{r.title}</span>}
           <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', marginLeft: r.title ? 8 : 'auto' }}>#{String(index + 1).padStart(2, '0')}</span>
         </div>
@@ -171,6 +173,7 @@ export default function Results() {
   const verdicts = t('common.verdicts');
   const loadingSteps = t('results.loading.steps');
   const groups = t('results.groups');
+  const criteriaInfoMain = t('results.criteriaInfo');
 
   async function handleCaptureEmail(e) {
     e.preventDefault();
@@ -445,7 +448,7 @@ export default function Results() {
                     {(recommendations.length - 1) === 1 ? t('results.recos.lockedReco1') : t('results.recos.lockedRecoN').replace('{count}', recommendations.length - 1)}
                   </div>
                   <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7 }}>
-                    {recommendations.slice(1).map(r => r.criterion || r.title).filter(Boolean).join(' · ')}
+                    {recommendations.slice(1).map(r => criteriaInfoMain[r.criterion]?.title || r.criterion || r.title).filter(Boolean).join(' · ')}
                   </div>
                 </div>
               )}
