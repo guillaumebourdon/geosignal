@@ -4,41 +4,335 @@ export const config = { maxDuration: 60 };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// ─── i18n strings ────────────────────────────────────────────────────────────
+
+const S = {
+  fr: {
+    grade: { good: 'BON', average: 'MOYEN', poor: 'FAIBLE' },
+    criterionGrade: { good: 'BON', important: 'IMPORTANT', critical: 'CRITIQUE' },
+    criterionGroup: { readability: 'Lisibilite IA', credibility: 'Credibilite', freshness: 'Fraicheur', other: 'Optimisation' },
+    delay: { high: '1-2 sem.', medium: '1 mois', low: '2-3 mois' },
+    impact: { high: 'Eleve', medium: 'Moyen', low: 'Faible' },
+    priority: { high: 'CRITIQUE', medium: 'IMPORTANT', low: 'BONUS' },
+    recoTitles: [
+      { icon: '\u{1F50D}', title: 'Diagnostic', key: 'diagnostic' },
+      { icon: '\u26A0\uFE0F', title: "Pourquoi c'est critique", key: 'whyCritical' },
+      { icon: '\u2705', title: "Ce qu'il faut faire", key: 'whatToDo' },
+      { icon: '\u{1F6E0}\uFE0F', title: 'Comment le faire', key: 'howToDoIt' },
+      { icon: '\u{1F4A1}', title: 'Exemple concret', key: 'concreteExample' },
+      { icon: '\u{1F4C8}', title: 'Impact attendu', key: 'expectedImpact' },
+      { icon: '\u{1F3AF}', title: "Tip d'expert", key: 'expertTip' },
+    ],
+    wellOptimized: 'Ce critere est bien optimise. Continuez a maintenir ce niveau.',
+    cover: { title: 'RAPPORT GEO COMPLET', confidential: 'Ce rapport est personnel et confidentiel', verdictGood: 'Excellente citabilite IA', verdictAvg: 'Citabilite IA a ameliorer', verdictPoor: 'Citabilite IA insuffisante' },
+    synthesis: { label: 'Synthese executive', h1: "Resultats de l'analyse", avgNote: 'La majorite des sites analyses obtient un score inferieur a 50/100.', criteriaH2: 'Les 8 criteres GEO', top3H2: '3 actions prioritaires', strengthsH2: 'Points forts identifies', noEvidence: 'Donnees detaillees non disponibles pour ce scan. Relancez l\'analyse pour un rapport enrichi.', colCriterion: 'Critere', colScore: 'Score', colProgress: 'Progression', colStatus: 'Statut' },
+    context: {
+      label: 'Contexte 2026', h1: 'Pourquoi la visibilite IA est critique en 2026',
+      intro: 'Les moteurs de recherche IA changent radicalement la facon dont les internautes trouvent l\'information. Voici les donnees cles qui expliquent pourquoi votre visibilite IA est devenue un enjeu business direct.',
+      cards: [
+        { label: 'Croissance du trafic IA', value: '+527%', text: 'Le trafic refere par les IA a augmente de 527% entre janvier et mai 2025.', source: 'Previsible, 2025 AI Traffic Report' },
+        { label: 'Usage ChatGPT', value: '2,5 Mds', text: 'Requetes traitees par jour. 810 millions de personnes l\'utilisent quotidiennement.', source: 'Search Engine Land, 2026' },
+        { label: 'Taux de conversion IA', value: '4,4x', text: 'Les visiteurs referes par les IA convertissent 4,4x mieux que les visiteurs organiques classiques.', source: 'Semrush, 2025' },
+        { label: 'SEO vs GEO', value: '80%', text: 'Des URLs citees par ChatGPT ne sont PAS dans le top 100 Google. Le SEO seul ne suffit plus.', source: 'Ahrefs, 2025' },
+        { label: 'Position du texte', value: '44,2%', text: 'Des citations IA proviennent des 30 premiers % du texte. Votre introduction est votre atout n1.', source: 'Growth Memo, 2026' },
+        { label: 'Marche GEO', value: '33,7 Mds$', text: 'Valeur projetee du marche GEO en 2034, contre 848M$ en 2025.', source: 'eMarketer' },
+      ],
+      crossPlatform: 'Seulement 11% des domaines sont cites a la fois par ChatGPT ET Perplexity. Chaque plateforme IA a ses propres preferences — une raison supplementaire de travailler votre citabilite de facon transversale.',
+      academicLabel: 'Source academique de reference',
+      academicText: '"Generative Engine Optimization" — Aggarwal et al., Princeton University / Georgia Tech, KDD 2024. Cette etude demontre que l\'ajout de citations sourcees, de statistiques et de structure dans le contenu augmente la visibilite IA jusqu\'a 40%. C\'est le fondement methodologique de ce rapport.',
+    },
+    citationTest: {
+      label: 'Test IA', h1: 'Test de visibilite IA',
+      intro: 'Nous avons simule 10 requetes utilisateur pour verifier si votre site est cite par les moteurs IA.',
+      queriesCite: 'requetes\ncitent votre site',
+      cited: 'Cite', notCited: 'Non cite',
+      competitorsLabel: 'Cites a votre place :',
+      difficultyLabel: 'Difficulte pour etre cite :',
+      recoLabel: 'Recommandation :',
+      bestOpp: 'Meilleure opportunite :', mainBlocker: 'Blocage principal :',
+      disclaimer: 'Ce test simule des requetes utilisateur via l\'IA. Il reflete la visibilite actuelle de votre marque dans les connaissances des IA. Les resultats peuvent varier selon le moteur IA, la formulation de la requete et le moment du test.',
+    },
+    criteriaPage: {
+      criterionOf: 'Critere', of: '/',
+      found: 'Ce que nous avons trouve',
+      whyImportant: 'Pourquoi c\'est important',
+      recommendation: 'Recommandation', recommendations: 'Recommandations',
+      technicalGuide: 'Guide technique',
+      realCase: 'Cas reel documente',
+      relaunch: 'Relancez l\'analyse pour voir les donnees detaillees.',
+    },
+    evidence: {
+      extractIntro: 'Extrait analyse — 300 premiers caracteres du site',
+      headingsDetected: 'Structure H1/H2/H3 detectee',
+      headingLevel: 'Niveau', headingText: 'Texte',
+      noHeadings: 'Aucun titre H1/H2/H3 detecte',
+      wordCount: 'Nombre de mots :',
+      extLinks: 'Liens sortants vers sources externes',
+      extLinksCount: 'lien(s) externe(s) detecte(s)',
+      datesDetected: 'Dates detectees dans le contenu',
+      noDate: 'Aucune date detectee',
+      titleTag: 'Balise <title>',
+      metaDesc: 'Meta description',
+      notDefined: 'Non definie',
+      socialDetected: 'Reseaux sociaux detectes',
+      noSocial: 'Aucun lien vers reseaux sociaux',
+      noSocialDetected: 'Aucun lien vers reseaux sociaux detecte',
+      robotsContent: 'Contenu de robots.txt',
+      notAccessible: 'Non accessible',
+      llmsFile: 'Fichier llms.txt',
+      llmsPresent: 'Present', llmsAbsent: 'Absent',
+      schemasDetected: 'Schemas JSON-LD detectes',
+      noSchema: 'Aucun schema JSON-LD detecte',
+      schemaType: 'Type', schemaProps: 'Proprietes',
+    },
+    actionPlan: {
+      label: "Plan d'action", h1: 'Recapitulatif des actions',
+      intro: 'recommandations classees par priorite d\'impact.',
+      colHash: '#', colPriority: 'Priorite', colAction: 'Action', colCriterion: 'Critere', colImpact: 'Impact', colDelay: 'Delai',
+      currentScore: 'Score actuel', projectedScore: 'Score projete',
+      projectionText: 'Si toutes les recommandations sont implementees, votre score devrait passer de',
+      projectionTo: 'a environ',
+    },
+    methodology: {
+      label: 'Transparence', h1: 'Methodologie',
+      limitsWarning: "LIMITES DE L'ANALYSE : Ce rapport est genere par analyse automatisee du contenu accessible via scraping (Jina AI). Certains elements rendus en JavaScript cote client, proteges par authentification, ou charges dynamiquement peuvent ne pas etre detectes. Les scores et recommandations refletent le contenu accessible au moment de l'analyse. En cas de doute sur un resultat specifique, une verification manuelle est recommandee.",
+      howItWorks1: 'Ce rapport est genere par analyse automatisee du DOM de votre page via <strong>Jina AI</strong> (scraping HTML) et evaluation sur <strong>8 criteres ponderes</strong>.',
+      howItWorks2: 'Le critere <strong>Neutralite editoriale</strong> est evalue par intelligence artificielle. Les 7 autres criteres sont evalues par analyse technique du HTML.',
+      howItWorks3: 'Le <strong>test de visibilite IA</strong> est realise par simulation de 10 requetes via l\'IA. Les resultats varient selon le moteur IA, la requete et le moment du test.',
+      criteriaH2: 'Les 8 criteres et leur ponderation',
+      colCriterion: 'Critere', colWeight: 'Poids', colMeasured: 'Ce qui est mesure',
+      academicLabel: 'Source academique',
+      academicText: '"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. Certaines optimisations augmentent la visibilite IA jusqu\'a 40%.',
+      limitsLabel: 'Limites de ce rapport',
+      limitsText: 'Ce rapport mesure le <strong>potentiel de citation IA</strong>, pas le nombre reel de citations. Les resultats des moteurs IA varient selon la requete et le contexte.',
+      scopeLabel: 'Perimetre de l\'analyse',
+      scopeText: 'Les scores sont calcules sur la page analysee uniquement, pas le site entier. Pour une evaluation complete, analysez vos pages principales separement.',
+      generatedOn: 'Rapport genere le',
+      criteria: [
+        { name: 'Extractibilite & reponse directe', weight: '25 pts', measured: 'Longueur intro, structure H2/H3, listes, tableaux, calibrage des paragraphes' },
+        { name: 'Verifiabilite & preuves', weight: '20 pts', measured: 'Donnees chiffrees, liens externes sources, dates, tableaux, citations' },
+        { name: 'Autorite & E-E-A-T', weight: '15 pts', measured: 'Page auteur, biographie, A propos, contact, mentions legales, schema Organization' },
+        { name: 'Crawlabilite IA', weight: '15 pts', measured: 'Longueur contenu, lang, canonical, indexabilite, sitemap, bots IA autorises' },
+        { name: 'Donnees structurees', weight: '10 pts', measured: 'HTML semantique, schemas JSON-LD (FAQPage, Article, HowTo, Organization...)' },
+        { name: 'Neutralite editoriale', weight: '10 pts', measured: 'Evalue par IA — superlatifs, ton promotionnel, honnetete' },
+        { name: 'Presence externe', weight: '5 pts', measured: 'Mentions presse, liens reseaux sociaux, temoignages tiers detectes' },
+        { name: 'Fraicheur & maintenance', weight: '5 pts', measured: 'dateModified schema, annees recentes dans le contenu, copyright a jour' },
+      ],
+    },
+    email: {
+      subject: 'Votre rapport GEO complet',
+      headerLabel: 'RAPPORT GEO COMPLET',
+      topPriority: 'Priorite absolue',
+      pdfNote: 'Votre rapport PDF complet avec toutes les recommandations detaillees est joint a cet email.',
+      filename: 'rapport-geo',
+    },
+    why: {
+      extractibilite: "44,2% des citations IA proviennent des 30 premiers % du texte d'une page (Growth Memo, 2026). L'etude Princeton/KDD 2024 demontre que l'ajout de statistiques et de citations dans le contenu augmente la visibilite IA de 30 a 40%. Votre introduction est votre atout n1.",
+      verifiabilite: "Les IA favorisent les contenus factuels et sources. Les pages avec des donnees chiffrees sont citees 2,8x plus souvent que les pages sans donnees verifiables. (AirOps, 2026)",
+      autorite: "L'autorite de domaine est le predicteur n1 des citations IA avec un score SHAP de 0,63 (SE Ranking, 2025). Les pages avec des auteurs identifies et des biographies sont significativement plus citees par les LLM.",
+      crawlabilite: "73% des sites ne sont pas crawlables par les bots IA a cause de robots.txt, CDN ou JavaScript (Otterly.AI, 2026). Debloquer les crawlers IA est le quick win n1 — impact visible en 2 a 4 semaines.",
+      'donnees structurees': "Les pages avec Schema FAQPage, Article et Organization sont plus facilement parsees par les IA. Le contenu structure en chunks est cite 3 a 5x plus souvent que le contenu brut. (Otterly.AI, 2026)",
+      neutralite: "Les IA deprioritisent le contenu ouvertement promotionnel. L'etude Princeton montre que la 'Fluency Optimization' ameliore la visibilite IA, mais le ton doit rester factuel et informatif pour etre cite.",
+      presence: "90% des citations IA proviennent de medias earned et owned, pas de placements payants (Edelman, 2026). Reddit est la source n1 pour Perplexity (6,6% des citations) et n2 pour ChatGPT.",
+      fraicheur: "65% des visites de bots IA ciblent du contenu publie dans les 12 derniers mois (Seer Interactive, 2025). Un contenu non mis a jour depuis plus de 6 mois perd progressivement sa citabilite IA.",
+    },
+    cases: {
+      extractibilite: "SEO Vendor a applique des tactiques d'extractibilite (sections citables, formatage reponse directe) et a obtenu 549 sessions ChatGPT en 7 mois, contre seulement 3 sessions organiques. (SEO Vendor, 2026)",
+      verifiabilite: "Ahrefs genere 12,1% de ses inscriptions via le trafic IA (0,5% du trafic total) grace a des contenus riches en donnees verifiables. Les visiteurs IA consultent 50% plus de pages par session. (Ahrefs/Semrush, 2025)",
+      autorite: "Les marques dans le top 25% des mentions web obtiennent 10x plus de visibilite IA. Les 50 premieres marques captent 28,9% de toutes les mentions dans les AI Overviews. (Ahrefs, 2025)",
+      crawlabilite: "Triangle IP a cree un fichier llms.txt guidant les IA vers ses pages prioritaires. Resultat : 5x plus de trafic IA et une presence sur ChatGPT, Gemini, Perplexity et Copilot. (Concurate/SE Ranking, 2025)",
+      'donnees structurees': "Un site a augmente sa visibilite IA de 340% en 6 mois grace a la restructuration de contenu et l'implementation de schema. Le trafic IA est passe de 127 a 2 340 sessions mensuelles. (Stackmatix, 2026)",
+      neutralite: "L'etude Princeton montre que la 'Fluency Optimization' (reecriture factuelle du contenu) ameliore significativement la visibilite dans les reponses IA. Le contenu educatif est systematiquement cite devant le contenu promotionnel.",
+      presence: "Reddit est cite dans 46,7% des reponses Perplexity (parmi le top 10 sources) et 1,8% des citations ChatGPT. Une presence active sur Reddit est le levier de presence externe le plus efficace. (Profound, 2025)",
+      fraicheur: "79% des pages visitees par les bots IA ont ete publiees dans les 2 dernieres annees (Seer Interactive, 2025). Mettre a jour un article avec des donnees 2026 peut multiplier par 3 ses chances d'etre cite.",
+    },
+    guides: {
+      extractibilite: "Pour ameliorer votre extractibilite, commencez par restructurer votre page d'accueil pour repondre directement a la question principale de votre audience des les 2 premieres phrases. Utilisez des listes a puces pour enumerer vos avantages, services ou fonctionnalites — les IA extraient les listes 3x plus facilement que le texte continu. Ajoutez des sous-titres H2/H3 descriptifs qui contiennent les mots-cles de vos requetes cibles. Evitez les introductions vagues type 'Bienvenue chez...' ou 'Leader de...' — preferez un format 'question-reponse' que les IA peuvent directement citer.",
+      verifiabilite: "Les IA privilegient les contenus sources et verifiables. Pour chaque donnee chiffree de votre site, ajoutez un lien externe vers la source originale (etude, rapport, article de presse). Visez 5 a 10 liens externes par page principale vers des sources reconnues dans votre secteur. Ajoutez des dates explicites a vos contenus (datePublished, dateModified en JSON-LD). Les pages avec des citations sourcees sont citees 2,8x plus souvent par les IA (AirOps, 2026).",
+      autorite: "Renforcez votre E-E-A-T en creant une page 'A propos' detaillee avec les qualifications de votre equipe, vos certifications, vos annees d'experience et vos publications. Ajoutez un schema Organization en JSON-LD. Creez des pages auteur pour chaque contributeur avec biographie, photo, et liens LinkedIn. Obtenez des mentions dans la presse ou sur des sites d'autorite de votre secteur.",
+      crawlabilite: "Verifiez votre fichier robots.txt : les bots GPTBot (OpenAI), ClaudeBot (Anthropic), PerplexityBot et Google-Extended doivent etre autorises. Ajoutez un fichier llms.txt a la racine de votre site. Assurez-vous que votre contenu principal n'est pas rendu en JavaScript cote client (CSR). Utilisez le Server-Side Rendering (SSR) ou le Static Site Generation (SSG). Verifiez que votre sitemap.xml est a jour.",
+      'donnees structurees': "Implementez au minimum ces schemas JSON-LD : Organization (nom, logo, contact, reseaux sociaux), FAQPage (vos questions frequentes), Article ou BlogPosting (pour chaque contenu editorial). Pour les e-commerces, ajoutez Product avec prix, disponibilite, avis agreges (AggregateRating). Validez avec le Google Rich Results Test. Les pages avec Schema structure sont citees 3 a 5x plus souvent par les IA (Otterly.AI, 2026).",
+      neutralite: "Les IA deprioritisent le contenu ouvertement promotionnel. Remplacez les superlatifs ('le meilleur', 'n1', 'leader') par des donnees factuelles ('utilise par 5 000 entreprises', '98% de satisfaction client'). Ajoutez une section 'Limites' ou 'Pour qui ce n'est PAS fait'. Comparez honnetement votre offre avec les alternatives. L'etude Princeton/KDD 2024 montre que la reecriture factuelle ameliore la visibilite IA de 30 a 40%.",
+      presence: "90% des citations IA proviennent de medias earned et owned (Edelman, 2026). Creez un profil actif sur Reddit — c'est la source n1 pour Perplexity. Participez aux discussions de votre secteur avec expertise. Obtenez des mentions dans des articles de presse, podcasts, interviews. Publiez des etudes originales ou des donnees proprietaires que d'autres sites voudront citer.",
+      fraicheur: "Les bots IA privilegient le contenu recent : 65% des visites ciblent du contenu publie dans les 12 derniers mois (Seer Interactive, 2025). Ajoutez datePublished et dateModified en schema.org. Mettez a jour vos articles existants avec des donnees de l'annee en cours. Affichez la date de derniere mise a jour visiblement. Publiez regulierement (2-4 contenus/mois).",
+    },
+  },
+  en: {
+    grade: { good: 'GOOD', average: 'AVERAGE', poor: 'LOW' },
+    criterionGrade: { good: 'GOOD', important: 'IMPORTANT', critical: 'CRITICAL' },
+    criterionGroup: { readability: 'AI Readability', credibility: 'Credibility', freshness: 'Freshness', other: 'Optimization' },
+    delay: { high: '1-2 weeks', medium: '1 month', low: '2-3 months' },
+    impact: { high: 'High', medium: 'Medium', low: 'Low' },
+    priority: { high: 'CRITICAL', medium: 'IMPORTANT', low: 'BONUS' },
+    recoTitles: [
+      { icon: '\u{1F50D}', title: 'Diagnosis', key: 'diagnostic' },
+      { icon: '\u26A0\uFE0F', title: 'Why it\'s critical', key: 'whyCritical' },
+      { icon: '\u2705', title: 'What to do', key: 'whatToDo' },
+      { icon: '\u{1F6E0}\uFE0F', title: 'How to do it', key: 'howToDoIt' },
+      { icon: '\u{1F4A1}', title: 'Concrete example', key: 'concreteExample' },
+      { icon: '\u{1F4C8}', title: 'Expected impact', key: 'expectedImpact' },
+      { icon: '\u{1F3AF}', title: 'Expert tip', key: 'expertTip' },
+    ],
+    wellOptimized: 'This criterion is well optimized. Keep maintaining this level.',
+    cover: { title: 'FULL GEO REPORT', confidential: 'This report is personal and confidential', verdictGood: 'Excellent AI Visibility', verdictAvg: 'AI Visibility Needs Improvement', verdictPoor: 'Insufficient AI Visibility' },
+    synthesis: { label: 'Executive Summary', h1: 'Analysis Results', avgNote: 'Most analyzed websites score below 50/100.', criteriaH2: 'The 8 GEO Criteria', top3H2: '3 Priority Actions', strengthsH2: 'Identified Strengths', noEvidence: 'Detailed data not available for this scan. Re-run the analysis for an enriched report.', colCriterion: 'Criterion', colScore: 'Score', colProgress: 'Progress', colStatus: 'Status' },
+    context: {
+      label: '2026 Context', h1: 'Why AI Visibility Is Critical in 2026',
+      intro: 'AI search engines are radically changing how people find information. Here are the key data points that explain why your AI visibility has become a direct business concern.',
+      cards: [
+        { label: 'AI Traffic Growth', value: '+527%', text: 'AI-referred traffic surged 527% between January and May 2025.', source: 'Previsible, 2025 AI Traffic Report' },
+        { label: 'ChatGPT Usage', value: '2.5B', text: 'Queries processed per day. 810 million people use it daily.', source: 'Search Engine Land, 2026' },
+        { label: 'AI Conversion Rate', value: '4.4x', text: 'AI-referred visitors convert 4.4x better than traditional organic visitors.', source: 'Semrush, 2025' },
+        { label: 'SEO vs GEO', value: '80%', text: 'Of URLs cited by ChatGPT are NOT in Google\'s top 100. SEO alone is no longer enough.', source: 'Ahrefs, 2025' },
+        { label: 'Text Position', value: '44.2%', text: 'Of AI citations come from the first 30% of the text. Your introduction is your #1 asset.', source: 'Growth Memo, 2026' },
+        { label: 'GEO Market', value: '$33.7B', text: 'Projected GEO market value by 2034, up from $848M in 2025.', source: 'eMarketer' },
+      ],
+      crossPlatform: 'Only 11% of domains are cited by both ChatGPT AND Perplexity. Each AI platform has its own preferences — another reason to work on your citation-worthiness across the board.',
+      academicLabel: 'Academic reference source',
+      academicText: '"Generative Engine Optimization" — Aggarwal et al., Princeton University / Georgia Tech, KDD 2024. This study demonstrates that adding sourced citations, statistics and structure to content increases AI visibility by up to 40%. This is the methodological foundation of this report.',
+    },
+    citationTest: {
+      label: 'AI Test', h1: 'AI Visibility Test',
+      intro: 'We simulated 10 user queries to check if your website is cited by AI engines.',
+      queriesCite: 'queries\ncite your website',
+      cited: 'Cited', notCited: 'Not cited',
+      competitorsLabel: 'Cited instead of you:',
+      difficultyLabel: 'Difficulty to get cited:',
+      recoLabel: 'Recommendation:',
+      bestOpp: 'Best opportunity:', mainBlocker: 'Main blocker:',
+      disclaimer: 'This test simulates user queries via AI. It reflects the current visibility of your brand in AI knowledge. Results may vary depending on the AI engine, query phrasing and timing.',
+    },
+    criteriaPage: {
+      criterionOf: 'Criterion', of: '/',
+      found: 'What we found',
+      whyImportant: 'Why it matters',
+      recommendation: 'Recommendation', recommendations: 'Recommendations',
+      technicalGuide: 'Technical guide',
+      realCase: 'Documented real case',
+      relaunch: 'Re-run the analysis to see detailed data.',
+    },
+    evidence: {
+      extractIntro: 'Analyzed excerpt — first 300 characters of the site',
+      headingsDetected: 'H1/H2/H3 structure detected',
+      headingLevel: 'Level', headingText: 'Text',
+      noHeadings: 'No H1/H2/H3 headings detected',
+      wordCount: 'Word count:',
+      extLinks: 'Outbound links to external sources',
+      extLinksCount: 'external link(s) detected',
+      datesDetected: 'Dates detected in content',
+      noDate: 'No date detected',
+      titleTag: '<title> tag',
+      metaDesc: 'Meta description',
+      notDefined: 'Not defined',
+      socialDetected: 'Social media detected',
+      noSocial: 'No social media links found',
+      noSocialDetected: 'No social media links detected',
+      robotsContent: 'robots.txt content',
+      notAccessible: 'Not accessible',
+      llmsFile: 'llms.txt file',
+      llmsPresent: 'Present', llmsAbsent: 'Absent',
+      schemasDetected: 'JSON-LD schemas detected',
+      noSchema: 'No JSON-LD schema detected',
+      schemaType: 'Type', schemaProps: 'Properties',
+    },
+    actionPlan: {
+      label: 'Action Plan', h1: 'Action Summary',
+      intro: 'recommendations ranked by impact priority.',
+      colHash: '#', colPriority: 'Priority', colAction: 'Action', colCriterion: 'Criterion', colImpact: 'Impact', colDelay: 'Timeline',
+      currentScore: 'Current Score', projectedScore: 'Projected Score',
+      projectionText: 'If all recommendations are implemented, your score should go from',
+      projectionTo: 'to approximately',
+    },
+    methodology: {
+      label: 'Transparency', h1: 'Methodology',
+      limitsWarning: 'ANALYSIS LIMITATIONS: This report is generated by automated analysis of content accessible via scraping (Jina AI). Some elements rendered via client-side JavaScript, protected by authentication, or dynamically loaded may not be detected. Scores and recommendations reflect the content accessible at the time of analysis. When in doubt about a specific result, manual verification is recommended.',
+      howItWorks1: 'This report is generated by automated DOM analysis of your page via <strong>Jina AI</strong> (HTML scraping) and evaluation across <strong>8 weighted criteria</strong>.',
+      howItWorks2: 'The <strong>Editorial Neutrality</strong> criterion is evaluated by artificial intelligence. The other 7 criteria are evaluated through technical HTML analysis.',
+      howItWorks3: 'The <strong>AI visibility test</strong> is performed by simulating 10 queries via AI. Results vary depending on the AI engine, query and timing.',
+      criteriaH2: 'The 8 criteria and their weighting',
+      colCriterion: 'Criterion', colWeight: 'Weight', colMeasured: 'What is measured',
+      academicLabel: 'Academic source',
+      academicText: '"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. Certain optimizations increase AI visibility by up to 40%.',
+      limitsLabel: 'Limitations of this report',
+      limitsText: 'This report measures <strong>AI citation potential</strong>, not the actual number of citations. AI engine results vary depending on query and context.',
+      scopeLabel: 'Analysis scope',
+      scopeText: 'Scores are calculated on the analyzed page only, not the entire site. For a complete evaluation, analyze your main pages separately.',
+      generatedOn: 'Report generated on',
+      criteria: [
+        { name: 'Extractability & direct answer', weight: '25 pts', measured: 'Intro length, H2/H3 structure, lists, tables, paragraph calibration' },
+        { name: 'Verifiability & evidence', weight: '20 pts', measured: 'Hard data, sourced external links, dates, tables, citations' },
+        { name: 'Authority & E-E-A-T', weight: '15 pts', measured: 'Author page, bio, About, contact, legal notices, Organization schema' },
+        { name: 'AI Crawlability', weight: '15 pts', measured: 'Content length, lang, canonical, indexability, sitemap, AI bots allowed' },
+        { name: 'Structured data', weight: '10 pts', measured: 'Semantic HTML, JSON-LD schemas (FAQPage, Article, HowTo, Organization...)' },
+        { name: 'Editorial neutrality', weight: '10 pts', measured: 'Evaluated by AI — superlatives, promotional tone, honesty' },
+        { name: 'External presence', weight: '5 pts', measured: 'Press mentions, social media links, third-party testimonials detected' },
+        { name: 'Freshness & maintenance', weight: '5 pts', measured: 'dateModified schema, recent years in content, current copyright' },
+      ],
+    },
+    email: {
+      subject: 'Your full GEO report',
+      headerLabel: 'FULL GEO REPORT',
+      topPriority: 'Top Priority',
+      pdfNote: 'Your full PDF report with all detailed recommendations is attached to this email.',
+      filename: 'geo-report',
+    },
+    why: {
+      extractibilite: "44.2% of AI citations come from the first 30% of a page's text (Growth Memo, 2026). The Princeton/KDD 2024 study demonstrates that adding statistics and citations to content increases AI visibility by 30-40%. Your introduction is your #1 asset.",
+      verifiabilite: "AI favors factual, sourced content. Pages with hard data are cited 2.8x more often than pages without verifiable data. (AirOps, 2026)",
+      autorite: "Domain authority is the #1 predictor of AI citations with a SHAP score of 0.63 (SE Ranking, 2025). Pages with identified authors and bios are significantly more cited by LLMs.",
+      crawlabilite: "73% of websites are not crawlable by AI bots due to robots.txt, CDN or JavaScript issues (Otterly.AI, 2026). Unblocking AI crawlers is the #1 quick win — visible impact in 2-4 weeks.",
+      'donnees structurees': "Pages with Schema FAQPage, Article and Organization are more easily parsed by AI. Structured content in chunks is cited 3-5x more often than raw content. (Otterly.AI, 2026)",
+      neutralite: "AI deprioritizes overtly promotional content. The Princeton study shows that 'Fluency Optimization' improves AI visibility, but the tone must remain factual and informative to get cited.",
+      presence: "90% of AI citations come from earned and owned media, not paid placements (Edelman, 2026). Reddit is the #1 source for Perplexity (6.6% of citations) and #2 for ChatGPT.",
+      fraicheur: "65% of AI bot visits target content published in the last 12 months (Seer Interactive, 2025). Content not updated for 6+ months gradually loses its AI citation-worthiness.",
+    },
+    cases: {
+      extractibilite: "SEO Vendor applied extractability tactics (citable sections, direct-answer formatting) and generated 549 ChatGPT sessions in 7 months, compared to only 3 organic sessions. (SEO Vendor, 2026)",
+      verifiabilite: "Ahrefs generates 12.1% of its signups via AI traffic (0.5% of total traffic) thanks to data-rich verifiable content. AI visitors view 50% more pages per session. (Ahrefs/Semrush, 2025)",
+      autorite: "Brands in the top 25% of web mentions get 10x more AI visibility. The top 50 brands capture 28.9% of all mentions in AI Overviews. (Ahrefs, 2025)",
+      crawlabilite: "Triangle IP created an llms.txt file guiding AI to its priority pages. Result: 5x more AI traffic and presence on ChatGPT, Gemini, Perplexity and Copilot. (Concurate/SE Ranking, 2025)",
+      'donnees structurees': "A website increased its AI visibility by 340% in 6 months through content restructuring and schema implementation. AI traffic went from 127 to 2,340 monthly sessions. (Stackmatix, 2026)",
+      neutralite: "The Princeton study shows that 'Fluency Optimization' (factual content rewriting) significantly improves visibility in AI responses. Educational content is systematically cited over promotional content.",
+      presence: "Reddit is cited in 46.7% of Perplexity responses (among top 10 sources) and 1.8% of ChatGPT citations. An active Reddit presence is the most effective external presence lever. (Profound, 2025)",
+      fraicheur: "79% of pages visited by AI bots were published in the last 2 years (Seer Interactive, 2025). Updating an article with 2026 data can triple its chances of being cited.",
+    },
+    guides: {
+      extractibilite: "To improve your extractability, start by restructuring your homepage to directly answer your audience's main question in the first 2 sentences. Use bullet lists to enumerate your advantages, services or features — AI extracts lists 3x more easily than continuous text. Add descriptive H2/H3 subheadings containing your target keywords. Avoid vague introductions like 'Welcome to...' or 'Leader in...' — prefer a 'question-answer' format that AI can directly cite.",
+      verifiabilite: "AI prioritizes sourced, verifiable content. For every data point on your site, add an external link to the original source (study, report, press article). Aim for 5-10 external links per main page to recognized sources in your industry. Add explicit dates to your content (datePublished, dateModified in JSON-LD). Pages with sourced citations are cited 2.8x more often by AI (AirOps, 2026).",
+      autorite: "Strengthen your E-E-A-T by creating a detailed 'About' page with your team's qualifications, certifications, years of experience and publications. Add an Organization schema in JSON-LD. Create author pages for each contributor with bio, photo and LinkedIn links. Get mentions in press or authority sites in your industry.",
+      crawlabilite: "Check your robots.txt file: GPTBot (OpenAI), ClaudeBot (Anthropic), PerplexityBot and Google-Extended bots must be allowed. Add an llms.txt file at your site root. Make sure your main content is not rendered via client-side JavaScript (CSR). Use Server-Side Rendering (SSR) or Static Site Generation (SSG). Ensure your sitemap.xml is up to date.",
+      'donnees structurees': "Implement at minimum these JSON-LD schemas: Organization (name, logo, contact, social links), FAQPage (your FAQs), Article or BlogPosting (for each editorial content). For e-commerce, add Product with price, availability, aggregate reviews (AggregateRating). Validate with the Google Rich Results Test. Pages with structured Schema are cited 3-5x more often by AI (Otterly.AI, 2026).",
+      neutralite: "AI deprioritizes overtly promotional content. Replace superlatives ('the best', '#1', 'leader') with factual data ('used by 5,000 companies', '98% customer satisfaction'). Add a 'Limitations' section or 'Who this is NOT for'. Compare your offering honestly with alternatives. The Princeton/KDD 2024 study shows factual rewriting improves AI visibility by 30-40%.",
+      presence: "90% of AI citations come from earned and owned media (Edelman, 2026). Create an active Reddit profile — it's the #1 source for Perplexity. Participate in your industry's discussions with expertise. Get mentions in press articles, podcasts, interviews. Publish original studies or proprietary data that other sites will want to cite.",
+      fraicheur: "AI bots favor recent content: 65% of visits target content published in the last 12 months (Seer Interactive, 2025). Add datePublished and dateModified in schema.org. Update your existing articles with current-year data. Display the last update date visibly. Publish regularly (2-4 pieces/month).",
+    },
+  },
+};
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function esc(s) {
   return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function grade(score) {
-  if (score >= 70) return { label: 'BON',    color: '#10A37F', bg: 'rgba(16,163,127,0.12)',  border: 'rgba(16,163,127,0.3)'  };
-  if (score >= 45) return { label: 'MOYEN',  color: '#C9861A', bg: 'rgba(201,134,26,0.12)',  border: 'rgba(201,134,26,0.3)'  };
-  return              { label: 'FAIBLE', color: '#D97757', bg: 'rgba(217,119,87,0.12)',  border: 'rgba(217,119,87,0.3)'  };
+function grade(score, t) {
+  if (score >= 70) return { label: t.grade.good,    color: '#10A37F', bg: 'rgba(16,163,127,0.12)',  border: 'rgba(16,163,127,0.3)'  };
+  if (score >= 45) return { label: t.grade.average,  color: '#C9861A', bg: 'rgba(201,134,26,0.12)',  border: 'rgba(201,134,26,0.3)'  };
+  return              { label: t.grade.poor, color: '#D97757', bg: 'rgba(217,119,87,0.12)',  border: 'rgba(217,119,87,0.3)'  };
 }
 
-function criterionGrade(score, max) {
+function criterionGrade(score, max, t) {
   const pct = score / max;
-  if (pct >= 0.75) return { label: 'BON',       color: '#10A37F', bg: 'rgba(16,163,127,0.10)' };
-  if (pct >= 0.45) return { label: 'IMPORTANT', color: '#C9861A', bg: 'rgba(201,134,26,0.10)' };
-  return              { label: 'CRITIQUE',  color: '#D97757', bg: 'rgba(217,119,87,0.10)' };
+  if (pct >= 0.75) return { label: t.criterionGrade.good,       color: '#10A37F', bg: 'rgba(16,163,127,0.10)' };
+  if (pct >= 0.45) return { label: t.criterionGrade.important, color: '#C9861A', bg: 'rgba(201,134,26,0.10)' };
+  return              { label: t.criterionGrade.critical,  color: '#D97757', bg: 'rgba(217,119,87,0.10)' };
 }
 
-function criterionGroup(name) {
-  if (/extractibilité|données structurées|crawlabilité/i.test(name)) return 'Lisibilité IA';
-  if (/vérifiabilité|autorité|neutralité/i.test(name))               return 'Crédibilité';
-  if (/présence|fraîcheur/i.test(name))                              return 'Fraîcheur';
-  return 'Optimisation';
-}
-
-function matchReco(recs, criterionName) {
-  if (!recs?.length) return null;
-  const name = criterionName.toLowerCase();
-  return (
-    recs.find(r => r.criterion && name.includes(r.criterion.toLowerCase())) ||
-    recs.find(r => r.criterion && r.criterion.toLowerCase().split(/[\s&]/)[0].trim().length > 3 &&
-                   name.includes(r.criterion.toLowerCase().split(/[\s&]/)[0].trim())) ||
-    null
-  );
+function criterionGroup(name, t) {
+  if (/extractibilit|donn.*structur|crawlabilit/i.test(name)) return t.criterionGroup.readability;
+  if (/v.*rifiabilit|autorit|neutralit/i.test(name))          return t.criterionGroup.credibility;
+  if (/pr.*sence|fra.*cheur/i.test(name))                     return t.criterionGroup.freshness;
+  return t.criterionGroup.other;
 }
 
 function matchRecos(recs, criterionName) {
@@ -50,14 +344,6 @@ function matchRecos(recs, criterionName) {
                           name.includes(r.criterion.toLowerCase().split(/[\s&]/)[0].trim()));
 }
 
-function delayLabel(p) {
-  return p === 'high' ? '1–2 sem.' : p === 'medium' ? '1 mois' : '2–3 mois';
-}
-
-function impactLabel(p) {
-  return p === 'high' ? 'Élevé' : p === 'medium' ? 'Moyen' : 'Faible';
-}
-
 function projectedScore(currentScore, criteria) {
   let gain = 0;
   criteria.forEach(c => {
@@ -66,106 +352,92 @@ function projectedScore(currentScore, criteria) {
   return Math.min(100, currentScore + Math.round(gain * 0.7));
 }
 
-// ─── Evidence blocks per criterion ───────────────────────────────────────────
+// ─── Evidence blocks ─────────────────────────────────────────────────────────
 
-function evidenceBlock(criterionName, evidence) {
+function evidenceBlock(criterionName, evidence, t) {
   if (!evidence) return '';
   const name = criterionName.toLowerCase();
-
   const blockStyle = 'background:#F7F5F2;border-left:3px solid #E5E2DC;padding:14px 18px;border-radius:0 6px 6px 0;margin:10px 0;';
   const labelStyle = 'font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;';
   const codeStyle  = 'background:#1A1916;color:#F7F5F2;border-radius:8px;padding:16px;font-family:monospace;font-size:11px;line-height:1.6;white-space:pre-wrap;word-break:break-all;margin:10px 0;';
   const valStyle   = 'font-family:monospace;font-size:12px;color:#1A1916;line-height:1.6;';
 
-  if (/extractibilité/i.test(name)) {
+  if (/extractibilit/i.test(name)) {
     const introBlock = evidence.intro
-      ? `<div style="${blockStyle}"><div style="${labelStyle}">Extrait analysé — 300 premiers caractères du site</div><div style="${valStyle}">${esc(evidence.intro)}</div></div>`
-      : '';
+      ? `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.extractIntro}</div><div style="${valStyle}">${esc(evidence.intro)}</div></div>` : '';
     const headingsRows = (evidence.headings || []).slice(0, 20).map(h =>
       `<tr><td style="padding:5px 10px;font-family:monospace;font-size:10px;color:#D97757;text-transform:uppercase;white-space:nowrap;border-bottom:1px solid #F0EDE8;">${esc(h.level)}</td><td style="padding:5px 10px;font-family:system-ui;font-size:11px;color:#1A1916;border-bottom:1px solid #F0EDE8;">${esc(h.text)}</td></tr>`
     ).join('');
     const headingsBlock = headingsRows
-      ? `<div style="${labelStyle};margin-top:14px;">Structure H1/H2/H3 détectée</div><table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:6px;overflow:hidden;"><thead><tr style="background:#F7F5F2;"><th style="padding:7px 10px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1px;font-weight:400;">Niveau</th><th style="padding:7px 10px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1px;font-weight:400;">Texte</th></tr></thead><tbody>${headingsRows}</tbody></table>`
-      : `<div style="${blockStyle}"><div style="${valStyle}">Aucun titre H1/H2/H3 détecté</div></div>`;
+      ? `<div style="${labelStyle};margin-top:14px;">${t.evidence.headingsDetected}</div><table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:6px;overflow:hidden;"><thead><tr style="background:#F7F5F2;"><th style="padding:7px 10px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1px;font-weight:400;">${t.evidence.headingLevel}</th><th style="padding:7px 10px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1px;font-weight:400;">${t.evidence.headingText}</th></tr></thead><tbody>${headingsRows}</tbody></table>`
+      : `<div style="${blockStyle}"><div style="${valStyle}">${t.evidence.noHeadings}</div></div>`;
     const wcBlock = evidence.wordCount != null
-      ? `<div style="font-family:system-ui;font-size:12px;color:#8A8680;margin-top:10px;">Nombre de mots : <strong style="color:#1A1916;">${evidence.wordCount}</strong></div>`
-      : '';
+      ? `<div style="font-family:system-ui;font-size:12px;color:#8A8680;margin-top:10px;">${t.evidence.wordCount} <strong style="color:#1A1916;">${evidence.wordCount}</strong></div>` : '';
     return introBlock + headingsBlock + wcBlock;
   }
 
-  if (/vérifiabilité/i.test(name)) {
+  if (/v.*rifiabilit/i.test(name)) {
     const extBlock = evidence.externalLinks != null
-      ? `<div style="${blockStyle}"><div style="${labelStyle}">Liens sortants vers sources externes</div><div style="${valStyle}">${evidence.externalLinks} lien(s) externe(s) détecté(s)</div></div>`
-      : '';
-    const datesEntries = Object.entries(evidence.dates || {})
-      .map(([k, v]) => `<div style="font-size:12px;margin-bottom:4px;font-family:system-ui;"><span style="color:#8A8680;">${esc(k)} :</span> <strong style="color:#1A1916;">${esc(v)}</strong></div>`)
-      .join('');
-    const datesBlock = `<div style="${blockStyle}"><div style="${labelStyle}">Dates détectées dans le contenu</div>${datesEntries || '<div style="font-family:system-ui;font-size:12px;color:#D97757;">Aucune date détectée</div>'}</div>`;
+      ? `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.extLinks}</div><div style="${valStyle}">${evidence.externalLinks} ${t.evidence.extLinksCount}</div></div>` : '';
+    const datesEntries = Object.entries(evidence.dates || {}).map(([k, v]) =>
+      `<div style="font-size:12px;margin-bottom:4px;font-family:system-ui;"><span style="color:#8A8680;">${esc(k)}:</span> <strong style="color:#1A1916;">${esc(v)}</strong></div>`
+    ).join('');
+    const datesBlock = `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.datesDetected}</div>${datesEntries || `<div style="font-family:system-ui;font-size:12px;color:#D97757;">${t.evidence.noDate}</div>`}</div>`;
     return extBlock + datesBlock;
   }
 
-  if (/autorité/i.test(name)) {
-    const titleBlock = `<div style="${blockStyle}"><div style="${labelStyle}">Balise &lt;title&gt;</div><div style="${valStyle}">${esc(evidence.metaTitle) || '<span style="color:#D97757;">Non définie</span>'}</div></div>`;
-    const descBlock  = `<div style="${blockStyle}"><div style="${labelStyle}">Meta description</div><div style="${valStyle}">${esc(evidence.metaDescription) || '<span style="color:#D97757;">Non définie</span>'}</div></div>`;
+  if (/autorit/i.test(name)) {
+    const titleBlock = `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.titleTag}</div><div style="${valStyle}">${esc(evidence.metaTitle) || `<span style="color:#D97757;">${t.evidence.notDefined}</span>`}</div></div>`;
+    const descBlock  = `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.metaDesc}</div><div style="${valStyle}">${esc(evidence.metaDescription) || `<span style="color:#D97757;">${t.evidence.notDefined}</span>`}</div></div>`;
     const socialRows = (evidence.socialLinks || []).map(l => `<div style="font-size:11px;font-family:monospace;color:#4285F4;margin-bottom:4px;word-break:break-all;">${esc(l)}</div>`).join('');
-    const socialBlock = `<div style="${blockStyle}"><div style="${labelStyle}">Réseaux sociaux détectés</div>${socialRows || '<div style="font-family:system-ui;font-size:12px;color:#D97757;">Aucun lien vers réseaux sociaux</div>'}</div>`;
+    const socialBlock = `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.socialDetected}</div>${socialRows || `<div style="font-family:system-ui;font-size:12px;color:#D97757;">${t.evidence.noSocial}</div>`}</div>`;
     return titleBlock + descBlock + socialBlock;
   }
 
-  if (/crawlabilité/i.test(name)) {
+  if (/crawlabilit/i.test(name)) {
     const robotsContent = evidence.robotsTxt && evidence.robotsTxt !== 'Non accessible'
       ? `<div style="${codeStyle}">${esc(evidence.robotsTxt)}</div>`
-      : `<div style="${blockStyle}"><div style="${valStyle}">Non accessible</div></div>`;
-    const robotsBlock = `<div style="${labelStyle}">Contenu de robots.txt</div>${robotsContent}`;
+      : `<div style="${blockStyle}"><div style="${valStyle}">${t.evidence.notAccessible}</div></div>`;
+    const robotsBlock = `<div style="${labelStyle}">${t.evidence.robotsContent}</div>${robotsContent}`;
     const llmsColor = evidence.hasLlmsTxt ? '#10A37F' : '#D97757';
-    const llmsBlock = `<div style="${blockStyle}"><div style="${labelStyle}">Fichier llms.txt</div><div style="font-family:system-ui;font-size:13px;font-weight:600;color:${llmsColor};">${evidence.hasLlmsTxt ? '✓ Présent' : '✗ Absent'}</div></div>`;
+    const llmsBlock = `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.llmsFile}</div><div style="font-family:system-ui;font-size:13px;font-weight:600;color:${llmsColor};">${evidence.hasLlmsTxt ? `✓ ${t.evidence.llmsPresent}` : `✗ ${t.evidence.llmsAbsent}`}</div></div>`;
     return robotsBlock + llmsBlock;
   }
 
-  if (/données structurées/i.test(name)) {
+  if (/donn.*structur/i.test(name)) {
     if (!evidence.schemas?.length) {
-      return `<div style="${blockStyle}"><div style="${labelStyle}">Schemas JSON-LD détectés</div><div style="font-family:system-ui;font-size:13px;font-weight:600;color:#D97757;">Aucun schema JSON-LD détecté</div></div>`;
+      return `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.schemasDetected}</div><div style="font-family:system-ui;font-size:13px;font-weight:600;color:#D97757;">${t.evidence.noSchema}</div></div>`;
     }
     const schemaRows = evidence.schemas.map(s =>
       `<tr><td style="padding:8px 10px;font-family:monospace;font-size:11px;color:#1A1916;border-bottom:1px solid #F0EDE8;">${esc(s.type)}</td><td style="padding:8px 10px;font-family:system-ui;font-size:11px;color:#8A8680;border-bottom:1px solid #F0EDE8;">${(s.properties || []).join(', ')}</td></tr>`
     ).join('');
-    return `<div style="${labelStyle}">Schemas JSON-LD détectés</div><table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:6px;overflow:hidden;"><thead><tr style="background:#F7F5F2;"><th style="padding:7px 10px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1px;font-weight:400;">Type</th><th style="padding:7px 10px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1px;font-weight:400;">Propriétés</th></tr></thead><tbody>${schemaRows}</tbody></table>`;
+    return `<div style="${labelStyle}">${t.evidence.schemasDetected}</div><table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:6px;overflow:hidden;"><thead><tr style="background:#F7F5F2;"><th style="padding:7px 10px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1px;font-weight:400;">${t.evidence.schemaType}</th><th style="padding:7px 10px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1px;font-weight:400;">${t.evidence.schemaProps}</th></tr></thead><tbody>${schemaRows}</tbody></table>`;
   }
 
-  if (/présence/i.test(name)) {
+  if (/pr.*sence/i.test(name)) {
     const socialRows = (evidence.socialLinks || []).map(l => `<div style="font-size:11px;font-family:monospace;color:#4285F4;margin-bottom:4px;word-break:break-all;">${esc(l)}</div>`).join('');
-    return `<div style="${blockStyle}"><div style="${labelStyle}">Réseaux sociaux détectés</div>${socialRows || '<div style="font-family:system-ui;font-size:12px;color:#D97757;">Aucun lien vers réseaux sociaux détecté</div>'}</div>`;
+    return `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.socialDetected}</div>${socialRows || `<div style="font-family:system-ui;font-size:12px;color:#D97757;">${t.evidence.noSocialDetected}</div>`}</div>`;
   }
 
-  if (/fraîcheur/i.test(name)) {
-    const datesEntries = Object.entries(evidence.dates || {})
-      .map(([k, v]) => `<div style="font-size:12px;margin-bottom:4px;font-family:system-ui;"><span style="color:#8A8680;">${esc(k)} :</span> <strong style="color:#1A1916;">${esc(v)}</strong></div>`)
-      .join('');
-    return `<div style="${blockStyle}"><div style="${labelStyle}">Dates détectées dans le contenu</div>${datesEntries || '<div style="font-family:system-ui;font-size:12px;color:#D97757;">Aucune date détectée</div>'}</div>`;
+  if (/fra.*cheur/i.test(name)) {
+    const datesEntries = Object.entries(evidence.dates || {}).map(([k, v]) =>
+      `<div style="font-size:12px;margin-bottom:4px;font-family:system-ui;"><span style="color:#8A8680;">${esc(k)}:</span> <strong style="color:#1A1916;">${esc(v)}</strong></div>`
+    ).join('');
+    return `<div style="${blockStyle}"><div style="${labelStyle}">${t.evidence.datesDetected}</div>${datesEntries || `<div style="font-family:system-ui;font-size:12px;color:#D97757;">${t.evidence.noDate}</div>`}</div>`;
   }
 
   return '';
 }
 
-// ─── Recommendation sections ──────────────────────────────────────────────────
+// ─── Recommendation sections ─────────────────────────────────────────────────
 
-function recoSections(reco) {
+function recoSections(reco, t) {
   if (!reco) {
     return `<div style="background:rgba(16,163,127,0.06);border:1px solid rgba(16,163,127,0.2);border-radius:8px;padding:16px 20px;display:flex;align-items:center;gap:12px;">
       <span style="font-size:18px;">✓</span>
-      <span style="font-family:system-ui;font-size:13px;color:#10A37F;font-weight:500;">Ce critère est bien optimisé. Continuez à maintenir ce niveau.</span>
+      <span style="font-family:system-ui;font-size:13px;color:#10A37F;font-weight:500;">${t.wellOptimized}</span>
     </div>`;
   }
-
-  const ALL = [
-    { icon: '🔍', title: 'Diagnostic',              content: reco.diagnostic,      key: 'diagnostic'      },
-    { icon: '⚠️', title: "Pourquoi c'est critique", content: reco.whyCritical,     key: 'whyCritical'     },
-    { icon: '✅', title: "Ce qu'il faut faire",     content: reco.whatToDo,        key: 'whatToDo'        },
-    { icon: '🛠️', title: 'Comment le faire',        content: reco.howToDoIt,       key: 'howToDoIt'       },
-    { icon: '💡', title: 'Exemple concret',         content: reco.concreteExample, key: 'concreteExample' },
-    { icon: '📈', title: 'Impact attendu',          content: reco.expectedImpact,  key: 'expectedImpact'  },
-    { icon: '🎯', title: "Tip d'expert",            content: reco.expertTip,       key: 'expertTip'       },
-  ];
 
   const KEYS = {
     high:   ['diagnostic', 'whyCritical', 'whatToDo', 'howToDoIt', 'concreteExample', 'expectedImpact', 'expertTip'],
@@ -173,21 +445,22 @@ function recoSections(reco) {
     low:    ['diagnostic', 'whatToDo', 'expectedImpact'],
   };
 
-  return ALL
-    .filter(s => (KEYS[reco.priority] || KEYS.medium).includes(s.key) && s.content)
+  return t.recoTitles
+    .filter(s => (KEYS[reco.priority] || KEYS.medium).includes(s.key) && reco[s.key])
     .map(s => `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:13px 16px;margin-bottom:8px;">
       <div style="font-family:system-ui;font-size:11px;font-weight:600;color:#1A1916;margin-bottom:5px;">${s.icon} ${s.title}</div>
-      <div style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.65;">${esc(s.content)}</div>
+      <div style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.65;">${esc(reco[s.key])}</div>
     </div>`)
     .join('');
 }
 
-// ─── Main HTML generator ──────────────────────────────────────────────────────
+// ─── Main HTML generator ─────────────────────────────────────────────────────
 
-function generateReportHTML(data) {
+function generateReportHTML(data, locale = 'fr') {
+  const t = S[locale] || S.fr;
   const { url, score, verdict, strengths = [], topPriority, criteria = [], recommendations = [], evidence, citationTest } = data;
-  const g         = grade(score);
-  const date      = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  const g         = grade(score, t);
+  const date      = new Date().toLocaleDateString(locale === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const projected = projectedScore(score, criteria);
   const noEvidence = !evidence;
 
@@ -196,15 +469,25 @@ function generateReportHTML(data) {
     return (p[a.priority] ?? 1) - (p[b.priority] ?? 1);
   });
 
+  function delayLabel(p) { return t.delay[p] || t.delay.medium; }
+  function impactLabel(p) { return t.impact[p] || t.impact.medium; }
+  function priorityLabel(p) { return t.priority[p] || t.priority.medium; }
+
   const P  = 'page-break-before:always;padding:52px 56px 64px;background:#fff;box-sizing:border-box;';
   const LS = 'font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;';
-
   const sLabel = (txt, color = '#D97757') =>
     `<div style="font-family:monospace;font-size:10px;color:${color};letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">${txt}</div>`;
   const H1 = (txt) =>
     `<h1 style="font-family:Georgia,serif;font-size:34px;color:#1A1916;letter-spacing:-1px;margin-bottom:28px;line-height:1.1;">${txt}</h1>`;
 
-  // ── PAGE 1 : COVER ──────────────────────────────────────────────────────────
+  function lookup(map, criterionName) {
+    const n = criterionName.toLowerCase();
+    for (const [k, v] of Object.entries(map)) { if (n.includes(k)) return v; }
+    return '';
+  }
+
+  // ── PAGE 1 : COVER
+  const coverVerdict = g.label === t.grade.good ? t.cover.verdictGood : g.label === t.grade.average ? t.cover.verdictAvg : t.cover.verdictPoor;
   const cover = `
   <div style="background:#1A1916;min-height:100vh;padding:72px 64px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;">
     <div style="position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:${g.color};opacity:0.05;pointer-events:none;"></div>
@@ -217,7 +500,7 @@ function generateReportHTML(data) {
         </div>
         <span style="font-family:Georgia,serif;font-size:22px;color:#F7F5F2;">Detekia</span>
       </div>
-      <div style="font-family:monospace;font-size:10px;color:rgba(247,245,242,0.3);letter-spacing:3px;text-transform:uppercase;">RAPPORT GEO COMPLET · ${date}</div>
+      <div style="font-family:monospace;font-size:10px;color:rgba(247,245,242,0.3);letter-spacing:3px;text-transform:uppercase;">${t.cover.title} · ${date}</div>
     </div>
     <div>
       <div style="font-family:Georgia,serif;font-size:136px;line-height:1;color:#F7F5F2;letter-spacing:-6px;margin-bottom:4px;">${score}</div>
@@ -225,258 +508,167 @@ function generateReportHTML(data) {
       <div style="display:inline-block;background:${g.bg};border:1px solid ${g.border};padding:6px 18px;border-radius:24px;margin-bottom:18px;">
         <span style="font-family:monospace;font-size:11px;letter-spacing:2px;color:${g.color};text-transform:uppercase;">${g.label}</span>
       </div>
-      <div style="font-family:Georgia,serif;font-size:34px;color:#F7F5F2;line-height:1.2;max-width:620px;margin-bottom:18px;">
-        ${g.label === 'BON' ? 'Excellente citabilité IA' : g.label === 'MOYEN' ? 'Citabilité IA à améliorer' : 'Citabilité IA insuffisante'}
-      </div>
+      <div style="font-family:Georgia,serif;font-size:34px;color:#F7F5F2;line-height:1.2;max-width:620px;margin-bottom:18px;">${coverVerdict}</div>
       <div style="font-family:monospace;font-size:13px;color:#D97757;">${esc(url)}</div>
     </div>
     <div style="border-top:1px solid rgba(247,245,242,0.08);padding-top:22px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;">
-      <div style="font-family:system-ui;font-size:12px;color:rgba(247,245,242,0.28);">Ce rapport est personnel et confidentiel</div>
+      <div style="font-family:system-ui;font-size:12px;color:rgba(247,245,242,0.28);">${t.cover.confidential}</div>
       <div style="font-family:system-ui;font-size:11px;color:rgba(247,245,242,0.2);">Beeleven SASU · hello@detekia.fr · detekia.fr</div>
     </div>
   </div>`;
 
-  // ── PAGE 2 : EXECUTIVE SUMMARY ──────────────────────────────────────────────
+  // ── PAGE 2 : EXECUTIVE SUMMARY
   const criteriaTableRows = criteria.map(c => {
     const pct = Math.round((c.score / c.max) * 100);
-    const cg  = criterionGrade(c.score, c.max);
+    const cg  = criterionGrade(c.score, c.max, t);
     return `<tr>
       <td style="padding:10px 12px;font-family:system-ui;font-size:12px;color:#1A1916;border-bottom:1px solid #F0EDE8;">${esc(c.name)}</td>
       <td style="padding:10px 12px;text-align:center;border-bottom:1px solid #F0EDE8;"><span style="font-family:monospace;font-size:12px;font-weight:600;color:${cg.color};">${c.score}/${c.max}</span></td>
-      <td style="padding:10px 16px;border-bottom:1px solid #F0EDE8;width:120px;">
-        <div style="height:6px;background:#E5E2DC;border-radius:3px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${cg.color};border-radius:3px;"></div></div>
-      </td>
-      <td style="padding:10px 12px;border-bottom:1px solid #F0EDE8;">
-        <span style="display:inline-block;padding:2px 9px;border-radius:12px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${cg.bg};color:${cg.color};">${cg.label}</span>
-      </td>
+      <td style="padding:10px 16px;border-bottom:1px solid #F0EDE8;width:120px;"><div style="height:6px;background:#E5E2DC;border-radius:3px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${cg.color};border-radius:3px;"></div></div></td>
+      <td style="padding:10px 12px;border-bottom:1px solid #F0EDE8;"><span style="display:inline-block;padding:2px 9px;border-radius:12px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${cg.bg};color:${cg.color};">${cg.label}</span></td>
     </tr>`;
   }).join('');
 
   const top3HTML = sortedRecos.slice(0, 3).map((r, i) => {
-    const rc = r.priority === 'high' ? { color: '#D97757', bg: 'rgba(217,119,87,0.07)' }
-             : r.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.07)' }
-             : { color: '#10A37F', bg: 'rgba(16,163,127,0.07)' };
+    const rc = r.priority === 'high' ? { color: '#D97757', bg: 'rgba(217,119,87,0.07)' } : r.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.07)' } : { color: '#10A37F', bg: 'rgba(16,163,127,0.07)' };
     return `<div style="display:flex;gap:16px;align-items:flex-start;padding:14px 16px;background:${rc.bg};border-radius:8px;margin-bottom:8px;">
       <div style="font-family:Georgia,serif;font-size:22px;color:${rc.color};line-height:1;flex-shrink:0;min-width:24px;">${i + 1}</div>
-      <div style="flex:1;">
-        <div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:3px;">${esc(r.title || r.criterion || '')}</div>
-        <div style="font-family:system-ui;font-size:11px;color:#8A8680;line-height:1.5;">${esc(r.whatToDo || r.diagnostic || '')}</div>
-      </div>
+      <div style="flex:1;"><div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:3px;">${esc(r.title || r.criterion || '')}</div><div style="font-family:system-ui;font-size:11px;color:#8A8680;line-height:1.5;">${esc(r.whatToDo || r.diagnostic || '')}</div></div>
       <div style="font-family:monospace;font-size:9px;color:${rc.color};background:${rc.bg};padding:3px 9px;border-radius:12px;white-space:nowrap;flex-shrink:0;border:1px solid ${rc.color}33;">${impactLabel(r.priority)}</div>
     </div>`;
   }).join('');
 
   const strengthsHTML = (strengths || []).map(s =>
-    `<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;">
-      <span style="color:#10A37F;font-size:14px;flex-shrink:0;margin-top:1px;">✓</span>
-      <span style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.5;">${esc(s)}</span>
-    </div>`
+    `<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;"><span style="color:#10A37F;font-size:14px;flex-shrink:0;margin-top:1px;">✓</span><span style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.5;">${esc(s)}</span></div>`
   ).join('') || `<div style="font-family:system-ui;font-size:13px;color:#8A8680;">—</div>`;
 
   const execSummary = `
   <div style="${P}min-height:100vh;">
-    ${sLabel('Synthèse exécutive')}
-    ${H1("Résultats de l'analyse")}
+    ${sLabel(t.synthesis.label)}
+    ${H1(t.synthesis.h1)}
     <div style="background:#1A1916;border-radius:12px;padding:24px 28px;margin-bottom:36px;display:flex;align-items:center;gap:24px;">
-      <div style="flex-shrink:0;">
-        <div style="font-family:Georgia,serif;font-size:52px;color:#F7F5F2;line-height:1;letter-spacing:-2px;">${score}</div>
-        <div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.28);">/100</div>
-      </div>
+      <div style="flex-shrink:0;"><div style="font-family:Georgia,serif;font-size:52px;color:#F7F5F2;line-height:1;letter-spacing:-2px;">${score}</div><div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.28);">/100</div></div>
       <div style="width:1px;height:60px;background:rgba(247,245,242,0.1);flex-shrink:0;"></div>
-      <div>
-        <div style="font-family:system-ui;font-size:13px;color:rgba(247,245,242,0.65);line-height:1.7;max-width:460px;">${esc(verdict)}</div>
-        <div style="font-family:system-ui;font-size:11px;color:rgba(247,245,242,0.28);margin-top:8px;">La majorité des sites analysés obtient un score inférieur à 50/100.</div>
-      </div>
+      <div><div style="font-family:system-ui;font-size:13px;color:rgba(247,245,242,0.65);line-height:1.7;max-width:460px;">${esc(verdict)}</div><div style="font-family:system-ui;font-size:11px;color:rgba(247,245,242,0.28);margin-top:8px;">${t.synthesis.avgNote}</div></div>
     </div>
-    <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">Les 8 critères GEO</h2>
+    <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">${t.synthesis.criteriaH2}</h2>
     <table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:36px;">
       <thead><tr style="background:#F7F5F2;">
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Critère</th>
-        <th style="padding:9px 12px;text-align:center;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Score</th>
-        <th style="padding:9px 12px;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;width:120px;">Progression</th>
-        <th style="padding:9px 12px;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Statut</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.synthesis.colCriterion}</th>
+        <th style="padding:9px 12px;text-align:center;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.synthesis.colScore}</th>
+        <th style="padding:9px 12px;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;width:120px;">${t.synthesis.colProgress}</th>
+        <th style="padding:9px 12px;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.synthesis.colStatus}</th>
       </tr></thead>
       <tbody>${criteriaTableRows}</tbody>
     </table>
-    <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">3 actions prioritaires</h2>
+    <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">${t.synthesis.top3H2}</h2>
     ${top3HTML}
-    <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-top:28px;margin-bottom:14px;">Points forts identifiés</h2>
+    <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-top:28px;margin-bottom:14px;">${t.synthesis.strengthsH2}</h2>
     <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;">${strengthsHTML}</div>
-    ${noEvidence ? `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.25);border-radius:8px;padding:14px 18px;margin-top:28px;font-family:system-ui;font-size:12px;color:#C9861A;line-height:1.5;">⚠️ Données détaillées non disponibles pour ce scan. Relancez l'analyse pour un rapport enrichi.</div>` : ''}
+    ${noEvidence ? `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.25);border-radius:8px;padding:14px 18px;margin-top:28px;font-family:system-ui;font-size:12px;color:#C9861A;line-height:1.5;">${t.synthesis.noEvidence}</div>` : ''}
   </div>`;
 
-  // ── PAGE 3 : CONTEXT ────────────────────────────────────────────────────────
+  // ── PAGE 3 : CONTEXT
+  const contextCards = t.context.cards.map((card, i) => {
+    const valueColor = i === 2 ? '#10A37F' : i === 4 ? '#C9861A' : i === 5 ? '#10A37F' : '#D97757';
+    return `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
+      <div style="${LS}">${card.label}</div>
+      <div style="font-family:Georgia,serif;font-size:28px;color:${valueColor};line-height:1;margin-bottom:6px;">${card.value}</div>
+      <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">${card.text} <span style="color:#B0ABA5;">(${card.source})</span></p>
+    </div>`;
+  }).join('');
+
   const context = `
   <div style="${P}min-height:100vh;">
-    ${sLabel('Contexte 2026')}
-    ${H1('Pourquoi la visibilité IA est critique en 2026')}
-    <p style="font-family:system-ui;font-size:13px;color:#8A8680;line-height:1.7;margin-bottom:28px;">Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information. Voici les données clés qui expliquent pourquoi votre visibilité IA est devenue un enjeu business direct.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;">
-      <div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
-        <div style="${LS}">Croissance du trafic IA</div>
-        <div style="font-family:Georgia,serif;font-size:28px;color:#D97757;line-height:1;margin-bottom:6px;">+527%</div>
-        <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">Le trafic référé par les IA a augmenté de 527% entre janvier et mai 2025. <span style="color:#B0ABA5;">(Previsible, 2025 AI Traffic Report)</span></p>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
-        <div style="${LS}">Usage ChatGPT</div>
-        <div style="font-family:Georgia,serif;font-size:28px;color:#D97757;line-height:1;margin-bottom:6px;">2,5 Mds</div>
-        <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">Requêtes traitées par jour. 810 millions de personnes l'utilisent quotidiennement. <span style="color:#B0ABA5;">(Search Engine Land, 2026)</span></p>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
-        <div style="${LS}">Taux de conversion IA</div>
-        <div style="font-family:Georgia,serif;font-size:28px;color:#10A37F;line-height:1;margin-bottom:6px;">4,4×</div>
-        <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">Les visiteurs référés par les IA convertissent 4,4× mieux que les visiteurs organiques classiques. <span style="color:#B0ABA5;">(Semrush, 2025)</span></p>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
-        <div style="${LS}">SEO vs GEO</div>
-        <div style="font-family:Georgia,serif;font-size:28px;color:#D97757;line-height:1;margin-bottom:6px;">80%</div>
-        <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">Des URLs citées par ChatGPT ne sont PAS dans le top 100 Google. Le SEO seul ne suffit plus. <span style="color:#B0ABA5;">(Ahrefs, 2025)</span></p>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
-        <div style="${LS}">Position du texte</div>
-        <div style="font-family:Georgia,serif;font-size:28px;color:#C9861A;line-height:1;margin-bottom:6px;">44,2%</div>
-        <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">Des citations IA proviennent des 30 premiers % du texte. Votre introduction est votre atout n°1. <span style="color:#B0ABA5;">(Growth Memo, 2026)</span></p>
-      </div>
-      <div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
-        <div style="${LS}">Marché GEO</div>
-        <div style="font-family:Georgia,serif;font-size:28px;color:#10A37F;line-height:1;margin-bottom:6px;">33,7 Mds$</div>
-        <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">Valeur projetée du marché GEO en 2034, contre 848M$ en 2025. <span style="color:#B0ABA5;">(eMarketer)</span></p>
-      </div>
-    </div>
+    ${sLabel(t.context.label)}
+    ${H1(t.context.h1)}
+    <p style="font-family:system-ui;font-size:13px;color:#8A8680;line-height:1.7;margin-bottom:28px;">${t.context.intro}</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;">${contextCards}</div>
     <div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;margin-bottom:20px;">
-      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.7;"><strong>Seulement 11%</strong> des domaines sont cités à la fois par ChatGPT ET Perplexity. <span style="color:#8A8680;">(Profound, 2025)</span> Chaque plateforme IA a ses propres préférences — une raison supplémentaire de travailler votre citabilité de façon transversale.</p>
+      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.7;"><strong>${t.context.crossPlatform.split('.')[0]}.</strong>${t.context.crossPlatform.substring(t.context.crossPlatform.indexOf('.') + 1)} <span style="color:#8A8680;">(Profound, 2025)</span></p>
     </div>
     <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;">
-      <div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Source académique de référence</div>
-      <p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.7;">"Generative Engine Optimization" — Aggarwal et al., Princeton University / Georgia Tech, KDD 2024. Cette étude démontre que l'ajout de citations sourcées, de statistiques et de structure dans le contenu augmente la visibilité IA jusqu'à <strong>40%</strong>. C'est le fondement méthodologique de ce rapport.</p>
+      <div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.context.academicLabel}</div>
+      <p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.7;">${t.context.academicText}</p>
     </div>
   </div>`;
 
-  // ── PAGE 4 : CITATION TEST ──────────────────────────────────────────────────
+  // ── PAGE 4 : CITATION TEST
   const citationTestPage = (() => {
     if (!citationTest || !Array.isArray(citationTest.tests) || !citationTest.tests.length) return '';
     const ct = citationTest;
-    const citedCount = ct.summary?.cited_count ?? ct.tests.filter(t => t.cited).length;
-    const totalTests  = ct.summary?.total_tests ?? ct.tests.length;
-    const bc = citedCount >= 3
-      ? { color: '#10A37F', bg: 'rgba(16,163,127,0.12)', border: 'rgba(16,163,127,0.3)' }
-      : citedCount >= 1
-      ? { color: '#C9861A', bg: 'rgba(201,134,26,0.12)',  border: 'rgba(201,134,26,0.3)' }
-      : { color: '#D97757', bg: 'rgba(217,119,87,0.12)',  border: 'rgba(217,119,87,0.3)' };
-    const diffColor = {
-      'générique':     { color: '#D97757', bg: 'rgba(217,119,87,0.10)' },
-      'niche':         { color: '#C9861A', bg: 'rgba(201,134,26,0.10)' },
-      'longue_traîne': { color: '#10A37F', bg: 'rgba(16,163,127,0.10)' },
-    };
-    const cards = ct.tests.map(t => {
-      const dc = diffColor[t.difficulty] || { color: '#8A8680', bg: 'rgba(138,134,128,0.10)' };
-      const citedColor = t.cited ? '#10A37F' : '#D97757';
-      const citedBg    = t.cited ? 'rgba(16,163,127,0.10)' : 'rgba(217,119,87,0.10)';
-      const diffLabel  = (t.difficulty || '').toUpperCase().replace(/_/g, ' ');
-      const competitorsLine = !t.cited && t.competitors_cited?.length
-        ? `<div style="font-family:system-ui;font-size:11px;color:#8A8680;margin-bottom:4px;">Cités à votre place : <strong style="color:#1A1916;">${t.competitors_cited.map(esc).join(', ')}</strong></div>`
-        : '';
-      const excerptBlock = t.ai_response_excerpt
-        ? `<div style="background:#F7F5F2;border-left:3px solid #E5E2DC;padding:8px 12px;font-family:monospace;font-size:11px;color:#8A8680;line-height:1.5;margin-top:8px;">${esc(t.ai_response_excerpt)}</div>`
-        : '';
+    const citedCount = ct.summary?.cited_count ?? ct.tests.filter(tt => tt.cited).length;
+    const totalTests = ct.summary?.total_tests ?? ct.tests.length;
+    const bc = citedCount >= 3 ? { color: '#10A37F', bg: 'rgba(16,163,127,0.12)', border: 'rgba(16,163,127,0.3)' }
+             : citedCount >= 1 ? { color: '#C9861A', bg: 'rgba(201,134,26,0.12)', border: 'rgba(201,134,26,0.3)' }
+             : { color: '#D97757', bg: 'rgba(217,119,87,0.12)', border: 'rgba(217,119,87,0.3)' };
+    const diffColorMap = { 'generique': '#D97757', 'niche': '#C9861A', 'longue_traine': '#10A37F', 'generic': '#D97757', 'long_tail': '#10A37F' };
+    const cards = ct.tests.map(tt => {
+      const dc = diffColorMap[tt.difficulty] || '#8A8680';
+      const dcBg = dc + '1A';
+      const citedColor = tt.cited ? '#10A37F' : '#D97757';
+      const citedBg = tt.cited ? 'rgba(16,163,127,0.10)' : 'rgba(217,119,87,0.10)';
+      const diffLabel = (tt.difficulty || '').toUpperCase().replace(/_/g, ' ');
+      const competitorsLine = !tt.cited && tt.competitors_cited?.length
+        ? `<div style="font-family:system-ui;font-size:11px;color:#8A8680;margin-bottom:4px;">${t.citationTest.competitorsLabel} <strong style="color:#1A1916;">${tt.competitors_cited.map(esc).join(', ')}</strong></div>` : '';
+      const excerptBlock = tt.ai_response_excerpt
+        ? `<div style="background:#F7F5F2;border-left:3px solid #E5E2DC;padding:8px 12px;font-family:monospace;font-size:11px;color:#8A8680;line-height:1.5;margin-top:8px;">${esc(tt.ai_response_excerpt)}</div>` : '';
       return `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:16px;margin-bottom:12px;">
         <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-          <div style="flex:1;min-width:200px;font-family:system-ui;font-size:13px;font-weight:600;color:#1A1916;line-height:1.4;">${esc(t.query)}</div>
-          <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${dc.bg};color:${dc.color};white-space:nowrap;">${diffLabel}</span>
-          <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${citedBg};color:${citedColor};white-space:nowrap;">${t.cited ? '✓ Cité' : '✗ Non cité'}</span>
+          <div style="flex:1;min-width:200px;font-family:system-ui;font-size:13px;font-weight:600;color:#1A1916;line-height:1.4;">${esc(tt.query)}</div>
+          <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${dcBg};color:${dc};white-space:nowrap;">${diffLabel}</span>
+          <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${citedBg};color:${citedColor};white-space:nowrap;">${tt.cited ? `✓ ${t.citationTest.cited}` : `✗ ${t.citationTest.notCited}`}</span>
         </div>
         ${competitorsLine}
-        <div style="font-family:system-ui;font-size:11px;color:#8A8680;margin-bottom:4px;">Difficulté pour être cité : <strong style="color:#1A1916;">${esc(t.difficulty_to_rank || '')}</strong></div>
-        <div style="font-family:system-ui;font-size:11px;color:#1A1916;margin-bottom:4px;line-height:1.5;"><em>Recommandation :</em> ${esc(t.recommendation || '')}</div>
+        <div style="font-family:system-ui;font-size:11px;color:#8A8680;margin-bottom:4px;">${t.citationTest.difficultyLabel} <strong style="color:#1A1916;">${esc(tt.difficulty_to_rank || '')}</strong></div>
+        <div style="font-family:system-ui;font-size:11px;color:#1A1916;margin-bottom:4px;line-height:1.5;"><em>${t.citationTest.recoLabel}</em> ${esc(tt.recommendation || '')}</div>
         ${excerptBlock}
       </div>`;
     }).join('');
     const summaryBlock = ct.summary
       ? `<div style="font-family:system-ui;font-size:13px;color:#1A1916;margin-top:12px;line-height:1.8;">
-          <span style="color:#8A8680;">Meilleure opportunité :</span> ${esc(ct.summary.best_opportunity || '—')}<br>
-          <span style="color:#8A8680;">Blocage principal :</span> ${esc(ct.summary.main_blocker || '—')}
-        </div>`
-      : '';
+          <span style="color:#8A8680;">${t.citationTest.bestOpp}</span> ${esc(ct.summary.best_opportunity || '—')}<br>
+          <span style="color:#8A8680;">${t.citationTest.mainBlocker}</span> ${esc(ct.summary.main_blocker || '—')}
+        </div>` : '';
     return `
     <div style="${P}min-height:100vh;">
-      ${sLabel('Test IA')}
-      <h1 style="font-family:Georgia,serif;font-size:34px;color:#1A1916;letter-spacing:-1px;margin-bottom:8px;line-height:1.1;">Test de visibilité IA</h1>
-      <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:28px;line-height:1.6;">Nous avons simulé 10 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
+      ${sLabel(t.citationTest.label)}
+      <h1 style="font-family:Georgia,serif;font-size:34px;color:#1A1916;letter-spacing:-1px;margin-bottom:8px;line-height:1.1;">${t.citationTest.h1}</h1>
+      <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:28px;line-height:1.6;">${t.citationTest.intro}</p>
       <div style="display:inline-flex;align-items:center;gap:16px;background:${bc.bg};border:1px solid ${bc.border};border-radius:12px;padding:18px 28px;margin-bottom:4px;">
         <div style="font-family:Georgia,serif;font-size:44px;color:${bc.color};line-height:1;letter-spacing:-2px;">${citedCount}/${totalTests}</div>
-        <div style="font-family:system-ui;font-size:13px;color:${bc.color};font-weight:600;line-height:1.4;">requêtes<br>citent votre site</div>
+        <div style="font-family:system-ui;font-size:13px;color:${bc.color};font-weight:600;line-height:1.4;white-space:pre-line;">${t.citationTest.queriesCite}</div>
       </div>
       ${summaryBlock}
       <div style="margin-top:28px;">${cards}</div>
       <div style="margin-top:24px;background:#F7F5F2;border-radius:8px;padding:16px 20px;">
-        <p style="font-family:system-ui;font-size:11px;color:#8A8680;line-height:1.65;">Ce test simule des requêtes utilisateur via Claude (Anthropic). Il reflète la visibilité actuelle de votre marque dans les connaissances des IA. Les résultats peuvent varier selon le moteur IA, la formulation de la requête et le moment du test.</p>
+        <p style="font-family:system-ui;font-size:11px;color:#8A8680;line-height:1.65;">${t.citationTest.disclaimer}</p>
       </div>
     </div>`;
   })();
 
-  // ── PAGES 5–12 : CRITERIA ──────────────────────────────────────────────────
-  const WHY = {
-    extractibilité:        "44,2% des citations IA proviennent des 30 premiers % du texte d'une page (Growth Memo, 2026). L'étude Princeton/KDD 2024 démontre que l'ajout de statistiques et de citations dans le contenu augmente la visibilité IA de 30 à 40%. Votre introduction est votre atout n°1.",
-    vérifiabilité:         "Les IA favorisent les contenus factuels et sourcés. Les pages avec des données chiffrées sont citées 2,8× plus souvent que les pages sans données vérifiables. (AirOps, 2026)",
-    autorité:              "L'autorité de domaine est le prédicteur n°1 des citations IA avec un score SHAP de 0,63 (SE Ranking, 2025). Les pages avec des auteurs identifiés et des biographies sont significativement plus citées par les LLM.",
-    crawlabilité:          "73% des sites ne sont pas crawlables par les bots IA à cause de robots.txt, CDN ou JavaScript (Otterly.AI, 2026). Débloquer les crawlers IA est le quick win n°1 — impact visible en 2 à 4 semaines.",
-    "données structurées": "Les pages avec Schema FAQPage, Article et Organization sont plus facilement parsées par les IA. Le contenu structuré en chunks est cité 3 à 5× plus souvent que le contenu brut. (Otterly.AI, 2026)",
-    neutralité:            "Les IA déprioritisent le contenu ouvertement promotionnel. L'étude Princeton montre que la 'Fluency Optimization' améliore la visibilité IA, mais le ton doit rester factuel et informatif pour être cité.",
-    présence:              "90% des citations IA proviennent de médias earned et owned, pas de placements payants (Edelman, 2026). Reddit est la source n°1 pour Perplexity (6,6% des citations) et n°2 pour ChatGPT.",
-    fraîcheur:             "65% des visites de bots IA ciblent du contenu publié dans les 12 derniers mois (Seer Interactive, 2025). Un contenu non mis à jour depuis plus de 6 mois perd progressivement sa citabilité IA.",
-  };
-
-  const CASES = {
-    extractibilité:        "SEO Vendor a appliqué des tactiques d'extractibilité (sections citables, formatage réponse directe) et a obtenu 549 sessions ChatGPT en 7 mois, contre seulement 3 sessions organiques. (SEO Vendor, 2026)",
-    vérifiabilité:         "Ahrefs génère 12,1% de ses inscriptions via le trafic IA (0,5% du trafic total) grâce à des contenus riches en données vérifiables. Les visiteurs IA consultent 50% plus de pages par session. (Ahrefs/Semrush, 2025)",
-    autorité:              "Les marques dans le top 25% des mentions web obtiennent 10× plus de visibilité IA. Les 50 premières marques captent 28,9% de toutes les mentions dans les AI Overviews. (Ahrefs, 2025)",
-    crawlabilité:          "Triangle IP a créé un fichier llms.txt guidant les IA vers ses pages prioritaires. Résultat : 5× plus de trafic IA et une présence sur ChatGPT, Gemini, Perplexity et Copilot. (Concurate/SE Ranking, 2025)",
-    "données structurées": "Un site a augmenté sa visibilité IA de 340% en 6 mois grâce à la restructuration de contenu et l'implémentation de schema. Le trafic IA est passé de 127 à 2 340 sessions mensuelles. (Stackmatix, 2026)",
-    neutralité:            "L'étude Princeton montre que la 'Fluency Optimization' (réécriture factuelle du contenu) améliore significativement la visibilité dans les réponses IA. Le contenu éducatif est systématiquement cité devant le contenu promotionnel.",
-    présence:              "Reddit est cité dans 46,7% des réponses Perplexity (parmi le top 10 sources) et 1,8% des citations ChatGPT. Une présence active sur Reddit est le levier de présence externe le plus efficace. (Profound, 2025)",
-    fraîcheur:             "79% des pages visitées par les bots IA ont été publiées dans les 2 dernières années (Seer Interactive, 2025). Mettre à jour un article avec des données 2026 peut multiplier par 3 ses chances d'être cité.",
-  };
-
-  const GUIDES = {
-    extractibilité:        "Pour améliorer votre extractibilité, commencez par restructurer votre page d'accueil pour répondre directement à la question principale de votre audience dès les 2 premières phrases. Utilisez des listes à puces (<ul><li>) pour énumérer vos avantages, services ou fonctionnalités — les IA extraient les listes 3x plus facilement que le texte continu. Ajoutez des sous-titres H2/H3 descriptifs qui contiennent les mots-clés de vos requêtes cibles. Évitez les introductions vagues type 'Bienvenue chez...' ou 'Leader de...' — préférez un format 'question-réponse' que les IA peuvent directement citer. Testez votre extractibilité en copiant vos 300 premiers caractères dans ChatGPT et en demandant 'De quoi parle ce site ?' — si la réponse est floue, votre intro doit être réécrite.",
-    vérifiabilité:         "Les IA privilégient les contenus sourcés et vérifiables. Pour chaque donnée chiffrée de votre site, ajoutez un lien externe vers la source originale (étude, rapport, article de presse). Visez 5 à 10 liens externes par page principale vers des sources reconnues dans votre secteur (instituts, études universitaires, rapports gouvernementaux). Ajoutez des dates explicites à vos contenus (datePublished, dateModified en JSON-LD). Incluez des tableaux comparatifs avec des données factuelles plutôt que des affirmations marketing. Les pages avec des citations sourcées sont citées 2,8x plus souvent par les IA que les pages sans sources (AirOps, 2026).",
-    autorité:              "Renforcez votre E-E-A-T en créant une page 'À propos' détaillée avec les qualifications de votre équipe, vos certifications, vos années d'expérience et vos publications. Ajoutez un schema Organization en JSON-LD avec votre nom, adresse, logo, et liens vers vos réseaux sociaux. Créez des pages auteur pour chaque contributeur avec biographie, photo, et liens LinkedIn. Obtenez des mentions dans la presse ou sur des sites d'autorité de votre secteur — les backlinks éditoriaux comptent plus que les backlinks techniques. Publiez du contenu expert (études de cas, guides techniques, analyses de données propriétaires) plutôt que du contenu générique.",
-    crawlabilité:          "Vérifiez votre fichier robots.txt : les bots GPTBot (OpenAI), ClaudeBot (Anthropic), PerplexityBot et Google-Extended doivent être autorisés. Ajoutez un fichier llms.txt à la racine de votre site pour guider les IA vers vos pages prioritaires — format : une URL par ligne avec une brève description. Assurez-vous que votre contenu principal n'est pas rendu en JavaScript côté client (CSR) — les bots IA ne l'exécutent pas. Utilisez le Server-Side Rendering (SSR) ou le Static Site Generation (SSG). Vérifiez que votre sitemap.xml est à jour et soumis dans Google Search Console. Testez l'accessibilité de votre site aux bots IA avec : curl -A 'GPTBot' https://votre-site.com",
-    "données structurées": "Implémentez au minimum ces schemas JSON-LD : Organization (nom, logo, contact, réseaux sociaux), FAQPage (vos questions fréquentes), Article ou BlogPosting (pour chaque contenu éditorial). Pour les e-commerces, ajoutez Product avec prix, disponibilité, avis agrégés (AggregateRating). Pour les services, utilisez Service avec description, zone géographique, tarifs. Insérez les balises <script type='application/ld+json'> dans le <head> de chaque page. Validez avec le Google Rich Results Test (search.google.com/test/rich-results). Les pages avec Schema structuré sont citées 3 à 5x plus souvent par les IA (Otterly.AI, 2026).",
-    neutralité:            "Les IA déprioritisent le contenu ouvertement promotionnel. Remplacez les superlatifs ('le meilleur', 'n°1', 'leader') par des données factuelles ('utilisé par 5 000 entreprises', '98% de satisfaction client'). Ajoutez une section 'Limites' ou 'Pour qui ce n'est PAS fait' — paradoxalement, reconnaître vos limites renforce votre crédibilité. Comparez honnêtement votre offre avec les alternatives, y compris les gratuites. Adoptez un ton informatif et éducatif plutôt que commercial. L'étude Princeton/KDD 2024 montre que la 'Fluency Optimization' (réécriture factuelle) améliore la visibilité IA de 30 à 40%.",
-    présence:              "90% des citations IA proviennent de médias earned et owned, pas de placements payants (Edelman, 2026). Créez un profil actif sur Reddit — c'est la source n°1 pour Perplexity (6,6% des citations) et n°2 pour ChatGPT. Participez aux discussions de votre secteur avec expertise, pas avec de la promotion. Obtenez des mentions dans des articles de presse, podcasts, interviews — chaque mention externe est un signal d'autorité pour les IA. Créez des liens vers vos réseaux sociaux depuis votre site (LinkedIn, Twitter/X, YouTube minimum). Publiez des études originales ou des données propriétaires que d'autres sites voudront citer.",
-    fraîcheur:             "Les bots IA privilégient le contenu récent : 65% des visites de bots IA ciblent du contenu publié dans les 12 derniers mois (Seer Interactive, 2025). Ajoutez datePublished et dateModified en schema.org sur chaque page de contenu. Mettez à jour vos articles existants avec des données de l'année en cours — une mise à jour peut multiplier par 3 les chances d'être cité. Affichez la date de dernière mise à jour visiblement sur vos pages. Publiez régulièrement (2-4 contenus/mois) pour signaler aux IA que votre site est actif et maintenu. Un copyright à jour dans le footer est un signal basique mais important.",
-  };
-
-  function lookup(map, criterionName) {
-    const n = criterionName.toLowerCase();
-    for (const [k, v] of Object.entries(map)) { if (n.includes(k)) return v; }
-    return '';
-  }
-
+  // ── PAGES 5-12 : CRITERIA
   const criteriaPages = criteria.map((c, idx) => {
-    const cg    = criterionGrade(c.score, c.max);
-    const group = criterionGroup(c.name);
+    const cg    = criterionGrade(c.score, c.max, t);
+    const group = criterionGroup(c.name, t);
     const pct   = Math.round((c.score / c.max) * 100);
     const recos = matchRecos(recommendations, c.name);
-    const ev    = evidenceBlock(c.name, evidence);
-    const why   = lookup(WHY, c.name);
-    const study = lookup(CASES, c.name);
-    const guide = lookup(GUIDES, c.name);
+    const ev    = evidenceBlock(c.name, evidence, t);
+    const why   = lookup(t.why, c.name);
+    const study = lookup(t.cases, c.name);
+    const guide = lookup(t.guides, c.name);
 
     const evidenceSection = evidence
       ? (ev ? `<div style="margin-top:16px;">${ev}</div>` : '')
-      : `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.2);border-radius:8px;padding:12px 16px;margin-top:12px;font-family:system-ui;font-size:12px;color:#C9861A;">Relancez l'analyse pour voir les données détaillées.</div>`;
+      : `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.2);border-radius:8px;padding:12px 16px;margin-top:12px;font-family:system-ui;font-size:12px;color:#C9861A;">${t.criteriaPage.relaunch}</div>`;
 
     const recosHTML = recos.length > 0
       ? recos.map((reco, ri) => {
-          const rc = reco.priority === 'high'   ? { color: '#D97757', bg: 'rgba(217,119,87,0.08)', label: 'CRITIQUE'  }
-                   : reco.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.08)', label: 'IMPORTANT' }
-                   :                              { color: '#10A37F', bg: 'rgba(16,163,127,0.08)', label: 'BONUS'     };
+          const rc = reco.priority === 'high' ? { color: '#D97757', bg: 'rgba(217,119,87,0.08)' } : reco.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.08)' } : { color: '#10A37F', bg: 'rgba(16,163,127,0.08)' };
           const header = recos.length > 1
             ? `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;${ri > 0 ? 'margin-top:20px;' : ''}">
-                 <span style="font-family:monospace;font-size:9px;letter-spacing:1.5px;color:${rc.color};text-transform:uppercase;">Recommandation ${ri + 1} / ${recos.length}</span>
-                 <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${rc.bg};color:${rc.color};">${rc.label}</span>
+                 <span style="font-family:monospace;font-size:9px;letter-spacing:1.5px;color:${rc.color};text-transform:uppercase;">${t.criteriaPage.recommendation} ${ri + 1} / ${recos.length}</span>
+                 <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${rc.bg};color:${rc.color};">${priorityLabel(reco.priority)}</span>
                  <span style="font-family:system-ui;font-size:11px;color:#8A8680;">${impactLabel(reco.priority)} · ${delayLabel(reco.priority)}</span>
                </div>`
             : `<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
@@ -485,9 +677,9 @@ function generateReportHTML(data) {
                </div>`;
           return header
             + (reco.title ? `<div style="font-family:Georgia,serif;font-size:16px;color:${rc.color};margin-bottom:12px;font-weight:bold;">${esc(reco.title)}</div>` : '')
-            + recoSections(reco);
+            + recoSections(reco, t);
         }).join('<div style="height:1px;background:#E5E2DC;margin:16px 0;"></div>')
-      : recoSections(null);
+      : recoSections(null, t);
 
     return `
     <div style="${P}">
@@ -495,7 +687,7 @@ function generateReportHTML(data) {
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
           <span style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:2px;text-transform:uppercase;">${esc(group)}</span>
           <span style="font-family:monospace;font-size:9px;color:#D5D2CE;">·</span>
-          <span style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:2px;text-transform:uppercase;">Critère ${idx + 1} / 8</span>
+          <span style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:2px;text-transform:uppercase;">${t.criteriaPage.criterionOf} ${idx + 1} ${t.criteriaPage.of} 8</span>
         </div>
         <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px;gap:16px;">
           <h1 style="font-family:Georgia,serif;font-size:26px;color:#1A1916;letter-spacing:-0.5px;line-height:1.2;">${esc(c.name)}</h1>
@@ -504,53 +696,30 @@ function generateReportHTML(data) {
             <div style="font-family:monospace;font-size:9px;color:#B0ABA5;">${pct}%</div>
           </div>
         </div>
-        <div style="height:8px;background:#E5E2DC;border-radius:4px;overflow:hidden;">
-          <div style="height:100%;width:${pct}%;background:${cg.color};border-radius:4px;"></div>
-        </div>
+        <div style="height:8px;background:#E5E2DC;border-radius:4px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${cg.color};border-radius:4px;"></div></div>
       </div>
-
       <div style="margin-bottom:24px;">
-        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">Ce que nous avons trouvé</div>
+        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">${t.criteriaPage.found}</div>
         <div style="background:#F7F5F2;border-left:3px solid ${cg.color};padding:14px 18px;border-radius:0 6px 6px 0;font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.65;">${esc(c.detail)}</div>
         ${evidenceSection}
       </div>
-
-      ${why ? `<div style="margin-bottom:24px;">
-        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">Pourquoi c'est important</div>
-        <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;">${esc(why)}</p>
-      </div>` : ''}
-
+      ${why ? `<div style="margin-bottom:24px;"><div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">${t.criteriaPage.whyImportant}</div><p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;">${esc(why)}</p></div>` : ''}
       <div style="margin-bottom:24px;">
-        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Recommandation${recos.length > 1 ? 's' : ''}</div>
+        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">${recos.length > 1 ? t.criteriaPage.recommendations : t.criteriaPage.recommendation}</div>
         ${recosHTML}
       </div>
-
-      ${guide ? `<div style="background:rgba(217,119,87,0.04);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:16px;">
-        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Guide technique</div>
-        <p style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.8;">${esc(guide)}</p>
-      </div>` : ''}
-
-      ${study ? `<div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:18px 22px;">
-        <div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Cas réel documenté</div>
-        <p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.7;">${esc(study)}</p>
-      </div>` : ''}
+      ${guide ? `<div style="background:rgba(217,119,87,0.04);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:16px;"><div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.criteriaPage.technicalGuide}</div><p style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.8;">${esc(guide)}</p></div>` : ''}
+      ${study ? `<div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:18px 22px;"><div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.criteriaPage.realCase}</div><p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.7;">${esc(study)}</p></div>` : ''}
     </div>`;
   }).join('');
 
-  // ── PAGE 13 : ACTION PLAN ───────────────────────────────────────────────────
+  // ── PAGE 13 : ACTION PLAN
   const actionRows = sortedRecos.map((r, i) => {
-    const rc = r.priority === 'high'   ? { color: '#D97757', bg: 'rgba(217,119,87,0.08)',  label: 'CRITIQUE'  }
-             : r.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.08)',  label: 'IMPORTANT' }
-             :                           { color: '#10A37F', bg: 'rgba(16,163,127,0.08)',  label: 'BONUS'     };
+    const rc = r.priority === 'high' ? { color: '#D97757', bg: 'rgba(217,119,87,0.08)' } : r.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.08)' } : { color: '#10A37F', bg: 'rgba(16,163,127,0.08)' };
     return `<tr>
       <td style="padding:9px 12px;font-family:monospace;font-size:11px;color:#B0ABA5;border-bottom:1px solid #F0EDE8;white-space:nowrap;">${i + 1}</td>
-      <td style="padding:9px 12px;border-bottom:1px solid #F0EDE8;white-space:nowrap;">
-        <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${rc.bg};color:${rc.color};">${rc.label}</span>
-      </td>
-      <td style="padding:9px 12px;border-bottom:1px solid #F0EDE8;">
-        <div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:2px;">${esc(r.title || '')}</div>
-        <div style="font-family:system-ui;font-size:11px;color:#8A8680;">${esc(r.whatToDo || '')}</div>
-      </td>
+      <td style="padding:9px 12px;border-bottom:1px solid #F0EDE8;white-space:nowrap;"><span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${rc.bg};color:${rc.color};">${priorityLabel(r.priority)}</span></td>
+      <td style="padding:9px 12px;border-bottom:1px solid #F0EDE8;"><div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:2px;">${esc(r.title || '')}</div><div style="font-family:system-ui;font-size:11px;color:#8A8680;">${esc(r.whatToDo || '')}</div></td>
       <td style="padding:9px 12px;font-family:system-ui;font-size:11px;color:#8A8680;border-bottom:1px solid #F0EDE8;">${esc(r.criterion || '')}</td>
       <td style="padding:9px 12px;font-family:system-ui;font-size:11px;color:${rc.color};font-weight:600;border-bottom:1px solid #F0EDE8;white-space:nowrap;">${impactLabel(r.priority)}</td>
       <td style="padding:9px 12px;font-family:monospace;font-size:11px;color:#8A8680;border-bottom:1px solid #F0EDE8;white-space:nowrap;">${delayLabel(r.priority)}</td>
@@ -559,51 +728,30 @@ function generateReportHTML(data) {
 
   const actionPlan = `
   <div style="${P}min-height:100vh;">
-    ${sLabel("Plan d'action")}
-    ${H1('Récapitulatif des actions')}
-    <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:36px;line-height:1.6;">${recommendations.length} recommandations classées par priorité d'impact.</p>
+    ${sLabel(t.actionPlan.label)}
+    ${H1(t.actionPlan.h1)}
+    <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:36px;line-height:1.6;">${recommendations.length} ${t.actionPlan.intro}</p>
     <table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:44px;">
       <thead><tr style="background:#F7F5F2;">
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">#</th>
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Priorité</th>
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Action</th>
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Critère</th>
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Impact</th>
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Délai</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.actionPlan.colHash}</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.actionPlan.colPriority}</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.actionPlan.colAction}</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.actionPlan.colCriterion}</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.actionPlan.colImpact}</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.actionPlan.colDelay}</th>
       </tr></thead>
       <tbody>${actionRows}</tbody>
     </table>
     <div style="background:#1A1916;border-radius:14px;padding:30px 36px;display:flex;align-items:center;gap:32px;">
-      <div style="text-align:center;flex-shrink:0;">
-        <div style="font-family:monospace;font-size:9px;color:rgba(247,245,242,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">Score actuel</div>
-        <div style="font-family:Georgia,serif;font-size:52px;color:#F7F5F2;line-height:1;letter-spacing:-2px;">${score}</div>
-        <div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.25);">/100</div>
-      </div>
+      <div style="text-align:center;flex-shrink:0;"><div style="font-family:monospace;font-size:9px;color:rgba(247,245,242,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">${t.actionPlan.currentScore}</div><div style="font-family:Georgia,serif;font-size:52px;color:#F7F5F2;line-height:1;letter-spacing:-2px;">${score}</div><div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.25);">/100</div></div>
       <div style="font-family:Georgia,serif;font-size:28px;color:rgba(247,245,242,0.18);flex-shrink:0;">→</div>
-      <div style="text-align:center;flex-shrink:0;">
-        <div style="font-family:monospace;font-size:9px;color:rgba(247,245,242,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">Score projeté</div>
-        <div style="font-family:Georgia,serif;font-size:52px;color:#10A37F;line-height:1;letter-spacing:-2px;">${projected}</div>
-        <div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.25);">/100</div>
-      </div>
-      <div style="flex:1;padding-left:28px;border-left:1px solid rgba(247,245,242,0.1);">
-        <div style="font-family:system-ui;font-size:13px;color:rgba(247,245,242,0.55);line-height:1.7;">Si toutes les recommandations sont implémentées, votre score devrait passer de <strong style="color:#F7F5F2;">${score}/100</strong> à environ <strong style="color:#10A37F;">${projected}/100</strong>.</div>
-      </div>
+      <div style="text-align:center;flex-shrink:0;"><div style="font-family:monospace;font-size:9px;color:rgba(247,245,242,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">${t.actionPlan.projectedScore}</div><div style="font-family:Georgia,serif;font-size:52px;color:#10A37F;line-height:1;letter-spacing:-2px;">${projected}</div><div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.25);">/100</div></div>
+      <div style="flex:1;padding-left:28px;border-left:1px solid rgba(247,245,242,0.1);"><div style="font-family:system-ui;font-size:13px;color:rgba(247,245,242,0.55);line-height:1.7;">${t.actionPlan.projectionText} <strong style="color:#F7F5F2;">${score}/100</strong> ${t.actionPlan.projectionTo} <strong style="color:#10A37F;">${projected}/100</strong>.</div></div>
     </div>
   </div>`;
 
-  // ── PAGE 14 : METHODOLOGY ───────────────────────────────────────────────────
-  const methodoCriteria = [
-    { name: 'Extractibilité & réponse directe', weight: '25 pts', measured: 'Longueur intro, structure H2/H3, listes, tableaux, calibrage des paragraphes' },
-    { name: 'Vérifiabilité & preuves',          weight: '20 pts', measured: 'Données chiffrées, liens externes sourcés, dates, tableaux, citations' },
-    { name: 'Autorité & E-E-A-T',               weight: '15 pts', measured: 'Page auteur, biographie, À propos, contact, mentions légales, schema Organization' },
-    { name: 'Crawlabilité IA',                  weight: '15 pts', measured: 'Longueur contenu, lang, canonical, indexabilité, sitemap, bots IA autorisés' },
-    { name: 'Données structurées',              weight: '10 pts', measured: 'HTML sémantique, schemas JSON-LD (FAQPage, Article, HowTo, Organization…)' },
-    { name: 'Neutralité éditoriale',            weight: '10 pts', measured: 'Évalué par IA (Claude Haiku, Anthropic) — superlatifs, ton promotionnel, honnêteté' },
-    { name: 'Présence externe',                 weight: '5 pts',  measured: 'Mentions presse, liens réseaux sociaux, témoignages tiers détectés' },
-    { name: 'Fraîcheur & maintenance',          weight: '5 pts',  measured: 'dateModified schema, années récentes dans le contenu, copyright à jour' },
-  ];
-
-  const methodoRows = methodoCriteria.map(c => `
+  // ── PAGE 14 : METHODOLOGY
+  const methodoRows = t.methodology.criteria.map(c => `
     <tr>
       <td style="padding:10px 12px;font-family:system-ui;font-size:12px;color:#1A1916;border-bottom:1px solid #F0EDE8;">${c.name}</td>
       <td style="padding:10px 12px;text-align:center;font-family:monospace;font-size:12px;font-weight:600;color:#D97757;border-bottom:1px solid #F0EDE8;white-space:nowrap;">${c.weight}</td>
@@ -612,50 +760,50 @@ function generateReportHTML(data) {
 
   const methodology = `
   <div style="${P}min-height:100vh;">
-    ${sLabel('Transparence')}
-    ${H1('Méthodologie')}
+    ${sLabel(t.methodology.label)}
+    ${H1(t.methodology.h1)}
     <div style="background:rgba(217,119,87,0.06);border-left:3px solid #D97757;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:28px;">
-      <p style="font-family:system-ui;font-size:12px;color:#3A3835;line-height:1.7;">⚠️ LIMITES DE L'ANALYSE : Ce rapport est généré par analyse automatisée du contenu accessible via scraping (Jina AI). Certains éléments rendus en JavaScript côté client, protégés par authentification, ou chargés dynamiquement peuvent ne pas être détectés. Les scores et recommandations reflètent le contenu accessible au moment de l'analyse. En cas de doute sur un résultat spécifique, une vérification manuelle est recommandée.</p>
+      <p style="font-family:system-ui;font-size:12px;color:#3A3835;line-height:1.7;">${t.methodology.limitsWarning}</p>
     </div>
     <div style="background:#F7F5F2;border-radius:10px;padding:22px 26px;margin-bottom:32px;">
-      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;margin-bottom:10px;">Ce rapport est généré par analyse automatisée du DOM de votre page via <strong>Jina AI</strong> (scraping HTML) et évaluation sur <strong>8 critères pondérés</strong>.</p>
-      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;margin-bottom:10px;">Le critère <strong>Neutralité éditoriale</strong> est évalué par intelligence artificielle (Claude Haiku, Anthropic). Les 7 autres critères sont évalués par analyse technique du HTML.</p>
-      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;">Le <strong>test de visibilité IA</strong> est réalisé par simulation de 10 requêtes via Claude (Anthropic). Les résultats varient selon le moteur IA, la requête et le moment du test.</p>
+      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;margin-bottom:10px;">${t.methodology.howItWorks1}</p>
+      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;margin-bottom:10px;">${t.methodology.howItWorks2}</p>
+      <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;">${t.methodology.howItWorks3}</p>
     </div>
-    <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">Les 8 critères et leur pondération</h2>
+    <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">${t.methodology.criteriaH2}</h2>
     <table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:32px;">
       <thead><tr style="background:#F7F5F2;">
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Critère</th>
-        <th style="padding:9px 12px;text-align:center;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Poids</th>
-        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">Ce qui est mesuré</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.methodology.colCriterion}</th>
+        <th style="padding:9px 12px;text-align:center;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.methodology.colWeight}</th>
+        <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.methodology.colMeasured}</th>
       </tr></thead>
       <tbody>${methodoRows}</tbody>
     </table>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
       <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 22px;">
-        <div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Source académique</div>
-        <p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.65;">"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. Certaines optimisations augmentent la visibilité IA jusqu'à 40%.</p>
+        <div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.methodology.academicLabel}</div>
+        <p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.65;">${t.methodology.academicText}</p>
       </div>
       <div style="background:#FBF0EB;border:1px solid rgba(217,119,87,0.2);border-radius:10px;padding:20px 22px;">
-        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Limites de ce rapport</div>
-        <p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.65;">Ce rapport mesure le <strong>potentiel de citation IA</strong>, pas le nombre réel de citations. Les résultats des moteurs IA varient selon la requête et le contexte.</p>
+        <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.methodology.limitsLabel}</div>
+        <p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.65;">${t.methodology.limitsText}</p>
       </div>
     </div>
     <div style="background:#F7F5F2;border-radius:10px;padding:18px 22px;margin-bottom:36px;">
-      <div style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Périmètre de l'analyse</div>
-      <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.65;">Les scores sont calculés sur la page analysée uniquement (<strong style="color:#1A1916;">${esc(url)}</strong>), pas le site entier. Pour une évaluation complète, analysez vos pages principales séparément.</p>
+      <div style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">${t.methodology.scopeLabel}</div>
+      <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.65;">${t.methodology.scopeText} (<strong style="color:#1A1916;">${esc(url)}</strong>)</p>
     </div>
     <div style="border-top:1px solid #E5E2DC;padding-top:22px;display:flex;justify-content:space-between;align-items:center;">
       <div style="font-family:Georgia,serif;font-size:15px;color:#1A1916;">Detekia</div>
-      <div style="font-family:monospace;font-size:10px;color:#B0ABA5;">Rapport généré le ${date} · detekia.fr</div>
+      <div style="font-family:monospace;font-size:10px;color:#B0ABA5;">${t.methodology.generatedOn} ${date} · detekia.fr</div>
     </div>
   </div>`;
 
   return `<!DOCTYPE html>
-<html lang="fr">
+<html lang="${locale}">
 <head>
 <meta charset="UTF-8">
-<title>Rapport GEO — ${esc(url)}</title>
+<title>${locale === 'en' ? 'GEO Report' : 'Rapport GEO'} — ${esc(url)}</title>
 <style>
   @page { margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -674,18 +822,19 @@ ${methodology}
 </html>`;
 }
 
-// ─── API Handler ──────────────────────────────────────────────────────────────
+// ─── API Handler ─────────────────────────────────────────────────────────────
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const { email, url, reportData, locale: reqLocale } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';
+  const t = S[locale] || S.fr;
   console.log('generate-pdf locale:', locale);
-  if (!email || !reportData) return res.status(400).json({ error: 'Données manquantes' });
+  if (!email || !reportData) return res.status(400).json({ error: 'Missing data' });
 
   try {
-    const html = generateReportHTML({ url, ...reportData });
+    const html = generateReportHTML({ url, ...reportData }, locale);
 
     console.log('Starting PDFShift...');
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
@@ -708,13 +857,13 @@ export default async function handler(req, res) {
     const { data, error } = await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: email,
-      subject: `Votre rapport GEO complet — ${url} · Score ${reportData.score}/100`,
+      subject: `${t.email.subject} — ${url} · Score ${reportData.score}/100`,
       html: `
         <div style="background:#F7F5F2;padding:40px 20px;font-family:system-ui">
           <div style="max-width:560px;margin:0 auto">
             <div style="text-align:center;margin-bottom:32px">
               <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:8px">Detekia</div>
-              <div style="font-family:monospace;font-size:10px;color:#8A8680;letter-spacing:2px">RAPPORT GEO COMPLET</div>
+              <div style="font-family:monospace;font-size:10px;color:#8A8680;letter-spacing:2px">${t.email.headerLabel}</div>
             </div>
             <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:24px">
               <div style="font-family:Georgia,serif;font-size:64px;color:#F7F5F2;line-height:1;letter-spacing:-2px">${reportData.score}</div>
@@ -722,18 +871,18 @@ export default async function handler(req, res) {
               <div style="font-size:13px;color:rgba(247,245,242,0.55);margin-top:12px;font-family:system-ui;line-height:1.6">${reportData.verdict}</div>
             </div>
             <div style="background:#fff;border-radius:12px;padding:24px;border:1px solid #E5E2DC;margin-bottom:24px">
-              <div style="font-size:13px;color:#1A1916;font-weight:600;margin-bottom:8px;font-family:system-ui">🎯 Priorité absolue</div>
+              <div style="font-size:13px;color:#1A1916;font-weight:600;margin-bottom:8px;font-family:system-ui">\u{1F3AF} ${t.email.topPriority}</div>
               <div style="font-size:13px;color:#8A8680;line-height:1.6;font-family:system-ui">${reportData.topPriority || ''}</div>
             </div>
             <div style="text-align:center;font-size:13px;color:#8A8680;font-family:system-ui;line-height:1.6">
-              Votre rapport PDF complet avec toutes les recommandations détaillées est joint à cet email.
+              ${t.email.pdfNote}
             </div>
           </div>
         </div>
       `,
       attachments: [
         {
-          filename: `rapport-geo-${url.replace(/[^a-z0-9]/gi, '-')}.pdf`,
+          filename: `${t.email.filename}-${url.replace(/[^a-z0-9]/gi, '-')}.pdf`,
           content: Buffer.from(pdfBuffer).toString('base64'),
           content_type: 'application/pdf',
         },
