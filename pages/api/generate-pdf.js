@@ -692,6 +692,7 @@ function generateReportHTML(data, locale = 'fr') {
     const why   = lookup(t.why, c.name) || '';
     const study = lookup(t.cases, c.name) || '';
     const guide = lookup(t.guides, c.name) || '';
+    console.log(`[generate-pdf] Criterion ${idx}: ${c.name} | ev:${ev.length}c | why:${why.length}c | study:${study.length}c | guide:${guide.length}c | recos:${recos.length}`);
 
     const evidenceSection = evidence
       ? (ev ? `<div style="margin-top:16px;">${ev}</div>` : '')
@@ -872,6 +873,9 @@ export default async function handler(req, res) {
   console.log('generate-pdf locale:', locale);
   if (!email || !reportData) return res.status(400).json({ error: 'Missing data' });
 
+  // Debug mode: return raw HTML if ?debug=html
+  const debugMode = req.query?.debug === 'html';
+
   try {
     const html = generateReportHTML({ url, ...reportData }, locale);
 
@@ -881,6 +885,16 @@ export default async function handler(req, res) {
     console.log('[generate-pdf] First criteria:', reportData.criteria?.[0]?.name);
     console.log('[generate-pdf] Last criteria:', reportData.criteria?.[reportData.criteria.length - 1]?.name);
     console.log('[generate-pdf] recos count:', reportData.recommendations?.length);
+
+    // Log the HTML around each page-break to find where rendering stops
+    const pageBreaks = [...html.matchAll(/page-break-before:always/g)];
+    console.log('[generate-pdf] page-break count:', pageBreaks.length);
+
+    if (debugMode) {
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      return res.status(200).send(html);
+    }
+
     console.log('Starting PDFShift...');
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
       method: 'POST',
