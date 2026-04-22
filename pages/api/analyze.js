@@ -381,6 +381,39 @@ async function collectEvidence($, textContent, rawContent, url) {
   const robotsTxt = rt;
   const hasLlmsTxt = lt;
 
+  // 11. Internal trust links (E-E-A-T signals on other pages)
+  const trustPathPatterns = /\/(equipe|l-equipe|notre-equipe|team|our-team|about|about-us|a-propos|qui-sommes-nous|who-we-are|professeurs|instructeurs|teachers|instructors|coaches|experts|staff|membres|histoire|our-story|notre-histoire|mentions-legales|legal|imprint|contact)(\/|$|\?|#)/i;
+  const trustTextPatterns = /notre\s+[eé]quipe|l['\u2019][eé]quipe|nos\s+professeurs|nos\s+instructeurs|nos\s+experts|nos\s+coachs|[aà]\s+propos|qui\s+sommes[- ]nous|notre\s+histoire|about\s+us|our\s+team|meet\s+the\s+team|our\s+story|who\s+we\s+are|\bteam\b|\bcoaches\b|\binstructors\b|\bexperts\b|\bstaff\b/i;
+  const internalTrustLinks = [];
+  const seenUrls = new Set();
+  let siteHostnameForTrust;
+  try { siteHostnameForTrust = new URL(normalizedUrl).hostname; } catch { siteHostnameForTrust = ''; }
+
+  $('a[href]').each((_, el) => {
+    if (internalTrustLinks.length >= 5) return false;
+    const href = ($(el).attr('href') || '').trim();
+    const label = $(el).text().trim().slice(0, 80);
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+    // Determine if internal
+    let fullUrl;
+    try {
+      fullUrl = new URL(href, normalizedUrl);
+      if (fullUrl.hostname !== siteHostnameForTrust) return;
+    } catch { return; }
+
+    // Skip if same as analyzed URL
+    if (fullUrl.pathname === new URL(normalizedUrl).pathname) return;
+
+    const urlStr = fullUrl.href;
+    if (seenUrls.has(urlStr)) return;
+
+    if (trustPathPatterns.test(fullUrl.pathname) || trustTextPatterns.test(label)) {
+      seenUrls.add(urlStr);
+      internalTrustLinks.push({ url: urlStr, label: label || fullUrl.pathname });
+    }
+  });
+
   return {
     intro,
     headings,
@@ -394,6 +427,7 @@ async function collectEvidence($, textContent, rawContent, url) {
     images,
     externalLinks: externalLinksCount,
     dates,
+    internalTrustLinks,
   };
 }
 

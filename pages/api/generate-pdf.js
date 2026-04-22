@@ -153,6 +153,9 @@ const S = {
       technicalGuide: 'Guide technique',
       realCase: 'Cas reel documente',
       relaunch: 'Relancez l\'analyse pour voir les donnees detaillees.',
+      scopeNoteLabel: 'Note sur le perimetre de l\'analyse',
+      scopeNoteWithLinks: 'Nous avons detecte sur votre page des liens vers : {links}. L\'analyse Detekia porte uniquement sur cette URL — assurez-vous que ces pages sont bien optimisees (bios, certifications, signaux d\'expertise), elles comptent pour votre visibilite IA globale.',
+      scopeNoteWithoutLinks: 'Cette analyse porte uniquement sur la page fournie. Si vous avez une page equipe, a propos ou mentions professionnelles sur une autre URL de votre site, pensez a les analyser separement — elles comptent pour votre visibilite IA globale.',
     },
     evidence: {
       extractIntro: 'Extrait analyse — 300 premiers caracteres du site',
@@ -309,6 +312,9 @@ const S = {
       technicalGuide: 'Technical guide',
       realCase: 'Documented real case',
       relaunch: 'Re-run the analysis to see detailed data.',
+      scopeNoteLabel: 'Note on analysis scope',
+      scopeNoteWithLinks: 'We detected links on your page pointing to: {links}. The Detekia analysis covers only this URL — make sure those pages are well optimized (bios, certifications, expertise signals), they contribute to your overall AI visibility.',
+      scopeNoteWithoutLinks: 'This analysis covers only the provided URL. If you have a team, about or professional credentials page on another URL of your site, consider analyzing them separately — they contribute to your overall AI visibility.',
     },
     evidence: {
       extractIntro: 'Analyzed excerpt — first 300 characters of the site',
@@ -814,6 +820,17 @@ function generateReportHTML(data, locale = 'fr') {
         <div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">${recos.length > 1 ? t.criteriaPage.recommendations : t.criteriaPage.recommendation}</div>
         ${recosHTML}
       </div>
+      ${(() => {
+        const n = stripAccents(c.name).toLowerCase();
+        const isScopeCriterion = n.includes('autorite') || n.includes('authority') || n.includes('verifiab') || n.includes('presence externe') || n.includes('external presence');
+        if (!isScopeCriterion) return '';
+        const trustLinks = (evidence && evidence.internalTrustLinks) || [];
+        if (trustLinks.length > 0) {
+          const linksList = trustLinks.map(l => `<span style="font-family:monospace;font-size:11px;color:#D97757;">${esc(l.label || l.url)}</span>`).join(', ');
+          return `<div class="scope-note-block" style="background:#F7F5F2;border-left:3px solid #B0ABA5;border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;"><div style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">${t.criteriaPage.scopeNoteLabel}</div><p style="font-family:system-ui;font-size:12px;color:#3A3835;line-height:1.6;">${t.criteriaPage.scopeNoteWithLinks.replace('{links}', linksList)}</p></div>`;
+        }
+        return `<div class="scope-note-block" style="background:#F7F5F2;border-left:3px solid #B0ABA5;border-radius:0 6px 6px 0;padding:14px 18px;margin:14px 0;"><div style="font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">${t.criteriaPage.scopeNoteLabel}</div><p style="font-family:system-ui;font-size:12px;color:#3A3835;line-height:1.6;">${t.criteriaPage.scopeNoteWithoutLinks}</p></div>`;
+      })()}
       ${guide ? `<div style="background:rgba(217,119,87,0.04);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:18px 22px;margin-bottom:16px;"><div style="font-family:monospace;font-size:9px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.criteriaPage.technicalGuide}</div><p style="font-family:system-ui;font-size:13px;color:#3A3835;line-height:1.8;">${esc(guide)}</p></div>` : ''}
       ${study ? `<div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:18px 22px;"><div style="font-family:monospace;font-size:9px;color:#10A37F;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">${t.criteriaPage.realCase}</div><p style="font-family:system-ui;font-size:12px;color:#1A1916;line-height:1.7;">${esc(study)}</p></div>` : ''}
     </div>`;
@@ -933,7 +950,7 @@ function generateReportHTML(data, locale = 'fr') {
   html, body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .no-break, .score-projection-card, .citation-test-card, .action-plan-table,
   .criterion-evidence-block, .beeleven-cta-block, .strengths-block,
-  .top3-reco-card, .context-card, .methodology-table {
+  .top3-reco-card, .context-card, .methodology-table, .scope-note-block {
     page-break-inside: avoid; break-inside: avoid;
   }
   h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
