@@ -189,7 +189,7 @@ export default function AiOverviewsGoogle2026() {
 
       <p>Ranking first in SEO doesn't guarantee being the AI Overview source. Google AI evaluates additional criteria: content extractability, structure, comprehensiveness, structured data. A competitor in position 4 with better-structured content can be preferred.</p>
 
-      <ArrowLink href="/">Analyze your site — GEO score out of 100, 8 criteria, in 30 seconds →</ArrowLink>
+      <ArrowLink href="/">Analyze your site — GEO score out of 100, 8 criteria, in under 60 seconds →</ArrowLink>
     </>
   );
 }

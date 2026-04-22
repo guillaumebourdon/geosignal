@@ -89,7 +89,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Paradoxically, some sites see their direct traffic increase while organic declines. Explanation: users discover your brand through an AI citation, then type your name directly into their browser. That is a positive signal, but it masks the reality of the organic decline.</p>
 
-      <InlineCTA href="/">Is your website visible to AI? Free diagnostic in 30 seconds.</InlineCTA>
+      <InlineCTA href="/">Is your website visible to AI? Free diagnostic in under 60 seconds.</InlineCTA>
 
       <h2>Why SEO alone is no longer enough</h2>
 
@@ -111,7 +111,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Before you act, measure. Analyze your site across the 8 criteria that determine whether AI cites you: content extractability, data verifiability, authority, AI bot crawlability, structured data, editorial neutrality, external presence, and freshness.</p>
 
-      <p>Detekia automatically analyzes these 8 criteria and gives you a score out of 100 in 30 seconds. It is free and requires no signup.</p>
+      <p>Detekia automatically analyzes these 8 criteria and gives you a score out of 100 in under 60 seconds. It is free and requires no signup.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">GEO score: how to measure your website's AI visibility</ArrowLink>
 
@@ -168,7 +168,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Websites that adapt now by optimizing their content to be cited by AI (not just ranked by Google) will gain a decisive advantage. Those that wait will see their traffic continue to decline, month after month.</p>
 
-      <p>The first step is simple: measure where you stand. Analyze your site for free on Detekia — GEO score out of 100, 8 criteria analyzed, actionable recommendations, in 30 seconds.</p>
+      <p>The first step is simple: measure where you stand. Analyze your site for free on Detekia — GEO score out of 100, 8 criteria analyzed, actionable recommendations, in under 60 seconds.</p>
 
       <InlineCTA href="/">Traffic dropping? Find out if AI is the cause.</InlineCTA>
     </>

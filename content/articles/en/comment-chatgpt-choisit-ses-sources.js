@@ -66,7 +66,7 @@ export default function CommentChatgptChoisitSesSources() {
 
       <p>In practice, a site ranking very well on Google but absent from Bing will be invisible to ChatGPT. And conversely: a mediocre Google site that's well-indexed on Bing can be cited regularly.</p>
 
-      <InlineCTA href="/">Is your website visible to ChatGPT? Check your GEO score in 30 seconds.</InlineCTA>
+      <InlineCTA href="/">Is your website visible to ChatGPT? Check your GEO score in under 60 seconds.</InlineCTA>
 
       <h2>Source selection criteria: what the research tells us</h2>
 

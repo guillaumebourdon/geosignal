@@ -79,7 +79,7 @@ export default function SitesBloquentBotsIA() {
 
       <p>Detekia vérifie automatiquement la crawlabilité de votre site par les bots IA. Le critère "Crawlabilité IA" de notre score GEO détecte les blocages <code>robots.txt</code>, l'absence de fichier <code>llms.txt</code>, les problèmes d'indexation et la présence ou non des bots IA dans votre configuration.</p>
 
-      <InlineCTA href="/">Vérifiez si les bots IA peuvent accéder à votre site — gratuit, 30 secondes.</InlineCTA>
+      <InlineCTA href="/">Vérifiez si les bots IA peuvent accéder à votre site — gratuit, moins de 60 secondes.</InlineCTA>
 
       <h2>Les 6 bots IA que vous devez connaître</h2>
 
@@ -209,7 +209,7 @@ vos services, votre proposition de valeur.`}</code></pre>
 
       <p>La crawlabilité IA est l'un des 8 critères du score GEO Detekia. C'est aussi le critère le plus simple à corriger : une modification de 2 lignes dans votre <code>robots.txt</code> peut suffire à débloquer votre visibilité IA.</p>
 
-      <p>Detekia analyse automatiquement votre fichier <code>robots.txt</code>, détecte la présence ou l'absence d'un <code>llms.txt</code>, et vérifie si votre contenu est accessible aux crawlers IA. Le diagnostic est gratuit et prend 30 secondes.</p>
+      <p>Detekia analyse automatiquement votre fichier <code>robots.txt</code>, détecte la présence ou l'absence d'un <code>llms.txt</code>, et vérifie si votre contenu est accessible aux crawlers IA. Le diagnostic est gratuit et prend moins de 60 secondes.</p>
 
       <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 8 critères GEO qui déterminent si une IA vous cite — méthodologie Detekia</ArrowLink>
 
@@ -235,7 +235,7 @@ vos services, votre proposition de valeur.`}</code></pre>
 
       <p>Vérifiez votre <code>robots.txt</code>, créez un fichier <code>llms.txt</code>, désactivez les règles de sécurité trop agressives, et assurez-vous que votre contenu est rendu côté serveur. En 10 minutes, vous passez d'invisible à indexable par toutes les IA.</p>
 
-      <InlineCTA href="/">Votre site bloque-t-il les bots IA ? Vérifiez gratuitement en 30 secondes.</InlineCTA>
+      <InlineCTA href="/">Votre site bloque-t-il les bots IA ? Vérifiez gratuitement en moins de 60 secondes.</InlineCTA>
     </>
   );
 }

@@ -215,7 +215,7 @@ Disallow: /`}</code></pre>
 
       <p>You cannot fix what you do not measure. The first step is knowing where you stand: what your GEO Score is, which criteria are failing, and where to begin.</p>
 
-      <p>Analyze your site for free on Detekia — score out of 100, 8 criteria, recommendations prioritized by impact, in 30 seconds. No signup required.</p>
+      <p>Analyze your site for free on Detekia — score out of 100, 8 criteria, recommendations prioritized by impact, in under 60 seconds. No signup required.</p>
     </>
   );
 }

@@ -292,7 +292,7 @@ For smaller apartments, a more compact model may be sufficient."`}</code></pre>
 
       <p>Is your online store being cited when a customer asks ChatGPT for a recommendation in your space? Find out now.</p>
 
-      <p>Analyze your site on Detekia — score out of 100, 8 GEO criteria, prioritized recommendations. In 30 seconds, no sign-up required.</p>
+      <p>Analyze your site on Detekia — score out of 100, 8 GEO criteria, prioritized recommendations. In under 60 seconds, no sign-up required.</p>
     </>
   );
 }

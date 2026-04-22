@@ -111,7 +111,7 @@ export default function VisibiliteIaGuideDebutant() {
 
       <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et IA : le guide pratique avec exemples de code</ArrowLink>
 
-      <InlineCTA href="/">Découvrez votre score de visibilité IA en 30 secondes</InlineCTA>
+      <InlineCTA href="/">Découvrez votre score de visibilité IA en moins de 60 secondes</InlineCTA>
 
       <h2>Par où commencer : votre plan d'action en 7 jours</h2>
       <p>
@@ -183,7 +183,7 @@ export default function VisibiliteIaGuideDebutant() {
         <strong>3. Le trafic référé :</strong> Dans Google Analytics, surveillez le trafic provenant de sources IA (chatgpt.com, perplexity.ai, etc.). C'est encore faible pour la plupart des sites, mais c'est un indicateur en forte croissance.
       </p>
 
-      <InlineCTA href="/">Analysez votre visibilité IA gratuitement — score en 30 secondes</InlineCTA>
+      <InlineCTA href="/">Analysez votre visibilité IA gratuitement — score en moins de 60 secondes</InlineCTA>
 
       <h2>Ce qu'il faut retenir</h2>
       <p>

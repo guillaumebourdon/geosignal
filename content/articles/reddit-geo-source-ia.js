@@ -218,7 +218,7 @@ Commencez par les points 1 et 2, c'est corrigeable en une journée."`}</code></p
 
       <p>30-45 minutes par semaine suffisent pour une présence efficace : 3-5 commentaires utiles + 1 post mensuel. La qualité prime sur la quantité.</p>
 
-      <ArrowLink href="/">Mesurez votre visibilité IA actuelle avant de démarrer — audit GEO gratuit en 30 secondes →</ArrowLink>
+      <ArrowLink href="/">Mesurez votre visibilité IA actuelle avant de démarrer — audit GEO gratuit en moins de 60 secondes →</ArrowLink>
     </>
   );
 }

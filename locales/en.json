@@ -31,7 +31,7 @@
       "breadcrumbBlog": "Blog",
       "readTimeSuffix": "read",
       "ctaTitle": "Test your GEO Score for free",
-      "ctaSubtitle": "Full analysis in 30 seconds, no signup required",
+      "ctaSubtitle": "Full analysis in under 60 seconds, no signup required",
       "ctaButton": "Analyze my website →",
       "relatedTitle": "Recommended articles",
       "fallbackContent": "Article content coming soon"
@@ -69,17 +69,17 @@
   "homepage": {
     "seo": {
       "title": "Detekia — Is your website visible to AI?",
-      "description": "Analyze your presence on ChatGPT, Claude, Gemini and Perplexity. GEO Score out of 100 + personalized recommendations in 30 seconds."
+      "description": "Analyze your presence on ChatGPT, Claude, Gemini and Perplexity. GEO Score out of 100 + personalized recommendations in under 60 seconds."
     },
     "hero": {
       "badge": "100% free analysis — no signup required",
       "titleLine1": "Your competitors are showing up on",
       "titleLine2": "You don't.",
-      "subtitle": "Detekia audits your website in 30 seconds and shows you what to fix to get cited by AI — and capture the traffic Google no longer sends you.",
+      "subtitle": "Detekia audits your website in under 60 seconds and shows you what to fix to get cited by AI — and capture the traffic Google no longer sends you.",
       "inputPlaceholder": "https://www.your-website.com",
       "cta": "Analyze my website →",
       "easterEgg": "Nice try 😏 But we don't grade ourselves — it would be too easy to give a 100/100. Try with another website!",
-      "trustBadge": "Free · No signup · Results in 30 seconds"
+      "trustBadge": "Free · No signup · Results in under 60 seconds"
     },
     "mockup": {
       "headerLabel": "AI Visibility Audit · example.com",
@@ -156,11 +156,11 @@
     "howItWorks": {
       "label": "How it works",
       "titleStart": "The complete AI visibility analysis in ",
-      "titleEm": "30 seconds",
+      "titleEm": "60 seconds",
       "steps": [
         { "num": "01", "title": "Enter your URL", "desc": "Paste your website address. Zero signup, zero setup, zero credit card." },
         { "num": "02", "title": "We analyze everything", "desc": "Detekia scrapes your website and evaluates it against 8 research-backed GEO criteria." },
-        { "num": "03", "title": "Get your score", "desc": "Score out of 100, per-criteria analysis and expert recommendations in under 30 seconds." }
+        { "num": "03", "title": "Get your score", "desc": "Score out of 100, per-criteria analysis and expert recommendations in under 60 seconds." }
       ],
       "methodologyLink": "See our full methodology →"
     },
@@ -212,7 +212,7 @@
           "initials": "MG",
           "name": "Marine G.",
           "role": "Freelance SEO consultant",
-          "quote": "I use Detekia for every new client. In 30 seconds I have <strong>a clear diagnosis to present</strong>, and it lets me upsell an AI optimization service. The ROI is immediate.",
+          "quote": "I use Detekia for every new client. In seconds I have <strong>a clear diagnosis to present</strong>, and it lets me upsell an AI optimization service. The ROI is immediate.",
           "footerType": "badge",
           "badge": "USED FOR EVERY CLIENT"
         },
@@ -248,9 +248,9 @@
       "badge": "Free · No signup · No credit card",
       "titleLine1": "Your website deserves to be cited",
       "titleEm": "by AI",
-      "subtitle": "Join the professionals who have already optimized their AI visibility — for free, in 30 seconds.",
+      "subtitle": "Join the professionals who have already optimized their AI visibility — for free, in under 60 seconds.",
       "cta": "Analyze my website for free →",
-      "trustBadge": "Free · No signup · Results in 30 seconds",
+      "trustBadge": "Free · No signup · Results in under 60 seconds",
       "priceNote": "Full report 29 € · One-time payment"
     },
     "footer": {
@@ -406,7 +406,7 @@
     "cta": {
       "titleLine1": "Test your website",
       "titleEm": "for free",
-      "subtitle": "Full analysis in 30 seconds. No signup required.",
+      "subtitle": "Full analysis in under 60 seconds. No signup required.",
       "button": "Analyze my website →"
     },
     "footer": {
@@ -499,7 +499,7 @@
     },
     "how": {
       "title": "How it works",
-      "p1": "Detekia analyzes your website across 8 AI citability criteria validated by academic research (Princeton/Georgia Tech study, KDD 2024). In 30 seconds, you get a score out of 100 and personalized recommendations.",
+      "p1": "Detekia analyzes your website across 8 AI citability criteria validated by academic research (Princeton/Georgia Tech study, KDD 2024). In under 60 seconds, you get a score out of 100 and personalized recommendations.",
       "p2": "Our analysis is transparent: 7 criteria are evaluated through technical HTML analysis, 1 criterion (editorial neutrality) is evaluated by artificial intelligence. Each recommendation is sourced and accompanied by a documented real-world case."
     },
     "who": {
@@ -527,7 +527,7 @@
     },
     "cta": {
       "title": "Test your GEO Score for free",
-      "subtitle": "Full analysis in 30 seconds, no signup required",
+      "subtitle": "Full analysis in under 60 seconds, no signup required",
       "button": "Analyze my website →"
     },
     "schema": {

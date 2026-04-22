@@ -83,7 +83,7 @@ export default function PerplexityCommentApparaitre() {
 
       <p>Implication stratégique : il faut <strong>diagnostiquer les deux moteurs séparément</strong>. Un score GEO global est utile, mais le détail par moteur est indispensable pour prioriser les actions.</p>
 
-      <InlineCTA href="/">Vérifiez votre visibilité sur ChatGPT et Perplexity en 30 secondes avec Detekia.</InlineCTA>
+      <InlineCTA href="/">Vérifiez votre visibilité sur ChatGPT et Perplexity en moins de 60 secondes avec Detekia.</InlineCTA>
 
       <h2>5 actions concrètes pour apparaître dans Perplexity</h2>
 

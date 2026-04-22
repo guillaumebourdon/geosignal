@@ -266,7 +266,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <p>Le premier pas est de savoir où vous en êtes. Votre SEO est peut-être solide, mais votre GEO pourrait avoir des lacunes critiques — ou l'inverse.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères GEO, recommandations concrètes. En 30 secondes, sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères GEO, recommandations concrètes. En moins de 60 secondes, sans inscription.</p>
     </>
   );
 }
