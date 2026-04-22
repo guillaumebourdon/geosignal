@@ -300,9 +300,9 @@
       "label": "The process",
       "title": "3 automated analysis steps",
       "steps": [
-        { "num": "01", "title": "Content scraping", "desc": "Detekia retrieves the full HTML of your page via Jina Reader — a scraping service optimized for AI. The raw HTML, text and metadata are extracted." },
+        { "num": "01", "title": "Content scraping", "desc": "Detekia retrieves the full HTML of your page via a specialized AI scraping service. The raw HTML, text and metadata are extracted." },
         { "num": "02", "title": "Heuristic analysis", "desc": "Our analysis engine computes 7 heuristic scores by inspecting the DOM: tags, attributes, ratios, counts. These scores are reproducible and deterministic." },
-        { "num": "03", "title": "AI analysis (Claude)", "desc": "Claude Haiku analyzes the text content to assess editorial neutrality and generate contextualized recommendations. The final score incorporates this result." }
+        { "num": "03", "title": "AI analysis", "desc": "Our AI analysis engine evaluates the text content to assess editorial neutrality and generate contextualized recommendations. The final score incorporates this result." }
       ]
     },
     "score": {
@@ -712,7 +712,7 @@
       ]},
       { "title": "Data collected and purposes", "paragraphs": [
         "Detekia collects a minimal amount of data, strictly necessary for the operation of the service.",
-        "<strong>Analyzed URL</strong> — When you launch a GEO analysis, the URL you enter is processed in real time to generate your score. The URL and results are cached in our database (Upstash Redis) for 24 hours to speed up subsequent analyses of the same website. After 24 hours, this data is automatically deleted. <em>Legal basis: legitimate interest (provision of the requested service).</em>",
+        "<strong>Analyzed URL</strong> — When you launch a GEO analysis, the URL you enter is processed in real time to generate your score. The URL and results are cached in our secure database for 24 hours to speed up subsequent analyses of the same website. After 24 hours, this data is automatically deleted. <em>Legal basis: legitimate interest (provision of the requested service).</em>",
         "<strong>Email address (optional)</strong> — If you choose to receive your report by email via the capture form, your email address is stored in our database along with the analyzed URL and the score obtained. This data is used to send you your report and, if you consent, alerts about changes to your score. <em>Legal basis: consent.</em>",
         "<strong>Payment data</strong> — When you purchase the full GEO report, payment is entirely processed by Stripe Payments Europe, Ltd. Beeleven SASU does not collect, store or process any banking data (card number, expiration date, CVV). Only the information transmitted by Stripe after payment is processed: buyer's email, transaction ID, amount. <em>Legal basis: contract performance.</em>",
         "<strong>Browsing data</strong> — Detekia uses Vercel Analytics to measure website traffic (page views, visit duration, geographic origin). Vercel Analytics does not set cookies, does not use third-party trackers and does not collect personally identifiable data. The data is aggregated and anonymous. <em>Legal basis: legitimate interest (service improvement).</em>"
@@ -728,10 +728,10 @@
       { "title": "Processors and data recipients", "content": [
         "The data collected by Detekia is processed by the following processors, all compliant with GDPR or the EU-US data protection framework:",
         ["<strong>Vercel Inc.</strong> (United States) — website hosting and analytics. Compliant with the EU-US Data Privacy Framework.",
-         "<strong>Upstash</strong> (hosted in the EU, eu-west-1 region) — temporary storage of analysis results and email leads. Data hosted in the European Union.",
+         "<strong>Database service</strong> (hosted in the EU, eu-west-1 region) — temporary storage of analysis results and email leads. Data hosted in the European Union.",
          "<strong>Stripe Payments Europe, Ltd.</strong> (Ireland) — payment processing. PCI DSS Level 1 certified, GDPR compliant.",
          "<strong>Resend</strong> (United States) — transactional email delivery (report by email, confirmation). Compliant with the EU-US Data Privacy Framework.",
-         "<strong>Anthropic</strong> (United States) — editorial neutrality analysis of scanned content via the Claude API. No personal data is transmitted to Anthropic; only the textual content of the analyzed page is sent for evaluation. Compliant with the EU-US Data Privacy Framework."],
+         "<strong>AI provider</strong> (United States) — editorial neutrality analysis of scanned content via an artificial intelligence API. No personal data is transmitted; only the textual content of the analyzed page is sent for evaluation. Compliant with the EU-US Data Privacy Framework."],
         "No personal data is transmitted to any third parties other than those listed above."
       ]},
       { "title": "Data retention", "list": [
@@ -752,9 +752,9 @@
         "If you believe that the processing of your data does not comply with regulations, you may file a complaint with the CNIL (French data protection authority): <a href='https://www.cnil.fr' style='color:#D97757;text-decoration:none' target='_blank' rel='noopener noreferrer'>www.cnil.fr</a>."
       ]},
       { "title": "Data transfers outside the EU", "paragraphs": [
-        "Some of our processors are located in the United States (Vercel, Resend, Anthropic). These transfers are governed by the EU-US Data Privacy Framework, recognized by the European Commission as providing an adequate level of protection (adequacy decision of July 10, 2023).",
+        "Some of our processors are located in the United States (Vercel, Resend, our AI provider). These transfers are governed by the EU-US Data Privacy Framework, recognized by the European Commission as providing an adequate level of protection (adequacy decision of July 10, 2023).",
         "Payment data is processed by Stripe Payments Europe, Ltd., established in Ireland (EU).",
-        "Cache data (URLs, analysis results) is stored by Upstash in the eu-west-1 region (EU)."
+        "Cache data (URLs, analysis results) is stored in the eu-west-1 region (EU)."
       ]},
       { "title": "Security", "paragraphs": [
         "Beeleven SASU implements appropriate technical and organizational measures to protect personal data against loss, theft, unauthorized access, disclosure or destruction. Communications are encrypted via HTTPS/TLS. Database access is protected by authentication."

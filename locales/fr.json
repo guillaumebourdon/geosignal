@@ -300,9 +300,9 @@
       "label": "Le processus",
       "title": "3 étapes d'analyse automatisée",
       "steps": [
-        { "num": "01", "title": "Scraping du contenu", "desc": "Detekia récupère le HTML complet de votre page via Jina Reader — un service de scraping optimisé pour les IA. Le HTML brut, le texte et les métadonnées sont extraits." },
+        { "num": "01", "title": "Scraping du contenu", "desc": "Detekia récupère le HTML complet de votre page via un service de scraping spécialisé pour les IA. Le HTML brut, le texte et les métadonnées sont extraits." },
         { "num": "02", "title": "Analyse heuristique", "desc": "Notre moteur d'analyse calcule 7 scores heuristiques en inspectant le DOM : balises, attributs, ratios, comptages. Ces scores sont reproductibles et déterministes." },
-        { "num": "03", "title": "Analyse IA (Claude)", "desc": "Claude Haiku analyse le contenu textuel pour évaluer la neutralité éditoriale et générer des recommandations contextualisées. Le score final intègre ce résultat." }
+        { "num": "03", "title": "Analyse IA", "desc": "Notre moteur d'analyse IA évalue le contenu textuel pour mesurer la neutralité éditoriale et générer des recommandations contextualisées. Le score final intègre ce résultat." }
       ]
     },
     "score": {
@@ -712,7 +712,7 @@
       ]},
       { "title": "Données collectées et finalités", "paragraphs": [
         "Detekia collecte un nombre minimal de données, strictement nécessaires au fonctionnement du service.",
-        "<strong>URL analysée</strong> — Lorsque vous lancez une analyse GEO, l'URL que vous saisissez est traitée en temps réel pour générer votre score. L'URL et les résultats sont mis en cache dans notre base de données (Upstash Redis) pendant 24 heures afin d'accélérer les analyses ultérieures du même site. Après 24 heures, ces données sont automatiquement supprimées. <em>Base légale : intérêt légitime (fourniture du service demandé).</em>",
+        "<strong>URL analysée</strong> — Lorsque vous lancez une analyse GEO, l'URL que vous saisissez est traitée en temps réel pour générer votre score. L'URL et les résultats sont mis en cache dans notre base de données sécurisée pendant 24 heures afin d'accélérer les analyses ultérieures du même site. Après 24 heures, ces données sont automatiquement supprimées. <em>Base légale : intérêt légitime (fourniture du service demandé).</em>",
         "<strong>Adresse email (optionnel)</strong> — Si vous choisissez de recevoir votre rapport par email via le formulaire de capture, votre adresse email est stockée dans notre base de données avec l'URL analysée et le score obtenu. Cette donnée est utilisée pour vous envoyer votre rapport et, si vous y consentez, des alertes sur l'évolution de votre score. <em>Base légale : consentement.</em>",
         "<strong>Données de paiement</strong> — Lorsque vous achetez le rapport GEO complet, le paiement est intégralement traité par Stripe Payments Europe, Ltd. Beeleven SASU ne collecte, ne stocke et ne traite aucune donnée bancaire (numéro de carte, date d'expiration, cryptogramme). Seules les informations transmises par Stripe après le paiement sont traitées : email de l'acheteur, identifiant de transaction, montant. <em>Base légale : exécution du contrat.</em>",
         "<strong>Données de navigation</strong> — Detekia utilise Vercel Analytics pour mesurer la fréquentation du site (pages vues, durée de visite, provenance géographique). Vercel Analytics ne dépose pas de cookies, n'utilise pas de traceurs tiers et ne collecte pas de données personnelles identifiantes. Les données sont agrégées et anonymes. <em>Base légale : intérêt légitime (amélioration du service).</em>"
@@ -728,10 +728,10 @@
       { "title": "Sous-traitants et destinataires des données", "content": [
         "Les données collectées par Detekia sont traitées par les sous-traitants suivants, tous conformes au RGPD ou au cadre de protection des données UE-US :",
         ["<strong>Vercel Inc.</strong> (États-Unis) — hébergement du site et analytics. Conforme au Data Privacy Framework UE-US.",
-         "<strong>Upstash</strong> (hébergé en UE, région eu-west-1) — stockage temporaire des résultats d'analyse et des leads email. Données hébergées dans l'Union européenne.",
+         "<strong>Service de base de données</strong> (hébergé en UE, région eu-west-1) — stockage temporaire des résultats d'analyse et des leads email. Données hébergées dans l'Union européenne.",
          "<strong>Stripe Payments Europe, Ltd.</strong> (Irlande) — traitement des paiements. Certifié PCI DSS Level 1, conforme au RGPD.",
          "<strong>Resend</strong> (États-Unis) — envoi des emails transactionnels (rapport par email, confirmation). Conforme au Data Privacy Framework UE-US.",
-         "<strong>Anthropic</strong> (États-Unis) — analyse de la neutralité éditoriale du contenu scanné via l'API Claude. Aucune donnée personnelle n'est transmise à Anthropic ; seul le contenu textuel de la page analysée est envoyé pour évaluation. Conforme au Data Privacy Framework UE-US."],
+         "<strong>Fournisseur d'IA</strong> (États-Unis) — analyse de la neutralité éditoriale du contenu scanné via une API d'intelligence artificielle. Aucune donnée personnelle n'est transmise ; seul le contenu textuel de la page analysée est envoyé pour évaluation. Conforme au Data Privacy Framework UE-US."],
         "Aucune donnée personnelle n'est transmise à d'autres tiers que ceux listés ci-dessus."
       ]},
       { "title": "Durée de conservation", "list": [
@@ -752,9 +752,9 @@
         "Si vous estimez que le traitement de vos données n'est pas conforme à la réglementation, vous pouvez adresser une réclamation à la CNIL : <a href='https://www.cnil.fr' style='color:#D97757;text-decoration:none' target='_blank' rel='noopener noreferrer'>www.cnil.fr</a>."
       ]},
       { "title": "Transferts de données hors UE", "paragraphs": [
-        "Certains de nos sous-traitants sont situés aux États-Unis (Vercel, Resend, Anthropic). Ces transferts sont encadrés par le Data Privacy Framework UE-US, reconnu par la Commission européenne comme offrant un niveau de protection adéquat (décision d'adéquation du 10 juillet 2023).",
+        "Certains de nos sous-traitants sont situés aux États-Unis (Vercel, Resend, notre fournisseur d'IA). Ces transferts sont encadrés par le Data Privacy Framework UE-US, reconnu par la Commission européenne comme offrant un niveau de protection adéquat (décision d'adéquation du 10 juillet 2023).",
         "Les données de paiement sont traitées par Stripe Payments Europe, Ltd., établi en Irlande (UE).",
-        "Les données de cache (URL, résultats d'analyse) sont stockées par Upstash dans la région eu-west-1 (UE)."
+        "Les données de cache (URL, résultats d'analyse) sont stockées dans la région eu-west-1 (UE)."
       ]},
       { "title": "Sécurité", "paragraphs": [
         "Beeleven SASU met en œuvre les mesures techniques et organisationnelles appropriées pour protéger les données personnelles contre la perte, le vol, l'accès non autorisé, la divulgation ou la destruction. Les communications sont chiffrées via HTTPS/TLS. Les accès aux bases de données sont protégés par authentification."
