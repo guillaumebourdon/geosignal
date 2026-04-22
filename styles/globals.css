@@ -3,17 +3,62 @@
 /* ── MOBILE BREAK ───────────────────────────────────────────────── */
 .mobile-break { display: none; }
 
+/* ── BURGER — hidden on desktop ──────────────────────────────────── */
+.nav-burger { display: none !important; }
+
+/* ── MOBILE MENU OVERLAY ─────────────────────────────────────────── */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: #1A1916;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: menuFadeIn 0.25s ease;
+}
+@keyframes menuFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.mobile-menu-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #F7F5F2;
+  cursor: pointer;
+  padding: 8px;
+}
+.mobile-menu-link {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  color: #F7F5F2;
+  padding: 14px 0;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.mobile-menu-link:hover,
+.mobile-menu-link:focus {
+  color: #D97757;
+}
 /* ── NAV ─────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .detekia-nav {
     padding: 0 20px !important;
   }
-  .nav-link-secondary {
+  .nav-links {
     display: none !important;
   }
+  .nav-burger {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
   .nav-cta {
-    font-size: 12px !important;
-    padding: 7px 12px !important;
+    display: none !important;
   }
 
   /* ── SECTION PADDING ──────────────────────────────────────────── */

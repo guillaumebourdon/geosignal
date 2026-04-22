@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
+import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
@@ -317,22 +318,7 @@ export default function Results() {
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
-      <nav className="detekia-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
-            {['#10A37F','#D97757','#4285F4','#1C7DC4'].map((c,i) => <div key={i} style={{ background: c, borderRadius: '50%' }} />)}
-          </div>
-          {t('common.siteName')}
-        </Link>
-        <div className="nav-links" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-          <Link href="/blog" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.blog')}</Link>
-          <Link href="/pricing" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.pricing')}</Link>
-          <Link href="/methodologie" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.methodology')}</Link>
-          <Link href="/a-propos" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.about')}</Link>
-          <Link href="/contact" className="nav-link-secondary" style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.contact')}</Link>
-          <Link href="/" className="nav-cta" style={{ fontSize: 12, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '7px 16px', borderRadius: 8, textDecoration: 'none', fontFamily: 'system-ui' }}>{t('results.nav.newAnalysis')}</Link>
-        </div>
-      </nav>
+      <Header showLanguageSwitcher={false} ctaLabel={t('results.nav.newAnalysis')} />
 
       {!result && !error && (
         <div style={{ minHeight: 'calc(100vh - 56px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 24px' }}>

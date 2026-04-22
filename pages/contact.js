@@ -1,16 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import SEO from '../components/SEO';
-import LanguageSwitcher from '../components/LanguageSwitcher';
+import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
 
-const Logo = () => (
-  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 18, height: 18 }}>
-    {['#10A37F','#D97757','#4285F4','#1C7DC4'].map((c,i) => (
-      <div key={i} style={{ background: c, borderRadius: '50%' }} />
-    ))}
-  </div>
-);
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
@@ -31,21 +24,7 @@ export default function Contact() {
         description={t('contact.seo.description')}
       />
 
-      {/* NAV */}
-      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 48px', borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.95)', position: 'sticky', top: 0, zIndex: 100 }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 20, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916' }}>
-          <Logo />{t('common.siteName')}
-        </Link>
-        <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
-          <Link href="/blog" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.blog')}</Link>
-          <Link href="/pricing" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.pricing')}</Link>
-          <Link href="/methodologie" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.methodology')}</Link>
-          <Link href="/a-propos" style={{ fontSize: 13, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.about')}</Link>
-          <Link href="/contact" style={{ fontSize: 13, color: '#1A1916', fontWeight: 600, textDecoration: 'none', fontFamily: 'system-ui' }}>{t('nav.contact')}</Link>
-          <LanguageSwitcher />
-          <Link href="/" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '8px 18px', borderRadius: 8, textDecoration: 'none' }}>{t('nav.ctaAnalyze')}</Link>
-        </div>
-      </nav>
+      <Header ctaLabel={t('nav.ctaAnalyze')} />
 
       <div style={{ maxWidth: 560, margin: '0 auto', padding: '72px 24px 100px' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>

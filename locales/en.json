@@ -62,7 +62,9 @@
     "contact": "Contact",
     "blog": "Blog",
     "cta": "Free analysis",
-    "ctaAnalyze": "Analyze my website"
+    "ctaAnalyze": "Analyze my website",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "homepage": {
     "seo": {
