@@ -61,15 +61,7 @@
     display: none !important;
   }
 
-  /* ── SECTION PADDING ──────────────────────────────────────────── */
-  section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-  footer {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
+  /* ── SECTION + FOOTER PADDING — overridden by Vague 1 block ──── */
   .footer-inner {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -81,10 +73,6 @@
   .hero-grid {
     grid-template-columns: 1fr !important;
     gap: 36px !important;
-  }
-  .hero-grid h1 {
-    font-size: clamp(26px, 8vw, 34px) !important;
-    letter-spacing: -1px !important;
   }
   .hero-mockup {
     justify-content: center !important;
@@ -154,6 +142,101 @@
   /* ── FAQ ───────────────────────────────────────────────────────── */
   .faq-grid {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   VAGUE 1 — Refonte mobile (7 fixes)
+   Tout est dans ce bloc @media. Zéro impact desktop.
+   ══════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* ── 1. TITRES H1/H2 — tailles adaptées mobile ──────────────── */
+  .hero-grid h1 {
+    font-size: clamp(32px, 9.5vw, 38px) !important;
+    line-height: 1.12 !important;
+  }
+  section h2 {
+    font-size: clamp(24px, 7vw, 30px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.8px !important;
+    margin-bottom: 28px !important;
+  }
+
+  /* ── 2. PADDINGS VERTICAUX DES SECTIONS ──────────────────────── */
+  section {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+  /* Hero section : moins de padding vertical */
+  .hero-section {
+    padding-top: 16px !important;
+    padding-bottom: 24px !important;
+  }
+
+  /* ── 3. CARTES PLEINE LARGEUR — paddings internes ────────────── */
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .diff-grid > div,
+  .target-grid > div,
+  .steps-grid > div,
+  .reports-grid > div {
+    padding: 20px !important;
+    border-radius: 12px !important;
+  }
+  .testimonials-grid > div {
+    border-radius: 12px !important;
+  }
+
+  /* ── 4. FOOTER — réparation ──────────────────────────────────── */
+  footer {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-bottom: 24px !important;
+  }
+  .footer-inner > div:last-child {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px 20px !important;
+    width: 100% !important;
+  }
+
+  /* ── 5. FAQ — accessibilité + alignement ─────────────────────── */
+  /* Question row: more vertical breathing room */
+  .faq-grid > div > div:first-child {
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+    align-items: flex-start !important;
+  }
+  /* "+" button: 44×44 minimum touch target */
+  .faq-grid > div > div:first-child > div:last-child {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    margin-top: 0 !important;
+  }
+
+  /* ── 6. BADGES MOTEURS IA — grille 2×2 propre ───────────────── */
+  /* Les 4 chips ChatGPT/Claude/Gemini/Perplexity ont
+     border-radius: 20px dans un flex-wrap center.
+     On force chaque chip à ~45% width pour un 2×2 propre. */
+  div[style*="flex-wrap: wrap"][style*="justify-content: center"] > div[style*="border-radius: 20px"] {
+    min-width: calc(50% - 8px) !important;
+    justify-content: center !important;
+  }
+
+  /* ── 7. MONOSPACE TEXTES COUPÉS ──────────────────────────────── */
+  /* Cible les trust badges (monospace font-size 10px) sous les CTA.
+     NE touche PAS les labels de section (monospace font-size 9px). */
+  div[style*="font-family: monospace"][style*="font-size: 10px"],
+  p[style*="font-family: monospace"][style*="font-size: 10px"] {
+    font-size: 9px !important;
+    letter-spacing: 0.5px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    text-align: center !important;
   }
 }
 
