@@ -45,10 +45,10 @@ export default function Methodologie() {
       {/* COMMENT ÇA MARCHE */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.process.label')}</div>
-        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
+        <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
           {t('methodology.process.title')}
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+        <div className="methodo-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
           {t('methodology.process.steps').map((step, idx) => (
             <div key={step.num} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
               <div style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: stepColors[idx], marginBottom: 16, letterSpacing: -1 }}>{step.num}</div>
@@ -63,13 +63,13 @@ export default function Methodologie() {
       <div style={{ background: '#1A1916', padding: '60px 24px', marginBottom: 80 }}>
         <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.4)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{t('methodology.score.label')}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#F7F5F2', letterSpacing: -1, marginBottom: 16 }}>
+          <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#F7F5F2', letterSpacing: -1, marginBottom: 16 }}>
             {t('methodology.score.title')}
           </h2>
           <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 40, maxWidth: 540, margin: '0 auto 40px' }}>
             {t('methodology.score.subtitle')}
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, textAlign: 'center' }}>
+          <div className="methodo-score-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, textAlign: 'center' }}>
             {t('methodology.score.items').map((item) => (
               <div key={item.name} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '12px 8px' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#D97757', letterSpacing: -1 }}>{item.pts}</div>
@@ -84,7 +84,7 @@ export default function Methodologie() {
       {/* 8 CRITÈRES DÉTAILLÉS */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.criteria.label')}</div>
-        <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
+        <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
           {t('methodology.criteria.titleStart')}<em style={{ color: '#D97757' }}>{t('methodology.criteria.titleEm')}</em>
         </h2>
 
@@ -100,7 +100,7 @@ export default function Methodologie() {
                   {c.weight}
                 </div>
               </div>
-              <div style={{ padding: '20px 24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+              <div className="methodo-criteria-detail" style={{ padding: '20px 24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
                 <div>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{t('methodology.criteria.whatLabel')}</div>
                   <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65, fontFamily: 'system-ui' }}>{c.what}</div>

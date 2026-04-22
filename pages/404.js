@@ -15,7 +15,7 @@ export default function Custom404() {
         <Header />
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100vh - 58px)', padding: '48px 24px', textAlign: 'center' }}>
-          <div style={{ fontSize: 160, fontWeight: 700, fontFamily: 'Georgia, serif', color: '#D97757', lineHeight: 1, letterSpacing: -6, marginBottom: 16 }}>
+          <div className="error-code" style={{ fontSize: 160, fontWeight: 700, fontFamily: 'Georgia, serif', color: '#D97757', lineHeight: 1, letterSpacing: -6, marginBottom: 16 }}>
             {t('notFound.code')}
           </div>
           <h1 style={{ fontSize: 28, fontWeight: 600, fontFamily: 'Georgia, serif', color: '#1A1916', margin: '0 0 12px' }}>
