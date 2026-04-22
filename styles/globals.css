@@ -44,11 +44,6 @@
 .mobile-menu-link:focus {
   color: #D97757;
 }
-.mobile-menu-lang {
-  position: absolute;
-  bottom: 40px;
-}
-
 /* ── NAV ─────────────────────────────────────────────────────────── */
 @media (max-width: 767px) {
   .detekia-nav {

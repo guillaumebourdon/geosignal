@@ -91,26 +91,28 @@ export default function Header({ variant = 'default', ctaLabel, showLanguageSwit
               </Link>
             );
           })}
-          {showLanguageSwitcher && <LanguageSwitcher />}
+        </div>
+
+        <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <Link href="/" className="nav-cta" style={{ fontSize: 13, fontWeight: 600, background: '#1A1916', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, textDecoration: 'none', fontFamily: 'system-ui' }}>
             {resolvedCtaLabel}
           </Link>
+          {showLanguageSwitcher && <LanguageSwitcher />}
+          {/* Burger button — mobile only */}
+          <button
+            ref={burgerRef}
+            className="nav-burger"
+            onClick={() => setMenuOpen(true)}
+            aria-label={t('nav.openMenu')}
+            style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 8, marginRight: -8 }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1916" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
         </div>
-
-        {/* Burger button — mobile only */}
-        <button
-          ref={burgerRef}
-          className="nav-burger"
-          onClick={() => setMenuOpen(true)}
-          aria-label={t('nav.openMenu')}
-          style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 8, marginRight: -8 }}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1916" strokeWidth="2" strokeLinecap="round">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
       </nav>
 
       {/* Mobile menu overlay */}
@@ -145,11 +147,6 @@ export default function Header({ variant = 'default', ctaLabel, showLanguageSwit
                 </Link>
               );
             })}
-          </div>
-
-          {/* Language switcher at bottom */}
-          <div className="mobile-menu-lang">
-            <LanguageSwitcher />
           </div>
         </div>
       )}
