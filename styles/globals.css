@@ -58,8 +58,7 @@
     justify-content: center;
   }
   .nav-cta {
-    font-size: 12px !important;
-    padding: 7px 12px !important;
+    display: none !important;
   }
 
   /* ── SECTION PADDING ──────────────────────────────────────────── */
