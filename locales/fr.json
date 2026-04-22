@@ -908,5 +908,22 @@
     "subtitle": "Vous cherchez quelque chose ? Cette page a dû se perdre en chemin.",
     "cta": "Retour à l'accueil →",
     "ctaSub": "Ou analysez votre site →"
+  },
+  "beelevenContact": {
+    "modalTitle": "Discutons de votre projet",
+    "modalSubtitle": "Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations de votre rapport : audit approfondi, optimisations techniques, suivi mensuel.",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "website": "Site web audité",
+    "message": "Message (optionnel)",
+    "messagePlaceholder": "Décrivez votre projet ou vos questions…",
+    "submitButton": "Envoyer",
+    "submitLoading": "Envoi en cours…",
+    "submitSuccess": "Merci, on revient vers vous sous 24h.",
+    "submitError": "Une erreur est survenue. Réessayez ou contactez-nous à hello@detekia.fr.",
+    "ctaBlockTitle": "Besoin d'aide pour appliquer les recommandations ?",
+    "ctaBlockText": "Beeleven, l'agence derrière Detekia, accompagne les entreprises dans l'implémentation de leur stratégie GEO : audit approfondi, optimisations techniques, suivi des résultats.",
+    "ctaBlockButton": "Discutons-en →"
   }
 }
