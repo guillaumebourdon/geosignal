@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
 
 function RecoCard({ r, index, t }) {
@@ -99,16 +100,7 @@ export default function Success() {
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
-      <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', height: 56, borderBottom: '1px solid #E5E2DC', background: 'rgba(247,245,242,0.97)', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(12px)' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 'bold', textDecoration: 'none', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, width: 16, height: 16 }}>
-            {['#10A37F','#D97757','#4285F4','#1C7DC4'].map((c, i) => (
-              <div key={i} style={{ background: c, borderRadius: '50%' }} />
-            ))}
-          </div>
-          {t('common.siteName')}
-        </Link>
-      </nav>
+      <Header variant="minimal" />
 
       <div style={{ maxWidth: 860, margin: '0 auto', padding: '48px 24px 100px' }}>
 
