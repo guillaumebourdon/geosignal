@@ -636,7 +636,7 @@ function generateReportHTML(data, locale = 'fr') {
 
   const top3HTML = sortedRecos.slice(0, 3).map((r, i) => {
     const rc = r.priority === 'high' ? { color: '#D97757', bg: 'rgba(217,119,87,0.07)' } : r.priority === 'medium' ? { color: '#C9861A', bg: 'rgba(201,134,26,0.07)' } : { color: '#10A37F', bg: 'rgba(16,163,127,0.07)' };
-    return `<div style="display:flex;gap:16px;align-items:flex-start;padding:14px 16px;background:${rc.bg};border-radius:8px;margin-bottom:8px;">
+    return `<div class="top3-reco-card" style="display:flex;gap:16px;align-items:flex-start;padding:14px 16px;background:${rc.bg};border-radius:8px;margin-bottom:8px;">
       <div style="font-family:Georgia,serif;font-size:22px;color:${rc.color};line-height:1;flex-shrink:0;min-width:24px;">${i + 1}</div>
       <div style="flex:1;"><div style="font-family:system-ui;font-size:12px;font-weight:600;color:#1A1916;margin-bottom:3px;">${esc(r.title || translateCriterionName(r.criterion || '', locale))}</div><div style="font-family:system-ui;font-size:11px;color:#8A8680;line-height:1.5;">${esc(r.whatToDo || r.diagnostic || '')}</div></div>
       <div style="font-family:monospace;font-size:9px;color:${rc.color};background:${rc.bg};padding:3px 9px;border-radius:12px;white-space:nowrap;flex-shrink:0;border:1px solid ${rc.color}33;">${impactLabel(r.priority)}</div>
@@ -648,7 +648,7 @@ function generateReportHTML(data, locale = 'fr') {
   ).join('') || `<div style="font-family:system-ui;font-size:13px;color:#8A8680;">—</div>`;
 
   const execSummary = `
-  <div style="${P}min-height:100vh;">
+  <div style="${P}">
     ${sLabel(t.synthesis.label)}
     ${H1(t.synthesis.h1)}
     <div style="background:#1A1916;border-radius:12px;padding:24px 28px;margin-bottom:36px;display:flex;align-items:center;gap:24px;">
@@ -669,14 +669,14 @@ function generateReportHTML(data, locale = 'fr') {
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">${t.synthesis.top3H2}</h2>
     ${top3HTML}
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-top:28px;margin-bottom:14px;">${t.synthesis.strengthsH2}</h2>
-    <div style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;">${strengthsHTML}</div>
+    <div class="strengths-block" style="background:#E8F7F3;border:1px solid rgba(16,163,127,0.2);border-radius:10px;padding:20px 24px;">${strengthsHTML}</div>
     ${noEvidence ? `<div style="background:#FFF8ED;border:1px solid rgba(201,134,26,0.25);border-radius:8px;padding:14px 18px;margin-top:28px;font-family:system-ui;font-size:12px;color:#C9861A;line-height:1.5;">${t.synthesis.noEvidence}</div>` : ''}
   </div>`;
 
   // ── PAGE 3 : CONTEXT
   const contextCards = t.context.cards.map((card, i) => {
     const valueColor = i === 2 ? '#10A37F' : i === 4 ? '#C9861A' : i === 5 ? '#10A37F' : '#D97757';
-    return `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
+    return `<div class="context-card" style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:10px;padding:18px 20px;">
       <div style="${LS}">${card.label}</div>
       <div style="font-family:Georgia,serif;font-size:28px;color:${valueColor};line-height:1;margin-bottom:6px;">${card.value}</div>
       <p style="font-family:system-ui;font-size:12px;color:#8A8680;line-height:1.6;">${card.text} <span style="color:#B0ABA5;">(${card.source})</span></p>
@@ -684,7 +684,7 @@ function generateReportHTML(data, locale = 'fr') {
   }).join('');
 
   const context = `
-  <div style="${P}min-height:100vh;">
+  <div style="${P}">
     ${sLabel(t.context.label)}
     ${H1(t.context.h1)}
     <p style="font-family:system-ui;font-size:13px;color:#8A8680;line-height:1.7;margin-bottom:28px;">${t.context.intro}</p>
@@ -718,7 +718,7 @@ function generateReportHTML(data, locale = 'fr') {
         ? `<div style="font-family:system-ui;font-size:11px;color:#8A8680;margin-bottom:4px;">${t.citationTest.competitorsLabel} <strong style="color:#1A1916;">${tt.competitors_cited.map(esc).join(', ')}</strong></div>` : '';
       const excerptBlock = tt.ai_response_excerpt
         ? `<div style="background:#F7F5F2;border-left:3px solid #E5E2DC;padding:8px 12px;font-family:monospace;font-size:11px;color:#8A8680;line-height:1.5;margin-top:8px;">${esc(tt.ai_response_excerpt)}</div>` : '';
-      return `<div style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:16px;margin-bottom:12px;">
+      return `<div class="citation-test-card" style="background:#FAFAF9;border:1px solid #E5E2DC;border-radius:8px;padding:16px;margin-bottom:12px;">
         <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
           <div style="flex:1;min-width:200px;font-family:system-ui;font-size:13px;font-weight:600;color:#1A1916;line-height:1.4;">${esc(tt.query)}</div>
           <span style="display:inline-block;padding:2px 9px;border-radius:10px;font-family:monospace;font-size:9px;letter-spacing:1px;background:${dcBg};color:${dc};white-space:nowrap;">${diffLabel}</span>
@@ -736,7 +736,7 @@ function generateReportHTML(data, locale = 'fr') {
           <span style="color:#8A8680;">${t.citationTest.mainBlocker}</span> ${esc(ct.summary.main_blocker || '—')}
         </div>` : '';
     return `
-    <div style="${P}min-height:100vh;">
+    <div style="${P}">
       ${sLabel(t.citationTest.label)}
       <h1 style="font-family:Georgia,serif;font-size:34px;color:#1A1916;letter-spacing:-1px;margin-bottom:8px;line-height:1.1;">${t.citationTest.h1}</h1>
       <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:28px;line-height:1.6;">${t.citationTest.intro}</p>
@@ -837,11 +837,11 @@ function generateReportHTML(data, locale = 'fr') {
   }).join('');
 
   const actionPlan = `
-  <div style="${P}min-height:100vh;">
+  <div style="${P}">
     ${sLabel(t.actionPlan.label)}
     ${H1(t.actionPlan.h1)}
     <p style="font-family:system-ui;font-size:13px;color:#8A8680;margin-bottom:36px;line-height:1.6;">${recommendations.length} ${t.actionPlan.intro}</p>
-    <table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:44px;">
+    <table class="action-plan-table" style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:44px;">
       <thead><tr style="background:#F7F5F2;">
         <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.actionPlan.colHash}</th>
         <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.actionPlan.colPriority}</th>
@@ -852,7 +852,7 @@ function generateReportHTML(data, locale = 'fr') {
       </tr></thead>
       <tbody>${actionRows}</tbody>
     </table>
-    <div style="background:#1A1916;border-radius:14px;padding:30px 36px;display:flex;align-items:center;gap:32px;">
+    <div class="score-projection-card" style="background:#1A1916;border-radius:14px;padding:30px 36px;display:flex;align-items:center;gap:32px;">
       <div style="text-align:center;flex-shrink:0;"><div style="font-family:monospace;font-size:9px;color:rgba(247,245,242,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">${t.actionPlan.currentScore}</div><div style="font-family:Georgia,serif;font-size:52px;color:#F7F5F2;line-height:1;letter-spacing:-2px;">${score}</div><div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.25);">/100</div></div>
       <div style="font-family:Georgia,serif;font-size:28px;color:rgba(247,245,242,0.18);flex-shrink:0;">→</div>
       <div style="text-align:center;flex-shrink:0;"><div style="font-family:monospace;font-size:9px;color:rgba(247,245,242,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">${t.actionPlan.projectedScore}</div><div style="font-family:Georgia,serif;font-size:52px;color:#10A37F;line-height:1;letter-spacing:-2px;">${projected}</div><div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.25);">/100</div></div>
@@ -863,7 +863,7 @@ function generateReportHTML(data, locale = 'fr') {
   // ── BEELEVEN CTA (after score, before criteria)
   const beelevenUrl = locale === 'en' ? 'https://detekia.fr/en/contact' : 'https://detekia.fr/contact';
   const beelevenSection = `
-  <div style="${P}display:flex;align-items:center;justify-content:center;min-height:50vh;">
+  <div class="beeleven-cta-block" style="${P}display:flex;align-items:center;justify-content:center;padding-top:120px;padding-bottom:120px;">
     <div style="max-width:480px;text-align:center;">
       ${sLabel(t.beeleven.label)}
       ${H1(t.beeleven.h1)}
@@ -882,7 +882,7 @@ function generateReportHTML(data, locale = 'fr') {
     </tr>`).join('');
 
   const methodology = `
-  <div style="${P}min-height:100vh;">
+  <div style="${P}">
     ${sLabel(t.methodology.label)}
     ${H1(t.methodology.h1)}
     <div style="background:rgba(217,119,87,0.06);border-left:3px solid #D97757;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:28px;">
@@ -894,7 +894,7 @@ function generateReportHTML(data, locale = 'fr') {
       <p style="font-family:system-ui;font-size:13px;color:#1A1916;line-height:1.75;">${t.methodology.howItWorks3}</p>
     </div>
     <h2 style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:14px;">${t.methodology.criteriaH2}</h2>
-    <table style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:32px;">
+    <table class="methodology-table" style="width:100%;border-collapse:collapse;border:1px solid #E5E2DC;border-radius:10px;overflow:hidden;margin-bottom:32px;">
       <thead><tr style="background:#F7F5F2;">
         <th style="padding:9px 12px;text-align:left;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.methodology.colCriterion}</th>
         <th style="padding:9px 12px;text-align:center;font-family:monospace;font-size:9px;color:#8A8680;letter-spacing:1.5px;text-transform:uppercase;font-weight:400;">${t.methodology.colWeight}</th>
@@ -928,9 +928,18 @@ function generateReportHTML(data, locale = 'fr') {
 <meta charset="UTF-8">
 <title>${locale === 'en' ? 'GEO Report' : 'Rapport GEO'} — ${esc(url)}</title>
 <style>
-  @page { margin: 0; }
+  @page { size: A4; margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-break, .score-projection-card, .citation-test-card, .action-plan-table,
+  .criterion-evidence-block, .beeleven-cta-block, .strengths-block,
+  .top3-reco-card, .context-card, .methodology-table {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  p { orphans: 3; widows: 3; }
+  tr { page-break-inside: avoid; break-inside: avoid; }
+  img { page-break-inside: avoid; break-inside: avoid; }
 </style>
 </head>
 <body>
@@ -966,7 +975,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + Buffer.from('api:' + process.env.PDFSHIFT_API_KEY).toString('base64'),
       },
-      body: JSON.stringify({ source: html, landscape: false, use_print: true }),
+      body: JSON.stringify({ source: html, landscape: false, use_print: true, format: 'A4', margin: { top: '0', right: '0', bottom: '0', left: '0' } }),
     });
 
     if (!pdfResponse.ok) {
