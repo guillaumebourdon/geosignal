@@ -27,6 +27,7 @@ CONTENT_MAP_EN['comment-chatgpt-choisit-ses-sources'] = require('../../content/a
 CONTENT_MAP_EN['perplexity-comment-apparaitre'] = require('../../content/articles/en/perplexity-comment-apparaitre').default;
 CONTENT_MAP_EN['gemini-visibilite-site-france'] = require('../../content/articles/en/gemini-visibilite-site-france').default;
 CONTENT_MAP_EN['meta-descriptions-seo-geo-2026'] = require('../../content/articles/en/meta-descriptions-seo-geo-2026').default;
+CONTENT_MAP_EN['faq-schema-faqpage-combo-ia'] = require('../../content/articles/en/faq-schema-faqpage-combo-ia').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
@@ -49,6 +50,7 @@ const CONTENT_MAP = {
   'perplexity-comment-apparaitre': require('../../content/articles/perplexity-comment-apparaitre').default,
   'gemini-visibilite-site-france': require('../../content/articles/gemini-visibilite-site-france').default,
   'meta-descriptions-seo-geo-2026': require('../../content/articles/meta-descriptions-seo-geo-2026').default,
+  'faq-schema-faqpage-combo-ia': require('../../content/articles/faq-schema-faqpage-combo-ia').default,
 };
 
 const CATEGORY_COLORS = {
