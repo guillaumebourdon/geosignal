@@ -940,6 +940,26 @@ function generateReportHTML(data, locale = 'fr') {
   p { orphans: 3; widows: 3; }
   tr { page-break-inside: avoid; break-inside: avoid; }
   img { page-break-inside: avoid; break-inside: avoid; }
+  /* Fix pour les blocs trop grands qui débordent sur 2 pages */
+  div[style*="background:#E8F7F3"] p,
+  div[style*="background:#E8F7F3"] div,
+  div[style*="background:rgba(217,119,87,0.04)"] p,
+  div[style*="background:rgba(217,119,87,0.04)"] div,
+  div[style*="background:rgba(217,119,87,0.06)"] p,
+  div[style*="background:rgba(217,119,87,0.06)"] div,
+  div[style*="background:#FFF8ED"] p,
+  div[style*="background:#FBF0EB"] p {
+    page-break-inside: avoid; break-inside: avoid;
+    orphans: 4; widows: 4;
+  }
+  p, div, td, th, li, span {
+    word-spacing: normal !important;
+    letter-spacing: normal;
+  }
+  .criterion-page-block {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
 </style>
 </head>
 <body>
