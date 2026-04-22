@@ -9,6 +9,9 @@
 /* ── MOCKUP LABEL — hidden on desktop ────────────────────────────── */
 .audit-mockup-label { display: none; }
 
+/* ── CAROUSEL CONTROLS — hidden on desktop ───────────────────────── */
+.testimonials-carousel-controls { display: none; }
+
 /* ── MOBILE MENU OVERLAY ─────────────────────────────────────────── */
 .mobile-menu-overlay {
   position: fixed;
@@ -189,8 +192,74 @@
     padding: 20px !important;
     border-radius: 12px !important;
   }
+  /* ── 3a. TÉMOIGNAGES CARROUSEL MOBILE ─────────────────────────── */
+  .testimonials-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    gap: 16px !important;
+    padding: 4px 16px 20px !important;
+    margin: 0 -16px !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .testimonials-grid::-webkit-scrollbar {
+    display: none !important;
+  }
   .testimonials-grid > div {
+    flex: 0 0 85% !important;
+    scroll-snap-align: start !important;
+    min-width: 85% !important;
     border-radius: 12px !important;
+  }
+  .testimonials-carousel-controls {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px 0 8px;
+  }
+  .testimonials-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: #D97757;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .testimonials-arrow:hover:not(:disabled) {
+    background: #D97757;
+    color: #F7F5F2;
+  }
+  .testimonials-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .testimonials-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .testimonials-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s;
+  }
+  .testimonials-dot.active {
+    background: #D97757;
+    width: 24px;
+    border-radius: 4px;
   }
 
   /* ── 3b. MOCKUP HOMEPAGE — version simplifiée mobile ─────────── */

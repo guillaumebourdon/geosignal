@@ -198,6 +198,8 @@
       "label": "Résultats",
       "title": "Ils ont analysé leur site",
       "subtitle": "Des résultats concrets, mesurables, en quelques jours.",
+      "prev": "Témoignage précédent",
+      "next": "Témoignage suivant",
       "items": [
         {
           "initials": "TL",

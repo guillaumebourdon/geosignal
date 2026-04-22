@@ -138,6 +138,7 @@ function ProductMockup() {
 export default function Home() {
   const [url, setUrl] = useState('');
   const [easterEgg, setEasterEgg] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const router = useRouter();
   const { t, locale } = useTranslation();
 
@@ -245,6 +246,31 @@ export default function Home() {
     'linear-gradient(135deg, #10A37F, #0d8a6a)',
     'linear-gradient(135deg, #D97757, #c4684a)',
   ];
+
+  // Carousel: scroll to active testimonial on click
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const grid = document.querySelector('.testimonials-grid');
+    if (!grid) return;
+    const card = grid.children[activeTestimonial];
+    if (card) {
+      grid.scrollTo({ left: card.offsetLeft - grid.offsetLeft, behavior: 'smooth' });
+    }
+  }, [activeTestimonial]);
+
+  // Carousel: sync active dot on manual swipe
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const grid = document.querySelector('.testimonials-grid');
+    if (!grid) return;
+    const handleScroll = () => {
+      const cardWidth = grid.children[0]?.offsetWidth || 1;
+      const newIndex = Math.round(grid.scrollLeft / (cardWidth + 16));
+      setActiveTestimonial(Math.min(2, Math.max(0, newIndex)));
+    };
+    grid.addEventListener('scroll', handleScroll, { passive: true });
+    return () => grid.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -532,6 +558,36 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Carousel controls — mobile only */}
+          <div className="testimonials-carousel-controls">
+            <button
+              className="testimonials-arrow testimonials-arrow-prev"
+              onClick={() => setActiveTestimonial(Math.max(0, activeTestimonial - 1))}
+              aria-label={t('homepage.testimonials.prev')}
+              disabled={activeTestimonial === 0}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div className="testimonials-dots">
+              {[0, 1, 2].map(i => (
+                <button
+                  key={i}
+                  className={"testimonials-dot" + (i === activeTestimonial ? " active" : "")}
+                  onClick={() => setActiveTestimonial(i)}
+                  aria-label={locale === 'fr' ? "Témoignage " + (i + 1) : "Testimonial " + (i + 1)}
+                />
+              ))}
+            </div>
+            <button
+              className="testimonials-arrow testimonials-arrow-next"
+              onClick={() => setActiveTestimonial(Math.min(2, activeTestimonial + 1))}
+              aria-label={t('homepage.testimonials.next')}
+              disabled={activeTestimonial === 2}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
           </div>
         </div>
       </section>
