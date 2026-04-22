@@ -27,7 +27,7 @@ export default function CGU() {
         <Header />
 
         {/* CONTENT */}
-        <div style={{ maxWidth: 780, margin: '0 auto', padding: '80px 24px 100px' }}>
+        <div className="legal-content" style={{ maxWidth: 780, margin: '0 auto', padding: '80px 24px 100px' }}>
           <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 36, letterSpacing: -1, color: '#1A1916', marginBottom: 12, lineHeight: 1.1 }}>{t('terms.title')}</h1>
           <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#B0ABA5', marginBottom: 48 }}>{t('terms.lastUpdate')}</p>
 

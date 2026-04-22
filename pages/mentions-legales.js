@@ -26,7 +26,7 @@ export default function MentionsLegales() {
         <Header />
 
         {/* CONTENT */}
-        <div style={{ maxWidth: 780, margin: '0 auto', padding: '80px 24px 100px' }}>
+        <div className="legal-content" style={{ maxWidth: 780, margin: '0 auto', padding: '80px 24px 100px' }}>
           <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 36, letterSpacing: -1, color: '#1A1916', marginBottom: 48, lineHeight: 1.1 }}>{t('legalNotices.title')}</h1>
 
           {disclaimer && (

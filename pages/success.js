@@ -171,7 +171,7 @@ export default function Success() {
             )}
 
             {/* Beeleven CTA block — after score, before details */}
-            <div style={{ background: '#F7F5F2', border: '1px solid rgba(217,119,87,0.25)', borderRadius: 16, padding: '32px 28px', marginBottom: 20, textAlign: 'center' }}>
+            <div className="beeleven-cta-block" style={{ background: '#F7F5F2', border: '1px solid rgba(217,119,87,0.25)', borderRadius: 16, padding: '32px 28px', marginBottom: 20, textAlign: 'center' }}>
               <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 10, letterSpacing: -0.3 }}>{t('beelevenContact.ctaBlockTitle')}</div>
               <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, maxWidth: 480, margin: '0 auto 20px' }}>{t('beelevenContact.ctaBlockText')}</div>
               <button onClick={() => setShowBeeleven(true)} style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 10, padding: '12px 28px', fontSize: 14, fontWeight: 700, fontFamily: 'system-ui', cursor: 'pointer', boxShadow: '0 4px 16px rgba(217,119,87,0.3)' }}>{t('beelevenContact.ctaBlockButton')}</button>
