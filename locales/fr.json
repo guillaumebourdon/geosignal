@@ -188,7 +188,7 @@
         }
       ],
       "cta": "Débloquer mon rapport — 29 € →",
-      "ctaSubtext": "Paiement unique · Accès immédiat · Satisfait ou remboursé 7 jours",
+      "ctaSubtext": "Paiement unique · Accès immédiat",
       "exampleLink": "Voir un exemple de rapport →"
     },
     "testimonials": {
@@ -239,8 +239,7 @@
         { "q": "Les données de mon site sont-elles conservées ?", "a": "Non. Detekia analyse votre site en temps réel et ne conserve aucune donnée de votre site au-delà de 24h. Les résultats d'analyse sont mis en cache 24h pour accélérer les analyses successives du même site, mais aucune donnée personnelle n'est stockée." },
         { "q": "Detekia fonctionne-t-il pour tous les types de sites ?", "a": "Oui — e-commerce, blogs, SaaS, sites vitrine, portfolios, sites institutionnels. Les critères GEO sont universels. Certains types de sites ont toutefois un avantage naturel : les blogs avec du contenu éditorial riche, les sites avec une forte présence presse, et les plateformes qui publient des données originales. Mais tous les sites peuvent progresser significativement avec les bonnes optimisations." },
         { "q": "Que se passe-t-il si mon score ne s'améliore pas ?", "a": "Les recommandations du rapport sont concrètes et priorisées par impact. Si vous les appliquez et que votre score n'évolue pas, contactez-nous à hello@detekia.fr — on analyse le cas avec vous gratuitement." },
-        { "q": "Qui est derrière Detekia ?", "a": "Detekia est développé par Beeleven, une agence spécialisée en stratégie digitale et IA basée à Paris. L'outil est conçu par des experts en SEO, GEO et intelligence artificielle qui travaillent quotidiennement avec les moteurs génératifs." },
-        { "q": "Satisfait ou remboursé ?", "a": "Oui. Si le rapport ne vous apporte aucune piste d'amélioration actionnable, envoyez-nous un email dans les 7 jours suivant l'achat à hello@detekia.fr et nous vous remboursons intégralement, sans condition." }
+        { "q": "Qui est derrière Detekia ?", "a": "Detekia est développé par Beeleven, une agence spécialisée en stratégie digitale et IA basée à Paris. L'outil est conçu par des experts en SEO, GEO et intelligence artificielle qui travaillent quotidiennement avec les moteurs génératifs." }
       ]
     },
     "finalCta": {
@@ -423,7 +422,7 @@
   "pricing": {
     "seo": {
       "title": "Tarifs — Rapport GEO complet | Detekia",
-      "description": "Débloquez votre rapport GEO complet pour 29 € : recommandations expertes, preuves techniques, cas concrets. Paiement unique, accès immédiat, satisfait ou remboursé."
+      "description": "Débloquez votre rapport GEO complet pour 29 € : recommandations expertes, preuves techniques, cas concrets. Paiement unique, accès immédiat."
     },
     "hero": {
       "title": "Débloquez votre rapport GEO complet",
@@ -861,7 +860,7 @@
       "desc": "{count} recommandations expertes avec méthodes, exemples et impact attendu.",
       "ctaLoading": "Chargement...",
       "cta": "Débloquer — 29 € →",
-      "subtext": "Paiement unique · Accès immédiat · Satisfait ou remboursé 7j"
+      "subtext": "Paiement unique · Accès immédiat"
     },
     "sticky": {
       "title": "Rapport complet — {count} recommandations",

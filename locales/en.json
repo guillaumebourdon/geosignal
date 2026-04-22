@@ -188,7 +188,7 @@
         }
       ],
       "cta": "Unlock my report — 29 € →",
-      "ctaSubtext": "One-time payment · Instant access · 7-day money-back guarantee",
+      "ctaSubtext": "One-time payment · Instant access",
       "exampleLink": "See a sample report →"
     },
     "testimonials": {
@@ -239,8 +239,7 @@
         { "q": "Is my website data stored?", "a": "No. Detekia analyzes your website in real time and doesn't store any of your website data beyond 24 hours. Analysis results are cached for 24 hours to speed up successive analyses of the same website, but no personal data is stored." },
         { "q": "Does Detekia work for all types of websites?", "a": "Yes — e-commerce, blogs, SaaS, business websites, portfolios, institutional sites. GEO criteria are universal. Some types of websites do have a natural advantage: blogs with rich editorial content, websites with strong press coverage, and platforms that publish original data. But all websites can improve significantly with the right optimizations." },
         { "q": "What if my score doesn't improve?", "a": "The report's recommendations are concrete and prioritized by impact. If you implement them and your score doesn't change, contact us at hello@detekia.fr — we'll analyze your case with you for free." },
-        { "q": "Who's behind Detekia?", "a": "Detekia is developed by Beeleven, a digital strategy and AI agency based in Paris. The tool is built by SEO, GEO and artificial intelligence experts who work daily with generative engines." },
-        { "q": "Money-back guarantee?", "a": "Yes. If the report doesn't provide any actionable improvement insights, send us an email within 7 days of purchase at hello@detekia.fr and we'll refund you in full, no questions asked." }
+        { "q": "Who's behind Detekia?", "a": "Detekia is developed by Beeleven, a digital strategy and AI agency based in Paris. The tool is built by SEO, GEO and artificial intelligence experts who work daily with generative engines." }
       ]
     },
     "finalCta": {
@@ -423,7 +422,7 @@
   "pricing": {
     "seo": {
       "title": "Pricing — Full GEO Report | Detekia",
-      "description": "Unlock your full GEO report for 29 €: expert recommendations, technical evidence, real case studies. One-time payment, instant access, money-back guarantee."
+      "description": "Unlock your full GEO report for 29 €: expert recommendations, technical evidence, real case studies. One-time payment, instant access."
     },
     "hero": {
       "title": "Unlock your full GEO report",
@@ -861,7 +860,7 @@
       "desc": "{count} expert recommendations with methods, examples and expected impact.",
       "ctaLoading": "Loading...",
       "cta": "Unlock — 29 € →",
-      "subtext": "One-time payment · Instant access · 7-day money-back guarantee"
+      "subtext": "One-time payment · Instant access"
     },
     "sticky": {
       "title": "Full report — {count} recommendations",
