@@ -186,6 +186,12 @@ const S = {
       projectionText: 'Si toutes les recommandations sont implementees, votre score devrait passer de',
       projectionTo: 'a environ',
     },
+    beeleven: {
+      label: 'Aller plus loin',
+      h1: 'Aller plus loin avec Beeleven',
+      text: 'Vous avez le diagnostic. Beeleven, l\'agence qui a cree Detekia, peut implementer les recommandations pour vous : audit approfondi, optimisations techniques, suivi mensuel des resultats.',
+      cta: 'Discutons-en &rarr;',
+    },
     methodology: {
       label: 'Transparence', h1: 'Methodologie',
       limitsWarning: "LIMITES DE L'ANALYSE : Ce rapport est genere par analyse automatisee du contenu accessible via scraping (Jina AI). Certains elements rendus en JavaScript cote client, proteges par authentification, ou charges dynamiquement peuvent ne pas etre detectes. Les scores et recommandations refletent le contenu accessible au moment de l'analyse. En cas de doute sur un resultat specifique, une verification manuelle est recommandee.",
@@ -335,6 +341,12 @@ const S = {
       currentScore: 'Current Score', projectedScore: 'Projected Score',
       projectionText: 'If all recommendations are implemented, your score should go from',
       projectionTo: 'to approximately',
+    },
+    beeleven: {
+      label: 'Going further',
+      h1: 'Going further with Beeleven',
+      text: 'You have the diagnosis. Beeleven, the agency that created Detekia, can implement the recommendations for you: in-depth audit, technical optimizations, monthly results monitoring.',
+      cta: 'Let\'s talk &rarr;',
     },
     methodology: {
       label: 'Transparency', h1: 'Methodology',
@@ -848,7 +860,20 @@ function generateReportHTML(data, locale = 'fr') {
     </div>
   </div>`;
 
-  // ── PAGE 14 : METHODOLOGY
+  // ── BEELEVEN CTA (between action plan and methodology)
+  const beelevenUrl = locale === 'en' ? 'https://detekia.fr/en?beeleven-contact=1' : 'https://detekia.fr/?beeleven-contact=1';
+  const beelevenSection = `
+  <div style="${P}display:flex;align-items:center;justify-content:center;min-height:50vh;">
+    <div style="max-width:480px;text-align:center;">
+      ${sLabel(t.beeleven.label)}
+      ${H1(t.beeleven.h1)}
+      <p style="font-family:system-ui;font-size:14px;color:#6B6762;line-height:1.7;margin-bottom:32px;">${t.beeleven.text}</p>
+      <a href="${beelevenUrl}" style="display:inline-block;background:#D97757;color:#fff;padding:14px 36px;border-radius:10px;font-family:system-ui;font-size:15px;font-weight:700;text-decoration:none;">${t.beeleven.cta}</a>
+      <div style="font-family:monospace;font-size:10px;color:#B0ABA5;margin-top:16px;letter-spacing:1px;">beeleven.fr &middot; hello@detekia.fr</div>
+    </div>
+  </div>`;
+
+  // ── PAGE 14 (or 15) : METHODOLOGY
   const methodoRows = t.methodology.criteria.map(c => `
     <tr>
       <td style="padding:10px 12px;font-family:system-ui;font-size:12px;color:#1A1916;border-bottom:1px solid #F0EDE8;">${c.name}</td>
@@ -915,6 +940,7 @@ ${context}
 ${citationTestPage}
 ${criteriaPages}
 ${actionPlan}
+${beelevenSection}
 ${methodology}
 </body>
 </html>`;
