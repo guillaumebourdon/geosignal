@@ -225,12 +225,20 @@
     width: 100% !important;
   }
 
-  /* ── 5. FAQ — accessibilité + alignement ─────────────────────── */
-  /* Question row: more vertical breathing room */
+  /* ── 5. FAQ — accessibilité + compactage mobile ──────────────── */
+  .faq-grid > div {
+    border-bottom-width: 1px !important;
+  }
+  /* Question row: compact padding */
   .faq-grid > div > div:first-child {
-    padding-top: 18px !important;
-    padding-bottom: 18px !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
     align-items: flex-start !important;
+  }
+  /* Question text: tighter line-height */
+  .faq-grid > div > div:first-child > div:first-child {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
   }
   /* "+" button: 44×44 minimum touch target */
   .faq-grid > div > div:first-child > div:last-child {
@@ -238,6 +246,11 @@
     height: 44px !important;
     min-width: 44px !important;
     margin-top: 0 !important;
+  }
+  /* Answer text: compact */
+  .faq-grid > div > div:last-child > div {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
   }
 
   /* ── 6. BADGES MOTEURS IA — grille 2×2 propre ───────────────── */
