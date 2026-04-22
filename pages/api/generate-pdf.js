@@ -860,8 +860,8 @@ function generateReportHTML(data, locale = 'fr') {
     </div>
   </div>`;
 
-  // ── BEELEVEN CTA (between action plan and methodology)
-  const beelevenUrl = locale === 'en' ? 'https://detekia.fr/en?beeleven-contact=1' : 'https://detekia.fr/?beeleven-contact=1';
+  // ── BEELEVEN CTA (after score, before criteria)
+  const beelevenUrl = locale === 'en' ? 'https://detekia.fr/en/contact' : 'https://detekia.fr/contact';
   const beelevenSection = `
   <div style="${P}display:flex;align-items:center;justify-content:center;min-height:50vh;">
     <div style="max-width:480px;text-align:center;">
@@ -936,11 +936,11 @@ function generateReportHTML(data, locale = 'fr') {
 <body>
 ${cover}
 ${execSummary}
+${beelevenSection}
 ${context}
 ${citationTestPage}
 ${criteriaPages}
 ${actionPlan}
-${beelevenSection}
 ${methodology}
 </body>
 </html>`;

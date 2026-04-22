@@ -144,11 +144,6 @@ export default function Home() {
   const router = useRouter();
   const { t, locale } = useTranslation();
 
-  // Auto-open Beeleven modal from PDF link
-  useEffect(() => {
-    if (router.query['beeleven-contact'] === '1') setShowBeeleven(true);
-  }, [router.query]);
-
   useEffect(() => {
     const engines = ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'];
     let engineIndex = 0;
