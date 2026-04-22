@@ -980,7 +980,7 @@ ${methodology}
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { email, url, reportData, locale: reqLocale } = req.body;
+  const { email, url, reportData, locale: reqLocale, isFreeViaPromo } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';
   const t = S[locale] || S.fr;
   if (!email || !reportData) return res.status(400).json({ error: 'Missing data' });
@@ -1116,10 +1116,65 @@ export default async function handler(req, res) {
     });
 
     if (error) return res.status(400).json({ error });
+
+    // Notification to Guillaume (non-blocking)
+    try {
+      const now = new Date().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' });
+      const safeUrl = url || 'URL inconnue';
+      const safeScore = reportData?.score ?? 'N/A';
+      const safeVerdict = reportData?.verdict || '';
+      const safeTopPriority = reportData?.topPriority || '';
+      const notifSubject = isFreeViaPromo
+        ? `\u{1F381} Test code promo 100% \u2014 ${safeUrl} \u2014 Score ${safeScore}/100`
+        : `\u2705 Nouvelle vente Detekia \u2014 ${safeUrl} \u2014 Score ${safeScore}/100`;
+
+      await resend.emails.send({
+        from: 'Detekia <hello@detekia.fr>',
+        to: 'guillaume@beeleven.fr',
+        subject: notifSubject,
+        html: `<div style="font-family:system-ui;max-width:560px;margin:0 auto;padding:24px;background:#F7F5F2;border-radius:12px;">
+          <div style="font-family:Georgia,serif;font-size:20px;color:#1A1916;margin-bottom:16px;">${notifSubject}</div>
+          <div style="background:#fff;border:1px solid #E5E2DC;border-radius:8px;padding:20px;margin-bottom:16px;">
+            <div style="margin-bottom:8px;"><strong>Site analys\u00e9 :</strong> ${safeUrl}</div>
+            <div style="margin-bottom:8px;"><strong>Score :</strong> ${safeScore}/100 \u2014 ${safeVerdict}</div>
+            <div style="margin-bottom:8px;"><strong>Email client :</strong> ${email}</div>
+            <div style="margin-bottom:8px;"><strong>Locale :</strong> ${locale.toUpperCase()}</div>
+            <div style="margin-bottom:8px;"><strong>Heure :</strong> ${now}</div>
+            <div style="margin-bottom:8px;"><strong>Code promo :</strong> ${isFreeViaPromo ? 'Oui (100%)' : 'Non'}</div>
+          </div>
+          <div style="background:#fff;border:1px solid #E5E2DC;border-radius:8px;padding:20px;">
+            <div style="font-weight:600;margin-bottom:8px;">\u{1F3AF} Top priorit\u00e9 identifi\u00e9e :</div>
+            <div style="color:#3A3835;line-height:1.6;">${safeTopPriority}</div>
+          </div>
+        </div>`,
+      });
+    } catch (notifErr) {
+      console.error('Notification email to Guillaume failed:', notifErr.message);
+    }
+
     return res.status(200).json({ success: true });
 
   } catch (e) {
     console.error('generate-pdf error:', e);
+
+    // Error notification to Guillaume (best effort)
+    try {
+      await resend.emails.send({
+        from: 'Detekia <hello@detekia.fr>',
+        to: 'guillaume@beeleven.fr',
+        subject: `\u26A0\uFE0F Achat re\u00e7u mais rapport en erreur \u2014 ${url || 'URL inconnue'} \u2014 ${email || 'email inconnu'}`,
+        html: `<div style="font-family:system-ui;max-width:560px;margin:0 auto;padding:24px;">
+          <div style="font-size:18px;color:#D97757;font-weight:600;margin-bottom:16px;">\u26A0\uFE0F Erreur generation PDF</div>
+          <div style="background:#fff;border:1px solid #E5E2DC;border-radius:8px;padding:20px;">
+            <div style="margin-bottom:8px;"><strong>Email client :</strong> ${email || 'N/A'}</div>
+            <div style="margin-bottom:8px;"><strong>URL :</strong> ${url || 'N/A'}</div>
+            <div style="margin-bottom:8px;"><strong>Erreur :</strong> ${e.message}</div>
+            <pre style="font-size:11px;color:#8A8680;overflow-x:auto;margin-top:12px;">${e.stack || ''}</pre>
+          </div>
+        </div>`,
+      });
+    } catch (_) { /* ignore notification failure */ }
+
     return res.status(500).json({ error: e.message, stack: e.stack });
   }
 }

@@ -83,7 +83,7 @@ export default function Success() {
             await fetch('/api/generate-pdf', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report, locale: reportLocale }),
+              body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report, locale: reportLocale, isFreeViaPromo: data.isFreeViaPromo || false }),
             });
             setEmailSent(true);
           }

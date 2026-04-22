@@ -26,7 +26,10 @@ export default async function handler(req, res) {
         plan: session.amount_total >= 2900 ? 'pro' : 'rapport',
       }, { ex: 30 * 24 * 60 * 60 });
 
-      return res.status(200).json({ email, url: url || null, locale, success: true });
+      const discountAmount = session.total_details?.amount_discount || 0;
+      const isFreeViaPromo = session.amount_total === 0 && discountAmount > 0;
+
+      return res.status(200).json({ email, url: url || null, locale, isFreeViaPromo, success: true });
     }
 
     return res.status(400).json({ error: 'Email non trouvé' });
