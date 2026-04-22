@@ -908,5 +908,22 @@
     "subtitle": "Looking for something? This page seems to have gotten lost along the way.",
     "cta": "Back to home →",
     "ctaSub": "Or analyze your website →"
+  },
+  "beelevenContact": {
+    "modalTitle": "Let's talk about your project",
+    "modalSubtitle": "Beeleven, the agency behind Detekia, can implement the recommendations from your report: in-depth audit, technical optimizations, monthly monitoring.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "website": "Audited website",
+    "message": "Message (optional)",
+    "messagePlaceholder": "Describe your project or questions…",
+    "submitButton": "Send",
+    "submitLoading": "Sending…",
+    "submitSuccess": "Thank you, we'll get back to you within 24 hours.",
+    "submitError": "An error occurred. Please try again or contact us at hello@detekia.fr.",
+    "ctaBlockTitle": "Need help implementing these recommendations?",
+    "ctaBlockText": "Beeleven, the agency behind Detekia, helps businesses implement their GEO strategy: in-depth audit, technical optimizations, results monitoring.",
+    "ctaBlockButton": "Let's talk →"
   }
 }

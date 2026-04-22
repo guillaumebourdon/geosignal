@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
+import BeelevenContactModal from '../components/BeelevenContactModal';
 import { useTranslation } from '../lib/useTranslation';
 
 /* ─── Helpers ───────────────────────────────────────────── */
@@ -139,6 +140,7 @@ export default function Home() {
   const [url, setUrl] = useState('');
   const [easterEgg, setEasterEgg] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [showBeeleven, setShowBeeleven] = useState(false);
   const router = useRouter();
   const { t, locale } = useTranslation();
 
@@ -681,6 +683,7 @@ export default function Home() {
         }
       `}</style>
     </div>
+    <BeelevenContactModal open={showBeeleven} onClose={() => setShowBeeleven(false)} />
     </>
   );
 }
