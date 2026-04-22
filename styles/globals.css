@@ -6,6 +6,9 @@
 /* ── BURGER — hidden on desktop ──────────────────────────────────── */
 .nav-burger { display: none !important; }
 
+/* ── MOCKUP LABEL — hidden on desktop ────────────────────────────── */
+.audit-mockup-label { display: none; }
+
 /* ── MOBILE MENU OVERLAY ─────────────────────────────────────────── */
 .mobile-menu-overlay {
   position: fixed;
@@ -188,6 +191,25 @@
   }
   .testimonials-grid > div {
     border-radius: 12px !important;
+  }
+
+  /* ── 3b. MOCKUP HOMEPAGE — version simplifiée mobile ─────────── */
+  .audit-mockup-chrome {
+    display: none !important;
+  }
+  .audit-mockup-label {
+    display: block !important;
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #C9861A;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 12px 0 8px;
+    background: #F7F5F2;
+    border-radius: 12px 12px 0 0;
+    border: 1px solid #E5E2DC;
+    border-bottom: none;
   }
 
   /* ── 4. FOOTER — réparation ──────────────────────────────────── */

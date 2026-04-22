@@ -79,7 +79,8 @@
       "inputPlaceholder": "https://www.votre-site.fr",
       "cta": "Analyser mon site →",
       "easterEgg": "Sympa d'essayer 😏 Mais on ne se note pas soi-même — ce serait trop facile de se mettre 100/100. Essayez avec un autre site !",
-      "trustBadge": "Gratuit · Sans inscription · Résultat en moins de 60 secondes"
+      "trustBadge": "Gratuit · Sans inscription · Résultat en moins de 60 secondes",
+      "mockupLabel": "EXEMPLE"
     },
     "mockup": {
       "headerLabel": "Audit de visibilité IA · exemple.fr",

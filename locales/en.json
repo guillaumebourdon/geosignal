@@ -79,7 +79,8 @@
       "inputPlaceholder": "https://www.your-website.com",
       "cta": "Analyze my website →",
       "easterEgg": "Nice try 😏 But we don't grade ourselves — it would be too easy to give a 100/100. Try with another website!",
-      "trustBadge": "Free · No signup · Results in under 60 seconds"
+      "trustBadge": "Free · No signup · Results in under 60 seconds",
+      "mockupLabel": "EXAMPLE"
     },
     "mockup": {
       "headerLabel": "AI Visibility Audit · example.com",
