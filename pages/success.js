@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Header from '../components/Header';
+import BeelevenContactModal from '../components/BeelevenContactModal';
 import { useTranslation } from '../lib/useTranslation';
 
 function RecoCard({ r, index, t }) {
@@ -45,6 +46,12 @@ export default function Success() {
   const [email, setEmail] = useState('');
   const [reportData, setReportData] = useState(null);
   const [emailSent, setEmailSent] = useState(false);
+  const [showBeeleven, setShowBeeleven] = useState(false);
+
+  // Auto-open modal if ?beeleven-contact=1
+  useEffect(() => {
+    if (router.query['beeleven-contact'] === '1') setShowBeeleven(true);
+  }, [router.query]);
 
   const grades = t('common.grades');
   const priorities = t('common.priorities');
@@ -245,12 +252,21 @@ export default function Success() {
               </>
             )}
 
-            <div style={{ textAlign: 'center', marginTop: 52 }}>
+            {/* Beeleven CTA block */}
+            <div style={{ background: '#F7F5F2', border: '1px solid rgba(217,119,87,0.25)', borderRadius: 16, padding: '32px 28px', marginTop: 48, textAlign: 'center' }}>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 10, letterSpacing: -0.3 }}>{t('beelevenContact.ctaBlockTitle')}</div>
+              <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, maxWidth: 480, margin: '0 auto 20px' }}>{t('beelevenContact.ctaBlockText')}</div>
+              <button onClick={() => setShowBeeleven(true)} style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 10, padding: '12px 28px', fontSize: 14, fontWeight: 700, fontFamily: 'system-ui', cursor: 'pointer', boxShadow: '0 4px 16px rgba(217,119,87,0.3)' }}>{t('beelevenContact.ctaBlockButton')}</button>
+            </div>
+
+            <div style={{ textAlign: 'center', marginTop: 32 }}>
               <Link href="/" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '14px 36px', borderRadius: 11, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600, boxShadow: '0 4px 16px rgba(26,25,22,0.15)' }}>{t('success.cta')}</Link>
             </div>
           </>
         )}
       </div>
+
+      <BeelevenContactModal open={showBeeleven} onClose={() => setShowBeeleven(false)} prefillUrl={url || ''} />
 
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
