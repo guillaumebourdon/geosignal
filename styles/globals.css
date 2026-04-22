@@ -6,6 +6,12 @@
 /* ── BURGER — hidden on desktop ──────────────────────────────────── */
 .nav-burger { display: none !important; }
 
+/* ── MOCKUP LABEL — hidden on desktop ────────────────────────────── */
+.audit-mockup-label { display: none; }
+
+/* ── CAROUSEL CONTROLS — hidden on desktop ───────────────────────── */
+.testimonials-carousel-controls { display: none; }
+
 /* ── MOBILE MENU OVERLAY ─────────────────────────────────────────── */
 .mobile-menu-overlay {
   position: fixed;
@@ -186,8 +192,93 @@
     padding: 20px !important;
     border-radius: 12px !important;
   }
+  /* ── 3a. TÉMOIGNAGES CARROUSEL MOBILE ─────────────────────────── */
+  .testimonials-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    gap: 16px !important;
+    padding: 4px 16px 20px !important;
+    margin: 0 -16px !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .testimonials-grid::-webkit-scrollbar {
+    display: none !important;
+  }
   .testimonials-grid > div {
+    flex: 0 0 85% !important;
+    scroll-snap-align: start !important;
+    min-width: 85% !important;
     border-radius: 12px !important;
+  }
+  .testimonials-carousel-controls {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px 0 8px;
+  }
+  .testimonials-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: #D97757;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .testimonials-arrow:hover:not(:disabled) {
+    background: #D97757;
+    color: #F7F5F2;
+  }
+  .testimonials-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .testimonials-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .testimonials-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s;
+  }
+  .testimonials-dot.active {
+    background: #D97757;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* ── 3b. MOCKUP HOMEPAGE — version simplifiée mobile ─────────── */
+  .audit-mockup-chrome {
+    display: none !important;
+  }
+  .audit-mockup-label {
+    display: block !important;
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #C9861A;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 12px 0 8px;
+    background: #F7F5F2;
+    border-radius: 12px 12px 0 0;
+    border: 1px solid #E5E2DC;
+    border-bottom: none;
   }
 
   /* ── 4. FOOTER — réparation ──────────────────────────────────── */
@@ -203,12 +294,20 @@
     width: 100% !important;
   }
 
-  /* ── 5. FAQ — accessibilité + alignement ─────────────────────── */
-  /* Question row: more vertical breathing room */
+  /* ── 5. FAQ — accessibilité + compactage mobile ──────────────── */
+  .faq-grid > div {
+    border-bottom-width: 1px !important;
+  }
+  /* Question row: compact padding */
   .faq-grid > div > div:first-child {
-    padding-top: 18px !important;
-    padding-bottom: 18px !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
     align-items: flex-start !important;
+  }
+  /* Question text: tighter line-height */
+  .faq-grid > div > div:first-child > div:first-child {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
   }
   /* "+" button: 44×44 minimum touch target */
   .faq-grid > div > div:first-child > div:last-child {
@@ -216,6 +315,11 @@
     height: 44px !important;
     min-width: 44px !important;
     margin-top: 0 !important;
+  }
+  /* Answer text: compact */
+  .faq-grid > div > div:last-child > div {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
   }
 
   /* ── 6. BADGES MOTEURS IA — grille 2×2 propre ───────────────── */

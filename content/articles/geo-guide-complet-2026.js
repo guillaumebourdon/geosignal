@@ -263,7 +263,7 @@ Disallow: /`}</code></pre>
         <li><strong>Le suivi dans le temps.</strong> Mesurez l'évolution de votre score après chaque optimisation. Un contenu amélioré peut se retrouver dans les réponses IA en quelques semaines pour les aspects techniques, et en 8 à 12 semaines pour les citations à proprement parler.</li>
       </ol>
 
-      <p>Detekia analyse votre site en 30 secondes sur les 8 critères GEO, vous attribue un score sur 100 et vous donne des recommandations priorisées par impact. Le diagnostic est gratuit, sans inscription.</p>
+      <p>Detekia analyse votre site en moins de 60 secondes sur les 8 critères GEO, vous attribue un score sur 100 et vous donne des recommandations priorisées par impact. Le diagnostic est gratuit, sans inscription.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">Pour comprendre comment interpréter votre score et prioriser vos actions, consultez Score GEO : comment mesurer la visibilité IA de votre site.</ArrowLink>
 
@@ -291,7 +291,7 @@ Disallow: /`}</code></pre>
 
       <p>La bonne nouvelle : les actions à mener sont concrètes, mesurables et accessibles. Structurez votre contenu pour qu'il soit extractible, ajoutez des preuves vérifiables, ouvrez l'accès aux bots IA, et suivez votre score dans le temps.</p>
 
-      <p>Commencez par mesurer votre situation actuelle. Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères, recommandations priorisées, en 30 secondes.</p>
+      <p>Commencez par mesurer votre situation actuelle. Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères, recommandations priorisées, en moins de 60 secondes.</p>
     </>
   );
 }

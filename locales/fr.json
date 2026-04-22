@@ -31,7 +31,7 @@
       "breadcrumbBlog": "Blog",
       "readTimeSuffix": "de lecture",
       "ctaTitle": "Testez votre score GEO gratuitement",
-      "ctaSubtitle": "Analyse complète en 30 secondes, sans inscription",
+      "ctaSubtitle": "Analyse complète en moins de 60 secondes, sans inscription",
       "ctaButton": "Analyser mon site →",
       "relatedTitle": "Articles recommandés",
       "fallbackContent": "Contenu de l'article à venir"
@@ -69,17 +69,18 @@
   "homepage": {
     "seo": {
       "title": "Detekia — Votre site est-il visible par les IA ?",
-      "description": "Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 100 + recommandations personnalisées en 30 secondes."
+      "description": "Analysez votre présence sur ChatGPT, Claude, Gemini et Perplexity. Score GEO sur 100 + recommandations personnalisées en moins de 60 secondes."
     },
     "hero": {
       "badge": "Analyse 100% gratuite — aucune inscription",
       "titleLine1": "Vos concurrents apparaissent dans",
       "titleLine2": "Pas vous.",
-      "subtitle": "Detekia audite votre site en 30 secondes et vous montre quoi corriger pour être cité par les IA — et capter le trafic que Google ne vous envoie plus.",
+      "subtitle": "Detekia audite votre site en moins de 60 secondes et vous montre quoi corriger pour être cité par les IA — et capter le trafic que Google ne vous envoie plus.",
       "inputPlaceholder": "https://www.votre-site.fr",
       "cta": "Analyser mon site →",
       "easterEgg": "Sympa d'essayer 😏 Mais on ne se note pas soi-même — ce serait trop facile de se mettre 100/100. Essayez avec un autre site !",
-      "trustBadge": "Gratuit · Sans inscription · Résultat en 30 secondes"
+      "trustBadge": "Gratuit · Sans inscription · Résultat en moins de 60 secondes",
+      "mockupLabel": "EXEMPLE"
     },
     "mockup": {
       "headerLabel": "Audit de visibilité IA · exemple.fr",
@@ -156,11 +157,11 @@
     "howItWorks": {
       "label": "Comment ça marche",
       "titleStart": "L'analyse de visibilité IA complète en ",
-      "titleEm": "30 secondes",
+      "titleEm": "60 secondes",
       "steps": [
         { "num": "01", "title": "Entrez votre URL", "desc": "Collez l'adresse de votre site. Zéro inscription, zéro configuration, zéro carte bancaire." },
         { "num": "02", "title": "On analyse tout", "desc": "Detekia scrape votre site et l'évalue selon 8 critères GEO validés par la recherche." },
-        { "num": "03", "title": "Recevez votre score", "desc": "Score sur 100, analyse par critère et recommandations expertes en moins de 30 secondes." }
+        { "num": "03", "title": "Recevez votre score", "desc": "Score sur 100, analyse par critère et recommandations expertes en moins de 60 secondes." }
       ],
       "methodologyLink": "Voir la méthodologie complète →"
     },
@@ -197,6 +198,8 @@
       "label": "Résultats",
       "title": "Ils ont analysé leur site",
       "subtitle": "Des résultats concrets, mesurables, en quelques jours.",
+      "prev": "Témoignage précédent",
+      "next": "Témoignage suivant",
       "items": [
         {
           "initials": "TL",
@@ -212,7 +215,7 @@
           "initials": "MG",
           "name": "Marine G.",
           "role": "Consultante SEO freelance",
-          "quote": "J'utilise Detekia pour chaque nouveau client. En 30 secondes j'ai <strong>un diagnostic clair à présenter</strong>, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat.",
+          "quote": "J'utilise Detekia pour chaque nouveau client. En quelques secondes j'ai <strong>un diagnostic clair à présenter</strong>, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat.",
           "footerType": "badge",
           "badge": "UTILISÉ POUR CHAQUE CLIENT"
         },
@@ -248,9 +251,9 @@
       "badge": "Gratuit · Sans inscription · Sans carte bancaire",
       "titleLine1": "Votre site mérite d'être cité",
       "titleEm": "par les IA",
-      "subtitle": "Rejoignez les professionnels qui ont déjà optimisé leur visibilité IA — gratuitement, en 30 secondes.",
+      "subtitle": "Rejoignez les professionnels qui ont déjà optimisé leur visibilité IA — gratuitement, en moins de 60 secondes.",
       "cta": "Analyser mon site gratuitement →",
-      "trustBadge": "Gratuit · Sans inscription · Résultat en 30 secondes",
+      "trustBadge": "Gratuit · Sans inscription · Résultat en moins de 60 secondes",
       "priceNote": "Rapport complet 29 € · Paiement unique"
     },
     "footer": {
@@ -406,7 +409,7 @@
     "cta": {
       "titleLine1": "Testez votre site",
       "titleEm": "gratuitement",
-      "subtitle": "Analyse complète en 30 secondes. Aucune inscription requise.",
+      "subtitle": "Analyse complète en moins de 60 secondes. Aucune inscription requise.",
       "button": "Analyser mon site →"
     },
     "footer": {
@@ -499,7 +502,7 @@
     },
     "how": {
       "title": "Comment ça marche",
-      "p1": "Detekia analyse votre site sur 8 critères de citabilité IA validés par la recherche académique (étude Princeton/Georgia Tech, KDD 2024). En 30 secondes, vous obtenez un score sur 100 et des recommandations personnalisées.",
+      "p1": "Detekia analyse votre site sur 8 critères de citabilité IA validés par la recherche académique (étude Princeton/Georgia Tech, KDD 2024). En moins de 60 secondes, vous obtenez un score sur 100 et des recommandations personnalisées.",
       "p2": "Notre analyse est transparente : 7 critères sont évalués par analyse technique du HTML, 1 critère (neutralité éditoriale) est évalué par intelligence artificielle. Chaque recommandation est sourcée et accompagnée d'un cas réel documenté."
     },
     "who": {
@@ -527,7 +530,7 @@
     },
     "cta": {
       "title": "Testez votre score GEO gratuitement",
-      "subtitle": "Analyse complète en 30 secondes, sans inscription",
+      "subtitle": "Analyse complète en moins de 60 secondes, sans inscription",
       "button": "Analyser mon site →"
     },
     "schema": {

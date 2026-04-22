@@ -67,15 +67,18 @@ function CriteriaCard({ icon, color, name, desc, checks, tag, tagColor }) {
 function ProductMockup() {
   const { t } = useTranslation();
   return (
-    <div style={{ background: '#fff', borderRadius: 22, boxShadow: '0 8px 32px rgba(0,0,0,0.12), 0 32px 80px rgba(26,25,22,0.18), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 390, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
+    <div className="audit-mockup" style={{ background: '#fff', borderRadius: 22, boxShadow: '0 8px 32px rgba(0,0,0,0.12), 0 32px 80px rgba(26,25,22,0.18), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 390, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
 
-      {/* macOS-style mini header */}
-      <div style={{ background: '#F0EDE8', borderBottom: '1px solid #E5E2DC', padding: '8px 18px', display: 'flex', alignItems: 'center', gap: 8 }}>
+      {/* macOS-style mini header — hidden on mobile */}
+      <div className="audit-mockup-chrome" style={{ background: '#F0EDE8', borderBottom: '1px solid #E5E2DC', padding: '8px 18px', display: 'flex', alignItems: 'center', gap: 8 }}>
         <div style={{ display: 'flex', gap: 5 }}>
           {['#F87171','#FBBF24','#34D399'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
         </div>
         <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 0.5, marginLeft: 6 }}>{t('homepage.mockup.headerLabel')}</div>
       </div>
+
+      {/* EXEMPLE badge — mobile only */}
+      <div className="audit-mockup-label">{t('homepage.hero.mockupLabel')}</div>
 
       {/* Score block */}
       <div style={{ background: '#1A1916', padding: '36px 32px 28px', position: 'relative', overflow: 'hidden' }}>
@@ -135,6 +138,7 @@ function ProductMockup() {
 export default function Home() {
   const [url, setUrl] = useState('');
   const [easterEgg, setEasterEgg] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const router = useRouter();
   const { t, locale } = useTranslation();
 
@@ -242,6 +246,31 @@ export default function Home() {
     'linear-gradient(135deg, #10A37F, #0d8a6a)',
     'linear-gradient(135deg, #D97757, #c4684a)',
   ];
+
+  // Carousel: scroll to active testimonial on click
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const grid = document.querySelector('.testimonials-grid');
+    if (!grid) return;
+    const card = grid.children[activeTestimonial];
+    if (card) {
+      grid.scrollTo({ left: card.offsetLeft - grid.offsetLeft, behavior: 'smooth' });
+    }
+  }, [activeTestimonial]);
+
+  // Carousel: sync active dot on manual swipe
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const grid = document.querySelector('.testimonials-grid');
+    if (!grid) return;
+    const handleScroll = () => {
+      const cardWidth = grid.children[0]?.offsetWidth || 1;
+      const newIndex = Math.round(grid.scrollLeft / (cardWidth + 16));
+      setActiveTestimonial(Math.min(2, Math.max(0, newIndex)));
+    };
+    grid.addEventListener('scroll', handleScroll, { passive: true });
+    return () => grid.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -529,6 +558,36 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Carousel controls — mobile only */}
+          <div className="testimonials-carousel-controls">
+            <button
+              className="testimonials-arrow testimonials-arrow-prev"
+              onClick={() => setActiveTestimonial(Math.max(0, activeTestimonial - 1))}
+              aria-label={t('homepage.testimonials.prev')}
+              disabled={activeTestimonial === 0}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div className="testimonials-dots">
+              {[0, 1, 2].map(i => (
+                <button
+                  key={i}
+                  className={"testimonials-dot" + (i === activeTestimonial ? " active" : "")}
+                  onClick={() => setActiveTestimonial(i)}
+                  aria-label={locale === 'fr' ? "Témoignage " + (i + 1) : "Testimonial " + (i + 1)}
+                />
+              ))}
+            </div>
+            <button
+              className="testimonials-arrow testimonials-arrow-next"
+              onClick={() => setActiveTestimonial(Math.min(2, activeTestimonial + 1))}
+              aria-label={t('homepage.testimonials.next')}
+              disabled={activeTestimonial === 2}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
           </div>
         </div>
       </section>

@@ -83,7 +83,7 @@ export default function PerplexityCommentApparaitre() {
 
       <p>Strategic implication: you need to <strong>diagnose each engine separately</strong>. An overall GEO score is useful, but per-engine detail is essential for prioritizing actions.</p>
 
-      <InlineCTA href="/">Check your visibility on ChatGPT and Perplexity in 30 seconds with Detekia.</InlineCTA>
+      <InlineCTA href="/">Check your visibility on ChatGPT and Perplexity in under 60 seconds with Detekia.</InlineCTA>
 
       <h2>5 concrete actions to show up in Perplexity</h2>
 

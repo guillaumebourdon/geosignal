@@ -79,7 +79,7 @@ export default function SitesBloquentBotsIA() {
 
       <p>Detekia automatically checks your site's crawlability by AI bots. The "AI Crawlability" criterion in our GEO score detects <code>robots.txt</code> blocks, the absence of an <code>llms.txt</code> file, indexation issues, and whether AI bots are present in your configuration.</p>
 
-      <InlineCTA href="/">Check if AI bots can access your website — free, 30 seconds.</InlineCTA>
+      <InlineCTA href="/">Check if AI bots can access your website — free, under 60 seconds.</InlineCTA>
 
       <h2>The 6 AI bots you need to know</h2>
 
@@ -209,7 +209,7 @@ your services, and your value proposition.`}</code></pre>
 
       <p>AI crawlability is one of the 8 criteria in the Detekia GEO score. It is also the simplest criterion to fix: a 2-line change in your <code>robots.txt</code> may be all it takes to unlock your AI visibility.</p>
 
-      <p>Detekia automatically analyzes your <code>robots.txt</code> file, detects the presence or absence of an <code>llms.txt</code>, and verifies whether your content is accessible to AI crawlers. The diagnostic is free and takes 30 seconds.</p>
+      <p>Detekia automatically analyzes your <code>robots.txt</code> file, detects the presence or absence of an <code>llms.txt</code>, and verifies whether your content is accessible to AI crawlers. The diagnostic is free and takes under 60 seconds.</p>
 
       <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">The 8 GEO criteria that determine if AI cites you — Detekia methodology</ArrowLink>
 
@@ -235,7 +235,7 @@ your services, and your value proposition.`}</code></pre>
 
       <p>Check your <code>robots.txt</code>, create an <code>llms.txt</code> file, disable overly aggressive security rules, and make sure your content is server-side rendered. In 10 minutes, you go from invisible to indexable by every AI engine.</p>
 
-      <InlineCTA href="/">Is your site blocking AI bots? Check for free in 30 seconds.</InlineCTA>
+      <InlineCTA href="/">Is your site blocking AI bots? Check for free in under 60 seconds.</InlineCTA>
     </>
   );
 }

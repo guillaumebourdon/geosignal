@@ -302,7 +302,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>L'audit manuel que nous venons de décrire prend environ 2 heures. C'est un excellent exercice pour comprendre les enjeux, mais ce n'est pas tenable pour un suivi régulier.</p>
 
-      <p>Detekia automatise les 8 critères en 30 secondes : il scrape le DOM réel de votre page, analyse chaque critère, et vous donne un score sur 100 avec des recommandations priorisées par impact.</p>
+      <p>Detekia automatise les 8 critères en moins de 60 secondes : il scrape le DOM réel de votre page, analyse chaque critère, et vous donne un score sur 100 avec des recommandations priorisées par impact.</p>
 
       <p>L'audit automatisé est particulièrement utile pour :</p>
       <ul>
@@ -311,7 +311,7 @@ export default function AuditGeoVisibiliteIa() {
         <li>Le benchmark concurrentiel — comment vous situez-vous par rapport à vos concurrents ?</li>
       </ul>
 
-      <ArrowLink href="/">Lancez votre audit GEO automatisé — en 30 secondes, sans inscription →</ArrowLink>
+      <ArrowLink href="/">Lancez votre audit GEO automatisé — en moins de 60 secondes, sans inscription →</ArrowLink>
     </>
   );
 }

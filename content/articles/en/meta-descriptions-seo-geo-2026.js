@@ -95,7 +95,7 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <pre><code>{`❌ "Your digital partner. Innovative solutions. Since 2005."
 
-✅ "Detekia analyzes your website across 8 GEO criteria and generates an AI citation-worthiness score out of 100 in 30 seconds."`}</code></pre>
+✅ "Detekia analyzes your website across 8 GEO criteria and generates an AI citation-worthiness score out of 100 in under 60 seconds."`}</code></pre>
 
       <p>The second version is a complete sentence that AI can directly integrate into its response.</p>
 
@@ -105,7 +105,7 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <pre><code>{`❌ "The best tool on the market for your online visibility."
 
-✅ "Analyze your website across 8 GEO criteria validated by Princeton/KDD 2024. Score out of 100 in 30 seconds, free."`}</code></pre>
+✅ "Analyze your website across 8 GEO criteria validated by Princeton/KDD 2024. Score out of 100 in under 60 seconds, free."`}</code></pre>
 
       <h3>3. Entity-richness: name the entities</h3>
 
@@ -186,7 +186,7 @@ After: "Real estate agency in Brooklyn: 320 homes sold in 2025, average 45-day c
 
       <p>Notice the pattern: every "after" version contains at least 2 numbers, 1 named entity, and forms a self-contained citable sentence.</p>
 
-      <InlineCTA href="/">Is your meta description citable by AI? Check your GEO score in 30 seconds.</InlineCTA>
+      <InlineCTA href="/">Is your meta description citable by AI? Check your GEO score in under 60 seconds.</InlineCTA>
 
       <h2>Operational checklist: 12 points to verify</h2>
 

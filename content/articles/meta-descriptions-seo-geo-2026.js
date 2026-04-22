@@ -95,7 +95,7 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <pre><code>{`❌ "Votre partenaire digital. Solutions innovantes. Depuis 2005."
 
-✅ "Detekia analyse votre site sur 8 criteres GEO et genere un score de citabilite IA sur 100 en 30 secondes."`}</code></pre>
+✅ "Detekia analyse votre site sur 8 criteres GEO et genere un score de citabilite IA sur 100 en moins de 60 secondes."`}</code></pre>
 
       <p>La deuxieme version est une phrase complete que l'IA peut integrer directement dans sa reponse.</p>
 
@@ -105,7 +105,7 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <pre><code>{`❌ "Le meilleur outil du marche pour votre visibilite en ligne."
 
-✅ "Analysez votre site sur 8 criteres GEO valides par Princeton/KDD 2024. Score sur 100 en 30 secondes, gratuit."`}</code></pre>
+✅ "Analysez votre site sur 8 criteres GEO valides par Princeton/KDD 2024. Score sur 100 en moins de 60 secondes, gratuit."`}</code></pre>
 
       <h3>3. Entity-richness : nommer les entites</h3>
 
@@ -186,7 +186,7 @@ Apres : "Agence immobiliere Paris 11e : 320 biens vendus en 2025, delai moyen 45
 
       <p>Remarquez le pattern : chaque version "apres" contient au moins 2 chiffres, 1 nom d'entite, et forme une phrase autonome citable.</p>
 
-      <InlineCTA href="/">Votre meta description est-elle citable par les IA ? Verifiez votre score GEO en 30 secondes.</InlineCTA>
+      <InlineCTA href="/">Votre meta description est-elle citable par les IA ? Verifiez votre score GEO en moins de 60 secondes.</InlineCTA>
 
       <h2>Checklist operationnelle : 12 points a verifier</h2>
 

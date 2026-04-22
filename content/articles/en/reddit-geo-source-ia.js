@@ -222,7 +222,7 @@ Start with points 1 and 2 — they're fixable in a day."`}</code></pre>
 
       <p>30-45 minutes per week is enough for an effective presence: 3-5 helpful comments + 1 monthly post. Quality over quantity.</p>
 
-      <ArrowLink href="/">Measure your current AI visibility before getting started — free GEO audit in 30 seconds →</ArrowLink>
+      <ArrowLink href="/">Measure your current AI visibility before getting started — free GEO audit in under 60 seconds →</ArrowLink>
     </>
   );
 }

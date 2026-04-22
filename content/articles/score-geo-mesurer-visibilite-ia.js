@@ -308,7 +308,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p>La première étape est de connaître votre score actuel. Pas d'estimation, pas d'intuition — une mesure objective sur les 8 critères GEO.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères détaillés, recommandations priorisées par impact. En 30 secondes, sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères détaillés, recommandations priorisées par impact. En moins de 60 secondes, sans inscription.</p>
     </>
   );
 }

@@ -113,7 +113,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <p>Gemini, like all AI models, favors content containing verifiable data. An article with percentages, dates, volumes, and identified sources gets cited more often than a generic article without data. Every key section of your content should include at least one sourced figure.</p>
 
-      <InlineCTA href="/">Test your AI visibility for free — Score out of 100 in 30 seconds</InlineCTA>
+      <InlineCTA href="/">Test your AI visibility for free — Score out of 100 in under 60 seconds</InlineCTA>
 
       <h2>Gemini vs ChatGPT vs Perplexity: what's different for your visibility?</h2>
 

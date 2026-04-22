@@ -215,7 +215,7 @@ Disallow: /`}</code></pre>
 
       <p>Vous ne pouvez pas corriger ce que vous ne mesurez pas. La première étape est de savoir où vous en êtes : quel est votre score GEO, quels critères sont défaillants, et par quoi commencer.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères, recommandations priorisées, en 30 secondes. Sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères, recommandations priorisées, en moins de 60 secondes. Sans inscription.</p>
     </>
   );
 }

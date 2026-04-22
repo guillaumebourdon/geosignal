@@ -89,7 +89,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Paradoxalement, certains sites voient leur trafic direct augmenter alors que l'organique baisse. Explication : des utilisateurs découvrent votre marque via une citation IA, puis tapent directement votre nom dans leur navigateur. C'est un signal positif, mais il masque la réalité de la baisse organique.</p>
 
-      <InlineCTA href="/">Votre site est-il visible par les IA ? Diagnostic gratuit en 30 secondes.</InlineCTA>
+      <InlineCTA href="/">Votre site est-il visible par les IA ? Diagnostic gratuit en moins de 60 secondes.</InlineCTA>
 
       <h2>Pourquoi le SEO seul ne suffit plus</h2>
 
@@ -111,7 +111,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Avant d'agir, mesurez. Analysez votre site sur les 8 critères qui déterminent si une IA vous cite : extractibilité du contenu, vérifiabilité des données, autorité, crawlabilité par les bots IA, données structurées, neutralité éditoriale, présence externe, et fraîcheur.</p>
 
-      <p>Detekia analyse automatiquement ces 8 critères et vous donne un score sur 100 en 30 secondes. C'est gratuit et sans inscription.</p>
+      <p>Detekia analyse automatiquement ces 8 critères et vous donne un score sur 100 en moins de 60 secondes. C'est gratuit et sans inscription.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">Score GEO : comment mesurer la visibilité IA de votre site</ArrowLink>
 
@@ -168,7 +168,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Les sites qui s'adaptent maintenant en optimisant leur contenu pour être cité par les IA (et pas seulement pour être classé par Google) prendront une avance décisive. Ceux qui attendent verront leur trafic continuer à baisser, mois après mois.</p>
 
-      <p>Le premier pas est simple : mesurez où vous en êtes. Analysez votre site gratuitement sur Detekia — score GEO sur 100, 8 critères analysés, recommandations concrètes, en 30 secondes.</p>
+      <p>Le premier pas est simple : mesurez où vous en êtes. Analysez votre site gratuitement sur Detekia — score GEO sur 100, 8 critères analysés, recommandations concrètes, en moins de 60 secondes.</p>
 
       <InlineCTA href="/">Votre trafic baisse ? Découvrez si les IA en sont la cause.</InlineCTA>
     </>

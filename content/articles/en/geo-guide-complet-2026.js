@@ -263,7 +263,7 @@ Disallow: /`}</code></pre>
         <li><strong>Tracking over time.</strong> Measure how your score evolves after each optimization. Improved content can appear in AI answers within a few weeks for technical aspects, and in 8 to 12 weeks for actual citations.</li>
       </ol>
 
-      <p>Detekia analyzes your site in 30 seconds across 8 GEO criteria, gives you a score out of 100, and provides recommendations prioritized by impact. The diagnostic is free, no signup required.</p>
+      <p>Detekia analyzes your site in under 60 seconds across 8 GEO criteria, gives you a score out of 100, and provides recommendations prioritized by impact. The diagnostic is free, no signup required.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">To understand how to interpret your score and prioritize your actions, read GEO Score: how to measure your website's AI visibility.</ArrowLink>
 
@@ -291,7 +291,7 @@ Disallow: /`}</code></pre>
 
       <p>The good news: the actions you need to take are concrete, measurable, and accessible. Structure your content to be extractable, add verifiable evidence, open access to AI bots, and track your score over time.</p>
 
-      <p>Start by measuring where you stand. Analyze your site for free on Detekia — score out of 100, 8 criteria, recommendations prioritized by impact, in 30 seconds.</p>
+      <p>Start by measuring where you stand. Analyze your site for free on Detekia — score out of 100, 8 criteria, recommendations prioritized by impact, in under 60 seconds.</p>
     </>
   );
 }

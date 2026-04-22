@@ -405,7 +405,7 @@ export default function HomePage() {
 
       <p>Vous avez implémenté vos schemas ? Mesurez l'impact immédiatement.</p>
 
-      <p>Lancez un audit GEO sur Detekia — votre score de données structurées passera de 0-3 à 7-10 si l'implémentation est correcte. En 30 secondes, sans inscription.</p>
+      <p>Lancez un audit GEO sur Detekia — votre score de données structurées passera de 0-3 à 7-10 si l'implémentation est correcte. En moins de 60 secondes, sans inscription.</p>
     </>
   );
 }
