@@ -11,15 +11,33 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 // ── Dynamic preview reco selection ──────────────────────────────────────────
 
 function selectPreviewRecommendation(criteria, recommendations) {
-  if (!Array.isArray(recommendations) || recommendations.length === 0) return null;
-  if (!Array.isArray(criteria) || criteria.length === 0) return recommendations[0];
+  // TEMP DEBUG — à retirer après diagnostic phase 2
+  if (!Array.isArray(recommendations) || recommendations.length === 0) {
+    console.log('[DETEKIA DEBUG] === SORTIE ===', 'aucune reco dans le tableau');
+    return null;
+  }
+  if (!Array.isArray(criteria) || criteria.length === 0) {
+    console.log('[DETEKIA DEBUG] === SORTIE ===', 'pas de criteria, fallback reco[0]:', recommendations[0]?.criterion);
+    return recommendations[0];
+  }
+
+  // TEMP DEBUG — à retirer après diagnostic phase 2
+  console.log('[DETEKIA DEBUG] === selectPreviewRecommendation ===');
+  console.log('[DETEKIA DEBUG] criteria recus:', JSON.stringify(criteria?.map(c => ({ name: c?.name, score: c?.score, max: c?.max })), null, 2));
+  console.log('[DETEKIA DEBUG] recommendations recues (criterion seulement):', JSON.stringify(recommendations?.map(r => r?.criterion), null, 2));
 
   const criteriaWithGap = criteria
     .filter(c => c && typeof c.score === 'number' && typeof c.max === 'number' && c.max > 0)
     .map(c => ({ name: c.name, normalizedGap: (c.max - c.score) / c.max }))
     .sort((a, b) => b.normalizedGap - a.normalizedGap);
 
-  if (criteriaWithGap.length === 0) return recommendations[0];
+  // TEMP DEBUG — à retirer après diagnostic phase 2
+  console.log('[DETEKIA DEBUG] criteriaWithGap calcule (trie par ecart decroissant):', JSON.stringify(criteriaWithGap, null, 2));
+
+  if (criteriaWithGap.length === 0) {
+    console.log('[DETEKIA DEBUG] === SORTIE ===', 'criteriaWithGap vide, fallback reco[0]:', recommendations[0]?.criterion);
+    return recommendations[0];
+  }
 
   const normalize = str => String(str || '').toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
@@ -32,20 +50,32 @@ function selectPreviewRecommendation(criteria, recommendations) {
         || recoCriterionNorm.includes(criterionNameNorm)
         || criterionNameNorm.includes(recoCriterionNorm);
     });
-    if (matchingReco) return matchingReco;
+    // TEMP DEBUG — à retirer après diagnostic phase 2
+    console.log(`[DETEKIA DEBUG] Test matching pour critere "${criterion.name}" (gap ${criterion.normalizedGap}):`, matchingReco ? `MATCH avec reco criterion="${matchingReco.criterion}"` : 'AUCUN MATCH');
+    if (matchingReco) {
+      console.log('[DETEKIA DEBUG] === SORTIE ===', 'match trouve dynamique:', matchingReco.criterion);
+      return matchingReco;
+    }
   }
 
+  // TEMP DEBUG — à retirer après diagnostic phase 2
+  console.log('[DETEKIA DEBUG] === SORTIE ===', 'fallback final recommendations[0]:', recommendations[0]?.criterion);
   return recommendations[0];
 }
 
 function buildPreviewFadeText(reco, staticFallback) {
+  // TEMP DEBUG — à retirer après diagnostic phase 2
+  console.log('[DETEKIA DEBUG] buildPreviewFadeText appelee. reco presente?', !!reco, 'reco.diagnostic present?', !!reco?.diagnostic, 'staticFallback utilise?', !reco);
   if (!reco) return staticFallback;
   const parts = [reco.diagnostic, reco.whyCritical, reco.whatToDo]
     .filter(p => typeof p === 'string' && p.trim().length > 0);
   if (parts.length === 0) return staticFallback;
-  return parts
+  const joined = parts
     .map(p => { const trimmed = p.trim(); return /[.!?]$/.test(trimmed) ? trimmed : trimmed + '.'; })
     .join(' ');
+  // TEMP DEBUG — à retirer après diagnostic phase 2
+  console.log('[DETEKIA DEBUG] previewFadeText final (50 premiers chars):', String(joined).slice(0, 50));
+  return joined;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -354,6 +384,8 @@ export default function Results() {
   const grade = result ? getGrade(result.score) : null;
   const recommendations = result?.recommendations || [];
   const previewReco = selectPreviewRecommendation(result?.criteria, recommendations);
+  // TEMP DEBUG — à retirer après diagnostic phase 2
+  console.log('[DETEKIA DEBUG] previewReco final utilise dans le render:', previewReco ? { criterion: previewReco.criterion, priority: previewReco.priority, title: previewReco.title } : null);
   const previewFadeText = buildPreviewFadeText(previewReco, t('results.recos.previewFadeText'));
   const otherRecos = recommendations.filter(r => r !== previewReco);
   const shareText = t('results.share.text').replace('{score}', result?.score || '');
