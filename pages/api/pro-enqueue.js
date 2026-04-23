@@ -14,6 +14,7 @@ const JOB_TTL = 2 * 60 * 60;
 export default async function handler(req, res) {
   const rawUrl = req.query.url;
   const locale = req.query.locale === 'en' ? 'en' : 'fr';
+  const customerEmail = req.query.email || 'guillaume@beeleven.fr';
   if (!rawUrl) return res.status(400).json({ error: 'Missing ?url= parameter' });
 
   let url;
@@ -37,6 +38,7 @@ export default async function handler(req, res) {
       await redis.set(`${JOB_PREFIX}:${result.siteJobId}:meta`, {
         rootUrl: url,
         locale,
+        customerEmail,
         queuedAt: new Date().toISOString(),
         urls: result.urls,
       }, { ex: JOB_TTL });

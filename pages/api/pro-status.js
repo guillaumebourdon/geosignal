@@ -15,12 +15,13 @@ export default async function handler(req, res) {
   if (!siteJobId) return res.status(400).json({ error: 'Missing ?siteJobId= parameter' });
 
   try {
-    const [total, completed, meta, status, consolidated] = await Promise.all([
+    const [total, completed, meta, status, consolidated, deliveredAt] = await Promise.all([
       redis.get(`${JOB_PREFIX}:${siteJobId}:total`),
       redis.get(`${JOB_PREFIX}:${siteJobId}:completed`),
       redis.get(`${JOB_PREFIX}:${siteJobId}:meta`),
       redis.get(`${JOB_PREFIX}:${siteJobId}:status`),
       redis.get(`${JOB_PREFIX}:${siteJobId}:consolidated`),
+      redis.get(`${JOB_PREFIX}:${siteJobId}:deliveredAt`),
     ]);
 
     if (total === null) {
@@ -59,6 +60,7 @@ export default async function handler(req, res) {
       rootUrl: metaData?.rootUrl || null,
       locale: metaData?.locale || null,
       queuedAt: metaData?.queuedAt || null,
+      deliveredAt: deliveredAt || null,
       pages,
     };
 
