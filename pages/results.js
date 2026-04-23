@@ -168,9 +168,8 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t }) {
             {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{translateCrit(r.criterion)}</span>}
             <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8' }}>#01</span>
           </div>
-          <div style={{ padding: '16px 24px 0', position: 'relative' }}>
-            <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.8, fontFamily: 'system-ui' }}>{preview}...</div>
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, background: 'linear-gradient(to bottom, transparent, #ffffff)', pointerEvents: 'none' }} />
+          <div className="reco-preview-fade" style={{ padding: '16px 24px 0', fontSize: 13, color: '#3A3835', lineHeight: 1.8, fontFamily: 'system-ui', position: 'relative', maxHeight: 'calc(1.8em * 3)', overflow: 'hidden', userSelect: 'none', pointerEvents: 'none', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 100%)' }}>
+            {t('results.recos.previewFadeText')}
           </div>
           <div className="reco-preview-cta" style={{ margin: '12px 24px 0', padding: '14px 18px', background: '#F7F5F2', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
             <div>
@@ -305,10 +304,10 @@ export default function Results() {
 
   const [openGroup, setOpenGroup] = useState(null);
   const closeTimeoutRef = useRef(null);
-  const [showSticky, setShowSticky] = useState(false);
+  // showSticky removed (sticky bar deleted)
   function handleGroupEnter(groupId) { if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current); setOpenGroup(groupId); }
   function handleGroupLeave() { closeTimeoutRef.current = setTimeout(() => setOpenGroup(null), 150); }
-  useEffect(() => { function onScroll() { setShowSticky(window.scrollY > 400); } window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll); }, []);
+  // scroll listener for sticky bar removed
 
   const isPaid = false;
   const grade = result ? getGrade(result.score) : null;
@@ -478,10 +477,10 @@ export default function Results() {
 
           {recommendations.length > 0 && (
             <div style={{ marginTop: 32 }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
                 <div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.recos.label')}</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5 }}>{t('results.recos.title').replace('{count}', recommendations.length)}</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5 }}>{t('results.recos.title')}</div>
                 </div>
                 {!isPaid && (
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', background: 'rgba(217,119,87,0.08)', padding: '4px 12px', borderRadius: 20, border: '1px solid rgba(217,119,87,0.2)' }}>
@@ -489,6 +488,11 @@ export default function Results() {
                   </div>
                 )}
               </div>
+              {!isPaid && (
+                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                  {t('results.recos.subtitle').replace('{count}', recommendations.length)}
+                </div>
+              )}
 
               {recommendations.map((r, i) => (
                 <RecoCard key={i} r={r} index={i} isPaid={isPaid} onCheckout={handleCheckout} total={recommendations.length} t={t} />
@@ -505,29 +509,21 @@ export default function Results() {
                 </div>
               )}
 
+              {/* Pro teaser block */}
               {!isPaid && (
-                <div className="unlock-cta" style={{ marginTop: 16, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, boxShadow: '0 8px 32px rgba(26,25,22,0.12)' }}>
+                <div style={{ marginTop: 16, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, boxShadow: '0 8px 32px rgba(26,25,22,0.12)' }}>
                   <div>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#F7F5F2', marginBottom: 6 }}>{t('results.unlock.title')}</div>
-                    <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6 }}>{t('results.unlock.desc').replace('{count}', recommendations.length - 1)}</div>
+                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#F7F5F2', marginBottom: 6 }}>{t('results.proBlock.title')}</div>
+                    <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6 }}>{t('results.proBlock.desc')}</div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, flexShrink: 0 }}>
-                    <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '16px 36px', borderRadius: 10, fontWeight: 700, fontSize: 15, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', opacity: checkoutLoading ? 0.7 : 1, animation: checkoutLoading ? 'none' : 'ctaPulse 2.4s ease-in-out infinite' }}>{checkoutLoading ? t('results.unlock.ctaLoading') : t('results.unlock.cta')}</button>
-                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>{t('results.unlock.subtext')}</div>
+                    <Link href="/pro" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 36px', borderRadius: 10, fontWeight: 700, fontSize: 15, fontFamily: 'system-ui', whiteSpace: 'nowrap', textDecoration: 'none' }}>{t('results.proBlock.cta')}</Link>
+                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', textTransform: 'uppercase', letterSpacing: 1 }}>{t('results.proBlock.note')}</div>
                   </div>
                 </div>
               )}
             </div>
           )}
-        </div>
-      )}
-
-      {!isPaid && showSticky && result && (
-        <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, background: '#1A1916', borderTop: '1px solid rgba(255,255,255,0.08)', padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, boxShadow: '0 -4px 24px rgba(26,25,22,0.18)' }}>
-          <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#F7F5F2', fontWeight: 500 }}>{t('results.sticky.title').replace('{count}', recommendations.length)}</div>
-          <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', padding: '10px 24px', borderRadius: 10, fontWeight: 600, fontSize: 13, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui', flexShrink: 0, opacity: checkoutLoading ? 0.7 : 1 }}>
-            {checkoutLoading ? '...' : t('results.sticky.cta')}
-          </button>
         </div>
       )}
 
@@ -547,6 +543,18 @@ export default function Results() {
               </EmbeddedCheckoutProvider>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Pro teaser — discret, en bas de page */}
+      {result && (
+        <div style={{ textAlign: 'center', padding: '60px 24px 32px', maxWidth: 600, margin: '0 auto' }}>
+          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 6 }}>
+            {t('results.proTeaser')}{' '}
+            <Link href="/pro" style={{ color: '#1A1916', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
+              {t('results.proTeaserLink')}
+            </Link>
+          </p>
         </div>
       )}
 

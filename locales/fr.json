@@ -75,7 +75,7 @@
       "badge": "Analyse 100% gratuite — aucune inscription",
       "titleLine1": "Vos concurrents apparaissent dans",
       "titleLine2": "Pas vous.",
-      "subtitle": "Detekia audite votre site en moins de 60 secondes et vous montre quoi corriger pour être cité par les IA — et capter le trafic que Google ne vous envoie plus.",
+      "subtitle": "Comprenez pourquoi en 60 secondes. Detekia diagnostique gratuitement la page de votre choix sur 8 critères GEO.",
       "inputPlaceholder": "https://www.votre-site.fr",
       "cta": "Analyser mon site →",
       "easterEgg": "Sympa d'essayer 😏 Mais on ne se note pas soi-même — ce serait trop facile de se mettre 100/100. Essayez avec un autre site !",
@@ -266,7 +266,8 @@
         { "label": "FAQ", "href": "/#faq" },
         { "label": "Mentions légales", "href": "/mentions-legales" },
         { "label": "Confidentialité", "href": "/confidentialite" },
-        { "label": "CGU", "href": "/cgu" }
+        { "label": "CGU", "href": "/cgu" },
+        { "label": "Detekia Pro (bientôt)", "href": "/pro" }
       ]
     },
     "schema": {
@@ -390,7 +391,7 @@
     "limits": {
       "label": "Limites de l'analyse",
       "items": [
-        { "title": "Analyse de surface", "desc": "Detekia analyse la page d'accueil ou la page soumise, pas l'intégralité du site. Un site peut avoir du contenu excellent sur d'autres pages non analysées." },
+        { "title": "Analyse page-level", "desc": "Detekia analyse précisément la page que vous soumettez (homepage par défaut, ou toute autre URL de votre site), pas l'intégralité du site. Pour la majorité des sites, la homepage concentre les signaux globaux (robots.txt, schema Organization, autorité, présence sociale) et donne un diagnostic représentatif. Pour analyser plusieurs pages avec un rapport consolidé, voir notre offre Pro (bientôt disponible)." },
         { "title": "Facteurs non mesurables", "desc": "La qualité intrinsèque du contenu, la réputation hors-ligne, les backlinks entrants, et l'historique de citation par les IA ne sont pas mesurables par notre analyse technique." },
         { "title": "Évolution des algorithmes", "desc": "Les critères de citation des IA évoluent régulièrement. Notre méthodologie est mise à jour mais peut présenter un décalage avec les dernières pratiques des modèles." },
         { "title": "Sites dynamiques", "desc": "Les sites qui chargent leur contenu entièrement en JavaScript côté client (SPA sans SSR) peuvent obtenir des scores sous-évalués car le contenu n'est pas accessible au scraper." }
@@ -431,7 +432,7 @@
     },
     "hero": {
       "title": "Débloquez votre rapport GEO complet",
-      "subtitle": "Toutes les recommandations expertes pour booster votre citabilité dans ChatGPT, Gemini, Claude et Perplexity."
+      "subtitle": "Toutes les recommandations expertes pour booster la citabilité de votre site dans ChatGPT, Gemini, Claude et Perplexity."
     },
     "free": {
       "label": "Gratuit",
@@ -439,7 +440,7 @@
       "subtitle": "Pour découvrir Detekia",
       "cta": "Commencer gratuitement",
       "features": [
-        { "included": true, "text": "Score GEO /100" },
+        { "included": true, "text": "Score GEO /100 sur la page de votre choix" },
         { "included": true, "text": "Analyse des 8 critères" },
         { "included": true, "text": "1 recommandation aperçu" },
         { "included": false, "text": "Recommandations complètes" },
@@ -450,7 +451,7 @@
     "report": {
       "label": "Rapport complet",
       "price": "29 €",
-      "paymentInfo": "Paiement unique · Par analyse",
+      "paymentInfo": "Paiement unique · Par analyse de page",
       "ctaLoading": "Chargement…",
       "cta": "Débloquer mon rapport — 29 € →",
       "features": [
@@ -464,16 +465,31 @@
     },
     "guarantee": {
       "title": "Paiement sécurisé via Stripe",
-      "subtitle": "Aucune donnée de carte stockée · Remboursement sous 24h si problème"
+      "subtitle": "Aucune donnée de carte stockée"
     },
     "faq": {
       "label": "Questions fréquentes",
       "items": [
         { "q": "Qu'est-ce que le GEO ?", "a": "Le GEO (Generative Engine Optimization) est l'optimisation de votre site pour apparaître dans les réponses de ChatGPT, Claude, Gemini et Perplexity." },
         { "q": "Combien de recommandations vais-je recevoir ?", "a": "Toutes les recommandations générées pour les critères sous 80% de leur score max — en général entre 5 et 8 recommandations détaillées avec méthode, exemple et impact attendu." },
-        { "q": "Le paiement est-il par site ou par analyse ?", "a": "Par analyse. Chaque rapport débloqué correspond à l'analyse d'un site à un instant donné." },
+        { "q": "Le paiement est-il par site ou par analyse ?", "a": "Par analyse. Chaque rapport débloqué correspond à l'analyse d'une page de votre site à un instant donné. Pour la majorité des sites, analyser la homepage suffit à obtenir un diagnostic représentatif. Pour analyser plusieurs pages avec un rapport consolidé, voir notre offre Pro (bientôt disponible)." },
         { "q": "Comment est délivré le rapport ?", "a": "Immédiatement en ligne sur la page de confirmation, et envoyé par email en PDF pour être consulté hors ligne." },
         { "q": "Les données de mon site sont-elles conservées ?", "a": "Non. Detekia analyse votre site en temps réel. Seul le rapport est mis en cache 24h pour vous éviter d'attendre si vous revenez sur la même URL." }
+      ]
+    },
+    "proCard": {
+      "label": "Pro — Multi-pages",
+      "price": "99 €",
+      "paymentInfo": "À partir de · Lancement juin 2026",
+      "cta": "Être notifié du lancement →",
+      "badge": "BIENTÔT DISPONIBLE",
+      "features": [
+        { "text": "Jusqu'à 10 pages analysées" },
+        { "text": "Rapport consolidé multi-pages" },
+        { "text": "Synthèse contextualisée entre vos pages" },
+        { "text": "Recommandations transversales priorisées" },
+        { "text": "Livraison sous 15 min par email" },
+        { "text": "Pour agences, e-commerces, médias" }
       ]
     },
     "errorAlert": "Erreur de paiement, réessayez.",
@@ -849,8 +865,10 @@
       "noSpam": "Pas de spam. Désabonnement en un clic."
     },
     "recos": {
-      "label": "Plan d'action GEO",
-      "title": "{count} recommandations expertes",
+      "label": "APERÇU DU PLAN D'ACTION",
+      "title": "Aperçu d'une recommandation",
+      "subtitle": "Voici un aperçu de l'une des {count} recommandations personnalisées pour votre site. Les autres sont détaillées dans le rapport complet.",
+      "previewFadeText": "Aucun schema JSON-LD identifié dans le contenu analysé, limitant la compréhension structurée par les moteurs de recherche et les IA génératives. Pour corriger ce point critique sur votre site, il est recommandé d'implémenter en priorité les schémas Article, FAQPage et Organization, en veillant à valider la syntaxe via l'outil officiel de test des données structurées avant la mise en production. Cette action technique permet généralement d'améliorer le score d'extractibilité IA de 15 à 25 points en moins de deux semaines, à condition que le contenu éditorial soit également structuré selon une hiérarchie H2/H3 cohérente.",
       "previewLocked": "🔒 Recommandation complète masquée",
       "previewSubtext": "Méthode, exemples et impact détaillé dans le rapport complet.",
       "previewUnlock": "Débloquer →",
@@ -874,6 +892,14 @@
     "checkout": {
       "title": "Rapport GEO complet",
       "subtext": "29 € · Accès immédiat · Paiement unique"
+    },
+    "proTeaser": "Vous voulez analyser plusieurs pages de votre site en un seul rapport ?",
+    "proTeaserLink": "Être notifié du lancement →",
+    "proBlock": {
+      "title": "Analyser plusieurs pages d'un coup",
+      "desc": "Detekia Pro arrive en juin 2026 — jusqu'à 10 pages, rapport consolidé, dès 99 €.",
+      "cta": "Rejoindre la liste d'attente →",
+      "note": "SOYEZ NOTIFIÉ·E AU LANCEMENT"
     }
   },
   "success": {
@@ -925,5 +951,54 @@
     "ctaBlockTitle": "Besoin d'aide pour appliquer les recommandations ?",
     "ctaBlockText": "Beeleven, l'agence derrière Detekia, accompagne les entreprises dans l'implémentation de leur stratégie GEO : audit approfondi, optimisations techniques, suivi des résultats.",
     "ctaBlockButton": "Discutons-en →"
+  },
+  "pro": {
+    "seo": {
+      "title": "Detekia Pro — Audit multi-pages GEO (bientôt)",
+      "description": "Analysez jusqu'à 10 pages de votre site en un seul rapport consolidé avec synthèse contextualisée. Pour les agences SEO, e-commerces et sites éditoriaux. À partir de 99 €. Lancement juin 2026."
+    },
+    "hero": {
+      "title": "Vous voulez analyser plus qu'une page ?",
+      "subtitle": "Detekia Pro arrive bientôt. Audit multi-pages, rapport consolidé, synthèse contextualisée entre vos pages. Pensé pour les pros."
+    },
+    "waitlist": {
+      "title": "Soyez prévenu(e) du lancement.",
+      "desc": "Laissez votre email pour être parmi les premiers informés. Pas de spam, juste une notification quand l'offre Pro sera prête.",
+      "placeholder": "votre@email.com",
+      "cta": "Me prévenir",
+      "note": "Vous serez aussi prioritaire pour bénéficier d'une offre de lancement.",
+      "success": "Merci ! Vous serez prévenu(e) du lancement.",
+      "error": "Une erreur est survenue. Réessayez ou contactez-nous."
+    },
+    "audience": {
+      "title": "Pour qui Detekia Pro est-il fait ?",
+      "cards": [
+        { "icon": "🎯", "title": "Agences SEO", "desc": "Vous voulez auditer 5 à 10 pages clés de vos clients (homepage, pages produits, articles piliers) en un seul rapport consolidé." },
+        { "icon": "🛒", "title": "E-commerces", "desc": "Vous voulez analyser votre homepage + vos pages catégories + vos fiches produits stratégiques pour comprendre votre visibilité IA globale." },
+        { "icon": "📰", "title": "Sites éditoriaux et médias", "desc": "Vous voulez analyser vos articles piliers et votre homepage pour optimiser systématiquement votre citabilité dans ChatGPT, Claude, Gemini et Perplexity." }
+      ]
+    },
+    "features": {
+      "title": "Ce qui change avec Detekia Pro",
+      "items": [
+        "Jusqu'à 10 pages analysées sur le même site, en un seul achat",
+        "Rapport PDF consolidé avec score global, synthèse exécutive, et fiche détaillée par page",
+        "Recommandations transversales priorisées par impact business",
+        "Tous les critères du rapport standard, mais avec une vision globale du site",
+        "Livraison sous 15 minutes par email (analyse asynchrone en background)"
+      ],
+      "highlight": "Synthèse contextualisée entre vos pages : les problèmes communs identifiés, les solutions mutualisées, et les priorités à l'échelle du site."
+    },
+    "pricing": {
+      "price": "À partir de 99 €",
+      "detail": "Paiement unique, par audit multi-pages. Pas d'abonnement.",
+      "timeline": "Lancement prévu : juin 2026",
+      "waitlistNote": "Inscrivez-vous à la liste d'attente pour être notifié(e) dès l'ouverture."
+    },
+    "finalCta": {
+      "title": "Prêt(e) à analyser votre site en profondeur ?",
+      "desc": "Inscrivez-vous pour être prévenu(e) du lancement et bénéficier d'une offre exclusive.",
+      "cta": "Me prévenir du lancement"
+    }
   }
 }

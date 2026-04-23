@@ -75,7 +75,7 @@
       "badge": "100% free analysis — no signup required",
       "titleLine1": "Your competitors are showing up on",
       "titleLine2": "You don't.",
-      "subtitle": "Detekia audits your website in under 60 seconds and shows you what to fix to get cited by AI — and capture the traffic Google no longer sends you.",
+      "subtitle": "Understand why in 60 seconds. Detekia diagnoses the page of your choice across 8 GEO criteria — for free.",
       "inputPlaceholder": "https://www.your-website.com",
       "cta": "Analyze my website →",
       "easterEgg": "Nice try 😏 But we don't grade ourselves — it would be too easy to give a 100/100. Try with another website!",
@@ -266,7 +266,8 @@
         { "label": "FAQ", "href": "/#faq" },
         { "label": "Legal Notice", "href": "/mentions-legales" },
         { "label": "Privacy", "href": "/confidentialite" },
-        { "label": "Terms", "href": "/cgu" }
+        { "label": "Terms", "href": "/cgu" },
+        { "label": "Detekia Pro (coming soon)", "href": "/pro" }
       ]
     },
     "schema": {
@@ -390,7 +391,7 @@
     "limits": {
       "label": "Analysis limitations",
       "items": [
-        { "title": "Surface-level analysis", "desc": "Detekia analyzes the homepage or the submitted page, not the entire website. A site may have excellent content on other pages that weren't analyzed." },
+        { "title": "Page-level analysis", "desc": "Detekia analyzes precisely the page you submit (homepage by default, or any other URL of your site), not the entire site. For most sites, the homepage concentrates the global signals (robots.txt, Organization schema, authority, social presence) and provides a representative diagnostic. To analyze multiple pages with a consolidated report, see our Pro offer (coming soon)." },
         { "title": "Non-measurable factors", "desc": "Intrinsic content quality, offline reputation, inbound backlinks, and AI citation history cannot be measured by our technical analysis." },
         { "title": "Algorithm evolution", "desc": "AI citation criteria evolve regularly. Our methodology is updated but may lag behind the latest practices of AI models." },
         { "title": "Dynamic websites", "desc": "Websites that load their content entirely via client-side JavaScript (SPA without SSR) may receive underestimated scores because the content isn't accessible to the scraper." }
@@ -431,7 +432,7 @@
     },
     "hero": {
       "title": "Unlock your full GEO report",
-      "subtitle": "All the expert recommendations to boost your citability on ChatGPT, Gemini, Claude and Perplexity."
+      "subtitle": "All the expert recommendations to boost your site's citability on ChatGPT, Gemini, Claude and Perplexity."
     },
     "free": {
       "label": "Free",
@@ -439,7 +440,7 @@
       "subtitle": "To discover Detekia",
       "cta": "Start for free",
       "features": [
-        { "included": true, "text": "GEO Score /100" },
+        { "included": true, "text": "GEO Score /100 on the page of your choice" },
         { "included": true, "text": "Analysis of 8 criteria" },
         { "included": true, "text": "1 recommendation preview" },
         { "included": false, "text": "Full recommendations" },
@@ -450,7 +451,7 @@
     "report": {
       "label": "Full report",
       "price": "29 €",
-      "paymentInfo": "One-time payment · Per analysis",
+      "paymentInfo": "One-time payment · Per page analysis",
       "ctaLoading": "Loading…",
       "cta": "Unlock my report — 29 € →",
       "features": [
@@ -464,16 +465,31 @@
     },
     "guarantee": {
       "title": "Secure payment via Stripe",
-      "subtitle": "No card data stored · Refund within 24h if there's an issue"
+      "subtitle": "No card data stored"
     },
     "faq": {
       "label": "Frequently asked questions",
       "items": [
         { "q": "What is GEO?", "a": "GEO (Generative Engine Optimization) is the practice of optimizing your website to appear in AI-generated responses from ChatGPT, Claude, Gemini and Perplexity." },
         { "q": "How many recommendations will I receive?", "a": "All recommendations generated for criteria below 80% of their max score — typically between 5 and 8 detailed recommendations with method, example and expected impact." },
-        { "q": "Is the payment per website or per analysis?", "a": "Per analysis. Each unlocked report corresponds to one website's analysis at a given point in time." },
+        { "q": "Is the payment per website or per analysis?", "a": "Per analysis. Each unlocked report corresponds to the analysis of one page of your site at a given moment. For most sites, analyzing the homepage is enough to get a representative diagnostic. To analyze multiple pages with a consolidated report, see our Pro offer (coming soon)." },
         { "q": "How is the report delivered?", "a": "Immediately online on the confirmation page, and sent by email as a PDF for offline viewing." },
         { "q": "Is my website data stored?", "a": "No. Detekia analyzes your website in real time. Only the report is cached for 24 hours so you don't have to wait if you return to the same URL." }
+      ]
+    },
+    "proCard": {
+      "label": "Pro — Multi-pages",
+      "price": "€99",
+      "paymentInfo": "Starting at · Launch June 2026",
+      "cta": "Get notified at launch →",
+      "badge": "COMING SOON",
+      "features": [
+        { "text": "Up to 10 pages analyzed" },
+        { "text": "Consolidated multi-page report" },
+        { "text": "Contextualized cross-page insights" },
+        { "text": "Prioritized transverse recommendations" },
+        { "text": "Delivery within 15 min by email" },
+        { "text": "For agencies, e-commerce, publishers" }
       ]
     },
     "errorAlert": "Payment error, please try again.",
@@ -849,8 +865,10 @@
       "noSpam": "No spam. Unsubscribe in one click."
     },
     "recos": {
-      "label": "GEO Action Plan",
-      "title": "{count} expert recommendations",
+      "label": "ACTION PLAN PREVIEW",
+      "title": "Preview of one recommendation",
+      "subtitle": "Here's a preview of one of the {count} personalized recommendations for your site. The others are detailed in the full report.",
+      "previewFadeText": "No JSON-LD schema detected in the analyzed content, limiting structured understanding by search engines and generative AI. To address this critical point on your site, it is recommended to implement Article, FAQPage and Organization schemas as a priority, making sure to validate the syntax via the official structured data testing tool before going live. This technical action typically improves the AI extractability score by 15 to 25 points within two weeks, provided that editorial content is also structured with a consistent H2/H3 hierarchy.",
       "previewLocked": "🔒 Full recommendation hidden",
       "previewSubtext": "Method, examples and detailed impact in the full report.",
       "previewUnlock": "Unlock →",
@@ -874,6 +892,14 @@
     "checkout": {
       "title": "Full GEO Report",
       "subtext": "29 € · Instant access · One-time payment"
+    },
+    "proTeaser": "Want to analyze several pages of your site in one report? The Pro offer is coming soon.",
+    "proTeaserLink": "Get notified at launch →",
+    "proBlock": {
+      "title": "Analyze multiple pages at once",
+      "desc": "Detekia Pro launches June 2026 — up to 10 pages, consolidated report, from €99.",
+      "cta": "Join the waitlist →",
+      "note": "GET NOTIFIED AT LAUNCH"
     }
   },
   "success": {
@@ -925,5 +951,54 @@
     "ctaBlockTitle": "Need help implementing these recommendations?",
     "ctaBlockText": "Beeleven, the agency behind Detekia, helps businesses implement their GEO strategy: in-depth audit, technical optimizations, results monitoring.",
     "ctaBlockButton": "Let's talk →"
+  },
+  "pro": {
+    "seo": {
+      "title": "Detekia Pro — Multi-page GEO Audit (coming soon)",
+      "description": "Analyze up to 10 pages of your site in one consolidated report with contextualized cross-page insights. For SEO agencies, e-commerce and editorial sites. Starting at €99. Launching June 2026."
+    },
+    "hero": {
+      "title": "Want to analyze more than one page?",
+      "subtitle": "Detekia Pro is coming soon. Multi-page audit, consolidated report, contextualized cross-page insights. Built for pros."
+    },
+    "waitlist": {
+      "title": "Get notified at launch.",
+      "desc": "Drop your email to be among the first informed. No spam, just a notification when Pro is ready.",
+      "placeholder": "your@email.com",
+      "cta": "Notify me",
+      "note": "You'll also be first in line for a launch offer.",
+      "success": "Thanks! You'll be notified at launch.",
+      "error": "An error occurred. Please try again or contact us."
+    },
+    "audience": {
+      "title": "Who is Detekia Pro built for?",
+      "cards": [
+        { "icon": "🎯", "title": "SEO Agencies", "desc": "Audit 5 to 10 key pages of your clients (homepage, product pages, pillar articles) in one consolidated report." },
+        { "icon": "🛒", "title": "E-commerce Sites", "desc": "Analyze your homepage + category pages + strategic product pages to understand your overall AI visibility." },
+        { "icon": "📰", "title": "Editorial Sites and Media", "desc": "Analyze your pillar articles and homepage to systematically optimize your citability on ChatGPT, Claude, Gemini and Perplexity." }
+      ]
+    },
+    "features": {
+      "title": "What changes with Detekia Pro",
+      "items": [
+        "Up to 10 pages analyzed on the same site, in a single purchase",
+        "Consolidated PDF report with global score, executive summary, and detailed page-by-page breakdown",
+        "Cross-page recommendations prioritized by business impact",
+        "All the criteria from the standard report, but with a site-wide perspective",
+        "Delivery within 15 minutes by email (asynchronous background analysis)"
+      ],
+      "highlight": "Contextualized cross-page insights: common issues identified, shared solutions, and site-level priorities."
+    },
+    "pricing": {
+      "price": "Starting at €99",
+      "detail": "One-time payment per multi-page audit. No subscription.",
+      "timeline": "Launch planned: June 2026",
+      "waitlistNote": "Sign up to the waitlist to be notified at launch."
+    },
+    "finalCta": {
+      "title": "Ready to analyze your site in depth?",
+      "desc": "Sign up to be notified at launch and get an exclusive offer.",
+      "cta": "Notify me at launch"
+    }
   }
 }
