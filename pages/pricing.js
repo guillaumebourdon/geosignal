@@ -159,6 +159,17 @@ export default function Pricing() {
         </div>
       </div>
 
+      {/* PRO BANNER */}
+      <div style={{ maxWidth: 700, margin: '0 auto 32px', padding: '0 24px' }}>
+        <div style={{ background: '#F0ECE0', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
+          <div style={{ fontSize: 20, marginBottom: 12 }}>🚀</div>
+          <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 10, letterSpacing: -0.3 }}>{t('pricing.proBanner.title')}</div>
+          <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 16px' }}>{t('pricing.proBanner.desc')}</div>
+          <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#D97757', marginBottom: 16 }}>{t('pricing.proBanner.price')}</div>
+          <Link href="/pro" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '11px 24px', borderRadius: 9, fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', textDecoration: 'none' }}>{t('pricing.proBanner.cta')}</Link>
+        </div>
+      </div>
+
       {/* GARANTIE */}
       <div style={{ maxWidth: 560, margin: '0 auto 64px', padding: '0 24px', textAlign: 'center' }}>
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 28px', display: 'inline-flex', alignItems: 'center', gap: 14 }}>
