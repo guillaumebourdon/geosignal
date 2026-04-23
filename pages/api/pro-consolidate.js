@@ -1,0 +1,226 @@
+import { Redis } from '@upstash/redis';
+import Anthropic from '@anthropic-ai/sdk';
+import { verifyQstashSignature } from '../../lib/proQueue';
+
+export const config = {
+  maxDuration: 120,
+  api: { bodyParser: false },
+};
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
+
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+const JOB_PREFIX = 'detekia:pro:v1:job';
+const CONSOLIDATED_TTL = 7 * 24 * 60 * 60;
+
+async function callHaikuWithRetry(params, maxRetries = 3) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await anthropic.messages.create(params);
+    } catch (err) {
+      const is429 = err?.status === 429
+        || String(err?.message || err || '').includes('429')
+        || String(err?.message || err || '').includes('rate_limit');
+      if (is429 && attempt < maxRetries) {
+        const retryAfter = Math.min(parseInt(err?.headers?.['retry-after'] || '0', 10) || (15 + attempt * 15), 60);
+        console.log(`[pro-consolidate] 429 rate limit, waiting ${retryAfter}s (attempt ${attempt + 1}/${maxRetries})`);
+        await new Promise(r => setTimeout(r, retryAfter * 1000));
+        continue;
+      }
+      throw err;
+    }
+  }
+}
+
+function parseHaikuJson(raw) {
+  const match = raw.match(/\{[\s\S]*\}/);
+  if (!match) throw new Error('No JSON in Claude response');
+  return JSON.parse(match[0]);
+}
+
+function readRawBody(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
+    req.on('end', () => resolve(Buffer.concat(chunks).toString('utf-8')));
+    req.on('error', reject);
+  });
+}
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
+
+  const signature = req.headers['upstash-signature'];
+  const rawBody = await readRawBody(req);
+
+  if (!signature || !(await verifyQstashSignature(signature, rawBody))) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { siteJobId } = JSON.parse(rawBody);
+  if (!siteJobId) return res.status(400).json({ error: 'Missing siteJobId' });
+
+  const startMs = Date.now();
+  console.log(`[pro-consolidate] Starting consolidation for ${siteJobId}`);
+
+  try {
+    // 1. Read job data from Redis
+    const [totalRaw, metaRaw] = await Promise.all([
+      redis.get(`${JOB_PREFIX}:${siteJobId}:total`),
+      redis.get(`${JOB_PREFIX}:${siteJobId}:meta`),
+    ]);
+
+    const total = Number(totalRaw) || 0;
+    const meta = typeof metaRaw === 'string' ? JSON.parse(metaRaw) : metaRaw;
+    if (!total || !meta) return res.status(404).json({ error: 'Job not found' });
+
+    const locale = meta.locale || 'fr';
+    const rootUrl = meta.rootUrl;
+
+    // Read all page results
+    const pageKeys = Array.from({ length: total }, (_, i) => `${JOB_PREFIX}:${siteJobId}:page:${i}`);
+    const pageResults = await Promise.all(pageKeys.map(k => redis.get(k).catch(() => null)));
+    const pages = pageResults.map((raw, i) => {
+      if (!raw) return { index: i, url: `page-${i}`, error: 'Result not found' };
+      return typeof raw === 'string' ? JSON.parse(raw) : raw;
+    });
+
+    // 2. Separate valid vs error pages
+    const validPages = pages.filter(p => !p.error && typeof p.score === 'number');
+    const errorPages = pages.filter(p => p.error);
+
+    // 3. Compute aggregates
+    const scores = validPages.map(p => p.score);
+    const scoreAverage = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+    const sorted = [...scores].sort((a, b) => a - b);
+    const scoreMedian = sorted.length > 0 ? sorted[Math.floor(sorted.length / 2)] : 0;
+
+    const distribution = { faible: 0, moyen: 0, bon: 0 };
+    scores.forEach(s => { if (s >= 70) distribution.bon++; else if (s >= 45) distribution.moyen++; else distribution.faible++; });
+
+    const criteriaNames = [
+      'Extractibilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
+      'Crawlabilite IA', 'Donnees structurees', 'Neutralite editoriale',
+      'Presence externe', 'Fraicheur & maintenance',
+    ];
+    const criteriaAverages = {};
+    for (const name of criteriaNames) {
+      const vals = validPages.map(p => (p.criteria || []).find(c => c.name === name)).filter(Boolean);
+      if (vals.length > 0) {
+        criteriaAverages[name] = {
+          avgScore: Math.round(vals.reduce((s, c) => s + c.score, 0) / vals.length * 10) / 10,
+          max: vals[0].max,
+        };
+      }
+    }
+
+    // 4. Claude call 1: Executive summary + patterns + action plan
+    const pagesForPrompt = validPages.map(p => ({
+      url: p.url,
+      score: p.score,
+      topRecos: (p.recommendations || []).slice(0, 3).map(r => `${r.criterion}: ${r.title || r.diagnostic || ''}`).join('; '),
+    }));
+
+    const langInstruction = locale === 'en'
+      ? 'OUTPUT LANGUAGE: English (US). ALL text values MUST be in American English.'
+      : 'LANGUE DE SORTIE : Francais. Toutes les valeurs texte en francais professionnel.';
+
+    const synthesisPrompt = `${langInstruction}
+
+You are a senior GEO consultant analyzing a FULL WEBSITE audit (${validPages.length} pages).
+
+Site: ${rootUrl}
+Average GEO score: ${scoreAverage}/100
+Distribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)
+
+Pages analyzed:
+${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}
+
+Criteria averages:
+${Object.entries(criteriaAverages).map(([k, v]) => `- ${k}: ${v.avgScore}/${v.max}`).join('\n')}
+
+Generate a comprehensive site-level analysis. JSON only:
+{"executiveSummary":"2-3 paragraphs qualitative analysis of the site's overall GEO health","topStrengths":["strength 1","strength 2","strength 3"],"topWeaknesses":["weakness 1","weakness 2","weakness 3"],"patterns":[{"pattern":"description","pagesAffected":["url1","url2"],"criterion":"criterion name","severity":"critique|important|mineur"}],"actionPlan":[{"priority":1,"action":"description","criterion":"criterion name","impact":"eleve|moyen|faible","effort":"faible|moyen|eleve","pagesAffected":["url1","url2"]}]}
+
+Rules:
+- executiveSummary: 2-3 substantial paragraphs, specific to this site
+- patterns: 5 to 8 cross-page patterns detected
+- actionPlan: 10 to 15 site-level actions, sorted by priority (impact/effort ratio)
+- Be specific: reference actual URLs from the audit`;
+
+    const synthesisMsg = await callHaikuWithRetry({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 6000,
+      temperature: 0.2,
+      messages: [{ role: 'user', content: synthesisPrompt }],
+    });
+    const synthesis = parseHaikuJson(synthesisMsg.content[0].text);
+
+    // 5-6. Claude call 2: Citation test consolidated (30 queries + simulation)
+    const pageTitles = validPages.map(p => {
+      const title = p.evidence?.metaTitle || p.url;
+      return `${title} (${p.url})`;
+    }).slice(0, 10).join(', ');
+
+    const citationPrompt = `${langInstruction}
+
+You are an AI visibility expert. Full site audit for ${rootUrl}.
+Pages: ${pageTitles}
+
+Step 1: Generate 30 queries users would ask ChatGPT/Perplexity about this site's domain:
+- 10 generic (high competition broad queries)
+- 10 niche (specific to this site)
+- 10 long_tail (ultra-targeted)
+
+Step 2: For each query, simulate whether ${new URL(rootUrl).hostname} would be cited. Consider the site's actual content quality (average score: ${scoreAverage}/100).
+
+JSON only:
+{"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["competitor1"],"recommendation":"1 sentence"}],"citationRate":"X/30","bestOpportunity":"best query opportunity","mainBlocker":"main reason for low citations"}`;
+
+    const citationMsg = await callHaikuWithRetry({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 8000,
+      temperature: 0.3,
+      messages: [{ role: 'user', content: citationPrompt }],
+    });
+    const citationTest = parseHaikuJson(citationMsg.content[0].text);
+
+    // 7. Build consolidated report
+    const consolidatedReport = {
+      siteJobId,
+      rootUrl,
+      locale,
+      queuedAt: meta.queuedAt,
+      consolidatedAt: new Date().toISOString(),
+      scoreAverage,
+      scoreMedian,
+      distribution,
+      pagesValid: validPages.length,
+      pagesWithError: errorPages.length,
+      criteriaAverages,
+      executiveSummary: synthesis.executiveSummary,
+      topStrengths: synthesis.topStrengths || [],
+      topWeaknesses: synthesis.topWeaknesses || [],
+      patterns: synthesis.patterns || [],
+      actionPlan: synthesis.actionPlan || [],
+      citationTestConsolidated: citationTest,
+      pages: pages.map(p => ({ url: p.url, score: p.score, error: p.error || null, topPriority: p.topPriority || null })),
+    };
+
+    // 8-9. Store in Redis
+    await redis.set(`${JOB_PREFIX}:${siteJobId}:consolidated`, consolidatedReport, { ex: CONSOLIDATED_TTL });
+    await redis.set(`${JOB_PREFIX}:${siteJobId}:status`, 'consolidated', { ex: CONSOLIDATED_TTL });
+
+    const duration = Date.now() - startMs;
+    console.log(`[pro-consolidate] Consolidated ${siteJobId} in ${duration}ms. Site score avg: ${scoreAverage}/100. Patterns: ${(synthesis.patterns || []).length}. Actions: ${(synthesis.actionPlan || []).length}.`);
+
+    return res.status(200).json({ success: true, siteJobId, status: 'consolidated' });
+  } catch (err) {
+    console.error(`[pro-consolidate] Error for ${siteJobId}:`, err.message);
+    return res.status(500).json({ error: err.message });
+  }
+}

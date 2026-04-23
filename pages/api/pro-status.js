@@ -11,13 +11,16 @@ export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'GET only' });
 
   const { siteJobId } = req.query;
+  const full = req.query.full === '1';
   if (!siteJobId) return res.status(400).json({ error: 'Missing ?siteJobId= parameter' });
 
   try {
-    const [total, completed, meta] = await Promise.all([
+    const [total, completed, meta, status, consolidated] = await Promise.all([
       redis.get(`${JOB_PREFIX}:${siteJobId}:total`),
       redis.get(`${JOB_PREFIX}:${siteJobId}:completed`),
       redis.get(`${JOB_PREFIX}:${siteJobId}:meta`),
+      redis.get(`${JOB_PREFIX}:${siteJobId}:status`),
+      redis.get(`${JOB_PREFIX}:${siteJobId}:consolidated`),
     ]);
 
     if (total === null) {
@@ -27,6 +30,8 @@ export default async function handler(req, res) {
     const totalNum = Number(total) || 0;
     const completedNum = Number(completed) || 0;
     const metaData = typeof meta === 'string' ? JSON.parse(meta) : meta;
+    const jobStatus = status || (completedNum >= totalNum && totalNum > 0 ? 'pages_done' : 'in_progress');
+    const consolidatedData = consolidated ? (typeof consolidated === 'string' ? JSON.parse(consolidated) : consolidated) : null;
 
     // Fetch individual page results
     const pageKeys = Array.from({ length: totalNum }, (_, i) => `${JOB_PREFIX}:${siteJobId}:page:${i}`);
@@ -46,15 +51,37 @@ export default async function handler(req, res) {
       };
     });
 
-    return res.status(200).json({
+    const response = {
       siteJobId,
       total: totalNum,
       completed: completedNum,
+      status: jobStatus,
       rootUrl: metaData?.rootUrl || null,
       locale: metaData?.locale || null,
       queuedAt: metaData?.queuedAt || null,
       pages,
-    });
+    };
+
+    // Add consolidated summary or full report
+    if (consolidatedData) {
+      if (full) {
+        response.consolidatedReport = consolidatedData;
+      } else {
+        response.consolidatedSummary = {
+          scoreAverage: consolidatedData.scoreAverage,
+          scoreMedian: consolidatedData.scoreMedian,
+          pagesValid: consolidatedData.pagesValid,
+          pagesWithError: consolidatedData.pagesWithError,
+          topStrengths: consolidatedData.topStrengths,
+          patternsCount: (consolidatedData.patterns || []).length,
+          actionPlanCount: (consolidatedData.actionPlan || []).length,
+          citationRate: consolidatedData.citationTestConsolidated?.citationRate,
+          consolidatedAt: consolidatedData.consolidatedAt,
+        };
+      }
+    }
+
+    return res.status(200).json(response);
   } catch (err) {
     console.error('[pro-status] Error:', err.message);
     return res.status(500).json({ error: err.message });

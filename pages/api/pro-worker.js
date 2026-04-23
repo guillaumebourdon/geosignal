@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import { verifyQstashSignature } from '../../lib/proQueue';
+import { verifyQstashSignature, triggerConsolidation } from '../../lib/proQueue';
 import { analyzePage } from '../../lib/proPageAnalyzer';
 
 export const config = {
@@ -75,7 +75,17 @@ export default async function handler(req, res) {
   console.log(`[pro-worker] Completed page ${index + 1}/${total} for ${siteJobId} (url=${url}, score=${result.score || 'error'}, progress=${newCount}/${total})`);
 
   if (newCount === total) {
-    console.log(`[pro-worker] All pages done for ${siteJobId}, ready for consolidation`);
+    // Atomic guard: SET NX to prevent double consolidation from QStash retries
+    const lockKey = `${JOB_PREFIX}:${siteJobId}:consolidation_triggered`;
+    const acquired = await redis.set(lockKey, '1', { nx: true, ex: JOB_TTL });
+    if (acquired) {
+      console.log(`[pro-worker] All pages done for ${siteJobId}, triggering consolidation`);
+      const proto = req.headers['x-forwarded-proto'] || 'https';
+      const host = req.headers['host'] || 'localhost:3000';
+      await triggerConsolidation(siteJobId, { baseUrl: `${proto}://${host}` });
+    } else {
+      console.log(`[pro-worker] All pages done for ${siteJobId}, but consolidation already triggered`);
+    }
   }
 
   return res.status(200).json({ success: true, siteJobId, url, progress: `${newCount}/${total}` });
