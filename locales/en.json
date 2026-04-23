@@ -865,8 +865,9 @@
       "noSpam": "No spam. Unsubscribe in one click."
     },
     "recos": {
-      "label": "GEO Action Plan",
-      "title": "{count} expert recommendations",
+      "label": "ACTION PLAN PREVIEW",
+      "title": "Preview of one recommendation",
+      "subtitle": "Here's a preview of one of the {count} personalized recommendations for your site. The others are detailed in the full report.",
       "previewLocked": "🔒 Full recommendation hidden",
       "previewSubtext": "Method, examples and detailed impact in the full report.",
       "previewUnlock": "Unlock →",
@@ -892,7 +893,13 @@
       "subtext": "29 € · Instant access · One-time payment"
     },
     "proTeaser": "Want to analyze several pages of your site in one report? The Pro offer is coming soon.",
-    "proTeaserLink": "Get notified at launch →"
+    "proTeaserLink": "Get notified at launch →",
+    "proBlock": {
+      "title": "Analyze multiple pages at once",
+      "desc": "Detekia Pro launches June 2026 — up to 10 pages, consolidated report, from €99.",
+      "cta": "Join the waitlist →",
+      "note": "GET NOTIFIED AT LAUNCH"
+    }
   },
   "success": {
     "loading": { "title": "Generating report…", "subtitle": "Verifying payment and loading analysis" },
