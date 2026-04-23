@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
@@ -7,6 +7,44 @@ import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+// ── Dynamic preview reco selection ──────────────────────────────────────────
+
+function selectPreviewRecommendation(criteria, recommendations) {
+  if (!Array.isArray(recommendations) || recommendations.length === 0) return null;
+  if (recommendations.length === 1) return recommendations[0];
+
+  const weightFor = (priority) => {
+    const p = String(priority || '').toLowerCase();
+    if (p === 'high') return 3;
+    if (p === 'medium') return 2;
+    return 1;
+  };
+
+  const weights = recommendations.map(r => weightFor(r?.priority));
+  const totalWeight = weights.reduce((a, b) => a + b, 0);
+  if (totalWeight <= 0) return recommendations[0];
+
+  let rand = Math.random() * totalWeight;
+  for (let i = 0; i < recommendations.length; i++) {
+    rand -= weights[i];
+    if (rand <= 0) return recommendations[i];
+  }
+
+  return recommendations[0];
+}
+
+function buildPreviewFadeText(reco, staticFallback) {
+  if (!reco) return staticFallback;
+  const parts = [reco.diagnostic, reco.whyCritical, reco.whatToDo]
+    .filter(p => typeof p === 'string' && p.trim().length > 0);
+  if (parts.length === 0) return staticFallback;
+  return parts
+    .map(p => { const trimmed = p.trim(); return /[.!?]$/.test(trimmed) ? trimmed : trimmed + '.'; })
+    .join(' ');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 function RotatingStats({ stats, finalizingText, locale }) {
   const [shuffled, setShuffled] = useState([]);
@@ -144,7 +182,7 @@ function GroupAccordion({ group, getCriteriaForGroup, getLevelColor, isOpen, onM
   );
 }
 
-function RecoCard({ r, index, isPaid, onCheckout, total, t }) {
+function RecoCard({ r, index, isPaid, onCheckout, total, t, isPreview, previewFadeText }) {
   const priorities = t('common.priorities');
   const recoSections = t('common.recoSections');
   const ci = t('results.criteriaInfo');
@@ -156,10 +194,9 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t }) {
   };
   const tag = tagColors[r.priority] || tagColors.medium;
 
-  if (!isPaid && index >= 1) return null;
+  if (!isPaid && !isPreview) return null;
 
-  if (!isPaid && index === 0) {
-    const preview = (r.text || r.diagnostic || '').slice(0, 350);
+  if (!isPaid && isPreview) {
     return (
       <div style={{ marginBottom: 10 }}>
         <div style={{ background: '#fff', border: `1px solid ${tag.border}`, borderRadius: 14, overflow: 'hidden', borderLeft: `4px solid ${tag.color}` }}>
@@ -169,7 +206,7 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t }) {
             <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8' }}>#01</span>
           </div>
           <div className="reco-preview-fade" style={{ padding: '16px 24px 0', fontSize: 13, color: '#3A3835', lineHeight: 1.8, fontFamily: 'system-ui', position: 'relative', maxHeight: 'calc(1.8em * 3)', overflow: 'hidden', userSelect: 'none', pointerEvents: 'none', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 100%)' }}>
-            {t('results.recos.previewFadeText')}
+            {previewFadeText || t('results.recos.previewFadeText')}
           </div>
           <div className="reco-preview-cta" style={{ margin: '12px 24px 0', padding: '14px 18px', background: '#F7F5F2', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
             <div>
@@ -312,6 +349,12 @@ export default function Results() {
   const isPaid = false;
   const grade = result ? getGrade(result.score) : null;
   const recommendations = result?.recommendations || [];
+  const previewReco = useMemo(
+    () => selectPreviewRecommendation(result?.criteria, recommendations),
+    [result?.recommendations, result?.criteria]
+  );
+  const previewFadeText = buildPreviewFadeText(previewReco, t('results.recos.previewFadeText'));
+  const otherRecos = recommendations.filter(r => r !== previewReco);
   const shareText = t('results.share.text').replace('{score}', result?.score || '');
 
   return (
@@ -494,17 +537,17 @@ export default function Results() {
                 </div>
               )}
 
-              {recommendations.map((r, i) => (
-                <RecoCard key={i} r={r} index={i} isPaid={isPaid} onCheckout={handleCheckout} total={recommendations.length} t={t} />
-              ))}
+              {previewReco && (
+                <RecoCard r={previewReco} index={0} isPaid={isPaid} isPreview={true} previewFadeText={previewFadeText} onCheckout={handleCheckout} total={recommendations.length} t={t} />
+              )}
 
-              {!isPaid && recommendations.length > 1 && (
+              {!isPaid && otherRecos.length > 0 && (
                 <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 8 }}>
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 8 }}>
-                    {(recommendations.length - 1) === 1 ? t('results.recos.lockedReco1') : t('results.recos.lockedRecoN').replace('{count}', recommendations.length - 1)}
+                    {otherRecos.length === 1 ? t('results.recos.lockedReco1') : t('results.recos.lockedRecoN').replace('{count}', otherRecos.length)}
                   </div>
                   <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7 }}>
-                    {recommendations.slice(1).map(r => criteriaInfoMain[r.criterion]?.title || r.criterion || r.title).filter(Boolean).join(' · ')}
+                    {otherRecos.map(r => criteriaInfoMain[r.criterion]?.title || r.criterion || r.title).filter(Boolean).join(' · ')}
                   </div>
                 </div>
               )}
