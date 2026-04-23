@@ -3,7 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { verifyQstashSignature } from '../../lib/proQueue';
 
 export const config = {
-  maxDuration: 120,
+  maxDuration: 300,
   api: { bodyParser: false },
 };
 
