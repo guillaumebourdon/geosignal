@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
@@ -349,7 +349,10 @@ export default function Results() {
   const isPaid = false;
   const grade = result ? getGrade(result.score) : null;
   const recommendations = result?.recommendations || [];
-  const previewReco = selectPreviewRecommendation(result?.criteria, recommendations);
+  const previewReco = useMemo(
+    () => selectPreviewRecommendation(result?.criteria, recommendations),
+    [result?.recommendations, result?.criteria]
+  );
   const previewFadeText = buildPreviewFadeText(previewReco, t('results.recos.previewFadeText'));
   const otherRecos = recommendations.filter(r => r !== previewReco);
   const shareText = t('results.share.text').replace('{score}', result?.score || '');
