@@ -470,33 +470,27 @@ ${textContent.slice(0, 300)}
 
 RULES:
 1. Generate EXACTLY 8 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
-2. Each field must fit in 1 sentence max (except howToDoIt: 2 sentences max).
-3. Be specific to this site.
-4. IMPORTANT: Use nuanced phrasing. Never say "no X detected" as an absolute. Prefer "no X identified in the analyzed content" or "not found in the accessible HTML". Acknowledge that scraping may be partial.
-5. Adapt schema recommendations to the SITE TYPE being analyzed. For example:
-   - E-commerce site → Product, AggregateOffer, AggregateRating
-   - SaaS/service → SoftwareApplication, Service, Organization
-   - Blog/media → Article, BlogPosting, NewsArticle
-   - Corporate site → Organization, Service, FAQPage
-   - Health/insurance site → MedicalOrganization, Service, FAQPage
-   Do NOT recommend LocalBusiness for a site that is not a local physical business.
-6. Be honest in your verdict. If the score seems low due to scraping detection limits, mention it.
-7. TOP PRIORITY SELECTION — This is critical. The "topPriority" field must NOT automatically be the criterion with the worst ratio. Instead, pick the ONE action that offers the best impact × effort × site context trade-off:
-   - For an e-commerce site with reviews → prioritize AggregateRating or Product schema, NOT 10 schema types at once
-   - For a media/blog site with thin articles → prioritize content depth (extractibility, internal linking) BEFORE schema
-   - For a site with strong content but no JSON-LD → yes, schema is the top priority
-   - For a site with weak extractibility (short intros, no H2/H3 structure, no lists) → prioritize restructuring content BEFORE adding schema
-   - For a site already cited by AI engines → prioritize external presence and freshness over schema
-   - Small schema additions (FAQPage only, Organization only) are quick wins; full schema overhaul is a bigger project — prefer quick wins if applicable
-   Always prefer the action that will produce VISIBLE impact in 2-4 weeks with minimum effort.
-8. AVOID REPEATING THE SAME TOP PRIORITY. If the lowest-scoring criterion is "Données structurées" (JSON-LD), do NOT automatically make it the topPriority. Instead, look at the site's content quality first and find a different angle that's equally valid for THIS specific site — for example, adding FAQPage specifically, restructuring headings, or improving a criterion where a small fix yields outsized gains. The goal is for each audit to feel tailored, not generic.
+2. Be SPECIFIC to this site. Reference actual elements found (or missing) in the analyzed content.
+3. Use nuanced phrasing. Prefer "not identified in the analyzed content" over absolute statements. Acknowledge scraping may be partial.
+4. Adapt schema recommendations to the SITE TYPE (e-commerce → Product/AggregateRating, SaaS → SoftwareApplication/Service, Blog → Article/BlogPosting, Corporate → Organization/FAQPage). Do NOT recommend LocalBusiness unless the site is a local physical business.
+5. Be honest in your verdict. If the score seems low due to scraping limits, mention it.
+6. TOP PRIORITY SELECTION — Pick the ONE action with the best impact × effort × context trade-off. Prefer quick wins (2-4 weeks, low effort) over major overhauls. Do NOT always pick the lowest-scoring criterion.
+7. FIELD LENGTH RULES:
+   - "problem": 3-5 dense sentences. Describe what was found (or missing), WHY it blocks AI citation (concrete mechanism), and the observable consequence if not fixed.
+   - "solution": 3-5 sentences. Clear action description and why it solves the problem.
+   - "technicalImplementation": 2-4 numbered steps, actionable enough for a developer or marketing manager to execute without additional research.
+   - "codeExample": Real code snippet (JSON-LD, HTML, meta tag) when relevant. Set to null for editorial-only recommendations.
+8. IMPACT/EFFORT/TIMEFRAME RULES:
+   - impact: based on expected visibility gain (high = major, medium = noticeable, low = incremental)
+   - effort: based on technical complexity (low = add a tag, medium = restructure content, high = major overhaul)
+   - timeframe: "1-2 sem" for quick fixes, "1 mois" for medium work, "2-3 mois" for complex projects
 
 JSON only, no markdown:
-{"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","criterion":"<French criterion name>","title":"<5 words max>","diagnostic":"<1 sentence>","whyCritical":"<1 sentence>","whatToDo":"<1 sentence>","howToDoIt":"<2 sentences>","concreteExample":"<1 sentence>","expectedImpact":"<1 sentence>","expertTip":"<1 sentence>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
+{"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois","criterion":"<French criterion name>","title":"<6 words max>","problem":"<3-5 sentences>","solution":"<3-5 sentences>","technicalImplementation":"<2-4 numbered steps>","codeExample":"<code snippet or null>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 4096,
+    max_tokens: 8192,
     temperature: 0.2,
     messages: [{ role: 'user', content: prompt }],
   });
@@ -615,7 +609,7 @@ export default async function handler(req, res) {
   const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   console.log('analyze: starting for', url);
 
-  const cacheKey = `detekia:v11:${url.toLowerCase()}:${locale}`;
+  const cacheKey = `detekia:v12:${url.toLowerCase()}:${locale}`;
 
   try {
     const cached = await redis.get(cacheKey);
