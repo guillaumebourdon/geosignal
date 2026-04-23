@@ -120,7 +120,7 @@ export default function Pricing() {
       </div>
 
       {/* PLANS */}
-      <div className="pricing-cards" style={{ maxWidth: 700, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 80 }}>
+      <div className="pricing-cards" style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 80 }}>
         {/* FREE */}
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
@@ -157,16 +157,24 @@ export default function Pricing() {
             ))}
           </div>
         </div>
-      </div>
 
-      {/* PRO BANNER */}
-      <div style={{ maxWidth: 700, margin: '0 auto 32px', padding: '0 24px' }}>
-        <div style={{ background: '#F0ECE0', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
-          <div style={{ fontSize: 20, marginBottom: 12 }}>🚀</div>
-          <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 10, letterSpacing: -0.3 }}>{t('pricing.proBanner.title')}</div>
-          <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 16px' }}>{t('pricing.proBanner.desc')}</div>
-          <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#D97757', marginBottom: 16 }}>{t('pricing.proBanner.price')}</div>
-          <Link href="/pro" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '11px 24px', borderRadius: 9, fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', textDecoration: 'none' }}>{t('pricing.proBanner.cta')}</Link>
+        {/* PRO */}
+        <div style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)' }}>
+          <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: '#D97757', color: '#fff', padding: '6px 20px', borderRadius: 20, fontSize: 11, fontWeight: 700, letterSpacing: 1, fontFamily: 'system-ui', whiteSpace: 'nowrap', zIndex: 2 }}>{t('pricing.proCard.badge')}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.proCard.label')}</div>
+          <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.proCard.price')}</span></div>
+          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 20 }}>{t('pricing.proCard.paymentInfo')}</div>
+          <Link href="/pro" style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', marginBottom: 24 }}>
+            {t('pricing.proCard.cta')}
+          </Link>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+            {t('pricing.proCard.features').map((feat, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 12, color: '#10A37F', flexShrink: 0 }}>✓</span>
+                <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.75)', fontFamily: 'system-ui' }}>{feat.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

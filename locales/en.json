@@ -477,11 +477,20 @@
         { "q": "Is my website data stored?", "a": "No. Detekia analyzes your website in real time. Only the report is cached for 24 hours so you don't have to wait if you return to the same URL." }
       ]
     },
-    "proBanner": {
-      "title": "Coming soon: Pro multi-page audit",
-      "desc": "For SEO agencies, e-commerce sites and editorial publishers who want to analyze multiple key pages of their site (homepage + product pages + pillar articles, etc.) with a consolidated report and contextualized cross-page insights.",
-      "price": "Starting at €99",
-      "cta": "Get notified at launch →"
+    "proCard": {
+      "label": "Pro — Multi-pages",
+      "price": "€99",
+      "paymentInfo": "Starting at · Launch June 2026",
+      "cta": "Get notified at launch →",
+      "badge": "COMING SOON",
+      "features": [
+        { "text": "Up to 10 pages analyzed" },
+        { "text": "Consolidated multi-page report" },
+        { "text": "Contextualized cross-page insights" },
+        { "text": "Prioritized transverse recommendations" },
+        { "text": "Delivery within 15 min by email" },
+        { "text": "For agencies, e-commerce, publishers" }
+      ]
     },
     "errorAlert": "Payment error, please try again.",
     "modal": {

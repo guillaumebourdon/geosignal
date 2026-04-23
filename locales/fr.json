@@ -477,11 +477,20 @@
         { "q": "Les données de mon site sont-elles conservées ?", "a": "Non. Detekia analyse votre site en temps réel. Seul le rapport est mis en cache 24h pour vous éviter d'attendre si vous revenez sur la même URL." }
       ]
     },
-    "proBanner": {
-      "title": "Bientôt : l'offre Pro multi-pages",
-      "desc": "Pour les agences SEO, e-commerces et sites éditoriaux qui veulent analyser plusieurs pages de leur site (homepage + fiches produits + articles piliers, etc.) avec un rapport consolidé et une synthèse contextualisée entre pages.",
-      "price": "À partir de 99 €",
-      "cta": "Être notifié du lancement →"
+    "proCard": {
+      "label": "Pro — Multi-pages",
+      "price": "99 €",
+      "paymentInfo": "À partir de · Lancement juin 2026",
+      "cta": "Être notifié du lancement →",
+      "badge": "BIENTÔT DISPONIBLE",
+      "features": [
+        { "text": "Jusqu'à 10 pages analysées" },
+        { "text": "Rapport consolidé multi-pages" },
+        { "text": "Synthèse contextualisée entre vos pages" },
+        { "text": "Recommandations transversales priorisées" },
+        { "text": "Livraison sous 15 min par email" },
+        { "text": "Pour agences, e-commerces, médias" }
+      ]
     },
     "errorAlert": "Erreur de paiement, réessayez.",
     "modal": {
