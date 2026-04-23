@@ -179,7 +179,7 @@ Step 1: Generate 30 queries users would ask ChatGPT/Perplexity about this site's
 Step 2: For each query, simulate whether ${new URL(rootUrl).hostname} would be cited. Consider the site's actual content quality (average score: ${scoreAverage}/100).
 
 JSON only:
-{"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["competitor1"],"recommendation":"1 sentence"}],"citationRate":"X/30","bestOpportunity":"best query opportunity","mainBlocker":"main reason for low citations"}`;
+{"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["competitor1"],"difficulty_to_rank":"easy|medium|hard","recommendation":"1 sentence","ai_response_excerpt":"first 100 chars of simulated AI answer"}],"citationRate":"X/30","bestOpportunity":"best query opportunity","mainBlocker":"main reason for low citations"}`;
 
     const citationMsg = await callHaikuWithRetry({
       model: 'claude-haiku-4-5-20251001',
@@ -189,7 +189,82 @@ JSON only:
     });
     const citationTest = parseHaikuJson(citationMsg.content[0].text);
 
-    // 7. Build consolidated report
+    // 6b. Claude call 3: Per-criterion consolidated analysis
+    const criteriaForPrompt = Object.entries(criteriaAverages).map(([name, data]) => {
+      const pagesBelow = validPages.filter(p => {
+        const c = (p.criteria || []).find(cr => cr.name === name);
+        return c && (c.score / c.max) < 0.75;
+      });
+      const examples = pagesBelow.slice(0, 3).map(p => {
+        const c = (p.criteria || []).find(cr => cr.name === name);
+        return `${p.url} (${c?.score}/${c?.max})`;
+      });
+      return `- ${name}: avg ${data.avgScore}/${data.max}, ${pagesBelow.length}/${validPages.length} pages below 75%. Examples: ${examples.join(', ') || 'none'}`;
+    }).join('\n');
+
+    const criteriaPrompt = `${langInstruction}
+
+You are a senior GEO consultant. For a site audit of ${rootUrl} (${validPages.length} pages, avg score ${scoreAverage}/100), generate a per-criterion consolidated analysis.
+
+Criteria data:
+${criteriaForPrompt}
+
+For each of the 8 GEO criteria, generate a JSON array of 8 objects:
+[{"criterion":"exact criterion name","synthesis":"2-3 sentences describing the state of this criterion across all pages","consolidatedRecommendation":{"diagnostic":"1 sentence","whyCritical":"1 sentence","whatToDo":"2 sentences","howToDoIt":"2-3 sentences","concreteExample":"1 sentence","expectedImpact":"1 sentence","expertTip":"1 sentence","pagesAffected":["url1","url2"]}}]
+
+Rules:
+- synthesis must reference specific numbers (X/20 pages lack..., Y pages have...)
+- consolidatedRecommendation must be site-level, not page-specific
+- pagesAffected: list up to 5 most impacted URLs
+- Be specific to ${rootUrl}
+
+JSON array only, no markdown:`;
+
+    const criteriaMsg = await callHaikuWithRetry({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 8000,
+      temperature: 0.2,
+      messages: [{ role: 'user', content: criteriaPrompt }],
+    });
+    let criteriaConsolidated = [];
+    try {
+      const rawCriteria = criteriaMsg.content[0].text;
+      const arrMatch = rawCriteria.match(/\[[\s\S]*\]/);
+      if (arrMatch) criteriaConsolidated = JSON.parse(arrMatch[0]);
+    } catch (e) {
+      console.error('[pro-consolidate] Failed to parse criteriaConsolidated:', e.message);
+    }
+
+    // Enrich each criteriaConsolidated entry with avgScore data
+    criteriaConsolidated = criteriaConsolidated.map(cc => {
+      const avg = criteriaAverages[cc.criterion];
+      return {
+        ...cc,
+        avgScore: avg?.avgScore || 0,
+        max: avg?.max || 0,
+        concreteExamples: validPages
+          .map(p => {
+            const c = (p.criteria || []).find(cr => cr.name === cc.criterion);
+            return c ? { url: p.url, score: c.score, max: c.max } : null;
+          })
+          .filter(Boolean)
+          .sort((a, b) => (a.score / a.max) - (b.score / b.max))
+          .slice(0, 3),
+      };
+    });
+
+    // 7. Build consolidated report — include full page data for PDF template
+    const fullPages = pages.map(p => ({
+      url: p.url,
+      score: p.score,
+      error: p.error || null,
+      topPriority: p.topPriority || null,
+      verdict: p.verdict || null,
+      strengths: p.strengths || [],
+      criteria: p.criteria || [],
+      recommendations: (p.recommendations || []).slice(0, 3),
+    }));
+
     const consolidatedReport = {
       siteJobId,
       rootUrl,
@@ -202,13 +277,14 @@ JSON only:
       pagesValid: validPages.length,
       pagesWithError: errorPages.length,
       criteriaAverages,
+      criteriaConsolidated,
       executiveSummary: synthesis.executiveSummary,
       topStrengths: synthesis.topStrengths || [],
       topWeaknesses: synthesis.topWeaknesses || [],
       patterns: synthesis.patterns || [],
       actionPlan: synthesis.actionPlan || [],
       citationTestConsolidated: citationTest,
-      pages: pages.map(p => ({ url: p.url, score: p.score, error: p.error || null, topPriority: p.topPriority || null })),
+      pages: fullPages,
     };
 
     // 8-9. Store in Redis
