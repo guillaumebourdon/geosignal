@@ -1,9 +1,19 @@
+import { Redis } from '@upstash/redis';
 import { verifyQstashSignature } from '../../lib/proQueue';
+import { analyzePage } from '../../lib/proPageAnalyzer';
 
 export const config = {
   maxDuration: 120,
   api: { bodyParser: false },
 };
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
+
+const JOB_PREFIX = 'detekia:pro:v1:job';
+const JOB_TTL = 2 * 60 * 60; // 2 hours
 
 function readRawBody(req) {
   return new Promise((resolve, reject) => {
@@ -26,14 +36,47 @@ export default async function handler(req, res) {
   }
 
   let payload;
-  try {
-    payload = JSON.parse(rawBody);
-  } catch {
+  try { payload = JSON.parse(rawBody); } catch {
     return res.status(400).json({ error: 'Invalid JSON body' });
   }
 
-  const { siteJobId, rootUrl, url, index, total } = payload;
-  console.log(`[pro-worker] Received: siteJobId=${siteJobId} url=${url} index=${index}/${total}`);
+  const { siteJobId, rootUrl, url, index, total, locale } = payload;
+  const pageKey = `${JOB_PREFIX}:${siteJobId}:page:${index}`;
+  const counterKey = `${JOB_PREFIX}:${siteJobId}:completed`;
 
-  return res.status(200).json({ success: true, received: url, siteJobId });
+  // Idempotence: skip if already processed
+  try {
+    const existing = await redis.get(pageKey);
+    if (existing) {
+      console.log(`[pro-worker] Idempotent skip for ${url} (job ${siteJobId}, index ${index})`);
+      return res.status(200).json({ success: true, skipped: true, siteJobId, url });
+    }
+  } catch {}
+
+  // Run real analysis
+  const result = await analyzePage(url, { locale: locale || 'fr' });
+
+  // Store result
+  try {
+    await redis.set(pageKey, result, { ex: JOB_TTL });
+  } catch (err) {
+    console.error(`[pro-worker] Redis set error for ${pageKey}:`, err.message);
+  }
+
+  // Increment counter
+  let newCount = 0;
+  try {
+    newCount = await redis.incr(counterKey);
+    await redis.expire(counterKey, JOB_TTL);
+  } catch (err) {
+    console.error(`[pro-worker] Redis incr error for ${counterKey}:`, err.message);
+  }
+
+  console.log(`[pro-worker] Completed page ${index + 1}/${total} for ${siteJobId} (url=${url}, score=${result.score || 'error'}, progress=${newCount}/${total})`);
+
+  if (newCount === total) {
+    console.log(`[pro-worker] All pages done for ${siteJobId}, ready for consolidation`);
+  }
+
+  return res.status(200).json({ success: true, siteJobId, url, progress: `${newCount}/${total}` });
 }
