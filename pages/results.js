@@ -168,14 +168,8 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t }) {
             {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{translateCrit(r.criterion)}</span>}
             <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8' }}>#01</span>
           </div>
-          <div style={{ padding: '16px 24px 0', position: 'relative' }}>
-            <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.8, fontFamily: 'system-ui' }}>{preview}...</div>
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, background: 'linear-gradient(to bottom, transparent, #ffffff)', pointerEvents: 'none' }} />
-          </div>
-          <div style={{ padding: '0 24px 8px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <div style={{ width: '95%', height: 10, borderRadius: 4, background: '#E5E2DC', filter: 'blur(1.5px)', opacity: 0.7 }} />
-            <div style={{ width: '88%', height: 10, borderRadius: 4, background: '#E5E2DC', filter: 'blur(3px)', opacity: 0.7 }} />
-            <div style={{ width: '62%', height: 10, borderRadius: 4, background: '#E5E2DC', filter: 'blur(5px)', opacity: 0.7 }} />
+          <div className="reco-preview-fade" style={{ padding: '16px 24px 0', fontSize: 13, color: '#3A3835', lineHeight: 1.8, fontFamily: 'system-ui', position: 'relative', maxHeight: 'calc(1.8em * 3)', overflow: 'hidden', userSelect: 'none', pointerEvents: 'none', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 100%)' }}>
+            {t('results.recos.previewFadeText')}
           </div>
           <div className="reco-preview-cta" style={{ margin: '12px 24px 0', padding: '14px 18px', background: '#F7F5F2', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
             <div>

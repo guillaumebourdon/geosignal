@@ -868,6 +868,7 @@
       "label": "ACTION PLAN PREVIEW",
       "title": "Preview of one recommendation",
       "subtitle": "Here's a preview of one of the {count} personalized recommendations for your site. The others are detailed in the full report.",
+      "previewFadeText": "No JSON-LD schema detected in the analyzed content, limiting structured understanding by search engines and generative AI. To address this critical point on your site, it is recommended to implement Article, FAQPage and Organization schemas as a priority, making sure to validate the syntax via the official structured data testing tool before going live. This technical action typically improves the AI extractability score by 15 to 25 points within two weeks, provided that editorial content is also structured with a consistent H2/H3 hierarchy.",
       "previewLocked": "🔒 Full recommendation hidden",
       "previewSubtext": "Method, examples and detailed impact in the full report.",
       "previewUnlock": "Unlock →",

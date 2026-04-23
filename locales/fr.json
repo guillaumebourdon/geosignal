@@ -868,6 +868,7 @@
       "label": "APERÇU DU PLAN D'ACTION",
       "title": "Aperçu d'une recommandation",
       "subtitle": "Voici un aperçu de l'une des {count} recommandations personnalisées pour votre site. Les autres sont détaillées dans le rapport complet.",
+      "previewFadeText": "Aucun schema JSON-LD identifié dans le contenu analysé, limitant la compréhension structurée par les moteurs de recherche et les IA génératives. Pour corriger ce point critique sur votre site, il est recommandé d'implémenter en priorité les schémas Article, FAQPage et Organization, en veillant à valider la syntaxe via l'outil officiel de test des données structurées avant la mise en production. Cette action technique permet généralement d'améliorer le score d'extractibilité IA de 15 à 25 points en moins de deux semaines, à condition que le contenu éditorial soit également structuré selon une hiérarchie H2/H3 cohérente.",
       "previewLocked": "🔒 Recommandation complète masquée",
       "previewSubtext": "Méthode, exemples et impact détaillé dans le rapport complet.",
       "previewUnlock": "Débloquer →",
