@@ -550,6 +550,18 @@ export default function Results() {
         </div>
       )}
 
+      {/* Pro teaser — discret, en bas de page */}
+      {result && (
+        <div style={{ textAlign: 'center', padding: '60px 24px 32px', maxWidth: 600, margin: '0 auto' }}>
+          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 6 }}>
+            {t('results.proTeaser')}{' '}
+            <Link href="/pro" style={{ color: '#1A1916', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
+              {t('results.proTeaserLink')}
+            </Link>
+          </p>
+        </div>
+      )}
+
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }

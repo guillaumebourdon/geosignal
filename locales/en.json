@@ -890,7 +890,9 @@
     "checkout": {
       "title": "Full GEO Report",
       "subtext": "29 € · Instant access · One-time payment"
-    }
+    },
+    "proTeaser": "Want to analyze several pages of your site in one report? The Pro offer is coming soon.",
+    "proTeaserLink": "Get notified at launch →"
   },
   "success": {
     "loading": { "title": "Generating report…", "subtitle": "Verifying payment and loading analysis" },

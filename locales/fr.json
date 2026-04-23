@@ -890,7 +890,9 @@
     "checkout": {
       "title": "Rapport GEO complet",
       "subtext": "29 € · Accès immédiat · Paiement unique"
-    }
+    },
+    "proTeaser": "Vous voulez analyser plusieurs pages de votre site en un seul rapport ?",
+    "proTeaserLink": "Être notifié du lancement →"
   },
   "success": {
     "loading": { "title": "Génération du rapport…", "subtitle": "Vérification du paiement et chargement de l'analyse" },
