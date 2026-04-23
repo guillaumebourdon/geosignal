@@ -28,14 +28,14 @@ async function testSite(rootUrl) {
     console.log(`  Selected: ${results.length}\n`);
 
     console.log(
-      `  ${pad('#', 3)} ${pad('Score', 6)} ${pad('Fresh', 6)} ${pad('Depth', 6)} ${pad('Seman', 6)} ${pad('Prior', 6)} URL`
+      `  ${pad('#', 3)} ${pad('Score', 6)} ${pad('Fresh', 6)} ${pad('Depth', 6)} ${pad('Seman', 6)} ${pad('Prior', 6)} ${pad('Strat', 6)} URL`
     );
-    console.log('  ' + '-'.repeat(78));
+    console.log('  ' + '-'.repeat(90));
 
     results.forEach((r, i) => {
       const rs = r.reasons;
       console.log(
-        `  ${pad(i + 1, 3)} ${padN(r.score, 5)}  ${padN(rs.freshness ?? '-', 5)}  ${padN(rs.depth ?? '-', 5)}  ${padN(rs.semantic ?? '-', 5)}  ${padN(rs.priority ?? '-', 5)}  ${r.url}${rs.forced ? ' ★' : ''}`
+        `  ${pad(i + 1, 3)} ${padN(r.score, 5)}  ${padN(rs.freshness ?? '-', 5)}  ${padN(rs.depth ?? '-', 5)}  ${padN(rs.semantic ?? '-', 5)}  ${padN(rs.priority ?? '-', 5)}  ${padN(rs.strategicBonus ?? '-', 5)}  ${r.url}${rs.forced ? ' ★' : ''}`
       );
     });
   } catch (err) {
