@@ -91,6 +91,7 @@ export default async function handler(req, res) {
         'Authorization': 'Basic ' + Buffer.from('api:' + process.env.PDFSHIFT_API_KEY).toString('base64'),
       },
       body: JSON.stringify({ source: html, landscape: false, use_print: true, format: 'A4', margin: { top: '0', right: '0', bottom: '0', left: '0' } }),
+      signal: AbortSignal.timeout(50000),
     });
 
     if (!pdfResponse.ok) {

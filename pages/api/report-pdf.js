@@ -11,6 +11,8 @@ const { generateReportHTML } = require('../../lib/oneReportTemplate');
 const { generateProReportHTML } = require('../../lib/proReportTemplate');
 
 export default async function handler(req, res) {
+  const { checkRateLimit } = require('../../lib/rateLimit');
+  if (!(await checkRateLimit('reportPdf', req, res))) return;
   const { id } = req.query;
   if (!id) return res.status(400).json({ error: 'Missing id' });
 

@@ -12,6 +12,8 @@ const JOB_PREFIX = 'detekia:pro:v1:job';
 const JOB_TTL = 24 * 60 * 60; // 24h — pages must survive until consolidation + finalize
 
 export default async function handler(req, res) {
+  const { checkRateLimit } = require('../../lib/rateLimit');
+  if (!(await checkRateLimit('proEnqueue', req, res))) return;
   const rawUrl = req.query.url;
   const locale = req.query.locale === 'en' ? 'en' : 'fr';
   const customerEmail = req.query.email || 'guillaume@beeleven.fr';

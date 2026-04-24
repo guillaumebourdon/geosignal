@@ -6,6 +6,8 @@ const redis = Redis.fromEnv();
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
+  const { checkRateLimit } = require('../../lib/rateLimit');
+  if (!(await checkRateLimit('captureEmail', req, res))) return;
 
   const { email, url, score } = req.body;
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 254) return res.status(400).json({ error: 'Email invalide' });
@@ -14,7 +16,7 @@ export default async function handler(req, res) {
 
   try {
     // Stockage Redis
-    await redis.set(`leads:${email.toLowerCase()}`, JSON.stringify({ email, url, score, capturedAt }));
+    await redis.set(`leads:${email.toLowerCase()}`, JSON.stringify({ email, url, score, capturedAt }), { ex: 90 * 24 * 60 * 60 });
     await redis.lpush('leads:list', email.toLowerCase());
 
     // Email de confirmation

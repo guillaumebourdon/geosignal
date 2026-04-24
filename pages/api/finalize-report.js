@@ -111,6 +111,8 @@ function buildEmailHTML(reportUrl, url, score, verdict, locale) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
+  const { checkRateLimit } = require('../../lib/rateLimit');
+  if (!(await checkRateLimit('finalize', req, res))) return;
 
   const { email, url, reportData, locale: reqLocale, isFreeViaPromo } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';

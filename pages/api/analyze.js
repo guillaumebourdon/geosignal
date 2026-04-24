@@ -8,7 +8,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const config = { maxDuration: 120 };
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: 120000 });
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
@@ -601,6 +601,8 @@ async function fetchJina(jinaUrl) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  const { checkRateLimit } = require('../../lib/rateLimit');
+  if (!(await checkRateLimit('analyze', req, res))) return;
 
   const rawUrl = req.body.url;
   const locale = req.body.locale === 'en' ? 'en' : 'fr';
