@@ -117,7 +117,9 @@ export default async function handler(req, res) {
   if (!email || !reportData) return res.status(400).json({ error: 'Missing data' });
 
   const uuid = randomUUID();
-  const reportUrl = `https://detekia.fr/r/${uuid}`;
+  const proto = req.headers['x-forwarded-proto'] || 'https';
+  const host = req.headers['host'] || 'detekia.fr';
+  const reportUrl = `${proto}://${host}/r/${uuid}`;
 
   try {
     // 1. Store report in Redis (no TTL = permanent)
