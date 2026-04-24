@@ -798,12 +798,33 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
   }).sort((a, b) => a.pct - b.pct);
   const weakest3 = new Set(critSorted.slice(0, 3).map(c => c.name));
 
+  // Map arbitrary Haiku criterion names to standard 8 criteria
+  const CRITERION_KEYWORDS = {
+    'Extractibilite & reponse directe': ['extractib', 'reponse directe', 'contenu detaille', 'contenu complet', 'contenu et clarte', 'contenu et pertinence', 'profondeur', 'contenu technique', 'contenu complementaire', 'contenu actionnable'],
+    'Verifiabilite & preuves': ['verifiab', 'preuves', 'sources', 'citations', 'donnees chiffrees'],
+    'Autorite & E-E-A-T': ['autorit', 'e-e-a-t', 'eeat', 'expertise', 'credibilit'],
+    'Crawlabilite IA': ['crawlab', 'indexab', 'robots', 'seo technique', 'performance technique', 'core web', 'accessibilit', 'performance et ux', 'performance et accessibilite', 'meta description', 'meta et balises', 'optimisation seo', 'canonique', 'optimisation technique'],
+    'Donnees structurees': ['structuree', 'schema', 'json-ld', 'donnees struct'],
+    'Neutralite editoriale': ['neutralit', 'editorial', 'equilibre', 'marketing', 'promotionnel', 'contenu marketing', 'equilibre critique', 'optimisation pour requetes', 'contenu pour gemini', 'engagement et conversion', 'engagement utilisateur', 'optimisation globale'],
+    'Presence externe': ['presence ext', 'backlink', 'mention', 'externe'],
+    'Fraicheur & maintenance': ['fraicheur', 'fraich', 'maintenance', 'mise a jour', 'contenu duplique'],
+  };
+
+  function matchCriterionName(recoCriterion) {
+    const norm = recoCriterion.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    for (const [standard, keywords] of Object.entries(CRITERION_KEYWORDS)) {
+      for (const kw of keywords) {
+        if (norm.includes(kw)) return standard;
+      }
+    }
+    return null;
+  }
+
   function dedupRecos(criterionName) {
     const matched = [];
     for (const [crit, recs] of Object.entries(recosByCriterion)) {
-      const normC = crit.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const normT = criterionName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      if (normC.includes(normT) || normT.includes(normC)) matched.push(...recs);
+      const mappedCrit = matchCriterionName(crit);
+      if (mappedCrit === criterionName) matched.push(...recs);
     }
     const deduped = [];
     const seen = new Set();
