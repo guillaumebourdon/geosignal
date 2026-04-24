@@ -287,73 +287,7 @@ JSON array only, no markdown:`;
       };
     });
 
-    // 7. Sonnet dedup pass — merge semantic duplicates across page recos
-    // Collect all page recos with their patternIds for Sonnet review
-    let allPageRecos = [];
-    validPages.forEach(p => {
-      (p.recommendations || []).forEach(r => {
-        allPageRecos.push({
-          criterion: r.criterion || '',
-          patternId: r.patternId || '',
-          title: r.title || '',
-          pageUrl: p.url,
-        });
-      });
-    });
-
-    // Build a summary for Sonnet to review
-    const recoByCritSummary = {};
-    for (const r of allPageRecos) {
-      const c = r.criterion;
-      if (!recoByCritSummary[c]) recoByCritSummary[c] = {};
-      const key = `${r.patternId || 'none'}::${r.title}`;
-      if (!recoByCritSummary[c][key]) recoByCritSummary[c][key] = { patternId: r.patternId, title: r.title, pages: [] };
-      recoByCritSummary[c][key].pages.push(r.pageUrl);
-    }
-
-    // Call Sonnet to merge remaining duplicates
-    let mergeMap = {}; // title → canonical title (for recos that should merge)
-    try {
-      const recoListForSonnet = [];
-      for (const [crit, recos] of Object.entries(recoByCritSummary)) {
-        for (const r of Object.values(recos)) {
-          recoListForSonnet.push({ criterion: crit, patternId: r.patternId, title: r.title, pageCount: r.pages.length });
-        }
-      }
-
-      if (recoListForSonnet.length > 5) {
-        const sonnetMsg = await callHaikuWithRetry({
-          model: 'claude-sonnet-4-6-20250514',
-          max_tokens: 4000,
-          temperature: 0,
-          messages: [{ role: 'user', content: `You are deduplicating a list of recommendations from a website audit. Many titles describe the SAME action with different wording.
-
-For each group of duplicates, output a merge instruction. JSON only, no markdown:
-{"merges":[{"canonicalTitle":"the best title to keep","titlesToMerge":["title 1","title 2","title 3"]}]}
-
-Rules:
-- Only merge if the titles describe the SAME concrete action (e.g. "add external sources" and "source statistics" = same action)
-- Different schema types (Organization vs Article vs FAQ) are DIFFERENT actions — do NOT merge
-- "optimize for IA crawlers" and "optimize HTML structure" = same action = merge
-- "meta descriptions" and "titles and descriptions" = same action = merge
-- Be aggressive: if in doubt, merge
-
-Recommendations to review:
-${recoListForSonnet.map(r => `[${r.criterion}] "${r.title}" (${r.pageCount} pages, patternId: ${r.patternId})`).join('\n')}` }],
-        });
-        const sonnetResult = parseHaikuJson(sonnetMsg.content[0].text);
-        for (const merge of (sonnetResult.merges || [])) {
-          for (const t of (merge.titlesToMerge || [])) {
-            mergeMap[t.toLowerCase()] = merge.canonicalTitle;
-          }
-        }
-        console.log(`[pro-consolidate] Sonnet dedup: ${Object.keys(mergeMap).length} titles merged into ${new Set(Object.values(mergeMap)).size} canonical titles`);
-      }
-    } catch (e) {
-      console.error('[pro-consolidate] Sonnet dedup failed (non-blocking):', e.message);
-    }
-
-    // 8. Build consolidated report — include full page data with merge info
+    // 7. Build consolidated report — Sonnet dedup moved to pro-finalize-report.js
     const fullPages = pages.map(p => ({
       url: p.url,
       score: p.score,
@@ -362,10 +296,7 @@ ${recoListForSonnet.map(r => `[${r.criterion}] "${r.title}" (${r.pageCount} page
       verdict: p.verdict || null,
       strengths: p.strengths || [],
       criteria: p.criteria || [],
-      recommendations: (p.recommendations || []).map(r => {
-        const canonical = mergeMap[(r.title || '').toLowerCase()];
-        return canonical ? { ...r, _mergedTitle: canonical } : r;
-      }),
+      recommendations: p.recommendations || [],
     }));
 
     const consolidatedReport = {

@@ -5,10 +5,13 @@
  */
 import { Resend } from 'resend';
 import { Redis } from '@upstash/redis';
+import Anthropic from '@anthropic-ai/sdk';
 import { verifyQstashSignature } from '../../lib/proQueue';
 import { randomUUID } from 'crypto';
 
-export const maxDuration = 120;
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+export const maxDuration = 180;
 export const config = { api: { bodyParser: false } };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -99,6 +102,68 @@ export default async function handler(req, res) {
       return typeof raw === 'string' ? JSON.parse(raw) : raw;
     });
 
+    // Sonnet dedup pass — merge semantic duplicates across page recos
+    let mergeMap = {};
+    try {
+      const recoByCrit = {};
+      fullPages.filter(p => !p.error).forEach(p => {
+        (p.recommendations || []).forEach(r => {
+          const c = r.criterion || 'other';
+          const key = `${r.patternId || ''}::${r.title || ''}`;
+          if (!recoByCrit[c]) recoByCrit[c] = {};
+          if (!recoByCrit[c][key]) recoByCrit[c][key] = { patternId: r.patternId || '', title: r.title || '', count: 0 };
+          recoByCrit[c][key].count++;
+        });
+      });
+      const recoList = [];
+      for (const [crit, recos] of Object.entries(recoByCrit)) {
+        for (const r of Object.values(recos)) recoList.push({ criterion: crit, patternId: r.patternId, title: r.title, pages: r.count });
+      }
+
+      if (recoList.length > 5) {
+        const sonnetMsg = await anthropic.messages.create({
+          model: 'claude-sonnet-4-6-20250514',
+          max_tokens: 4000,
+          temperature: 0,
+          messages: [{ role: 'user', content: `Deduplicate these website audit recommendations. Many titles describe the SAME action differently.
+
+JSON only, no markdown:
+{"merges":[{"canonicalTitle":"best title","titlesToMerge":["title1","title2"]}]}
+
+Rules:
+- Merge if titles describe the SAME concrete action
+- Different schema types (Organization vs Article vs FAQ) = DIFFERENT, don't merge
+- "add external sources" ≈ "source statistics" = merge
+- "optimize crawlers" ≈ "optimize HTML structure" = merge
+- "meta descriptions" ≈ "titles and descriptions" = merge
+- Be aggressive: if in doubt, merge
+
+Recommendations:
+${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.patternId})`).join('\n')}` }],
+        });
+        const raw = sonnetMsg.content[0].text;
+        const jsonMatch = raw.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const result = JSON.parse(jsonMatch[0]);
+          for (const m of (result.merges || [])) {
+            for (const t of (m.titlesToMerge || [])) mergeMap[t.toLowerCase()] = m.canonicalTitle;
+          }
+        }
+        console.log(`[pro-finalize] Sonnet dedup: ${Object.keys(mergeMap).length} titles merged`);
+      }
+    } catch (e) {
+      console.error('[pro-finalize] Sonnet dedup failed (non-blocking):', e.message);
+    }
+
+    // Apply merge map to page recommendations
+    const mergedPages = fullPages.map(p => ({
+      ...p,
+      recommendations: (p.recommendations || []).map(r => {
+        const canonical = mergeMap[(r.title || '').toLowerCase()];
+        return canonical ? { ...r, _mergedTitle: canonical } : r;
+      }),
+    }));
+
     // Generate UUID and store report
     const uuid = randomUUID();
     const proto = req.headers['x-forwarded-proto'] || 'https';
@@ -107,7 +172,7 @@ export default async function handler(req, res) {
 
     const reportRecord = {
       reportType: 'pro',
-      consolidatedReport: { ...consolidated, pages: fullPages },
+      consolidatedReport: { ...consolidated, pages: mergedPages },
       email: customerEmail,
       url: rootUrl,
       locale,
