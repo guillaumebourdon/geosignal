@@ -197,8 +197,7 @@ function EvidenceBlock({ criterionName, evidence }) {
   }
 
   if (/neutralit/i.test(name)) {
-    const detail = (evidence.criteria || []).find(c => /neutralit/i.test(c.name));
-    if (detail?.detail) return <Box label="Analyse IA du ton éditorial"><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.6 }}>{detail.detail}</div></Box>;
+    // Le diagnostic IA du ton éditorial est affiché via c.detail dans le rendu principal
     return null;
   }
 
@@ -244,8 +243,8 @@ function criteriaDetailLabel(c, evidence) {
       if (tl.hasAbout) parts.push('Page À propos ✓');
     }
   } else if (/crawlabilit/i.test(name)) {
-    if (evidence?.wordCount) parts.push(`${evidence.wordCount > 1000 ? evidence.wordCount + ' chars ✓' : evidence.wordCount + ' chars'}`);
-    parts.push('Indexable ✓');
+    // chars count comes from c.detail (e.g. "5277 chars ✓ · Indexable ✓"), not evidence.wordCount (which is word count)
+    // Don't duplicate — c.detail is shown separately
   } else if (/donn.*structur/i.test(name)) {
     if (!evidence?.schemas?.length) parts.push('Aucun schéma JSON-LD identifié ✗');
     else parts.push(`${evidence.schemas.length} schéma(s) détecté(s) ✓`);
@@ -319,7 +318,10 @@ export default function ReportPage({ uuid, reportData, url, locale, createdAt, l
   const citation = reportData.citationTest || {};
   const citationTests = citation.tests || [];
   const citedCount = citationTests.filter(t => t.cited).length;
-  const projected = Math.min(100, reportData.score + Math.round(reportData.score * 0.35));
+  // Projected score: same formula as PDF (oneReportTemplate.js projectedScore)
+  let projGain = 0;
+  criteria.forEach(c => { if (c.score / c.max < 0.75) projGain += Math.round(c.max * 0.8 - c.score); });
+  const projected = Math.min(100, reportData.score + Math.round(projGain * 0.7));
   const date = createdAt ? new Date(createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
 
   // Compute 3 weakest criteria for case study display
