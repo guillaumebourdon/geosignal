@@ -333,7 +333,14 @@ JSON array only, no markdown:`;
       topStrengths: synthesis.topStrengths || [],
       topWeaknesses: synthesis.topWeaknesses || [],
       patterns: synthesis.patterns || [],
-      actionPlan: synthesis.actionPlan || [],
+      actionPlan: (synthesis.actionPlan || []).sort((a, b) => {
+        const imp = { eleve: 0, high: 0, moyen: 1, medium: 1, faible: 2, low: 2 };
+        const ai = imp[String(a.impact || '').toLowerCase()] ?? 1;
+        const bi = imp[String(b.impact || '').toLowerCase()] ?? 1;
+        if (ai !== bi) return ai - bi;
+        const eff = { faible: 0, low: 0, moyen: 1, medium: 1, eleve: 2, high: 2 };
+        return (eff[String(a.effort || '').toLowerCase()] ?? 1) - (eff[String(b.effort || '').toLowerCase()] ?? 1);
+      }),
       citationTestConsolidated: citationTest,
       pages: fullPages,
     };
