@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   if (!rawUrl) return res.status(400).json({ error: 'Paramètre url manquant' });
 
   const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
-  const cacheKey = `detekia:v14:${url.toLowerCase()}:${locale}`;
+  const cacheKey = `detekia:v15:${url.toLowerCase()}:${locale}`;
   const cached = await redis.get(cacheKey);
 
   if (!cached) {
