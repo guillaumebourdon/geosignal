@@ -144,37 +144,43 @@ export default async function handler(req, res) {
       console.log(`[pro-trigger] Starting 3 Haiku calls for ${siteJobId}...`);
 
       // Call 1: Synthesis
-      const synthesisMsg = await callHaikuWithRetry({
-        model: 'claude-haiku-4-5-20251001', max_tokens: 6000, temperature: 0.2,
-        messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant analyzing a FULL WEBSITE audit (${validPages.length} pages).\n\nSite: ${rootUrl}\nAverage GEO score: ${scoreAverage}/100\nDistribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)\n\nPages analyzed:\n${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}\n\nCriteria averages:\n${Object.entries(criteriaAverages).map(([k, v]) => `- ${k}: ${v.avgScore}/${v.max}`).join('\n')}\n\nGenerate a comprehensive site-level analysis. JSON only:\n{"executiveSummary":"2-3 paragraphs","topStrengths":["s1","s2","s3"],"topWeaknesses":["w1","w2","w3"],"patterns":[{"pattern":"desc","pagesAffected":["url"],"criterion":"name","severity":"critique|important|mineur"}],"actionPlan":[{"priority":1,"action":"desc","criterion":"name","impact":"eleve|moyen|faible","effort":"faible|moyen|eleve","pagesAffected":["url"]}]}\n\nRules:\n- executiveSummary: 2-3 substantial paragraphs\n- patterns: 5 to 8 cross-page patterns\n- actionPlan: 10 to 15 actions sorted by priority\n- Be specific to ${rootUrl}` }],
-      });
-      const synthesis = parseHaikuJson(synthesisMsg.content[0].text);
-      console.log(`[pro-trigger] Synthesis done. Patterns: ${(synthesis.patterns||[]).length}, Actions: ${(synthesis.actionPlan||[]).length}`);
+      let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
+      try {
+        const synthesisMsg = await callHaikuWithRetry({
+          model: 'claude-haiku-4-5-20251001', max_tokens: 6000, temperature: 0.2,
+          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant analyzing a FULL WEBSITE audit (${validPages.length} pages).\n\nSite: ${rootUrl}\nAverage GEO score: ${scoreAverage}/100\nDistribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)\n\nPages analyzed:\n${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}\n\nCriteria averages:\n${Object.entries(criteriaAverages).map(([k, v]) => `- ${k}: ${v.avgScore}/${v.max}`).join('\n')}\n\nGenerate a comprehensive site-level analysis. JSON only, no markdown fences:\n{"executiveSummary":"2-3 paragraphs","topStrengths":["s1","s2","s3"],"topWeaknesses":["w1","w2","w3"],"patterns":[{"pattern":"desc","pagesAffected":["url"],"criterion":"name","severity":"critique|important|mineur"}],"actionPlan":[{"priority":1,"action":"desc","criterion":"name","impact":"eleve|moyen|faible","effort":"faible|moyen|eleve","pagesAffected":["url"]}]}\n\nRules:\n- executiveSummary: 2-3 substantial paragraphs\n- patterns: 5 to 8 cross-page patterns\n- actionPlan: 10 to 15 actions sorted by priority\n- Be specific to ${rootUrl}\n- IMPORTANT: output raw JSON only, no markdown, no explanation` }],
+        });
+        synthesis = parseHaikuJson(synthesisMsg.content[0].text);
+        console.log(`[pro-trigger] Synthesis done. Patterns: ${(synthesis.patterns||[]).length}, Actions: ${(synthesis.actionPlan||[]).length}`);
+      } catch (e) { console.error('[pro-trigger] Synthesis parse failed:', e.message); }
 
       // Call 2: Citation test
-      const pageTitles = validPages.map(p => `${p.evidence?.metaTitle || p.url} (${p.url})`).slice(0, 10).join(', ');
-      const citationMsg = await callHaikuWithRetry({
-        model: 'claude-haiku-4-5-20251001', max_tokens: 8000, temperature: 0.3,
-        messages: [{ role: 'user', content: `${langInstruction}\n\nYou are an AI visibility expert. Full site audit for ${rootUrl}.\nPages: ${pageTitles}\n\nGenerate 30 queries and simulate citations. JSON only:\n{"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["c1"],"difficulty_to_rank":"easy|medium|hard","recommendation":"1 sentence"}],"citationRate":"X/30","bestOpportunity":"best query","mainBlocker":"main reason"}` }],
-      });
-      const citationTest = parseHaikuJson(citationMsg.content[0].text);
-      console.log(`[pro-trigger] Citation test done. Rate: ${citationTest.citationRate}`);
+      let citationTest = { queries: [], citationRate: '0/30', bestOpportunity: '', mainBlocker: '' };
+      try {
+        const pageTitles = validPages.map(p => `${p.evidence?.metaTitle || p.url} (${p.url})`).slice(0, 10).join(', ');
+        const citationMsg = await callHaikuWithRetry({
+          model: 'claude-haiku-4-5-20251001', max_tokens: 8000, temperature: 0.3,
+          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are an AI visibility expert. Full site audit for ${rootUrl}.\nPages: ${pageTitles}\n\nGenerate 30 queries and simulate citations. JSON only, no markdown fences:\n{"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["c1"],"difficulty_to_rank":"easy|medium|hard","recommendation":"1 sentence"}],"citationRate":"X/30","bestOpportunity":"best query","mainBlocker":"main reason"}\n\nIMPORTANT: output raw JSON only, no markdown, no explanation` }],
+        });
+        citationTest = parseHaikuJson(citationMsg.content[0].text);
+        console.log(`[pro-trigger] Citation test done. Rate: ${citationTest.citationRate}`);
+      } catch (e) { console.error('[pro-trigger] Citation parse failed:', e.message); }
 
       // Call 3: Per-criterion
-      const criteriaForPrompt = Object.entries(criteriaAverages).map(([name, data]) => {
-        const pagesBelow = validPages.filter(p => { const c = (p.criteria || []).find(cr => cr.name === name); return c && (c.score / c.max) < 0.75; });
-        const examples = pagesBelow.slice(0, 3).map(p => { const c = (p.criteria || []).find(cr => cr.name === name); return `${p.url} (${c?.score}/${c?.max})`; });
-        return `- ${name}: avg ${data.avgScore}/${data.max}, ${pagesBelow.length}/${validPages.length} pages below 75%. Examples: ${examples.join(', ') || 'none'}`;
-      }).join('\n');
-
-      const criteriaMsg = await callHaikuWithRetry({
-        model: 'claude-haiku-4-5-20251001', max_tokens: 8000, temperature: 0.2,
-        messages: [{ role: 'user', content: `${langInstruction}\n\nFor a site audit of ${rootUrl} (${validPages.length} pages, avg ${scoreAverage}/100), generate per-criterion analysis.\n\nCriteria data:\n${criteriaForPrompt}\n\nJSON array of 8 objects:\n[{"criterion":"exact name","synthesis":"2-3 sentences"}]\n\nRules: synthesis must reference specific numbers. JSON array only:` }],
-      });
       let criteriaConsolidated = [];
       try {
+        const criteriaForPrompt = Object.entries(criteriaAverages).map(([name, data]) => {
+          const pagesBelow = validPages.filter(p => { const c = (p.criteria || []).find(cr => cr.name === name); return c && (c.score / c.max) < 0.75; });
+          const examples = pagesBelow.slice(0, 3).map(p => { const c = (p.criteria || []).find(cr => cr.name === name); return `${p.url} (${c?.score}/${c?.max})`; });
+          return `- ${name}: avg ${data.avgScore}/${data.max}, ${pagesBelow.length}/${validPages.length} pages below 75%. Examples: ${examples.join(', ') || 'none'}`;
+        }).join('\n');
+
+        const criteriaMsg = await callHaikuWithRetry({
+          model: 'claude-haiku-4-5-20251001', max_tokens: 8000, temperature: 0.2,
+          messages: [{ role: 'user', content: `${langInstruction}\n\nFor a site audit of ${rootUrl} (${validPages.length} pages, avg ${scoreAverage}/100), generate per-criterion analysis.\n\nCriteria data:\n${criteriaForPrompt}\n\nJSON array of 8 objects:\n[{"criterion":"exact name","synthesis":"2-3 sentences"}]\n\nRules: synthesis must reference specific numbers.\nIMPORTANT: output raw JSON array only, no markdown fences, no explanation` }],
+        });
         criteriaConsolidated = parseHaikuArray(criteriaMsg.content[0].text);
-      } catch (e) { console.error('[pro-trigger] Failed to parse criteria:', e.message); }
+      } catch (e) { console.error('[pro-trigger] Criteria parse failed:', e.message); }
       console.log(`[pro-trigger] Criteria done. Count: ${criteriaConsolidated.length}`);
 
       const fullPages = pages.map(p => ({
