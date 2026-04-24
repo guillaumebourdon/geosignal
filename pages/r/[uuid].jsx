@@ -820,14 +820,18 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
     return null;
   }
 
-  // Aggressive normalization for dedup: strip articles, accents, punctuation, short words
+  // Aggressive normalization: strip articles, accents, punctuation, action verbs, short words
+  const STOP_WORDS = 'le|la|les|de|du|des|et|en|un|une|pour|sur|dans|par|a|au|aux|l|d|s|ce|son|sa|ses|se|ne|pas|plus|avec|qui|que|est|sont|ou|nos|vos|leur|leurs|cette|ces|tout|tous|toute|toutes|aussi|bien|tres|trop|peu|encore|deja|ici|mais|donc';
+  const ACTION_VERBS = 'ajouter|implementer|mettre|creer|developper|optimiser|ameliorer|renforcer|enrichir|structurer|etablir|configurer|integrer|rendre|affiner|amplifier|adapter|reduire|gerer|planifier|reecrire|sourcer|presenter';
+
   function dedupKey(text) {
     return (text || '').toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9 ]/g, ' ')
-      .replace(/\b(le|la|les|de|du|des|et|en|un|une|pour|sur|dans|par|a|au|aux|l|d|s)\b/g, '')
+      .replace(new RegExp(`\\b(${STOP_WORDS})\\b`, 'g'), '')
+      .replace(new RegExp(`\\b(${ACTION_VERBS})\\b`, 'g'), '')
       .replace(/\s+/g, ' ').trim()
-      .split(' ').sort().join(' '); // Sort words for order-independent matching
+      .split(' ').filter(w => w.length > 2).sort().join(' ');
   }
 
   function dedupRecos(criterionName) {
@@ -836,26 +840,29 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
       const mappedCrit = matchCriterionName(crit);
       if (mappedCrit === criterionName) matched.push(...recs);
     }
+    // Title-only matching (titles are 5-word summaries — problem text varies too much per page)
     const deduped = [];
-    const keyMap = {}; // dedupKey → index in deduped
+    const keyMap = {};
     for (const rec of matched) {
-      const key = dedupKey(rec.title || rec.problem?.substring(0, 80) || '');
-      // Check if any existing key is a subset or superset (fuzzy match)
-      let matchedIdx = keyMap[key];
-      if (matchedIdx === undefined) {
-        const keyWords = new Set(key.split(' ').filter(w => w.length > 3));
+      const key = dedupKey(rec.title || '');
+      const keyWords = new Set(key.split(' ').filter(w => w.length > 2));
+
+      let matchedIdx = keyMap[key]; // exact key match
+      if (matchedIdx === undefined && keyWords.size > 0) {
+        // Fuzzy: if ANY significant word overlaps on these short titles, it's likely the same reco
+        // (after verb/article stripping, titles like "schema.org article" and "schema.org blogposting"
+        // still share "schema" which is enough signal within the same criterion)
         for (const [existingKey, idx] of Object.entries(keyMap)) {
-          const existingWords = new Set(existingKey.split(' ').filter(w => w.length > 3));
-          // If 60%+ of significant words overlap, it's the same reco
+          const existingWords = new Set(existingKey.split(' ').filter(w => w.length > 2));
           const overlap = [...keyWords].filter(w => existingWords.has(w)).length;
-          const minSize = Math.min(keyWords.size, existingWords.size);
-          if (minSize > 0 && overlap / minSize >= 0.6) { matchedIdx = idx; break; }
+          const maxSize = Math.max(keyWords.size, existingWords.size);
+          // 50% of the LARGER set must overlap (stricter than min, catches short keys)
+          if (maxSize > 0 && overlap / maxSize >= 0.5) { matchedIdx = idx; break; }
         }
       }
       if (matchedIdx !== undefined) {
         const existing = deduped[matchedIdx];
         if (!existing._pages.includes(rec._pageUrl)) existing._pages.push(rec._pageUrl);
-        // Keep the reco with the longest problem/solution text
         if ((rec.problem || '').length > (existing.problem || '').length) {
           Object.assign(existing, { ...rec, _pages: existing._pages });
         }
@@ -1148,7 +1155,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <span style={{ fontFamily: 'Georgia,serif', fontSize: 18, color: pi.color, minWidth: 24 }}>{i + 1}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 8px', borderRadius: 4, background: pi.bg, color: pi.color }}>{pi.label}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680' }}>{a.criterion || ''}</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, marginLeft: 'auto' }}><span style={{ color: pi.color }}>{pi.label}</span> · <span style={{ color: ei.color }}>{ei.label}</span></span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, marginLeft: 'auto', color: ei.color }}>Effort : {ei.label}</span>
                   </div>
                   <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6 }}>{a.action}</div>
                 </div>
