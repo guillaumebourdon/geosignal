@@ -1259,15 +1259,11 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   {top3Recos.length > 0 && (
                     <div>
                       <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>Actions prioritaires</div>
-                      {top3Recos.map((rec, ri) => {
-                        const rpi = priorityInfo(rec.priority);
-                        return (
-                          <div key={ri} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginBottom: 6 }}>
-                            <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 6px', borderRadius: 4, background: rpi.bg, color: rpi.color, flexShrink: 0 }}>{rpi.label}</span>
-                            <span style={{ fontSize: 11, color: '#1A1916', lineHeight: 1.4 }}>{rec.title || rec.problem?.substring(0, 80) || rec.solution?.substring(0, 80)}</span>
-                          </div>
-                        );
-                      })}
+                      {top3Recos.map((rec, ri) => (
+                        <div key={ri} style={{ fontSize: 11, color: '#1A1916', lineHeight: 1.4, marginBottom: 4, paddingLeft: 10, borderLeft: '2px solid #E5E2DC' }}>
+                          {rec.title || rec.problem?.substring(0, 80) || rec.solution?.substring(0, 80)}
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>

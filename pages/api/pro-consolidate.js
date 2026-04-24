@@ -143,6 +143,13 @@ export default async function handler(req, res) {
       }).length;
     }
 
+    // Precompute per-criterion percentage labels
+    const criteriaLabels = Object.entries(criteriaAverages).map(([k, v]) => {
+      const pct = Math.round((v.avgScore / v.max) * 100);
+      const adj = pct < 30 ? 'catastrophique' : pct < 50 ? 'faible' : pct < 70 ? 'moyen' : pct < 85 ? 'bon' : 'excellent';
+      return `  ${k}: ${v.avgScore}/${v.max} (${pct}%) → qualificatif: ${adj}`;
+    }).join('\n');
+
     const statsBlock = `FIXED STATS (use these exact numbers, do NOT count yourself):
 - Today's date: ${today} (2026 is the CURRENT year, dates in 2026 are RECENT not future)
 - Total pages queued: ${totalAnalyzed}
@@ -151,7 +158,13 @@ export default async function handler(req, res) {
 - Blog/article pages: ${blogPages.length}
 - Score distribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)
 - Pages below 75% threshold per criterion:
-${Object.entries(belowByCriterion).map(([k, v]) => `  ${k}: ${v}/${totalValid}`).join('\n')}`;
+${Object.entries(belowByCriterion).map(([k, v]) => `  ${k}: ${v}/${totalValid}`).join('\n')}
+
+VOCABULARY CALIBRATION (mandatory — use the qualifier that matches the score %):
+<30% = catastrophique | 30-50% = faible | 50-70% = moyen | 70-85% = bon | >85% = excellent
+Per-criterion qualifiers (use these exact words):
+${criteriaLabels}
+NEVER use "catastrophique" for a score above 30%. NEVER use "faible" for a score above 50%.`;
 
     const synthesisPrompt = `${langInstruction}
 
