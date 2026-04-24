@@ -80,7 +80,7 @@ export default function Success() {
           const report = await res.json();
           if (!report.error) {
             setReportData(report);
-            await fetch('/api/generate-pdf', {
+            await fetch('/api/finalize-report', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report, locale: reportLocale, isFreeViaPromo: data.isFreeViaPromo || false }),
