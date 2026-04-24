@@ -45,7 +45,8 @@ export default async function handler(req, res) {
         plan: amount >= 2900 ? 'pro' : 'rapport'
       }, { ex: 30 * 24 * 60 * 60 });
       
-      console.log(`✅ Paiement validé pour ${email} — plan: ${amount >= 2900 ? 'pro' : 'rapport'}`);
+      const { maskEmail } = require('../../lib/maskEmail');
+      console.log(`✅ Paiement validé pour ${maskEmail(email)} — plan: ${amount >= 2900 ? 'pro' : 'rapport'}`);
     }
   }
 

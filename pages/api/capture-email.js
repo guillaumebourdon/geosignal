@@ -4,6 +4,8 @@ import { Redis } from '@upstash/redis';
 const resend = new Resend(process.env.RESEND_API_KEY);
 const redis = Redis.fromEnv();
 
+export const maxDuration = 30;
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
   const { checkRateLimit } = require('../../lib/rateLimit');

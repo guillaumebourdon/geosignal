@@ -564,8 +564,10 @@ async function fetchJina(jinaUrl) {
   for (const attempt of attempts) {
     if (attempt.waitBefore > 0) await new Promise(r => setTimeout(r, attempt.waitBefore));
     try {
+      const jinaHeaders = { Accept: 'text/html' };
+      if (process.env.JINA_API_KEY) jinaHeaders.Authorization = `Bearer ${process.env.JINA_API_KEY}`;
       const { data } = await axios.get(jinaUrl, {
-        headers: { Accept: 'text/html' },
+        headers: jinaHeaders,
         timeout: attempt.timeout,
       });
       return { data, source: 'jina' };

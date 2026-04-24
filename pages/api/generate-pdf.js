@@ -49,7 +49,8 @@ async function generateLoyaltyCode(sessionId, url, email, locale) {
           locale: locale || 'fr',
         },
       });
-      console.log(`[loyalty] Generated code ${promoCode} for ${email} (url: ${url}, locale: ${locale})`);
+      const { maskEmail } = require('../../lib/maskEmail');
+      console.log(`[loyalty] Generated code ${promoCode} for ${maskEmail(email)} (url: ${url}, locale: ${locale})`);
       return promoCode;
     } catch (err) {
       if (err.code === 'resource_already_exists' && attempt < 2) {

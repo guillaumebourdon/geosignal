@@ -178,7 +178,8 @@ export default async function handler(req, res) {
     });
 
     if (emailError) throw new Error(`Resend error: ${JSON.stringify(emailError)}`);
-    console.log(`[pro-generate-pdf] Email sent to ${customerEmail}`);
+    const { maskEmail } = require('../../lib/maskEmail');
+    console.log(`[pro-generate-pdf] Email sent to ${maskEmail(customerEmail)}`);
 
     // Notify Guillaume
     try {

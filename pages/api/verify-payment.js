@@ -7,6 +7,8 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
+export const maxDuration = 30;
+
 export default async function handler(req, res) {
   const { session_id } = req.query;
   if (!session_id) return res.status(400).json({ error: 'session_id manquant' });

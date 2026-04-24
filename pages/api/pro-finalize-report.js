@@ -219,8 +219,9 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
       `,
     });
 
+    const { maskEmail } = require('../../lib/maskEmail');
     if (emailError) console.error('[pro-finalize] Email error:', emailError);
-    else console.log(`[pro-finalize] Email sent to ${customerEmail}`);
+    else console.log(`[pro-finalize] Email sent to ${maskEmail(customerEmail)}`);
 
     // Notify Guillaume
     try {
