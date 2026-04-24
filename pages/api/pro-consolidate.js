@@ -162,6 +162,9 @@ ${Object.entries(belowByCriterion).map(([k, v]) => `  ${k}: ${v}/${totalValid}`)
 
 VOCABULARY CALIBRATION (mandatory — use the qualifier that matches the score %):
 <30% = catastrophique | 30-50% = faible | 50-70% = moyen | 70-85% = bon | >85% = excellent
+FORBIDDEN above 50%: catastrophique, grave, lacune critique, défaillant, alarmant.
+Above 50%, acceptable words: moyen, à améliorer, perfectible, insuffisant, modéré.
+EXAMPLE: Vérifiabilité at 53% → "la vérifiabilité reste perfectible" NOT "la vérifiabilité est gravement déficiente".
 Per-criterion qualifiers (use these exact words):
 ${criteriaLabels}
 NEVER use "catastrophique" for a score above 30%. NEVER use "faible" for a score above 50%.`;
@@ -248,7 +251,7 @@ JSON array only, no markdown:`;
     console.log('[pro-consolidate] Starting 3 Sonnet calls in parallel...');
     const parallelStart = Date.now();
     const [synthesisResult, citationResult, criteriaResult] = await Promise.allSettled([
-      callHaikuWithRetry({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
+      callHaikuWithRetry({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
       callHaikuWithRetry({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.3, messages: [{ role: 'user', content: citationPrompt }] }),
       callHaikuWithRetry({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
     ]);
