@@ -604,9 +604,10 @@ export default async function handler(req, res) {
 
   const rawUrl = req.body.url;
   const locale = req.body.locale === 'en' ? 'en' : 'fr';
-  console.log('URL received:', rawUrl, '| locale:', locale);
   if (!rawUrl) return res.status(400).json({ error: 'URL manquante' });
-  const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
+  const urlCandidate = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
+  let url;
+  try { const parsed = new URL(urlCandidate); if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error(); url = parsed.href; } catch { return res.status(400).json({ error: 'URL invalide' }); }
   console.log('analyze: starting for', url);
 
   const cacheKey = `detekia:v20:${url.toLowerCase()}:${locale}`;

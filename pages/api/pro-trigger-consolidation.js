@@ -23,7 +23,7 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const JOB_PREFIX = 'detekia:pro:v1:job';
 const CONSOLIDATED_TTL = 7 * 24 * 60 * 60;
-const ADMIN_SECRET = process.env.PRO_ADMIN_SECRET || 'detekia-pro-manual-2026';
+const ADMIN_SECRET = process.env.PRO_ADMIN_SECRET;
 
 async function callHaikuWithRetry(params, maxRetries = 3) {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
@@ -68,7 +68,7 @@ function parseHaikuArray(raw) {
 export default async function handler(req, res) {
   const { siteJobId, secret, action } = req.query;
 
-  if (secret !== ADMIN_SECRET) return res.status(401).json({ error: 'Invalid secret' });
+  if (!ADMIN_SECRET || secret !== ADMIN_SECRET) return res.status(401).json({ error: 'Unauthorized' });
   if (!siteJobId) return res.status(400).json({ error: 'Missing siteJobId' });
 
   const proto = req.headers['x-forwarded-proto'] || 'https';

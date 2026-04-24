@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const { email, url, score } = req.body;
-  if (!email || !email.includes('@')) return res.status(400).json({ error: 'Email invalide' });
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 254) return res.status(400).json({ error: 'Email invalide' });
 
   const capturedAt = new Date().toISOString();
 

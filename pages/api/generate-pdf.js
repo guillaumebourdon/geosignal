@@ -270,6 +270,7 @@ export default async function handler(req, res) {
       });
     } catch (_) { /* ignore notification failure */ }
 
-    return res.status(500).json({ error: e.message, stack: e.stack });
+    console.error('[generate-pdf] Error:', e.message, e.stack);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }
