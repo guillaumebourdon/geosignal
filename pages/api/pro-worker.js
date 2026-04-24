@@ -13,7 +13,7 @@ const redis = new Redis({
 });
 
 const JOB_PREFIX = 'detekia:pro:v1:job';
-const JOB_TTL = 2 * 60 * 60; // 2 hours
+const JOB_TTL = 24 * 60 * 60; // 24 hours (was 2h — too short, pages expired before consolidation)
 
 function readRawBody(req) {
   return new Promise((resolve, reject) => {
@@ -55,6 +55,16 @@ export default async function handler(req, res) {
 
   // Run real analysis
   const result = await analyzePage(url, { locale: locale || 'fr' });
+
+  // If retryable error (429, timeout), return 500 so QStash retries instead of storing the error
+  if (result.error) {
+    const errStr = String(result.error);
+    const isRetryable = errStr.includes('429') || errStr.includes('rate_limit') || errStr.includes('timeout') || errStr.includes('ETIMEDOUT');
+    if (isRetryable) {
+      console.warn(`[pro-worker] Retryable error for ${url}: ${errStr.substring(0, 100)}. Returning 500 for QStash retry.`);
+      return res.status(500).json({ error: 'retryable', url, detail: errStr.substring(0, 200) });
+    }
+  }
 
   // Store result
   try {

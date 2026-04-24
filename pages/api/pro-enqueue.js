@@ -9,7 +9,7 @@ const redis = new Redis({
 });
 
 const JOB_PREFIX = 'detekia:pro:v1:job';
-const JOB_TTL = 2 * 60 * 60;
+const JOB_TTL = 24 * 60 * 60; // 24h — pages must survive until consolidation + finalize
 
 export default async function handler(req, res) {
   const rawUrl = req.query.url;

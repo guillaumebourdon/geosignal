@@ -1140,30 +1140,70 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             </div>
           </section>
 
-          {/* ═══ PARTIE 6: ANNEXE BILAN PAR PAGE ═══ */}
+          {/* ═══ PARTIE 6: ANNEXE BILAN PAR PAGE (enrichie) ═══ */}
           <section id="annexe" style={{ marginBottom: 48 }}>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Annexe</div>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>Bilan par page analysée</h2>
 
             {validPages.map((p, i) => {
               const sc = gradeInfo(p.score || 0);
-              const weakest = [...(p.criteria || [])].sort((a, b) => (a.score / a.max) - (b.score / b.max))[0];
+              const sortedCriteria = [...(p.criteria || [])].sort((a, b) => (a.score / a.max) - (b.score / b.max));
+              const top3Weak = sortedCriteria.filter(c => c.score < c.max).slice(0, 3);
+              const top3Recos = (p.recommendations || []).filter(rec => rec.priority === 'high').slice(0, 3);
+              if (top3Recos.length < 3) top3Recos.push(...(p.recommendations || []).filter(rec => rec.priority === 'medium').slice(0, 3 - top3Recos.length));
+
               return (
-                <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '14px 18px', marginBottom: 8 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                    <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', textDecoration: 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 300 }}>{(p.url || '').replace(url, '') || '/'}</a>
-                    <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: sc.color }}>{p.score}</span>
-                    <span style={{ padding: '2px 8px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: sc.bg, color: sc.color }}>{sc.label}</span>
-                    {weakest && <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', marginLeft: 'auto' }}>{weakest.name} ({weakest.score}/{weakest.max})</span>}
+                <div key={i} id={`page-${i}`} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24, marginBottom: 16 }}>
+                  {/* Page header */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
+                    <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'monospace', fontSize: 12, color: '#D97757', textDecoration: 'none', wordBreak: 'break-all' }}>{(p.url || '').replace(url, '') || '/'}</a>
+                    <span style={{ fontFamily: 'Georgia,serif', fontSize: 24, fontWeight: 'bold', color: sc.color, marginLeft: 'auto', flexShrink: 0 }}>{p.score}<span style={{ fontSize: 12, color: '#C0BBB5' }}>/100</span></span>
+                    <span style={{ padding: '3px 10px', borderRadius: 12, fontFamily: 'monospace', fontSize: 9, letterSpacing: 1, background: sc.bg, color: sc.color }}>{sc.label}</span>
                   </div>
-                  {/* Mini criterion bars */}
-                  <div style={{ display: 'flex', gap: 3, marginTop: 8 }}>
+
+                  {/* 8 criteria scores */}
+                  <div style={{ marginBottom: 16 }}>
                     {(p.criteria || []).map((c, ci) => {
-                      const cpct = c.max > 0 ? (c.score / c.max) * 100 : 0;
+                      const cpct = c.max > 0 ? Math.round((c.score / c.max) * 100) : 0;
                       const ccol = cpct >= 75 ? '#10A37F' : cpct >= 45 ? '#C9861A' : '#D97757';
-                      return <div key={ci} title={`${c.name}: ${c.score}/${c.max}`} style={{ flex: 1, height: 4, background: '#E5E2DC', borderRadius: 2, overflow: 'hidden' }}><div style={{ height: '100%', width: `${cpct}%`, background: ccol, borderRadius: 2 }} /></div>;
+                      return (
+                        <div key={ci} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                          <span style={{ fontSize: 11, color: '#1A1916', minWidth: 200 }}>{c.name}</span>
+                          <div style={{ flex: 1, height: 4, background: '#F0EDE8', borderRadius: 2, overflow: 'hidden' }}>
+                            <div style={{ height: '100%', width: `${cpct}%`, background: ccol, borderRadius: 2 }} />
+                          </div>
+                          <span style={{ fontFamily: 'monospace', fontSize: 11, fontWeight: 600, color: ccol, minWidth: 40, textAlign: 'right' }}>{c.score}/{c.max}</span>
+                        </div>
+                      );
                     })}
                   </div>
+
+                  {/* Top 3 points faibles */}
+                  {top3Weak.length > 0 && (
+                    <div style={{ marginBottom: 12 }}>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>Points faibles</div>
+                      {top3Weak.map((c, ci) => {
+                        const cpct = Math.round((c.score / c.max) * 100);
+                        return <div key={ci} style={{ fontSize: 11, color: '#3A3835', marginBottom: 3 }}>• {c.name} — {c.score}/{c.max} ({cpct}%)</div>;
+                      })}
+                    </div>
+                  )}
+
+                  {/* Top 3 actions pour cette page */}
+                  {top3Recos.length > 0 && (
+                    <div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>Actions prioritaires</div>
+                      {top3Recos.map((rec, ri) => {
+                        const rpi = priorityInfo(rec.priority);
+                        return (
+                          <div key={ri} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginBottom: 6 }}>
+                            <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 6px', borderRadius: 4, background: rpi.bg, color: rpi.color, flexShrink: 0 }}>{rpi.label}</span>
+                            <span style={{ fontSize: 11, color: '#1A1916', lineHeight: 1.4 }}>{rec.title || rec.problem?.substring(0, 80) || rec.solution?.substring(0, 80)}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -1229,9 +1269,15 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 function ProRecoCard({ r, index, rootUrl }) {
   const pi = priorityInfo(r.priority);
   const ei = effortInfo(r.effort);
-  const pagesNote = r._pages?.length > 1
-    ? `${r._pages.length} pages concernées : ${r._pages.slice(0, 4).map(u => u.replace(rootUrl, '') || '/').join(', ')}${r._pages.length > 4 ? ` +${r._pages.length - 4}` : ''}`
-    : r._pages?.[0] ? `Page : ${r._pages[0]}` : '';
+  const pagesList = r._pages || [];
+  const pagesNoteJsx = pagesList.length > 1
+    ? <div style={{ marginTop: 8 }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', marginBottom: 4 }}>{pagesList.length} pages concernées :</div>
+        {pagesList.map((u, i) => <div key={i}><a href={u} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', textDecoration: 'none' }}>{u.replace(rootUrl, '') || '/'}</a></div>)}
+      </div>
+    : pagesList[0]
+      ? <div style={{ marginTop: 8, fontFamily: 'monospace', fontSize: 10, color: '#8A8680' }}>Page : <a href={pagesList[0]} target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>{pagesList[0]}</a></div>
+      : null;
 
   return (
     <div style={{ border: `1px solid ${pi.color}28`, borderLeft: `4px solid ${pi.color}`, borderRadius: '0 14px 14px 0', overflow: 'hidden', marginBottom: 12 }}>
@@ -1262,7 +1308,7 @@ function ProRecoCard({ r, index, rootUrl }) {
             <pre style={{ background: '#1A1916', color: '#F7F5F2', borderRadius: 8, padding: 14, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.55, whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflow: 'auto', maxHeight: 300 }}>{r.codeExample}</pre>
           </div>
         )}
-        {pagesNote && <div style={{ marginTop: 8, fontFamily: 'monospace', fontSize: 10, color: '#8A8680' }}>{pagesNote}</div>}
+        {pagesNoteJsx}
       </div>
     </div>
   );
@@ -1289,7 +1335,7 @@ function CitationCard({ q }) {
       <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginTop: 6 }}>{q.query}</div>
       {open && (
         <div style={{ paddingTop: 10, marginTop: 8, borderTop: '1px solid #F0EDE8' }}>
-          {q.competitors_cited?.length > 0 && <div style={{ fontSize: 11, color: '#8A8680', marginBottom: 6 }}>Cités à votre place : {q.competitors_cited.join(', ')}</div>}
+          {(q.competitors_cited || q.competitorsCited)?.length > 0 && <div style={{ fontSize: 11, color: '#8A8680', marginBottom: 6 }}>Cités à votre place : {(q.competitors_cited || q.competitorsCited).join(', ')}</div>}
           {q.ai_response_excerpt && <div style={{ fontSize: 11, color: '#8A8680', fontStyle: 'italic', marginBottom: 6, background: '#FAFAF9', padding: '8px 12px', borderRadius: 6 }}>{q.ai_response_excerpt}</div>}
           {q.recommendation && <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.5 }}><strong>Recommandation :</strong> {q.recommendation}</div>}
         </div>
