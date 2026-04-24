@@ -24,6 +24,7 @@ export default async function handler(req, res) {
 
     const key = `detekia:analytics:${id}`;
     await redis.lpush(key, entry);
+    await redis.ltrim(key, 0, 999); // Cap at 1000 events per report
     // Set TTL only if not already set (first event)
     const ttl = await redis.ttl(key);
     if (ttl < 0) await redis.expire(key, ANALYTICS_TTL);

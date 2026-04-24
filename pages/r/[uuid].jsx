@@ -382,7 +382,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
           </button>
         </header>
 
-        <main style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
+        <main role="main" aria-label="Rapport GEO" style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
 
           {/* ═══ SECTION 1: SYNTHÈSE EXÉCUTIVE ═══ */}
           <section id="synthese" style={{ marginBottom: 48 }}>
@@ -918,7 +918,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
           </button>
         </header>
 
-        <main style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
+        <main role="main" aria-label="Rapport GEO" style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
 
           {/* ═══ PARTIE 1: VUE D'ENSEMBLE ═══ */}
           <section id="synthese" style={{ marginBottom: 48 }}>
