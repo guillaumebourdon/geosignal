@@ -8,22 +8,30 @@ const redis = new Redis({
 });
 
 const { generateReportHTML } = require('../../lib/oneReportTemplate');
+const { generateProReportHTML } = require('../../lib/proReportTemplate');
 
 export default async function handler(req, res) {
   const { id } = req.query;
   if (!id) return res.status(400).json({ error: 'Missing id' });
 
   try {
-    // Load report from Redis
     const raw = await redis.get(`detekia:report:${id}`);
     if (!raw) return res.status(404).json({ error: 'Report not found' });
 
     const record = typeof raw === 'string' ? JSON.parse(raw) : raw;
-    const { reportData, url, locale } = record;
-    if (!reportData) return res.status(404).json({ error: 'Report data missing' });
+    const isPro = record.reportType === 'pro';
+    const locale = record.locale || 'fr';
+    let html;
 
-    // Generate HTML using existing PDF template
-    const html = generateReportHTML({ url, ...reportData }, locale || 'fr');
+    if (isPro) {
+      const report = record.consolidatedReport;
+      if (!report) return res.status(404).json({ error: 'Pro report data missing' });
+      html = generateProReportHTML(report, locale);
+    } else {
+      const { reportData, url } = record;
+      if (!reportData) return res.status(404).json({ error: 'Report data missing' });
+      html = generateReportHTML({ url, ...reportData }, locale);
+    }
 
     // Call PDFShift
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
@@ -43,9 +51,10 @@ export default async function handler(req, res) {
     }
 
     const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
-    const safeName = (url || 'report').replace(/[^a-z0-9]/gi, '-');
+    const safeName = (record.url || 'report').replace(/[^a-z0-9]/gi, '-');
+    const filename = isPro ? `rapport-geo-complet-${safeName}.pdf` : `rapport-geo-${safeName}.pdf`;
 
-    // Track download event
+    // Track download
     try {
       await redis.lpush(`detekia:analytics:${id}`, JSON.stringify({
         event: 'download-pdf',
@@ -54,9 +63,8 @@ export default async function handler(req, res) {
       }));
     } catch (_) {}
 
-    // Stream PDF response
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="rapport-geo-${safeName}.pdf"`);
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.setHeader('Content-Length', pdfBuffer.length);
     return res.send(pdfBuffer);
 

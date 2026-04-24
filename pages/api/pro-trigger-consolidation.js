@@ -215,7 +215,23 @@ export default async function handler(req, res) {
     }
   }
 
-  // ── Run PDF generation directly (no QStash) ────────────────────────────
+  // ── Run finalize (HTML report, no PDF) directly ─────────────────────────
+  if (action === 'run-finalize') {
+    try {
+      // Call pro-finalize-report directly (skip QStash)
+      const finalizeRes = await fetch(`${baseUrl}/api/pro-finalize-report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ siteJobId }),
+      });
+      const result = await finalizeRes.json();
+      return res.status(finalizeRes.status).json({ ...result, action: 'finalized' });
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+
+  // ── Run PDF generation directly (no QStash) — legacy ───────────────────
   if (action === 'run-pdf') {
     try {
       const [consolidatedRaw, metaRaw] = await Promise.all([

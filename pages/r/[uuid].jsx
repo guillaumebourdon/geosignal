@@ -14,10 +14,28 @@ export async function getServerSideProps({ params }) {
     const raw = await redis.get(`detekia:report:${uuid}`);
     if (!raw) return { notFound: true };
     const record = typeof raw === 'string' ? JSON.parse(raw) : raw;
+
+    // Pro report
+    if (record.reportType === 'pro') {
+      if (!record.consolidatedReport) return { notFound: true };
+      return {
+        props: {
+          uuid,
+          reportType: 'pro',
+          proReport: record.consolidatedReport,
+          url: record.url || '',
+          locale: record.locale || 'fr',
+          createdAt: record.createdAt || null,
+        },
+      };
+    }
+
+    // One-page report
     if (!record.reportData) return { notFound: true };
     return {
       props: {
         uuid,
+        reportType: 'onepage',
         reportData: record.reportData,
         url: record.url || '',
         locale: record.locale || 'fr',
@@ -262,7 +280,12 @@ function criteriaDetailLabel(c, evidence) {
 
 // ── Main Component ──────────────────────────────────────────────────────────
 
-export default function ReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCode }) {
+export default function ReportRouter(props) {
+  if (props.reportType === 'pro') return <ProReportPage {...props} />;
+  return <OnePageReportPage {...props} />;
+}
+
+function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCode }) {
   const [downloading, setDownloading] = useState(false);
   const trackedScrolls = useRef(new Set());
   const startTime = useRef(Date.now());
@@ -684,6 +707,564 @@ export default function ReportPage({ uuid, reportData, url, locale, createdAt, l
         </main>
       </div>
     </>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PRO REPORT TEMPLATE
+// ═══════════════════════════════════════════════════════════════════════════
+
+function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
+  const [downloading, setDownloading] = useState(false);
+  const trackedScrolls = useRef(new Set());
+  const startTime = useRef(Date.now());
+
+  const track = useCallback((event) => {
+    fetch(`/api/track?id=${uuid}&event=${encodeURIComponent(event)}`).catch(() => {});
+  }, [uuid]);
+
+  useEffect(() => { track('open'); }, [track]);
+  useEffect(() => {
+    const handler = () => {
+      const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      [25, 50, 75, 100].forEach(m => {
+        if (pct >= m && !trackedScrolls.current.has(m)) { trackedScrolls.current.add(m); track(`scroll-${m}`); }
+      });
+    };
+    let timer;
+    const debounced = () => { clearTimeout(timer); timer = setTimeout(handler, 2000); };
+    window.addEventListener('scroll', debounced, { passive: true });
+    return () => window.removeEventListener('scroll', debounced);
+  }, [track]);
+  useEffect(() => {
+    const handler = () => {
+      const dur = Math.round((Date.now() - startTime.current) / 1000);
+      navigator.sendBeacon(`/api/track?id=${uuid}&event=${encodeURIComponent(`session-end:${dur}s`)}`);
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [uuid]);
+
+  const handleDownload = async () => {
+    setDownloading(true);
+    track('click-download-pdf');
+    try {
+      const res = await fetch(`/api/report-pdf?id=${uuid}`);
+      if (!res.ok) throw new Error();
+      const blob = await res.blob();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `rapport-geo-complet-${url.replace(/[^a-z0-9]/gi, '-')}.pdf`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    } catch { alert('Erreur lors de la génération du PDF. Réessayez.'); }
+    setDownloading(false);
+  };
+
+  const r = proReport;
+  const g = gradeInfo(r.scoreAverage);
+  const totalPages = r.pagesValid + (r.pagesWithError || 0);
+  const date = createdAt ? new Date(createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+  const criteriaAverages = r.criteriaAverages || {};
+  const pages = r.pages || [];
+  const validPages = pages.filter(p => !p.error);
+  const errorPages = pages.filter(p => p.error);
+  const patterns = r.patterns || [];
+  const actionPlan = r.actionPlan || [];
+  const ct = r.citationTestConsolidated || {};
+  const queries = ct.queries || [];
+  const citedCount = queries.filter(q => q.cited).length;
+
+  // Collect all recos from all pages, group by criterion, dedup
+  const recosByCriterion = {};
+  validPages.forEach(p => {
+    (p.recommendations || []).forEach(rec => {
+      const crit = rec.criterion || 'Autre';
+      if (!recosByCriterion[crit]) recosByCriterion[crit] = [];
+      recosByCriterion[crit].push({ ...rec, _pageUrl: p.url });
+    });
+  });
+
+  const CRITERIA_NAMES = [
+    'Extractibilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
+    'Crawlabilite IA', 'Donnees structurees', 'Neutralite editoriale',
+    'Presence externe', 'Fraicheur & maintenance',
+  ];
+
+  // 3 weakest criteria
+  const critSorted = CRITERIA_NAMES.map(name => {
+    const d = criteriaAverages[name] || { avgScore: 0, max: 1 };
+    return { name, pct: d.max > 0 ? d.avgScore / d.max : 1 };
+  }).sort((a, b) => a.pct - b.pct);
+  const weakest3 = new Set(critSorted.slice(0, 3).map(c => c.name));
+
+  function dedupRecos(criterionName) {
+    const matched = [];
+    for (const [crit, recs] of Object.entries(recosByCriterion)) {
+      const normC = crit.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const normT = criterionName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (normC.includes(normT) || normT.includes(normC)) matched.push(...recs);
+    }
+    const deduped = [];
+    const seen = new Set();
+    for (const rec of matched) {
+      const key = (rec.title || rec.problem || '').slice(0, 50).toLowerCase();
+      if (seen.has(key)) {
+        const existing = deduped.find(d => (d.title || d.problem || '').slice(0, 50).toLowerCase() === key);
+        if (existing && !existing._pages.includes(rec._pageUrl)) existing._pages.push(rec._pageUrl);
+        continue;
+      }
+      seen.add(key);
+      deduped.push({ ...rec, _pages: [rec._pageUrl] });
+    }
+    deduped.sort((a, b) => ({ high: 0, medium: 1, low: 2 }[a.priority] ?? 1) - ({ high: 0, medium: 1, low: 2 }[b.priority] ?? 1));
+    return deduped;
+  }
+
+  // Projected score
+  let projGain = 0;
+  CRITERIA_NAMES.forEach(name => {
+    const d = criteriaAverages[name];
+    if (d && d.avgScore / d.max < 0.75) projGain += Math.round(d.max * 0.8 - d.avgScore);
+  });
+  const projected = Math.min(100, r.scoreAverage + Math.round(projGain * 0.7));
+
+  return (
+    <>
+      <Head>
+        <title>Rapport GEO Complet — {url} — {r.scoreAverage}/100 | Detekia</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+
+      <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'system-ui,-apple-system,BlinkMacSystemFont,sans-serif' }}>
+
+        {/* STICKY HEADER */}
+        <header style={{ position: 'sticky', top: 0, zIndex: 100, background: '#1A1916', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <span style={{ fontFamily: 'Georgia,serif', fontSize: 16, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>Detekia</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1, minWidth: 0 }}>
+            <span style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>{r.scoreAverage}<span style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)' }}>/100</span></span>
+            <span style={{ padding: '2px 10px', borderRadius: 20, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, background: `${g.color}22`, color: g.color, border: `1px solid ${g.color}44`, flexShrink: 0 }}>{g.label}</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{url} · {totalPages} pages</span>
+          </div>
+          <button onClick={handleDownload} disabled={downloading} style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'system-ui', opacity: downloading ? 0.6 : 1, flexShrink: 0 }}>
+            {downloading ? 'Génération...' : '↓ Télécharger PDF'}
+          </button>
+        </header>
+
+        <main style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
+
+          {/* ═══ PARTIE 1: VUE D'ENSEMBLE ═══ */}
+          <section id="synthese" style={{ marginBottom: 48 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Synthèse exécutive</div>
+            <h1 style={{ fontFamily: 'Georgia,serif', fontSize: 30, color: '#1A1916', letterSpacing: -1, marginBottom: 20, lineHeight: 1.1 }}>Résultats de l'analyse</h1>
+
+            {/* Score hero */}
+            <div style={{ background: '#1A1916', borderRadius: 20, padding: '36px 32px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: -80, right: -80, width: 280, height: 280, borderRadius: '50%', background: g.color, opacity: 0.06, pointerEvents: 'none' }} />
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 28, flexWrap: 'wrap' }}>
+                <div style={{ textAlign: 'center', flexShrink: 0 }}>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>{r.scoreAverage}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.25)' }}>/100 — score moyen du site</div>
+                  <div style={{ marginTop: 10, display: 'inline-block', background: `${g.color}22`, border: `1px solid ${g.color}44`, padding: '3px 14px', borderRadius: 20, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: g.color }}>{g.label}</div>
+                </div>
+                <div style={{ paddingBottom: 4, flex: 1, minWidth: 200 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 6 }}>{url} — {totalPages} pages analysées</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
+                    {r.distribution?.faible || 0} faible · {r.distribution?.moyen || 0} moyen · {r.distribution?.bon || 0} bon
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Executive summary */}
+            {r.executiveSummary && (
+              <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 24 }}>
+                {r.executiveSummary.split('\n').filter(Boolean).map((p, i) => <p key={i} style={{ marginBottom: 10 }}>{p}</p>)}
+              </div>
+            )}
+
+            {/* 8 criteria table */}
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>Les 8 critères GEO</h2>
+            <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 20 }}>
+              {CRITERIA_NAMES.map((name, i) => {
+                const d = criteriaAverages[name] || { avgScore: 0, max: 1 };
+                const pct = Math.round((d.avgScore / d.max) * 100);
+                const col = pct >= 75 ? '#10A37F' : pct >= 45 ? '#C9861A' : '#D97757';
+                const below = validPages.filter(p => { const c = (p.criteria || []).find(c => c.name === name); return c && (c.score / c.max) < 0.75; }).length;
+                return (
+                  <div key={i} style={{ marginBottom: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                      <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{name}</a>
+                      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                        <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680' }}>{below}/{validPages.length} sous seuil</span>
+                        <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{d.avgScore}/{d.max}</span>
+                      </div>
+                    </div>
+                    <div style={{ height: 4, background: '#F0EDE8', borderRadius: 3, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${pct}%`, background: col, borderRadius: 3 }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Top 3 actions + strengths/weaknesses */}
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>3 actions prioritaires</h2>
+            {actionPlan.slice(0, 3).map((a, i) => {
+              const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact);
+              return (
+                <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: pi.color, lineHeight: 1, flexShrink: 0, minWidth: 24 }}>{i + 1}</div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.action}</div><div style={{ fontSize: 11, color: '#8A8680' }}>{a.criterion || ''}</div></div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: pi.color, padding: '3px 9px', borderRadius: 12, border: `1px solid ${pi.color}33`, background: pi.bg, flexShrink: 0 }}>{pi.label}</div>
+                </div>
+              );
+            })}
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, marginTop: 20 }}>
+              <div style={{ background: '#E8F7F3', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 14, padding: '20px 24px' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Points forts</div>
+                {(r.topStrengths || []).map((s, i) => <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}><span style={{ color: '#10A37F', flexShrink: 0 }}>✓</span><span style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.5 }}>{s}</span></div>)}
+              </div>
+              <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 14, padding: '20px 24px' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Points faibles</div>
+                {(r.topWeaknesses || []).map((s, i) => <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}><span style={{ color: '#D97757', flexShrink: 0 }}>✗</span><span style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.5 }}>{s}</span></div>)}
+              </div>
+            </div>
+          </section>
+
+          {/* ═══ CONTEXTE 2026 (same as one-page) ═══ */}
+          <section id="contexte" style={{ marginBottom: 48 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Contexte 2026</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Pourquoi la visibilité IA est critique en 2026</h2>
+            <p style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.7, marginBottom: 20 }}>Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12, marginBottom: 20 }}>
+              {CTX_CARDS.map((card, i) => (
+                <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{card.label}</div>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 28, color: card.color, lineHeight: 1, marginBottom: 6 }}>{card.value}</div>
+                  <p style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.6, margin: 0 }}>{card.text} <span style={{ color: '#B0ABA5' }}>({card.source})</span></p>
+                </div>
+              ))}
+            </div>
+            <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px', marginBottom: 12 }}>
+              <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.7, margin: 0 }}><strong>Seulement 11%</strong> des domaines sont cités à la fois par ChatGPT ET Perplexity.</p>
+            </div>
+            <div style={{ background: '#F7F5F2', borderRadius: 10, padding: '18px 22px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Source académique</div>
+              <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.65, margin: 0 }}>"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024.</p>
+            </div>
+          </section>
+
+          {/* ═══ PARTIE 2: TEST IA CONSOLIDÉ 30 REQUÊTES ═══ */}
+          {queries.length > 0 && (
+            <section id="test-ia" style={{ marginBottom: 48 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Test IA consolidé</div>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Test de visibilité IA — 30 requêtes</h2>
+              <p style={{ fontSize: 13, color: '#8A8680', marginBottom: 20 }}>Nous avons simulé 30 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
+
+              <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap' }}>
+                <div style={{ background: '#1A1916', borderRadius: 14, padding: '20px 28px', textAlign: 'center', flexShrink: 0 }}>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 36, color: '#F7F5F2' }}>{citedCount}/{queries.length}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', whiteSpace: 'pre-line' }}>{'requêtes\ncitent votre site'}</div>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minWidth: 200 }}>
+                  {ct.bestOpportunity && <div style={{ background: '#E8F7F3', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', marginBottom: 4 }}>Meilleure opportunité</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{ct.bestOpportunity}</div></div>}
+                  {ct.mainBlocker && <div style={{ background: 'rgba(217,119,87,0.06)', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', marginBottom: 4 }}>Blocage principal</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{ct.mainBlocker}</div></div>}
+                </div>
+              </div>
+
+              {queries.map((q, i) => <CitationCard key={i} q={q} />)}
+
+              <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '14px 18px', marginTop: 16 }}>
+                <p style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.7, margin: 0 }}>Ce test simule des requêtes via l'IA. Les résultats varient selon le moteur, la formulation et le moment.</p>
+              </div>
+            </section>
+          )}
+
+          {/* ═══ PARTIE 3: 8 CRITÈRES ═══ */}
+          <section id="criteres" style={{ marginBottom: 48 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Analyse détaillée</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 24, lineHeight: 1.2 }}>Les 8 critères GEO</h2>
+
+            {CRITERIA_NAMES.map((criterionName, idx) => {
+              const avgData = criteriaAverages[criterionName] || { avgScore: 0, max: 1 };
+              const pct = Math.round((avgData.avgScore / avgData.max) * 100);
+              const col = pct >= 75 ? '#10A37F' : pct >= 45 ? '#C9861A' : '#D97757';
+              const why = lookupMap(WHY, criterionName);
+              const guide = lookupMap(GUIDES, criterionName);
+              const caseStudy = lookupMap(CASES, criterionName);
+              const deduped = dedupRecos(criterionName);
+              const below = validPages.filter(p => { const c = (p.criteria || []).find(c => c.name === criterionName); return c && (c.score / c.max) < 0.75; }).length;
+              const cc = (r.criteriaConsolidated || []).find(c => c.criterion === criterionName) || {};
+
+              return (
+                <div key={idx} id={`critere-${idx + 1}`} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24, marginBottom: 20, scrollMarginTop: 70 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase' }}>Critère {idx + 1} / 8</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
+                    <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{criterionName}</h3>
+                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                      <div style={{ fontFamily: 'Georgia,serif', fontSize: 32, color: col, lineHeight: 1 }}>{avgData.avgScore}<span style={{ fontSize: 14, color: '#C0BBB5' }}>/{avgData.max}</span></div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5' }}>{pct}% — moyenne site</div>
+                    </div>
+                  </div>
+                  <div style={{ height: 6, background: '#E5E2DC', borderRadius: 3, overflow: 'hidden', marginBottom: 16 }}>
+                    <div style={{ height: '100%', width: `${pct}%`, background: col, borderRadius: 3 }} />
+                  </div>
+
+                  {below > 0 && <div style={{ fontSize: 12, color: '#8A8680', marginBottom: 16 }}>{below}/{validPages.length} pages sous le seuil 75%</div>}
+
+                  {/* Consolidated synthesis */}
+                  {cc.synthesis && (
+                    <div style={{ marginBottom: 16 }}>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>Ce que nous avons trouvé</div>
+                      <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65 }}>{cc.synthesis}</div>
+                    </div>
+                  )}
+
+                  {why && (
+                    <div style={{ marginBottom: 16 }}>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>Pourquoi c'est important</div>
+                      <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.75, margin: 0 }}>{why}</p>
+                    </div>
+                  )}
+
+                  {/* Recommendations */}
+                  <div style={{ marginBottom: 16 }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Recommandations ({deduped.length})</div>
+                    {deduped.length > 0 ? deduped.map((rec, ri) => (
+                      <ProRecoCard key={ri} r={rec} index={ri} rootUrl={url} />
+                    )) : (
+                      <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 8, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
+                        <span style={{ fontSize: 18 }}>✓</span>
+                        <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>Ce critère est bien optimisé sur l'ensemble du site.</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {guide && (
+                    <div style={{ background: 'rgba(217,119,87,0.04)', borderLeft: '3px solid #D97757', borderRadius: '0 10px 10px 0', padding: '18px 22px', marginBottom: 16 }}>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Guide technique</div>
+                      <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.8, margin: 0 }}>{guide}</p>
+                    </div>
+                  )}
+
+                  {weakest3.has(criterionName) && caseStudy && (
+                    <div style={{ background: '#E8F7F3', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 10, padding: '18px 22px' }}>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Cas réel documenté</div>
+                      <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.7, margin: 0 }}>{caseStudy}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </section>
+
+          {/* ═══ PARTIE 4: PATTERNS INTER-PAGES ═══ */}
+          {patterns.length > 0 && (
+            <section id="patterns" style={{ marginBottom: 48 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Patterns détectés</div>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>Patterns transverses</h2>
+              {patterns.map((p, i) => {
+                const sevStyle = String(p.severity || '').toLowerCase().includes('critique') ? { bg: 'rgba(217,119,87,0.12)', color: '#D97757', label: 'CRITIQUE' }
+                  : String(p.severity || '').toLowerCase().includes('important') ? { bg: 'rgba(201,134,26,0.12)', color: '#C9861A', label: 'IMPORTANT' }
+                  : { bg: 'rgba(16,163,127,0.12)', color: '#10A37F', label: 'MINEUR' };
+                return (
+                  <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px 20px', marginBottom: 10 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                      <span style={{ display: 'inline-block', padding: '2px 9px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, letterSpacing: 1, background: sevStyle.bg, color: sevStyle.color }}>{sevStyle.label}</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680' }}>{p.criterion || ''}</span>
+                    </div>
+                    <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6, marginBottom: 6 }}>{p.pattern}</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680' }}>{(p.pagesAffected || []).length} pages concernées</div>
+                  </div>
+                );
+              })}
+            </section>
+          )}
+
+          {/* ═══ PARTIE 5: PLAN D'ACTION ═══ */}
+          <section id="plan-action" style={{ marginBottom: 48 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Plan d'action site</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Actions prioritaires consolidées</h2>
+            <p style={{ fontSize: 13, color: '#8A8680', marginBottom: 20 }}>{actionPlan.length} actions classées par priorité.</p>
+
+            {actionPlan.map((a, i) => {
+              const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact);
+              const ei = effortInfo(a.effort === 'eleve' ? 'high' : a.effort === 'moyen' ? 'medium' : a.effort === 'faible' ? 'low' : a.effort);
+              return (
+                <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px 20px', marginBottom: 8, borderLeft: `4px solid ${pi.color}` }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, flexWrap: 'wrap' }}>
+                    <span style={{ fontFamily: 'Georgia,serif', fontSize: 18, color: pi.color, minWidth: 24 }}>{i + 1}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 8px', borderRadius: 4, background: pi.bg, color: pi.color }}>{pi.label}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680' }}>{a.criterion || ''}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, marginLeft: 'auto' }}><span style={{ color: pi.color }}>{pi.label}</span> · <span style={{ color: ei.color }}>{ei.label}</span></span>
+                  </div>
+                  <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6 }}>{a.action}</div>
+                </div>
+              );
+            })}
+
+            {/* Projected score */}
+            <div style={{ background: '#1A1916', borderRadius: 16, padding: '28px 32px', marginTop: 28, marginBottom: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.35)', marginBottom: 4 }}>Score actuel</div>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 42, color: '#F7F5F2', lineHeight: 1 }}>{r.scoreAverage}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
+                </div>
+                <div style={{ fontFamily: 'Georgia,serif', fontSize: 24, color: 'rgba(247,245,242,0.3)' }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 4 }}>Score projeté</div>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 42, color: '#10A37F', lineHeight: 1 }}>{projected}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
+                </div>
+                <div style={{ flex: 1, minWidth: 200 }}>
+                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>En appliquant les recommandations, votre score GEO pourrait passer de {r.scoreAverage} à {projected}/100.</div>
+                </div>
+              </div>
+            </div>
+            <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '12px 16px', marginBottom: 24 }}>
+              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.6, margin: 0 }}>Cette projection est indicative. Elle ne constitue pas une garantie.</p>
+            </div>
+
+            {/* CTA Beeleven */}
+            <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 8 }}>ALLER PLUS LOIN</div>
+              <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Besoin d'aide pour implémenter ces recommandations ?</h3>
+              <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations pour vous.</p>
+              <a href="mailto:hello@detekia.fr?subject=Audit GEO Pro — suite du rapport" onClick={() => track('click-beeleven')} style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>Discutons-en →</a>
+            </div>
+          </section>
+
+          {/* ═══ PARTIE 6: ANNEXE BILAN PAR PAGE ═══ */}
+          <section id="annexe" style={{ marginBottom: 48 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Annexe</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>Bilan par page analysée</h2>
+
+            {validPages.map((p, i) => {
+              const sc = gradeInfo(p.score || 0);
+              const weakest = [...(p.criteria || [])].sort((a, b) => (a.score / a.max) - (b.score / b.max))[0];
+              return (
+                <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '14px 18px', marginBottom: 8 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                    <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', textDecoration: 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 300 }}>{(p.url || '').replace(url, '') || '/'}</a>
+                    <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: sc.color }}>{p.score}</span>
+                    <span style={{ padding: '2px 8px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: sc.bg, color: sc.color }}>{sc.label}</span>
+                    {weakest && <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', marginLeft: 'auto' }}>{weakest.name} ({weakest.score}/{weakest.max})</span>}
+                  </div>
+                  {/* Mini criterion bars */}
+                  <div style={{ display: 'flex', gap: 3, marginTop: 8 }}>
+                    {(p.criteria || []).map((c, ci) => {
+                      const cpct = c.max > 0 ? (c.score / c.max) * 100 : 0;
+                      const ccol = cpct >= 75 ? '#10A37F' : cpct >= 45 ? '#C9861A' : '#D97757';
+                      return <div key={ci} title={`${c.name}: ${c.score}/${c.max}`} style={{ flex: 1, height: 4, background: '#E5E2DC', borderRadius: 2, overflow: 'hidden' }}><div style={{ height: '100%', width: `${cpct}%`, background: ccol, borderRadius: 2 }} /></div>;
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+
+            {errorPages.length > 0 && (
+              <div style={{ marginTop: 12, fontSize: 12, color: '#D97757' }}>
+                {errorPages.length} page(s) non analysable(s) : {errorPages.map(p => p.url).join(', ')}
+              </div>
+            )}
+          </section>
+
+          {/* ═══ PARTIE 7: MÉTHODOLOGIE ═══ */}
+          <section id="methodologie" style={{ marginBottom: 48 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Transparence</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>Méthodologie</h2>
+
+            <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '12px 16px', marginBottom: 16 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>LIMITES DE L'ANALYSE</div>
+              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.5, margin: 0 }}>Ce rapport fournit une estimation de la citabilité IA basée sur des heuristiques. Il ne constitue pas une garantie de visibilité dans les réponses des moteurs IA.</p>
+            </div>
+
+            <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
+              <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>Analyse réalisée sur {totalPages} pages du site prioritisées par leur importance éditoriale (méthodologie de priorisation par sitemap + fraîcheur + profondeur). Chaque page est évaluée sur 8 critères pondérés. Le test IA Pro porte sur 30 requêtes simulées (vs 10 pour le rapport one-page).</p>
+
+              <div style={{ overflowX: 'auto', marginBottom: 16 }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden', fontSize: 11 }}>
+                  <thead><tr style={{ background: '#F7F5F2' }}>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Critère</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Poids</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Ce qui est mesuré</th>
+                  </tr></thead>
+                  <tbody>{METHODOLOGY_TABLE.map((row, i) => (
+                    <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
+                      <td style={{ padding: '6px 10px', color: '#1A1916' }}>{row.name}</td>
+                      <td style={{ padding: '6px 10px', textAlign: 'center', fontFamily: 'monospace', color: '#D97757' }}>{row.weight}</td>
+                      <td style={{ padding: '6px 10px', color: '#8A8680' }}>{row.measured}</td>
+                    </tr>
+                  ))}</tbody>
+                </table>
+              </div>
+
+              <div style={{ background: '#F7F5F2', borderRadius: 8, padding: '12px 16px', marginBottom: 16 }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1, marginBottom: 6 }}>SOURCE ACADÉMIQUE</div>
+                <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5, margin: 0 }}>"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024.</p>
+              </div>
+
+              <div style={{ fontSize: 10, color: '#B0ABA5' }}>Périmètre : {totalPages} pages analysées sur {url}. Score agrégé : moyenne arithmétique des scores individuels.</div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer style={{ textAlign: 'center', padding: '24px 0', borderTop: '1px solid #E5E2DC' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginBottom: 4 }}>Rapport généré le {date}</div>
+            <div style={{ fontSize: 11, color: '#B0ABA5' }}>Beeleven SASU · hello@detekia.fr · <a href="https://detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>detekia.fr</a></div>
+          </footer>
+        </main>
+      </div>
+    </>
+  );
+}
+
+// Pro reco card with _pages list
+function ProRecoCard({ r, index, rootUrl }) {
+  const pi = priorityInfo(r.priority);
+  const ei = effortInfo(r.effort);
+  const pagesNote = r._pages?.length > 1
+    ? `${r._pages.length} pages concernées : ${r._pages.slice(0, 4).map(u => u.replace(rootUrl, '') || '/').join(', ')}${r._pages.length > 4 ? ` +${r._pages.length - 4}` : ''}`
+    : r._pages?.[0] ? `Page : ${r._pages[0]}` : '';
+
+  return (
+    <div style={{ border: `1px solid ${pi.color}28`, borderLeft: `4px solid ${pi.color}`, borderRadius: '0 14px 14px 0', overflow: 'hidden', marginBottom: 12 }}>
+      <div style={{ padding: '12px 18px 10px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+        <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', padding: '3px 9px', borderRadius: 6, background: pi.bg, color: pi.color }}>{pi.label}</span>
+        {r.title && <span style={{ fontSize: 13, fontWeight: 600, color: '#1A1916' }}>{r.title}</span>}
+        <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8' }}>#{String(index + 1).padStart(2, '0')}</span>
+      </div>
+      <div style={{ padding: '12px 18px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 14 }}>
+          {r.impact && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: pi.bg, color: pi.color }}>Impact {r.impact === 'high' ? 'Élevé' : r.impact === 'medium' ? 'Moyen' : 'Faible'}</span>}
+          {r.effort && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: `${ei.color}18`, color: ei.color }}>Effort {ei.label}</span>}
+          {r.timeframe && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: '#F7F5F2', color: '#8A8680', border: '1px solid #E5E2DC' }}>{r.timeframe}</span>}
+        </div>
+        {r.problem && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>Le problème</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.problem}</div></div>}
+        {r.solution && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#10A37F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>La solution</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.solution}</div></div>}
+        {r.technicalImplementation && (
+          <div style={{ background: '#F7F5F2', borderRadius: 8, padding: '12px 16px', marginBottom: 10 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 6 }}>🛠️ Mise en œuvre technique</div>
+            {Array.isArray(r.technicalImplementation)
+              ? <ol style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.5, margin: 0, paddingLeft: 20 }}>{r.technicalImplementation.map((s, si) => <li key={si} style={{ marginBottom: 4 }}>{String(s).replace(/^\d+\.\s*/, '')}</li>)}</ol>
+              : <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.5 }}>{r.technicalImplementation}</div>}
+          </div>
+        )}
+        {r.codeExample && (
+          <div style={{ marginBottom: 10 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 5 }}>&lt;/&gt; Exemple de code</div>
+            <pre style={{ background: '#1A1916', color: '#F7F5F2', borderRadius: 8, padding: 14, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.55, whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflow: 'auto', maxHeight: 300 }}>{r.codeExample}</pre>
+          </div>
+        )}
+        {pagesNote && <div style={{ marginTop: 8, fontFamily: 'monospace', fontSize: 10, color: '#8A8680' }}>{pagesNote}</div>}
+      </div>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 import { Redis } from '@upstash/redis';
 import Anthropic from '@anthropic-ai/sdk';
-import { verifyQstashSignature, triggerPdfGeneration } from '../../lib/proQueue';
+import { verifyQstashSignature, triggerFinalizeReport } from '../../lib/proQueue';
 
 export const config = {
   maxDuration: 300,
@@ -294,14 +294,14 @@ JSON array only, no markdown:`;
     const duration = Date.now() - startMs;
     console.log(`[pro-consolidate] Consolidated ${siteJobId} in ${duration}ms. Site score avg: ${scoreAverage}/100. Patterns: ${(synthesis.patterns || []).length}. Actions: ${(synthesis.actionPlan || []).length}.`);
 
-    // Trigger PDF generation (atomic guard)
+    // Trigger report finalization (atomic guard)
     const pdfLock = `${JOB_PREFIX}:${siteJobId}:pdf_triggered`;
     const pdfAcquired = await redis.set(pdfLock, '1', { nx: true, ex: CONSOLIDATED_TTL });
     if (pdfAcquired) {
       const proto = req.headers['x-forwarded-proto'] || 'https';
       const host = req.headers['host'] || 'localhost:3000';
-      await triggerPdfGeneration(siteJobId, { baseUrl: `${proto}://${host}` });
-      console.log(`[pro-consolidate] PDF generation triggered for ${siteJobId}`);
+      await triggerFinalizeReport(siteJobId, { baseUrl: `${proto}://${host}` });
+      console.log(`[pro-consolidate] Report finalization triggered for ${siteJobId}`);
     }
 
     return res.status(200).json({ success: true, siteJobId, status: 'consolidated' });
