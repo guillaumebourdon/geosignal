@@ -178,13 +178,19 @@ Rules:
 - Be specific: reference actual URLs from the audit
 - NEVER write "${totalValid} pages sur ${totalValid}" — that's trivially obvious. Write "${totalValid} pages" or "toutes les ${totalValid} pages".`;
 
-    const synthesisMsg = await callHaikuWithRetry({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 6000,
-      temperature: 0.2,
-      messages: [{ role: 'user', content: synthesisPrompt }],
-    });
-    const synthesis = parseHaikuJson(synthesisMsg.content[0].text);
+    let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
+    try {
+      const synthesisMsg = await callHaikuWithRetry({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 8000,
+        temperature: 0.2,
+        messages: [{ role: 'user', content: synthesisPrompt }],
+      });
+      synthesis = parseHaikuJson(synthesisMsg.content[0].text);
+      console.log(`[pro-consolidate] Synthesis OK: exec=${(synthesis.executiveSummary || '').length}c, patterns=${(synthesis.patterns || []).length}, actions=${(synthesis.actionPlan || []).length}`);
+    } catch (e) {
+      console.error(`[pro-consolidate] Synthesis call FAILED: ${e.message}`);
+    }
 
     // 5-6. Claude call 2: Citation test consolidated (30 queries + simulation)
     const pageTitles = validPages.map(p => {

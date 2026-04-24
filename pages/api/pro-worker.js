@@ -84,7 +84,7 @@ export default async function handler(req, res) {
 
   console.log(`[pro-worker] Completed page ${index + 1}/${total} for ${siteJobId} (url=${url}, score=${result.score || 'error'}, progress=${newCount}/${total})`);
 
-  if (newCount === total) {
+  if (newCount >= total) {
     // Atomic guard: SET NX to prevent double consolidation from QStash retries
     const lockKey = `${JOB_PREFIX}:${siteJobId}:consolidation_triggered`;
     const acquired = await redis.set(lockKey, '1', { nx: true, ex: JOB_TTL });
