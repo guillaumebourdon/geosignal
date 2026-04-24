@@ -248,9 +248,9 @@ JSON array only, no markdown:`;
     console.log('[pro-consolidate] Starting 3 Sonnet calls in parallel...');
     const parallelStart = Date.now();
     const [synthesisResult, citationResult, criteriaResult] = await Promise.allSettled([
-      callHaikuWithRetry({ model: 'claude-sonnet-4-6-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
-      callHaikuWithRetry({ model: 'claude-sonnet-4-6-20250514', max_tokens: 8000, temperature: 0.3, messages: [{ role: 'user', content: citationPrompt }] }),
-      callHaikuWithRetry({ model: 'claude-sonnet-4-6-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
+      callHaikuWithRetry({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
+      callHaikuWithRetry({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.3, messages: [{ role: 'user', content: citationPrompt }] }),
+      callHaikuWithRetry({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
     ]);
     console.log(`[pro-consolidate] 3 Sonnet calls completed in ${Date.now() - parallelStart}ms`);
 
