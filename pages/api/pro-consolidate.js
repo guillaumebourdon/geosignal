@@ -191,21 +191,7 @@ Rules:
 - Be specific: reference actual URLs from the audit
 - NEVER write "${totalValid} pages sur ${totalValid}" — that's trivially obvious. Write "${totalValid} pages" or "toutes les ${totalValid} pages".`;
 
-    let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
-    try {
-      const synthesisMsg = await callHaikuWithRetry({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 8000,
-        temperature: 0.2,
-        messages: [{ role: 'user', content: synthesisPrompt }],
-      });
-      synthesis = parseHaikuJson(synthesisMsg.content[0].text);
-      console.log(`[pro-consolidate] Synthesis OK: exec=${(synthesis.executiveSummary || '').length}c, patterns=${(synthesis.patterns || []).length}, actions=${(synthesis.actionPlan || []).length}`);
-    } catch (e) {
-      console.error(`[pro-consolidate] Synthesis call FAILED: ${e.message}`);
-    }
-
-    // 5-6. Claude call 2: Citation test consolidated (30 queries + simulation)
+    // 5-6. Prepare all 3 Claude prompts (independent — safe to parallelize)
     const pageTitles = validPages.map(p => {
       const title = p.evidence?.metaTitle || p.url;
       return `${title} (${p.url})`;
@@ -226,15 +212,6 @@ Step 2: For each query, simulate whether ${new URL(rootUrl).hostname} would be c
 JSON only:
 {"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["competitor1"],"difficulty_to_rank":"easy|medium|hard","recommendation":"1 sentence","ai_response_excerpt":"first 100 chars of simulated AI answer"}],"citationRate":"X/30","bestOpportunity":"best query opportunity","mainBlocker":"main reason for low citations"}`;
 
-    const citationMsg = await callHaikuWithRetry({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 8000,
-      temperature: 0.3,
-      messages: [{ role: 'user', content: citationPrompt }],
-    });
-    const citationTest = parseHaikuJson(citationMsg.content[0].text);
-
-    // 6b. Claude call 3: Per-criterion consolidated analysis
     const criteriaForPrompt = Object.entries(criteriaAverages).map(([name, data]) => {
       const pagesBelow = validPages.filter(p => {
         const c = (p.criteria || []).find(cr => cr.name === name);
@@ -267,19 +244,43 @@ Rules:
 
 JSON array only, no markdown:`;
 
-    const criteriaMsg = await callHaikuWithRetry({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 8000,
-      temperature: 0.2,
-      messages: [{ role: 'user', content: criteriaPrompt }],
-    });
+    // Run all 3 Sonnet calls in parallel (independent inputs, no cross-dependencies)
+    console.log('[pro-consolidate] Starting 3 Sonnet calls in parallel...');
+    const parallelStart = Date.now();
+    const [synthesisResult, citationResult, criteriaResult] = await Promise.allSettled([
+      callHaikuWithRetry({ model: 'claude-sonnet-4-6-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
+      callHaikuWithRetry({ model: 'claude-sonnet-4-6-20250514', max_tokens: 8000, temperature: 0.3, messages: [{ role: 'user', content: citationPrompt }] }),
+      callHaikuWithRetry({ model: 'claude-sonnet-4-6-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
+    ]);
+    console.log(`[pro-consolidate] 3 Sonnet calls completed in ${Date.now() - parallelStart}ms`);
+
+    // Parse results (each can fail independently)
+    let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
+    if (synthesisResult.status === 'fulfilled') {
+      try {
+        synthesis = parseHaikuJson(synthesisResult.value.content[0].text);
+        console.log(`[pro-consolidate] Synthesis OK: exec=${(synthesis.executiveSummary || '').length}c, patterns=${(synthesis.patterns || []).length}, actions=${(synthesis.actionPlan || []).length}`);
+      } catch (e) { console.error('[pro-consolidate] Synthesis parse error:', e.message); }
+    } else {
+      console.error('[pro-consolidate] Synthesis call FAILED:', synthesisResult.reason?.message);
+    }
+
+    let citationTest = { queries: [], citationRate: '0/30', bestOpportunity: '', mainBlocker: '' };
+    if (citationResult.status === 'fulfilled') {
+      try { citationTest = parseHaikuJson(citationResult.value.content[0].text); } catch (e) { console.error('[pro-consolidate] Citation parse error:', e.message); }
+    } else {
+      console.error('[pro-consolidate] Citation call FAILED:', citationResult.reason?.message);
+    }
+
     let criteriaConsolidated = [];
-    try {
-      const rawCriteria = criteriaMsg.content[0].text;
-      const arrMatch = rawCriteria.match(/\[[\s\S]*\]/);
-      if (arrMatch) criteriaConsolidated = JSON.parse(arrMatch[0]);
-    } catch (e) {
-      console.error('[pro-consolidate] Failed to parse criteriaConsolidated:', e.message);
+    if (criteriaResult.status === 'fulfilled') {
+      try {
+        const rawCriteria = criteriaResult.value.content[0].text;
+        const arrMatch = rawCriteria.match(/\[[\s\S]*\]/);
+        if (arrMatch) criteriaConsolidated = JSON.parse(arrMatch[0]);
+      } catch (e) { console.error('[pro-consolidate] Criteria parse error:', e.message); }
+    } else {
+      console.error('[pro-consolidate] Criteria call FAILED:', criteriaResult.reason?.message);
     }
 
     // Enrich each criteriaConsolidated entry with avgScore data

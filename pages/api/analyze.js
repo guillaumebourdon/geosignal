@@ -489,7 +489,7 @@ JSON only, no markdown:
 {"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois","criterion":"<French criterion name>","title":"<6 words max>","problem":"<3-5 sentences>","solution":"<3-5 sentences>","technicalImplementation":"<2-4 numbered steps>","codeExample":"<code snippet or null>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
 
   const message = await client.messages.create({
-    model: 'claude-haiku-4-5-20251001',
+    model: 'claude-sonnet-4-6-20250514',
     max_tokens: 8192,
     temperature: 0.2,
     messages: [{ role: 'user', content: prompt }],
@@ -541,7 +541,7 @@ Reply ONLY in JSON without markdown:
 {"tests":[{"query":"","difficulty":"${difficultyValues.generic}|${difficultyValues.niche}|${difficultyValues.longTail}","cited":false,"competitors_cited":[],"difficulty_to_rank":"${difficultyValues.easy}|${difficultyValues.medium}|${difficultyValues.hard}","recommendation":"1 concrete sentence","ai_response_excerpt":"first 150 characters of the simulated response"}],"summary":{"cited_count":0,"total_tests":10,"best_opportunity":"query where the site has the best chance","main_blocker":"main reason"}}`;
 
   const message = await client.messages.create({
-    model: 'claude-haiku-4-5-20251001',
+    model: 'claude-sonnet-4-6-20250514',
     max_tokens: 5000,
     temperature: 0.3,
     messages: [{ role: 'user', content: prompt }],
@@ -609,7 +609,7 @@ export default async function handler(req, res) {
   const url = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   console.log('analyze: starting for', url);
 
-  const cacheKey = `detekia:v18:${url.toLowerCase()}:${locale}`;
+  const cacheKey = `detekia:v19:${url.toLowerCase()}:${locale}`;
 
   try {
     const cached = await redis.get(cacheKey);
@@ -663,7 +663,7 @@ export default async function handler(req, res) {
         ? `OUTPUT LANGUAGE: English (US). Respond in American English only.`
         : `LANGUE DE SORTIE : Français.`;
       const verdictMsg = await client.messages.create({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-4-6-20250514',
         max_tokens: 150,
         temperature: 0.2,
         messages: [{ role: 'user', content: `${verdictLang}\nYou are a senior GEO consultant. The site ${url} gets a final score of ${totalScore}/100. Strengths: ${(claude.strengths || []).join(', ')}. Priority: ${claude.topPriority || 'none'}. Generate a verdict in 1 concise sentence. Reply ONLY with the sentence, no quotes, no JSON.` }],
