@@ -22,6 +22,14 @@ export default function Contact() {
       <SEO
         title={t('contact.seo.title')}
         description={t('contact.seo.description')}
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "email": "hello@detekia.fr",
+          "url": "https://detekia.fr/contact",
+          "availableLanguage": ["French", "English"]
+        }}
       />
 
       <Header ctaLabel={t('nav.ctaAnalyze')} />

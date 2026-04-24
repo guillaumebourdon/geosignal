@@ -109,7 +109,17 @@ export default function Pricing() {
 
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
-      <SEO title={t('pricing.seo.title')} description={t('pricing.seo.description')} />
+      <SEO title={t('pricing.seo.title')} description={t('pricing.seo.description')} schema={{
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Detekia GEO Audit",
+        "description": "Audit de visibilite IA pour sites web — score GEO sur 100, 8 criteres, recommandations priorisees",
+        "brand": { "@type": "Organization", "name": "Detekia" },
+        "offers": [
+          { "@type": "Offer", "name": "Rapport One-Page", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/pricing" },
+          { "@type": "Offer", "name": "Audit Pro Multi-Pages", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pricing" }
+        ]
+      }} />
 
       <Header ctaLabel={t('nav.ctaAnalyze')} />
 

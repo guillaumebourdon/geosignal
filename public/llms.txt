@@ -1,0 +1,37 @@
+# Detekia
+> Detekia est un outil d'audit GEO (Generative Engine Optimization) qui evalue la visibilite d'un site web face aux IA generatives (ChatGPT, Claude, Gemini, Perplexity) sur 8 criteres ponderes. Developpe par Beeleven SASU, Paris.
+
+## Pages principales
+- [Accueil](https://detekia.fr/) : Analyseur GEO gratuit, score sur 100
+- [Methodologie](https://detekia.fr/methodologie) : Les 8 criteres GEO et leur ponderation (source: Aggarwal et al., KDD 2024)
+- [A propos](https://detekia.fr/a-propos) : Equipe, mission, fondateur Guillaume Bourdon
+- [Pricing](https://detekia.fr/pricing) : Rapport one-page 29 EUR, audit Pro multi-pages 99 EUR
+- [Contact](https://detekia.fr/contact) : hello@detekia.fr
+
+## Blog - Guides GEO
+- [GEO Guide Complet 2026](https://detekia.fr/blog/geo-guide-complet-2026) : Introduction complete au Generative Engine Optimization
+- [SEO vs GEO : differences 2026](https://detekia.fr/blog/seo-vs-geo-differences-2026) : Comparaison SEO traditionnel et GEO
+- [Audit GEO en 9 etapes](https://detekia.fr/blog/audit-geo-visibilite-ia) : Guide pratique pour auditer sa visibilite IA
+- [Score GEO : mesurer sa visibilite](https://detekia.fr/blog/score-geo-mesurer-visibilite-ia) : Comment interpreter un score GEO
+- [8 criteres GEO expliques](https://detekia.fr/blog/8-criteres-geo-methodologie-detekia) : Detail de la methodologie Detekia
+- [Visibilite IA pour debutants](https://detekia.fr/blog/visibilite-ia-guide-debutant) : Premiers pas en GEO
+
+## Blog - Moteurs IA
+- [Comment ChatGPT choisit ses sources](https://detekia.fr/blog/comment-chatgpt-choisit-ses-sources) : Fonctionnement interne de ChatGPT pour la selection de sources
+- [Pourquoi ChatGPT ne cite pas votre site](https://detekia.fr/blog/pourquoi-chatgpt-ne-cite-pas-votre-site) : Diagnostic et solutions
+- [Perplexity : comment apparaitre](https://detekia.fr/blog/perplexity-comment-apparaitre) : Strategies pour Perplexity AI
+- [Gemini et visibilite en France](https://detekia.fr/blog/gemini-visibilite-site-france) : Optimiser pour Google Gemini
+- [Concurrents ChatGPT et visibilite](https://detekia.fr/blog/concurrents-chatgpt-visibilite) : Panorama des moteurs IA
+- [AI Overviews Google 2026](https://detekia.fr/blog/ai-overviews-google-2026) : Impact des AI Overviews sur le trafic
+
+## Blog - Techniques GEO
+- [Schema.org et IA : guide pratique](https://detekia.fr/blog/schema-org-ia-guide-pratique) : Implementer Schema.org pour la visibilite IA
+- [FAQ Schema + FAQPage combo](https://detekia.fr/blog/faq-schema-faqpage-combo-ia) : Optimiser les FAQ pour les IA
+- [Meta descriptions SEO/GEO 2026](https://detekia.fr/blog/meta-descriptions-seo-geo-2026) : Rediger des meta descriptions pour humains et IA
+- [llms.txt et robots.txt pour IA](https://detekia.fr/blog/llms-txt-robots-crawlabilite-ia) : Configurer l'acces des crawlers IA
+- [Reddit comme source GEO](https://detekia.fr/blog/reddit-geo-source-ia) : Strategie Reddit pour la visibilite IA
+- [Sites qui bloquent les bots IA](https://detekia.fr/blog/sites-bloquent-bots-ia) : Analyse et consequences
+- [Contenu long vs court pour IA](https://detekia.fr/blog/contenu-long-vs-court-ia) : Quelle longueur optimale
+- [Pourquoi le trafic Google baisse en 2026](https://detekia.fr/blog/pourquoi-trafic-google-baisse-2026) : Analyse et alternatives
+- [E-commerce et recommandations IA](https://detekia.fr/blog/ecommerce-recommandations-ia) : GEO pour les sites marchands
+- [GEO pour agences SEO](https://detekia.fr/blog/geo-agences-seo-audit-ia) : Integrer le GEO dans les offres d'agence
