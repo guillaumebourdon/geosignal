@@ -25,45 +25,8 @@ const JOB_PREFIX = 'detekia:pro:v1:job';
 const CONSOLIDATED_TTL = 7 * 24 * 60 * 60;
 const ADMIN_SECRET = process.env.PRO_ADMIN_SECRET;
 
-async function callHaikuWithRetry(params, maxRetries = 3) {
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    try {
-      return await anthropic.messages.create(params);
-    } catch (err) {
-      const is429 = err?.status === 429
-        || String(err?.message || err || '').includes('429')
-        || String(err?.message || err || '').includes('rate_limit');
-      if (is429 && attempt < maxRetries) {
-        const retryAfter = Math.min(parseInt(err?.headers?.['retry-after'] || '0', 10) || (15 + attempt * 15), 60);
-        console.log(`[pro-trigger] 429, waiting ${retryAfter}s (attempt ${attempt + 1}/${maxRetries})`);
-        await new Promise(r => setTimeout(r, retryAfter * 1000));
-        continue;
-      }
-      throw err;
-    }
-  }
-}
-
-function sanitizeJson(str) {
-  // Remove control chars that break JSON.parse (literal newlines inside strings, etc.)
-  return str.replace(/[\x00-\x1f\x7f]/g, ch => ch === '\n' || ch === '\r' || ch === '\t' ? ' ' : '');
-}
-
-function parseHaikuJson(raw) {
-  const match = raw.match(/\{[\s\S]*\}/);
-  if (!match) throw new Error('No JSON in Claude response');
-  try { return JSON.parse(match[0]); } catch {
-    return JSON.parse(sanitizeJson(match[0]));
-  }
-}
-
-function parseHaikuArray(raw) {
-  const match = raw.match(/\[[\s\S]*\]/);
-  if (!match) throw new Error('No JSON array in Claude response');
-  try { return JSON.parse(match[0]); } catch {
-    return JSON.parse(sanitizeJson(match[0]));
-  }
-}
+const { callWithRetry, parseJson: parseHaikuJson, parseJsonArray: parseHaikuArray } = require('../../lib/anthropicRetry');
+function callHaikuWithRetry(params, maxRetries = 3) { return callWithRetry(anthropic, params, maxRetries); }
 
 export default async function handler(req, res) {
   const { siteJobId, secret, action } = req.query;

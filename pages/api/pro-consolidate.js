@@ -17,24 +17,8 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout
 const JOB_PREFIX = 'detekia:pro:v1:job';
 const CONSOLIDATED_TTL = 7 * 24 * 60 * 60;
 
-async function callHaikuWithRetry(params, maxRetries = 3) {
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    try {
-      return await anthropic.messages.create(params);
-    } catch (err) {
-      const is429 = err?.status === 429
-        || String(err?.message || err || '').includes('429')
-        || String(err?.message || err || '').includes('rate_limit');
-      if (is429 && attempt < maxRetries) {
-        const retryAfter = Math.min(parseInt(err?.headers?.['retry-after'] || '0', 10) || (15 + attempt * 15), 60);
-        console.log(`[pro-consolidate] 429 rate limit, waiting ${retryAfter}s (attempt ${attempt + 1}/${maxRetries})`);
-        await new Promise(r => setTimeout(r, retryAfter * 1000));
-        continue;
-      }
-      throw err;
-    }
-  }
-}
+const { callWithRetry, parseJson: parseHaikuJsonShared } = require('../../lib/anthropicRetry');
+function callHaikuWithRetry(params, maxRetries = 3) { return callWithRetry(anthropic, params, maxRetries); }
 
 function parseHaikuJson(raw) {
   const match = raw.match(/\{[\s\S]*\}/);

@@ -126,6 +126,7 @@ export default async function handler(req, res) {
   try {
     // 1. Store report in Redis (no TTL = permanent)
     const reportRecord = {
+      reportType: 'onepage',
       reportData,
       email,
       url,
