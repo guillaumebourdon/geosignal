@@ -44,10 +44,25 @@ async function callHaikuWithRetry(params, maxRetries = 3) {
   }
 }
 
+function sanitizeJson(str) {
+  // Remove control chars that break JSON.parse (literal newlines inside strings, etc.)
+  return str.replace(/[\x00-\x1f\x7f]/g, ch => ch === '\n' || ch === '\r' || ch === '\t' ? ' ' : '');
+}
+
 function parseHaikuJson(raw) {
   const match = raw.match(/\{[\s\S]*\}/);
   if (!match) throw new Error('No JSON in Claude response');
-  return JSON.parse(match[0]);
+  try { return JSON.parse(match[0]); } catch {
+    return JSON.parse(sanitizeJson(match[0]));
+  }
+}
+
+function parseHaikuArray(raw) {
+  const match = raw.match(/\[[\s\S]*\]/);
+  if (!match) throw new Error('No JSON array in Claude response');
+  try { return JSON.parse(match[0]); } catch {
+    return JSON.parse(sanitizeJson(match[0]));
+  }
 }
 
 export default async function handler(req, res) {
@@ -158,8 +173,7 @@ export default async function handler(req, res) {
       });
       let criteriaConsolidated = [];
       try {
-        const arrMatch = criteriaMsg.content[0].text.match(/\[[\s\S]*\]/);
-        if (arrMatch) criteriaConsolidated = JSON.parse(arrMatch[0]);
+        criteriaConsolidated = parseHaikuArray(criteriaMsg.content[0].text);
       } catch (e) { console.error('[pro-trigger] Failed to parse criteria:', e.message); }
       console.log(`[pro-trigger] Criteria done. Count: ${criteriaConsolidated.length}`);
 
