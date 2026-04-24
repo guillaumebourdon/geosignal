@@ -820,6 +820,16 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
     return null;
   }
 
+  // Aggressive normalization for dedup: strip articles, accents, punctuation, short words
+  function dedupKey(text) {
+    return (text || '').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .replace(/\b(le|la|les|de|du|des|et|en|un|une|pour|sur|dans|par|a|au|aux|l|d|s)\b/g, '')
+      .replace(/\s+/g, ' ').trim()
+      .split(' ').sort().join(' '); // Sort words for order-independent matching
+  }
+
   function dedupRecos(criterionName) {
     const matched = [];
     for (const [crit, recs] of Object.entries(recosByCriterion)) {
@@ -827,15 +837,31 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
       if (mappedCrit === criterionName) matched.push(...recs);
     }
     const deduped = [];
-    const seen = new Set();
+    const keyMap = {}; // dedupKey → index in deduped
     for (const rec of matched) {
-      const key = (rec.title || rec.problem || '').slice(0, 50).toLowerCase();
-      if (seen.has(key)) {
-        const existing = deduped.find(d => (d.title || d.problem || '').slice(0, 50).toLowerCase() === key);
-        if (existing && !existing._pages.includes(rec._pageUrl)) existing._pages.push(rec._pageUrl);
+      const key = dedupKey(rec.title || rec.problem?.substring(0, 80) || '');
+      // Check if any existing key is a subset or superset (fuzzy match)
+      let matchedIdx = keyMap[key];
+      if (matchedIdx === undefined) {
+        const keyWords = new Set(key.split(' ').filter(w => w.length > 3));
+        for (const [existingKey, idx] of Object.entries(keyMap)) {
+          const existingWords = new Set(existingKey.split(' ').filter(w => w.length > 3));
+          // If 60%+ of significant words overlap, it's the same reco
+          const overlap = [...keyWords].filter(w => existingWords.has(w)).length;
+          const minSize = Math.min(keyWords.size, existingWords.size);
+          if (minSize > 0 && overlap / minSize >= 0.6) { matchedIdx = idx; break; }
+        }
+      }
+      if (matchedIdx !== undefined) {
+        const existing = deduped[matchedIdx];
+        if (!existing._pages.includes(rec._pageUrl)) existing._pages.push(rec._pageUrl);
+        // Keep the reco with the longest problem/solution text
+        if ((rec.problem || '').length > (existing.problem || '').length) {
+          Object.assign(existing, { ...rec, _pages: existing._pages });
+        }
         continue;
       }
-      seen.add(key);
+      keyMap[key] = deduped.length;
       deduped.push({ ...rec, _pages: [rec._pageUrl] });
     }
     deduped.sort((a, b) => ({ high: 0, medium: 1, low: 2 }[a.priority] ?? 1) - ({ high: 0, medium: 1, low: 2 }[b.priority] ?? 1));
@@ -1345,6 +1371,7 @@ function CitationCard({ q }) {
     ? { bg: 'rgba(16,163,127,0.12)', color: '#10A37F', label: 'Cité', icon: '✓' }
     : { bg: 'rgba(217,119,87,0.12)', color: '#D97757', label: 'Non cité', icon: '✗' };
   const typeLabel = q.difficulty === 'generic' ? 'GÉNÉRIQUE' : q.difficulty === 'niche' ? 'NICHE' : 'LONGUE TRAÎNE';
+  const competitors = q.competitors_cited || q.competitorsCited || [];
 
   return (
     <div onClick={() => setOpen(!open)} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '14px 18px', marginBottom: 8, cursor: 'pointer' }}>
@@ -1354,9 +1381,12 @@ function CitationCard({ q }) {
         {q.difficulty_to_rank && <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', marginLeft: 'auto' }}>Difficulté : {q.difficulty_to_rank}</span>}
       </div>
       <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginTop: 6 }}>{q.query}</div>
+      {/* Competitors always visible when present */}
+      {competitors.length > 0 && (
+        <div style={{ fontSize: 11, color: '#8A8680', marginTop: 4 }}>Cités à votre place : {competitors.join(', ')}</div>
+      )}
       {open && (
         <div style={{ paddingTop: 10, marginTop: 8, borderTop: '1px solid #F0EDE8' }}>
-          {(q.competitors_cited || q.competitorsCited)?.length > 0 && <div style={{ fontSize: 11, color: '#8A8680', marginBottom: 6 }}>Cités à votre place : {(q.competitors_cited || q.competitorsCited).join(', ')}</div>}
           {q.ai_response_excerpt && <div style={{ fontSize: 11, color: '#8A8680', fontStyle: 'italic', marginBottom: 6, background: '#FAFAF9', padding: '8px 12px', borderRadius: 6 }}>{q.ai_response_excerpt}</div>}
           {q.recommendation && <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.5 }}><strong>Recommandation :</strong> {q.recommendation}</div>}
         </div>
