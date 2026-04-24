@@ -125,17 +125,42 @@ export default async function handler(req, res) {
       topRecos: (p.recommendations || []).slice(0, 3).map(r => `${r.criterion}: ${r.title || r.diagnostic || ''}`).join('; '),
     }));
 
+    const today = new Date().toISOString().split('T')[0];
     const langInstruction = locale === 'en'
       ? 'OUTPUT LANGUAGE: English (US). ALL text values MUST be in American English.'
       : 'LANGUE DE SORTIE : Francais. Toutes les valeurs texte en francais professionnel.';
 
+    // Precompute stats so Haiku doesn't invent numbers
+    const totalAnalyzed = total;
+    const totalValid = validPages.length;
+    const totalErrors = errorPages.length;
+    const blogPages = validPages.filter(p => /blog/i.test(p.url));
+    const belowByCriterion = {};
+    for (const name of criteriaNames) {
+      belowByCriterion[name] = validPages.filter(p => {
+        const c = (p.criteria || []).find(cr => cr.name === name);
+        return c && (c.score / c.max) < 0.75;
+      }).length;
+    }
+
+    const statsBlock = `FIXED STATS (use these exact numbers, do NOT count yourself):
+- Today's date: ${today} (2026 is the CURRENT year, dates in 2026 are RECENT not future)
+- Total pages queued: ${totalAnalyzed}
+- Pages successfully analyzed: ${totalValid}
+- Pages with errors: ${totalErrors}
+- Blog/article pages: ${blogPages.length}
+- Score distribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)
+- Pages below 75% threshold per criterion:
+${Object.entries(belowByCriterion).map(([k, v]) => `  ${k}: ${v}/${totalValid}`).join('\n')}`;
+
     const synthesisPrompt = `${langInstruction}
 
-You are a senior GEO consultant analyzing a FULL WEBSITE audit (${validPages.length} pages).
+You are a senior GEO consultant analyzing a FULL WEBSITE audit.
+
+${statsBlock}
 
 Site: ${rootUrl}
 Average GEO score: ${scoreAverage}/100
-Distribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)
 
 Pages analyzed:
 ${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}
@@ -147,10 +172,11 @@ Generate a comprehensive site-level analysis. JSON only:
 {"executiveSummary":"2-3 paragraphs qualitative analysis of the site's overall GEO health","topStrengths":["strength 1","strength 2","strength 3"],"topWeaknesses":["weakness 1","weakness 2","weakness 3"],"patterns":[{"pattern":"description","pagesAffected":["url1","url2"],"criterion":"criterion name","severity":"critique|important|mineur"}],"actionPlan":[{"priority":1,"action":"description","criterion":"criterion name","impact":"eleve|moyen|faible","effort":"faible|moyen|eleve","pagesAffected":["url1","url2"]}]}
 
 Rules:
-- executiveSummary: 2-3 substantial paragraphs, specific to this site
+- executiveSummary: 2-3 substantial paragraphs, specific to this site. Use the FIXED STATS numbers above verbatim.
 - patterns: 5 to 8 cross-page patterns detected
 - actionPlan: 10 to 15 site-level actions, sorted by priority (impact/effort ratio)
-- Be specific: reference actual URLs from the audit`;
+- Be specific: reference actual URLs from the audit
+- NEVER write "${totalValid} pages sur ${totalValid}" — that's trivially obvious. Write "${totalValid} pages" or "toutes les ${totalValid} pages".`;
 
     const synthesisMsg = await callHaikuWithRetry({
       model: 'claude-haiku-4-5-20251001',
@@ -204,7 +230,9 @@ JSON only:
 
     const criteriaPrompt = `${langInstruction}
 
-You are a senior GEO consultant. For a site audit of ${rootUrl} (${validPages.length} pages, avg score ${scoreAverage}/100), generate a per-criterion consolidated analysis.
+${statsBlock}
+
+You are a senior GEO consultant. For a site audit of ${rootUrl} (${totalValid} pages analyzed, avg score ${scoreAverage}/100), generate a per-criterion consolidated analysis.
 
 Criteria data:
 ${criteriaForPrompt}
@@ -213,7 +241,7 @@ For each of the 8 GEO criteria, generate a JSON array of 8 objects:
 [{"criterion":"exact criterion name","synthesis":"2-3 sentences describing the state of this criterion across all pages","consolidatedRecommendation":{"diagnostic":"1 sentence","whyCritical":"1 sentence","whatToDo":"2 sentences","howToDoIt":"2-3 sentences","concreteExample":"1 sentence","expectedImpact":"1 sentence","expertTip":"1 sentence","pagesAffected":["url1","url2"]}}]
 
 Rules:
-- synthesis must reference specific numbers (X/20 pages lack..., Y pages have...)
+- synthesis must use the FIXED STATS numbers above (e.g. "${belowByCriterion[criteriaNames[0]]}/${totalValid} pages" not your own count)
 - consolidatedRecommendation must be site-level, not page-specific
 - pagesAffected: list up to 5 most impacted URLs
 - Be specific to ${rootUrl}
@@ -253,7 +281,73 @@ JSON array only, no markdown:`;
       };
     });
 
-    // 7. Build consolidated report — include full page data for PDF template
+    // 7. Sonnet dedup pass — merge semantic duplicates across page recos
+    // Collect all page recos with their patternIds for Sonnet review
+    let allPageRecos = [];
+    validPages.forEach(p => {
+      (p.recommendations || []).forEach(r => {
+        allPageRecos.push({
+          criterion: r.criterion || '',
+          patternId: r.patternId || '',
+          title: r.title || '',
+          pageUrl: p.url,
+        });
+      });
+    });
+
+    // Build a summary for Sonnet to review
+    const recoByCritSummary = {};
+    for (const r of allPageRecos) {
+      const c = r.criterion;
+      if (!recoByCritSummary[c]) recoByCritSummary[c] = {};
+      const key = `${r.patternId || 'none'}::${r.title}`;
+      if (!recoByCritSummary[c][key]) recoByCritSummary[c][key] = { patternId: r.patternId, title: r.title, pages: [] };
+      recoByCritSummary[c][key].pages.push(r.pageUrl);
+    }
+
+    // Call Sonnet to merge remaining duplicates
+    let mergeMap = {}; // title → canonical title (for recos that should merge)
+    try {
+      const recoListForSonnet = [];
+      for (const [crit, recos] of Object.entries(recoByCritSummary)) {
+        for (const r of Object.values(recos)) {
+          recoListForSonnet.push({ criterion: crit, patternId: r.patternId, title: r.title, pageCount: r.pages.length });
+        }
+      }
+
+      if (recoListForSonnet.length > 5) {
+        const sonnetMsg = await callHaikuWithRetry({
+          model: 'claude-sonnet-4-6-20250514',
+          max_tokens: 4000,
+          temperature: 0,
+          messages: [{ role: 'user', content: `You are deduplicating a list of recommendations from a website audit. Many titles describe the SAME action with different wording.
+
+For each group of duplicates, output a merge instruction. JSON only, no markdown:
+{"merges":[{"canonicalTitle":"the best title to keep","titlesToMerge":["title 1","title 2","title 3"]}]}
+
+Rules:
+- Only merge if the titles describe the SAME concrete action (e.g. "add external sources" and "source statistics" = same action)
+- Different schema types (Organization vs Article vs FAQ) are DIFFERENT actions — do NOT merge
+- "optimize for IA crawlers" and "optimize HTML structure" = same action = merge
+- "meta descriptions" and "titles and descriptions" = same action = merge
+- Be aggressive: if in doubt, merge
+
+Recommendations to review:
+${recoListForSonnet.map(r => `[${r.criterion}] "${r.title}" (${r.pageCount} pages, patternId: ${r.patternId})`).join('\n')}` }],
+        });
+        const sonnetResult = parseHaikuJson(sonnetMsg.content[0].text);
+        for (const merge of (sonnetResult.merges || [])) {
+          for (const t of (merge.titlesToMerge || [])) {
+            mergeMap[t.toLowerCase()] = merge.canonicalTitle;
+          }
+        }
+        console.log(`[pro-consolidate] Sonnet dedup: ${Object.keys(mergeMap).length} titles merged into ${new Set(Object.values(mergeMap)).size} canonical titles`);
+      }
+    } catch (e) {
+      console.error('[pro-consolidate] Sonnet dedup failed (non-blocking):', e.message);
+    }
+
+    // 8. Build consolidated report — include full page data with merge info
     const fullPages = pages.map(p => ({
       url: p.url,
       score: p.score,
@@ -262,7 +356,10 @@ JSON array only, no markdown:`;
       verdict: p.verdict || null,
       strengths: p.strengths || [],
       criteria: p.criteria || [],
-      recommendations: (p.recommendations || []).slice(0, 3),
+      recommendations: (p.recommendations || []).map(r => {
+        const canonical = mergeMap[(r.title || '').toLowerCase()];
+        return canonical ? { ...r, _mergedTitle: canonical } : r;
+      }),
     }));
 
     const consolidatedReport = {

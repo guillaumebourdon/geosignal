@@ -775,13 +775,15 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
   const queries = ct.queries || [];
   const citedCount = queries.filter(q => q.cited).length;
 
-  // Collect all recos from all pages, group by criterion, dedup
+  // Collect all recos from all pages, group by criterion, apply Sonnet merge titles
   const recosByCriterion = {};
   validPages.forEach(p => {
     (p.recommendations || []).forEach(rec => {
       const crit = rec.criterion || 'Autre';
       if (!recosByCriterion[crit]) recosByCriterion[crit] = [];
-      recosByCriterion[crit].push({ ...rec, _pageUrl: p.url });
+      // If Sonnet merged this title, use the canonical title for dedup
+      const effectiveTitle = rec._mergedTitle || rec.title;
+      recosByCriterion[crit].push({ ...rec, title: effectiveTitle, _pageUrl: p.url });
     });
   });
 
@@ -840,24 +842,31 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
       const mappedCrit = matchCriterionName(crit);
       if (mappedCrit === criterionName) matched.push(...recs);
     }
-    // Title-only matching (titles are 5-word summaries — problem text varies too much per page)
+    // Layer 1: Group by patternId (if present from Haiku prompt)
+    // Layer 2: Fuzzy title matching as fallback
     const deduped = [];
-    const keyMap = {};
+    const patternMap = {}; // patternId → index in deduped
+    const keyMap = {};     // dedupKey → index in deduped
     for (const rec of matched) {
-      const key = dedupKey(rec.title || '');
-      const keyWords = new Set(key.split(' ').filter(w => w.length > 2));
+      const pid = rec.patternId && rec.patternId !== 'other' ? rec.patternId : null;
 
-      let matchedIdx = keyMap[key]; // exact key match
-      if (matchedIdx === undefined && keyWords.size > 0) {
-        // Fuzzy: if ANY significant word overlaps on these short titles, it's likely the same reco
-        // (after verb/article stripping, titles like "schema.org article" and "schema.org blogposting"
-        // still share "schema" which is enough signal within the same criterion)
-        for (const [existingKey, idx] of Object.entries(keyMap)) {
-          const existingWords = new Set(existingKey.split(' ').filter(w => w.length > 2));
-          const overlap = [...keyWords].filter(w => existingWords.has(w)).length;
-          const maxSize = Math.max(keyWords.size, existingWords.size);
-          // 50% of the LARGER set must overlap (stricter than min, catches short keys)
-          if (maxSize > 0 && overlap / maxSize >= 0.5) { matchedIdx = idx; break; }
+      // Try patternId match first
+      let matchedIdx = pid ? patternMap[pid] : undefined;
+
+      // Fallback: fuzzy title match
+      if (matchedIdx === undefined) {
+        const key = dedupKey(rec.title || '');
+        matchedIdx = keyMap[key];
+        if (matchedIdx === undefined) {
+          const keyWords = new Set(key.split(' ').filter(w => w.length > 2));
+          if (keyWords.size > 0) {
+            for (const [existingKey, idx] of Object.entries(keyMap)) {
+              const existingWords = new Set(existingKey.split(' ').filter(w => w.length > 2));
+              const overlap = [...keyWords].filter(w => existingWords.has(w)).length;
+              const maxSize = Math.max(keyWords.size, existingWords.size);
+              if (maxSize > 0 && overlap / maxSize >= 0.5) { matchedIdx = idx; break; }
+            }
+          }
         }
       }
       if (matchedIdx !== undefined) {
@@ -868,7 +877,10 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
         }
         continue;
       }
-      keyMap[key] = deduped.length;
+      const newIdx = deduped.length;
+      const key = dedupKey(rec.title || '');
+      keyMap[key] = newIdx;
+      if (pid) patternMap[pid] = newIdx;
       deduped.push({ ...rec, _pages: [rec._pageUrl] });
     }
     deduped.sort((a, b) => ({ high: 0, medium: 1, low: 2 }[a.priority] ?? 1) - ({ high: 0, medium: 1, low: 2 }[b.priority] ?? 1));
