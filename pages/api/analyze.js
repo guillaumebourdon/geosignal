@@ -16,44 +16,7 @@ const redis = new Redis({
 
 const CACHE_DURATION = 24 * 60 * 60;
 
-// ── Markdown helpers (Jina returns markdown when HTML parsing fails) ──────────
-
-function mdHeadings(raw) {
-  const result = [];
-  for (const line of raw.split('\n')) {
-    const h3 = line.match(/^###\s+(.+)/); if (h3) { result.push({ level: 'h3', text: h3[1].trim() }); continue; }
-    const h2 = line.match(/^##\s+(.+)/);  if (h2) { result.push({ level: 'h2', text: h2[1].trim() }); continue; }
-    const h1 = line.match(/^#\s+(.+)/);   if (h1) { result.push({ level: 'h1', text: h1[1].trim() }); }
-  }
-  return result;
-}
-
-function mdExternalLinks(raw, hostname) {
-  const regex = /\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g;
-  const links = [];
-  let match;
-  while ((match = regex.exec(raw)) !== null) {
-    const href = match[2];
-    if (!hostname || !href.includes(hostname)) links.push(href);
-  }
-  return links;
-}
-
-function mdAllLinks(raw) {
-  const regex = /\[([^\]]*)\]\(((?:https?:\/\/|\/)[^)\s]+)\)/g;
-  const links = [];
-  let match;
-  while ((match = regex.exec(raw)) !== null) links.push(match[2].toLowerCase());
-  return links;
-}
-
-function jinaTitle(raw) {
-  return raw.match(/^Title:\s*(.+)/m)?.[1]?.trim() || '';
-}
-
-function jinaDescription(raw) {
-  return raw.match(/^Description:\s*(.+)/m)?.[1]?.trim() || '';
-}
+const { mdHeadings, mdExternalLinks, mdAllLinks, jinaTitle, jinaDescription } = require('../../lib/markdownHelpers');
 
 // ─── Evidence detail strings by locale ────────────────────────────────────────
 
