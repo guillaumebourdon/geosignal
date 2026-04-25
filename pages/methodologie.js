@@ -50,7 +50,7 @@ export default function Methodologie() {
         </h2>
         <div className="methodo-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
           {t('methodology.process.steps').map((step, idx) => (
-            <div key={step.num} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
+            <div key={step.num} className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
               <div style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: stepColors[idx], marginBottom: 16, letterSpacing: -1 }}>{step.num}</div>
               <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui' }}>{step.title}</div>
               <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
@@ -90,7 +90,7 @@ export default function Methodologie() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {criteria.map((c, i) => (
-            <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, overflow: 'hidden' }}>
+            <div key={i} className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, overflow: 'hidden' }}>
               <div style={{ padding: '18px 24px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 12 }}>
                 <span style={{ fontSize: 20 }}>{c.icon}</span>
                 <div style={{ flex: 1 }}>

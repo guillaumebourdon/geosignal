@@ -390,7 +390,7 @@ export default function Home() {
             {t('homepage.comparison.columns').map((col, idx) => {
               const s = compStyles[idx];
               return (
-                <div key={col.title} style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: 16, padding: 28 }}>
+                <div key={col.title} className="card-interactive" style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: 16, padding: 28 }}>
                   <div style={{ fontSize: 26, marginBottom: 14 }}>{col.icon}</div>
                   <div style={{ fontSize: 16, fontWeight: 700, color: s.titleColor, fontFamily: 'Georgia, serif', marginBottom: 4 }}>{col.title}</div>
                   <div style={{ fontSize: 11, color: s.subtitleColor, fontFamily: 'monospace', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 18 }}>{col.subtitle}</div>
@@ -424,7 +424,7 @@ export default function Home() {
           </p>
           <div className="target-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20 }}>
             {t('homepage.targetAudience.items').map((item) => (
-              <div key={item.title} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28 }}>
+              <div key={item.title} className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28 }}>
                 <div style={{ fontSize: 28, marginBottom: 12 }}>{item.emoji}</div>
                 <div style={{ fontSize: 16, fontWeight: 700, color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 10 }}>{item.title}</div>
                 <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui' }}>{item.desc}</div>
@@ -445,7 +445,7 @@ export default function Home() {
           </h2>
           <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {t('homepage.howItWorks.steps').map((step, idx) => (
-              <div key={step.num} style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
+              <div key={step.num} className="card-interactive" style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 38, color: stepColors[idx], marginBottom: 16, letterSpacing: -1 }}>{step.num}</div>
                 <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{step.title}</div>
                 <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{step.desc}</div>
@@ -477,7 +477,7 @@ export default function Home() {
             {t('homepage.report.cards').map((card, idx) => {
               const s = reportStyles[idx];
               return (
-                <div key={card.title} style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div key={card.title} className="card-interactive" style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: s.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>{card.icon}</div>
                   <div>
                     <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 700, color: s.titleColor, marginBottom: 8, lineHeight: 1.2 }}>{card.title}</div>
