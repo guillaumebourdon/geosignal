@@ -149,9 +149,9 @@ export default function Success() {
               </div>
             </div>
 
-            {/* ── 2 CTA SIDE BY SIDE — above articles ── */}
+            {/* ── CTA — above articles ── */}
             <div style={{ maxWidth: 720, margin: '0 auto', padding: '36px 24px 0' }}>
-              <div className="reveal reveal-d3 success-cta-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 40 }}>
+              <div className="reveal reveal-d3 success-cta-grid" style={{ display: 'grid', gridTemplateColumns: isPro ? '1fr' : '1fr 1fr', gap: 14, marginBottom: 40, maxWidth: isPro ? 440 : undefined, margin: isPro ? '0 auto' : undefined }}>
 
                 {/* CTA 1: Accompagnement */}
                 <a href="mailto:hello@detekia.fr?subject=Accompagnement GEO — suite du rapport" className="card-interactive" style={{
@@ -168,7 +168,8 @@ export default function Success() {
                   <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#D97757', fontWeight: 600 }}>Discutons-en →</div>
                 </a>
 
-                {/* CTA 2: Analyser tout le site */}
+                {/* CTA 2: Analyser tout le site — one-page only */}
+                {!isPro && (
                 <Link href="/pricing" className="card-interactive" style={{
                   background: '#fff', borderRadius: 14, padding: '28px 24px', textDecoration: 'none',
                   display: 'flex', flexDirection: 'column', border: '1px solid #EDE8E0',
@@ -182,6 +183,7 @@ export default function Success() {
                   <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Audit complet sur 20 pages avec patterns et plan d'action.</div>
                   <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#10A37F', fontWeight: 600 }}>Découvrir l'audit Pro →</div>
                 </Link>
+                )}
 
               </div>
             </div>
