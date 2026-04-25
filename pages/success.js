@@ -1,218 +1,283 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Head from 'next/head';
 import Header from '../components/Header';
+import BeelevenContactModal from '../components/BeelevenContactModal';
+import { useTranslation } from '../lib/useTranslation';
+
+function RecoCard({ r, index, t }) {
+  const priorities = t('common.priorities');
+  const recoSections = t('common.recoSections');
+  const ci = t('results.criteriaInfo');
+  const tag = {
+    high:   { bg: 'rgba(217,119,87,0.12)',  color: '#D97757' },
+    medium: { bg: 'rgba(201,134,26,0.12)',  color: '#C9861A' },
+    low:    { bg: 'rgba(16,163,127,0.12)',  color: '#10A37F' },
+  }[r.priority] || { bg: 'rgba(201,134,26,0.12)', color: '#C9861A' };
+  const sections = recoSections.filter(s => r[s.key]);
+
+  return (
+    <div style={{ background: '#fff', border: `1px solid ${tag.color}28`, borderLeft: `4px solid ${tag.color}`, borderRadius: 14, overflow: 'hidden', marginBottom: 14 }}>
+      <div style={{ padding: '14px 20px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+        <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', padding: '3px 9px', borderRadius: 5, fontWeight: 600, background: tag.bg, color: tag.color, flexShrink: 0 }}>{priorities[r.priority] || priorities.medium}</span>
+        {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{ci[r.criterion]?.title || r.criterion}</span>}
+        {r.title && <span style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginLeft: 4 }}>{r.title}</span>}
+        <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', flexShrink: 0 }}>#{String(index + 1).padStart(2, '0')}</span>
+      </div>
+      <div style={{ padding: '16px 20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 10 }}>
+        {sections.map(s => (
+          <div key={s.key} style={{ background: '#FAFAF9', border: '1px solid #ECEAE6', borderRadius: 9, padding: '11px 14px' }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: '#8A8680', fontFamily: 'system-ui', marginBottom: 5, display: 'flex', alignItems: 'center', gap: 5 }}>
+              <span>{s.icon}</span><span style={{ letterSpacing: 0.2 }}>{s.label}</span>
+            </div>
+            <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6, fontFamily: 'system-ui' }}>{r[s.key]}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Success() {
   const router = useRouter();
-  const { session_id } = router.query;
-  const [status, setStatus] = useState('verifying'); // verifying → confirmed → error
+  const { session_id, url } = router.query;
+  const { t } = useTranslation();
+  const [status, setStatus] = useState('loading');
   const [email, setEmail] = useState('');
   const [plan, setPlan] = useState('rapport');
-  const [url, setUrl] = useState('');
+  const [reportData, setReportData] = useState(null);
+  const [emailSent, setEmailSent] = useState(false);
+  const [showBeeleven, setShowBeeleven] = useState(false);
+
+  const grades = t('common.grades');
+  const priorities = t('common.priorities');
+  const criteriaInfo = t('results.criteriaInfo');
+
+  function getGrade(score) {
+    if (score >= 70) return { label: grades.good, color: '#10A37F' };
+    if (score >= 45) return { label: grades.average, color: '#C9861A' };
+    return { label: grades.poor, color: '#D97757' };
+  }
 
   useEffect(() => {
     if (!session_id) return;
-
     fetch(`/api/verify-payment?session_id=${session_id}`)
       .then(r => r.json())
       .then(data => {
-        if (!data.success || !data.email) {
-          setStatus('error');
-          return;
-        }
+        if (!data.email) { setStatus('error'); return; }
         setEmail(data.email);
         setPlan(data.plan || 'rapport');
-        setUrl(data.url || '');
-        setStatus('confirmed');
+        setStatus('success');
+        setEmailSent(true);
 
-        // Fire-and-forget: trigger one-page analysis in background
-        // Pro is already triggered by the Stripe webhook → pro-enqueue
-        if (data.plan !== 'pro' && data.url) {
+        // Fire-and-forget: run analysis in background (page already shown)
+        // Pro analysis is triggered server-side by the Stripe webhook, not here
+        const reportUrl = url || data.url;
+        const reportLocale = data.locale || 'fr';
+        if (data.plan !== 'pro' && reportUrl) {
           fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: data.url, locale: data.locale || 'fr' }),
+            body: JSON.stringify({ url: reportUrl, locale: reportLocale }),
           }).then(r => r.json()).then(report => {
             if (!report.error) {
+              setReportData(report);
               fetch('/api/finalize-report', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  email: data.email, url: data.url, reportData: report,
-                  locale: data.locale || 'fr', isFreeViaPromo: data.isFreeViaPromo || false,
-                }),
+                body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report, locale: reportLocale, isFreeViaPromo: data.isFreeViaPromo || false }),
               });
             }
           }).catch(() => {});
         }
       })
       .catch(() => setStatus('error'));
-  }, [session_id]);
+  }, [session_id, url]);
 
-  const isPro = plan === 'pro';
+  const grade = reportData ? getGrade(reportData.score) : null;
+  const recos = reportData?.recommendations || [];
+  const high = recos.filter(r => r.priority === 'high');
+  const medium = recos.filter(r => r.priority === 'medium');
+  const low = recos.filter(r => r.priority === 'low');
 
   return (
-    <>
-      <Head>
-        <title>{isPro ? 'Audit lancé' : 'Paiement confirmé'} | Detekia</title>
-        <meta name="robots" content="noindex" />
-      </Head>
+    <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
-      <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
-        <Header variant="minimal" />
+      <Header variant="minimal" />
 
-        <div style={{ maxWidth: 560, margin: '0 auto', padding: '64px 24px 100px' }}>
+      <div style={{ maxWidth: 860, margin: '0 auto', padding: '48px 24px 100px' }}>
 
-          {/* ═══ VERIFYING ═══ */}
-          {status === 'verifying' && (
-            <div style={{ textAlign: 'center', padding: '80px 0' }}>
-              <div style={{ width: 48, height: 48, borderRadius: '50%', border: '3px solid #E5E2DC', borderTopColor: '#D97757', animation: 'spin 0.9s linear infinite', margin: '0 auto 24px' }} />
-              <div style={{ fontSize: 17, color: '#1A1916', marginBottom: 6 }}>Vérification du paiement</div>
-              <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui' }}>Un instant...</div>
+        {status === 'loading' && (
+          <div style={{ textAlign: 'center', padding: '100px 0' }}>
+            <div style={{ width: 44, height: 44, borderRadius: '50%', border: '3px solid #E5E2DC', borderTopColor: '#D97757', animation: 'spin 0.9s linear infinite', margin: '0 auto 20px' }} />
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 8 }}>{t('success.loading.title')}</div>
+            <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui' }}>{t('success.loading.subtitle')}</div>
+          </div>
+        )}
+
+        {status === 'error' && (
+          <div style={{ maxWidth: 480, margin: '0 auto', background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 16, padding: '40px 32px', textAlign: 'center' }}>
+            <div style={{ fontSize: 36, marginBottom: 20 }}>⚠️</div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>{t('success.error.title')}</div>
+            <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 28 }}>
+              {t('success.error.desc')}{' '}
+              <a href="mailto:hello@detekia.fr" style={{ color: '#D97757' }}>hello@detekia.fr</a>
             </div>
-          )}
+            <Link href="/" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '10px 28px', borderRadius: 9, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>{t('success.error.cta')}</Link>
+          </div>
+        )}
 
-          {/* ═══ ERROR ═══ */}
-          {status === 'error' && (
-            <div style={{ textAlign: 'center', padding: '60px 0' }}>
-              <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(217,119,87,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
-              </div>
-              <h1 style={{ fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Paiement non vérifié</h1>
-              <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 28 }}>
-                Nous n'avons pas pu vérifier votre paiement. Si vous avez bien été débité,
-                contactez-nous et nous résoudrons le problème sous 24h.
-              </p>
-              <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <a href="mailto:hello@detekia.fr?subject=Problème paiement Detekia" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '12px 28px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>Contacter le support</a>
-                <Link href="/" style={{ display: 'inline-block', background: '#F0EDE8', color: '#1A1916', padding: '12px 28px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>Retour à l'accueil</Link>
-              </div>
-            </div>
-          )}
-
-          {/* ═══ CONFIRMED — ONE-PAGE ═══ */}
-          {status === 'confirmed' && !isPro && (
-            <div style={{ textAlign: 'center' }}>
-              {/* Checkmark */}
-              <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(16,163,127,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-              </div>
-
-              <h1 style={{ fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 10, lineHeight: 1.2 }}>
-                Paiement confirmé
-              </h1>
-              <p style={{ fontSize: 15, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 8 }}>
-                Votre rapport GEO pour <strong style={{ color: '#1A1916' }}>{url}</strong> est en cours de génération.
-              </p>
-              <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 32 }}>
-                Vous le recevrez dans 1 à 2 minutes à l'adresse <strong style={{ color: '#1A1916' }}>{email}</strong>.
-              </p>
-
-              {/* Info cards */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 32, textAlign: 'left' }}>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 20px' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Livraison</div>
-                  <div style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>
-                    Un email avec le lien vers votre rapport complet. Accessible pour toujours, PDF téléchargeable.
-                  </div>
-                </div>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 20px' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Pas reçu ?</div>
-                  <div style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>
-                    Vérifiez vos spams. L'email vient de <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#D97757' }}>hello@detekia.fr</span>
+        {status === 'success' && (
+          <>
+            <div style={{ background: '#1A1916', borderRadius: 20, padding: '36px 44px', marginBottom: 20, boxShadow: '0 12px 40px rgba(26,25,22,0.18)', position: 'relative', overflow: 'hidden' }}>
+              {grade && <div style={{ position: 'absolute', top: -80, right: -80, width: 280, height: 280, borderRadius: '50%', background: grade.color, opacity: 0.06, pointerEvents: 'none' }} />}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: plan === 'pro' ? 16 : 28 }}>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(16,163,127,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>✅</div>
+                <div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#F7F5F2', marginBottom: 3 }}>{plan === 'pro' ? 'Paiement confirmé — audit lancé' : t('success.hero.title')}</div>
+                  <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)', fontFamily: 'system-ui' }}>
+                    {emailSent ? t('success.hero.emailSent').replace('{email}', email) : t('success.hero.emailPreparing').replace('{email}', email)}
                   </div>
                 </div>
               </div>
-
-              <p style={{ fontSize: 13, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 32 }}>
-                Vous pouvez fermer cette page. Votre rapport arrivera par email.
-              </p>
-
-              {/* Actions */}
-              <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Link href="/blog" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '12px 28px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>Lire nos guides GEO</Link>
-                <Link href="/" style={{ display: 'inline-block', background: '#F0EDE8', color: '#1A1916', padding: '12px 28px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>Retour à l'accueil</Link>
-              </div>
+              {plan === 'pro' && (
+                <div style={{ background: 'rgba(247,245,242,0.06)', border: '1px solid rgba(247,245,242,0.1)', borderRadius: 10, padding: '16px 20px', marginBottom: 8 }}>
+                  <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.7)', fontFamily: 'system-ui', lineHeight: 1.65 }}>
+                    L'analyse de 20 pages de votre site est en cours. Votre rapport complet sera envoyé à <strong style={{ color: '#F7F5F2' }}>{email}</strong> dans environ <strong style={{ color: '#F7F5F2' }}>10 à 15 minutes</strong>. Vous pouvez fermer cette page.
+                  </div>
+                </div>
+              )}
+              {reportData && (
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 32 }}>
+                  <div style={{ textAlign: 'center', flexShrink: 0 }}>
+                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, lineHeight: 1, color: '#F7F5F2', letterSpacing: -3 }}>{reportData.score}</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.3)' }}>/100</div>
+                    <div style={{ marginTop: 8, display: 'inline-block', background: `${grade.color}22`, border: `1px solid ${grade.color}44`, padding: '3px 12px', borderRadius: 20, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: grade.color }}>{grade.label}</div>
+                  </div>
+                  <div style={{ paddingBottom: 4 }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 6 }}>{url}</div>
+                    <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', lineHeight: 1.65, fontFamily: 'system-ui', maxWidth: 520 }}>{reportData.verdict}</div>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
 
-          {/* ═══ CONFIRMED — PRO ═══ */}
-          {status === 'confirmed' && isPro && (
-            <div style={{ textAlign: 'center' }}>
-              {/* Checkmark */}
-              <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(16,163,127,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+            {emailSent && (
+              <div style={{ background: '#fff', border: '2px solid #10A37F', borderRadius: 16, padding: '28px 24px', marginBottom: 20, textAlign: 'center' }}>
+                <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(16,163,127,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px', fontSize: 22 }}>📧</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#1A1916', marginBottom: 8 }}>{t('success.emailBadge.title')}</div>
+                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', marginBottom: 18 }}>
+                  {t('success.emailBadge.desc')} <strong style={{ color: '#1A1916' }}>{email}</strong>
+                </div>
+                <div style={{ background: '#FFF8F0', border: '1px solid #E8C97A', borderRadius: 10, padding: '12px 16px', display: 'flex', alignItems: 'flex-start', gap: 10, textAlign: 'left' }}>
+                  <span style={{ color: '#C9A84C', fontSize: 18, lineHeight: 1, flexShrink: 0 }}>⚠️</span>
+                  <div style={{ fontSize: 12, color: '#8A6D20', fontFamily: 'system-ui', lineHeight: 1.5 }}>
+                    <strong>{t('success.emailBadge.spamBold')}</strong> {t('success.emailBadge.spamText')}
+                  </div>
+                </div>
               </div>
+            )}
 
-              <h1 style={{ fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 10, lineHeight: 1.2 }}>
-                Audit lancé
-              </h1>
-              <p style={{ fontSize: 15, color: '#3A3835', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 8 }}>
-                L'analyse complète de <strong style={{ color: '#1A1916' }}>{url}</strong> vient de démarrer.
-              </p>
-              <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 32 }}>
-                20 pages de votre site sont en cours d'analyse. Votre rapport sera prêt dans environ 10 à 15 minutes et envoyé à <strong style={{ color: '#1A1916' }}>{email}</strong>.
-              </p>
+            {/* Beeleven CTA block — after score, before details */}
+            <div className="beeleven-cta-block" style={{ background: '#F7F5F2', border: '1px solid rgba(217,119,87,0.25)', borderRadius: 16, padding: '32px 28px', marginBottom: 20, textAlign: 'center' }}>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 10, letterSpacing: -0.3 }}>{t('beelevenContact.ctaBlockTitle')}</div>
+              <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, maxWidth: 480, margin: '0 auto 20px' }}>{t('beelevenContact.ctaBlockText')}</div>
+              <button onClick={() => setShowBeeleven(true)} style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 10, padding: '12px 28px', fontSize: 14, fontWeight: 700, fontFamily: 'system-ui', cursor: 'pointer', boxShadow: '0 4px 16px rgba(217,119,87,0.3)' }}>{t('beelevenContact.ctaBlockButton')}</button>
+            </div>
 
-              {/* What's happening */}
-              <div style={{ background: '#1A1916', borderRadius: 14, padding: '24px 28px', marginBottom: 24, textAlign: 'left' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>En ce moment</div>
-                {[
-                  { step: '1', label: 'Identification des 20 pages prioritaires', detail: 'Analyse du sitemap et de l\'architecture' },
-                  { step: '2', label: 'Analyse page par page', detail: 'Scoring des 8 critères GEO sur chaque URL' },
-                  { step: '3', label: 'Consolidation et patterns', detail: 'Détection des tendances transverses' },
-                  { step: '4', label: 'Génération du rapport', detail: 'Plan d\'action priorisé et envoi par email' },
-                ].map((s, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 14, marginBottom: i < 3 ? 14 : 0 }}>
-                    <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(247,245,242,0.06)', border: '1px solid rgba(247,245,242,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.4)', flexShrink: 0 }}>{s.step}</div>
-                    <div>
-                      <div style={{ fontSize: 13, color: '#F7F5F2', fontFamily: 'system-ui', marginBottom: 2 }}>{s.label}</div>
-                      <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.4)', fontFamily: 'system-ui' }}>{s.detail}</div>
+            {reportData && (
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 20 }}>
+                  <div style={{ background: 'rgba(16,163,127,0.07)', border: '1px solid rgba(16,163,127,0.18)', borderRadius: 14, padding: '20px 24px' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', color: '#10A37F', marginBottom: 12, fontWeight: 600 }}>{t('success.strengths')}</div>
+                    {(reportData.strengths || []).map((s, i) => (
+                      <div key={i} style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 6, paddingLeft: 12, borderLeft: '2px solid rgba(16,163,127,0.3)' }}>{s}</div>
+                    ))}
+                  </div>
+                  <div style={{ background: 'rgba(217,119,87,0.06)', border: '1.5px solid rgba(217,119,87,0.25)', borderRadius: 14, padding: '20px 24px' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', color: '#D97757', marginBottom: 12, fontWeight: 600 }}>{t('success.topPriority')}</div>
+                    <div style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.65 }}>{reportData.topPriority}</div>
+                  </div>
+                </div>
+
+                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 28 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', color: '#8A8680', marginBottom: 16 }}>{t('success.criteriaAnalysis')}</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {(reportData.criteria || []).map((c, i) => {
+                      const pct = Math.round((c.score / c.max) * 100);
+                      const col = pct >= 75 ? '#10A37F' : pct >= 45 ? '#C9861A' : '#D97757';
+                      const gradeLabel = pct >= 75 ? grades.good : pct >= 45 ? grades.average : grades.poor;
+                      return (
+                        <div key={i}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+                            <span style={{ fontSize: 12, color: '#1A1916', fontFamily: 'system-ui' }}>{criteriaInfo[c.name]?.title || c.name}</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 7px', borderRadius: 4, background: col + '18', color: col }}>{gradeLabel}</span>
+                              <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{c.score}/{c.max}</span>
+                            </div>
+                          </div>
+                          <div style={{ height: 4, background: '#F0EDE8', borderRadius: 3, overflow: 'hidden' }}>
+                            <div style={{ height: '100%', width: `${pct}%`, background: col, borderRadius: 3, transition: 'width 0.6s ease' }} />
+                          </div>
+                          {c.detail && <div style={{ fontSize: 11, color: '#A8A49F', fontFamily: 'system-ui', marginTop: 3 }}>{c.detail}</div>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {recos.length > 0 && (
+                  <>
+                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 16 }}>
+                      <div>
+                        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('success.recos.label')}</div>
+                        <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5 }}>{t('success.recos.title').replace('{count}', recos.length)}</div>
+                      </div>
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        {high.length > 0 && <span style={{ fontFamily: 'monospace', fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(217,119,87,0.1)', color: '#D97757' }}>{t('success.recos.countCritical').replace('{count}', high.length)}</span>}
+                        {medium.length > 0 && <span style={{ fontFamily: 'monospace', fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(201,134,26,0.1)', color: '#C9861A' }}>{t('success.recos.countImportant').replace('{count}', medium.length)}</span>}
+                        {low.length > 0 && <span style={{ fontFamily: 'monospace', fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(16,163,127,0.1)', color: '#10A37F' }}>{t('success.recos.countBonus').replace('{count}', low.length)}</span>}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                    {high.length > 0 && (
+                      <>
+                        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10, marginTop: 4 }}>{t('success.recos.criticalLabel')}</div>
+                        {high.map((r, i) => <RecoCard key={i} r={r} index={recos.indexOf(r)} t={t} />)}
+                      </>
+                    )}
+                    {medium.length > 0 && (
+                      <>
+                        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10, marginTop: high.length > 0 ? 20 : 4 }}>{t('success.recos.importantLabel')}</div>
+                        {medium.map((r, i) => <RecoCard key={i} r={r} index={recos.indexOf(r)} t={t} />)}
+                      </>
+                    )}
+                    {low.length > 0 && (
+                      <>
+                        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10, marginTop: medium.length > 0 ? 20 : 4 }}>{t('success.recos.bonusLabel')}</div>
+                        {low.map((r, i) => <RecoCard key={i} r={r} index={recos.indexOf(r)} t={t} />)}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            )}
 
-              {/* Info cards */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 32, textAlign: 'left' }}>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 20px' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Livraison</div>
-                  <div style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>
-                    Un email avec le lien vers votre rapport complet. 20 pages analysées, patterns détectés, plan d'action priorisé.
-                  </div>
-                </div>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 20px' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Pas reçu après 20 min ?</div>
-                  <div style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>
-                    Vérifiez vos spams. Sinon, écrivez à <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#D97757' }}>hello@detekia.fr</span>
-                  </div>
-                </div>
-              </div>
-
-              <p style={{ fontSize: 13, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 32 }}>
-                Vous pouvez fermer cette page. L'analyse continue en arrière-plan et votre rapport sera envoyé par email dès qu'il sera prêt.
-              </p>
-
-              {/* Actions */}
-              <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Link href="/blog" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '12px 28px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>Lire nos guides GEO</Link>
-                <Link href="/" style={{ display: 'inline-block', background: '#F0EDE8', color: '#1A1916', padding: '12px 28px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>Retour à l'accueil</Link>
-              </div>
+            <div style={{ textAlign: 'center', marginTop: 32 }}>
+              <Link href="/" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '14px 36px', borderRadius: 11, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600, boxShadow: '0 4px 16px rgba(26,25,22,0.15)' }}>{t('success.cta')}</Link>
             </div>
-          )}
-
-        </div>
-
-        <style>{`
-          @keyframes spin { to { transform: rotate(360deg); } }
-          * { box-sizing: border-box; margin: 0; padding: 0; }
-          @media (max-width: 600px) {
-            nav { padding: 0 20px !important; }
-          }
-        `}</style>
+          </>
+        )}
       </div>
-    </>
+
+      <BeelevenContactModal open={showBeeleven} onClose={() => setShowBeeleven(false)} prefillUrl={url || ''} />
+
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @media (max-width: 600px) {
+          nav { padding: 0 20px !important; }
+        }
+      `}</style>
+    </div>
   );
 }
