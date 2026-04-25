@@ -142,6 +142,16 @@ export default async function handler(req, res) {
     await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
     console.log(`[finalize-report] Stored report ${uuid} for ${url}`);
 
+    // Validate report
+    try {
+      const { validateReport } = require('../../lib/reportValidator');
+      const validation = validateReport(reportData, 'onepage');
+      if (!validation.passed || validation.warnings.length > 0) {
+        await redis.set(`detekia:validation:${uuid}`, validation, { ex: REPORT_TTL });
+        console.log(`[finalize-report] Validation: ${validation.summary}`);
+      }
+    } catch (e) { console.error('[finalize-report] Validation error:', e.message); }
+
     // 2. Generate loyalty code (non-blocking)
     const loyaltyCode = await generateLoyaltyCode(url, email, locale).catch(() => null);
     if (loyaltyCode) {

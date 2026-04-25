@@ -183,6 +183,16 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
     await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
     console.log(`[pro-finalize] Report stored: ${uuid} for ${rootUrl}`);
 
+    // Validate report and log issues
+    try {
+      const { validateReport } = require('../../lib/reportValidator');
+      const validation = validateReport(consolidated, 'pro');
+      if (!validation.passed || validation.warnings.length > 0) {
+        await redis.set(`detekia:validation:${uuid}`, validation, { ex: REPORT_TTL });
+        console.log(`[pro-finalize] Validation: ${validation.summary}`);
+      }
+    } catch (e) { console.error('[pro-finalize] Validation error:', e.message); }
+
     // Send email with link
     const score = consolidated.scoreAverage;
     const color = gradeColor(score);

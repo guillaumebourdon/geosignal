@@ -553,17 +553,28 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   )}
 
                   {/* RECOMMENDATIONS */}
-                  {isMax ? (
-                    <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 8, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-                      <span style={{ fontSize: 18 }}>✓</span>
-                      <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>Ce critère est bien optimisé. Continuez à maintenir ce niveau.</span>
-                    </div>
+                  {isMax || pct >= 75 ? (
+                    criterionRecos.length > 0 ? (
+                      <div style={{ marginBottom: 16 }}>
+                        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Recommandation{criterionRecos.length > 1 ? 's' : ''}</div>
+                        {criterionRecos.map((r, ri) => <RecoCard key={ri} r={r} index={ri} />)}
+                      </div>
+                    ) : (
+                      <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 8, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                        <span style={{ fontSize: 18 }}>✓</span>
+                        <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>Ce critère est bien optimisé. Continuez à maintenir ce niveau.</span>
+                      </div>
+                    )
                   ) : criterionRecos.length > 0 ? (
                     <div style={{ marginBottom: 16 }}>
                       <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Recommandation{criterionRecos.length > 1 ? 's' : ''}</div>
                       {criterionRecos.map((r, ri) => <RecoCard key={ri} r={r} index={ri} />)}
                     </div>
-                  ) : null}
+                  ) : (
+                    <div style={{ background: 'rgba(201,134,26,0.06)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 8, padding: '16px 20px', fontSize: 13, color: '#C9861A', lineHeight: 1.6, marginBottom: 16 }}>
+                      Ce critère peut être amélioré ({pct}%).
+                    </div>
+                  )}
 
                   {/* GUIDE TECHNIQUE */}
                   {guide && (
@@ -1118,10 +1129,14 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Recommandations ({deduped.length})</div>
                     {deduped.length > 0 ? deduped.map((rec, ri) => (
                       <ProRecoCard key={ri} r={rec} index={ri} rootUrl={url} />
-                    )) : (
+                    )) : pct >= 75 ? (
                       <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 8, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
                         <span style={{ fontSize: 18 }}>✓</span>
                         <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>Ce critère est bien optimisé sur l'ensemble du site.</span>
+                      </div>
+                    ) : (
+                      <div style={{ background: 'rgba(201,134,26,0.06)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 8, padding: '16px 20px', fontSize: 13, color: '#C9861A', lineHeight: 1.6 }}>
+                        Ce critère nécessite des améliorations ({pct}%). Les recommandations spécifiques sont intégrées dans le plan d'action ci-dessous.
                       </div>
                     )}
                   </div>
