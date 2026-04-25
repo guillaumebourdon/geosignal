@@ -189,7 +189,7 @@ export default function Success() {
             </div>
 
             {/* ── ARTICLES ── */}
-            <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px 40px' }}>
+            <div style={{ maxWidth: 720, margin: '0 auto', padding: '24px 24px 40px' }}>
               <div className="reveal reveal-d4">
                 <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>En attendant votre rapport</div>
                 <div className="success-articles" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
