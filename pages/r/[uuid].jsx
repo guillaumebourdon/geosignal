@@ -429,9 +429,10 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               })}
             </div>
 
-            {/* Top 3 actions */}
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>3 actions prioritaires</h2>
-            {recos.filter(r => r.priority === 'high').slice(0, 3).map((a, i) => {
+            {/* Top actions */}
+            {(() => { const topActions = recos.filter(r => r.priority === 'high').slice(0, 3); return topActions.length > 0 && (<>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{topActions.length} action{topActions.length > 1 ? 's' : ''} prioritaire{topActions.length > 1 ? 's' : ''}</h2>
+            {topActions.map((a, i) => {
               const pi = priorityInfo(a.impact);
               return (
                 <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
@@ -440,7 +441,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: pi.color, background: pi.bg, padding: '3px 9px', borderRadius: 12, whiteSpace: 'nowrap', flexShrink: 0, border: `1px solid ${pi.color}33` }}>{pi.label}</div>
                 </div>
               );
-            })}
+            })}</>); })()}
 
             {/* Strengths */}
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginTop: 20, marginBottom: 14 }}>Points forts identifiés</h2>
@@ -536,10 +537,10 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   {/* CE QUE NOUS AVONS TROUVÉ */}
                   <div style={{ marginBottom: 20 }}>
                     <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>Ce que nous avons trouvé</div>
-                    {detailParts.length > 0 && (
-                      <div style={{ fontSize: 12, color: '#1A1916', marginBottom: 10 }}>{detailParts.join(' · ')}</div>
-                    )}
-                    {c.detail && <div style={{ fontSize: 12, color: '#8A8680', marginBottom: 10, lineHeight: 1.5 }}>{c.detail}</div>}
+                    {detailParts.length > 0
+                      ? <div style={{ fontSize: 12, color: '#1A1916', marginBottom: 10 }}>{detailParts.join(' · ')}</div>
+                      : c.detail && <div style={{ fontSize: 12, color: '#8A8680', marginBottom: 10, lineHeight: 1.5 }}>{c.detail}</div>
+                    }
                     <EvidenceBlock criterionName={c.name} evidence={evidence} />
                   </div>
 
@@ -975,9 +976,10 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               })}
             </div>
 
-            {/* Top 3 actions + strengths/weaknesses */}
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>3 actions prioritaires</h2>
-            {actionPlan.slice(0, 3).map((a, i) => {
+            {/* Top actions + strengths/weaknesses */}
+            {(() => { const topActs = actionPlan.slice(0, 3); return topActs.length > 0 && (<>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{topActs.length} action{topActs.length > 1 ? 's' : ''} prioritaire{topActs.length > 1 ? 's' : ''}</h2>
+            {topActs.map((a, i) => {
               const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact);
               return (
                 <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
@@ -986,7 +988,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: pi.color, padding: '3px 9px', borderRadius: 12, border: `1px solid ${pi.color}33`, background: pi.bg, flexShrink: 0 }}>{pi.label}</div>
                 </div>
               );
-            })}
+            })}</>); })()}
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, marginTop: 20 }}>
               <div style={{ background: '#E8F7F3', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 14, padding: '20px 24px' }}>
@@ -1398,7 +1400,7 @@ function CitationCard({ q }) {
       <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginTop: 6 }}>{q.query}</div>
       {/* Competitors always visible when present */}
       {competitors.length > 0 && (
-        <div style={{ fontSize: 11, color: '#8A8680', marginTop: 4 }}>Cités à votre place : {competitors.join(', ')}</div>
+        <div style={{ fontSize: 11, color: '#8A8680', marginTop: 4 }}>{q.cited ? 'Cités avec vous' : 'Cités à votre place'} : {competitors.join(', ')}</div>
       )}
       {open && (
         <div style={{ paddingTop: 10, marginTop: 8, borderTop: '1px solid #F0EDE8' }}>

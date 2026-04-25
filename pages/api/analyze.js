@@ -394,7 +394,7 @@ async function collectEvidence($, textContent, rawContent, url) {
   };
 }
 
-async function runClaudeAnalysis(url, textContent, scores, locale = 'fr') {
+async function runClaudeAnalysis(url, textContent, scores, locale = 'fr', detectedSignals = '') {
   const total = Object.values(scores).reduce((s, c) => s + c.score, 0);
 
   // All criteria below 80% threshold, sorted by worst score first
@@ -419,7 +419,15 @@ async function runClaudeAnalysis(url, textContent, scores, locale = 'fr') {
 CRITICAL: The "criterion" field MUST always use the FRENCH criterion name from this exact list (used as a matching key in the frontend): 'Extractibilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Crawlabilité IA', 'Données structurées', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & maintenance'.`
     : `LANGUE DE SORTIE : Français. Toutes les valeurs texte du JSON doivent être en français professionnel et direct.`;
 
+  const today = new Date().toISOString().split('T')[0];
   const prompt = `${langInstruction}
+
+TODAY'S DATE: ${today}. The year 2026 is the CURRENT year. Dates in 2026 are RECENT, NOT future.
+
+VOCABULARY CALIBRATION (mandatory):
+<30% = catastrophique | 30-50% = faible | 50-70% = moyen | 70-85% = bon | >85% = excellent
+FORBIDDEN above 50%: catastrophique, grave, lacune critique, défaillant, alarmant.
+Above 50%, acceptable words: moyen, à améliorer, perfectible, insuffisant, modéré.
 
 You are a senior GEO consultant. Audit ${url}.
 
@@ -431,6 +439,7 @@ ${criteriaList}
 CONTENT (first 300 characters):
 ${textContent.slice(0, 300)}
 
+${detectedSignals ? `ALREADY DETECTED ON THIS PAGE (do NOT recommend adding elements already present):\n${detectedSignals}\n` : ''}
 RULES:
 1. Generate EXACTLY 8 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
 2. Be SPECIFIC to this site. Reference actual elements found (or missing) in the analyzed content.
@@ -577,7 +586,7 @@ export default async function handler(req, res) {
   try { const parsed = new URL(urlCandidate); if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error(); url = parsed.href; } catch { return res.status(400).json({ error: 'URL invalide' }); }
   console.log('analyze: starting for', url);
 
-  const cacheKey = `detekia:v20:${url.toLowerCase()}:${locale}`;
+  const cacheKey = `detekia:v21:${url.toLowerCase()}:${locale}`;
 
   try {
     const cached = await redis.get(cacheKey);
@@ -616,8 +625,20 @@ export default async function handler(req, res) {
       freshness:        scoreFreshness($, rawContent, locale),
     };
 
+    // Build detected signals for prompt (prevent false absence claims)
+    const signalParts = [];
+    if (metaTitle) signalParts.push(`Meta title: "${metaTitle}"`);
+    if (metaDescription) signalParts.push(`Meta description: "${metaDescription.substring(0, 80)}..."`);
+    const detectedSchemas = [];
+    $('script[type="application/ld+json"]').each((_, el) => {
+      try { const d = JSON.parse($(el).html()); if (d['@type']) detectedSchemas.push(d['@type']); } catch {}
+    });
+    if (detectedSchemas.length) signalParts.push(`JSON-LD schemas: ${detectedSchemas.join(', ')}`);
+    else signalParts.push('JSON-LD schemas: NONE');
+    const detectedSignals = signalParts.join('\n');
+
     const [claude, evidence, citationTest] = await Promise.all([
-      runClaudeAnalysis(url, textContent, scores, locale),
+      runClaudeAnalysis(url, textContent, scores, locale, detectedSignals),
       collectEvidence($, textContent, rawContent, url),
       runCitationTest(url, textContent, metaTitle, metaDescription, locale).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
