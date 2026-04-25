@@ -35,8 +35,8 @@ export default async function handler(req, res) {
     const email   = session.customer_details?.email;
     const amount  = session.amount_total;
 
-    if (email && amount >= 900) {
-      const plan = session.metadata?.plan || (amount >= 9900 ? 'pro' : 'rapport');
+    const plan = session.metadata?.plan || (amount >= 9900 ? 'pro' : 'rapport');
+    if (email && (amount >= 900 || plan === 'pro')) {
       const key = `paid:${email.toLowerCase()}`;
       await redis.set(key, {
         email, amount, plan,
