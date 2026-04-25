@@ -229,8 +229,8 @@ export default function Pricing() {
             style={{ background: '#fff', borderRadius: 16, maxWidth: 460, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}
           >
             <button onClick={closeModal} style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>x</button>
-            <h2 id="modal-title" style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 10, lineHeight: 1.2 }}>{t('pricing.modal.title')}</h2>
-            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, marginBottom: 24 }}>{t('pricing.modal.subtitle')}</p>
+            <h2 id="modal-title" style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 10, lineHeight: 1.2 }}>{selectedPlan === 'pro' ? t('pricing.modalPro.title') : t('pricing.modal.title')}</h2>
+            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, marginBottom: 24 }}>{selectedPlan === 'pro' ? t('pricing.modalPro.subtitle') : t('pricing.modal.subtitle')}</p>
 
             <div style={{ marginBottom: 20 }}>
               <input
@@ -250,7 +250,7 @@ export default function Pricing() {
               onClick={handleModalSubmit}
               disabled={modalLoading || !modalUrl.trim()}
               style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
-              {modalLoading ? '...' : t('pricing.modal.submitButton')}
+              {modalLoading ? '...' : (selectedPlan === 'pro' ? t('pricing.modalPro.submitButton') : t('pricing.modal.submitButton'))}
             </button>
             <button onClick={closeModal} style={{ display: 'block', width: '100%', background: 'transparent', color: '#8A8680', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
               {t('pricing.modal.cancelButton')}

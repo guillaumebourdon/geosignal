@@ -805,13 +805,18 @@
     },
     "errorAlert": "Erreur de paiement, réessayez.",
     "modal": {
-      "title": "Debloquer votre rapport complet",
-      "subtitle": "Entrez l'URL de votre site. Nous genererons votre rapport GEO complet de 14 pages apres paiement (quelques minutes). Vous le recevrez par email.",
+      "title": "Analyser votre page",
+      "subtitle": "Entrez l'URL de la page a analyser. Votre rapport GEO sera pret en 30 secondes apres paiement. Vous le recevrez par email.",
       "urlPlaceholder": "https://www.votre-site.fr",
       "submitButton": "Payer 29 EUR et recevoir mon rapport",
       "cancelButton": "Annuler",
       "urlInvalidError": "URL invalide, verifiez le format",
       "errorGeneric": "Une erreur s'est produite, reessayez"
+    },
+    "modalPro": {
+      "title": "Auditer votre site complet",
+      "subtitle": "Entrez l'URL de votre site. Nous analyserons les 20 pages les plus importantes. Votre rapport sera pret en 10-15 minutes et envoye par email.",
+      "submitButton": "Payer 99 EUR et lancer l'audit"
     }
   },
   "about": {
