@@ -642,14 +642,27 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             </div>
           </section>
 
+          {/* ═══ CTA PRO UPSELL ═══ */}
+          <section id="upsell-pro" style={{ marginBottom: 28 }}>
+            <div style={{ background: '#1A1916', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 12 }}>AUDIT COMPLET</div>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#F7F5F2', marginBottom: 12, lineHeight: 1.3 }}>Ce rapport analyse 1 page.<br />Votre site en a probablement 20, 50, 100.</h2>
+              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', lineHeight: 1.7, maxWidth: 460, margin: '0 auto 20px' }}>L'audit complet Detekia analyse vos 20 pages les plus importantes, détecte les patterns transverses et produit un plan d'action priorisé pour l'ensemble du site.</p>
+              <a href="https://detekia.fr/pricing" onClick={() => track('click-upsell-pro')}
+                style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
+                Auditer mon site complet — 99€ →
+              </a>
+            </div>
+          </section>
+
           {/* ═══ CTA BEELEVEN ═══ */}
           <section id="beeleven" style={{ marginBottom: 48 }}>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
               <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 8 }}>ALLER PLUS LOIN</div>
-              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Aller plus loin avec Beeleven</h2>
-              <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>Vous avez le diagnostic. Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations pour vous : audit approfondi, optimisations techniques, suivi mensuel des résultats.</p>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Besoin d'aide pour implémenter ?</h2>
+              <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations pour vous.</p>
               <a href="mailto:hello@detekia.fr?subject=Audit GEO — suite du rapport" onClick={() => track('click-beeleven')}
-                style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
+                style={{ display: 'inline-block', background: 'transparent', color: '#D97757', padding: '12px 32px', borderRadius: 10, fontSize: 14, fontWeight: 600, textDecoration: 'none', border: '1px solid #D97757' }}>
                 Discutons-en →
               </a>
             </div>

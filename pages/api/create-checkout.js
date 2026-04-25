@@ -12,8 +12,13 @@ export default async function handler(req, res) {
 
   const prices = {
     rapport: {
-      name: locale === 'en' ? 'Detekia — Full AI Visibility Report' : 'Detekia — Rapport GEO complet',
-      amount: 2900, // 29€ en centimes
+      name: locale === 'en' ? 'Detekia — AI Visibility Report (1 page)' : 'Detekia — Audit GEO 1 page',
+      amount: 2900,
+      mode: 'payment',
+    },
+    pro: {
+      name: locale === 'en' ? 'Detekia — Complete Site Audit (20 pages)' : 'Detekia — Audit GEO complet (20 pages)',
+      amount: 9900,
       mode: 'payment',
     },
   };
@@ -45,6 +50,7 @@ export default async function handler(req, res) {
         url: url || '',
         score: score != null ? String(score) : '',
         locale,
+        plan: plan || 'rapport',
       },
       return_url: returnUrl,
     });

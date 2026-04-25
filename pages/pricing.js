@@ -28,6 +28,7 @@ export default function Pricing() {
   const { t } = useTranslation();
 
   const [showModal, setShowModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState('rapport'); // 'rapport' or 'pro'
   const [modalUrl, setModalUrl] = useState('');
   const [urlError, setUrlError] = useState('');
   const [modalError, setModalError] = useState('');
@@ -90,7 +91,7 @@ export default function Pricing() {
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: 'rapport', url, locale: router.locale }),
+        body: JSON.stringify({ plan: selectedPlan, url, locale: router.locale }),
       });
       const data = await res.json();
       if (data.clientSecret) {
@@ -135,7 +136,8 @@ export default function Pricing() {
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
           <div style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#1A1916', letterSpacing: -1, marginBottom: 4 }}>{t('pricing.free.price')}</div>
-          <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', marginBottom: 24, lineHeight: 1.4 }}>{t('pricing.free.subtitle')}</div>
+          <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.free.subtitle')}</div>
+          <div style={{ fontSize: 11, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>sans inscription</div>
           <Link href="/" style={{ display: 'block', textAlign: 'center', background: '#F0EDE8', color: '#1A1916', padding: '11px 0', borderRadius: 9, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui', marginBottom: 24 }}>{t('pricing.free.cta')}</Link>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {freeFeatures.map((feat, i) => (
@@ -151,10 +153,11 @@ export default function Pricing() {
         <div style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.report.label')}</div>
           <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.report.price')}</span></div>
-          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 20 }}>{t('pricing.report.paymentInfo')}</div>
+          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{t('pricing.report.paymentInfo')}</div>
+          {t('pricing.report.subtitle') && <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.report.subtitle')}</div>}
           <button
             ref={triggerRef}
-            onClick={openModal}
+            onClick={() => { setSelectedPlan('rapport'); openModal(); }}
             style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 24 }}>
             {t('pricing.report.cta')}
           </button>
@@ -170,13 +173,15 @@ export default function Pricing() {
 
         {/* PRO */}
         <div style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)' }}>
-          <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: '#D97757', color: '#fff', padding: '6px 20px', borderRadius: 20, fontSize: 11, fontWeight: 700, letterSpacing: 1, fontFamily: 'system-ui', whiteSpace: 'nowrap', zIndex: 2 }}>{t('pricing.proCard.badge')}</div>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.proCard.label')}</div>
           <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.proCard.price')}</span></div>
-          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 20 }}>{t('pricing.proCard.paymentInfo')}</div>
-          <Link href="/pro" style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', marginBottom: 24 }}>
+          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{t('pricing.proCard.paymentInfo')}</div>
+          {t('pricing.proCard.subtitle') && <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.proCard.subtitle')}</div>}
+          <button
+            onClick={() => { setSelectedPlan('pro'); openModal(); }}
+            style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, fontFamily: 'system-ui', border: 'none', cursor: 'pointer', marginBottom: 24 }}>
             {t('pricing.proCard.cta')}
-          </Link>
+          </button>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {t('pricing.proCard.features').map((feat, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -266,8 +271,8 @@ export default function Pricing() {
           >
             <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{t('pricing.report.label')}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{t('pricing.report.price')} &middot; {t('pricing.report.paymentInfo')}</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{selectedPlan === 'pro' ? t('pricing.proCard.label') : t('pricing.report.label')}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{selectedPlan === 'pro' ? t('pricing.proCard.price') : t('pricing.report.price')} &middot; {selectedPlan === 'pro' ? t('pricing.proCard.paymentInfo') : t('pricing.report.paymentInfo')}</div>
               </div>
               <button onClick={closeCheckout} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>x</button>
             </div>
