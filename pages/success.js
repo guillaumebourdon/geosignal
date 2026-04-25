@@ -143,7 +143,7 @@ export default function Success() {
               {plan === 'pro' && (
                 <div style={{ background: 'rgba(247,245,242,0.06)', border: '1px solid rgba(247,245,242,0.1)', borderRadius: 10, padding: '16px 20px', marginBottom: 8 }}>
                   <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.7)', fontFamily: 'system-ui', lineHeight: 1.65 }}>
-                    L'analyse de 20 pages de votre site est en cours. Votre rapport complet sera envoyé à <strong style={{ color: '#F7F5F2' }}>{email}</strong> dans environ <strong style={{ color: '#F7F5F2' }}>10 à 15 minutes</strong>. Vous pouvez fermer cette page.
+                    L'analyse de 20 pages de votre site est en cours. Votre rapport complet sera envoyé à <strong style={{ color: '#F7F5F2' }}>{email}</strong> dans environ <strong style={{ color: '#F7F5F2' }}>15 à 20 minutes</strong>. Vous pouvez fermer cette page.
                   </div>
                 </div>
               )}
