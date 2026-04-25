@@ -20,18 +20,19 @@ export default async function handler(req, res) {
     const locale  = session.metadata?.locale === 'en' ? 'en' : 'fr';
 
     if (email) {
-      // Stocker le paiement dans Redis
+      const plan = session.metadata?.plan || (session.amount_total >= 9900 ? 'pro' : 'rapport');
+
       await redis.set(`paid:${email.toLowerCase()}`, {
         email,
         amount: session.amount_total,
         date: new Date().toISOString(),
-        plan: session.amount_total >= 2900 ? 'pro' : 'rapport',
+        plan,
       }, { ex: 30 * 24 * 60 * 60 });
 
       const discountAmount = session.total_details?.amount_discount || 0;
       const isFreeViaPromo = session.amount_total === 0 && discountAmount > 0;
 
-      return res.status(200).json({ email, url: url || null, locale, isFreeViaPromo, success: true });
+      return res.status(200).json({ email, url: url || null, locale, plan, isFreeViaPromo, success: true });
     }
 
     return res.status(400).json({ error: 'Email non trouvé' });
