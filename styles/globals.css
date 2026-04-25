@@ -1,5 +1,73 @@
 /* ─── Detekia — Global responsive styles ─────────────────────────── */
 
+/* ═══════════════════════════════════════════════════════════════════
+   ANIMATION SYSTEM — reusable across the entire site
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* PATTERN 1 — Reveal on load: fade + slide up */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  animation: reveal 0.4s ease-out forwards;
+}
+.reveal-d1 { animation-delay: 0.08s; }
+.reveal-d2 { animation-delay: 0.16s; }
+.reveal-d3 { animation-delay: 0.24s; }
+.reveal-d4 { animation-delay: 0.32s; }
+.reveal-d5 { animation-delay: 0.40s; }
+.reveal-d6 { animation-delay: 0.48s; }
+
+/* PATTERN 1b — Scale-in for icons */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.scale-in {
+  opacity: 0;
+  animation: scaleIn 0.35s ease-out forwards;
+}
+
+/* PATTERN 2 — Interactive card: hover elevation + border glow */
+.card-interactive {
+  transition: box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+}
+.card-interactive:hover {
+  box-shadow: 0 8px 24px rgba(26,25,22,0.1);
+  border-color: #D97757 !important;
+}
+
+/* PATTERN 3 — Interactive button: subtle scale + brightness */
+.btn-interactive {
+  transition: transform 0.15s ease-out, filter 0.15s ease-out;
+}
+.btn-interactive:hover {
+  transform: scale(1.02);
+  filter: brightness(1.08);
+}
+.btn-interactive:active {
+  transform: scale(0.98);
+}
+
+/* PATTERN 4 — Soft pulse for "in progress" indicators */
+@keyframes pulseSoft {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+.pulse-soft {
+  animation: pulseSoft 2.5s ease-in-out infinite;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .scale-in { animation: none; opacity: 1; transform: none; }
+  .pulse-soft { animation: none; opacity: 1; }
+  .card-interactive { transition: none; }
+  .btn-interactive { transition: none; }
+}
+
 /* ── MOBILE BREAK ───────────────────────────────────────────────── */
 .mobile-break { display: none; }
 
