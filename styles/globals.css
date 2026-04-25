@@ -1,71 +1,109 @@
 /* ─── Detekia — Global responsive styles ─────────────────────────── */
 
 /* ═══════════════════════════════════════════════════════════════════
-   ANIMATION SYSTEM — reusable across the entire site
+   ANIMATION SYSTEM — Detekia Design Language
+   Reusable across the entire site. Warm, precise, premium.
+
+   Extended palette (complements #F7F5F2 / #1A1916 / #D97757):
+   - Sand:     #EDE8E0  (warm gray for borders, subtle bg)
+   - Pêche:    #FDF1EA  (warm highlight, alerts)
+   - Sable:    #C4B5A3  (muted text on dark)
+   - Glow orange: rgba(217,119,87, 0.15) — for radial glow effects
    ═══════════════════════════════════════════════════════════════════ */
 
-/* PATTERN 1 — Reveal on load: fade + slide up */
+/* PATTERN 1 — Reveal: fade + slide up with spring-like easing */
 @keyframes reveal {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .reveal {
   opacity: 0;
-  animation: reveal 0.4s ease-out forwards;
+  animation: reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-.reveal-d1 { animation-delay: 0.08s; }
-.reveal-d2 { animation-delay: 0.16s; }
-.reveal-d3 { animation-delay: 0.24s; }
-.reveal-d4 { animation-delay: 0.32s; }
-.reveal-d5 { animation-delay: 0.40s; }
-.reveal-d6 { animation-delay: 0.48s; }
+.reveal-d1 { animation-delay: 0.1s; }
+.reveal-d2 { animation-delay: 0.2s; }
+.reveal-d3 { animation-delay: 0.3s; }
+.reveal-d4 { animation-delay: 0.4s; }
+.reveal-d5 { animation-delay: 0.5s; }
+.reveal-d6 { animation-delay: 0.6s; }
 
-/* PATTERN 1b — Scale-in for icons */
+/* PATTERN 1b — Scale-in with slight bounce */
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.7); }
-  to   { opacity: 1; transform: scale(1); }
+  0%   { opacity: 0; transform: scale(0.6); }
+  60%  { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
 }
 .scale-in {
   opacity: 0;
-  animation: scaleIn 0.35s ease-out forwards;
+  animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* PATTERN 2 — Interactive card: hover elevation + border glow */
+/* PATTERN 2 — Interactive card: elevation + warm glow */
 .card-interactive {
-  transition: box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+  transition: box-shadow 0.25s ease-out, border-color 0.25s ease-out, transform 0.25s ease-out;
 }
 .card-interactive:hover {
-  box-shadow: 0 8px 24px rgba(26,25,22,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(26,25,22,0.08), 0 0 0 1px rgba(217,119,87,0.2);
   border-color: #D97757 !important;
 }
 
-/* PATTERN 3 — Interactive button: subtle scale + brightness */
+/* PATTERN 3 — Interactive button: scale + glow aura */
 .btn-interactive {
-  transition: transform 0.15s ease-out, filter 0.15s ease-out;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease-out;
 }
 .btn-interactive:hover {
-  transform: scale(1.02);
-  filter: brightness(1.08);
+  transform: scale(1.03);
+  box-shadow: 0 4px 20px rgba(217,119,87,0.3);
 }
 .btn-interactive:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(217,119,87,0.2);
 }
 
-/* PATTERN 4 — Soft pulse for "in progress" indicators */
-@keyframes pulseSoft {
-  0%, 100% { opacity: 0.4; }
-  50%      { opacity: 1; }
+/* PATTERN 4 — Pulse: breathing glow for "in progress" */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 0 0 rgba(217,119,87,0); }
+  50%      { opacity: 1;   box-shadow: 0 0 8px 3px rgba(217,119,87,0.25); }
 }
 .pulse-soft {
-  animation: pulseSoft 2.5s ease-in-out infinite;
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* PATTERN 5 — Slow gradient shift for premium backgrounds */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.gradient-bg {
+  background: linear-gradient(135deg, #1A1916 0%, #2A2520 40%, #1A1916 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* PATTERN 6 — Radial glow accent behind elements */
+.glow-orange {
+  position: relative;
+}
+.glow-orange::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(ellipse, rgba(217,119,87,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .scale-in { animation: none; opacity: 1; transform: none; }
-  .pulse-soft { animation: none; opacity: 1; }
-  .card-interactive { transition: none; }
-  .btn-interactive { transition: none; }
+  .reveal, .scale-in { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .pulse-soft { animation: none !important; opacity: 1 !important; }
+  .gradient-bg { animation: none !important; }
+  .card-interactive, .btn-interactive { transition: none !important; }
 }
 
 /* ── MOBILE BREAK ───────────────────────────────────────────────── */
