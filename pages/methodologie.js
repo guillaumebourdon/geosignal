@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
@@ -15,7 +17,15 @@ const stepColors = ['#10A37F', '#D97757', '#4285F4'];
 
 export default function Methodologie() {
   const { t, locale } = useTranslation();
+  const router = useRouter();
+  const [url, setUrl] = useState('');
   const criteria = t('methodology.criteria.items');
+
+  function analyze() {
+    if (!url) return;
+    const cleanUrl = url.replace(/^https?:\/\//, '');
+    router.push(`/results?url=${encodeURIComponent(cleanUrl)}`);
+  }
 
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
@@ -54,10 +64,20 @@ export default function Methodologie() {
             </div>
           ))}
         </div>
-        <div style={{ textAlign: 'center', marginTop: 32 }}>
-          <Link href="/" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui' }}>
-            {locale === 'en' ? 'Test your score for free →' : 'Tester mon score gratuitement →'}
-          </Link>
+        <div className="methodo-input-wrap" style={{ maxWidth: 520, margin: '32px auto 0', display: 'flex', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
+          <input
+            value={url}
+            onChange={e => setUrl(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && analyze()}
+            placeholder={locale === 'en' ? 'https://www.your-site.com' : 'https://www.votre-site.fr'}
+            style={{ flex: 1, border: 'none', outline: 'none', padding: '13px 20px', fontSize: 15, fontFamily: 'system-ui', color: '#1A1916', background: 'transparent', minWidth: 0 }}
+          />
+          <button
+            onClick={analyze}
+            className="btn-interactive"
+            style={{ background: '#D97757', color: '#fff', border: 'none', padding: '13px 28px', borderRadius: '0 10px 10px 0', fontWeight: 700, fontSize: 14, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', flexShrink: 0 }}>
+            {locale === 'en' ? 'Analyze →' : 'Analyser →'}
+          </button>
         </div>
       </div>
 
@@ -183,7 +203,15 @@ export default function Methodologie() {
         </div>
       </footer>
 
-      <style>{`* { box-sizing: border-box; margin: 0; padding: 0; }`}</style>
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        input::placeholder { color: #8A8680; }
+        @media (max-width: 600px) {
+          .methodo-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
+          .methodo-input-wrap input { border-radius: 10px 10px 0 0 !important; }
+          .methodo-input-wrap button { border-radius: 0 0 10px 10px !important; width: 100% !important; justify-content: center; }
+        }
+      `}</style>
     </div>
   );
 }
