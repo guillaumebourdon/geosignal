@@ -258,7 +258,7 @@
         {
           "num": "03",
           "title": "Recevez votre score",
-          "desc": "Score sur 100, analyse par critère et recommandations expertes. Résultat immédiat pour l'audit gratuit, rapport complet en 1 à 2 minutes."
+          "desc": "Score sur 100, analyse par critère et recommandations expertes. Résultat immédiat pour l'audit gratuit, rapport complet en 1 minute."
         }
       ],
       "methodologyLink": "Voir la méthodologie complète →"
@@ -757,7 +757,7 @@
         },
         {
           "q": "Combien de temps pour recevoir mon rapport ?",
-          "a": "L'audit gratuit : environ 30 secondes. L'audit 1 page (29 €) : 1 à 2 minutes. L'audit complet (99 €) : 15 à 20 minutes (analyse de 20 pages par IA)."
+          "a": "L'audit gratuit : environ 30 secondes. L'audit 1 page (29 €) : 1 minute. L'audit complet (99 €) : 15 à 20 minutes (analyse de 20 pages par IA)."
         },
         {
           "q": "Puis-je passer d'une offre à l'autre ?",
@@ -1605,7 +1605,6 @@
     },
     "audience": {
       "label": "POUR QUI",
-      "title": "Conçu notamment pour :",
       "items": [
         "Consultants SEO",
         "Agences digitales",
@@ -1629,16 +1628,20 @@
     "included": {
       "label": "CE QUE VOUS OBTENEZ",
       "title": "Un audit professionnel, livré en 15 à 20 minutes",
-      "items": [
-        "Score moyen sur 100 calculé sur 20 pages",
-        "8 critères analysés sur chaque page",
-        "Recommandations consolidées avec pages concernées",
-        "Test IA sur 30 requêtes — concurrents cités identifiés",
-        "Patterns transverses détectés entre vos pages",
-        "Plan d'action priorisé par impact",
-        "Guide technique par critère",
-        "Bilan détaillé page par page",
-        "Rapport web accessible indéfiniment + PDF"
+      "columns": ["Élément", "Détail", "Volume"],
+      "rows": [
+        { "element": "Score global du site", "detail": "Moyenne pondérée sur 100, notation par critère", "volume": "20 pages" },
+        { "element": "8 critères GEO", "detail": "Évaluation individuelle sur chaque page analysée", "volume": "160 analyses" },
+        { "element": "Pages prioritaires", "detail": "Sélection automatique via sitemap", "volume": "20 pages" },
+        { "element": "Test de visibilité IA", "detail": "Requêtes sur ChatGPT, Gemini, Perplexity", "volume": "30 requêtes" },
+        { "element": "Concurrents identifiés", "detail": "Sites cités à votre place sur vos thématiques", "volume": "Par requête" },
+        { "element": "Patterns transverses", "detail": "Problèmes récurrents détectés entre vos pages", "volume": "Inter-pages" },
+        { "element": "Plan d'action priorisé", "detail": "Actions triées par impact et effort estimé", "volume": "Clé en main" },
+        { "element": "Bilan page par page", "detail": "Diagnostic individuel de chaque page analysée", "volume": "20 bilans" },
+        { "element": "Recos consolidées", "detail": "Recommandations dédupliquées avec pages concernées", "volume": "Niveau site" },
+        { "element": "Guides techniques", "detail": "Exemples de code et instructions par critère", "volume": "8 guides" },
+        { "element": "Rapport web + PDF", "detail": "URL permanente + téléchargement PDF", "volume": "Illimité" },
+        { "element": "Méthodologie", "detail": "Princeton / Georgia Tech, KDD 2024", "volume": "Peer-reviewed" }
       ]
     },
     "steps": {
@@ -1698,18 +1701,17 @@
   "onepage": {
     "seo": {
       "title": "Audit GEO 1 page — 29 € | Detekia",
-      "description": "Analysez la visibilité IA de votre page en profondeur. Score sur 100, 8 critères, 8 recommandations avec exemples de code. Rapport en 1 à 2 minutes."
+      "description": "Analysez la visibilité IA de votre page en profondeur. Score sur 100, 8 critères, 8 recommandations avec exemples de code. Rapport en 1 minute."
     },
     "hero": {
       "badge": "AUDIT 1 PAGE",
       "title": "Votre page, analysée par l'IA",
-      "subtitle": "Score sur 100, 8 critères détaillés, recommandations concrètes avec exemples de code. Résultat en 1 à 2 minutes.",
+      "subtitle": "Score sur 100, 8 critères détaillés, recommandations concrètes avec exemples de code. Résultat en 1 minute.",
       "cta": "Analyser ma page — 29 € →",
       "exampleLink": "Voir un exemple de rapport"
     },
     "audience": {
       "label": "POUR QUI",
-      "title": "Conçu notamment pour :",
       "items": [
         "Freelances",
         "Créateurs de contenu",
@@ -1732,15 +1734,40 @@
     },
     "included": {
       "label": "CE QUE VOUS OBTENEZ",
-      "title": "Un rapport complet, livré en 1 à 2 minutes",
-      "items": [
-        "Score de visibilité IA sur 100",
-        "8 critères analysés en profondeur",
-        "8 recommandations détaillées avec exemples de code",
-        "Test IA sur 10 requêtes — concurrents cités identifiés",
-        "Guide technique par critère",
-        "Rapport web accessible indéfiniment",
-        "PDF téléchargeable"
+      "title": "Un rapport complet, livré en 1 minute",
+      "features": [
+        {
+          "title": "Score de visibilité sur 100",
+          "desc": "Votre page reçoit un score global calculé à partir de 8 critères pondérés. Vous voyez immédiatement où vous en êtes — et ce qui reste à faire."
+        },
+        {
+          "title": "8 critères GEO analysés en profondeur",
+          "desc": "Données structurées, profondeur du contenu, signaux d'autorité, fraîcheur… Chaque critère est évalué individuellement avec une note et un diagnostic précis."
+        },
+        {
+          "title": "Test IA sur 10 requêtes",
+          "desc": "Nous interrogeons ChatGPT, Gemini et Perplexity sur votre thématique. Vous découvrez quels concurrents sont cités — et pourquoi ils le sont à votre place."
+        },
+        {
+          "title": "Recommandations concrètes avec code",
+          "desc": "Chaque recommandation inclut le problème identifié, la solution et un exemple de code prêt à implémenter. Pas de conseil vague — du concret."
+        },
+        {
+          "title": "Guide technique par critère",
+          "desc": "Pour chaque critère, un guide qui explique le pourquoi et le comment. Vous comprenez ce qu'il faut faire, même sans expertise technique."
+        },
+        {
+          "title": "Plan d'action priorisé",
+          "desc": "Les actions sont triées par impact. Vous savez exactement par où commencer pour maximiser votre visibilité dans les réponses IA."
+        },
+        {
+          "title": "Rapport web permanent + PDF",
+          "desc": "Votre rapport reste accessible indéfiniment à son URL. Le PDF est téléchargeable à tout moment — pour vos archives ou vos clients."
+        },
+        {
+          "title": "Méthodologie Princeton / KDD 2024",
+          "desc": "Basé sur l'étude « Generative Engine Optimization » de Princeton et Georgia Tech. Pas d'opinion — des critères validés par la recherche académique."
+        }
       ]
     },
     "steps": {
@@ -1759,7 +1786,7 @@
         {
           "num": "03",
           "title": "Recevez votre rapport",
-          "desc": "Rapport web + PDF envoyé par email en 1 à 2 minutes."
+          "desc": "Rapport web + PDF envoyé par email en 1 minute."
         }
       ]
     },
@@ -1768,7 +1795,7 @@
       "items": [
         {
           "q": "Combien de temps pour recevoir mon rapport ?",
-          "a": "1 à 2 minutes après paiement. Vous recevez un email avec le lien vers votre rapport web, plus un PDF téléchargeable."
+          "a": "1 minute après paiement. Vous recevez un email avec le lien vers votre rapport web, plus un PDF téléchargeable."
         },
         {
           "q": "Quelle page analyser en priorité ?",
@@ -1790,7 +1817,7 @@
     },
     "finalCta": {
       "title": "Prêt à analyser votre page ?",
-      "subtitle": "Score, recommandations et plan d'action en 1 à 2 minutes."
+      "subtitle": "Score, recommandations et plan d'action en 1 minute."
     },
     "crossSell": {
       "title": "Besoin d'une vision plus large ?",

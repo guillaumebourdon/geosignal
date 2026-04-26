@@ -28,7 +28,23 @@ function useAnimatedCounter(target, duration = 1400, delay = 600) {
   return value;
 }
 
-/* ─── Animated hero mockup — One-page version ────────────── */
+/* ─── Scroll reveal hook ─────────────────────────────────── */
+function useScrollReveal(threshold = 0.15) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
+    }, { threshold });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
+
+/* ─── Animated hero mockup ───────────────────────────────── */
 function HeroMockup({ locale }) {
   const score = useAnimatedCounter(72);
   const [barsVisible, setBarsVisible] = useState(false);
@@ -55,15 +71,12 @@ function HeroMockup({ locale }) {
 
   return (
     <div className="lp-mockup" style={{ background: '#fff', borderRadius: 20, boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 32px 80px rgba(26,25,22,0.15)', overflow: 'hidden', maxWidth: 360, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
-      {/* Chrome bar */}
       <div style={{ background: '#F0EDE8', borderBottom: '1px solid #E5E2DC', padding: '7px 16px', display: 'flex', alignItems: 'center', gap: 7 }}>
         <div style={{ display: 'flex', gap: 5 }}>
           {['#F87171','#FBBF24','#34D399'].map(c => <div key={c} style={{ width: 7, height: 7, borderRadius: '50%', background: c }} />)}
         </div>
         <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#B0ABA5', letterSpacing: 0.5, marginLeft: 4 }}>detekia.fr/r/...</div>
       </div>
-
-      {/* Score block */}
       <div style={{ background: '#1A1916', padding: '28px 24px 22px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '30%', left: 16, width: 100, height: 100, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.15) 0%, transparent 70%)' }} />
         <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 14, display: 'inline-flex', alignItems: 'center', gap: 5, border: '1px solid rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 4 }}>
@@ -71,7 +84,7 @@ function HeroMockup({ locale }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, position: 'relative' }}>
           <div>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3, transition: 'all 0.1s' }}>{score}</div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>{score}</div>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.2)', letterSpacing: 1 }}>/100</div>
           </div>
           <div style={{ paddingBottom: 12 }}>
@@ -79,8 +92,6 @@ function HeroMockup({ locale }) {
           </div>
         </div>
       </div>
-
-      {/* Criterion bars */}
       <div style={{ padding: '16px 20px 12px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>
           {locale === 'en' ? '8 CRITERIA ANALYZED' : '8 CRITÈRES ANALYSÉS'}
@@ -97,8 +108,6 @@ function HeroMockup({ locale }) {
           </div>
         ))}
       </div>
-
-      {/* Cascading badges */}
       <div style={{ padding: '0 20px 16px', display: 'flex', flexWrap: 'wrap', gap: 5 }}>
         {badges.map((b, i) => (
           <span key={i} style={{
@@ -114,8 +123,35 @@ function HeroMockup({ locale }) {
   );
 }
 
-/* ─── Audience icons ─────────────────────────────────────── */
-const audienceIcons = ['✦', '✎', '◆', '⚡', '●', '▲', '◇'];
+/* ─── Feature icons (SVG) ────────────────────────────────── */
+const featureIcons = [
+  /* Score */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+  /* Critères */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>,
+  /* Test IA */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+  /* Code */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+  /* Guide */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+  /* Action */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>,
+  /* Rapport */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
+  /* Méthodologie */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg>,
+];
+
+/* ─── Typographic XXL list item ──────────────────────────── */
+function TypoItem({ children, index, visible }) {
+  return (
+    <div style={{
+      fontFamily: 'Georgia, serif',
+      fontSize: 'clamp(22px, 3.5vw, 34px)',
+      color: '#1A1916',
+      letterSpacing: -0.5,
+      lineHeight: 1.2,
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(14px)',
+      transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.08}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.08}s`,
+    }}>
+      {children}
+    </div>
+  );
+}
 
 export default function OnePage() {
   const { t, locale } = useTranslation();
@@ -125,6 +161,9 @@ export default function OnePage() {
 
   const p = (key) => t(`onepage.${key}`);
 
+  const [audienceRef, audienceVisible] = useScrollReveal(0.1);
+  const [sitesRef, sitesVisible] = useScrollReveal(0.1);
+
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
       <SEO title={p('seo.title')} description={p('seo.description')} schema={{
@@ -133,9 +172,8 @@ export default function OnePage() {
       }} />
       <Header ctaLabel={t('nav.ctaAnalyze')} />
 
-      {/* ═══ HERO — gradient + animated mockup ═══ */}
+      {/* ═══ 1. HERO (inchangé) ═══ */}
       <section className="gradient-bg lp-hero-section" style={{ padding: '80px 24px 72px', position: 'relative', overflow: 'hidden' }}>
-        {/* Radial glow */}
         <div style={{ position: 'absolute', top: '20%', right: '10%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div className="lp-hero-grid" style={{ maxWidth: 1060, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 380px', gap: 48, alignItems: 'center' }}>
           <div>
@@ -157,55 +195,53 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ POUR QUI — visual cards ═══ */}
-      <section style={{ padding: '64px 24px' }}>
+      {/* ═══ 2. CE QUE VOUS OBTENEZ — Feature sections ═══ */}
+      <section style={{ padding: '72px 24px 64px' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12, textAlign: 'center' }}>{p('audience.label')}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 26, color: '#1A1916', marginBottom: 28, letterSpacing: -0.5, textAlign: 'center' }}>{p('audience.title')}</h2>
-          <div className="lp-audience-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{p('included.label')}</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(24px, 4vw, 30px)', color: '#1A1916', letterSpacing: -0.8, textAlign: 'center', marginBottom: 48, lineHeight: 1.2 }}>{p('included.title')}</h2>
+          <div className="lp-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
+            {p('included.features').map((feature, i) => (
+              <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                <div style={{ width: 44, height: 44, borderRadius: 11, background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+                  {featureIcons[i]}
+                </div>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 6, lineHeight: 1.3 }}>{feature.title}</div>
+                  <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{feature.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 3. POUR QUI — Typographic XXL ═══ */}
+      <section style={{ padding: '48px 24px 40px', background: '#fff' }}>
+        <div ref={audienceRef} style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 36 }}>{p('audience.label')}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
             {p('audience.items').map((item, i) => (
-              <div key={i} className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 16px', textAlign: 'center' }}>
-                <div style={{ fontSize: 18, marginBottom: 8, opacity: 0.5 }}>{audienceIcons[i % audienceIcons.length]}</div>
-                <div style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', fontWeight: 500, lineHeight: 1.3 }}>{item}</div>
-              </div>
+              <TypoItem key={i} index={i} visible={audienceVisible}>{item}</TypoItem>
             ))}
           </div>
-          <p style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic', textAlign: 'center', marginTop: 16 }}>{p('audience.closing')}</p>
+          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
         </div>
       </section>
 
-      {/* ═══ IDÉAL POUR ═══ */}
-      <section style={{ padding: '0 24px 64px' }}>
-        <div style={{ maxWidth: 680, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{p('sites.label')}</div>
-          <div className="lp-sites-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+      {/* ═══ 4. IDÉAL POUR ANALYSER — Typographic XXL ═══ */}
+      <section style={{ padding: '48px 24px 56px' }}>
+        <div ref={sitesRef} style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 36 }}>{p('sites.label')}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
             {p('sites.items').map((item, i) => (
-              <div key={i} className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 22px', display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: stepColors[i % 3], flexShrink: 0 }} />
-                <span style={{ fontSize: 14, color: '#1A1916', fontFamily: 'system-ui' }}>{item}</span>
-              </div>
+              <TypoItem key={i} index={i} visible={sitesVisible}>{item}</TypoItem>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══ CE QUE VOUS OBTENEZ — dark section ═══ */}
-      <section className="gradient-bg" style={{ padding: '64px 24px' }}>
-        <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.4)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{p('included.label')}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 26, color: '#F7F5F2', letterSpacing: -0.5, marginBottom: 28, lineHeight: 1.2 }}>{p('included.title')}</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {p('included.items').map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                <span style={{ color: '#10A37F', fontSize: 14, flexShrink: 0, marginTop: 1, fontWeight: 700 }}>✓</span>
-                <span style={{ fontSize: 14, color: 'rgba(247,245,242,0.75)', fontFamily: 'system-ui', lineHeight: 1.55 }}>{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ COMMENT ÇA MARCHE — HP-aligned step cards ═══ */}
+      {/* ═══ 5. COMMENT ÇA MARCHE ═══ */}
       <section style={{ padding: '64px 24px' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('steps.label')}</div>
@@ -221,7 +257,7 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ EXEMPLE RAPPORT ═══ */}
+      {/* ═══ 6. EXEMPLE RAPPORT ═══ */}
       <section style={{ padding: '0 24px 48px', textAlign: 'center' }}>
         <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer"
           className="btn-interactive"
@@ -231,7 +267,7 @@ export default function OnePage() {
         </a>
       </section>
 
-      {/* ═══ FAQ ═══ */}
+      {/* ═══ 7. FAQ ═══ */}
       <section style={{ padding: '0 24px 64px' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('faq.label')}</div>
@@ -244,7 +280,7 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ CTA FINAL ═══ */}
+      {/* ═══ 8. CTA FINAL ═══ */}
       <section className="gradient-bg" style={{ padding: '64px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', letterSpacing: -0.8, marginBottom: 12, lineHeight: 1.15 }}>{p('finalCta.title')}</h2>
@@ -261,7 +297,7 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ CROSS-SELL PRO — enhanced ═══ */}
+      {/* ═══ 9. CROSS-SELL PRO ═══ */}
       <section style={{ padding: '48px 24px 64px' }}>
         <div className="card-interactive" style={{ maxWidth: 560, margin: '0 auto', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', display: 'flex', gap: 20, alignItems: 'center' }}>
           <div style={{ width: 52, height: 52, borderRadius: 12, background: 'rgba(217,119,87,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -288,16 +324,12 @@ export default function OnePage() {
           .lp-hero-mockup > div { max-width: 300px !important; }
           .lp-hero-grid h1 { font-size: clamp(30px, 8vw, 40px) !important; }
           .lp-hero-grid p { margin: 0 auto 32px !important; }
-          .lp-audience-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .lp-sites-grid { grid-template-columns: 1fr !important; }
+          .lp-features-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
           .lp-steps-grid { grid-template-columns: 1fr !important; }
           .lp-final-input { flex-direction: column !important; }
           .lp-final-input input { border-radius: 10px 10px 0 0 !important; }
           .lp-final-input button { border-radius: 0 0 10px 10px !important; width: 100% !important; justify-content: center; }
           .lp-hero-section { padding: 60px 16px 48px !important; }
-        }
-        @media (max-width: 480px) {
-          .lp-audience-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>

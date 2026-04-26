@@ -258,7 +258,7 @@
         {
           "num": "03",
           "title": "Get your score",
-          "desc": "Score out of 100, per-criteria analysis and expert recommendations. Instant for the free audit, full report in 1-2 minutes."
+          "desc": "Score out of 100, per-criteria analysis and expert recommendations. Instant for the free audit, full report in 1 minute."
         }
       ],
       "methodologyLink": "See our full methodology →"
@@ -756,7 +756,7 @@
         },
         {
           "q": "How long to receive my report?",
-          "a": "Free audit: about 30 seconds. 1-page audit (€29): 1 to 2 minutes. Complete audit (€99): 15 to 20 minutes (analysis of 20 pages by AI)."
+          "a": "Free audit: about 30 seconds. 1-page audit (€29): 1 minute. Complete audit (€99): 15 to 20 minutes (analysis of 20 pages by AI)."
         },
         {
           "q": "Can I switch between plans?",
@@ -1598,7 +1598,6 @@
     },
     "audience": {
       "label": "FOR WHO",
-      "title": "Built for:",
       "items": [
         "SEO consultants",
         "Digital agencies",
@@ -1622,16 +1621,20 @@
     "included": {
       "label": "WHAT YOU GET",
       "title": "A professional audit, delivered in 15-20 minutes",
-      "items": [
-        "Average score out of 100 across 20 pages",
-        "8 criteria analyzed per page",
-        "Consolidated recommendations with affected pages",
-        "AI test on 30 queries — competing sites identified",
-        "Cross-page patterns detected",
-        "Prioritized action plan by impact",
-        "Technical guide per criterion",
-        "Detailed per-page breakdown",
-        "Permanent web report + PDF"
+      "columns": ["Element", "Detail", "Volume"],
+      "rows": [
+        { "element": "Overall site score", "detail": "Weighted average out of 100, per-criterion rating", "volume": "20 pages" },
+        { "element": "8 GEO criteria", "detail": "Individual evaluation on each analyzed page", "volume": "160 analyses" },
+        { "element": "Priority pages", "detail": "Automatic selection via sitemap", "volume": "20 pages" },
+        { "element": "AI visibility test", "detail": "Queries on ChatGPT, Gemini, Perplexity", "volume": "30 queries" },
+        { "element": "Competitors identified", "detail": "Sites cited in your place on your topics", "volume": "Per query" },
+        { "element": "Cross-page patterns", "detail": "Recurring issues detected across your pages", "volume": "Cross-page" },
+        { "element": "Prioritized action plan", "detail": "Actions sorted by impact and estimated effort", "volume": "Turnkey" },
+        { "element": "Per-page breakdown", "detail": "Individual diagnosis of each analyzed page", "volume": "20 reports" },
+        { "element": "Consolidated recos", "detail": "Deduplicated recommendations with affected pages", "volume": "Site level" },
+        { "element": "Technical guides", "detail": "Code examples and instructions per criterion", "volume": "8 guides" },
+        { "element": "Web report + PDF", "detail": "Permanent URL + PDF download", "volume": "Unlimited" },
+        { "element": "Methodology", "detail": "Princeton / Georgia Tech, KDD 2024", "volume": "Peer-reviewed" }
       ]
     },
     "steps": {
@@ -1691,18 +1694,17 @@
   "onepage": {
     "seo": {
       "title": "1-Page GEO Audit — €29 | Detekia",
-      "description": "Analyze your page's AI visibility in depth. Score out of 100, 8 criteria, 8 recommendations with code examples. Report in 1-2 minutes."
+      "description": "Analyze your page's AI visibility in depth. Score out of 100, 8 criteria, 8 recommendations with code examples. Report in 1 minute."
     },
     "hero": {
       "badge": "1-PAGE AUDIT",
       "title": "Your page, analyzed by AI",
-      "subtitle": "Score out of 100, 8 detailed criteria, actionable recommendations with code examples. Results in 1-2 minutes.",
+      "subtitle": "Score out of 100, 8 detailed criteria, actionable recommendations with code examples. Results in 1 minute.",
       "cta": "Analyze my page — €29 →",
       "exampleLink": "See an example report"
     },
     "audience": {
       "label": "FOR WHO",
-      "title": "Built for:",
       "items": [
         "Freelancers",
         "Content creators",
@@ -1725,15 +1727,40 @@
     },
     "included": {
       "label": "WHAT YOU GET",
-      "title": "A complete report, delivered in 1-2 minutes",
-      "items": [
-        "AI visibility score out of 100",
-        "8 criteria analyzed in depth",
-        "8 detailed recommendations with code examples",
-        "AI test on 10 queries — competing sites identified",
-        "Technical guide per criterion",
-        "Permanent web report",
-        "Downloadable PDF"
+      "title": "A complete report, delivered in 1 minute",
+      "features": [
+        {
+          "title": "Visibility score out of 100",
+          "desc": "Your page receives an overall score based on 8 weighted criteria. You see exactly where you stand — and what needs fixing."
+        },
+        {
+          "title": "8 GEO criteria analyzed in depth",
+          "desc": "Structured data, content depth, authority signals, freshness… Each criterion is evaluated individually with a score and precise diagnosis."
+        },
+        {
+          "title": "AI test on 10 queries",
+          "desc": "We query ChatGPT, Gemini and Perplexity on your topic. You discover which competitors are cited — and why they show up instead of you."
+        },
+        {
+          "title": "Actionable recommendations with code",
+          "desc": "Each recommendation includes the problem, the solution and a ready-to-implement code example. No vague advice — concrete actions."
+        },
+        {
+          "title": "Technical guide per criterion",
+          "desc": "For each criterion, a guide explaining the why and the how. You understand what to do, even without technical expertise."
+        },
+        {
+          "title": "Prioritized action plan",
+          "desc": "Actions sorted by impact. You know exactly where to start to maximize your visibility in AI responses."
+        },
+        {
+          "title": "Permanent web report + PDF",
+          "desc": "Your report stays accessible indefinitely at its URL. The PDF is downloadable anytime — for your records or your clients."
+        },
+        {
+          "title": "Princeton / KDD 2024 methodology",
+          "desc": "Based on the \"Generative Engine Optimization\" study from Princeton and Georgia Tech. Not opinion — criteria validated by academic research."
+        }
       ]
     },
     "steps": {
@@ -1752,7 +1779,7 @@
         {
           "num": "03",
           "title": "Get your report",
-          "desc": "Web report + PDF sent by email in 1-2 minutes."
+          "desc": "Web report + PDF sent by email in 1 minute."
         }
       ]
     },
@@ -1761,7 +1788,7 @@
       "items": [
         {
           "q": "How long to receive my report?",
-          "a": "1-2 minutes after payment."
+          "a": "1 minute after payment."
         },
         {
           "q": "Which page should I analyze first?",
@@ -1783,7 +1810,7 @@
     },
     "finalCta": {
       "title": "Ready to analyze your page?",
-      "subtitle": "Score, recommendations and action plan in 1-2 minutes."
+      "subtitle": "Score, recommendations and action plan in 1 minute."
     },
     "crossSell": {
       "title": "Need a broader view?",
