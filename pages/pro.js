@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
 import CheckoutFlow from '../components/CheckoutFlow';
@@ -131,23 +132,20 @@ function HeroMockup({ locale }) {
   );
 }
 
-/* ─── Typographic XXL list item ──────────────────────────── */
-function TypoItem({ children, index, visible }) {
-  return (
-    <div style={{
-      fontFamily: 'Georgia, serif',
-      fontSize: 'clamp(22px, 3.5vw, 34px)',
-      color: '#1A1916',
-      letterSpacing: -0.5,
-      lineHeight: 1.2,
-      opacity: visible ? 1 : 0,
-      transform: visible ? 'translateY(0)' : 'translateY(14px)',
-      transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.08}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.08}s`,
-    }}>
-      {children}
-    </div>
-  );
-}
+/* ─── Feature icons (SVG) — Pro has 11 features ──────────── */
+const proFeatureIcons = [
+  <svg key="0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+  <svg key="1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>,
+  <svg key="2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>,
+  <svg key="3" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+  <svg key="4" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>,
+  <svg key="5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>,
+  <svg key="6" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>,
+  <svg key="7" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
+  <svg key="8" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+  <svg key="9" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
+  <svg key="10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg>,
+];
 
 export default function Pro() {
   const { t, locale } = useTranslation();
@@ -157,11 +155,7 @@ export default function Pro() {
 
   const p = (key) => t(`pro.${key}`);
 
-  const [audienceRef, audienceVisible] = useScrollReveal(0.1);
-  const [sitesRef, sitesVisible] = useScrollReveal(0.1);
-
-  const rows = p('included.rows');
-  const columns = p('included.columns');
+  const [targetRef, targetVisible] = useScrollReveal(0.1);
 
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
@@ -195,75 +189,74 @@ export default function Pro() {
         </div>
       </section>
 
-      {/* ═══ 2. CE QUE VOUS OBTENEZ — Pro table ═══ */}
+      {/* ═══ 2. CE QUE VOUS OBTENEZ — Feature sections (Pro) ═══ */}
       <section style={{ padding: '72px 24px 64px' }}>
-        <div style={{ maxWidth: 820, margin: '0 auto' }}>
+        <div style={{ maxWidth: 780, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{p('included.label')}</div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(24px, 4vw, 30px)', color: '#1A1916', letterSpacing: -0.8, textAlign: 'center', marginBottom: 48, lineHeight: 1.2 }}>{p('included.title')}</h2>
+          <div className="lp-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 28 }}>
+            {p('included.features').map((feature, i) => (
+              <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                <div style={{ width: 44, height: 44, borderRadius: 11, background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+                  {proFeatureIcons[i]}
+                </div>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 6, lineHeight: 1.3 }}>{feature.title}</div>
+                  <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{feature.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          {/* Desktop table */}
-          <div className="lp-pro-table-desktop" style={{ background: '#fff', borderRadius: 16, border: '1px solid #E5E2DC', overflow: 'hidden', boxShadow: '0 2px 12px rgba(26,25,22,0.04)' }}>
-            {/* Header */}
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 3fr 1fr', background: '#1A1916', padding: '14px 24px' }}>
-              {columns.map((col, i) => (
-                <div key={i} style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.5)', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600 }}>{col}</div>
+      {/* ═══ 3. POUR QUI + IDÉAL POUR — combined block ═══ */}
+      <section style={{ padding: '56px 24px', background: '#fff' }}>
+        <div ref={targetRef} style={{ maxWidth: 820, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 40 }}>
+            {locale === 'en' ? 'WHO IS THIS AUDIT FOR' : 'À QUI S\'ADRESSE CET AUDIT'}
+          </div>
+          <div className="lp-target-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: 0 }}>
+            {/* Left — Profiles */}
+            <div style={{ padding: '0 36px 0 0' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>
+                {locale === 'en' ? 'YOUR PROFILE' : 'VOTRE PROFIL'}
+              </div>
+              {p('audience.items').map((item, i) => (
+                <div key={i} className="lp-target-item" style={{
+                  fontFamily: 'Georgia, serif', fontSize: 'clamp(17px, 2.2vw, 21px)', color: '#1A1916',
+                  padding: '10px 0', borderBottom: '1px solid #F0EDE8', letterSpacing: -0.3, lineHeight: 1.3,
+                  opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateX(0)' : 'translateX(-12px)',
+                  transition: `opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06}s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06}s`,
+                }}>
+                  {item}
+                </div>
               ))}
             </div>
-            {/* Rows */}
-            {rows.map((row, i) => (
-              <div key={i} style={{
-                display: 'grid', gridTemplateColumns: '2fr 3fr 1fr', padding: '14px 24px',
-                borderBottom: i < rows.length - 1 ? '1px solid #F0EDE8' : 'none',
-                background: i % 2 === 0 ? '#fff' : '#FAFAF9',
-              }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.4 }}>{row.element}</div>
-                <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5 }}>{row.detail}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', fontWeight: 600, letterSpacing: 0.3 }}>{row.volume}</div>
+            {/* Divider */}
+            <div style={{ background: '#E5E2DC' }} />
+            {/* Right — Site types */}
+            <div style={{ padding: '0 0 0 36px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>
+                {locale === 'en' ? 'YOU ANALYZE' : 'VOUS ANALYSEZ'}
               </div>
-            ))}
-          </div>
-
-          {/* Mobile cards (replaces table) */}
-          <div className="lp-pro-table-mobile" style={{ display: 'none' }}>
-            {rows.map((row, i) => (
-              <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '16px 18px', marginBottom: 8 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.3 }}>{row.element}</div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', fontWeight: 600, letterSpacing: 0.3, flexShrink: 0, marginLeft: 12, marginTop: 2 }}>{row.volume}</div>
+              {p('sites.items').map((item, i) => (
+                <div key={i} className="lp-target-item" style={{
+                  fontFamily: 'Georgia, serif', fontSize: 'clamp(17px, 2.2vw, 21px)', color: '#1A1916',
+                  padding: '10px 0', borderBottom: '1px solid #F0EDE8', letterSpacing: -0.3, lineHeight: 1.3,
+                  opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateX(12px)' : 'translateX(24px)',
+                  transition: `opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06 + 0.15}s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06 + 0.15}s`,
+                }}>
+                  {item}
                 </div>
-                <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.5 }}>{row.detail}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic', textAlign: 'center', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
         </div>
       </section>
 
-      {/* ═══ 3. POUR QUI — Typographic XXL ═══ */}
-      <section style={{ padding: '48px 24px 40px', background: '#fff' }}>
-        <div ref={audienceRef} style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 36 }}>{p('audience.label')}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-            {p('audience.items').map((item, i) => (
-              <TypoItem key={i} index={i} visible={audienceVisible}>{item}</TypoItem>
-            ))}
-          </div>
-          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
-        </div>
-      </section>
-
-      {/* ═══ 4. IDÉAL POUR ANALYSER — Typographic XXL ═══ */}
-      <section style={{ padding: '48px 24px 56px' }}>
-        <div ref={sitesRef} style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 36 }}>{p('sites.label')}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-            {p('sites.items').map((item, i) => (
-              <TypoItem key={i} index={i} visible={sitesVisible}>{item}</TypoItem>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 5. COMMENT ÇA MARCHE ═══ */}
+      {/* ═══ 4. COMMENT ÇA MARCHE ═══ */}
       <section style={{ padding: '64px 24px' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('steps.label')}</div>
@@ -279,7 +272,7 @@ export default function Pro() {
         </div>
       </section>
 
-      {/* ═══ 6. EXEMPLE RAPPORT ═══ */}
+      {/* ═══ 5. EXEMPLE RAPPORT ═══ */}
       <section style={{ padding: '0 24px 48px', textAlign: 'center' }}>
         <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer"
           className="btn-interactive"
@@ -289,7 +282,7 @@ export default function Pro() {
         </a>
       </section>
 
-      {/* ═══ 7. FAQ ═══ */}
+      {/* ═══ 6. FAQ ═══ */}
       <section style={{ padding: '0 24px 64px' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('faq.label')}</div>
@@ -302,7 +295,7 @@ export default function Pro() {
         </div>
       </section>
 
-      {/* ═══ 8. CTA FINAL ═══ */}
+      {/* ═══ 7. CTA FINAL ═══ */}
       <section className="gradient-bg" style={{ padding: '64px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', letterSpacing: -0.8, marginBottom: 12, lineHeight: 1.15 }}>{p('finalCta.title')}</h2>
@@ -319,21 +312,40 @@ export default function Pro() {
         </div>
       </section>
 
-      {/* Pas de cross-sell sur /pro (pas de downsell) */}
+      {/* ═══ 8. CROSS-SELL ONE-PAGE ═══ */}
+      <section style={{ padding: '48px 24px 64px' }}>
+        <div className="card-interactive" style={{ maxWidth: 560, margin: '0 auto', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', display: 'flex', gap: 20, alignItems: 'center' }}>
+          <div style={{ width: 52, height: 52, borderRadius: 12, background: 'rgba(217,119,87,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="2" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 17, color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 6, fontWeight: 600 }}>{p('crossSell.title')}</div>
+            <p style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 12 }}>{p('crossSell.desc')}</p>
+            <Link href="/one-page" className="btn-interactive" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: '#D97757', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none', background: 'rgba(217,119,87,0.06)', padding: '8px 18px', borderRadius: 8, border: '1px solid rgba(217,119,87,0.2)' }}>
+              {p('crossSell.cta')}
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <CheckoutFlow plan="pro" showModal={showCheckout} onClose={() => setShowCheckout(false)} />
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: rgba(247,245,242,0.3); }
+        .lp-target-item { transition: color 0.2s; }
+        .lp-target-item:hover { color: #D97757 !important; }
         @media (max-width: 767px) {
           .lp-hero-grid { grid-template-columns: 1fr !important; gap: 36px !important; text-align: center; }
           .lp-hero-mockup { justify-content: center !important; }
           .lp-hero-mockup > div { max-width: 310px !important; }
           .lp-hero-grid h1 { font-size: clamp(30px, 8vw, 40px) !important; }
           .lp-hero-grid p { margin: 0 auto 32px !important; }
-          .lp-pro-table-desktop { display: none !important; }
-          .lp-pro-table-mobile { display: block !important; }
+          .lp-features-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .lp-target-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .lp-target-grid > div:nth-child(2) { display: none !important; }
+          .lp-target-grid > div:last-child { padding-left: 0 !important; }
+          .lp-target-grid > div:first-child { padding-right: 0 !important; }
           .lp-steps-grid { grid-template-columns: 1fr !important; }
           .lp-final-input { flex-direction: column !important; }
           .lp-final-input input { border-radius: 10px 10px 0 0 !important; }

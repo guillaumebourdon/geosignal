@@ -1621,20 +1621,51 @@
     "included": {
       "label": "WHAT YOU GET",
       "title": "A professional audit, delivered in 15-20 minutes",
-      "columns": ["Element", "Detail", "Volume"],
-      "rows": [
-        { "element": "Overall site score", "detail": "Weighted average out of 100, per-criterion rating", "volume": "20 pages" },
-        { "element": "8 GEO criteria", "detail": "Individual evaluation on each analyzed page", "volume": "160 analyses" },
-        { "element": "Priority pages", "detail": "Automatic selection via sitemap", "volume": "20 pages" },
-        { "element": "AI visibility test", "detail": "Queries on ChatGPT, Gemini, Perplexity", "volume": "30 queries" },
-        { "element": "Competitors identified", "detail": "Sites cited in your place on your topics", "volume": "Per query" },
-        { "element": "Cross-page patterns", "detail": "Recurring issues detected across your pages", "volume": "Cross-page" },
-        { "element": "Prioritized action plan", "detail": "Actions sorted by impact and estimated effort", "volume": "Turnkey" },
-        { "element": "Per-page breakdown", "detail": "Individual diagnosis of each analyzed page", "volume": "20 reports" },
-        { "element": "Consolidated recos", "detail": "Deduplicated recommendations with affected pages", "volume": "Site level" },
-        { "element": "Technical guides", "detail": "Code examples and instructions per criterion", "volume": "8 guides" },
-        { "element": "Web report + PDF", "detail": "Permanent URL + PDF download", "volume": "Unlimited" },
-        { "element": "Methodology", "detail": "Princeton / Georgia Tech, KDD 2024", "volume": "Peer-reviewed" }
+      "features": [
+        {
+          "title": "Overall site score out of 100",
+          "desc": "Your site receives an average AI visibility score out of 100, calculated from individual page scores. Each criterion is rated separately to pinpoint exactly what needs improvement."
+        },
+        {
+          "title": "8 GEO criteria on every page",
+          "desc": "Structured data, content depth, authority signals, freshness, citations, technical SEO… Each criterion is evaluated individually on every analyzed page."
+        },
+        {
+          "title": "20 priority pages analyzed",
+          "desc": "Our algorithm automatically selects your most strategic pages via sitemap — homepage, products, recent articles, conversion pages."
+        },
+        {
+          "title": "AI test on 30 queries",
+          "desc": "We query ChatGPT, Gemini and Perplexity on 30 queries related to your business. You discover which competitors are cited instead of you — and on which topics."
+        },
+        {
+          "title": "Cross-page pattern detection",
+          "desc": "Cross-analyzing 20 pages reveals systemic issues invisible page by page: missing schemas everywhere, absent FAQs, weak authority signals across the entire site."
+        },
+        {
+          "title": "Consolidated recommendations",
+          "desc": "Recommendations are deduplicated and consolidated at site level. Each reco indicates affected pages for efficient, targeted fixes."
+        },
+        {
+          "title": "Impact-prioritized action plan",
+          "desc": "Actions sorted by impact and estimated effort. You know exactly where to start to maximize your visibility in AI responses."
+        },
+        {
+          "title": "Detailed per-page breakdown",
+          "desc": "Each analyzed page gets its own diagnosis: individual score, criteria evaluated, and priority actions specific to that page."
+        },
+        {
+          "title": "Technical guides with code examples",
+          "desc": "For each criterion, a guide with ready-to-implement code examples. Fixes are directly actionable by your technical team."
+        },
+        {
+          "title": "Permanent web report + PDF",
+          "desc": "Your report stays accessible indefinitely at its permanent URL. The PDF is downloadable anytime — ideal for client deliverables."
+        },
+        {
+          "title": "Evolving, research-backed methodology",
+          "desc": "Built on the foundational Princeton study (KDD 2024) and continuously enriched with recent industry research — Otterly.AI 2026, Growth Memo, Seer Interactive, Edelman. A living methodology, not a frozen one."
+        }
       ]
     },
     "steps": {
@@ -1689,6 +1720,11 @@
     "finalCta": {
       "title": "Ready to audit your site?",
       "subtitle": "20 pages analyzed, patterns detected, action plan in 15-20 minutes."
+    },
+    "crossSell": {
+      "title": "Need to analyze a single page?",
+      "desc": "The 1-page audit gives you a complete diagnosis of your most strategic page — score, recommendations and action plan in 1 minute.",
+      "cta": "Discover the 1-page audit →"
     }
   },
   "onepage": {
@@ -1758,8 +1794,8 @@
           "desc": "Your report stays accessible indefinitely at its URL. The PDF is downloadable anytime — for your records or your clients."
         },
         {
-          "title": "Princeton / KDD 2024 methodology",
-          "desc": "Based on the \"Generative Engine Optimization\" study from Princeton and Georgia Tech. Not opinion — criteria validated by academic research."
+          "title": "Evolving, research-backed methodology",
+          "desc": "Built on the foundational Princeton study (KDD 2024) and continuously enriched with recent industry research — Otterly.AI 2026, Growth Memo, Seer Interactive, Edelman. A living methodology, not a frozen one."
         }
       ]
     },

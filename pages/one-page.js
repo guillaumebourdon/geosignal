@@ -125,33 +125,15 @@ function HeroMockup({ locale }) {
 
 /* ─── Feature icons (SVG) ────────────────────────────────── */
 const featureIcons = [
-  /* Score */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
-  /* Critères */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>,
-  /* Test IA */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
-  /* Code */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
-  /* Guide */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
-  /* Action */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>,
-  /* Rapport */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
-  /* Méthodologie */ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg>,
+  <svg key="0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+  <svg key="1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>,
+  <svg key="2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+  <svg key="3" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+  <svg key="4" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+  <svg key="5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>,
+  <svg key="6" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
+  <svg key="7" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="1.5" strokeLinecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg>,
 ];
-
-/* ─── Typographic XXL list item ──────────────────────────── */
-function TypoItem({ children, index, visible }) {
-  return (
-    <div style={{
-      fontFamily: 'Georgia, serif',
-      fontSize: 'clamp(22px, 3.5vw, 34px)',
-      color: '#1A1916',
-      letterSpacing: -0.5,
-      lineHeight: 1.2,
-      opacity: visible ? 1 : 0,
-      transform: visible ? 'translateY(0)' : 'translateY(14px)',
-      transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.08}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.08}s`,
-    }}>
-      {children}
-    </div>
-  );
-}
 
 export default function OnePage() {
   const { t, locale } = useTranslation();
@@ -161,8 +143,7 @@ export default function OnePage() {
 
   const p = (key) => t(`onepage.${key}`);
 
-  const [audienceRef, audienceVisible] = useScrollReveal(0.1);
-  const [sitesRef, sitesVisible] = useScrollReveal(0.1);
+  const [targetRef, targetVisible] = useScrollReveal(0.1);
 
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
@@ -200,7 +181,7 @@ export default function OnePage() {
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{p('included.label')}</div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(24px, 4vw, 30px)', color: '#1A1916', letterSpacing: -0.8, textAlign: 'center', marginBottom: 48, lineHeight: 1.2 }}>{p('included.title')}</h2>
-          <div className="lp-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
+          <div className="lp-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 28 }}>
             {p('included.features').map((feature, i) => (
               <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                 <div style={{ width: 44, height: 44, borderRadius: 11, background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
@@ -216,32 +197,53 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ 3. POUR QUI — Typographic XXL ═══ */}
-      <section style={{ padding: '48px 24px 40px', background: '#fff' }}>
-        <div ref={audienceRef} style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 36 }}>{p('audience.label')}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-            {p('audience.items').map((item, i) => (
-              <TypoItem key={i} index={i} visible={audienceVisible}>{item}</TypoItem>
-            ))}
+      {/* ═══ 3. POUR QUI + IDÉAL POUR — combined block ═══ */}
+      <section style={{ padding: '56px 24px', background: '#fff' }}>
+        <div ref={targetRef} style={{ maxWidth: 820, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 40 }}>
+            {locale === 'en' ? 'WHO IS THIS AUDIT FOR' : 'À QUI S\'ADRESSE CET AUDIT'}
           </div>
-          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
+          <div className="lp-target-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: 0 }}>
+            {/* Left — Profiles */}
+            <div style={{ padding: '0 36px 0 0' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>
+                {locale === 'en' ? 'YOUR PROFILE' : 'VOTRE PROFIL'}
+              </div>
+              {p('audience.items').map((item, i) => (
+                <div key={i} className="lp-target-item" style={{
+                  fontFamily: 'Georgia, serif', fontSize: 'clamp(17px, 2.2vw, 21px)', color: '#1A1916',
+                  padding: '10px 0', borderBottom: '1px solid #F0EDE8', letterSpacing: -0.3, lineHeight: 1.3,
+                  opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateX(0)' : 'translateX(-12px)',
+                  transition: `opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06}s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06}s`,
+                }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+            {/* Divider */}
+            <div style={{ background: '#E5E2DC' }} />
+            {/* Right — Site types */}
+            <div style={{ padding: '0 0 0 36px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>
+                {locale === 'en' ? 'YOU ANALYZE' : 'VOUS ANALYSEZ'}
+              </div>
+              {p('sites.items').map((item, i) => (
+                <div key={i} className="lp-target-item" style={{
+                  fontFamily: 'Georgia, serif', fontSize: 'clamp(17px, 2.2vw, 21px)', color: '#1A1916',
+                  padding: '10px 0', borderBottom: '1px solid #F0EDE8', letterSpacing: -0.3, lineHeight: 1.3,
+                  opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateX(12px)' : 'translateX(24px)',
+                  transition: `opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06 + 0.15}s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06 + 0.15}s`,
+                }}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic', textAlign: 'center', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
         </div>
       </section>
 
-      {/* ═══ 4. IDÉAL POUR ANALYSER — Typographic XXL ═══ */}
-      <section style={{ padding: '48px 24px 56px' }}>
-        <div ref={sitesRef} style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 36 }}>{p('sites.label')}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-            {p('sites.items').map((item, i) => (
-              <TypoItem key={i} index={i} visible={sitesVisible}>{item}</TypoItem>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ 5. COMMENT ÇA MARCHE ═══ */}
+      {/* ═══ 4. COMMENT ÇA MARCHE ═══ */}
       <section style={{ padding: '64px 24px' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('steps.label')}</div>
@@ -257,7 +259,7 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ 6. EXEMPLE RAPPORT ═══ */}
+      {/* ═══ 5. EXEMPLE RAPPORT ═══ */}
       <section style={{ padding: '0 24px 48px', textAlign: 'center' }}>
         <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer"
           className="btn-interactive"
@@ -267,7 +269,7 @@ export default function OnePage() {
         </a>
       </section>
 
-      {/* ═══ 7. FAQ ═══ */}
+      {/* ═══ 6. FAQ ═══ */}
       <section style={{ padding: '0 24px 64px' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('faq.label')}</div>
@@ -280,7 +282,7 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ 8. CTA FINAL ═══ */}
+      {/* ═══ 7. CTA FINAL ═══ */}
       <section className="gradient-bg" style={{ padding: '64px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 520, margin: '0 auto' }}>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', letterSpacing: -0.8, marginBottom: 12, lineHeight: 1.15 }}>{p('finalCta.title')}</h2>
@@ -297,7 +299,7 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ 9. CROSS-SELL PRO ═══ */}
+      {/* ═══ 8. CROSS-SELL PRO ═══ */}
       <section style={{ padding: '48px 24px 64px' }}>
         <div className="card-interactive" style={{ maxWidth: 560, margin: '0 auto', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', display: 'flex', gap: 20, alignItems: 'center' }}>
           <div style={{ width: 52, height: 52, borderRadius: 12, background: 'rgba(217,119,87,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -318,13 +320,19 @@ export default function OnePage() {
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: rgba(247,245,242,0.3); }
+        .lp-target-item { transition: color 0.2s; }
+        .lp-target-item:hover { color: #D97757 !important; }
         @media (max-width: 767px) {
           .lp-hero-grid { grid-template-columns: 1fr !important; gap: 36px !important; text-align: center; }
           .lp-hero-mockup { justify-content: center !important; }
           .lp-hero-mockup > div { max-width: 300px !important; }
           .lp-hero-grid h1 { font-size: clamp(30px, 8vw, 40px) !important; }
           .lp-hero-grid p { margin: 0 auto 32px !important; }
-          .lp-features-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+          .lp-features-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .lp-target-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .lp-target-grid > div:nth-child(2) { display: none !important; }
+          .lp-target-grid > div:last-child { padding-left: 0 !important; }
+          .lp-target-grid > div:first-child { padding-right: 0 !important; }
           .lp-steps-grid { grid-template-columns: 1fr !important; }
           .lp-final-input { flex-direction: column !important; }
           .lp-final-input input { border-radius: 10px 10px 0 0 !important; }

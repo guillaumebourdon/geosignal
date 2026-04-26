@@ -1628,20 +1628,51 @@
     "included": {
       "label": "CE QUE VOUS OBTENEZ",
       "title": "Un audit professionnel, livré en 15 à 20 minutes",
-      "columns": ["Élément", "Détail", "Volume"],
-      "rows": [
-        { "element": "Score global du site", "detail": "Moyenne pondérée sur 100, notation par critère", "volume": "20 pages" },
-        { "element": "8 critères GEO", "detail": "Évaluation individuelle sur chaque page analysée", "volume": "160 analyses" },
-        { "element": "Pages prioritaires", "detail": "Sélection automatique via sitemap", "volume": "20 pages" },
-        { "element": "Test de visibilité IA", "detail": "Requêtes sur ChatGPT, Gemini, Perplexity", "volume": "30 requêtes" },
-        { "element": "Concurrents identifiés", "detail": "Sites cités à votre place sur vos thématiques", "volume": "Par requête" },
-        { "element": "Patterns transverses", "detail": "Problèmes récurrents détectés entre vos pages", "volume": "Inter-pages" },
-        { "element": "Plan d'action priorisé", "detail": "Actions triées par impact et effort estimé", "volume": "Clé en main" },
-        { "element": "Bilan page par page", "detail": "Diagnostic individuel de chaque page analysée", "volume": "20 bilans" },
-        { "element": "Recos consolidées", "detail": "Recommandations dédupliquées avec pages concernées", "volume": "Niveau site" },
-        { "element": "Guides techniques", "detail": "Exemples de code et instructions par critère", "volume": "8 guides" },
-        { "element": "Rapport web + PDF", "detail": "URL permanente + téléchargement PDF", "volume": "Illimité" },
-        { "element": "Méthodologie", "detail": "Princeton / Georgia Tech, KDD 2024", "volume": "Peer-reviewed" }
+      "features": [
+        {
+          "title": "Score global de votre site sur 100",
+          "desc": "Votre site reçoit un score moyen de visibilité IA sur 100, calculé à partir des scores individuels de chaque page. Chaque critère est noté séparément pour identifier précisément les axes d'amélioration."
+        },
+        {
+          "title": "8 critères GEO sur chaque page",
+          "desc": "Données structurées, profondeur du contenu, signaux d'autorité, fraîcheur, citations, SEO technique… Chaque critère est évalué individuellement sur chaque page analysée."
+        },
+        {
+          "title": "20 pages prioritaires analysées",
+          "desc": "Notre algorithme sélectionne automatiquement les pages les plus stratégiques de votre site via le sitemap — accueil, produits, articles récents, pages de conversion."
+        },
+        {
+          "title": "Test IA sur 30 requêtes",
+          "desc": "Nous interrogeons ChatGPT, Gemini et Perplexity sur 30 requêtes liées à votre activité. Vous découvrez quels concurrents sont cités à votre place — et sur quels sujets."
+        },
+        {
+          "title": "Détection de patterns transverses",
+          "desc": "L'analyse croisée de 20 pages révèle les problèmes systémiques invisibles page par page : schémas manquants partout, FAQ absentes, signaux d'autorité faibles sur tout le site."
+        },
+        {
+          "title": "Recommandations consolidées",
+          "desc": "Les recommandations sont dédupliquées et consolidées au niveau du site. Chaque reco indique les pages concernées pour une correction efficace et ciblée."
+        },
+        {
+          "title": "Plan d'action priorisé par impact",
+          "desc": "Les actions sont triées par impact et effort estimé. Vous savez exactement par où commencer pour maximiser votre visibilité dans les réponses IA."
+        },
+        {
+          "title": "Bilan détaillé page par page",
+          "desc": "Chaque page analysée reçoit son propre diagnostic : score individuel, critères évalués, et les actions prioritaires spécifiques à cette page."
+        },
+        {
+          "title": "Guides techniques avec exemples de code",
+          "desc": "Pour chaque critère, un guide avec exemples de code prêts à implémenter. Les corrections sont directement actionnables par votre équipe technique."
+        },
+        {
+          "title": "Rapport web permanent + PDF",
+          "desc": "Votre rapport reste accessible indéfiniment à son URL permanente. Le PDF est téléchargeable à tout moment — idéal pour vos livrables clients."
+        },
+        {
+          "title": "Méthodologie évolutive et sourcée",
+          "desc": "Basée sur l'étude fondatrice de Princeton (KDD 2024) et enrichie en continu avec les recherches récentes — Otterly.AI 2026, Growth Memo, Seer Interactive, Edelman. Une méthodologie vivante, pas figée."
+        }
       ]
     },
     "steps": {
@@ -1696,6 +1727,11 @@
     "finalCta": {
       "title": "Prêt à auditer votre site ?",
       "subtitle": "20 pages analysées, patterns détectés, plan d'action livré en 15 à 20 minutes."
+    },
+    "crossSell": {
+      "title": "Besoin d'analyser une seule page ?",
+      "desc": "L'audit 1 page vous donne un diagnostic complet sur votre page la plus stratégique — score, recommandations et plan d'action en 1 minute.",
+      "cta": "Découvrir l'audit 1 page →"
     }
   },
   "onepage": {
@@ -1765,8 +1801,8 @@
           "desc": "Votre rapport reste accessible indéfiniment à son URL. Le PDF est téléchargeable à tout moment — pour vos archives ou vos clients."
         },
         {
-          "title": "Méthodologie Princeton / KDD 2024",
-          "desc": "Basé sur l'étude « Generative Engine Optimization » de Princeton et Georgia Tech. Pas d'opinion — des critères validés par la recherche académique."
+          "title": "Méthodologie évolutive et sourcée",
+          "desc": "Basée sur l'étude fondatrice de Princeton (KDD 2024) et enrichie en continu avec les recherches récentes — Otterly.AI 2026, Growth Memo, Seer Interactive, Edelman. Une méthodologie vivante, pas figée."
         }
       ]
     },
