@@ -160,12 +160,12 @@
     },
     "stats": [
       {
-        "value": "1,247",
+        "value": "—",
         "label": "audits completed"
       },
       {
-        "value": "38/100",
-        "label": "average score observed"
+        "value": "4",
+        "label": "AI engines tested"
       },
       {
         "value": "Extractability",
@@ -300,7 +300,8 @@
           ]
         }
       ],
-      "cta": "Unlock my report — 29 € →",
+      "cta": "1-Page audit — €29",
+      "ctaPro": "Complete audit — €99",
       "ctaSubtext": "One-time payment · Instant access",
       "exampleLink": "See a sample report →"
     },
@@ -360,7 +361,7 @@
         },
         {
           "q": "Why is the analysis really free?",
-          "a": "The basic analysis — score out of 100, 8 detailed criteria, one expert recommendation preview — is completely free with no signup required. No credit card needed. We believe everyone should be able to know if their website is visible to AI. The full report with all detailed recommendations and action plans is available for 29 €, one-time payment."
+          "a": "The basic analysis — score out of 100, 8 detailed criteria, one recommendation preview — is completely free with no signup. No credit card needed. To go further: the 1-page audit (€29) gives a full diagnosis, and the complete audit (€99) analyzes 20 pages of your site."
         },
         {
           "q": "What's a good GEO Score?",
@@ -381,6 +382,10 @@
         {
           "q": "Who's behind Detekia?",
           "a": "Detekia is developed by Beeleven, a digital strategy and AI agency based in Paris. The tool is built by SEO, GEO and artificial intelligence experts who work daily with generative engines."
+        },
+        {
+          "q": "What's the difference between the 1-page and complete audit?",
+          "a": "The 1-page audit (€29) analyzes one URL in depth: score, 8 criteria, recommendations with code, results in 1 minute. The complete audit (€99) analyzes the 20 most important pages of your site, detects cross-page patterns and produces a prioritized action plan for the entire site."
         }
       ]
     },

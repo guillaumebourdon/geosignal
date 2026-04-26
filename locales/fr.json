@@ -160,12 +160,12 @@
     },
     "stats": [
       {
-        "value": "1 247",
+        "value": "—",
         "label": "audits réalisés"
       },
       {
-        "value": "38/100",
-        "label": "score moyen observé"
+        "value": "4",
+        "label": "moteurs IA testés"
       },
       {
         "value": "Extractibilité",
@@ -300,7 +300,8 @@
           ]
         }
       ],
-      "cta": "Débloquer mon rapport — 29 € →",
+      "cta": "Audit 1 page — 29 €",
+      "ctaPro": "Audit complet — 99 €",
       "ctaSubtext": "Paiement unique · Accès immédiat",
       "exampleLink": "Voir un exemple de rapport →"
     },
@@ -360,7 +361,7 @@
         },
         {
           "q": "Pourquoi l'analyse est-elle vraiment gratuite ?",
-          "a": "L'analyse de base — score sur 100, 8 critères détaillés, une recommandation experte en aperçu — est totalement gratuite et sans inscription. Aucune carte bancaire requise. Nous croyons que tout le monde devrait pouvoir savoir si son site est visible par les IA. Le rapport complet avec toutes les recommandations détaillées et les plans d'action est disponible à 29 €, paiement unique."
+          "a": "L'analyse de base — score sur 100, 8 critères détaillés, une recommandation en aperçu — est totalement gratuite et sans inscription. Aucune carte bancaire requise. Pour aller plus loin : l'audit 1 page (29 €) donne un diagnostic complet, et l'audit complet (99 €) analyse 20 pages de votre site."
         },
         {
           "q": "Qu'est-ce qu'un bon score GEO ?",
@@ -381,6 +382,10 @@
         {
           "q": "Qui est derrière Detekia ?",
           "a": "Detekia est développé par Beeleven, une agence spécialisée en stratégie digitale et IA basée à Paris. L'outil est conçu par des experts en SEO, GEO et intelligence artificielle qui travaillent quotidiennement avec les moteurs génératifs."
+        },
+        {
+          "q": "Quelle différence entre l'audit 1 page et l'audit complet ?",
+          "a": "L'audit 1 page (29 €) analyse une URL en profondeur : score, 8 critères, recommandations avec code, résultat en 1 minute. L'audit complet (99 €) analyse les 20 pages les plus importantes de votre site, détecte les patterns transverses et produit un plan d'action priorisé au niveau du site entier."
         }
       ]
     },

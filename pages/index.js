@@ -371,7 +371,7 @@ export default function Home() {
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', gap: 48, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
           {t('homepage.stats').map((stat, idx) => (
             <div key={stat.label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{idx === 0 && auditCount ? auditCount.toLocaleString(locale === 'en' ? 'en-US' : 'fr-FR') : stat.value}</span>
+              <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{idx === 0 ? (auditCount ? auditCount.toLocaleString(locale === 'en' ? 'en-US' : 'fr-FR') : '…') : stat.value}</span>
               <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase' }}>{stat.label}</span>
             </div>
           ))}
@@ -501,11 +501,16 @@ export default function Home() {
             })}
           </div>
 
-          {/* CTA */}
+          {/* CTA — 2 offres */}
           <div style={{ textAlign: 'center' }}>
-            <Link href="/pricing" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
-              {t('homepage.report.cta')}
-            </Link>
+            <div className="report-cta-buttons" style={{ display: 'inline-flex', gap: 12 }}>
+              <Link href="/one-page" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
+                {t('homepage.report.cta')}
+              </Link>
+              <Link href="/pro" className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', border: '1px solid rgba(247,245,242,0.15)', boxShadow: '0 4px 16px rgba(26,25,22,0.2)' }}>
+                {t('homepage.report.ctaPro')}
+              </Link>
+            </div>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', marginTop: 12, letterSpacing: 1 }}>
               {t('homepage.report.ctaSubtext')}
             </div>
@@ -690,6 +695,8 @@ export default function Home() {
           .hero-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
           .hero-input-wrap input { border-radius: 10px 10px 0 0 !important; }
           .hero-input-wrap button { border-radius: 0 0 10px 10px !important; width: 100% !important; justify-content: center; }
+          .report-cta-buttons { flex-direction: column !important; width: 100% !important; }
+          .report-cta-buttons a { width: 100% !important; text-align: center !important; }
         }
       `}</style>
     </div>
