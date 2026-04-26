@@ -141,9 +141,9 @@ export default function Methodologie() {
         </div>
       </div>
 
-      {/* LIMITES + NORMALISATION + CAS RÉELS — unified block */}
-      <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 16, padding: '32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+      {/* LIMITES */}
+      <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 24px 48px' }}>
+        <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 16, padding: '32px', display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase' }}>{t('methodology.limits.label')}</div>
           {t('methodology.limits.items').map((item) => (
             <div key={item.title}>
@@ -151,27 +151,77 @@ export default function Methodologie() {
               <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{item.desc}</div>
             </div>
           ))}
-          <div style={{ borderTop: '1px solid rgba(217,119,87,0.15)', paddingTop: 16 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{locale === 'en' ? 'Score normalization' : 'Normalisation du score'}</div>
-            <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{t('methodology.scoring.normalizationNote')}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{locale === 'en' ? 'Case studies & academic sources' : 'Cas réels et sources académiques'}</div>
-            <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{t('methodology.scoring.casesNote')}</div>
-          </div>
         </div>
       </div>
 
-      {/* SOURCES */}
-      <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>{t('methodology.sources.label')}</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {t('methodology.sources.items').map((source, i) => (
-            <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', marginTop: 2, flexShrink: 0 }}>→</span>
-              <span style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6 }}>{source}</span>
+      {/* SOURCES, NORMALISATION, CAS RÉELS — white card */}
+      <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
+        <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, overflow: 'hidden' }}>
+
+          {/* Header */}
+          <div style={{ padding: '22px 28px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 20 }}>📚</span>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, fontWeight: 600, color: '#1A1916' }}>{locale === 'en' ? 'Sources & methodology' : 'Sources et méthodologie'}</div>
+          </div>
+
+          <div style={{ padding: '24px 28px', display: 'flex', flexDirection: 'column', gap: 24 }}>
+
+            {/* Academic foundation */}
+            <div style={{ background: '#FAFAF9', borderRadius: 12, padding: '20px 22px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{locale === 'en' ? 'Academic foundation' : 'Fondation académique'}</div>
+              <div style={{ fontSize: 14, color: '#1A1916', fontFamily: 'system-ui', fontWeight: 600, marginBottom: 6, lineHeight: 1.4 }}>
+                "Generative Engine Optimization"
+              </div>
+              <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6 }}>
+                Aggarwal et al. — Princeton University / Georgia Tech — KDD 2024
+              </div>
+              <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginTop: 4 }}>
+                {locale === 'en'
+                  ? 'Demonstrates that adding sourced citations, statistics and structure to content increases AI visibility by up to 40%.'
+                  : "Démontre que l'ajout de citations sourcées, statistiques et structure au contenu augmente la visibilité IA jusqu'à 40%."}
+              </div>
             </div>
-          ))}
+
+            {/* Sources grid */}
+            <div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 14 }}>{locale === 'en' ? 'Sources used' : 'Sources utilisées'}</div>
+              <div className="methodo-sources-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                {[
+                  { icon: '🤖', name: 'Google E-E-A-T', desc: locale === 'en' ? 'Search quality guidelines (2024)' : 'Directives qualité de recherche (2024)' },
+                  { icon: '🔍', name: 'OpenAI — GPTBot', desc: locale === 'en' ? 'Crawling & robots.txt policies' : 'Politiques de crawl et robots.txt' },
+                  { icon: '🧠', name: 'Anthropic — ClaudeBot', desc: locale === 'en' ? 'AI crawling policies' : 'Politiques de crawl IA' },
+                  { icon: '📊', name: 'Schema.org', desc: locale === 'en' ? 'FAQPage, Article, Organization specs' : 'Specs FAQPage, Article, Organization' },
+                  { icon: '📈', name: 'SE Ranking (2025)', desc: locale === 'en' ? 'Domain authority & AI citations study' : 'Étude autorité de domaine et citations IA' },
+                  { icon: '🌐', name: 'Otterly.AI (2026)', desc: locale === 'en' ? 'AI crawlability & structured data study' : 'Étude crawlabilité IA et données structurées' },
+                ].map((s, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '10px 12px', background: '#FAFAF9', borderRadius: 8 }}>
+                    <span style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>{s.icon}</span>
+                    <div>
+                      <div style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', fontWeight: 600, lineHeight: 1.3 }}>{s.name}</div>
+                      <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.4, marginTop: 2 }}>{s.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Normalization + case studies */}
+            <div style={{ borderTop: '1px solid #F0EDE8', paddingTop: 20, display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{locale === 'en' ? 'Score normalization' : 'Normalisation du score'}</div>
+                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{t('methodology.scoring.normalizationNote')}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{locale === 'en' ? 'Documented case studies' : 'Cas réels documentés'}</div>
+                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>
+                  {locale === 'en'
+                    ? 'Each report includes real-world case studies on the 3 weakest criteria (SEO Vendor, Ahrefs, Stackmatix, etc.) to illustrate concrete impact of optimizations.'
+                    : 'Chaque rapport inclut des cas réels documentés sur les 3 critères les plus faibles (SEO Vendor, Ahrefs, Stackmatix, etc.) pour illustrer l\'impact concret des optimisations.'}
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 
