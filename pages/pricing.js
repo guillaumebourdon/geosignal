@@ -161,6 +161,9 @@ export default function Pricing() {
             style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 24 }}>
             {t('pricing.report.cta')}
           </button>
+          <div style={{ textAlign: 'center', marginBottom: 20 }}>
+            <Link href="/one-page" style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1, transition: 'color 0.2s' }}>{t('pricing.report.learnMore')}</Link>
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {reportFeatures.map((feat, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -182,6 +185,9 @@ export default function Pricing() {
             style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, fontFamily: 'system-ui', border: 'none', cursor: 'pointer', marginBottom: 24 }}>
             {t('pricing.proCard.cta')}
           </button>
+          <div style={{ textAlign: 'center', marginBottom: 20 }}>
+            <Link href="/pro" style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1, transition: 'color 0.2s' }}>{t('pricing.proCard.learnMore')}</Link>
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {t('pricing.proCard.features').map((feat, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
