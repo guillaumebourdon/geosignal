@@ -134,6 +134,20 @@ export default function Methodologie() {
         </div>
       </div>
 
+      {/* SCORING NOTE + CASE STUDIES */}
+      <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 24px 40px' }}>
+        <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px 28px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{locale === 'en' ? 'Score normalization' : 'Normalisation du score'}</div>
+            <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{t('methodology.scoring.normalizationNote')}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{locale === 'en' ? 'Case studies & academic sources' : 'Cas réels et sources académiques'}</div>
+            <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{t('methodology.scoring.casesNote')}</div>
+          </div>
+        </div>
+      </div>
+
       {/* SOURCES */}
       <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 24px 80px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>{t('methodology.sources.label')}</div>

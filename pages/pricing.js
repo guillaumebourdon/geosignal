@@ -193,6 +193,13 @@ export default function Pricing() {
         </div>
       </div>
 
+      {/* EXEMPLE DE RAPPORT */}
+      <div style={{ textAlign: 'center', marginBottom: 32 }}>
+        <a href={router.locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 2 }}>
+          {router.locale === 'en' ? 'See an example report →' : 'Voir un exemple de rapport →'}
+        </a>
+      </div>
+
       {/* GARANTIE */}
       <div style={{ maxWidth: 560, margin: '0 auto 64px', padding: '0 24px', textAlign: 'center' }}>
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 28px', display: 'inline-flex', alignItems: 'center', gap: 14 }}>

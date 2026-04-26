@@ -93,9 +93,9 @@ function buildEmailHTML(reportUrl, url, score, verdict, locale) {
           <div style="display:inline-block;margin-top:12px;background:${color}22;border:1px solid ${color}44;padding:3px 14px;border-radius:20px;font-family:monospace;font-size:10px;letter-spacing:2px;color:${color}">${grade}</div>
         </div>
         <div style="background:#fff;border-radius:12px;padding:28px;border:1px solid #E5E2DC;margin-bottom:24px;text-align:center">
-          <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 8px">${isFr ? 'Votre rapport GEO complet est pret.' : 'Your complete GEO report is ready.'}</p>
+          <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 8px">${isFr ? 'Votre rapport GEO est pret.' : 'Your GEO report is ready.'}</p>
           <p style="font-size:13px;color:#8A8680;line-height:1.6;margin:0 0 24px">${verdict || ''}</p>
-          <a href="${reportUrl}" style="display:inline-block;background:#D97757;color:#fff;padding:14px 40px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;font-family:system-ui">${isFr ? 'Voir mon rapport complet' : 'View my full report'} →</a>
+          <a href="${reportUrl}" style="display:inline-block;background:#D97757;color:#fff;padding:14px 40px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;font-family:system-ui">${isFr ? 'Voir mon rapport' : 'View my report'} →</a>
           <p style="font-size:11px;color:#B0ABA5;margin-top:16px;line-height:1.5">${isFr ? 'Votre rapport reste accessible indefiniment a cette URL.' : 'Your report is accessible indefinitely at this URL.'}</p>
         </div>
         <div style="background:#F7F5F2;border-radius:10px;padding:20px 24px;margin-bottom:20px;text-align:center">
@@ -141,6 +141,9 @@ export default async function handler(req, res) {
     };
     await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
     console.log(`[finalize-report] Stored report ${uuid} for ${url}`);
+
+    // Increment global audit counter
+    try { await redis.incr('detekia:stats:audit-count'); } catch (_) {}
 
     // Validate report
     try {

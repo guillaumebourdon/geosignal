@@ -141,8 +141,13 @@ export default function Home() {
   const [easterEgg, setEasterEgg] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showBeeleven, setShowBeeleven] = useState(false);
+  const [auditCount, setAuditCount] = useState(null);
   const router = useRouter();
   const { t, locale } = useTranslation();
+
+  useEffect(() => {
+    fetch('/api/stats').then(r => r.json()).then(d => setAuditCount(d.audits)).catch(() => {});
+  }, []);
 
   useEffect(() => {
     const engines = ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'];
@@ -364,9 +369,9 @@ export default function Home() {
       {/* ── MICRO BANDEAU PREUVE D'USAGE — MOD 9 ────────────── */}
       <div style={{ background: '#fff', borderTop: '1px solid rgba(26,25,22,0.07)', borderBottom: '1px solid rgba(26,25,22,0.07)', padding: '12px 48px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', gap: 48, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
-          {t('homepage.stats').map((stat) => (
+          {t('homepage.stats').map((stat, idx) => (
             <div key={stat.label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{stat.value}</span>
+              <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{idx === 0 && auditCount ? auditCount.toLocaleString(locale === 'en' ? 'en-US' : 'fr-FR') : stat.value}</span>
               <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase' }}>{stat.label}</span>
             </div>
           ))}

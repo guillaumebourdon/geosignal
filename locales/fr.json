@@ -136,7 +136,7 @@
       "badge": "Analyse 100% gratuite — aucune inscription",
       "titleLine1": "Vos concurrents apparaissent dans",
       "titleLine2": "Pas vous.",
-      "subtitle": "Comprenez pourquoi en 60 secondes. Detekia diagnostique gratuitement la page de votre choix sur 8 critères GEO.",
+      "subtitle": "Comprenez pourquoi en quelques secondes. Detekia diagnostique gratuitement la page de votre choix sur 8 critères GEO.",
       "inputPlaceholder": "https://www.votre-site.fr",
       "cta": "Analyser mon site →",
       "easterEgg": "Sympa d'essayer 😏 Mais on ne se note pas soi-même — ce serait trop facile de se mettre 100/100. Essayez avec un autre site !",
@@ -161,7 +161,7 @@
     "stats": [
       {
         "value": "1 247",
-        "label": "analyses réalisées"
+        "label": "audits réalisés"
       },
       {
         "value": "38/100",
@@ -258,7 +258,7 @@
         {
           "num": "03",
           "title": "Recevez votre score",
-          "desc": "Score sur 100, analyse par critère et recommandations expertes en moins de 60 secondes."
+          "desc": "Score sur 100, analyse par critère et recommandations expertes. Résultat immédiat pour l'audit gratuit, rapport complet en 1 à 2 minutes."
         }
       ],
       "methodologyLink": "Voir la méthodologie complète →"
@@ -669,6 +669,10 @@
           "href": "/cgu"
         }
       ]
+    },
+    "scoring": {
+      "normalizationNote": "Le score brut des 7 critères hors neutralité totalise 95 points. Le critère Neutralité éditoriale, évalué par IA, apporte un ajustement de -3 à +3 points. Le score final est plafonné à 100.",
+      "casesNote": "Chaque rapport inclut des cas réels documentés (études SEO Vendor, Ahrefs, Stackmatix, etc.) et s'appuie sur la recherche académique de référence : \"Generative Engine Optimization\" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024."
     }
   },
   "pricing": {
@@ -729,13 +733,13 @@
           "text": "8 recommandations avec exemples de code"
         },
         {
-          "text": "Test IA approfondi (10 requêtes)"
+          "text": "Test IA (10 requêtes) — concurrents cités identifiés"
         },
         {
-          "text": "Rapport web accessible pour toujours"
+          "text": "Guide technique par critère"
         },
         {
-          "text": "PDF téléchargeable"
+          "text": "Rapport web accessible indéfiniment + PDF"
         }
       ],
       "subtitle": "Votre page phare passée aux rayons X de l'IA"
@@ -753,7 +757,7 @@
         },
         {
           "q": "Combien de temps pour recevoir mon rapport ?",
-          "a": "L'audit gratuit et l'audit 1 page : 30 secondes. L'audit complet : 10-15 minutes (analyse de 20 pages par IA)."
+          "a": "L'audit gratuit : environ 30 secondes. L'audit 1 page (29 €) : 1 à 2 minutes. L'audit complet (99 €) : 15 à 20 minutes (analyse de 20 pages par IA)."
         },
         {
           "q": "Puis-je passer d'une offre à l'autre ?",
@@ -786,16 +790,16 @@
           "text": "Recommandations consolidées avec pages concernées"
         },
         {
-          "text": "Test IA approfondi (30 requêtes)"
+          "text": "Test IA (30 requêtes) — concurrents cités identifiés"
         },
         {
           "text": "Patterns inter-pages détectés"
         },
         {
-          "text": "Plan d'action priorisé (15 actions)"
+          "text": "Plan d'action priorisé par impact"
         },
         {
-          "text": "Bilan détaillé par page"
+          "text": "Guide technique + bilan détaillé par page"
         },
         {
           "text": "Rapport web + PDF"
@@ -1593,17 +1597,8 @@
       "description": "Analysez jusqu'à 10 pages de votre site en un seul rapport consolidé avec synthèse contextualisée. Pour les agences SEO, e-commerces et sites éditoriaux. À partir de 99 €. Lancement juin 2026."
     },
     "hero": {
-      "title": "Vous voulez analyser plus qu'une page ?",
-      "subtitle": "Detekia Pro arrive bientôt. Audit multi-pages, rapport consolidé, synthèse contextualisée entre vos pages. Pensé pour les pros."
-    },
-    "waitlist": {
-      "title": "Soyez prévenu(e) du lancement.",
-      "desc": "Laissez votre email pour être parmi les premiers informés. Pas de spam, juste une notification quand l'offre Pro sera prête.",
-      "placeholder": "votre@email.com",
-      "cta": "Me prévenir",
-      "note": "Vous serez aussi prioritaire pour bénéficier d'une offre de lancement.",
-      "success": "Merci ! Vous serez prévenu(e) du lancement.",
-      "error": "Une erreur est survenue. Réessayez ou contactez-nous."
+      "title": "L'audit complet est disponible",
+      "subtitle": "Analysez les 20 pages les plus importantes de votre site. Patterns transverses, plan d'action priorisé, bilan par page."
     },
     "audience": {
       "title": "Pour qui Detekia Pro est-il fait ?",
@@ -1637,15 +1632,12 @@
       "highlight": "Synthèse contextualisée entre vos pages : les problèmes communs identifiés, les solutions mutualisées, et les priorités à l'échelle du site."
     },
     "pricing": {
-      "price": "À partir de 99 €",
-      "detail": "Paiement unique, par audit multi-pages. Pas d'abonnement.",
-      "timeline": "Lancement prévu : juin 2026",
-      "waitlistNote": "Inscrivez-vous à la liste d'attente pour être notifié(e) dès l'ouverture."
+      "price": "99 €",
+      "detail": "Paiement unique"
     },
     "finalCta": {
-      "title": "Prêt(e) à analyser votre site en profondeur ?",
-      "desc": "Inscrivez-vous pour être prévenu(e) du lancement et bénéficier d'une offre exclusive.",
-      "cta": "Me prévenir du lancement"
+      "title": "Prêt à auditer votre site ?",
+      "desc": "20 pages analysées, patterns détectés, plan d'action livré en 15 à 20 minutes."
     }
   }
 }

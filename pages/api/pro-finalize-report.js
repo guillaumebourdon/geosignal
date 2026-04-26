@@ -183,6 +183,9 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
     await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
     console.log(`[pro-finalize] Report stored: ${uuid} for ${rootUrl}`);
 
+    // Increment global audit counter
+    try { await redis.incr('detekia:stats:audit-count'); } catch (_) {}
+
     // Validate report and log issues
     try {
       const { validateReport } = require('../../lib/reportValidator');
