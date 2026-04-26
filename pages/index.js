@@ -601,6 +601,41 @@ export default function Home() {
 
       <SectionDivider />
 
+      {/* ── OFFRES PAYANTES ────────────────────────────────── */}
+      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 780, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.offers.label')}</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,38px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+            {t('homepage.offers.title')}
+          </h2>
+          <p style={{ fontSize: 15, color: '#8A8680', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 40px' }}>
+            {t('homepage.offers.subtitle')}
+          </p>
+          <div className="offers-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+            {/* One-page */}
+            <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600 }}>{t('homepage.offers.onepage.name')}</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#1A1916', letterSpacing: -0.5 }}>{t('homepage.offers.onepage.price')}</div>
+              </div>
+              <p style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 18 }}>{t('homepage.offers.onepage.desc')}</p>
+              <Link href="/one-page" style={{ fontSize: 13, color: '#D97757', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none' }}>{t('homepage.offers.onepage.cta')}</Link>
+            </div>
+            {/* Pro */}
+            <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600 }}>{t('homepage.offers.pro.name')}</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#1A1916', letterSpacing: -0.5 }}>{t('homepage.offers.pro.price')}</div>
+              </div>
+              <p style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 18 }}>{t('homepage.offers.pro.desc')}</p>
+              <Link href="/pro" style={{ fontSize: 13, color: '#D97757', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none' }}>{t('homepage.offers.pro.cta')}</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       {/* ── FAQ ─────────────────────────────────────────────── */}
       <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
@@ -658,19 +693,24 @@ export default function Home() {
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────── */}
-      <footer style={{ borderTop: '1px solid #E5E2DC', padding: '36px 48px', background: '#fff' }}>
-        <div className="footer-inner" style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 15, fontWeight: 'bold', color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 5 }}>
+      <footer style={{ borderTop: '1px solid #E5E2DC', padding: '40px 48px 32px', background: '#fff' }}>
+        <div className="footer-inner" style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 32 }}>
+          <div style={{ minWidth: 180 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 15, fontWeight: 'bold', color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 8 }}>
               <Logo />{t('common.siteName')}
             </div>
             <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>{t('homepage.footer.copyright')}</div>
           </div>
-          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'center' }}>
-            {t('homepage.footer.links').map((link) => (
-              <Link key={link.href} href={link.href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{link.label}</Link>
-            ))}
-          </div>
+          {['products', 'resources', 'legal'].map((section) => (
+            <div key={section}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12, fontWeight: 600 }}>{t(`homepage.footer.${section}.label`)}</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {t(`homepage.footer.${section}.links`).map((link) => (
+                  <Link key={link.href} href={link.href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui', transition: 'color 0.2s' }}>{link.label}</Link>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </footer>
 
@@ -685,6 +725,7 @@ export default function Home() {
           .hero-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
           .hero-input-wrap input { border-radius: 10px 10px 0 0 !important; }
           .hero-input-wrap button { border-radius: 0 0 10px 10px !important; width: 100% !important; justify-content: center; }
+          .offers-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>

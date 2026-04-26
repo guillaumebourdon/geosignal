@@ -77,35 +77,14 @@
       "fallbackContent": "Article content coming soon"
     },
     "footer": {
+      "byLine": "by Beeleven SASU",
       "links": [
-        {
-          "label": "Blog",
-          "href": "/blog"
-        },
-        {
-          "label": "Pricing",
-          "href": "/pricing"
-        },
-        {
-          "label": "Methodology",
-          "href": "/methodologie"
-        },
-        {
-          "label": "Contact",
-          "href": "/contact"
-        },
-        {
-          "label": "Legal Notice",
-          "href": "/mentions-legales"
-        },
-        {
-          "label": "Privacy",
-          "href": "/confidentialite"
-        },
-        {
-          "label": "Terms",
-          "href": "/cgu"
-        }
+        { "label": "Pricing", "href": "/pricing" },
+        { "label": "Methodology", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Legal Notice", "href": "/mentions-legales" },
+        { "label": "Privacy", "href": "/confidentialite" },
+        { "label": "Terms", "href": "/cgu" }
       ]
     }
   },
@@ -393,46 +372,50 @@
       "trustBadge": "Free · No signup · Results in under 60 seconds",
       "priceNote": "Full report 29 € · One-time payment"
     },
+    "offers": {
+      "label": "GO FURTHER",
+      "title": "Deeper audits",
+      "subtitle": "The free scoring gives you an overview. Paid audits go in depth — recommendations, code, action plan.",
+      "onepage": {
+        "name": "1-Page Audit",
+        "price": "€29",
+        "desc": "Complete diagnosis of your most strategic page. Score, 8 recommendations with code, action plan in 1 minute.",
+        "cta": "Discover →"
+      },
+      "pro": {
+        "name": "Complete Audit",
+        "price": "€99",
+        "desc": "20 pages analyzed, cross-page patterns detected, prioritized action plan. The most comprehensive diagnosis available.",
+        "cta": "Discover →"
+      }
+    },
     "footer": {
       "copyright": "© 2026 Detekia — Beeleven SASU",
-      "links": [
-        {
-          "label": "Blog",
-          "href": "/blog"
-        },
-        {
-          "label": "Pricing",
-          "href": "/pricing"
-        },
-        {
-          "label": "Methodology",
-          "href": "/methodologie"
-        },
-        {
-          "label": "Contact",
-          "href": "/contact"
-        },
-        {
-          "label": "FAQ",
-          "href": "/#faq"
-        },
-        {
-          "label": "Legal Notice",
-          "href": "/mentions-legales"
-        },
-        {
-          "label": "Privacy",
-          "href": "/confidentialite"
-        },
-        {
-          "label": "Terms",
-          "href": "/cgu"
-        },
-        {
-          "label": "Detekia Pro (coming soon)",
-          "href": "/pro"
-        }
-      ]
+      "products": {
+        "label": "Products",
+        "links": [
+          { "label": "Free audit", "href": "/" },
+          { "label": "1-Page audit — €29", "href": "/one-page" },
+          { "label": "Complete audit — €99", "href": "/pro" }
+        ]
+      },
+      "resources": {
+        "label": "Resources",
+        "links": [
+          { "label": "Blog", "href": "/blog" },
+          { "label": "Pricing", "href": "/pricing" },
+          { "label": "Methodology", "href": "/methodologie" },
+          { "label": "Contact", "href": "/contact" }
+        ]
+      },
+      "legal": {
+        "label": "Legal",
+        "links": [
+          { "label": "Legal Notice", "href": "/mentions-legales" },
+          { "label": "Privacy", "href": "/confidentialite" },
+          { "label": "Terms", "href": "/cgu" }
+        ]
+      }
     },
     "schema": {
       "appDescription": "GEO (Generative Engine Optimization) audit tool that analyzes website visibility on AI engines like ChatGPT, Claude, Gemini and Perplexity.",
@@ -741,7 +724,8 @@
         {
           "text": "Permanent web report + PDF download"
         }
-      ]
+      ],
+      "learnMore": "Learn more about the 1-page audit →"
     },
     "guarantee": {
       "title": "Secure payment via Stripe",
@@ -773,11 +757,12 @@
       ]
     },
     "proCard": {
-      "label": "Pro — Multi-pages",
+      "label": "Complete audit",
       "price": "€99",
-      "paymentInfo": "Starting at · Launch June 2026",
-      "cta": "Get notified at launch →",
-      "badge": "COMING SOON",
+      "paymentInfo": "One-time payment",
+      "cta": "Audit my site — €99 →",
+      "learnMore": "Learn more about the complete audit →",
+      "badge": "",
       "features": [
         {
           "text": "Average /100 score across 20 pages"

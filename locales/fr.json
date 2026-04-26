@@ -77,35 +77,14 @@
       "fallbackContent": "Contenu de l'article à venir"
     },
     "footer": {
+      "byLine": "par Beeleven SASU",
       "links": [
-        {
-          "label": "Blog",
-          "href": "/blog"
-        },
-        {
-          "label": "Tarifs",
-          "href": "/pricing"
-        },
-        {
-          "label": "Méthodologie",
-          "href": "/methodologie"
-        },
-        {
-          "label": "Contact",
-          "href": "/contact"
-        },
-        {
-          "label": "Mentions légales",
-          "href": "/mentions-legales"
-        },
-        {
-          "label": "Confidentialité",
-          "href": "/confidentialite"
-        },
-        {
-          "label": "CGU",
-          "href": "/cgu"
-        }
+        { "label": "Tarifs", "href": "/pricing" },
+        { "label": "Méthodologie", "href": "/methodologie" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Mentions légales", "href": "/mentions-legales" },
+        { "label": "Confidentialité", "href": "/confidentialite" },
+        { "label": "CGU", "href": "/cgu" }
       ]
     }
   },
@@ -393,46 +372,50 @@
       "trustBadge": "Gratuit · Sans inscription · Résultat en moins de 60 secondes",
       "priceNote": "Rapport complet 29 € · Paiement unique"
     },
+    "offers": {
+      "label": "ALLER PLUS LOIN",
+      "title": "Des audits plus profonds",
+      "subtitle": "Le scoring gratuit vous donne un aperçu. Les audits payants vont en profondeur — recommandations, code, plan d'action.",
+      "onepage": {
+        "name": "Audit 1 page",
+        "price": "29 €",
+        "desc": "Diagnostic complet de votre page la plus stratégique. Score, 8 recommandations avec code, plan d'action en 1 minute.",
+        "cta": "Découvrir →"
+      },
+      "pro": {
+        "name": "Audit complet",
+        "price": "99 €",
+        "desc": "20 pages analysées, patterns transverses détectés, plan d'action priorisé. Le diagnostic le plus complet du marché.",
+        "cta": "Découvrir →"
+      }
+    },
     "footer": {
       "copyright": "© 2026 Detekia — Beeleven SASU",
-      "links": [
-        {
-          "label": "Blog",
-          "href": "/blog"
-        },
-        {
-          "label": "Tarifs",
-          "href": "/pricing"
-        },
-        {
-          "label": "Méthodologie",
-          "href": "/methodologie"
-        },
-        {
-          "label": "Contact",
-          "href": "/contact"
-        },
-        {
-          "label": "FAQ",
-          "href": "/#faq"
-        },
-        {
-          "label": "Mentions légales",
-          "href": "/mentions-legales"
-        },
-        {
-          "label": "Confidentialité",
-          "href": "/confidentialite"
-        },
-        {
-          "label": "CGU",
-          "href": "/cgu"
-        },
-        {
-          "label": "Detekia Pro (bientôt)",
-          "href": "/pro"
-        }
-      ]
+      "products": {
+        "label": "Produits",
+        "links": [
+          { "label": "Audit gratuit", "href": "/" },
+          { "label": "Audit 1 page — 29 €", "href": "/one-page" },
+          { "label": "Audit complet — 99 €", "href": "/pro" }
+        ]
+      },
+      "resources": {
+        "label": "Ressources",
+        "links": [
+          { "label": "Blog", "href": "/blog" },
+          { "label": "Tarifs", "href": "/pricing" },
+          { "label": "Méthodologie", "href": "/methodologie" },
+          { "label": "Contact", "href": "/contact" }
+        ]
+      },
+      "legal": {
+        "label": "Légal",
+        "links": [
+          { "label": "Mentions légales", "href": "/mentions-legales" },
+          { "label": "Confidentialité", "href": "/confidentialite" },
+          { "label": "CGU", "href": "/cgu" }
+        ]
+      }
     },
     "schema": {
       "appDescription": "Outil d'audit GEO (Generative Engine Optimization) qui analyse la visibilité d'un site web sur les moteurs d'IA comme ChatGPT, Claude, Gemini et Perplexity.",
@@ -742,7 +725,8 @@
           "text": "Rapport web accessible indéfiniment + PDF"
         }
       ],
-      "subtitle": "Votre page phare passée aux rayons X de l'IA"
+      "subtitle": "Votre page phare passée aux rayons X de l'IA",
+      "learnMore": "En savoir plus sur l'audit 1 page →"
     },
     "guarantee": {
       "title": "Paiement sécurisé via Stripe",
@@ -778,6 +762,7 @@
       "price": "99 €",
       "paymentInfo": "Paiement unique",
       "cta": "Auditer mon site — 99 € →",
+      "learnMore": "En savoir plus sur l'audit complet →",
       "badge": "",
       "features": [
         {
