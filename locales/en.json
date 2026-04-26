@@ -1586,51 +1586,209 @@
   },
   "pro": {
     "seo": {
-      "title": "Detekia Pro — Multi-page GEO Audit (coming soon)",
-      "description": "Analyze up to 10 pages of your site in one consolidated report with contextualized cross-page insights. For SEO agencies, e-commerce and editorial sites. Starting at €99. Launching June 2026."
+      "title": "Complete GEO Audit — €99 | Detekia",
+      "description": "Full site audit on 20 pages. Cross-page patterns, prioritized action plan, per-page breakdown. Princeton/KDD 2024 methodology."
     },
     "hero": {
-      "title": "The complete audit is available",
-      "subtitle": "Analyze the 20 most important pages of your site. Cross-page patterns, prioritized action plan, per-page breakdown."
+      "badge": "COMPLETE AUDIT",
+      "title": "Your entire site, audited by AI",
+      "subtitle": "20 pages analyzed, cross-page patterns detected, prioritized action plan. The most comprehensive GEO diagnosis available.",
+      "cta": "Audit my site — €99 →",
+      "exampleLink": "See an example report"
     },
     "audience": {
-      "title": "Who is Detekia Pro built for?",
-      "cards": [
+      "label": "FOR WHO",
+      "title": "Built for:",
+      "items": [
+        "SEO consultants",
+        "Digital agencies",
+        "B2B SaaS & startups",
+        "Established e-commerce",
+        "Media & editorial sites",
+        "Professional firms",
+        "DTC brands"
+      ],
+      "closing": "… and any organization wanting a complete view of their AI visibility."
+    },
+    "sites": {
+      "label": "IDEAL FOR ANALYZING",
+      "items": [
+        "An e-commerce site",
+        "A blog or media site",
+        "A SaaS or service website",
+        "A corporate website"
+      ]
+    },
+    "included": {
+      "label": "WHAT YOU GET",
+      "title": "A professional audit, delivered in 15-20 minutes",
+      "items": [
+        "Average score out of 100 across 20 pages",
+        "8 criteria analyzed per page",
+        "Consolidated recommendations with affected pages",
+        "AI test on 30 queries — competing sites identified",
+        "Cross-page patterns detected",
+        "Prioritized action plan by impact",
+        "Technical guide per criterion",
+        "Detailed per-page breakdown",
+        "Permanent web report + PDF"
+      ]
+    },
+    "steps": {
+      "label": "HOW IT WORKS",
+      "items": [
         {
-          "icon": "🎯",
-          "title": "SEO Agencies",
-          "desc": "Audit 5 to 10 key pages of your clients (homepage, product pages, pillar articles) in one consolidated report."
+          "num": "01",
+          "title": "Enter your site URL",
+          "desc": "Our AI identifies the 20 most important pages."
         },
         {
-          "icon": "🛒",
-          "title": "E-commerce Sites",
-          "desc": "Analyze your homepage + category pages + strategic product pages to understand your overall AI visibility."
+          "num": "02",
+          "title": "Deep analysis",
+          "desc": "Each page evaluated on 8 GEO criteria. Cross-page patterns detected."
         },
         {
-          "icon": "📰",
-          "title": "Editorial Sites and Media",
-          "desc": "Analyze your pillar articles and homepage to systematically optimize your citability on ChatGPT, Claude, Gemini and Perplexity."
+          "num": "03",
+          "title": "Get your report",
+          "desc": "Complete report sent by email in 15-20 minutes."
         }
       ]
     },
-    "features": {
-      "title": "What changes with Detekia Pro",
-      "items": [
-        "Up to 10 pages analyzed on the same site, in a single purchase",
-        "Consolidated PDF report with global score, executive summary, and detailed page-by-page breakdown",
-        "Cross-page recommendations prioritized by business impact",
-        "All the criteria from the standard report, but with a site-wide perspective",
-        "Delivery within 15 minutes by email (asynchronous background analysis)"
-      ],
-      "highlight": "Contextualized cross-page insights: common issues identified, shared solutions, and site-level priorities."
+    "methodology": {
+      "label": "METHODOLOGY",
+      "text": "Based on \"Generative Engine Optimization\" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. 8 weighted criteria, deterministic scoring, calibrated AI evaluation."
     },
-    "pricing": {
-      "price": "€99",
-      "detail": "One-time payment"
+    "faq": {
+      "label": "FAQ",
+      "items": [
+        {
+          "q": "Which pages are analyzed?",
+          "a": "Our algorithm identifies the 20 most important via sitemap, prioritizing strategic pages."
+        },
+        {
+          "q": "How long for the report?",
+          "a": "15-20 minutes. Analyzing 20 pages takes time — that's the price of depth."
+        },
+        {
+          "q": "How is it different from the 1-page audit?",
+          "a": "Cross-page patterns, site-level action plan, and per-page breakdown."
+        },
+        {
+          "q": "Can I use the report for a client?",
+          "a": "Yes. It's a professional deliverable with shareable URL and downloadable PDF."
+        },
+        {
+          "q": "What if my sitemap is blocked?",
+          "a": "Our crawler explores your site automatically to find priority pages."
+        }
+      ]
     },
     "finalCta": {
       "title": "Ready to audit your site?",
-      "desc": "20 pages analyzed, patterns detected, action plan delivered in 15-20 minutes."
+      "subtitle": "20 pages analyzed, patterns detected, action plan in 15-20 minutes."
+    }
+  },
+  "onepage": {
+    "seo": {
+      "title": "1-Page GEO Audit — €29 | Detekia",
+      "description": "Analyze your page's AI visibility in depth. Score out of 100, 8 criteria, 8 recommendations with code examples. Report in 1-2 minutes."
+    },
+    "hero": {
+      "badge": "1-PAGE AUDIT",
+      "title": "Your page, analyzed by AI",
+      "subtitle": "Score out of 100, 8 detailed criteria, actionable recommendations with code examples. Results in 1-2 minutes.",
+      "cta": "Analyze my page — €29 →",
+      "exampleLink": "See an example report"
+    },
+    "audience": {
+      "label": "FOR WHO",
+      "title": "Built for:",
+      "items": [
+        "Freelancers",
+        "Content creators",
+        "Coaches & trainers",
+        "Independent consultants",
+        "Beginning e-commerce sellers",
+        "Local businesses",
+        "Authors"
+      ],
+      "closing": "… and any site that wants to understand how AI perceives it."
+    },
+    "sites": {
+      "label": "IDEAL FOR ANALYZING",
+      "items": [
+        "A homepage",
+        "A product or service page",
+        "A blog post",
+        "A campaign landing page"
+      ]
+    },
+    "included": {
+      "label": "WHAT YOU GET",
+      "title": "A complete report, delivered in 1-2 minutes",
+      "items": [
+        "AI visibility score out of 100",
+        "8 criteria analyzed in depth",
+        "8 detailed recommendations with code examples",
+        "AI test on 10 queries — competing sites identified",
+        "Technical guide per criterion",
+        "Permanent web report",
+        "Downloadable PDF"
+      ]
+    },
+    "steps": {
+      "label": "HOW IT WORKS",
+      "items": [
+        {
+          "num": "01",
+          "title": "Enter your URL",
+          "desc": "Paste the page address to analyze."
+        },
+        {
+          "num": "02",
+          "title": "AI analyzes everything",
+          "desc": "8 GEO criteria evaluated, AI visibility test on 10 queries."
+        },
+        {
+          "num": "03",
+          "title": "Get your report",
+          "desc": "Web report + PDF sent by email in 1-2 minutes."
+        }
+      ]
+    },
+    "faq": {
+      "label": "FAQ",
+      "items": [
+        {
+          "q": "How long to receive my report?",
+          "a": "1-2 minutes after payment."
+        },
+        {
+          "q": "Which page should I analyze first?",
+          "a": "Your homepage for a global diagnosis, or your most strategic product page."
+        },
+        {
+          "q": "Are recommendations actionable?",
+          "a": "Yes. Each includes the problem, solution, technical steps and code examples."
+        },
+        {
+          "q": "Does my report expire?",
+          "a": "No. It's accessible indefinitely."
+        },
+        {
+          "q": "What if I need to analyze my entire site?",
+          "a": "The complete audit (€99) analyzes 20 pages with cross-page patterns."
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "Ready to analyze your page?",
+      "subtitle": "Score, recommendations and action plan in 1-2 minutes."
+    },
+    "crossSell": {
+      "title": "Need a broader view?",
+      "desc": "The complete audit analyzes 20 pages and detects patterns a single-page analysis can't see.",
+      "cta": "Discover the complete audit →"
     }
   }
 }

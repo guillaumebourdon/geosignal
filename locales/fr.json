@@ -1593,51 +1593,209 @@
   },
   "pro": {
     "seo": {
-      "title": "Detekia Pro — Audit multi-pages GEO (bientôt)",
-      "description": "Analysez jusqu'à 10 pages de votre site en un seul rapport consolidé avec synthèse contextualisée. Pour les agences SEO, e-commerces et sites éditoriaux. À partir de 99 €. Lancement juin 2026."
+      "title": "Audit GEO complet — 99 € | Detekia",
+      "description": "Audit complet de votre site sur 20 pages. Patterns transverses, plan d'action priorisé, bilan détaillé par page. Méthodologie Princeton/KDD 2024."
     },
     "hero": {
-      "title": "L'audit complet est disponible",
-      "subtitle": "Analysez les 20 pages les plus importantes de votre site. Patterns transverses, plan d'action priorisé, bilan par page."
+      "badge": "AUDIT COMPLET",
+      "title": "Votre site entier, audité par l'IA",
+      "subtitle": "20 pages analysées, patterns transverses détectés, plan d'action priorisé. Le diagnostic GEO le plus complet du marché.",
+      "cta": "Auditer mon site — 99 € →",
+      "exampleLink": "Voir un exemple de rapport"
     },
     "audience": {
-      "title": "Pour qui Detekia Pro est-il fait ?",
-      "cards": [
+      "label": "POUR QUI",
+      "title": "Conçu notamment pour :",
+      "items": [
+        "Consultants SEO",
+        "Agences digitales",
+        "SaaS B2B et startups",
+        "E-commerçants confirmés",
+        "Médias et sites éditoriaux",
+        "Cabinets professionnels",
+        "Marques DTC"
+      ],
+      "closing": "… et toute organisation qui veut une vision complète de sa visibilité IA."
+    },
+    "sites": {
+      "label": "IDÉAL POUR ANALYSER",
+      "items": [
+        "Un site e-commerce",
+        "Un blog ou un média",
+        "Un site SaaS ou de service en ligne",
+        "Un site d'entreprise"
+      ]
+    },
+    "included": {
+      "label": "CE QUE VOUS OBTENEZ",
+      "title": "Un audit professionnel, livré en 15 à 20 minutes",
+      "items": [
+        "Score moyen sur 100 calculé sur 20 pages",
+        "8 critères analysés sur chaque page",
+        "Recommandations consolidées avec pages concernées",
+        "Test IA sur 30 requêtes — concurrents cités identifiés",
+        "Patterns transverses détectés entre vos pages",
+        "Plan d'action priorisé par impact",
+        "Guide technique par critère",
+        "Bilan détaillé page par page",
+        "Rapport web accessible indéfiniment + PDF"
+      ]
+    },
+    "steps": {
+      "label": "COMMENT ÇA MARCHE",
+      "items": [
         {
-          "icon": "🎯",
-          "title": "Agences SEO",
-          "desc": "Vous voulez auditer 5 à 10 pages clés de vos clients (homepage, pages produits, articles piliers) en un seul rapport consolidé."
+          "num": "01",
+          "title": "Entrez l'URL de votre site",
+          "desc": "Notre IA identifie automatiquement les 20 pages les plus importantes."
         },
         {
-          "icon": "🛒",
-          "title": "E-commerces",
-          "desc": "Vous voulez analyser votre homepage + vos pages catégories + vos fiches produits stratégiques pour comprendre votre visibilité IA globale."
+          "num": "02",
+          "title": "Analyse approfondie",
+          "desc": "Chaque page est évaluée sur 8 critères GEO. Les patterns transverses sont détectés."
         },
         {
-          "icon": "📰",
-          "title": "Sites éditoriaux et médias",
-          "desc": "Vous voulez analyser vos articles piliers et votre homepage pour optimiser systématiquement votre citabilité dans ChatGPT, Claude, Gemini et Perplexity."
+          "num": "03",
+          "title": "Recevez votre rapport",
+          "desc": "Rapport complet envoyé par email en 15 à 20 minutes."
         }
       ]
     },
-    "features": {
-      "title": "Ce qui change avec Detekia Pro",
-      "items": [
-        "Jusqu'à 10 pages analysées sur le même site, en un seul achat",
-        "Rapport PDF consolidé avec score global, synthèse exécutive, et fiche détaillée par page",
-        "Recommandations transversales priorisées par impact business",
-        "Tous les critères du rapport standard, mais avec une vision globale du site",
-        "Livraison sous 15 minutes par email (analyse asynchrone en background)"
-      ],
-      "highlight": "Synthèse contextualisée entre vos pages : les problèmes communs identifiés, les solutions mutualisées, et les priorités à l'échelle du site."
+    "methodology": {
+      "label": "MÉTHODOLOGIE",
+      "text": "Basé sur l'étude \"Generative Engine Optimization\" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. 8 critères pondérés, scoring déterministe, évaluation IA calibrée."
     },
-    "pricing": {
-      "price": "99 €",
-      "detail": "Paiement unique"
+    "faq": {
+      "label": "QUESTIONS FRÉQUENTES",
+      "items": [
+        {
+          "q": "Quelles pages sont analysées ?",
+          "a": "Notre algorithme identifie les 20 pages les plus importantes de votre site via le sitemap, en priorisant les pages stratégiques (accueil, produits, articles récents)."
+        },
+        {
+          "q": "Combien de temps pour recevoir le rapport ?",
+          "a": "15 à 20 minutes. L'analyse de 20 pages par IA prend du temps — c'est le prix de la profondeur. Vous recevez un email dès que le rapport est prêt."
+        },
+        {
+          "q": "En quoi c'est différent de l'audit 1 page ?",
+          "a": "L'audit complet détecte les patterns transverses (problèmes récurrents sur plusieurs pages), produit un plan d'action priorisé au niveau du site, et inclut un bilan détaillé page par page."
+        },
+        {
+          "q": "Puis-je utiliser le rapport pour un client ?",
+          "a": "Oui. Le rapport est un livrable professionnel que vous pouvez présenter à vos clients. Le PDF est téléchargeable et le rapport web est partageable par URL."
+        },
+        {
+          "q": "Que se passe-t-il si mon site a un sitemap bloqué ?",
+          "a": "Si le sitemap n'est pas accessible, notre crawler explore votre site automatiquement pour identifier les pages prioritaires. Le nombre de pages analysées peut varier."
+        }
+      ]
     },
     "finalCta": {
       "title": "Prêt à auditer votre site ?",
-      "desc": "20 pages analysées, patterns détectés, plan d'action livré en 15 à 20 minutes."
+      "subtitle": "20 pages analysées, patterns détectés, plan d'action livré en 15 à 20 minutes."
+    }
+  },
+  "onepage": {
+    "seo": {
+      "title": "Audit GEO 1 page — 29 € | Detekia",
+      "description": "Analysez la visibilité IA de votre page en profondeur. Score sur 100, 8 critères, 8 recommandations avec exemples de code. Rapport en 1 à 2 minutes."
+    },
+    "hero": {
+      "badge": "AUDIT 1 PAGE",
+      "title": "Votre page, analysée par l'IA",
+      "subtitle": "Score sur 100, 8 critères détaillés, recommandations concrètes avec exemples de code. Résultat en 1 à 2 minutes.",
+      "cta": "Analyser ma page — 29 € →",
+      "exampleLink": "Voir un exemple de rapport"
+    },
+    "audience": {
+      "label": "POUR QUI",
+      "title": "Conçu notamment pour :",
+      "items": [
+        "Freelances",
+        "Créateurs de contenu",
+        "Coachs et formateurs",
+        "Consultants indépendants",
+        "E-commerçants débutants",
+        "Artisans et commerces locaux",
+        "Auteurs"
+      ],
+      "closing": "… et tout site qui veut comprendre comment les IA le perçoivent."
+    },
+    "sites": {
+      "label": "IDÉAL POUR ANALYSER",
+      "items": [
+        "Une page d'accueil",
+        "Une page produit ou service",
+        "Un article de blog",
+        "Une landing page de campagne"
+      ]
+    },
+    "included": {
+      "label": "CE QUE VOUS OBTENEZ",
+      "title": "Un rapport complet, livré en 1 à 2 minutes",
+      "items": [
+        "Score de visibilité IA sur 100",
+        "8 critères analysés en profondeur",
+        "8 recommandations détaillées avec exemples de code",
+        "Test IA sur 10 requêtes — concurrents cités identifiés",
+        "Guide technique par critère",
+        "Rapport web accessible indéfiniment",
+        "PDF téléchargeable"
+      ]
+    },
+    "steps": {
+      "label": "COMMENT ÇA MARCHE",
+      "items": [
+        {
+          "num": "01",
+          "title": "Entrez votre URL",
+          "desc": "Collez l'adresse de la page à analyser."
+        },
+        {
+          "num": "02",
+          "title": "L'IA analyse tout",
+          "desc": "8 critères GEO évalués, test de visibilité IA simulé sur 10 requêtes."
+        },
+        {
+          "num": "03",
+          "title": "Recevez votre rapport",
+          "desc": "Rapport web + PDF envoyé par email en 1 à 2 minutes."
+        }
+      ]
+    },
+    "faq": {
+      "label": "QUESTIONS FRÉQUENTES",
+      "items": [
+        {
+          "q": "Combien de temps pour recevoir mon rapport ?",
+          "a": "1 à 2 minutes après paiement. Vous recevez un email avec le lien vers votre rapport web, plus un PDF téléchargeable."
+        },
+        {
+          "q": "Quelle page analyser en priorité ?",
+          "a": "Votre page d'accueil pour un diagnostic global, ou votre page produit/service la plus stratégique pour un diagnostic ciblé."
+        },
+        {
+          "q": "Les recommandations sont-elles actionnables ?",
+          "a": "Oui. Chaque recommandation inclut le problème identifié, la solution, les étapes techniques et un exemple de code quand c'est pertinent."
+        },
+        {
+          "q": "Mon rapport expire-t-il ?",
+          "a": "Non. Votre rapport reste accessible indéfiniment à son URL. Le PDF est téléchargeable à tout moment."
+        },
+        {
+          "q": "Et si j'ai besoin d'analyser tout mon site ?",
+          "a": "L'audit complet (99 €) analyse les 20 pages les plus importantes de votre site, détecte les patterns transverses et produit un plan d'action priorisé."
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "Prêt à analyser votre page ?",
+      "subtitle": "Score, recommandations et plan d'action en 1 à 2 minutes."
+    },
+    "crossSell": {
+      "title": "Besoin d'une vision plus large ?",
+      "desc": "L'audit complet analyse 20 pages de votre site et détecte les patterns que l'analyse d'une seule page ne peut pas voir.",
+      "cta": "Découvrir l'audit complet →"
     }
   }
 }

@@ -1,0 +1,131 @@
+/**
+ * Shared checkout flow — URL modal + Stripe embedded checkout.
+ * Used by /pricing, /pro, /one-page.
+ */
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { loadStripe } from '@stripe/stripe-js';
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
+import { useTranslation } from '../lib/useTranslation';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+function isValidUrl(input) {
+  let url = input.trim();
+  if (!url) return false;
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  try { new URL(url); return true; } catch { return false; }
+}
+
+function normalizeUrl(input) {
+  let url = input.trim();
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  return url;
+}
+
+export default function CheckoutFlow({ plan, showModal, onClose }) {
+  const router = useRouter();
+  const { t } = useTranslation();
+  const [modalUrl, setModalUrl] = useState('');
+  const [urlError, setUrlError] = useState('');
+  const [modalError, setModalError] = useState('');
+  const [modalLoading, setModalLoading] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [clientSecret, setClientSecret] = useState(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (showModal && inputRef.current) inputRef.current.focus();
+  }, [showModal]);
+
+  useEffect(() => {
+    if (!showModal) return;
+    function onKey(e) { if (e.key === 'Escape') handleClose(); }
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [showModal]);
+
+  function handleClose() {
+    setModalUrl(''); setUrlError(''); setModalError('');
+    setShowCheckout(false); setClientSecret(null);
+    onClose();
+  }
+
+  async function handleSubmit() {
+    if (!isValidUrl(modalUrl)) { setUrlError(t('pricing.modal.urlInvalidError')); return; }
+    setUrlError(''); setModalError(''); setModalLoading(true);
+    try {
+      const url = normalizeUrl(modalUrl);
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, url, locale: router.locale }),
+      });
+      const data = await res.json();
+      if (data.clientSecret) { setClientSecret(data.clientSecret); setShowCheckout(true); }
+      else { setModalError(t('pricing.modal.errorGeneric')); }
+    } catch { setModalError(t('pricing.modal.errorGeneric')); }
+    finally { setModalLoading(false); }
+  }
+
+  const isPro = plan === 'pro';
+  const modalTitle = isPro ? t('pricing.modalPro.title') : t('pricing.modal.title');
+  const modalSubtitle = isPro ? t('pricing.modalPro.subtitle') : t('pricing.modal.subtitle');
+  const submitText = isPro ? t('pricing.modalPro.submitButton') : t('pricing.modal.submitButton');
+  const label = isPro ? t('pricing.proCard.label') : t('pricing.report.label');
+  const price = isPro ? t('pricing.proCard.price') : t('pricing.report.price');
+  const paymentInfo = isPro ? t('pricing.proCard.paymentInfo') : t('pricing.report.paymentInfo');
+
+  if (!showModal && !showCheckout) return null;
+
+  return (
+    <>
+      {/* URL Modal */}
+      {showModal && !showCheckout && (
+        <div onClick={handleClose} style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>
+          <div role="dialog" aria-modal="true" onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 16, maxWidth: 460, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
+            <button onClick={handleClose} style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 10, lineHeight: 1.2 }}>{modalTitle}</h2>
+            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, marginBottom: 24 }}>{modalSubtitle}</p>
+            <div style={{ marginBottom: 20 }}>
+              <input ref={inputRef} type="url" value={modalUrl}
+                onChange={e => { setModalUrl(e.target.value); setUrlError(''); setModalError(''); }}
+                onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }}
+                placeholder={t('pricing.modal.urlPlaceholder')}
+                style={{ width: '100%', background: '#F7F5F2', border: urlError ? '1.5px solid #D97757' : '1px solid #E5E2DC', borderRadius: 10, padding: '14px 16px', fontSize: 15, fontFamily: 'system-ui', color: '#1A1916', outline: 'none' }} />
+              {urlError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{urlError}</div>}
+              {modalError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{modalError}</div>}
+            </div>
+            <button onClick={handleSubmit} disabled={modalLoading || !modalUrl.trim()}
+              style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
+              {modalLoading ? '...' : submitText}
+            </button>
+            <button onClick={handleClose} style={{ display: 'block', width: '100%', background: 'transparent', color: '#8A8680', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
+              {t('pricing.modal.cancelButton')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Stripe Checkout */}
+      {showCheckout && clientSecret && (
+        <div onClick={handleClose} style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 14, maxWidth: 500, width: '100%', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
+            <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{label}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{price} · {paymentInfo}</div>
+              </div>
+              <button onClick={handleClose} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>×</button>
+            </div>
+            <div style={{ padding: '16px 0 0' }}>
+              <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
+                <EmbeddedCheckout />
+              </EmbeddedCheckoutProvider>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
