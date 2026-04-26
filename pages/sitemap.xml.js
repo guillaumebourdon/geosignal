@@ -30,6 +30,7 @@ function generateSiteMap() {
     { path: '/contact', changefreq: 'monthly', priority: '0.7' },
     { path: '/blog', changefreq: 'daily', priority: '0.9' },
     { path: '/pro', changefreq: 'monthly', priority: '0.7' },
+    { path: '/one-page', changefreq: 'monthly', priority: '0.7' },
   ];
 
   const today = new Date().toISOString().split('T')[0];

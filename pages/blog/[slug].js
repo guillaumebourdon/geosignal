@@ -29,6 +29,7 @@ CONTENT_MAP_EN['gemini-visibilite-site-france'] = require('../../content/article
 CONTENT_MAP_EN['meta-descriptions-seo-geo-2026'] = require('../../content/articles/en/meta-descriptions-seo-geo-2026').default;
 CONTENT_MAP_EN['faq-schema-faqpage-combo-ia'] = require('../../content/articles/en/faq-schema-faqpage-combo-ia').default;
 CONTENT_MAP_EN['contenu-long-vs-court-ia'] = require('../../content/articles/en/contenu-long-vs-court-ia').default;
+CONTENT_MAP_EN['backlinks-geo-autorite-domaine-ia'] = require('../../content/articles/en/backlinks-geo-autorite-domaine-ia').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
@@ -53,6 +54,7 @@ const CONTENT_MAP = {
   'meta-descriptions-seo-geo-2026': require('../../content/articles/meta-descriptions-seo-geo-2026').default,
   'faq-schema-faqpage-combo-ia': require('../../content/articles/faq-schema-faqpage-combo-ia').default,
   'contenu-long-vs-court-ia': require('../../content/articles/contenu-long-vs-court-ia').default,
+  'backlinks-geo-autorite-domaine-ia': require('../../content/articles/backlinks-geo-autorite-domaine-ia').default,
 };
 
 const CATEGORY_COLORS = {
@@ -153,7 +155,7 @@ export default function ArticlePage({ article, related }) {
               {article.title}
             </h1>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5', marginBottom: 28 }}>
-              <span>{formatDate(article.date, locale)}</span>
+              <time dateTime={article.date}>{formatDate(article.date, locale)}</time>
               <span>·</span>
               <span>{article.readTime} {t('blog.article.readTimeSuffix')}</span>
               <span>·</span>
