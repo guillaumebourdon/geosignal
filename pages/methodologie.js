@@ -37,9 +37,6 @@ export default function Methodologie() {
         <p style={{ fontSize: 15, color: '#8A8680', lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 64, maxWidth: 560, margin: '0 auto 64px' }}>
           {t('methodology.hero.subtitle')}
         </p>
-        <p style={{ textAlign: 'center', marginTop: 24, marginBottom: 0, fontFamily: 'system-ui', fontSize: 14 }}>
-          <Link href="/" style={{ color: '#D97757', textDecoration: 'none' }}>{t('methodology.hero.ctaLink')}</Link>
-        </p>
       </div>
 
       {/* COMMENT ÇA MARCHE */}
@@ -56,6 +53,11 @@ export default function Methodologie() {
               <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
             </div>
           ))}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 32 }}>
+          <Link href="/" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui' }}>
+            {locale === 'en' ? 'Test your score for free →' : 'Tester mon score gratuitement →'}
+          </Link>
         </div>
       </div>
 
@@ -119,25 +121,17 @@ export default function Methodologie() {
         </div>
       </div>
 
-      {/* LIMITES */}
+      {/* LIMITES + NORMALISATION + CAS RÉELS — unified block */}
       <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 16, padding: '32px' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('methodology.limits.label')}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {t('methodology.limits.items').map((item) => (
-              <div key={item.title}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{item.title}</div>
-                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{item.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* SCORING NOTE + CASE STUDIES */}
-      <div style={{ maxWidth: 680, margin: '0 auto', padding: '0 24px 40px' }}>
-        <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px 28px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div>
+        <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 16, padding: '32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase' }}>{t('methodology.limits.label')}</div>
+          {t('methodology.limits.items').map((item) => (
+            <div key={item.title}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{item.title}</div>
+              <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{item.desc}</div>
+            </div>
+          ))}
+          <div style={{ borderTop: '1px solid rgba(217,119,87,0.15)', paddingTop: 16 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{locale === 'en' ? 'Score normalization' : 'Normalisation du score'}</div>
             <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{t('methodology.scoring.normalizationNote')}</div>
           </div>
