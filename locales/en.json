@@ -395,44 +395,31 @@
     },
     "footer": {
       "copyright": "© 2026 Detekia — Beeleven SASU",
-      "links": [
-        {
-          "label": "Blog",
-          "href": "/blog"
-        },
-        {
-          "label": "Pricing",
-          "href": "/pricing"
-        },
-        {
-          "label": "Methodology",
-          "href": "/methodologie"
-        },
-        {
-          "label": "Contact",
-          "href": "/contact"
-        },
-        {
-          "label": "FAQ",
-          "href": "/#faq"
-        },
-        {
-          "label": "Legal Notice",
-          "href": "/mentions-legales"
-        },
-        {
-          "label": "Privacy",
-          "href": "/confidentialite"
-        },
-        {
-          "label": "Terms",
-          "href": "/cgu"
-        },
-        {
-          "label": "Detekia Pro (coming soon)",
-          "href": "/pro"
-        }
-      ]
+      "products": {
+        "label": "Products",
+        "links": [
+          { "label": "Free audit", "href": "/" },
+          { "label": "1-Page audit — €29", "href": "/one-page" },
+          { "label": "Complete audit — €99", "href": "/pro" }
+        ]
+      },
+      "resources": {
+        "label": "Resources",
+        "links": [
+          { "label": "Blog", "href": "/blog" },
+          { "label": "Pricing", "href": "/pricing" },
+          { "label": "Methodology", "href": "/methodologie" },
+          { "label": "Contact", "href": "/contact" }
+        ]
+      },
+      "legal": {
+        "label": "Legal",
+        "links": [
+          { "label": "Legal Notice", "href": "/mentions-legales" },
+          { "label": "Privacy", "href": "/confidentialite" },
+          { "label": "Terms", "href": "/cgu" }
+        ]
+      }
     },
     "schema": {
       "appDescription": "GEO (Generative Engine Optimization) audit tool that analyzes website visibility on AI engines like ChatGPT, Claude, Gemini and Perplexity.",

@@ -23,9 +23,20 @@ function normalizeUrl(input) {
   return url;
 }
 
+/* ─── Logo (inline SVG, same as homepage) ────────────────── */
+function Logo() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="8" fill="#1A1916"/>
+      <path d="M8 22V10l8 6-8 6z" fill="#D97757"/>
+      <path d="M16 22V10l8 6-8 6z" fill="#D97757" opacity="0.5"/>
+    </svg>
+  );
+}
+
 export default function Pricing() {
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   const [showModal, setShowModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState('rapport'); // 'rapport' or 'pro'
@@ -131,7 +142,7 @@ export default function Pricing() {
       </div>
 
       {/* PLANS */}
-      <div className="pricing-cards" style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 80 }}>
+      <div className="pricing-cards" style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 48 }}>
         {/* FREE */}
         <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
@@ -150,7 +161,7 @@ export default function Pricing() {
         </div>
 
         {/* RAPPORT */}
-        <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)' }}>
+        <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.report.label')}</div>
           <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.report.price')}</span></div>
           <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{t('pricing.report.paymentInfo')}</div>
@@ -161,10 +172,7 @@ export default function Pricing() {
             style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 24 }}>
             {t('pricing.report.cta')}
           </button>
-          <div style={{ textAlign: 'center', marginBottom: 20 }}>
-            <Link href="/one-page" style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1, transition: 'color 0.2s' }}>{t('pricing.report.learnMore')}</Link>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
             {reportFeatures.map((feat, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 12, color: '#10A37F', flexShrink: 0 }}>✓</span>
@@ -172,10 +180,13 @@ export default function Pricing() {
               </div>
             ))}
           </div>
+          <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
+            <Link href="/one-page" style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(247,245,242,0.12)', paddingBottom: 1 }}>{t('pricing.report.learnMore')}</Link>
+          </div>
         </div>
 
         {/* PRO */}
-        <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)' }}>
+        <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.proCard.label')}</div>
           <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.proCard.price')}</span></div>
           <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{t('pricing.proCard.paymentInfo')}</div>
@@ -185,10 +196,7 @@ export default function Pricing() {
             style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, fontFamily: 'system-ui', border: 'none', cursor: 'pointer', marginBottom: 24 }}>
             {t('pricing.proCard.cta')}
           </button>
-          <div style={{ textAlign: 'center', marginBottom: 20 }}>
-            <Link href="/pro" style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1, transition: 'color 0.2s' }}>{t('pricing.proCard.learnMore')}</Link>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
             {t('pricing.proCard.features').map((feat, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 12, color: '#10A37F', flexShrink: 0 }}>✓</span>
@@ -196,14 +204,10 @@ export default function Pricing() {
               </div>
             ))}
           </div>
+          <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
+            <Link href="/pro" style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(247,245,242,0.12)', paddingBottom: 1 }}>{t('pricing.proCard.learnMore')}</Link>
+          </div>
         </div>
-      </div>
-
-      {/* EXEMPLE DE RAPPORT */}
-      <div style={{ textAlign: 'center', marginBottom: 32 }}>
-        <a href={router.locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 2 }}>
-          {router.locale === 'en' ? 'See an example report →' : 'Voir un exemple de rapport →'}
-        </a>
       </div>
 
       {/* GARANTIE */}
@@ -217,16 +221,41 @@ export default function Pricing() {
         </div>
       </div>
 
-      {/* FAQ */}
-      <div style={{ maxWidth: 600, margin: '0 auto', padding: '0 24px 100px' }}>
+      {/* FAQ — Accordion */}
+      <div style={{ maxWidth: 600, margin: '0 auto', padding: '0 24px 80px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{t('pricing.faq.label')}</div>
         {faqItems.map((faq, i) => (
-          <div key={i} style={{ borderBottom: '1px solid #E5E2DC', padding: '20px 0' }}>
-            <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui' }}>{faq.q}</div>
-            <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{faq.a}</div>
-          </div>
+          <details key={i} className="pricing-faq-item" style={{ borderBottom: '1px solid #E5E2DC' }}>
+            <summary style={{ padding: '18px 0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, listStyle: 'none' }}>
+              <span style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.4 }}>{faq.q}</span>
+              <span className="pricing-faq-icon" style={{ fontSize: 18, color: '#B0ABA5', flexShrink: 0, transition: 'transform 0.2s ease', fontWeight: 300 }}>+</span>
+            </summary>
+            <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', paddingBottom: 18 }}>{faq.a}</div>
+          </details>
         ))}
       </div>
+
+      {/* FOOTER */}
+      <footer style={{ borderTop: '1px solid #E5E2DC', padding: '40px 48px 32px', background: '#fff' }}>
+        <div className="pricing-footer-inner" style={{ maxWidth: 960, margin: '0 auto', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 32 }}>
+          <div style={{ minWidth: 180 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 15, fontWeight: 'bold', color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 8 }}>
+              <Logo />{t('common.siteName')}
+            </div>
+            <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>{t('homepage.footer.copyright')}</div>
+          </div>
+          {['products', 'resources', 'legal'].map((section) => (
+            <div key={section}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12, fontWeight: 600 }}>{t(`homepage.footer.${section}.label`)}</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {t(`homepage.footer.${section}.links`).map((link) => (
+                  <Link key={link.href} href={link.href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{link.label}</Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </footer>
 
       {/* URL MODAL */}
       {showModal && (
@@ -302,7 +331,13 @@ export default function Pricing() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @media (max-width: 600px) {
           .pricing-cards { grid-template-columns: 1fr !important; }
+          .pricing-footer-inner { flex-direction: column !important; gap: 24px !important; }
         }
+        /* FAQ accordion — native <details> styling */
+        .pricing-faq-item summary::-webkit-details-marker { display: none; }
+        .pricing-faq-item summary::marker { display: none; content: ''; }
+        .pricing-faq-item[open] .pricing-faq-icon { transform: rotate(45deg); }
+        .pricing-faq-item summary:hover { color: #D97757; }
       `}</style>
     </div>
   );
