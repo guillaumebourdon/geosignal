@@ -669,7 +669,7 @@
     },
     "hero": {
       "title": "Choisissez l'audit qui correspond à votre besoin",
-      "subtitle": "Deux formules pour deux usages. Le même moteur d'analyse, la même méthodologie Princeton/KDD 2024."
+      "subtitle": "Deux formules pour deux usages. Le même moteur d'analyse, la même méthodologie sourcée et enrichie en continu."
     },
     "free": {
       "label": "Audit gratuit",
@@ -729,7 +729,8 @@
           "text": "Rapport web accessible indéfiniment + PDF"
         }
       ],
-      "subtitle": "Votre page phare passée aux rayons X de l'IA"
+      "subtitle": "Votre page phare passée aux rayons X de l'IA",
+      "learnMore": "En savoir plus sur l'audit 1 page →"
     },
     "guarantee": {
       "title": "Paiement sécurisé via Stripe",
@@ -765,6 +766,7 @@
       "price": "99 €",
       "paymentInfo": "Paiement unique",
       "cta": "Auditer mon site — 99 € →",
+      "learnMore": "En savoir plus sur l'audit complet ��",
       "badge": "",
       "features": [
         {

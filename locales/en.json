@@ -728,7 +728,8 @@
         {
           "text": "Permanent web report + PDF download"
         }
-      ]
+      ],
+      "learnMore": "Learn more about the 1-page audit →"
     },
     "guarantee": {
       "title": "Secure payment via Stripe",
@@ -760,11 +761,12 @@
       ]
     },
     "proCard": {
-      "label": "Pro — Multi-pages",
+      "label": "Complete audit",
       "price": "€99",
-      "paymentInfo": "Starting at · Launch June 2026",
-      "cta": "Get notified at launch →",
-      "badge": "COMING SOON",
+      "paymentInfo": "One-time payment",
+      "cta": "Audit my site — €99 →",
+      "learnMore": "Learn more about the complete audit →",
+      "badge": "",
       "features": [
         {
           "text": "Average /100 score across 20 pages"
