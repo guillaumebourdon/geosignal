@@ -821,7 +821,14 @@
       "submitButton": "Pay $29 and receive my report",
       "cancelButton": "Cancel",
       "urlInvalidError": "Invalid URL, please check the format",
-      "errorGeneric": "Something went wrong, please try again"
+      "errorGeneric": "Something went wrong, please try again",
+      "checking": "Checking your site...",
+      "errorAntibot": "Your site is protected by anti-bot technology that prevents our tool from accessing it. We cannot perform this audit at the moment.",
+      "errorUnreachable": "Your site is not accessible. Please check the URL and try again.",
+      "errorNoContent": "The page does not contain enough exploitable content to generate an audit.",
+      "errorProInsufficient": "Your site doesn't support a complete audit (fewer than 20 pages detected). However, we can analyze this page in detail.",
+      "errorProInsufficient_cta": "Get the 1-page audit — €29 →",
+      "errorCheckFailed": "An error occurred during verification. Please try again in a moment."
     }
   },
   "about": {

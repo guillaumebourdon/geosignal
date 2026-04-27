@@ -23,15 +23,17 @@ function normalizeUrl(input) {
   return url;
 }
 
-export default function CheckoutFlow({ plan, showModal, onClose, initialUrl }) {
+export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onSwitchPlan }) {
   const router = useRouter();
   const { t } = useTranslation();
   const [modalUrl, setModalUrl] = useState('');
   const [urlError, setUrlError] = useState('');
   const [modalError, setModalError] = useState('');
   const [modalLoading, setModalLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState(null);
+  const [showFallback, setShowFallback] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -51,14 +53,55 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl }) {
   function handleClose() {
     setModalUrl(''); setUrlError(''); setModalError('');
     setShowCheckout(false); setClientSecret(null);
+    setShowFallback(false); setLoadingText('');
     onClose();
   }
 
   async function handleSubmit() {
     if (!isValidUrl(modalUrl)) { setUrlError(t('pricing.modal.urlInvalidError')); return; }
-    setUrlError(''); setModalError(''); setModalLoading(true);
+    setUrlError(''); setModalError(''); setShowFallback(false); setModalLoading(true);
+    const url = normalizeUrl(modalUrl);
+
+    // Step 1: Pre-check auditability
+    setLoadingText(t('pricing.modal.checking'));
     try {
-      const url = normalizeUrl(modalUrl);
+      const checkRes = await fetch('/api/pre-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url, plan }),
+      });
+      const check = await checkRes.json();
+
+      // Evaluate result based on selected plan
+      const isPro = plan === 'pro';
+      const auditable = isPro ? check.proAuditable : check.onePageAuditable;
+
+      if (!auditable) {
+        // Pro not possible but one-page is → show fallback
+        if (isPro && check.onePageAuditable) {
+          setModalError(t('pricing.modal.errorProInsufficient'));
+          setShowFallback(true);
+          setModalLoading(false);
+          return;
+        }
+        // Nothing possible → show specific error
+        const errKey = check.reason === 'antibot_detected' ? 'errorAntibot'
+          : check.reason === 'site_unreachable' ? 'errorUnreachable'
+          : check.reason === 'no_content' ? 'errorNoContent'
+          : 'errorAntibot';
+        setModalError(t(`pricing.modal.${errKey}`));
+        setModalLoading(false);
+        return;
+      }
+    } catch {
+      // Pre-check failed (network error, timeout) — let the user proceed anyway
+      // Better to have a degraded audit than to block a paying customer on a false positive
+      console.warn('[CheckoutFlow] Pre-check failed, proceeding to checkout');
+    }
+
+    // Step 2: Create Stripe checkout
+    setLoadingText('');
+    try {
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -68,7 +111,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl }) {
       if (data.clientSecret) { setClientSecret(data.clientSecret); setShowCheckout(true); }
       else { setModalError(t('pricing.modal.errorGeneric')); }
     } catch { setModalError(t('pricing.modal.errorGeneric')); }
-    finally { setModalLoading(false); }
+    finally { setModalLoading(false); setLoadingText(''); }
   }
 
   const isPro = plan === 'pro';
@@ -101,8 +144,14 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl }) {
             </div>
             <button onClick={handleSubmit} disabled={modalLoading || !modalUrl.trim()}
               style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
-              {modalLoading ? '...' : submitText}
+              {modalLoading ? (loadingText || '...') : submitText}
             </button>
+            {showFallback && (
+              <button onClick={() => { if (onSwitchPlan) { onSwitchPlan('rapport', normalizeUrl(modalUrl)); handleClose(); } else { window.location.href = '/one-page'; } }}
+                style={{ display: 'block', width: '100%', background: '#1A1916', color: '#F7F5F2', padding: '13px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 12 }}>
+                {t('pricing.modal.errorProInsufficient_cta')}
+              </button>
+            )}
             <button onClick={handleClose} style={{ display: 'block', width: '100%', background: 'transparent', color: '#8A8680', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
               {t('pricing.modal.cancelButton')}
             </button>

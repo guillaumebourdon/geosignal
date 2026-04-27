@@ -44,6 +44,8 @@ export default function Pricing() {
   const [urlError, setUrlError] = useState('');
   const [modalError, setModalError] = useState('');
   const [modalLoading, setModalLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
+  const [showFallback, setShowFallback] = useState(false);
 
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState(null);
@@ -80,6 +82,8 @@ export default function Pricing() {
     setModalUrl('');
     setUrlError('');
     setModalError('');
+    setShowFallback(false);
+    setLoadingText('');
     if (triggerRef.current) triggerRef.current.focus();
   }
 
@@ -95,10 +99,46 @@ export default function Pricing() {
     }
     setUrlError('');
     setModalError('');
+    setShowFallback(false);
     setModalLoading(true);
 
+    const url = normalizeUrl(modalUrl);
+
+    // Pre-check auditability
+    setLoadingText(t('pricing.modal.checking'));
     try {
-      const url = normalizeUrl(modalUrl);
+      const checkRes = await fetch('/api/pre-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url, plan: selectedPlan }),
+      });
+      const check = await checkRes.json();
+      const isPro = selectedPlan === 'pro';
+      const auditable = isPro ? check.proAuditable : check.onePageAuditable;
+
+      if (!auditable) {
+        if (isPro && check.onePageAuditable) {
+          setModalError(t('pricing.modal.errorProInsufficient'));
+          setShowFallback(true);
+          setModalLoading(false);
+          setLoadingText('');
+          return;
+        }
+        const errKey = check.reason === 'antibot_detected' ? 'errorAntibot'
+          : check.reason === 'site_unreachable' ? 'errorUnreachable'
+          : check.reason === 'no_content' ? 'errorNoContent'
+          : 'errorAntibot';
+        setModalError(t(`pricing.modal.${errKey}`));
+        setModalLoading(false);
+        setLoadingText('');
+        return;
+      }
+    } catch {
+      // Pre-check failed — proceed to checkout (fail-open)
+    }
+    setLoadingText('');
+
+    try {
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -292,8 +332,14 @@ export default function Pricing() {
               onClick={handleModalSubmit}
               disabled={modalLoading || !modalUrl.trim()}
               style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
-              {modalLoading ? '...' : (selectedPlan === 'pro' ? t('pricing.modalPro.submitButton') : t('pricing.modal.submitButton'))}
+              {modalLoading ? (loadingText || '...') : (selectedPlan === 'pro' ? t('pricing.modalPro.submitButton') : t('pricing.modal.submitButton'))}
             </button>
+            {showFallback && (
+              <button onClick={() => { setSelectedPlan('rapport'); setShowFallback(false); setModalError(''); }}
+                style={{ display: 'block', width: '100%', background: '#1A1916', color: '#F7F5F2', padding: '13px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 12 }}>
+                {t('pricing.modal.errorProInsufficient_cta')}
+              </button>
+            )}
             <button onClick={closeModal} style={{ display: 'block', width: '100%', background: 'transparent', color: '#8A8680', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
               {t('pricing.modal.cancelButton')}
             </button>
