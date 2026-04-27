@@ -186,13 +186,30 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
     // Increment global audit counter
     try { await redis.incr('detekia:stats:audit-count'); } catch (_) {}
 
-    // Validate report and log issues
+    // Validate report — alert Guillaume if errors detected
     try {
       const { validateReport } = require('../../lib/reportValidator');
       const validation = validateReport(consolidated, 'pro');
       if (!validation.passed || validation.warnings.length > 0) {
         await redis.set(`detekia:validation:${uuid}`, validation, { ex: REPORT_TTL });
         console.log(`[pro-finalize] Validation: ${validation.summary}`);
+      }
+      if (!validation.passed) {
+        await resend.emails.send({
+          from: 'Detekia <hello@detekia.fr>',
+          to: 'guillaume@beeleven.fr',
+          subject: `⚠️ Rapport Pro dégradé — ${consolidated.rootUrl} — ${validation.summary}`,
+          html: `<div style="font-family:system-ui;padding:24px;">
+            <h2 style="color:#D97757;">Rapport Pro avec erreurs de validation</h2>
+            <p><strong>Site :</strong> ${consolidated.rootUrl}</p>
+            <p><strong>Email client :</strong> ${meta?.customerEmail || 'N/A'}</p>
+            <p><strong>Score moyen :</strong> ${consolidated.scoreAverage}/100</p>
+            <p><strong>Pages :</strong> ${consolidated.pagesValid}</p>
+            <p><strong>Rapport :</strong> <a href="${reportUrl}">${reportUrl}</a></p>
+            <p><strong>Erreurs :</strong></p>
+            <ul>${validation.errors.map(e => `<li><strong>${e.rule}</strong>: attendu ${e.expected}, obtenu ${e.actual}</li>`).join('')}</ul>
+          </div>`,
+        }).catch(() => {});
       }
     } catch (e) { console.error('[pro-finalize] Validation error:', e.message); }
 

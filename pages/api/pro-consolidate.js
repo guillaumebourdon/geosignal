@@ -1,6 +1,7 @@
 import { Redis } from '@upstash/redis';
 import Anthropic from '@anthropic-ai/sdk';
 import { verifyQstashSignature, triggerFinalizeReport } from '../../lib/proQueue';
+const { runRealCitationTest } = require('../../lib/citationTest');
 
 export const config = {
   maxDuration: 300,
@@ -221,15 +222,19 @@ JSON array only, no markdown:`;
 
 // ── Step 5: Run 3 Sonnet calls in parallel ──────────────────────────────────
 
-async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt) {
-  console.log('[pro-consolidate] Starting 3 Sonnet calls in parallel...');
+async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt, { rootUrl, metaDescription, intro, locale } = {}) {
+  console.log('[pro-consolidate] Starting Sonnet synthesis + criteria + real citation test...');
   const start = Date.now();
+
+  const hostname = new URL(rootUrl).hostname.replace(/^www\./, '');
+  const brand = hostname.split('.')[0];
+
   const [synthR, citR, critR] = await Promise.allSettled([
     callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
-    callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.3, messages: [{ role: 'user', content: citationPrompt }] }),
+    runRealCitationTest(rootUrl, hostname, brand, metaDescription || '', intro || '', 30, locale || 'fr', anthropic),
     callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
   ]);
-  console.log(`[pro-consolidate] 3 Sonnet calls completed in ${Date.now() - start}ms`);
+  console.log(`[pro-consolidate] Parallel calls completed in ${Date.now() - start}ms`);
 
   let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
   if (synthR.status === 'fulfilled') {
@@ -237,11 +242,11 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt)
     catch (e) { console.error('[pro-consolidate] Synthesis parse error:', e.message); }
   } else { console.error('[pro-consolidate] Synthesis FAILED:', synthR.reason?.message); }
 
-  let citationTest = { queries: [], citationRate: '0/30', bestOpportunity: '', mainBlocker: '' };
-  if (citR.status === 'fulfilled') {
-    try { citationTest = parseJson(citR.value.content[0].text); }
-    catch (e) { console.error('[pro-consolidate] Citation parse error:', e.message); }
-  } else { console.error('[pro-consolidate] Citation FAILED:', citR.reason?.message); }
+  let citationTest = { tests: [], summary: { cited_count: 0, total_tests: 0, best_opportunity: '', main_blocker: '' } };
+  if (citR.status === 'fulfilled' && citR.value) {
+    citationTest = citR.value;
+    console.log(`[pro-consolidate] Citation test OK: ${citationTest.tests?.length || 0} queries tested`);
+  } else { console.error('[pro-consolidate] Citation test FAILED:', citR.reason?.message || 'null result'); }
 
   let criteriaConsolidated = [];
   if (critR.status === 'fulfilled') {
@@ -295,10 +300,12 @@ export default async function handler(req, res) {
     const agg = computeAggregates(pages);
     const ctx = buildPromptContext(locale, rootUrl, agg);
 
+    const homepageEvidence = agg.validPages[0]?.evidence || {};
     const { synthesis, citationTest, criteriaConsolidated: rawCriteria } = await runParallelCalls(
       buildSynthesisPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages),
       buildCitationPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages),
       buildCriteriaPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages),
+      { rootUrl, metaDescription: homepageEvidence.metaDescription, intro: homepageEvidence.intro, locale },
     );
 
     // Enrich criteria with score data
@@ -329,7 +336,12 @@ export default async function handler(req, res) {
       topStrengths: synthesis.topStrengths || [], topWeaknesses: synthesis.topWeaknesses || [],
       patterns: synthesis.patterns || [],
       actionPlan: sortActionPlan(synthesis.actionPlan),
-      citationTestConsolidated: citationTest,
+      citationTestConsolidated: {
+        queries: citationTest.tests || citationTest.queries || [],
+        citationRate: citationTest.summary?.cited_count ? `${citationTest.summary.cited_count}/${citationTest.summary.total_tests}` : (citationTest.citationRate || '0/0'),
+        bestOpportunity: citationTest.summary?.best_opportunity || citationTest.bestOpportunity || '',
+        mainBlocker: citationTest.summary?.main_blocker || citationTest.mainBlocker || '',
+      },
       pages: fullPages,
     };
 

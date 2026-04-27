@@ -145,13 +145,31 @@ export default async function handler(req, res) {
     // Increment global audit counter
     try { await redis.incr('detekia:stats:audit-count'); } catch (_) {}
 
-    // Validate report
+    // Validate report — alert Guillaume if errors detected
     try {
       const { validateReport } = require('../../lib/reportValidator');
       const validation = validateReport(reportData, 'onepage');
       if (!validation.passed || validation.warnings.length > 0) {
         await redis.set(`detekia:validation:${uuid}`, validation, { ex: REPORT_TTL });
         console.log(`[finalize-report] Validation: ${validation.summary}`);
+      }
+      if (!validation.passed) {
+        reportRecord.validationErrors = validation.errors;
+        await resend.emails.send({
+          from: 'Detekia <hello@detekia.fr>',
+          to: 'guillaume@beeleven.fr',
+          subject: `⚠️ Rapport dégradé livré — ${url} — ${validation.summary}`,
+          html: `<div style="font-family:system-ui;padding:24px;">
+            <h2 style="color:#D97757;">Rapport avec erreurs de validation</h2>
+            <p><strong>URL :</strong> ${url}</p>
+            <p><strong>Email client :</strong> ${email}</p>
+            <p><strong>Score :</strong> ${reportData.score}/100</p>
+            <p><strong>Rapport :</strong> <a href="${reportUrl}">${reportUrl}</a></p>
+            <p><strong>Erreurs :</strong></p>
+            <ul>${validation.errors.map(e => `<li><strong>${e.rule}</strong>: attendu ${e.expected}, obtenu ${e.actual}</li>`).join('')}</ul>
+            <p style="color:#8A8680;font-size:12px;">Le rapport a été livré. Vérifier manuellement si nécessaire.</p>
+          </div>`,
+        }).catch(() => {});
       }
     } catch (e) { console.error('[finalize-report] Validation error:', e.message); }
 

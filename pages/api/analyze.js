@@ -17,6 +17,7 @@ const redis = new Redis({
 const CACHE_DURATION = 24 * 60 * 60;
 
 const { mdHeadings, mdExternalLinks, mdAllLinks, jinaTitle, jinaDescription } = require('../../lib/markdownHelpers');
+const { runRealCitationTest } = require('../../lib/citationTest');
 
 // ─── Evidence detail strings by locale ────────────────────────────────────────
 
@@ -637,10 +638,15 @@ export default async function handler(req, res) {
     else signalParts.push('JSON-LD schemas: NONE');
     const detectedSignals = signalParts.join('\n');
 
+    const hostname = new URL(url).hostname.replace(/^www\./, '');
+    const brand = metaTitle ? metaTitle.split(/[-|–·]/)[0].trim() : hostname;
+    const intro = textContent.slice(0, 300);
+
+    // Run analysis + evidence in parallel. Citation test uses real GPT-4o-mini queries (2 for free tier).
     const [claude, evidence, citationTest] = await Promise.all([
       runClaudeAnalysis(url, textContent, scores, locale, detectedSignals),
       collectEvidence($, textContent, rawContent, url),
-      runCitationTest(url, textContent, metaTitle, metaDescription, locale).catch(e => { console.error('citationTest error:', e.message); return null; }),
+      runRealCitationTest(url, hostname, brand, metaDescription, intro, 2, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
     const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
     const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;
