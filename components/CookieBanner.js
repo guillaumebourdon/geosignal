@@ -88,7 +88,7 @@ export default function CookieBanner() {
               <div style={{ fontSize: 12, color: '#F7F5F2', fontFamily: 'system-ui', fontWeight: 600 }}>{t('cookieBanner.analytics')}</div>
               <div style={{ fontSize: 10, color: 'rgba(247,245,242,0.4)', fontFamily: 'system-ui', marginTop: 2 }}>{t('cookieBanner.analyticsDesc')}</div>
             </div>
-            <button onClick={() => setAnalyticsEnabled(!analyticsEnabled)} style={{
+            <button role="switch" aria-checked={analyticsEnabled} aria-label={t('cookieBanner.analytics')} onClick={() => setAnalyticsEnabled(!analyticsEnabled)} style={{
               width: 40, height: 22, borderRadius: 11, border: 'none', cursor: 'pointer', flexShrink: 0,
               background: analyticsEnabled ? '#D97757' : 'rgba(255,255,255,0.15)',
               position: 'relative', transition: 'background 0.2s',

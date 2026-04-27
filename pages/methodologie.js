@@ -46,6 +46,7 @@ export default function Methodologie() {
       />
 
       <Header ctaLabel={t('nav.ctaAnalyze')} />
+      <main>
 
       {/* HERO */}
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '72px 24px 0', textAlign: 'center' }}>
@@ -277,6 +278,7 @@ export default function Methodologie() {
       </div>
 
       {/* FOOTER */}
+      </main>
       <footer style={{ borderTop: '1px solid #E5E2DC', padding: '28px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff', flexWrap: 'wrap', gap: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, fontWeight: 'bold', color: '#1A1916', fontFamily: 'Georgia, serif' }}>
           <Logo />{t('common.siteName')}

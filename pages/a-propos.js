@@ -46,6 +46,7 @@ export default function APropos() {
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
         <Header />
+      <main>
 
         {/* ═══ HERO ═══ */}
         <section style={{ maxWidth: 680, margin: '0 auto', padding: '72px 24px 48px', textAlign: 'center' }}>
@@ -148,6 +149,7 @@ export default function APropos() {
         </section>
 
         {/* ═══ FOOTER ═══ */}
+      </main>
         <footer style={{ borderTop: '1px solid #E5E2DC', padding: '40px 48px 32px', background: '#fff' }}>
           <div className="footer-inner" style={{ maxWidth: 900, margin: '0 auto', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 32 }}>
             <div style={{ minWidth: 160 }}>

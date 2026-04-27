@@ -171,6 +171,7 @@ export default function Pro() {
         }) }} />
       </Head>
       <Header ctaLabel={t('nav.ctaAnalyze')} />
+      <main>
 
       {/* ═══ 1. HERO (inchangé) ═══ */}
       <section className="gradient-bg lp-hero-section" style={{ padding: '80px 24px 72px', position: 'relative', overflow: 'hidden' }}>
@@ -341,6 +342,7 @@ export default function Pro() {
 
       <CheckoutFlow plan="pro" showModal={showCheckout} onClose={() => setShowCheckout(false)} initialUrl={ctaUrl} />
 
+      </main>
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: rgba(247,245,242,0.3); }

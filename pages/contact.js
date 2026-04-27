@@ -33,6 +33,7 @@ export default function Contact() {
       />
 
       <Header ctaLabel={t('nav.ctaAnalyze')} />
+      <main>
 
       <div style={{ maxWidth: 560, margin: '0 auto', padding: '72px 24px 100px' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
@@ -124,6 +125,7 @@ export default function Contact() {
         </div>
       </div>
 
+      </main>
       <style>{`* { box-sizing: border-box; margin: 0; padding: 0; }`}</style>
     </div>
   );

@@ -135,6 +135,7 @@ export default function ArticlePage({ article, related }) {
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
         <Header />
+      <main>
 
         {/* ARTICLE */}
         <article style={{ maxWidth: 740, margin: '0 auto', padding: '56px 24px 80px' }}>
@@ -210,6 +211,7 @@ export default function ArticlePage({ article, related }) {
         </article>
 
         {/* FOOTER */}
+      </main>
         <footer style={{ borderTop: '1px solid #E5E2DC', padding: '36px 48px', background: '#fff' }}>
           <div className="footer-inner" style={{ maxWidth: 900, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
             <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>{t('common.siteName')}</span>

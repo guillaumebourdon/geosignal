@@ -98,6 +98,17 @@
   z-index: 0;
 }
 
+/* ── ACCESSIBILITY — Focus visible for keyboard navigation ────── */
+*:focus-visible {
+  outline: 2px solid #D97757;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, details:focus-visible summary {
+  outline: 2px solid #D97757;
+  outline-offset: 2px;
+}
+
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .reveal, .scale-in { animation: none !important; opacity: 1 !important; transform: none !important; }

@@ -27,6 +27,7 @@ export default function CGU() {
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
         <Header />
+      <main>
 
         {/* CONTENT */}
         <div className="legal-content" style={{ maxWidth: 780, margin: '0 auto', padding: '80px 24px 100px' }}>
@@ -50,6 +51,7 @@ export default function CGU() {
         </div>
 
         {/* FOOTER */}
+      </main>
         <footer style={{ borderTop: '1px solid #E5E2DC', padding: '36px 48px', background: '#fff' }}>
           <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
             <div>

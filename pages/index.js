@@ -315,6 +315,7 @@ export default function Home() {
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
       <Header />
+      <main>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="hero-section" style={{ background: '#F7F5F2', padding: '20px 48px 32px' }}>
@@ -340,6 +341,7 @@ export default function Home() {
                   value={url}
                   onChange={e => setUrl(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && analyze()}
+                  aria-label="URL du site à analyser"
                   placeholder={t('homepage.hero.inputPlaceholder')}
                   style={{ flex: 1, border: 'none', outline: 'none', padding: '13px 20px', fontSize: 16, fontFamily: 'system-ui', color: '#1A1916', background: 'transparent', minWidth: 0 }}
                 />
@@ -664,6 +666,7 @@ export default function Home() {
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────── */}
+      </main>
       <footer style={{ borderTop: '1px solid #E5E2DC', padding: '40px 48px 32px', background: '#fff' }}>
         <div className="footer-inner" style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 32 }}>
           <div style={{ minWidth: 180 }}>

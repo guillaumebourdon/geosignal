@@ -388,6 +388,7 @@ export default function Results() {
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
       <Header showLanguageSwitcher={false} ctaLabel={t('results.nav.newAnalysis')} />
+      <main>
 
       {!result && !error && (
         <div style={{ minHeight: 'calc(100vh - 56px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 24px' }}>
@@ -663,6 +664,7 @@ export default function Results() {
         </div>
       )}
 
+      </main>
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }

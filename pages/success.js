@@ -56,6 +56,7 @@ export default function Success() {
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
         <Header variant="minimal" />
+      <main>
 
         {/* ═══ VERIFYING ═══ */}
         {status === 'verifying' && (
@@ -215,6 +216,7 @@ export default function Success() {
           </>
         )}
 
+      </main>
         <style>{`
           @keyframes spin { to { transform: rotate(360deg); } }
           * { box-sizing: border-box; margin: 0; padding: 0; }
