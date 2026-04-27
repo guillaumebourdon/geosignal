@@ -808,53 +808,65 @@
   },
   "about": {
     "seo": {
-      "title": "About Detekia — GEO, Beeleven SASU",
-      "description": "Detekia is a GEO audit tool developed by Beeleven SASU. Measure and improve your website's visibility in AI responses (ChatGPT, Gemini, Claude, Perplexity)."
+      "title": "About — Detekia",
+      "description": "Detekia is a GEO audit tool built by Beeleven SASU. Research-backed methodology, full transparency, designed and developed in France."
     },
     "breadcrumbHome": "Home",
     "breadcrumbCurrent": "About",
-    "title": "About Detekia",
+    "hero": {
+      "badge": "ABOUT",
+      "title": "GEO auditing, accessible to all",
+      "subtitle": "Detekia measures your website's visibility in responses from ChatGPT, Gemini, Claude and Perplexity."
+    },
     "why": {
-      "title": "Why Detekia exists",
-      "p1": "AI search engines (ChatGPT, Gemini, Claude, Perplexity) are changing how people find businesses. AI-referred traffic increased by 527% in 2025. Yet most websites are not optimized to be cited by these engines.",
-      "p2": "Detekia was born from this observation: businesses need a simple tool to measure and improve their visibility in AI responses. Not another SEO tool — a tool specifically designed for GEO (Generative Engine Optimization)."
+      "title": "Why Detekia",
+      "p1": "AI engines are changing how people find businesses. Yet most websites aren't built to be cited by these engines. We wanted to build a serious tool, with a solid analysis engine, a research-backed methodology — and above all, accessible to everyone, with no subscription or commitment.",
+      "p2": "Detekia is not another SEO tool. It's built specifically for GEO (Generative Engine Optimization): 8 measured criteria, a score out of 100, actionable recommendations with code examples."
     },
-    "how": {
-      "title": "How it works",
-      "p1": "Detekia analyzes your website across 8 AI citability criteria validated by academic research (Princeton/Georgia Tech study, KDD 2024). In under 60 seconds, you get a score out of 100 and personalized recommendations.",
-      "p2": "Our analysis is transparent: 7 criteria are evaluated through technical HTML analysis, 1 criterion (editorial neutrality) is evaluated by artificial intelligence. Each recommendation is sourced and accompanied by a documented real-world case."
+    "beeleven": {
+      "title": "Beeleven — the company",
+      "text": "Detekia is published by Beeleven, an independent French company. We hold ourselves to a high standard of quality, transparency and accessibility across everything we build."
     },
-    "who": {
-      "title": "Who's behind Detekia",
-      "p1": "Detekia is a product of Beeleven SASU, founded by Guillaume Bourdon.",
-      "p2": "With over 10 years in digital marketing, acquisition and growth strategy, Guillaume has helped dozens of companies — from early-stage startups to established SMBs — with their online visibility challenges.",
-      "p3": "In 2025, facing the explosion of AI-referred traffic (+527% in just a few months), he created Detekia to address a need that nobody was covering yet: giving businesses a simple, transparent and actionable tool to measure and improve their visibility in ChatGPT, Claude, Gemini and Perplexity responses.",
-      "p4": "Detekia's methodology is based on academic research (Princeton / Georgia Tech, KDD 2024) and constant monitoring of AI engine developments.",
-      "p5": "Contact: <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a>"
+    "principles": {
+      "label": "OUR PRINCIPLES",
+      "items": [
+        {
+          "title": "Transparency",
+          "desc": "Our methodology is public. The 8 criteria, academic sources, weightings: everything is documented on our methodology page."
+        },
+        {
+          "title": "Methodological rigor",
+          "desc": "Our approach is built on solid academic foundations (Princeton/KDD 2024 study) and continuously enriched with the latest industry research (2025-2026)."
+        },
+        {
+          "title": "Honesty",
+          "desc": "No unrealistic promises. No guaranteed scores. We precisely measure your site's current AI visibility and give you actionable recommendations."
+        },
+        {
+          "title": "Accessibility",
+          "desc": "Our audit is self-service, no subscription, no commitment. Starting at €29, anyone can understand how AI perceives their site."
+        },
+        {
+          "title": "Made in France",
+          "desc": "Detekia is designed, developed and published in France. Our infrastructure is European, GDPR compliant."
+        }
+      ]
     },
-    "methodologySection": {
-      "title": "Methodology",
-      "intro": "Our scoring is based on 8 weighted criteria according to their demonstrated impact on AI visibility:",
-      "criteria": [
-        "Extractability & direct answer (25 pts)",
-        "Verifiability & evidence (20 pts)",
-        "Authority & E-E-A-T (15 pts)",
-        "AI Crawlability (15 pts)",
-        "Structured data (10 pts)",
-        "Editorial neutrality (10 pts)",
-        "External presence (5 pts)",
-        "Freshness & maintenance (5 pts)"
-      ],
-      "source": "Source: Aggarwal et al., \"Generative Engine Optimization\", Princeton / Georgia Tech, KDD 2024."
+    "team": {
+      "label": "THE TEAM",
+      "name": "Guillaume Bourdon",
+      "role": "Founder",
+      "bio": "15 years of experience in digital marketing, growth and SEO.",
+      "linkedin": "https://www.linkedin.com/in/gbourdon/"
     },
     "cta": {
-      "title": "Test your GEO Score for free",
-      "subtitle": "Full analysis in under 60 seconds, no signup required",
-      "button": "Analyze my website →"
+      "title": "Discover our methodology",
+      "subtitle": "8 criteria, academic sources, transparent scoring.",
+      "button": "View methodology →"
     },
     "schema": {
       "name": "About Detekia",
-      "description": "Detekia is a GEO audit tool developed by Beeleven SASU, founded by Guillaume Bourdon."
+      "description": "Detekia is a GEO audit tool published by Beeleven SASU, an independent French company."
     },
     "footer": {
       "links": [
