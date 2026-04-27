@@ -622,6 +622,25 @@
         "Schema.org — Official FAQPage, Article, Organization documentation"
       ]
     },
+    "compare": {
+      "label": "3 AUDIT LEVELS",
+      "title": "Same methodology, 3 levels of depth",
+      "subtitle": "The 8 criteria and scoring are identical across all 3 audits. What changes is the depth of analysis.",
+      "headers": ["", "Free", "1 page — €29", "Complete — €99"],
+      "rows": [
+        ["8 GEO criteria analyzed", true, true, true],
+        ["Pages analyzed", "1", "1", "20"],
+        ["AI visibility test", "Partial", "10 queries", "30 queries"],
+        ["Recommendations", "Preview", "Detailed + code", "Detailed + code"],
+        ["Cross-page patterns", false, false, true],
+        ["Prioritized action plan", false, false, true],
+        ["Per-page breakdown", false, false, true],
+        ["Downloadable PDF", false, true, true],
+        ["Report accessible", "24h", "10 years", "10 years"],
+        ["Delivery time", "30 sec", "1 min", "15-20 min"]
+      ],
+      "cta": "See our detailed plans →"
+    },
     "cta": {
       "titleLine1": "Test your website",
       "titleEm": "for free",
@@ -1512,19 +1531,24 @@
     "citation": {
       "label": "AI VISIBILITY TEST",
       "title": "Do AI engines cite your site?",
-      "intro": "We simulated 10 queries your potential customers might ask ChatGPT or Perplexity.",
+      "intro": "We simulated several queries your potential customers might ask ChatGPT or Perplexity.",
       "queryLabel": "Query tested",
       "notCited": "Your site doesn't appear",
       "cited": "Your site is cited",
       "competitorsLabel": "Cited instead of you:",
       "noCompetitors": "No competitors identified",
-      "lockedTitle": "8 more queries tested",
-      "lockedDesc": "The full report reveals all 10 results of your AI visibility test — with competitors cited and recommendations for each query.",
-      "lockedCta": "See all 10 results →"
+      "lockedTitle": "Want to see more query analyses?",
+      "lockedDesc": "The full report reveals more results from your AI visibility test — with competitors cited.",
+      "lockedCta": "Unlock the report →"
     },
     "checkout": {
       "title": "Full GEO Report",
       "subtext": "29 € · Instant access · One-time payment"
+    },
+    "fullSite": {
+      "title": "What about your entire site?",
+      "desc": "The complete audit analyzes 20 pages of your site, detects cross-page patterns that a single page can't reveal, and delivers a consolidated action plan.",
+      "cta": "Discover the complete audit — €99 →"
     },
     "proTeaser": "Need to analyze your entire site? The complete audit covers 20 pages.",
     "proTeaserLink": "Discover the complete audit →",

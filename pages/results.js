@@ -518,17 +518,53 @@ export default function Results() {
             )}
           </div>
 
+          {recommendations.length > 0 && (
+            <div style={{ marginTop: 32 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
+                <div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.recos.label')}</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5 }}>{t('results.recos.title')}</div>
+                </div>
+                {!isPaid && (
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', background: 'rgba(217,119,87,0.08)', padding: '4px 12px', borderRadius: 20, border: '1px solid rgba(217,119,87,0.2)' }}>
+                    {t('results.recos.lockedCount').replace('{preview}', '1').replace('{locked}', recommendations.length - 1)}
+                  </div>
+                )}
+              </div>
+              {!isPaid && (
+                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                  {t('results.recos.subtitle').replace('{count}', recommendations.length)}
+                </div>
+              )}
+
+              {previewReco && (
+                <RecoCard r={previewReco} index={0} isPaid={isPaid} isPreview={true} previewFadeText={previewFadeText} onCheckout={handleCheckout} total={recommendations.length} t={t} />
+              )}
+
+              {!isPaid && otherRecos.length > 0 && (
+                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 8 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 8 }}>
+                    {otherRecos.length === 1 ? t('results.recos.lockedReco1') : t('results.recos.lockedRecoN').replace('{count}', otherRecos.length)}
+                  </div>
+                  <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7 }}>
+                    {otherRecos.map(r => criteriaInfoMain[r.criterion]?.title || r.criterion || r.title).filter(Boolean).join(' · ')}
+                  </div>
+                </div>
+              )}
+
+            </div>
+          )}
+
           {/* ── CITATION TEST ─────────────────────────── */}
           {result?.citationTest?.tests && result.citationTest.tests.length > 0 && (() => {
             const tests = result.citationTest.tests;
-            // Select 2 most impactful: prefer generic/niche, not cited, with competitors
-            const scored = tests.map((t, i) => {
+            const scored = tests.map((ct, i) => {
               let s = 0;
-              if (!t.cited) s += 10;
-              if (t.competitors_cited?.length > 0) s += 5 + Math.min(t.competitors_cited.length, 3);
-              if (t.difficulty === 'générique' || t.difficulty === 'generic') s += 4;
-              else if (t.difficulty === 'niche') s += 2;
-              return { ...t, _score: s, _idx: i };
+              if (!ct.cited) s += 10;
+              if (ct.competitors_cited?.length > 0) s += 5 + Math.min(ct.competitors_cited.length, 3);
+              if (ct.difficulty === 'générique' || ct.difficulty === 'generic') s += 4;
+              else if (ct.difficulty === 'niche') s += 2;
+              return { ...ct, _score: s, _idx: i };
             });
             scored.sort((a, b) => b._score - a._score);
             const pick1 = scored[0];
@@ -579,53 +615,19 @@ export default function Results() {
             );
           })()}
 
-          {recommendations.length > 0 && (
-            <div style={{ marginTop: 32 }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
-                <div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.recos.label')}</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5 }}>{t('results.recos.title')}</div>
-                </div>
-                {!isPaid && (
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', background: 'rgba(217,119,87,0.08)', padding: '4px 12px', borderRadius: 20, border: '1px solid rgba(217,119,87,0.2)' }}>
-                    {t('results.recos.lockedCount').replace('{preview}', '1').replace('{locked}', recommendations.length - 1)}
-                  </div>
-                )}
+          {/* ── BLOC 99€ — AUDIT COMPLET ──────────────── */}
+          {!isPaid && (
+            <div style={{ marginTop: 32, background: '#fff', border: '1.5px solid #E5E2DC', borderRadius: 16, padding: '28px 28px', display: 'flex', alignItems: 'center', gap: 24 }}>
+              <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(16,163,127,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2" strokeLinecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
               </div>
-              {!isPaid && (
-                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-                  {t('results.recos.subtitle').replace('{count}', recommendations.length)}
-                </div>
-              )}
-
-              {previewReco && (
-                <RecoCard r={previewReco} index={0} isPaid={isPaid} isPreview={true} previewFadeText={previewFadeText} onCheckout={handleCheckout} total={recommendations.length} t={t} />
-              )}
-
-              {!isPaid && otherRecos.length > 0 && (
-                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 8 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 8 }}>
-                    {otherRecos.length === 1 ? t('results.recos.lockedReco1') : t('results.recos.lockedRecoN').replace('{count}', otherRecos.length)}
-                  </div>
-                  <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7 }}>
-                    {otherRecos.map(r => criteriaInfoMain[r.criterion]?.title || r.criterion || r.title).filter(Boolean).join(' · ')}
-                  </div>
-                </div>
-              )}
-
-              {/* Pro teaser block */}
-              {!isPaid && (
-                <div style={{ marginTop: 16, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, boxShadow: '0 8px 32px rgba(26,25,22,0.12)' }}>
-                  <div>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#F7F5F2', marginBottom: 6 }}>{t('results.proBlock.title')}</div>
-                    <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6 }}>{t('results.proBlock.desc')}</div>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, flexShrink: 0 }}>
-                    <Link href="/pro" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 36px', borderRadius: 10, fontWeight: 700, fontSize: 15, fontFamily: 'system-ui', whiteSpace: 'nowrap', textDecoration: 'none' }}>{t('results.proBlock.cta')}</Link>
-                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', textTransform: 'uppercase', letterSpacing: 1 }}>{t('results.proBlock.note')}</div>
-                  </div>
-                </div>
-              )}
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 6 }}>{t('results.fullSite.title')}</div>
+                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 12 }}>{t('results.fullSite.desc')}</div>
+                <Link href="/pro" className="btn-interactive" style={{ display: 'inline-block', fontSize: 13, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none', background: 'rgba(16,163,127,0.06)', padding: '8px 18px', borderRadius: 8, border: '1px solid rgba(16,163,127,0.2)' }}>
+                  {t('results.fullSite.cta')}
+                </Link>
+              </div>
             </div>
           )}
         </div>

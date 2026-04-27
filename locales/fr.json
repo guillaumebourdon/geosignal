@@ -622,6 +622,25 @@
         "Schema.org — Documentation officielle FAQPage, Article, Organization"
       ]
     },
+    "compare": {
+      "label": "3 NIVEAUX D'AUDIT",
+      "title": "La même méthodologie, 3 niveaux de profondeur",
+      "subtitle": "Les 8 critères et le scoring sont identiques pour les 3 audits. Ce qui change, c'est la profondeur d'analyse.",
+      "headers": ["", "Gratuit", "1 page — 29 €", "Complet — 99 €"],
+      "rows": [
+        ["8 critères GEO analysés", true, true, true],
+        ["Pages analysées", "1", "1", "20"],
+        ["Test de visibilité IA", "Partiel", "10 requêtes", "30 requêtes"],
+        ["Recommandations", "Aperçu", "Détaillées + code", "Détaillées + code"],
+        ["Patterns transverses", false, false, true],
+        ["Plan d'action priorisé", false, false, true],
+        ["Bilan page par page", false, false, true],
+        ["PDF téléchargeable", false, true, true],
+        ["Rapport accessible", "24h", "10 ans", "10 ans"],
+        ["Délai", "30 sec", "1 min", "15-20 min"]
+      ],
+      "cta": "Voir nos offres détaillées →"
+    },
     "cta": {
       "titleLine1": "Testez votre site",
       "titleEm": "gratuitement",
@@ -1519,19 +1538,24 @@
     "citation": {
       "label": "TEST DE VISIBILITÉ IA",
       "title": "Les IA citent-elles votre site ?",
-      "intro": "Nous avons simulé 10 requêtes que vos clients potentiels pourraient poser à ChatGPT ou Perplexity.",
+      "intro": "Nous avons simulé plusieurs requêtes que vos clients potentiels pourraient poser à ChatGPT ou Perplexity.",
       "queryLabel": "Requête testée",
       "notCited": "Votre site n'apparaît pas",
       "cited": "Votre site est cité",
       "competitorsLabel": "Cités à votre place :",
       "noCompetitors": "Aucun concurrent identifié",
-      "lockedTitle": "8 autres requêtes testées",
-      "lockedDesc": "Le rapport complet révèle les 10 résultats de votre test de visibilité IA — avec les concurrents cités et les recommandations pour chaque requête.",
-      "lockedCta": "Voir les 10 résultats →"
+      "lockedTitle": "Vous voulez voir d'autres analyses de requête ?",
+      "lockedDesc": "Le rapport complet révèle + de résultats de votre test de visibilité IA — avec les concurrents cités.",
+      "lockedCta": "Débloquer le rapport →"
     },
     "checkout": {
       "title": "Rapport GEO complet",
       "subtext": "29 € · Accès immédiat · Paiement unique"
+    },
+    "fullSite": {
+      "title": "Et si vous analysiez tout votre site ?",
+      "desc": "L'audit complet analyse 20 pages de votre site, détecte les patterns transverses qu'une seule page ne peut pas révéler, et vous livre un plan d'action consolidé.",
+      "cta": "Découvrir l'audit complet — 99 € →"
     },
     "proTeaser": "Besoin d'analyser tout votre site ? L'audit complet analyse 20 pages.",
     "proTeaserLink": "Découvrir l'audit complet →",

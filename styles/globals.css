@@ -478,6 +478,9 @@
     font-size: 24px !important;
     margin-bottom: 28px !important;
   }
+  /* Comparison table: desktop hidden, mobile shown */
+  .methodo-compare-desktop { display: none !important; }
+  .methodo-compare-mobile { display: block !important; }
 
   /* ── CONTACT : formulaire confortable ───────────────────────── */
   .contact-form input,
