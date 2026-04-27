@@ -168,7 +168,7 @@
     },
     "stats": [
       { "value": "—", "label": "audits completed", "dynamic": true },
-      { "value": "4", "label": "AI engines tested" },
+      { "value": "4", "label": "AI engines covered" },
       { "value": "8", "label": "GEO criteria analyzed" },
       { "value": "2025-2026", "label": "sourced methodology" },
       { "value": "30", "label": "AI queries (Pro audit)" },
@@ -278,7 +278,7 @@
           "title": "AI Visibility Test",
           "desc": "Are your direct competitors cited by ChatGPT and Gemini on your key queries? The report reveals your actual position in AI responses compared to your market.",
           "checks": [
-            "Queries tested on 4 AI engines",
+            "Real citation test on ChatGPT",
             "Comparison with 3 competitors",
             "Real response excerpts"
           ]
@@ -480,7 +480,7 @@
     "score": {
       "label": "Score calculation",
       "title": "Score out of 100 = 7 heuristics + AI neutrality",
-      "subtitle": "The first 7 criteria are calculated by deterministic rules on the HTML. The 8th criterion (editorial neutrality) is scored by Claude out of 10, then converted into a ±5 point bonus/penalty added to the total.",
+      "subtitle": "The first 7 criteria are calculated by deterministic rules on the HTML. The 8th criterion (editorial neutrality) is scored by Claude out of 10, then converted into a -3 to +3 point bonus/penalty added to the total.",
       "ptsLabel": "pts",
       "items": [
         {
@@ -747,7 +747,7 @@
           "text": "8 recommendations with code examples"
         },
         {
-          "text": "AI test (10 queries) — competing sites identified"
+          "text": "Real AI test (10 ChatGPT queries) — competing sites identified"
         },
         {
           "text": "Technical guide per criterion"
@@ -824,7 +824,7 @@
     "errorAlert": "Payment error, please try again.",
     "modal": {
       "title": "Unlock your full report",
-      "subtitle": "Enter your website URL. We'll generate your full 14-page GEO report after payment (takes a few minutes). You'll receive it by email.",
+      "subtitle": "Enter the URL of the page to analyze. Your GEO report will be ready in about 1 minute after payment. You'll receive it by email.",
       "urlPlaceholder": "https://www.your-website.com",
       "submitButton": "Pay $29 and receive my report",
       "cancelButton": "Cancel",
@@ -873,7 +873,7 @@
         },
         {
           "title": "Honesty",
-          "desc": "No unrealistic promises. No guaranteed scores. We precisely measure your site's current AI visibility and give you actionable recommendations."
+          "desc": "No unrealistic promises. No guaranteed scores. If for any technical reason we can't deliver your report, you're automatically and instantly refunded. That's our commitment."
         },
         {
           "title": "Accessibility",
@@ -1705,7 +1705,7 @@
         },
         {
           "title": "AI test on 30 queries",
-          "desc": "We query ChatGPT, Gemini and Perplexity on 30 queries related to your business. You discover which competitors are cited instead of you — and on which topics."
+          "desc": "We send 30 real queries to ChatGPT related to your business. You discover which competitors are cited instead of you — and on which topics."
         },
         {
           "title": "Cross-page pattern detection",
@@ -1844,7 +1844,7 @@
         },
         {
           "title": "AI test on 10 queries",
-          "desc": "We query ChatGPT, Gemini and Perplexity on your topic. You discover which competitors are cited — and why they show up instead of you."
+          "desc": "We send 10 real queries to ChatGPT on your topic. You discover which competitors are cited — and why they show up instead of you."
         },
         {
           "title": "Actionable recommendations with code",

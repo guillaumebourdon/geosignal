@@ -168,7 +168,7 @@
     },
     "stats": [
       { "value": "—", "label": "audits réalisés", "dynamic": true },
-      { "value": "4", "label": "moteurs IA testés" },
+      { "value": "4", "label": "moteurs IA couverts" },
       { "value": "8", "label": "critères GEO analysés" },
       { "value": "2025-2026", "label": "méthodologie sourcée" },
       { "value": "30", "label": "requêtes IA (audit Pro)" },
@@ -278,7 +278,7 @@
           "title": "Test de visibilité IA",
           "desc": "Vos concurrents directs sont-ils cités par ChatGPT et Gemini sur vos requêtes clés ? Le rapport révèle votre position réelle dans les réponses IA par rapport à votre marché.",
           "checks": [
-            "Requêtes testées sur 4 moteurs IA",
+            "Test de citation réel sur ChatGPT",
             "Comparatif avec 3 concurrents",
             "Extraits de réponses réelles"
           ]
@@ -480,7 +480,7 @@
     "score": {
       "label": "Calcul du score",
       "title": "Score sur 100 = 7 heuristiques + neutralité IA",
-      "subtitle": "Les 7 premiers critères sont calculés par des règles déterministes sur le HTML. Le 8e critère (neutralité éditoriale) est noté par Claude sur 10, puis converti en bonus/malus ±5 points ajouté au total.",
+      "subtitle": "Les 7 premiers critères sont calculés par des règles déterministes sur le HTML. Le 8e critère (neutralité éditoriale) est noté par Claude sur 10, puis converti en bonus/malus de -3 à +3 points ajouté au total.",
       "ptsLabel": "pts",
       "items": [
         {
@@ -714,7 +714,7 @@
         },
         {
           "included": true,
-          "text": "Test IA (3 requêtes)"
+          "text": "Test IA (2 requêtes réelles ChatGPT)"
         },
         {
           "included": true,
@@ -747,7 +747,7 @@
           "text": "8 recommandations avec exemples de code"
         },
         {
-          "text": "Test IA (10 requêtes) — concurrents cités identifiés"
+          "text": "Test IA réel (10 requêtes ChatGPT) — concurrents cités identifiés"
         },
         {
           "text": "Guide technique par critère"
@@ -806,7 +806,7 @@
           "text": "Recommandations consolidées avec pages concernées"
         },
         {
-          "text": "Test IA (30 requêtes) — concurrents cités identifiés"
+          "text": "Test IA réel (30 requêtes ChatGPT) — concurrents cités identifiés"
         },
         {
           "text": "Patterns inter-pages détectés"
@@ -826,7 +826,7 @@
     "errorAlert": "Erreur de paiement, réessayez.",
     "modal": {
       "title": "Analyser votre page",
-      "subtitle": "Entrez l'URL de la page a analyser. Votre rapport GEO sera pret en 30 secondes apres paiement. Vous le recevrez par email.",
+      "subtitle": "Entrez l'URL de la page a analyser. Votre rapport GEO sera pret en environ 1 minute apres paiement. Vous le recevrez par email.",
       "urlPlaceholder": "https://www.votre-site.fr",
       "submitButton": "Payer 29 EUR et recevoir mon rapport",
       "cancelButton": "Annuler",
@@ -880,7 +880,7 @@
         },
         {
           "title": "Honnêteté",
-          "desc": "Pas de promesses irréalistes. Pas de score garanti. Nous mesurons précisément la visibilité IA actuelle de votre site et vous donnons des recommandations actionnables."
+          "desc": "Pas de promesses irréalistes. Pas de score garanti. Si pour une raison technique nous ne pouvons pas livrer votre rapport, vous êtes remboursé automatiquement et instantanément. C'est notre engagement."
         },
         {
           "title": "Accessibilité",
@@ -1712,7 +1712,7 @@
         },
         {
           "title": "Test IA sur 30 requêtes",
-          "desc": "Nous interrogeons ChatGPT, Gemini et Perplexity sur 30 requêtes liées à votre activité. Vous découvrez quels concurrents sont cités à votre place — et sur quels sujets."
+          "desc": "Nous envoyons 30 vraies requêtes à ChatGPT liées à votre activité. Vous découvrez quels concurrents sont cités à votre place — et sur quels sujets."
         },
         {
           "title": "Détection de patterns transverses",
@@ -1851,7 +1851,7 @@
         },
         {
           "title": "Test IA sur 10 requêtes",
-          "desc": "Nous interrogeons ChatGPT, Gemini et Perplexity sur votre thématique. Vous découvrez quels concurrents sont cités — et pourquoi ils le sont à votre place."
+          "desc": "Nous envoyons 10 vraies requêtes à ChatGPT sur votre thématique. Vous découvrez quels concurrents sont cités — et pourquoi ils le sont à votre place."
         },
         {
           "title": "Recommandations concrètes avec code",
