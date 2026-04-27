@@ -1546,11 +1546,16 @@
       "noCompetitors": "Aucun concurrent identifié",
       "lockedTitle": "Vous voulez voir d'autres analyses de requête ?",
       "lockedDesc": "Le rapport complet révèle + de résultats de votre test de visibilité IA — avec les concurrents cités.",
-      "lockedCta": "Débloquer le rapport →"
+      "lockedCta": "Voir nos offres →"
     },
     "checkout": {
       "title": "Rapport GEO complet",
       "subtext": "29 € · Accès immédiat · Paiement unique"
+    },
+    "doubleCta": {
+      "intro": "Pour aller plus loin",
+      "onepage": "Rapport 1 page — 29 €",
+      "pro": "Audit complet — 99 €"
     },
     "fullSite": {
       "title": "Et si vous analysiez tout votre site ?",

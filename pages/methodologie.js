@@ -81,6 +81,57 @@ export default function Methodologie() {
         </div>
       </div>
 
+      {/* COMPARATIF 3 OFFRES */}
+      <div style={{ maxWidth: 780, margin: '0 auto', padding: '48px 24px' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.compare.label')}</div>
+        <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#1A1916', textAlign: 'center', letterSpacing: -0.8, marginBottom: 10, lineHeight: 1.15 }}>
+          {t('methodology.compare.title')}
+        </h2>
+        <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, textAlign: 'center', maxWidth: 540, margin: '0 auto 32px' }}>
+          {t('methodology.compare.subtitle')}
+        </p>
+        <div className="methodo-compare-desktop" style={{ background: '#fff', borderRadius: 16, border: '1px solid #E5E2DC', overflow: 'hidden', boxShadow: '0 2px 12px rgba(26,25,22,0.04)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', background: '#1A1916' }}>
+            {t('methodology.compare.headers').map((h, i) => (
+              <div key={i} style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: 10, color: i === 0 ? 'transparent' : 'rgba(247,245,242,0.6)', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, textAlign: i > 0 ? 'center' : 'left' }}>{h}</div>
+            ))}
+          </div>
+          {t('methodology.compare.rows').map((row, i) => (
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', borderBottom: i < t('methodology.compare.rows').length - 1 ? '1px solid #F0EDE8' : 'none', background: i % 2 === 0 ? '#fff' : '#FAFAF9' }}>
+              {row.map((cell, j) => (
+                <div key={j} style={{ padding: '12px 16px', fontSize: 13, fontFamily: 'system-ui', color: j === 0 ? '#1A1916' : '#3A3835', fontWeight: j === 0 ? 600 : 400, textAlign: j > 0 ? 'center' : 'left', display: 'flex', alignItems: 'center', justifyContent: j > 0 ? 'center' : 'flex-start' }}>
+                  {cell === true ? <span style={{ color: '#10A37F', fontSize: 14, fontWeight: 700 }}>✓</span> : cell === false ? <span style={{ color: '#D0CBC5' }}>—</span> : cell}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div className="methodo-compare-mobile" style={{ display: 'none' }}>
+          {[1, 2, 3].map(colIdx => {
+            const headers = t('methodology.compare.headers');
+            const rows = t('methodology.compare.rows');
+            return (
+              <div key={colIdx} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 18px', marginBottom: 12 }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>{headers[colIdx]}</div>
+                {rows.map((row, i) => (
+                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: i < rows.length - 1 ? '1px solid #F0EDE8' : 'none' }}>
+                    <span style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui' }}>{row[0]}</span>
+                    <span style={{ fontSize: 12, color: '#1A1916', fontFamily: 'system-ui', fontWeight: 500 }}>
+                      {row[colIdx] === true ? <span style={{ color: '#10A37F' }}>✓</span> : row[colIdx] === false ? <span style={{ color: '#D0CBC5' }}>—</span> : row[colIdx]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: 24 }}>
+          <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui' }}>
+            {t('methodology.compare.cta')}
+          </Link>
+        </div>
+      </div>
+
       {/* SCORE */}
       <div style={{ background: '#1A1916', padding: '60px 24px', marginBottom: 80 }}>
         <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
@@ -116,7 +167,7 @@ export default function Methodologie() {
               <div style={{ padding: '18px 24px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 12 }}>
                 <span style={{ fontSize: 20 }}>{c.icon}</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui' }}>{c.name}</div>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui' }}>{c.name}</div>
                 </div>
                 <div style={{ fontFamily: 'monospace', fontSize: 11, color: c.color, background: c.color + '14', border: `1px solid ${c.color}30`, padding: '3px 10px', borderRadius: 20, flexShrink: 0 }}>
                   {c.weight}
@@ -196,62 +247,6 @@ export default function Methodologie() {
           Seer Interactive (2025)
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
           Edelman (2026)
-        </div>
-      </div>
-
-      {/* COMPARATIF 3 OFFRES */}
-      <div style={{ maxWidth: 780, margin: '0 auto', padding: '64px 24px 48px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.compare.label')}</div>
-        <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#1A1916', textAlign: 'center', letterSpacing: -0.8, marginBottom: 10, lineHeight: 1.15 }}>
-          {t('methodology.compare.title')}
-        </h2>
-        <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, textAlign: 'center', maxWidth: 540, margin: '0 auto 32px' }}>
-          {t('methodology.compare.subtitle')}
-        </p>
-
-        {/* Desktop table */}
-        <div className="methodo-compare-desktop" style={{ background: '#fff', borderRadius: 16, border: '1px solid #E5E2DC', overflow: 'hidden', boxShadow: '0 2px 12px rgba(26,25,22,0.04)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', background: '#1A1916' }}>
-            {t('methodology.compare.headers').map((h, i) => (
-              <div key={i} style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: 10, color: i === 0 ? 'transparent' : 'rgba(247,245,242,0.6)', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, textAlign: i > 0 ? 'center' : 'left' }}>{h}</div>
-            ))}
-          </div>
-          {t('methodology.compare.rows').map((row, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', borderBottom: i < t('methodology.compare.rows').length - 1 ? '1px solid #F0EDE8' : 'none', background: i % 2 === 0 ? '#fff' : '#FAFAF9' }}>
-              {row.map((cell, j) => (
-                <div key={j} style={{ padding: '12px 16px', fontSize: 13, fontFamily: 'system-ui', color: j === 0 ? '#1A1916' : '#3A3835', fontWeight: j === 0 ? 600 : 400, textAlign: j > 0 ? 'center' : 'left', display: 'flex', alignItems: 'center', justifyContent: j > 0 ? 'center' : 'flex-start' }}>
-                  {cell === true ? <span style={{ color: '#10A37F', fontSize: 14, fontWeight: 700 }}>✓</span> : cell === false ? <span style={{ color: '#D0CBC5' }}>—</span> : cell}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile cards */}
-        <div className="methodo-compare-mobile" style={{ display: 'none' }}>
-          {[1, 2, 3].map(colIdx => {
-            const headers = t('methodology.compare.headers');
-            const rows = t('methodology.compare.rows');
-            return (
-              <div key={colIdx} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 18px', marginBottom: 12 }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>{headers[colIdx]}</div>
-                {rows.map((row, i) => (
-                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: i < rows.length - 1 ? '1px solid #F0EDE8' : 'none' }}>
-                    <span style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui' }}>{row[0]}</span>
-                    <span style={{ fontSize: 12, color: '#1A1916', fontFamily: 'system-ui', fontWeight: 500 }}>
-                      {row[colIdx] === true ? <span style={{ color: '#10A37F' }}>✓</span> : row[colIdx] === false ? <span style={{ color: '#D0CBC5' }}>—</span> : row[colIdx]}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            );
-          })}
-        </div>
-
-        <div style={{ textAlign: 'center', marginTop: 24 }}>
-          <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui' }}>
-            {t('methodology.compare.cta')}
-          </Link>
         </div>
       </div>
 

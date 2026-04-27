@@ -452,74 +452,70 @@ export default function Results() {
             </div>
           </div>
 
-          {!isPaid && (
-            <div className="promo-block" style={{ display: 'flex', alignItems: 'center', gap: 28, background: 'linear-gradient(to right, #fff, rgba(217,119,87,0.06))', border: '1px solid rgba(217,119,87,0.15)', borderRadius: 16, padding: '28px 32px', marginBottom: 20 }}>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6 }}>{t('results.promo.title')}</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.6, marginBottom: 14 }}>{t('results.promo.desc').replace('{count}', recommendations.length)}</div>
-                <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                  <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#10A37F' }}>{t('results.promo.feat1')}</span>
-                  <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#4285F4' }}>{t('results.promo.feat2')}</span>
-                  <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#D97757' }}>{t('results.promo.feat3')}</span>
-                </div>
-                <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener" style={{ fontSize: 11, color: '#D97757', textDecoration: 'underline', fontFamily: 'system-ui', marginTop: 8, display: 'inline-block' }}>{t('results.promo.exampleLink')}</a>
-              </div>
-              <div style={{ flexShrink: 0, textAlign: 'center' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#D97757', fontWeight: 'bold', lineHeight: 1 }}>{t('results.promo.price')}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1 }}>{t('results.promo.priceNote')}</div>
-                <button onClick={handleCheckout} disabled={checkoutLoading} style={{ display: 'block', background: '#D97757', color: '#fff', border: 'none', borderRadius: 10, padding: '12px 28px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', cursor: checkoutLoading ? 'wait' : 'pointer', marginTop: 10, whiteSpace: 'nowrap', opacity: checkoutLoading ? 0.7 : 1 }}>
-                  {checkoutLoading ? t('results.promo.ctaLoading') : t('results.promo.cta')}
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, position: 'relative' }} ref={shareRef}>
-            <button onClick={() => setShowShare(v => !v)} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'transparent', border: '1px solid #E5E2DC', borderRadius: 8, padding: '10px 20px', color: '#8A8680', fontSize: 13, fontFamily: 'system-ui', cursor: 'pointer', transition: 'border-color 0.15s, color 0.15s' }} onMouseEnter={e => { e.currentTarget.style.borderColor = '#1A1916'; e.currentTarget.style.color = '#1A1916'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E2DC'; e.currentTarget.style.color = '#8A8680'; }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-              {t('results.share.button')}
-            </button>
-            {showShare && (
-              <div style={{ position: 'absolute', top: 'calc(100% + 8px)', left: '50%', transform: 'translateX(-50%)', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.08)', padding: 8, zIndex: 50, minWidth: 220 }}>
-                {[
-                  { label: 'LinkedIn', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>, action: () => { window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://www.detekia.fr&summary=${encodeURIComponent(shareText)}`, '_blank'); setShowShare(false); } },
-                  { label: 'Twitter / X', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>, action: () => { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`, '_blank'); setShowShare(false); } },
-                  { label: copied ? t('results.share.copied') : t('results.share.copyLink'), icon: copied ? null : <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>, action: () => { navigator.clipboard.writeText(shareText); setCopied(true); setTimeout(() => { setCopied(false); setShowShare(false); }, 2000); } },
-                ].map(({ label, icon, action }) => (
-                  <button key={label} onClick={action} style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '10px 16px', background: 'transparent', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontFamily: 'system-ui', color: '#3A3835', textAlign: 'left', transition: 'background 0.1s' }} onMouseEnter={e => e.currentTarget.style.background = '#F7F5F2'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-                    {icon && <span style={{ color: '#8A8680', flexShrink: 0 }}>{icon}</span>}{label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* ── 1. ANALYSE DÉTAILLÉE (ci-dessus, inchangée) ── */}
 
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{t('results.detailedAnalysis')}</div>
           {groups.map(group => (
             <GroupAccordion key={group.id} group={group} getCriteriaForGroup={getCriteriaForGroup} getLevelColor={getLevelColor} isOpen={openGroup === group.id} onMouseEnter={() => handleGroupEnter(group.id)} onMouseLeave={handleGroupLeave} t={t} />
           ))}
 
-          <div style={{ margin: '24px 0', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '24px 28px' }}>
-            {captureSent ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontSize: 18 }}>✓</span>
-                <span style={{ fontFamily: 'system-ui', fontSize: 14, color: '#10A37F', fontWeight: 500 }}>{t('results.capture.sent')}</span>
+          {/* ── 2. DOUBLE CTA 29€ + 99€ ──────────────── */}
+          {!isPaid && (
+            <div style={{ marginTop: 28, marginBottom: 24 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('results.doubleCta.intro')}</div>
+              <div className="results-double-cta" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+                <Link href="/one-page" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)', textAlign: 'center' }}>
+                  {t('results.doubleCta.onepage')}
+                </Link>
+                <Link href="/pro" className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', border: '1px solid rgba(247,245,242,0.15)', boxShadow: '0 4px 16px rgba(26,25,22,0.2)', textAlign: 'center' }}>
+                  {t('results.doubleCta.pro')}
+                </Link>
               </div>
-            ) : (
-              <>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 4 }}>{t('results.capture.title')}</div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', marginBottom: 16 }}>{t('results.capture.subtitle')}</div>
-                <form onSubmit={handleCaptureEmail} className="capture-form" style={{ display: 'flex', gap: 8 }}>
-                  <input type="email" value={captureEmail} onChange={e => setCaptureEmail(e.target.value)} placeholder={t('results.capture.placeholder')} required style={{ flex: 1, border: '1px solid #E5E2DC', borderRadius: 8, padding: '12px 16px', fontSize: 14, fontFamily: 'system-ui', color: '#1A1916', background: '#fff', outline: 'none' }} />
-                  <button type="submit" disabled={captureLoading} style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', borderRadius: 8, padding: '12px 24px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, cursor: captureLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', opacity: captureLoading ? 0.7 : 1 }}>{captureLoading ? '…' : t('results.capture.submit')}</button>
-                </form>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1, marginTop: 10 }}>{t('results.capture.noSpam')}</div>
-              </>
-            )}
+            </div>
+          )}
+
+          {/* ── 3. EMAIL + PARTAGER (même ligne) ─────── */}
+          <div className="results-capture-share" style={{ display: 'flex', gap: 12, margin: '0 0 24px', alignItems: 'stretch' }}>
+            <div style={{ flex: 1, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 22px' }}>
+              {captureSent ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, height: '100%' }}>
+                  <span style={{ fontSize: 18 }}>✓</span>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 14, color: '#10A37F', fontWeight: 500 }}>{t('results.capture.sent')}</span>
+                </div>
+              ) : (
+                <>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 10 }}>{t('results.capture.title')}</div>
+                  <form onSubmit={handleCaptureEmail} className="capture-form" style={{ display: 'flex', gap: 8 }}>
+                    <input type="email" value={captureEmail} onChange={e => setCaptureEmail(e.target.value)} placeholder={t('results.capture.placeholder')} required style={{ flex: 1, border: '1px solid #E5E2DC', borderRadius: 8, padding: '10px 14px', fontSize: 13, fontFamily: 'system-ui', color: '#1A1916', background: '#F7F5F2', outline: 'none', minWidth: 0 }} />
+                    <button type="submit" disabled={captureLoading} style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', borderRadius: 8, padding: '10px 18px', fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, cursor: captureLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', opacity: captureLoading ? 0.7 : 1 }}>{captureLoading ? '…' : t('results.capture.submit')}</button>
+                  </form>
+                </>
+              )}
+            </div>
+            <div style={{ position: 'relative', flexShrink: 0, display: 'flex', alignItems: 'center' }} ref={shareRef}>
+              <button onClick={() => setShowShare(v => !v)} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 20px', color: '#8A8680', fontSize: 13, fontFamily: 'system-ui', cursor: 'pointer', height: '100%', transition: 'border-color 0.15s' }} onMouseEnter={e => e.currentTarget.style.borderColor = '#1A1916'} onMouseLeave={e => e.currentTarget.style.borderColor = '#E5E2DC'}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                {t('results.share.button')}
+              </button>
+              {showShare && (
+                <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.08)', padding: 8, zIndex: 50, minWidth: 220 }}>
+                  {[
+                    { label: 'LinkedIn', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>, action: () => { window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://www.detekia.fr&summary=${encodeURIComponent(shareText)}`, '_blank'); setShowShare(false); } },
+                    { label: 'Twitter / X', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>, action: () => { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`, '_blank'); setShowShare(false); } },
+                    { label: copied ? t('results.share.copied') : t('results.share.copyLink'), icon: copied ? null : <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>, action: () => { navigator.clipboard.writeText(shareText); setCopied(true); setTimeout(() => { setCopied(false); setShowShare(false); }, 2000); } },
+                  ].map(({ label, icon, action }) => (
+                    <button key={label} onClick={action} style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '10px 16px', background: 'transparent', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontFamily: 'system-ui', color: '#3A3835', textAlign: 'left', transition: 'background 0.1s' }} onMouseEnter={e => e.currentTarget.style.background = '#F7F5F2'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                      {icon && <span style={{ color: '#8A8680', flexShrink: 0 }}>{icon}</span>}{label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
+          {/* ── 4. APERÇU PLAN D'ACTION (recos) ──────── */}
           {recommendations.length > 0 && (
-            <div style={{ marginTop: 32 }}>
+            <div style={{ marginTop: 16 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
                 <div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.recos.label')}</div>
@@ -551,11 +547,10 @@ export default function Results() {
                   </div>
                 </div>
               )}
-
             </div>
           )}
 
-          {/* ── CITATION TEST ─────────────────────────── */}
+          {/* ── 5. CITATION TEST ─────────────────────── */}
           {result?.citationTest?.tests && result.citationTest.tests.length > 0 && (() => {
             const tests = result.citationTest.tests;
             const scored = tests.map((ct, i) => {
@@ -606,30 +601,14 @@ export default function Results() {
                     <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', lineHeight: 1.6, marginBottom: 14 }}>
                       {t('results.citation.lockedDesc')}
                     </div>
-                    <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 24px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', cursor: checkoutLoading ? 'wait' : 'pointer' }}>
+                    <Link href="/pricing" style={{ display: 'inline-block', background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 24px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', textDecoration: 'none' }}>
                       {t('results.citation.lockedCta')}
-                    </button>
+                    </Link>
                   </div>
                 )}
               </div>
             );
           })()}
-
-          {/* ── BLOC 99€ — AUDIT COMPLET ──────────────── */}
-          {!isPaid && (
-            <div style={{ marginTop: 32, background: '#fff', border: '1.5px solid #E5E2DC', borderRadius: 16, padding: '28px 28px', display: 'flex', alignItems: 'center', gap: 24 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(16,163,127,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2" strokeLinecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', marginBottom: 6 }}>{t('results.fullSite.title')}</div>
-                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 12 }}>{t('results.fullSite.desc')}</div>
-                <Link href="/pro" className="btn-interactive" style={{ display: 'inline-block', fontSize: 13, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none', background: 'rgba(16,163,127,0.06)', padding: '8px 18px', borderRadius: 8, border: '1px solid rgba(16,163,127,0.2)' }}>
-                  {t('results.fullSite.cta')}
-                </Link>
-              </div>
-            </div>
-          )}
         </div>
       )}
 
@@ -652,18 +631,6 @@ export default function Results() {
         </div>
       )}
 
-      {/* Pro teaser — discret, en bas de page */}
-      {result && (
-        <div style={{ textAlign: 'center', padding: '60px 24px 32px', maxWidth: 600, margin: '0 auto' }}>
-          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 6 }}>
-            {t('results.proTeaser')}{' '}
-            <Link href="/pro" style={{ color: '#1A1916', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
-              {t('results.proTeaserLink')}
-            </Link>
-          </p>
-        </div>
-      )}
-
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
@@ -677,6 +644,9 @@ export default function Results() {
           .reco-preview-cta { flex-direction: column !important; }
           .reco-preview-cta > div:last-child { align-items: flex-start !important; width: 100% !important; }
           .reco-preview-cta > div:last-child button { width: 100% !important; }
+          .results-double-cta { flex-direction: column !important; }
+          .results-double-cta a { width: 100% !important; }
+          .results-capture-share { flex-direction: column !important; }
         }
       `}</style>
     </div>

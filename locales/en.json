@@ -1539,11 +1539,16 @@
       "noCompetitors": "No competitors identified",
       "lockedTitle": "Want to see more query analyses?",
       "lockedDesc": "The full report reveals more results from your AI visibility test — with competitors cited.",
-      "lockedCta": "Unlock the report →"
+      "lockedCta": "See our plans →"
     },
     "checkout": {
       "title": "Full GEO Report",
       "subtext": "29 € · Instant access · One-time payment"
+    },
+    "doubleCta": {
+      "intro": "Go further",
+      "onepage": "1-page report — €29",
+      "pro": "Complete audit — €99"
     },
     "fullSite": {
       "title": "What about your entire site?",
