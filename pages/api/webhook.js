@@ -61,7 +61,27 @@ export default async function handler(req, res) {
             rootUrl: session.metadata.url, locale: session.metadata.locale || 'fr',
             customerEmail: email, queuedAt: new Date().toISOString(), urls: result.urls,
           }, { ex: JOB_TTL });
-          console.log(`🚀 Pro audit triggered for ${session.metadata.url} — job ${result.siteJobId}`);
+          console.log(`🚀 Pro audit triggered for ${session.metadata.url} — job ${result.siteJobId}, pages: ${result.queuedCount}`);
+
+          // SAFEGUARD: alert if page count is critically low
+          if (result.queuedCount < 5) {
+            const { Resend } = require('resend');
+            const alertResend = new Resend(process.env.RESEND_API_KEY);
+            await alertResend.emails.send({
+              from: 'Detekia <hello@detekia.fr>',
+              to: 'guillaume@beeleven.fr',
+              subject: `⚠️ ALERTE Pro audit dégradé — ${result.queuedCount} pages seulement — ${session.metadata.url}`,
+              html: `<div style="font-family:system-ui;max-width:480px;padding:24px;">
+                <h2 style="color:#D97757;">Audit Pro dégradé détecté</h2>
+                <p><strong>Site :</strong> ${session.metadata.url}</p>
+                <p><strong>Pages trouvées :</strong> ${result.queuedCount} (attendu : ~20)</p>
+                <p><strong>Email client :</strong> ${email}</p>
+                <p><strong>Job ID :</strong> ${result.siteJobId}</p>
+                <p><strong>Cause probable :</strong> Sitemap inaccessible (anti-bot) + crawler fallback bloqué</p>
+                <p style="color:#D97757;font-weight:bold;">Action requise : vérifier le rapport et potentiellement re-lancer manuellement.</p>
+              </div>`,
+            }).catch(e => console.error('Alert email failed:', e.message));
+          }
         } catch (e) {
           console.error('Pro auto-trigger failed:', e.message);
         }

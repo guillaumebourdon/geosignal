@@ -48,6 +48,28 @@ export default async function handler(req, res) {
       console.error('[pro-enqueue] Redis metadata write error:', err.message);
     }
 
+    // SAFEGUARD: alert if page count is critically low (< 5 pages for a Pro audit)
+    if (result.queuedCount < 5) {
+      console.warn(`[pro-enqueue] ⚠️ DEGRADED: only ${result.queuedCount} pages found for ${url}`);
+      try {
+        const { Resend } = require('resend');
+        const alertResend = new Resend(process.env.RESEND_API_KEY);
+        await alertResend.emails.send({
+          from: 'Detekia <hello@detekia.fr>',
+          to: 'guillaume@beeleven.fr',
+          subject: `⚠️ ALERTE Pro audit dégradé — ${result.queuedCount} pages — ${url}`,
+          html: `<div style="font-family:system-ui;padding:24px;">
+            <h2 style="color:#D97757;">Audit Pro dégradé</h2>
+            <p><strong>Site :</strong> ${url}</p>
+            <p><strong>Pages trouvées :</strong> ${result.queuedCount} (attendu : ~20)</p>
+            <p><strong>Email client :</strong> ${customerEmail}</p>
+            <p><strong>Job ID :</strong> ${result.siteJobId}</p>
+            <p style="color:#D97757;font-weight:bold;">Sitemap probablement inaccessible (anti-bot). Vérifier et re-lancer si nécessaire.</p>
+          </div>`,
+        });
+      } catch (_) {}
+    }
+
     return res.status(200).json({ success: true, ...result });
   } catch (err) {
     console.error('[pro-enqueue] Error:', err.message);
