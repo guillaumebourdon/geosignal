@@ -159,18 +159,14 @@
       "unlock": "Débloquer →"
     },
     "stats": [
-      {
-        "value": "—",
-        "label": "audits réalisés"
-      },
-      {
-        "value": "4",
-        "label": "moteurs IA testés"
-      },
-      {
-        "value": "Extractibilité",
-        "label": "critère le plus bloquant"
-      }
+      { "value": "—", "label": "audits réalisés", "dynamic": true },
+      { "value": "4", "label": "moteurs IA testés" },
+      { "value": "8", "label": "critères GEO analysés" },
+      { "value": "2025-2026", "label": "méthodologie sourcée" },
+      { "value": "30", "label": "requêtes IA (audit Pro)" },
+      { "value": "FR + EN", "label": "disponible" },
+      { "value": "10 ans", "label": "rapport accessible en ligne" },
+      { "value": "1 min", "label": "audit one-page" }
     ],
     "comparison": {
       "label": "Pourquoi Detekia",
@@ -907,12 +903,12 @@
   "contact": {
     "seo": {
       "title": "Contact — Detekia",
-      "description": "Contactez l'équipe Detekia. Question sur un rapport, bug, demande entreprise ou partenariat — on vous répond sous 24h."
+      "description": "Contactez l'équipe Detekia. Question sur un rapport, remarque, demande entreprise ou partenariat — on vous répond sous 24h."
     },
     "hero": {
       "badge": "On vous répond sous 24h",
       "title": "Une question ?",
-      "subtitle": "Une suggestion, un bug, une demande de partenariat — on lit tous les messages."
+      "subtitle": "Une suggestion, une remarque, une demande de partenariat — on lit tous les messages."
     },
     "success": {
       "title": "Message envoyé !",
@@ -938,7 +934,7 @@
         },
         {
           "icon": "🐛",
-          "title": "Bug ou problème technique",
+          "title": "Remarque ou problème technique",
           "desc": "Erreur d'analyse, rapport non reçu, problème de paiement."
         },
         {

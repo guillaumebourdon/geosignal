@@ -93,7 +93,7 @@ export default function Methodologie() {
           </p>
           <div className="methodo-score-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, textAlign: 'center' }}>
             {t('methodology.score.items').map((item) => (
-              <div key={item.name} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '12px 8px' }}>
+              <div key={item.name} className="card-interactive" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '12px 8px' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#D97757', letterSpacing: -1 }}>{item.pts}</div>
                 <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', marginBottom: 2 }}>{t('methodology.score.ptsLabel')}</div>
                 <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.4 }}>{item.name}</div>

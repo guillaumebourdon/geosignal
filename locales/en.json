@@ -159,18 +159,14 @@
       "unlock": "Unlock →"
     },
     "stats": [
-      {
-        "value": "—",
-        "label": "audits completed"
-      },
-      {
-        "value": "4",
-        "label": "AI engines tested"
-      },
-      {
-        "value": "Extractability",
-        "label": "most common bottleneck"
-      }
+      { "value": "—", "label": "audits completed", "dynamic": true },
+      { "value": "4", "label": "AI engines tested" },
+      { "value": "8", "label": "GEO criteria analyzed" },
+      { "value": "2025-2026", "label": "sourced methodology" },
+      { "value": "30", "label": "AI queries (Pro audit)" },
+      { "value": "FR + EN", "label": "available" },
+      { "value": "10 years", "label": "report accessible online" },
+      { "value": "1 min", "label": "one-page audit" }
     ],
     "comparison": {
       "label": "Why Detekia",
@@ -900,12 +896,12 @@
   "contact": {
     "seo": {
       "title": "Contact — Detekia",
-      "description": "Contact the Detekia team. Questions about a report, bugs, enterprise requests or partnerships — we respond within 24 hours."
+      "description": "Contact the Detekia team. Questions about a report, feedback, enterprise requests or partnerships — we respond within 24 hours."
     },
     "hero": {
       "badge": "We respond within 24h",
       "title": "Got a question?",
-      "subtitle": "A suggestion, a bug, a partnership request — we read every message."
+      "subtitle": "A suggestion, feedback, a partnership request — we read every message."
     },
     "success": {
       "title": "Message sent!",
@@ -931,7 +927,7 @@
         },
         {
           "icon": "🐛",
-          "title": "Bug or technical issue",
+          "title": "Feedback or technical issue",
           "desc": "Analysis error, report not received, payment issue."
         },
         {

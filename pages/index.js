@@ -366,13 +366,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── MICRO BANDEAU PREUVE D'USAGE — MOD 9 ────────────── */}
-      <div style={{ background: '#fff', borderTop: '1px solid rgba(26,25,22,0.07)', borderBottom: '1px solid rgba(26,25,22,0.07)', padding: '12px 48px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', gap: 48, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
-          {t('homepage.stats').map((stat, idx) => (
-            <div key={stat.label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{idx === 0 ? (auditCount ? auditCount.toLocaleString(locale === 'en' ? 'en-US' : 'fr-FR') : '…') : stat.value}</span>
-              <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase' }}>{stat.label}</span>
+      {/* ── BANDEAU STATS DÉFILANT ────────────────────────────── */}
+      <div className="stats-marquee-wrap" style={{ background: '#fff', borderTop: '1px solid rgba(26,25,22,0.07)', borderBottom: '1px solid rgba(26,25,22,0.07)', overflow: 'hidden', position: 'relative' }}>
+        <div className="stats-marquee">
+          {[0, 1].map(copy => (
+            <div key={copy} className="stats-marquee-inner" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {t('homepage.stats').map((stat, idx) => (
+                <div key={`${copy}-${idx}`} style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                  <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{stat.dynamic ? (auditCount ? auditCount.toLocaleString(locale === 'en' ? 'en-US' : 'fr-FR') : '…') : stat.value}</span>
+                  <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{stat.label}</span>
+                  <span style={{ color: '#E5E2DC', fontSize: 8, margin: '0 20px' }}>●</span>
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -688,6 +693,13 @@ export default function Home() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: #8A8680; }
         @keyframes ai-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .stats-marquee-wrap { mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%); }
+        .stats-marquee { display: flex; animation: marqueeScroll 40s linear infinite; padding: 13px 0; }
+        .stats-marquee:hover { animation-play-state: paused; }
+        .stats-marquee-inner { display: flex; align-items: center; flex-shrink: 0; }
+        @media (prefers-reduced-motion: reduce) { .stats-marquee { animation: none !important; flex-wrap: wrap; justify-content: center; gap: 8px; } }
+        @media (max-width: 640px) { .stats-marquee { animation-duration: 30s; } }
         #ai-cursor { animation: ai-blink 1.06s step-end infinite; font-weight: 300; }
         .testimonial-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.35); transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
         .testimonial-quote strong { color: #F7F5F2; font-weight: 700; }

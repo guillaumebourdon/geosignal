@@ -161,7 +161,7 @@ export default function Pricing() {
         </div>
 
         {/* RAPPORT */}
-        <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)', display: 'flex', flexDirection: 'column' }}>
+        <div className="card-interactive" style={{ background: '#1A1916', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.report.label')}</div>
           <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.report.price')}</span></div>
           <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{t('pricing.report.paymentInfo')}</div>
@@ -186,7 +186,7 @@ export default function Pricing() {
         </div>
 
         {/* PRO */}
-        <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)', display: 'flex', flexDirection: 'column' }}>
+        <div className="card-interactive" style={{ background: '#1A1916', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.proCard.label')}</div>
           <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.proCard.price')}</span></div>
           <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{t('pricing.proCard.paymentInfo')}</div>
