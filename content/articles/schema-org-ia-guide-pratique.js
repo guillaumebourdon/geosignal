@@ -52,7 +52,7 @@ export default function SchemaOrgIaGuidePratique() {
 
       <h2>Les 5 schemas prioritaires pour le GEO</h2>
 
-      <p>Vous n'avez pas besoin d'implémenter les 806 types de Schema.org. Pour le GEO, 5 schemas couvrent 90 % de l'impact. Voici lesquels, dans l'ordre de priorité.</p>
+      <p>Vous n'avez pas besoin d'implémenter les 806 types de Schema.org. Pour le GEO, 5 schemas couvrent 90 % de l'impact. Voici lesquels, dans l'ordre de priorité. Pour comprendre le poids de chaque critère dans le score GEO, consultez <Link href="/blog/8-criteres-geo-methodologie-detekia" style={{ color: '#D97757', textDecoration: 'none' }}>les 8 critères GEO détaillés</Link>.</p>
 
       <h3>1. Organization — votre identité</h3>
 
@@ -194,6 +194,8 @@ export default function SchemaOrgIaGuidePratique() {
   }
 }`}</code></pre>
 
+      <ArrowLink href="/blog/faq-schema-faqpage-combo-ia">Pour aller plus loin sur FAQPage, consultez FAQ et Schema FAQPage : le combo gagnant GEO.</ArrowLink>
+
       <h3>5. BreadcrumbList — votre architecture</h3>
 
       <p>Le fil d'Ariane balisé aide les IA à comprendre la hiérarchie de votre site : quelle page est parente de quelle autre, comment le contenu s'organise. C'est un signal de structure qui renforce la crawlabilité.</p>
@@ -252,6 +254,8 @@ export default function SchemaOrgIaGuidePratique() {
         <li><code>SoftwareApplication</code> — nom, système d'exploitation, catégorie, prix. Les IA citent ces infos dans les comparatifs logiciels.</li>
         <li><code>HowTo</code> — étapes d'utilisation de votre outil. Format très extractible par les IA.</li>
       </ul>
+
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Avant d'implémenter les schemas, vérifiez que votre site est bien crawlable par les bots IA : llms.txt, robots.txt et crawlabilité IA.</ArrowLink>
 
       <h2>Implémentation technique</h2>
 

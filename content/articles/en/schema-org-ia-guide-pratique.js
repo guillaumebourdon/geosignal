@@ -52,7 +52,7 @@ export default function SchemaOrgIaGuidePratique() {
 
       <h2>The 5 priority schemas for GEO</h2>
 
-      <p>You do not need to implement all 806 Schema.org types. For GEO, 5 schemas cover 90% of the impact. Here they are, in priority order.</p>
+      <p>You do not need to implement all 806 Schema.org types. For GEO, 5 schemas cover 90% of the impact. Here they are, in priority order. To understand how each criterion weighs in the GEO score, see <Link href="/blog/8-criteres-geo-methodologie-detekia" style={{ color: '#D97757', textDecoration: 'none' }}>the 8 GEO criteria explained</Link>.</p>
 
       <h3>1. Organization — your identity</h3>
 
@@ -195,6 +195,8 @@ export default function SchemaOrgIaGuidePratique() {
   }
 }`}</code></pre>
 
+      <ArrowLink href="/blog/faq-schema-faqpage-combo-ia">For more on FAQPage, see FAQ and FAQPage Schema: the winning GEO combo.</ArrowLink>
+
       <h3>5. BreadcrumbList — your architecture</h3>
 
       <p>Breadcrumb markup helps AI engines understand your site's hierarchy: which page is the parent of which, how content is organized. It is a structural signal that reinforces crawlability.</p>
@@ -253,6 +255,8 @@ export default function SchemaOrgIaGuidePratique() {
         <li><code>SoftwareApplication</code> — name, operating system, category, price. AI engines cite this info in software comparisons.</li>
         <li><code>HowTo</code> — steps for using your tool. A format that is highly extractable by AI engines.</li>
       </ul>
+
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Before implementing schemas, make sure your site is crawlable by AI bots: llms.txt, robots.txt and AI crawlability.</ArrowLink>
 
       <h2>Technical implementation</h2>
 
