@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Link from 'next/link';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
@@ -163,6 +164,12 @@ export default function Pro() {
         "@context": "https://schema.org", "@type": "Product", "name": "Detekia — Audit GEO complet",
         "offers": { "@type": "Offer", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro" }
       }} />
+      <Head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          '@context': 'https://schema.org', '@type': 'FAQPage',
+          mainEntity: p('faq.items').map(faq => ({ '@type': 'Question', name: faq.q, acceptedAnswer: { '@type': 'Answer', text: faq.a } })),
+        }) }} />
+      </Head>
       <Header ctaLabel={t('nav.ctaAnalyze')} />
 
       {/* ═══ 1. HERO (inchangé) ═══ */}

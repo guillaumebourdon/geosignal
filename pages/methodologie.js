@@ -32,6 +32,17 @@ export default function Methodologie() {
       <SEO
         title={t('methodology.seo.title')}
         description={t('methodology.seo.description')}
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'TechArticle',
+          headline: t('methodology.seo.title'),
+          description: t('methodology.seo.description'),
+          author: { '@type': 'Organization', name: 'Detekia', url: 'https://detekia.fr' },
+          publisher: { '@type': 'Organization', name: 'Detekia' },
+          datePublished: '2026-03-14',
+          dateModified: '2026-04-27',
+          inLanguage: locale,
+        }}
       />
 
       <Header ctaLabel={t('nav.ctaAnalyze')} />

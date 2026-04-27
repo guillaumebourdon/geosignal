@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
+import Head from 'next/head';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
@@ -178,6 +179,17 @@ export default function Pricing() {
           { "@type": "Offer", "name": "Audit Pro Multi-Pages", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pricing" }
         ]
       }} />
+      <Head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(faq => ({
+            '@type': 'Question',
+            name: faq.q,
+            acceptedAnswer: { '@type': 'Answer', text: faq.a },
+          })),
+        }) }} />
+      </Head>
 
       <Header ctaLabel={t('nav.ctaAnalyze')} />
 
