@@ -69,7 +69,7 @@ export default async function handler(req, res) {
   <!-- Message -->
   <div style="background:#fff;border:1px solid #E5E2DC;border-radius:12px;padding:28px;margin-bottom:24px;">
     <div style="font-family:Georgia,serif;font-size:18px;color:#1A1916;margin-bottom:12px;">Votre analyse est prête</div>
-    <div style="font-size:13px;color:#8A8680;line-height:1.7;margin-bottom:20px;">
+    <div style="font-size:13px;color:#6B6762;line-height:1.7;margin-bottom:20px;">
       Votre score GEO de <strong style="color:#1A1916;">${score}/100</strong> pour <strong style="color:#1A1916;">${siteLabel}</strong> indique ${score >= 70 ? 'une bonne visibilité IA — quelques optimisations peuvent encore l\'améliorer.' : score >= 45 ? 'une visibilité IA à améliorer. Des actions ciblées peuvent significativement progresser votre score.' : 'une visibilité IA insuffisante. Les recommandations du rapport complet vous permettront de corriger les points bloquants.'}
     </div>
     <a href="${resultsLink}" style="display:block;text-align:center;background:#1A1916;color:#F7F5F2;padding:14px 24px;border-radius:10px;font-family:system-ui,sans-serif;font-size:14px;font-weight:600;text-decoration:none;">Revoir mon analyse →</a>
@@ -78,7 +78,7 @@ export default async function handler(req, res) {
   <!-- CTA rapport complet -->
   <div style="background:#FBF0EB;border:1px solid rgba(217,119,87,0.2);border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;">
     <div style="font-family:Georgia,serif;font-size:16px;color:#1A1916;margin-bottom:6px;">Rapport complet avec toutes les recommandations</div>
-    <div style="font-size:12px;color:#8A8680;font-family:system-ui;margin-bottom:16px;">Diagnostic · méthode · exemple concret · impact attendu pour chaque critère</div>
+    <div style="font-size:12px;color:#6B6762;font-family:system-ui;margin-bottom:16px;">Diagnostic · méthode · exemple concret · impact attendu pour chaque critère</div>
     <a href="${resultsLink}" style="display:inline-block;background:#D97757;color:#fff;padding:13px 28px;border-radius:9px;font-family:system-ui,sans-serif;font-size:14px;font-weight:700;text-decoration:none;">Voir le rapport complet — 29 € →</a>
     <div style="font-family:monospace;font-size:9px;color:#C2BDB8;margin-top:10px;letter-spacing:1px;">paiement unique</div>
   </div>

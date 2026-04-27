@@ -12,7 +12,7 @@ function InternalLink({ href, children }) {
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
-      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#8A8680', marginBottom: 12 }}>{children}</p>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
       <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
         Analyser mon site gratuitement →
       </a>
@@ -23,7 +23,7 @@ function InlineCTA({ href, children }) {
 function CodeBlock({ title, children }) {
   return (
     <div style={{ margin: '24px 0' }}>
-      {title && <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' }}>{title}</div>}
+      {title && <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#6B6762', letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' }}>{title}</div>}
       <pre style={{ background: '#1A1916', color: '#F7F5F2', borderRadius: 10, padding: '20px 24px', overflow: 'auto', fontSize: 13, lineHeight: 1.6 }}><code>{children}</code></pre>
     </div>
   );
@@ -44,10 +44,10 @@ function BotTable() {
       <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'system-ui', fontSize: 13 }}>
         <thead>
           <tr style={{ borderBottom: '2px solid #E5E2DC' }}>
-            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#8A8680', fontWeight: 600 }}>Bot</th>
-            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#8A8680', fontWeight: 600 }}>Propriétaire</th>
-            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#8A8680', fontWeight: 600 }}>Type</th>
-            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#8A8680', fontWeight: 600 }}>Respecte robots.txt</th>
+            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#6B6762', fontWeight: 600 }}>Bot</th>
+            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#6B6762', fontWeight: 600 }}>Propriétaire</th>
+            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#6B6762', fontWeight: 600 }}>Type</th>
+            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#6B6762', fontWeight: 600 }}>Respecte robots.txt</th>
           </tr>
         </thead>
         <tbody>
@@ -55,7 +55,7 @@ function BotTable() {
             <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
               <td style={{ padding: '10px 12px', fontWeight: 600, color: '#1A1916' }}><code>{b.name}</code></td>
               <td style={{ padding: '10px 12px', color: '#3A3835' }}>{b.owner}</td>
-              <td style={{ padding: '10px 12px', color: '#8A8680' }}>{b.type}</td>
+              <td style={{ padding: '10px 12px', color: '#6B6762' }}>{b.type}</td>
               <td style={{ padding: '10px 12px', color: b.respect === 'Oui' ? '#10A37F' : '#D97757', fontWeight: 600 }}>{b.respect}</td>
             </tr>
           ))}

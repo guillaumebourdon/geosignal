@@ -94,7 +94,7 @@ function RotatingStats({ stats, finalizingText, locale }) {
     <div style={{ textAlign: 'center', marginTop: 28, minHeight: 80 }}>
       <div style={{ opacity: visible ? 1 : 0, transition: 'opacity 300ms ease', maxWidth: 640, margin: '0 auto' }}>
         {showFinalizing ? (
-          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic' }}>{finalizingText}</p>
+          <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', fontStyle: 'italic' }}>{finalizingText}</p>
         ) : (
           <>
             <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(18px, 4vw, 22px)', lineHeight: 1.5, color: '#1A1916', letterSpacing: '-0.3px', marginBottom: 12 }}>
@@ -102,7 +102,7 @@ function RotatingStats({ stats, finalizingText, locale }) {
               {current.text}
               <span style={{ color: '#C9A84C', fontSize: 'clamp(22px, 5vw, 28px)', verticalAlign: '-3px', marginLeft: 4 }}>{closeQuote}</span>
             </p>
-            <p style={{ fontFamily: 'system-ui, sans-serif', fontSize: 13, color: '#8A8680', fontStyle: 'italic', letterSpacing: '0.5px' }}>
+            <p style={{ fontFamily: 'system-ui, sans-serif', fontSize: 13, color: '#6B6762', fontStyle: 'italic', letterSpacing: '0.5px' }}>
               — {current.source}
             </p>
           </>
@@ -120,7 +120,7 @@ function Tooltip({ info }) {
     <span style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}
       onMouseEnter={e => { const rect = e.currentTarget.getBoundingClientRect(); setPos({ top: rect.bottom + 8, left: rect.left }); setVisible(true); }}
       onMouseLeave={() => setVisible(false)}>
-      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 16, height: 16, borderRadius: '50%', background: 'rgba(138,134,128,0.12)', color: '#8A8680', fontSize: 10, fontFamily: 'system-ui', fontWeight: 600, cursor: 'help', marginLeft: 6, flexShrink: 0, border: '1px solid rgba(138,134,128,0.2)' }}>ⓘ</span>
+      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 16, height: 16, borderRadius: '50%', background: 'rgba(138,134,128,0.12)', color: '#6B6762', fontSize: 10, fontFamily: 'system-ui', fontWeight: 600, cursor: 'help', marginLeft: 6, flexShrink: 0, border: '1px solid rgba(138,134,128,0.2)' }}>ⓘ</span>
       {visible && (
         <div style={{ position: 'fixed', top: pos.top, left: Math.min(pos.left, typeof window !== 'undefined' ? window.innerWidth - 320 : 0), width: 300, zIndex: 1000, background: '#1A1916', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '16px 18px', boxShadow: '0 16px 48px rgba(0,0,0,0.24)', animation: 'tooltipIn 0.15s ease', pointerEvents: 'none' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
@@ -148,7 +148,7 @@ function GroupAccordion({ group, getCriteriaForGroup, getLevelColor, isOpen, onM
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 20px', background: isOpen ? group.colorLight : '#fff', border: `1.5px solid ${isOpen ? group.color : '#E5E2DC'}`, borderRadius: isOpen && criteria.length > 0 ? '12px 12px 0 0' : 12, cursor: 'default', transition: 'all 0.2s ease' }}>
         <div style={{ width: 8, height: 8, borderRadius: '50%', background: group.color, flexShrink: 0 }} />
         <span style={{ fontFamily: 'monospace', fontSize: 10, color: group.color, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600 }}>{group.label}</span>
-        <span style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui' }}>— {group.desc}</span>
+        <span style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui' }}>— {group.desc}</span>
         <span style={{ marginLeft: 'auto', fontSize: 11, color: group.color, fontFamily: 'system-ui' }}>{isOpen ? t('results.accordion.hide') : t('results.accordion.show')}</span>
       </div>
       {isOpen && (
@@ -172,7 +172,7 @@ function GroupAccordion({ group, getCriteriaForGroup, getLevelColor, isOpen, onM
                 <div style={{ height: 3, background: '#E5E2DC', borderRadius: 3, overflow: 'hidden', marginBottom: 8 }}>
                   <div style={{ height: '100%', width: `${pct}%`, background: levelColor, borderRadius: 3 }} />
                 </div>
-                <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.6, fontFamily: 'system-ui' }}>{c.detail}</div>
+                <div style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.6, fontFamily: 'system-ui' }}>{c.detail}</div>
               </div>
             );
           })}
@@ -202,7 +202,7 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t, isPreview, previewFa
         <div style={{ background: '#fff', border: `1px solid ${tag.border}`, borderRadius: 14, overflow: 'hidden', borderLeft: `4px solid ${tag.color}` }}>
           <div style={{ padding: '16px 24px 14px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', padding: '4px 10px', borderRadius: 6, fontWeight: 500, background: tag.bg, color: tag.color }}>{priorities[r.priority] || priorities.medium}</span>
-            {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{translateCrit(r.criterion)}</span>}
+            {r.criterion && <span style={{ fontSize: 11, color: '#6B6762', fontFamily: 'monospace' }}>{translateCrit(r.criterion)}</span>}
             <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8' }}>#01</span>
           </div>
           <div className="reco-preview-fade" style={{ padding: '16px 24px 0', fontSize: 13, color: '#3A3835', lineHeight: 1.8, fontFamily: 'system-ui', position: 'relative', maxHeight: 'calc(1.8em * 3)', overflow: 'hidden', userSelect: 'none', pointerEvents: 'none', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 30%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 100%)' }}>
@@ -211,14 +211,14 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t, isPreview, previewFa
           <div className="reco-preview-cta" style={{ margin: '12px 24px 0', padding: '14px 18px', background: '#F7F5F2', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
             <div>
               <div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>{t('results.recos.previewLocked')}</div>
-              <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui' }}>{t('results.recos.previewSubtext')}</div>
+              <div style={{ fontSize: 11, color: '#6B6762', fontFamily: 'system-ui' }}>{t('results.recos.previewSubtext')}</div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 5, flexShrink: 0 }}>
               <button onClick={onCheckout} style={{ background: tag.color, color: '#fff', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 12, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'system-ui' }}>{t('results.recos.previewUnlock')}</button>
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757' }}>{t('results.recos.previewPrice')}</div>
             </div>
           </div>
-          <div style={{ margin: '0 24px 20px', paddingTop: 12, borderTop: '1px solid #E5E2DC', fontSize: 11, color: '#8A8680', fontStyle: 'italic', fontFamily: 'system-ui' }}>
+          <div style={{ margin: '0 24px 20px', paddingTop: 12, borderTop: '1px solid #E5E2DC', fontSize: 11, color: '#6B6762', fontStyle: 'italic', fontFamily: 'system-ui' }}>
             {t('results.recos.previewFooter').replace('{count}', total)}
           </div>
         </div>
@@ -237,7 +237,7 @@ function RecoCard({ r, index, isPaid, onCheckout, total, t, isPreview, previewFa
       <div style={{ background: '#fff', border: `1px solid ${tag.border}`, borderRadius: 14, overflow: 'hidden', borderLeft: `4px solid ${tag.color}` }}>
         <div style={{ padding: '16px 24px 14px', borderBottom: '1px solid #F0EDE8', display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: 1.5, textTransform: 'uppercase', padding: '4px 10px', borderRadius: 6, fontWeight: 500, background: tag.bg, color: tag.color }}>{priorities[r.priority] || priorities.medium}</span>
-          {r.criterion && <span style={{ fontSize: 11, color: '#8A8680', fontFamily: 'monospace' }}>{translateCrit(r.criterion)}</span>}
+          {r.criterion && <span style={{ fontSize: 11, color: '#6B6762', fontFamily: 'monospace' }}>{translateCrit(r.criterion)}</span>}
           {r.title && <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui' }}>{r.title}</span>}
           <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', marginLeft: r.title ? 8 : 'auto' }}>#{String(index + 1).padStart(2, '0')}</span>
         </div>
@@ -396,15 +396,15 @@ export default function Results() {
             <div style={{ textAlign: 'center', marginBottom: 48 }}>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 20, padding: '6px 16px', marginBottom: 24 }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#D97757', animation: 'pulse 1.5s infinite' }} />
-                <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#8A8680' }}>{url}</span>
+                <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#6B6762' }}>{url}</span>
               </div>
               <h1 style={{ fontSize: 32, color: '#1A1916', letterSpacing: -1, marginBottom: 8, lineHeight: 1.1 }}>{t('results.loading.title')}{loadingDots}</h1>
-              <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui' }}>{t('results.loading.subtitle')}</p>
+              <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui' }}>{t('results.loading.subtitle')}</p>
             </div>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 20, padding: '32px 36px', boxShadow: '0 4px 32px rgba(26,25,22,0.06)' }}>
               <div style={{ marginBottom: 32 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase' }}>{t('results.loading.progress')}</span>
+                  <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>{t('results.loading.progress')}</span>
                   <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757' }}>{Math.round((step / loadingSteps.length) * 100)}%</span>
                 </div>
                 <div style={{ height: 4, background: '#F0EDE8', borderRadius: 4, overflow: 'hidden' }}>
@@ -421,7 +421,7 @@ export default function Results() {
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: 13, fontWeight: isActive ? 600 : 400, color: isDone ? '#10A37F' : isActive ? '#1A1916' : '#C2BDB8', fontFamily: 'system-ui' }}>{s.text}</div>
-                      {isActive && <div style={{ fontSize: 11, color: '#8A8680', fontFamily: 'system-ui', marginTop: 2 }}>{s.sub}</div>}
+                      {isActive && <div style={{ fontSize: 11, color: '#6B6762', fontFamily: 'system-ui', marginTop: 2 }}>{s.sub}</div>}
                     </div>
                     {isDone && <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#10A37F' }}>OK</span>}
                   </div>
@@ -438,7 +438,7 @@ export default function Results() {
           <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 16, padding: '28px 32px' }}>
             <div style={{ fontSize: 24, marginBottom: 12 }}>⚠️</div>
             <div style={{ fontSize: 15, fontWeight: 500, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 8 }}>{t('results.error.title')}</div>
-            <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 20 }}>{error}</div>
+            <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 20 }}>{error}</div>
             <Link href="/" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>{t('results.error.retry')}</Link>
           </div>
         </div>
@@ -482,7 +482,7 @@ export default function Results() {
 
           {/* ── 1. ANALYSE DÉTAILLÉE (ci-dessus, inchangée) ── */}
 
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{t('results.detailedAnalysis')}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{t('results.detailedAnalysis')}</div>
           {groups.map(group => (
             <GroupAccordion key={group.id} group={group} getCriteriaForGroup={getCriteriaForGroup} getLevelColor={getLevelColor} isOpen={openGroup === group.id} onMouseEnter={() => handleGroupEnter(group.id)} onMouseLeave={handleGroupLeave} t={t} />
           ))}
@@ -490,7 +490,7 @@ export default function Results() {
           {/* ── 2. DOUBLE CTA 29€ + 99€ ──────────────── */}
           {!isPaid && (
             <div style={{ marginTop: 28, marginBottom: 24 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('results.doubleCta.intro')}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('results.doubleCta.intro')}</div>
               <div className="results-double-cta" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
                 <button onClick={() => handleCheckout('rapport')} disabled={checkoutLoading} className="btn-interactive" style={{ background: '#D97757', color: '#fff', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)', textAlign: 'center', opacity: checkoutLoading ? 0.7 : 1 }}>
                   {t('results.doubleCta.onepage')}
@@ -526,7 +526,7 @@ export default function Results() {
               )}
             </div>
             <div style={{ position: 'relative', flexShrink: 0, display: 'flex', alignItems: 'center' }} ref={shareRef}>
-              <button onClick={() => setShowShare(v => !v)} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 20px', color: '#8A8680', fontSize: 13, fontFamily: 'system-ui', cursor: 'pointer', height: '100%', transition: 'border-color 0.15s' }} onMouseEnter={e => e.currentTarget.style.borderColor = '#1A1916'} onMouseLeave={e => e.currentTarget.style.borderColor = '#E5E2DC'}>
+              <button onClick={() => setShowShare(v => !v)} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 20px', color: '#6B6762', fontSize: 13, fontFamily: 'system-ui', cursor: 'pointer', height: '100%', transition: 'border-color 0.15s' }} onMouseEnter={e => e.currentTarget.style.borderColor = '#1A1916'} onMouseLeave={e => e.currentTarget.style.borderColor = '#E5E2DC'}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
                 {t('results.share.button')}
               </button>
@@ -538,7 +538,7 @@ export default function Results() {
                     { label: copied ? t('results.share.copied') : t('results.share.copyLink'), icon: copied ? null : <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>, action: () => { navigator.clipboard.writeText(shareText); setCopied(true); setTimeout(() => { setCopied(false); setShowShare(false); }, 2000); } },
                   ].map(({ label, icon, action }) => (
                     <button key={label} onClick={action} style={{ display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '10px 16px', background: 'transparent', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontFamily: 'system-ui', color: '#3A3835', textAlign: 'left', transition: 'background 0.1s' }} onMouseEnter={e => e.currentTarget.style.background = '#F7F5F2'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-                      {icon && <span style={{ color: '#8A8680', flexShrink: 0 }}>{icon}</span>}{label}
+                      {icon && <span style={{ color: '#6B6762', flexShrink: 0 }}>{icon}</span>}{label}
                     </button>
                   ))}
                 </div>
@@ -551,7 +551,7 @@ export default function Results() {
             <div style={{ marginTop: 16 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
                 <div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.recos.label')}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.recos.label')}</div>
                   <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5 }}>{t('results.recos.title')}</div>
                 </div>
                 {!isPaid && (
@@ -561,7 +561,7 @@ export default function Results() {
                 )}
               </div>
               {!isPaid && (
-                <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
                   {t('results.recos.subtitle').replace('{count}', recommendations.length)}
                 </div>
               )}
@@ -575,7 +575,7 @@ export default function Results() {
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 8 }}>
                     {otherRecos.length === 1 ? t('results.recos.lockedReco1') : t('results.recos.lockedRecoN').replace('{count}', otherRecos.length)}
                   </div>
-                  <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7 }}>
+                  <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.7 }}>
                     {otherRecos.map(r => criteriaInfoMain[r.criterion]?.title || r.criterion || r.title).filter(Boolean).join(' · ')}
                   </div>
                 </div>
@@ -602,13 +602,13 @@ export default function Results() {
 
             return (
               <div style={{ marginTop: 32 }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.citation.label')}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.citation.label')}</div>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5, marginBottom: 6 }}>{t('results.citation.title')}</div>
-                <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.6, marginBottom: 16 }}>{t('results.citation.intro')}</p>
+                <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.6, marginBottom: 16 }}>{t('results.citation.intro')}</p>
 
                 {previewTests.map((test, i) => (
                   <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 22px', marginBottom: 10 }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{t('results.citation.queryLabel')}</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{t('results.citation.queryLabel')}</div>
                     <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', marginBottom: 10, lineHeight: 1.3 }}>"{test.query}"</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                       <span style={{ width: 8, height: 8, borderRadius: '50%', background: test.cited ? '#10A37F' : '#D97757', flexShrink: 0 }} />
@@ -617,7 +617,7 @@ export default function Results() {
                       </span>
                     </div>
                     {!test.cited && test.competitors_cited?.length > 0 && (
-                      <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', lineHeight: 1.5 }}>
+                      <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.5 }}>
                         <span style={{ fontWeight: 600, color: '#3A3835' }}>{t('results.citation.competitorsLabel')}</span>{' '}
                         {test.competitors_cited.join(', ')}
                       </div>
@@ -631,7 +631,7 @@ export default function Results() {
                     <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 6 }}>
                       🔒 {t('results.citation.lockedTitle')}
                     </div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', lineHeight: 1.6, marginBottom: 14 }}>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.6, marginBottom: 14 }}>
                       {t('results.citation.lockedDesc')}
                     </div>
                     <Link href="/pricing" style={{ display: 'inline-block', background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 24px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', textDecoration: 'none' }}>
@@ -653,7 +653,7 @@ export default function Results() {
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{checkoutPlan === 'pro' ? t('pricing.proCard.label') : t('results.checkout.title')}</div>
                 <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{checkoutPlan === 'pro' ? (t('pricing.proCard.price') + ' · ' + t('pricing.proCard.paymentInfo')) : t('results.checkout.subtext')}</div>
               </div>
-              <button onClick={closeCheckout} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>×</button>
+              <button onClick={closeCheckout} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>×</button>
             </div>
             <div style={{ padding: '16px 0 0' }}>
               <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>

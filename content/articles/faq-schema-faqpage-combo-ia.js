@@ -12,7 +12,7 @@ function ArrowLink({ href, children }) {
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
-      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#8A8680', marginBottom: 12 }}>{children}</p>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
       <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
         Analyser mon site gratuitement →
       </a>
@@ -162,8 +162,8 @@ export default function FaqSchemaFaqpageComboIa() {
               <td style={{ padding: '14px 16px', color: '#3A3835', lineHeight: 1.6 }}>"Nous proposons plusieurs options de livraison adaptées à vos besoins. Contactez-nous pour en savoir plus !"</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #E5E2DC', background: '#F7F5F2' }}>
-              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#8A8680' }}>Problème</td>
-              <td style={{ padding: '14px 16px', color: '#8A8680', lineHeight: 1.6 }}>Aucun chiffre, aucun fait. Renvoie vers un contact au lieu de répondre. Inutilisable par une IA.</td>
+              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#6B6762' }}>Problème</td>
+              <td style={{ padding: '14px 16px', color: '#6B6762', lineHeight: 1.6 }}>Aucun chiffre, aucun fait. Renvoie vers un contact au lieu de répondre. Inutilisable par une IA.</td>
             </tr>
             <tr>
               <td style={{ padding: '14px 16px', fontWeight: 600, color: '#10A37F' }}>Après</td>
@@ -183,8 +183,8 @@ export default function FaqSchemaFaqpageComboIa() {
               <td style={{ padding: '14px 16px', color: '#3A3835', lineHeight: 1.6 }}>"Notre solution innovante vous accompagne au quotidien. Demandez une démo pour découvrir toutes ses fonctionnalités !"</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #E5E2DC', background: '#F7F5F2' }}>
-              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#8A8680' }}>Problème</td>
-              <td style={{ padding: '14px 16px', color: '#8A8680', lineHeight: 1.6 }}>Aucune information sur le fonctionnement réel. "Solution innovante" ne veut rien dire. Renvoie vers une démo au lieu de répondre.</td>
+              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#6B6762' }}>Problème</td>
+              <td style={{ padding: '14px 16px', color: '#6B6762', lineHeight: 1.6 }}>Aucune information sur le fonctionnement réel. "Solution innovante" ne veut rien dire. Renvoie vers une démo au lieu de répondre.</td>
             </tr>
             <tr>
               <td style={{ padding: '14px 16px', fontWeight: 600, color: '#10A37F' }}>Après</td>
@@ -204,8 +204,8 @@ export default function FaqSchemaFaqpageComboIa() {
               <td style={{ padding: '14px 16px', color: '#3A3835', lineHeight: 1.6 }}>"Notre équipe passionnée met son expertise à votre service depuis plus de 20 ans. Faites-nous confiance !"</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #E5E2DC', background: '#F7F5F2' }}>
-              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#8A8680' }}>Problème</td>
-              <td style={{ padding: '14px 16px', color: '#8A8680', lineHeight: 1.6 }}>Question promotionnelle. Réponse sans chiffres vérifiables. "Passionnée" et "faites-nous confiance" sont des signaux promotionnels que les IA déprioritisent.</td>
+              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#6B6762' }}>Problème</td>
+              <td style={{ padding: '14px 16px', color: '#6B6762', lineHeight: 1.6 }}>Question promotionnelle. Réponse sans chiffres vérifiables. "Passionnée" et "faites-nous confiance" sont des signaux promotionnels que les IA déprioritisent.</td>
             </tr>
             <tr>
               <td style={{ padding: '14px 16px', fontWeight: 600, color: '#10A37F' }}>Après</td>

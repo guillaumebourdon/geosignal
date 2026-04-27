@@ -30,7 +30,7 @@ export default function LanguageSwitcher() {
           style={{
             ...base,
             fontWeight: locale === l ? 700 : 400,
-            color: locale === l ? '#1A1916' : '#8A8680',
+            color: locale === l ? '#1A1916' : '#6B6762',
             background: locale === l ? '#F0EDE8' : 'transparent',
             borderColor: locale === l ? '#D5D0CA' : '#E5E2DC',
           }}

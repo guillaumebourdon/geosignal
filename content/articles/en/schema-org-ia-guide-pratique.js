@@ -12,7 +12,7 @@ function ArrowLink({ href, children }) {
 function ChecklistSection({ title, items }) {
   return (
     <div style={{ marginBottom: 20 }}>
-      <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{title}</div>
+      <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{title}</div>
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
         {items.map((item, i) => (
           <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontFamily: 'system-ui', fontSize: 14, color: '#3A3835', lineHeight: 1.5 }}>

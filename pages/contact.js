@@ -43,7 +43,7 @@ export default function Contact() {
           <h1 style={{ fontSize: 'clamp(28px, 5vw, 44px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 14, color: '#1A1916' }}>
             {t('contact.hero.title')}
           </h1>
-          <p style={{ fontSize: 15, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui, sans-serif' }}>
+          <p style={{ fontSize: 15, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui, sans-serif' }}>
             {t('contact.hero.subtitle')}
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function Contact() {
           <div style={{ background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.3)', borderRadius: 16, padding: '40px 32px', textAlign: 'center' }}>
             <div style={{ fontSize: 32, marginBottom: 16 }}>✅</div>
             <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 8 }}>{t('contact.success.title')}</div>
-            <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui, sans-serif', lineHeight: 1.6 }}>
+            <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui, sans-serif', lineHeight: 1.6 }}>
               {t('contact.success.subtitle')}
             </div>
           </div>
@@ -60,7 +60,7 @@ export default function Contact() {
           <div className="contact-form" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: 32, boxShadow: '0 4px 24px rgba(26,25,22,0.07)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <div>
-                <label style={{ display: 'block', fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>{t('contact.form.nameLabel')}</label>
+                <label style={{ display: 'block', fontFamily: 'monospace', fontSize: 11, color: '#6B6762', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>{t('contact.form.nameLabel')}</label>
                 <input
                   value={form.name}
                   onChange={e => setForm({...form, name: e.target.value})}
@@ -69,7 +69,7 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>{t('contact.form.emailLabel')}</label>
+                <label style={{ display: 'block', fontFamily: 'monospace', fontSize: 11, color: '#6B6762', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>{t('contact.form.emailLabel')}</label>
                 <input
                   value={form.email}
                   onChange={e => setForm({...form, email: e.target.value})}
@@ -79,7 +79,7 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontFamily: 'monospace', fontSize: 11, color: '#8A8680', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>{t('contact.form.messageLabel')}</label>
+                <label style={{ display: 'block', fontFamily: 'monospace', fontSize: 11, color: '#6B6762', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 }}>{t('contact.form.messageLabel')}</label>
                 <textarea
                   value={form.message}
                   onChange={e => setForm({...form, message: e.target.value})}
@@ -98,7 +98,7 @@ export default function Contact() {
         )}
 
         <div style={{ textAlign: 'center', marginTop: 32 }}>
-          <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui, sans-serif' }}>
+          <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui, sans-serif' }}>
             {t('contact.emailDirect')}{' '}
             <a href="mailto:hello@detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>hello@detekia.fr</a>
           </div>
@@ -106,14 +106,14 @@ export default function Contact() {
 
         {/* Motifs de contact */}
         <div style={{ marginTop: 40, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '28px 28px 20px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 18 }}>{t('contact.reasons.label')}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 18 }}>{t('contact.reasons.label')}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 20 }}>
             {reasons.map((r) => (
               <div key={r.title} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', borderBottom: '1px solid #F0EDE8', paddingBottom: 14 }}>
                 <div style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{r.icon}</div>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 3, fontFamily: 'system-ui' }}>{r.title}</div>
-                  <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.5 }}>{r.desc}</div>
+                  <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5 }}>{r.desc}</div>
                 </div>
               </div>
             ))}

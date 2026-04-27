@@ -136,9 +136,9 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
       {showModal && !showCheckout && (
         <div onClick={handleClose} style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>
           <div role="dialog" aria-modal="true" onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 16, maxWidth: 460, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
-            <button onClick={handleClose} aria-label="Fermer" style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
+            <button onClick={handleClose} aria-label="Fermer" style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 10, lineHeight: 1.2 }}>{modalTitle}</h2>
-            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, marginBottom: 24 }}>{modalSubtitle}</p>
+            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.65, marginBottom: 24 }}>{modalSubtitle}</p>
             <div style={{ marginBottom: 20 }}>
               <input ref={inputRef} type="url" aria-label={isPro ? 'URL du site' : 'URL de la page'} value={modalUrl}
                 onChange={e => { setModalUrl(e.target.value); setUrlError(''); setModalError(''); }}
@@ -158,7 +158,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
                 {t('pricing.modal.errorProInsufficient_cta')}
               </button>
             )}
-            <button onClick={handleClose} style={{ display: 'block', width: '100%', background: 'transparent', color: '#8A8680', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
+            <button onClick={handleClose} style={{ display: 'block', width: '100%', background: 'transparent', color: '#6B6762', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
               {t('pricing.modal.cancelButton')}
             </button>
           </div>
@@ -174,7 +174,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{label}</div>
                 <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{price} · {paymentInfo}</div>
               </div>
-              <button onClick={handleClose} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>×</button>
+              <button onClick={handleClose} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>×</button>
             </div>
             <div style={{ padding: '16px 0 0' }}>
               <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>

@@ -56,14 +56,14 @@ export default function Methodologie() {
         <h1 style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 16, color: '#1A1916' }}>
           {t('methodology.hero.titleLine1')}<br /><em style={{ color: '#D97757' }}>{t('methodology.hero.titleEm')}</em>
         </h1>
-        <p style={{ fontSize: 15, color: '#8A8680', lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 64, maxWidth: 560, margin: '0 auto 64px' }}>
+        <p style={{ fontSize: 15, color: '#6B6762', lineHeight: 1.7, fontFamily: 'system-ui', marginBottom: 64, maxWidth: 560, margin: '0 auto 64px' }}>
           {t('methodology.hero.subtitle')}
         </p>
       </div>
 
       {/* COMMENT ÇA MARCHE */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.process.label')}</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.process.label')}</div>
         <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
           {t('methodology.process.title')}
         </h2>
@@ -72,7 +72,7 @@ export default function Methodologie() {
             <div key={step.num} className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
               <div style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: stepColors[idx], marginBottom: 16, letterSpacing: -1 }}>{step.num}</div>
               <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui' }}>{step.title}</div>
-              <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
+              <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
             </div>
           ))}
         </div>
@@ -95,11 +95,11 @@ export default function Methodologie() {
 
       {/* COMPARATIF 3 OFFRES */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '48px 24px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.compare.label')}</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.compare.label')}</div>
         <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#1A1916', textAlign: 'center', letterSpacing: -0.8, marginBottom: 10, lineHeight: 1.15 }}>
           {t('methodology.compare.title')}
         </h2>
-        <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, textAlign: 'center', maxWidth: 540, margin: '0 auto 32px' }}>
+        <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, textAlign: 'center', maxWidth: 540, margin: '0 auto 32px' }}>
           {t('methodology.compare.subtitle')}
         </p>
         <div className="methodo-compare-desktop" style={{ background: '#fff', borderRadius: 16, border: '1px solid #E5E2DC', overflow: 'hidden', boxShadow: '0 2px 12px rgba(26,25,22,0.04)' }}>
@@ -127,7 +127,7 @@ export default function Methodologie() {
                 <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>{headers[colIdx]}</div>
                 {rows.map((row, i) => (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: i < rows.length - 1 ? '1px solid #F0EDE8' : 'none' }}>
-                    <span style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui' }}>{row[0]}</span>
+                    <span style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui' }}>{row[0]}</span>
                     <span style={{ fontSize: 12, color: '#1A1916', fontFamily: 'system-ui', fontWeight: 500 }}>
                       {row[colIdx] === true ? <span style={{ color: '#10A37F' }}>✓</span> : row[colIdx] === false ? <span style={{ color: '#D0CBC5' }}>—</span> : row[colIdx]}
                     </span>
@@ -168,7 +168,7 @@ export default function Methodologie() {
 
       {/* 8 CRITÈRES DÉTAILLÉS */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.criteria.label')}</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.criteria.label')}</div>
         <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
           {t('methodology.criteria.titleStart')}<em style={{ color: '#D97757' }}>{t('methodology.criteria.titleEm')}</em>
         </h2>
@@ -187,7 +187,7 @@ export default function Methodologie() {
               </div>
               <div className="methodo-criteria-detail" style={{ padding: '20px 24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
                 <div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{t('methodology.criteria.whatLabel')}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{t('methodology.criteria.whatLabel')}</div>
                   <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65, fontFamily: 'system-ui' }}>{c.what}</div>
                 </div>
                 <div>
@@ -209,11 +209,11 @@ export default function Methodologie() {
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div>
             <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>{locale === 'en' ? 'Score normalization' : 'Normalisation du score'}</div>
-            <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6 }}>{t('methodology.scoring.normalizationNote')}</div>
+            <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6 }}>{t('methodology.scoring.normalizationNote')}</div>
           </div>
           <div style={{ borderTop: '1px solid #F0EDE8', paddingTop: 12 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>{locale === 'en' ? 'Documented case studies' : 'Cas réels documentés'}</div>
-            <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6 }}>
+            <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6 }}>
               {locale === 'en'
                 ? 'Each report includes real-world case studies on the 3 weakest criteria (SEO Vendor, Ahrefs, Stackmatix, etc.) to illustrate concrete impact of optimizations.'
                 : 'Chaque rapport inclut des cas réels documentés sur les 3 critères les plus faibles (SEO Vendor, Ahrefs, Stackmatix, etc.) pour illustrer l\'impact concret des optimisations.'}
@@ -229,7 +229,7 @@ export default function Methodologie() {
           {t('methodology.limits.items').map((item) => (
             <div key={item.title}>
               <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 4 }}>{item.title}</div>
-              <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{item.desc}</div>
+              <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.65 }}>{item.desc}</div>
             </div>
           ))}
         </div>
@@ -286,14 +286,14 @@ export default function Methodologie() {
         </div>
         <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
           {t('methodology.footer.links').map((link) => (
-            <Link key={link.href} href={link.href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{link.label}</Link>
+            <Link key={link.href} href={link.href} style={{ fontSize: 12, color: '#6B6762', textDecoration: 'none', fontFamily: 'system-ui' }}>{link.label}</Link>
           ))}
         </div>
       </footer>
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        input::placeholder { color: #8A8680; }
+        input::placeholder { color: #6B6762; }
         @media (max-width: 600px) {
           .methodo-input-wrap { flex-direction: column !important; border-radius: 10px !important; }
           .methodo-input-wrap input { border-radius: 10px 10px 0 0 !important; }

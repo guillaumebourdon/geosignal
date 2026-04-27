@@ -28,11 +28,11 @@ export default function BlogIndex() {
 
         {/* HEADER */}
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '72px 24px 48px', textAlign: 'center' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('blog.index.sectionLabel')}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('blog.index.sectionLabel')}</div>
           <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#1A1916', letterSpacing: -1, marginBottom: 14, lineHeight: 1.1 }}>
             {t('blog.index.h1')}
           </h1>
-          <p style={{ fontFamily: 'system-ui', fontSize: 15, color: '#8A8680', lineHeight: 1.65 }}>
+          <p style={{ fontFamily: 'system-ui', fontSize: 15, color: '#6B6762', lineHeight: 1.65 }}>
             {t('blog.index.subtitle')}
           </p>
         </div>
@@ -41,7 +41,7 @@ export default function BlogIndex() {
         <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 24px 100px' }}>
           <div className="blog-grid">
             {localizedArticles.slice().reverse().map(article => {
-              const catColor = CATEGORY_COLORS[article.category] || '#8A8680';
+              const catColor = CATEGORY_COLORS[article.category] || '#6B6762';
               return (
                 <Link
                   key={article.slug}
@@ -57,7 +57,7 @@ export default function BlogIndex() {
                   <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', lineHeight: 1.25, margin: 0, letterSpacing: -0.3 }}>
                     {article.title}
                   </h2>
-                  <p className="blog-desc" style={{ fontFamily: 'system-ui', fontSize: 14, color: '#8A8680', lineHeight: 1.6, margin: 0 }}>
+                  <p className="blog-desc" style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', lineHeight: 1.6, margin: 0 }}>
                     {article.description}
                   </p>
                   <div style={{ display: 'flex', gap: 16, marginTop: 'auto', paddingTop: 8, borderTop: '1px solid #F0EDE8' }}>
@@ -77,7 +77,7 @@ export default function BlogIndex() {
             <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>{t('common.siteName')}</span>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
               {t('blog.footer.links').map((link) => (
-                <Link key={link.href} href={link.href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', textDecoration: 'none' }}>{link.label}</Link>
+                <Link key={link.href} href={link.href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', textDecoration: 'none' }}>{link.label}</Link>
               ))}
             </div>
           </div>

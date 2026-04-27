@@ -85,7 +85,7 @@ function buildEmailHTML(reportUrl, url, score, verdict, locale) {
       <div style="max-width:520px;margin:0 auto">
         <div style="text-align:center;margin-bottom:28px">
           <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:4px">Detekia</div>
-          <div style="font-family:monospace;font-size:10px;color:#8A8680;letter-spacing:2px">${isFr ? 'RAPPORT DE VISIBILITE IA' : 'AI VISIBILITY REPORT'}</div>
+          <div style="font-family:monospace;font-size:10px;color:#6B6762;letter-spacing:2px">${isFr ? 'RAPPORT DE VISIBILITE IA' : 'AI VISIBILITY REPORT'}</div>
         </div>
         <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:24px">
           <div style="font-family:Georgia,serif;font-size:64px;color:#F7F5F2;line-height:1;letter-spacing:-2px">${score}</div>
@@ -94,16 +94,16 @@ function buildEmailHTML(reportUrl, url, score, verdict, locale) {
         </div>
         <div style="background:#fff;border-radius:12px;padding:28px;border:1px solid #E5E2DC;margin-bottom:24px;text-align:center">
           <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 8px">${isFr ? 'Votre rapport GEO est pret.' : 'Your GEO report is ready.'}</p>
-          <p style="font-size:13px;color:#8A8680;line-height:1.6;margin:0 0 24px">${verdict || ''}</p>
+          <p style="font-size:13px;color:#6B6762;line-height:1.6;margin:0 0 24px">${verdict || ''}</p>
           <a href="${reportUrl}" style="display:inline-block;background:#D97757;color:#fff;padding:14px 40px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;font-family:system-ui">${isFr ? 'Voir mon rapport' : 'View my report'} →</a>
           <p style="font-size:11px;color:#B0ABA5;margin-top:16px;line-height:1.5">${isFr ? 'Votre rapport reste accessible indefiniment a cette URL.' : 'Your report is accessible indefinitely at this URL.'}</p>
         </div>
         <div style="background:#F7F5F2;border-radius:10px;padding:20px 24px;margin-bottom:20px;text-align:center">
           <p style="font-size:13px;color:#1A1916;font-weight:600;margin:0 0 6px">${isFr ? 'Envie d\'une vision globale ?' : 'Want the full picture?'}</p>
-          <p style="font-size:12px;color:#8A8680;line-height:1.6;margin:0 0 12px">${isFr ? 'L\'audit complet analyse 20 pages de votre site et detecte les patterns que cette analyse page par page ne peut pas voir.' : 'The complete audit analyzes 20 pages of your site and detects patterns that a single-page analysis cannot reveal.'}</p>
+          <p style="font-size:12px;color:#6B6762;line-height:1.6;margin:0 0 12px">${isFr ? 'L\'audit complet analyse 20 pages de votre site et detecte les patterns que cette analyse page par page ne peut pas voir.' : 'The complete audit analyzes 20 pages of your site and detects patterns that a single-page analysis cannot reveal.'}</p>
           <a href="https://detekia.fr/pricing" style="font-size:12px;color:#D97757;text-decoration:none;font-weight:600">${isFr ? 'En savoir plus →' : 'Learn more →'}</a>
         </div>
-        <div style="text-align:center;font-size:12px;color:#8A8680;line-height:1.6;padding-top:8px">
+        <div style="text-align:center;font-size:12px;color:#6B6762;line-height:1.6;padding-top:8px">
           Beeleven SASU · hello@detekia.fr · detekia.fr
         </div>
       </div>

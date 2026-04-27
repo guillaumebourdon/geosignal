@@ -244,7 +244,7 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
           <div style="max-width:520px;margin:0 auto">
             <div style="text-align:center;margin-bottom:28px">
               <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:4px">Detekia</div>
-              <div style="font-family:monospace;font-size:10px;color:#8A8680;letter-spacing:2px">RAPPORT GEO COMPLET — AUDIT SITE</div>
+              <div style="font-family:monospace;font-size:10px;color:#6B6762;letter-spacing:2px">RAPPORT GEO COMPLET — AUDIT SITE</div>
             </div>
             <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:24px">
               <div style="font-family:Georgia,serif;font-size:64px;color:#F7F5F2;line-height:1;letter-spacing:-2px">${score}</div>
@@ -254,11 +254,11 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
             </div>
             <div style="background:#fff;border-radius:12px;padding:28px;border:1px solid #E5E2DC;margin-bottom:24px;text-align:center">
               <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 8px">Votre audit GEO complet multi-pages est prêt.</p>
-              <p style="font-size:13px;color:#8A8680;line-height:1.6;margin:0 0 24px">${consolidated.pagesValid} pages analysées, ${(consolidated.patterns || []).length} patterns transverses détectés, ${(consolidated.actionPlan || []).length} actions recommandées.</p>
+              <p style="font-size:13px;color:#6B6762;line-height:1.6;margin:0 0 24px">${consolidated.pagesValid} pages analysées, ${(consolidated.patterns || []).length} patterns transverses détectés, ${(consolidated.actionPlan || []).length} actions recommandées.</p>
               <a href="${reportUrl}" style="display:inline-block;background:#D97757;color:#fff;padding:14px 40px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;font-family:system-ui">Voir mon rapport complet →</a>
               <p style="font-size:11px;color:#B0ABA5;margin-top:16px;line-height:1.5">Votre rapport reste accessible indéfiniment à cette URL.</p>
             </div>
-            <div style="text-align:center;font-size:12px;color:#8A8680;line-height:1.6;padding-top:8px">
+            <div style="text-align:center;font-size:12px;color:#6B6762;line-height:1.6;padding-top:8px">
               Beeleven SASU · hello@detekia.fr · detekia.fr
             </div>
           </div>

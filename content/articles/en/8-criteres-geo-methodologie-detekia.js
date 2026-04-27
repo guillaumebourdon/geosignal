@@ -140,7 +140,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={8} nom="Freshness" poids="Weight: 5%" couleur="#8A8680">
+      <CritereCard numero={8} nom="Freshness" poids="Weight: 5%" couleur="#6B6762">
         <p><strong>What it is:</strong> How recent and regularly updated your content is.</p>
         <p><strong>How it's measured:</strong> Publication and modification dates of pages, frequency of new content publication, presence of dates in Schema.org markup and visible HTML.</p>
         <p><strong>Why it matters:</strong> AI engines prefer recent information for evolving topics. A 2021 article about AI will be cited less than a 2026 article, even if the content is similar. Freshness matters less for stable subjects (mathematics, history) than for technology topics.</p>

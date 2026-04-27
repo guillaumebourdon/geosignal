@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         <div style="height:3px;background:#E5E2DC;border-radius:3px;overflow:hidden;margin-bottom:8px;">
           <div style="height:100%;width:${pct}%;background:${color};border-radius:3px;"></div>
         </div>
-        <div style="font-size:12px;color:#8A8680;font-family:sans-serif">${c.detail}</div>
+        <div style="font-size:12px;color:#6B6762;font-family:sans-serif">${c.detail}</div>
       </div>
     `;
   }).join('');
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     return `
       <div style="background:#fff;border:1px solid #E5E2DC;border-radius:10px;padding:16px 20px;margin-bottom:8px;display:flex;gap:12px;">
         <span style="background:${tag.bg};color:${tag.color};font-family:monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap;height:fit-content;flex-shrink:0">${tag.label}</span>
-        <span style="font-size:13px;color:#8A8680;line-height:1.6;font-family:sans-serif">${r.text}</span>
+        <span style="font-size:13px;color:#6B6762;line-height:1.6;font-family:sans-serif">${r.text}</span>
       </div>
     `;
   }).join('');
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;">
         <span style="font-family:Georgia,serif;font-size:22px;color:#1A1916;font-weight:400">Detekia</span>
       </div>
-      <div style="font-family:monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#8A8680">Rapport GEO Complet</div>
+      <div style="font-family:monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#6B6762">Rapport GEO Complet</div>
     </div>
 
     <!-- Score principal -->
@@ -72,11 +72,11 @@ export default async function handler(req, res) {
     </div>
 
     <!-- Critères -->
-    <div style="font-family:monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8A8680;margin-bottom:12px;margin-top:28px">Analyse par critère</div>
+    <div style="font-family:monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6762;margin-bottom:12px;margin-top:28px">Analyse par critère</div>
     ${criteriaHtml}
 
     <!-- Recommandations -->
-    <div style="font-family:monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8A8680;margin-bottom:12px;margin-top:28px">Recommandations prioritaires</div>
+    <div style="font-family:monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B6762;margin-bottom:12px;margin-top:28px">Recommandations prioritaires</div>
     ${recoHtml}
 
     <!-- CTA -->

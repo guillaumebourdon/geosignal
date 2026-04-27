@@ -23,9 +23,9 @@ function BotTable() {
       <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'system-ui', fontSize: 13 }}>
         <thead>
           <tr style={{ borderBottom: '2px solid #E5E2DC' }}>
-            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#8A8680', fontWeight: 600 }}>AI Platform</th>
-            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#8A8680', fontWeight: 600 }}>Primary User-Agent</th>
-            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#8A8680', fontWeight: 600 }}>Secondary User-Agent</th>
+            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#6B6762', fontWeight: 600 }}>AI Platform</th>
+            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#6B6762', fontWeight: 600 }}>Primary User-Agent</th>
+            <th style={{ textAlign: 'left', padding: '10px 12px', color: '#6B6762', fontWeight: 600 }}>Secondary User-Agent</th>
           </tr>
         </thead>
         <tbody>

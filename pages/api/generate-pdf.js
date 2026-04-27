@@ -149,11 +149,11 @@ export default async function handler(req, res) {
 
     const promoBlock = loyaltyCode ? `
       <div style="margin:32px 0;padding:24px;background:#F7F5F2;border-left:4px solid #C9A84C;border-radius:8px">
-        <div style="font-family:monospace;font-size:11px;color:#8A8680;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">${ls.eyebrow}</div>
+        <div style="font-family:monospace;font-size:11px;color:#6B6762;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">${ls.eyebrow}</div>
         <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:8px">${ls.title}</div>
         <div style="font-family:system-ui;font-size:14px;color:#3A3835;line-height:1.6;margin-bottom:16px">${ls.body}</div>
         <div style="background:#1A1916;color:#C9A84C;font-family:monospace;font-size:20px;font-weight:bold;padding:16px 24px;border-radius:6px;text-align:center;letter-spacing:3px">${loyaltyCode}</div>
-        <div style="font-family:system-ui;font-size:12px;color:#8A8680;margin-top:12px;text-align:center">${ls.footerNote}</div>
+        <div style="font-family:system-ui;font-size:12px;color:#6B6762;margin-top:12px;text-align:center">${ls.footerNote}</div>
       </div>
     ` : '';
 
@@ -167,7 +167,7 @@ export default async function handler(req, res) {
             <!-- Header -->
             <div style="text-align:center;margin-bottom:32px">
               <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:8px">Detekia</div>
-              <div style="font-family:monospace;font-size:10px;color:#8A8680;letter-spacing:2px">${t.email.headerLabel}</div>
+              <div style="font-family:monospace;font-size:10px;color:#6B6762;letter-spacing:2px">${t.email.headerLabel}</div>
             </div>
             <!-- Score card -->
             <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:28px">
@@ -189,17 +189,17 @@ export default async function handler(req, res) {
               <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 16px">${EMAIL_BODY.feedbackLine}</p>
               <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 4px">${EMAIL_BODY.signoff}</p>
               <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 4px;font-weight:600">${EMAIL_BODY.name}</p>
-              <p style="font-size:12px;color:#8A8680;line-height:1.5;margin:0">${EMAIL_BODY.role}</p>
+              <p style="font-size:12px;color:#6B6762;line-height:1.5;margin:0">${EMAIL_BODY.role}</p>
             </div>
             <!-- Promo block -->
             ${promoBlock}
             <!-- Top priority reminder -->
             <div style="background:#fff;border-radius:12px;padding:20px 24px;border:1px solid #E5E2DC;margin-bottom:20px">
               <div style="font-size:13px;color:#1A1916;font-weight:600;margin-bottom:8px;font-family:system-ui">\u{1F3AF} ${t.email.topPriority}</div>
-              <div style="font-size:13px;color:#8A8680;line-height:1.6;font-family:system-ui">${reportData.topPriority || ''}</div>
+              <div style="font-size:13px;color:#6B6762;line-height:1.6;font-family:system-ui">${reportData.topPriority || ''}</div>
             </div>
             <!-- PS -->
-            <div style="text-align:center;font-size:12px;color:#8A8680;font-family:system-ui;line-height:1.6;padding-top:8px">
+            <div style="text-align:center;font-size:12px;color:#6B6762;font-family:system-ui;line-height:1.6;padding-top:8px">
               ${EMAIL_BODY.ps}
             </div>
           </div>
@@ -268,7 +268,7 @@ export default async function handler(req, res) {
             <div style="margin-bottom:8px;"><strong>Email client :</strong> ${email || 'N/A'}</div>
             <div style="margin-bottom:8px;"><strong>URL :</strong> ${url || 'N/A'}</div>
             <div style="margin-bottom:8px;"><strong>Erreur :</strong> ${e.message}</div>
-            <pre style="font-size:11px;color:#8A8680;overflow-x:auto;margin-top:12px;">${e.stack || ''}</pre>
+            <pre style="font-size:11px;color:#6B6762;overflow-x:auto;margin-top:12px;">${e.stack || ''}</pre>
           </div>
         </div>`,
       });

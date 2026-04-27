@@ -74,7 +74,7 @@ export default function Success() {
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
             </div>
             <h1 style={{ fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Paiement non vérifié</h1>
-            <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 28 }}>
+            <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 28 }}>
               Si vous avez été débité, contactez-nous à{' '}
               <a href="mailto:hello@detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>hello@detekia.fr</a>
             </p>
@@ -181,7 +181,7 @@ export default function Success() {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2" strokeLinecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
                   </div>
                   <div style={{ fontSize: 15, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', marginBottom: 6 }}>Analyser tout mon site</div>
-                  <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Audit complet sur 20 pages avec patterns et plan d'action.</div>
+                  <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Audit complet sur 20 pages avec patterns et plan d'action.</div>
                   <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#10A37F', fontWeight: 600 }}>Découvrir l'audit Pro →</div>
                 </Link>
                 )}
@@ -201,7 +201,7 @@ export default function Success() {
                     }}>
                       <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 10 }}>{a.category} · {a.readTime}</div>
                       <div style={{ fontSize: 14, color: '#1A1916', lineHeight: 1.35, marginBottom: 8, fontFamily: 'system-ui', fontWeight: 600 }}>{a.title}</div>
-                      <div style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.5, fontFamily: 'system-ui' }}>{a.description?.substring(0, 80)}...</div>
+                      <div style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.5, fontFamily: 'system-ui' }}>{a.description?.substring(0, 80)}...</div>
                     </Link>
                   ))}
                 </div>

@@ -101,7 +101,7 @@ function HeroMockup({ locale }) {
           <div key={i} style={{ marginBottom: 8 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
               <span style={{ fontSize: 10, color: '#3A3835', fontFamily: 'system-ui' }}>{c.label}</span>
-              <span style={{ fontSize: 9, color: '#8A8680', fontFamily: 'monospace' }}>{barsVisible ? c.pct : 0}%</span>
+              <span style={{ fontSize: 9, color: '#6B6762', fontFamily: 'monospace' }}>{barsVisible ? c.pct : 0}%</span>
             </div>
             <div style={{ height: 4, background: '#F0EDE8', borderRadius: 2, overflow: 'hidden' }}>
               <div style={{ height: '100%', borderRadius: 2, background: c.color, width: barsVisible ? `${c.pct}%` : '0%', transition: `width 0.8s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.12}s` }} />
@@ -187,7 +187,7 @@ export default function OnePage() {
       {/* ═══ 2. CE QUE VOUS OBTENEZ — Feature sections ═══ */}
       <section style={{ padding: '72px 24px 64px' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{p('included.label')}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{p('included.label')}</div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(24px, 4vw, 30px)', color: '#1A1916', letterSpacing: -0.8, textAlign: 'center', marginBottom: 48, lineHeight: 1.2 }}>{p('included.title')}</h2>
           <div className="lp-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 28 }}>
             {p('included.features').map((feature, i) => (
@@ -197,7 +197,7 @@ export default function OnePage() {
                 </div>
                 <div>
                   <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 6, lineHeight: 1.3 }}>{feature.title}</div>
-                  <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.65 }}>{feature.desc}</div>
+                  <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.65 }}>{feature.desc}</div>
                 </div>
               </div>
             ))}
@@ -208,7 +208,7 @@ export default function OnePage() {
       {/* ═══ 3. POUR QUI + IDÉAL POUR — cards animées ═══ */}
       <section style={{ padding: '56px 24px', background: '#fff' }}>
         <div ref={targetRef} style={{ maxWidth: 860, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 40 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 40 }}>
             {locale === 'en' ? 'WHO IS THIS AUDIT FOR' : 'À QUI S\'ADRESSE CET AUDIT'}
           </div>
           <div className="lp-target-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
@@ -251,20 +251,20 @@ export default function OnePage() {
               </div>
             </div>
           </div>
-          <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic', textAlign: 'center', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
+          <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', fontStyle: 'italic', textAlign: 'center', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
         </div>
       </section>
 
       {/* ═══ 4. COMMENT ÇA MARCHE ═══ */}
       <section style={{ padding: '64px 24px' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('steps.label')}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('steps.label')}</div>
           <div className="lp-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
             {p('steps.items').map((step, i) => (
               <div key={i} className="card-interactive" style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24, boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: stepColors[i], marginBottom: 14, letterSpacing: -1, lineHeight: 1 }}>{step.num}</div>
                 <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 6, fontFamily: 'system-ui' }}>{step.title}</div>
-                <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
+                <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
               </div>
             ))}
           </div>
@@ -284,11 +284,11 @@ export default function OnePage() {
       {/* ═══ 6. FAQ ═══ */}
       <section style={{ padding: '0 24px 64px' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('faq.label')}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('faq.label')}</div>
           {p('faq.items').map((faq, i) => (
             <div key={i} style={{ borderBottom: '1px solid #E5E2DC', padding: '20px 0' }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui' }}>{faq.q}</div>
-              <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui' }}>{faq.a}</div>
+              <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui' }}>{faq.a}</div>
             </div>
           ))}
         </div>
@@ -319,7 +319,7 @@ export default function OnePage() {
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 17, color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 6, fontWeight: 600 }}>{p('crossSell.title')}</div>
-            <p style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 12 }}>{p('crossSell.desc')}</p>
+            <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 12 }}>{p('crossSell.desc')}</p>
             <Link href="/pro" className="btn-interactive" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: '#D97757', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none', background: 'rgba(217,119,87,0.06)', padding: '8px 18px', borderRadius: 8, border: '1px solid rgba(217,119,87,0.2)' }}>
               {p('crossSell.cta')}
             </Link>

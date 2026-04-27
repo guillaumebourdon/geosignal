@@ -155,7 +155,7 @@ export default async function handler(req, res) {
           <div style="max-width:560px;margin:0 auto">
             <div style="text-align:center;margin-bottom:32px">
               <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:8px">Detekia</div>
-              <div style="font-family:monospace;font-size:10px;color:#8A8680;letter-spacing:2px">${emailLabel}</div>
+              <div style="font-family:monospace;font-size:10px;color:#6B6762;letter-spacing:2px">${emailLabel}</div>
             </div>
             <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:28px">
               <div style="font-family:Georgia,serif;font-size:64px;color:#F7F5F2;line-height:1;letter-spacing:-2px">${consolidated.scoreAverage}</div>
@@ -166,7 +166,7 @@ export default async function handler(req, res) {
               <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0 0 16px">${consolidated.pagesValid} pages analys\u00e9es, ${(consolidated.patterns || []).length} patterns transverses, ${(consolidated.actionPlan || []).length} actions prioritaires.</p>
               <p style="font-size:14px;color:#1A1916;line-height:1.7;margin:0">Besoin d'aide ? R\u00e9pondez directement \u00e0 cet email.</p>
             </div>
-            <div style="text-align:center;font-size:12px;color:#8A8680;line-height:1.6;padding-top:8px">Beeleven SASU &middot; hello@detekia.fr &middot; detekia.fr</div>
+            <div style="text-align:center;font-size:12px;color:#6B6762;line-height:1.6;padding-top:8px">Beeleven SASU &middot; hello@detekia.fr &middot; detekia.fr</div>
           </div>
         </div>
       `,

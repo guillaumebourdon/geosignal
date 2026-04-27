@@ -12,7 +12,7 @@ function ArrowLink({ href, children }) {
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
-      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#8A8680', marginBottom: 12 }}>{children}</p>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
       <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
         Analyze my website for free →
       </a>
@@ -162,8 +162,8 @@ export default function FaqSchemaFaqpageComboAi() {
               <td style={{ padding: '14px 16px', color: '#3A3835', lineHeight: 1.6 }}>"We offer several shipping options to fit your needs. Contact us to learn more!"</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #E5E2DC', background: '#F7F5F2' }}>
-              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#8A8680' }}>Problem</td>
-              <td style={{ padding: '14px 16px', color: '#8A8680', lineHeight: 1.6 }}>Zero numbers, zero facts. Redirects to a contact form instead of answering. Useless for AI.</td>
+              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#6B6762' }}>Problem</td>
+              <td style={{ padding: '14px 16px', color: '#6B6762', lineHeight: 1.6 }}>Zero numbers, zero facts. Redirects to a contact form instead of answering. Useless for AI.</td>
             </tr>
             <tr>
               <td style={{ padding: '14px 16px', fontWeight: 600, color: '#10A37F' }}>After</td>
@@ -183,8 +183,8 @@ export default function FaqSchemaFaqpageComboAi() {
               <td style={{ padding: '14px 16px', color: '#3A3835', lineHeight: 1.6 }}>"Our innovative solution supports your business every day. Request a demo to discover all its features!"</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #E5E2DC', background: '#F7F5F2' }}>
-              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#8A8680' }}>Problem</td>
-              <td style={{ padding: '14px 16px', color: '#8A8680', lineHeight: 1.6 }}>No information about how it actually works. "Innovative solution" means nothing. Points to a demo instead of answering.</td>
+              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#6B6762' }}>Problem</td>
+              <td style={{ padding: '14px 16px', color: '#6B6762', lineHeight: 1.6 }}>No information about how it actually works. "Innovative solution" means nothing. Points to a demo instead of answering.</td>
             </tr>
             <tr>
               <td style={{ padding: '14px 16px', fontWeight: 600, color: '#10A37F' }}>After</td>
@@ -204,8 +204,8 @@ export default function FaqSchemaFaqpageComboAi() {
               <td style={{ padding: '14px 16px', color: '#3A3835', lineHeight: 1.6 }}>"Our passionate team puts its expertise at your service for over 20 years. Trust us!"</td>
             </tr>
             <tr style={{ borderBottom: '1px solid #E5E2DC', background: '#F7F5F2' }}>
-              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#8A8680' }}>Problem</td>
-              <td style={{ padding: '14px 16px', color: '#8A8680', lineHeight: 1.6 }}>Promotional question. Answer without verifiable numbers. "Passionate" and "trust us" are promotional signals that AI deprioritizes.</td>
+              <td style={{ padding: '14px 16px', fontWeight: 600, color: '#6B6762' }}>Problem</td>
+              <td style={{ padding: '14px 16px', color: '#6B6762', lineHeight: 1.6 }}>Promotional question. Answer without verifiable numbers. "Passionate" and "trust us" are promotional signals that AI deprioritizes.</td>
             </tr>
             <tr>
               <td style={{ padding: '14px 16px', fontWeight: 600, color: '#10A37F' }}>After</td>

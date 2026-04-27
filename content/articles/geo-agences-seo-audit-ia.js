@@ -16,7 +16,7 @@ function OffreCard({ titre, prix, description, inclus }) {
         <strong style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916' }}>{titre}</strong>
         <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', fontWeight: 700 }}>{prix}</span>
       </div>
-      <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', marginBottom: 12 }}>{description}</p>
+      <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', marginBottom: 12 }}>{description}</p>
       <ul style={{ fontFamily: 'system-ui', fontSize: 13, color: '#3A3733', paddingLeft: 16 }}>
         {inclus.map((item, i) => <li key={i} style={{ marginBottom: 4 }}>{item}</li>)}
       </ul>

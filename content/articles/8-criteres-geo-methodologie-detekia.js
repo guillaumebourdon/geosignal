@@ -140,7 +140,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={8} nom="Fraîcheur" poids="Pondération : 5%" couleur="#8A8680">
+      <CritereCard numero={8} nom="Fraîcheur" poids="Pondération : 5%" couleur="#6B6762">
         <p><strong>Ce que c'est :</strong> La récence et la régularité de mise à jour du contenu.</p>
         <p><strong>Comment c'est mesuré :</strong> Date de publication et de modification des pages, fréquence de publication de nouveaux contenus, présence de la date dans le balisage Schema.org et dans le HTML visible.</p>
         <p><strong>Pourquoi ça compte :</strong> Les IA préfèrent les informations récentes pour les sujets évolutifs. Un article de 2021 sur les IA sera moins cité qu'un article de 2026, même si le contenu est similaire. La fraîcheur a moins d'importance pour les sujets stables (mathématiques, histoire) que pour les sujets technologiques.</p>

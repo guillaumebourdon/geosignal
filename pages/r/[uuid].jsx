@@ -147,7 +147,7 @@ function EvidenceBlock({ criterionName, evidence }) {
   const name = criterionName.toLowerCase();
   const Box = ({ label, children }) => (
     <div style={{ background: '#F7F5F2', borderLeft: '3px solid #E5E2DC', padding: '14px 18px', borderRadius: '0 6px 6px 0', margin: '10px 0' }}>
-      {label && <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{label}</div>}
+      {label && <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{label}</div>}
       {children}
     </div>
   );
@@ -156,13 +156,13 @@ function EvidenceBlock({ criterionName, evidence }) {
     return (<>
       {evidence.intro && <Box label="Extrait analysé — 300 premiers caractères du site"><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916', lineHeight: 1.6 }}>{evidence.intro}</div></Box>}
       {evidence.headings?.length > 0 && (<>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Structure H1/H2/H3 détectée</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Structure H1/H2/H3 détectée</div>
         <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden', fontSize: 12 }}>
-          <thead><tr style={{ background: '#F7F5F2' }}><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Niveau</th><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Texte</th></tr></thead>
+          <thead><tr style={{ background: '#F7F5F2' }}><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Niveau</th><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Texte</th></tr></thead>
           <tbody>{evidence.headings.slice(0, 20).map((h, i) => (<tr key={i}><td style={{ padding: '5px 10px', fontFamily: 'monospace', fontSize: 10, color: '#D97757', textTransform: 'uppercase', whiteSpace: 'nowrap', borderBottom: '1px solid #F0EDE8' }}>{h.level}</td><td style={{ padding: '5px 10px', fontSize: 11, color: '#1A1916', borderBottom: '1px solid #F0EDE8' }}>{h.text}</td></tr>))}</tbody>
         </table>
       </>)}
-      {evidence.wordCount != null && <div style={{ fontSize: 12, color: '#8A8680', marginTop: 10 }}>Nombre de mots : <strong style={{ color: '#1A1916' }}>{evidence.wordCount}</strong></div>}
+      {evidence.wordCount != null && <div style={{ fontSize: 12, color: '#6B6762', marginTop: 10 }}>Nombre de mots : <strong style={{ color: '#1A1916' }}>{evidence.wordCount}</strong></div>}
     </>);
   }
 
@@ -171,7 +171,7 @@ function EvidenceBlock({ criterionName, evidence }) {
       {evidence.externalLinks != null && <Box label="Liens sortants vers sources externes"><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916' }}>{evidence.externalLinks} lien(s) externe(s) détecté(s)</div></Box>}
       <Box label="Dates détectées dans le contenu">
         {evidence.dates && Object.keys(evidence.dates).length > 0
-          ? Object.entries(evidence.dates).map(([k, v]) => <div key={k} style={{ fontSize: 12, marginBottom: 4 }}><span style={{ color: '#8A8680' }}>{k}:</span> <strong style={{ color: '#1A1916' }}>{String(v)}</strong></div>)
+          ? Object.entries(evidence.dates).map(([k, v]) => <div key={k} style={{ fontSize: 12, marginBottom: 4 }}><span style={{ color: '#6B6762' }}>{k}:</span> <strong style={{ color: '#1A1916' }}>{String(v)}</strong></div>)
           : <div style={{ fontSize: 12, color: '#D97757' }}>Aucune date détectée</div>}
       </Box>
     </>);
@@ -191,7 +191,7 @@ function EvidenceBlock({ criterionName, evidence }) {
 
   if (/crawlabilit/i.test(name)) {
     return (<>
-      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Contenu de robots.txt</div>
+      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Contenu de robots.txt</div>
       {evidence.robotsTxt && evidence.robotsTxt !== 'Non accessible'
         ? <pre style={{ background: '#1A1916', color: '#F7F5F2', borderRadius: 8, padding: 16, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.6, whiteSpace: 'pre-wrap', wordBreak: 'break-all', margin: '10px 0' }}>{evidence.robotsTxt}</pre>
         : <Box><div style={{ fontSize: 12, color: '#D97757' }}>Non accessible</div></Box>}
@@ -206,10 +206,10 @@ function EvidenceBlock({ criterionName, evidence }) {
       return <Box label="Schémas JSON-LD détectés"><div style={{ fontSize: 13, fontWeight: 600, color: '#D97757' }}>Aucun schéma JSON-LD détecté</div></Box>;
     }
     return (<>
-      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Schémas JSON-LD détectés</div>
+      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Schémas JSON-LD détectés</div>
       <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden' }}>
-        <thead><tr style={{ background: '#F7F5F2' }}><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Type</th><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Propriétés</th></tr></thead>
-        <tbody>{evidence.schemas.map((s, i) => <tr key={i}><td style={{ padding: '8px 10px', fontFamily: 'monospace', fontSize: 11, color: '#1A1916', borderBottom: '1px solid #F0EDE8' }}>{s.type}</td><td style={{ padding: '8px 10px', fontSize: 11, color: '#8A8680', borderBottom: '1px solid #F0EDE8' }}>{(s.properties || []).join(', ')}</td></tr>)}</tbody>
+        <thead><tr style={{ background: '#F7F5F2' }}><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Type</th><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Propriétés</th></tr></thead>
+        <tbody>{evidence.schemas.map((s, i) => <tr key={i}><td style={{ padding: '8px 10px', fontFamily: 'monospace', fontSize: 11, color: '#1A1916', borderBottom: '1px solid #F0EDE8' }}>{s.type}</td><td style={{ padding: '8px 10px', fontSize: 11, color: '#6B6762', borderBottom: '1px solid #F0EDE8' }}>{(s.properties || []).join(', ')}</td></tr>)}</tbody>
       </table>
     </>);
   }
@@ -230,7 +230,7 @@ function EvidenceBlock({ criterionName, evidence }) {
   if (/fra.*cheur/i.test(name)) {
     return <Box label="Dates détectées dans le contenu">
       {evidence.dates && Object.keys(evidence.dates).length > 0
-        ? Object.entries(evidence.dates).map(([k, v]) => <div key={k} style={{ fontSize: 12, marginBottom: 4 }}><span style={{ color: '#8A8680' }}>{k}:</span> <strong style={{ color: '#1A1916' }}>{String(v)}</strong></div>)
+        ? Object.entries(evidence.dates).map(([k, v]) => <div key={k} style={{ fontSize: 12, marginBottom: 4 }}><span style={{ color: '#6B6762' }}>{k}:</span> <strong style={{ color: '#1A1916' }}>{String(v)}</strong></div>)
         : <div style={{ fontSize: 12, color: '#D97757' }}>Aucune date détectée</div>}
     </Box>;
   }
@@ -437,7 +437,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               return (
                 <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: pi.color, lineHeight: 1, flexShrink: 0, minWidth: 24 }}>{i + 1}</div>
-                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.title || a.solution?.substring(0, 80)}</div><div style={{ fontSize: 11, color: '#8A8680', lineHeight: 1.5 }}>{a.criterion || ''}</div></div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.title || a.solution?.substring(0, 80)}</div><div style={{ fontSize: 11, color: '#6B6762', lineHeight: 1.5 }}>{a.criterion || ''}</div></div>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: pi.color, background: pi.bg, padding: '3px 9px', borderRadius: 12, whiteSpace: 'nowrap', flexShrink: 0, border: `1px solid ${pi.color}33` }}>{pi.label}</div>
                 </div>
               );
@@ -459,13 +459,13 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
           <section id="contexte" style={{ marginBottom: 48 }}>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Contexte 2026</div>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Pourquoi la visibilité IA est critique en 2026</h2>
-            <p style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.7, marginBottom: 20 }}>Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information. Voici les données clés qui expliquent pourquoi votre visibilité IA est devenue un enjeu business direct.</p>
+            <p style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.7, marginBottom: 20 }}>Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information. Voici les données clés qui expliquent pourquoi votre visibilité IA est devenue un enjeu business direct.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12, marginBottom: 20 }}>
               {CTX_CARDS.map((card, i) => (
                 <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{card.label}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{card.label}</div>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 28, color: card.color, lineHeight: 1, marginBottom: 6 }}>{card.value}</div>
-                  <p style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.6, margin: 0 }}>{card.text} <span style={{ color: '#B0ABA5' }}>({card.source})</span></p>
+                  <p style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.6, margin: 0 }}>{card.text} <span style={{ color: '#B0ABA5' }}>({card.source})</span></p>
                 </div>
               ))}
             </div>
@@ -483,7 +483,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             <section id="test-ia" style={{ marginBottom: 48 }}>
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Test IA</div>
               <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Test de visibilité IA</h2>
-              <p style={{ fontSize: 13, color: '#8A8680', marginBottom: 20 }}>Nous avons simulé 10 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
+              <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>Nous avons simulé 10 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
 
               <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap' }}>
                 <div style={{ background: '#1A1916', borderRadius: 14, padding: '20px 28px', textAlign: 'center', flexShrink: 0 }}>
@@ -521,7 +521,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                 <div key={i} id={`critere-${i + 1}`} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24, marginBottom: 20, scrollMarginTop: 70 }}>
                   {/* Header */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase' }}>{group} · Critère {i + 1} / 8</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>{group} · Critère {i + 1} / 8</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
                     <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{c.name}</h3>
@@ -539,7 +539,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                     <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>Ce que nous avons trouvé</div>
                     {detailParts.length > 0
                       ? <div style={{ fontSize: 12, color: '#1A1916', marginBottom: 10 }}>{detailParts.join(' · ')}</div>
-                      : c.detail && <div style={{ fontSize: 12, color: '#8A8680', marginBottom: 10, lineHeight: 1.5 }}>{c.detail}</div>
+                      : c.detail && <div style={{ fontSize: 12, color: '#6B6762', marginBottom: 10, lineHeight: 1.5 }}>{c.detail}</div>
                     }
                     <EvidenceBlock criterionName={c.name} evidence={evidence} />
                   </div>
@@ -600,7 +600,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
           <section id="plan-action" style={{ marginBottom: 48 }}>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Plan d'action</div>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Récapitulatif des actions</h2>
-            <p style={{ fontSize: 13, color: '#8A8680', marginBottom: 20 }}>{recos.length} recommandations classées par priorité d'impact.</p>
+            <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{recos.length} recommandations classées par priorité d'impact.</p>
 
             {/* Full action table */}
             <div style={{ overflowX: 'auto', marginBottom: 28 }}>
@@ -620,9 +620,9 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                       <td style={{ padding: '10px 12px', fontFamily: 'Georgia,serif', fontSize: 14, color: pi.color, textAlign: 'center' }}>{i + 1}</td>
                       <td style={{ padding: '10px 12px', textAlign: 'center' }}><span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 8px', borderRadius: 4, background: pi.bg, color: pi.color }}>{pi.label}</span></td>
                       <td style={{ padding: '10px 12px', fontSize: 12, color: '#1A1916', lineHeight: 1.5, maxWidth: 400 }}><strong>{r.title}</strong>{r.solution ? ` — ${r.solution.substring(0, 100)}` : ''}</td>
-                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#8A8680', whiteSpace: 'nowrap' }}>{r.criterion || ''}</td>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#6B6762', whiteSpace: 'nowrap' }}>{r.criterion || ''}</td>
                       <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: pi.color, textAlign: 'center' }}>{r.impact === 'high' ? 'Élevé' : r.impact === 'medium' ? 'Moyen' : 'Faible'}</td>
-                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#8A8680', whiteSpace: 'nowrap', textAlign: 'center' }}>{r.timeframe || ''}</td>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#6B6762', whiteSpace: 'nowrap', textAlign: 'center' }}>{r.timeframe || ''}</td>
                     </tr>
                   );
                 })}</tbody>
@@ -694,19 +694,19 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>Le test de visibilité IA est réalisé par simulation de 10 requêtes via l'IA. Les résultats varient selon le moteur IA, la requête et le moment du test.</p>
 
               {/* 8 criteria table */}
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Les 8 critères et leur pondération</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Les 8 critères et leur pondération</div>
               <div style={{ overflowX: 'auto', marginBottom: 16 }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden', fontSize: 11 }}>
                   <thead><tr style={{ background: '#F7F5F2' }}>
-                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Critère</th>
-                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Poids</th>
-                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Ce qui est mesuré</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Critère</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Poids</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Ce qui est mesuré</th>
                   </tr></thead>
                   <tbody>{METHODOLOGY_TABLE.map((row, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
                       <td style={{ padding: '6px 10px', color: '#1A1916' }}>{row.name}</td>
                       <td style={{ padding: '6px 10px', textAlign: 'center', fontFamily: 'monospace', color: '#D97757' }}>{row.weight}</td>
-                      <td style={{ padding: '6px 10px', color: '#8A8680' }}>{row.measured}</td>
+                      <td style={{ padding: '6px 10px', color: '#6B6762' }}>{row.measured}</td>
                     </tr>
                   ))}</tbody>
                 </table>
@@ -988,7 +988,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
                       <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{name}</a>
                       <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                        <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680' }}>{below}/{validPages.length} sous seuil</span>
+                        <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{below}/{validPages.length} sous seuil</span>
                         <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{d.avgScore}/{d.max}</span>
                       </div>
                     </div>
@@ -1008,7 +1008,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               return (
                 <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: pi.color, lineHeight: 1, flexShrink: 0, minWidth: 24 }}>{i + 1}</div>
-                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.action}</div><div style={{ fontSize: 11, color: '#8A8680' }}>{a.criterion || ''}</div></div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.action}</div><div style={{ fontSize: 11, color: '#6B6762' }}>{a.criterion || ''}</div></div>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: pi.color, padding: '3px 9px', borderRadius: 12, border: `1px solid ${pi.color}33`, background: pi.bg, flexShrink: 0 }}>{pi.label}</div>
                 </div>
               );
@@ -1030,13 +1030,13 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
           <section id="contexte" style={{ marginBottom: 48 }}>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Contexte 2026</div>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Pourquoi la visibilité IA est critique en 2026</h2>
-            <p style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.7, marginBottom: 20 }}>Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information.</p>
+            <p style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.7, marginBottom: 20 }}>Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12, marginBottom: 20 }}>
               {CTX_CARDS.map((card, i) => (
                 <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{card.label}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{card.label}</div>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 28, color: card.color, lineHeight: 1, marginBottom: 6 }}>{card.value}</div>
-                  <p style={{ fontSize: 12, color: '#8A8680', lineHeight: 1.6, margin: 0 }}>{card.text} <span style={{ color: '#B0ABA5' }}>({card.source})</span></p>
+                  <p style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.6, margin: 0 }}>{card.text} <span style={{ color: '#B0ABA5' }}>({card.source})</span></p>
                 </div>
               ))}
             </div>
@@ -1054,7 +1054,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             <section id="test-ia" style={{ marginBottom: 48 }}>
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Test IA consolidé</div>
               <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Test de visibilité IA — 30 requêtes</h2>
-              <p style={{ fontSize: 13, color: '#8A8680', marginBottom: 20 }}>Nous avons simulé 30 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
+              <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>Nous avons simulé 30 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
 
               <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap' }}>
                 <div style={{ background: '#1A1916', borderRadius: 14, padding: '20px 28px', textAlign: 'center', flexShrink: 0 }}>
@@ -1094,7 +1094,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               return (
                 <div key={idx} id={`critere-${idx + 1}`} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24, marginBottom: 20, scrollMarginTop: 70 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase' }}>Critère {idx + 1} / 8</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>Critère {idx + 1} / 8</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
                     <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{criterionName}</h3>
@@ -1107,7 +1107,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <div style={{ height: '100%', width: `${pct}%`, background: col, borderRadius: 3 }} />
                   </div>
 
-                  {below > 0 && <div style={{ fontSize: 12, color: '#8A8680', marginBottom: 16 }}>{below}/{validPages.length} pages sous le seuil 75%</div>}
+                  {below > 0 && <div style={{ fontSize: 12, color: '#6B6762', marginBottom: 16 }}>{below}/{validPages.length} pages sous le seuil 75%</div>}
 
                   {/* Consolidated synthesis */}
                   {cc.synthesis && (
@@ -1172,10 +1172,10 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px 20px', marginBottom: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                       <span style={{ display: 'inline-block', padding: '2px 9px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, letterSpacing: 1, background: sevStyle.bg, color: sevStyle.color }}>{sevStyle.label}</span>
-                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680' }}>{p.criterion || ''}</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{p.criterion || ''}</span>
                     </div>
                     <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6, marginBottom: 6 }}>{p.pattern}</div>
-                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680' }}>{(p.pagesAffected || []).length} pages concernées</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{(p.pagesAffected || []).length} pages concernées</div>
                   </div>
                 );
               })}
@@ -1186,7 +1186,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
           <section id="plan-action" style={{ marginBottom: 48 }}>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Plan d'action site</div>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Actions prioritaires consolidées</h2>
-            <p style={{ fontSize: 13, color: '#8A8680', marginBottom: 20 }}>{actionPlan.length} actions classées par priorité.</p>
+            <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{actionPlan.length} actions classées par priorité.</p>
 
             {actionPlan.map((a, i) => {
               const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact);
@@ -1196,7 +1196,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, flexWrap: 'wrap' }}>
                     <span style={{ fontFamily: 'Georgia,serif', fontSize: 18, color: pi.color, minWidth: 24 }}>{i + 1}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 8px', borderRadius: 4, background: pi.bg, color: pi.color }}>{pi.label}</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680' }}>{a.criterion || ''}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{a.criterion || ''}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 9, marginLeft: 'auto', color: ei.color }}>Effort : {ei.label}</span>
                   </div>
                   <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6 }}>{a.action}</div>
@@ -1323,15 +1323,15 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               <div style={{ overflowX: 'auto', marginBottom: 16 }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden', fontSize: 11 }}>
                   <thead><tr style={{ background: '#F7F5F2' }}>
-                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Critère</th>
-                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Poids</th>
-                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', fontWeight: 400 }}>Ce qui est mesuré</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Critère</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Poids</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Ce qui est mesuré</th>
                   </tr></thead>
                   <tbody>{METHODOLOGY_TABLE.map((row, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
                       <td style={{ padding: '6px 10px', color: '#1A1916' }}>{row.name}</td>
                       <td style={{ padding: '6px 10px', textAlign: 'center', fontFamily: 'monospace', color: '#D97757' }}>{row.weight}</td>
-                      <td style={{ padding: '6px 10px', color: '#8A8680' }}>{row.measured}</td>
+                      <td style={{ padding: '6px 10px', color: '#6B6762' }}>{row.measured}</td>
                     </tr>
                   ))}</tbody>
                 </table>
@@ -1364,11 +1364,11 @@ function ProRecoCard({ r, index, rootUrl }) {
   const pagesList = r._pages || [];
   const pagesNoteJsx = pagesList.length > 1
     ? <div style={{ marginTop: 8 }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', marginBottom: 4 }}>{pagesList.length} pages concernées :</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', marginBottom: 4 }}>{pagesList.length} pages concernées :</div>
         {pagesList.map((u, i) => <div key={i}><a href={u} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', textDecoration: 'none' }}>{u.replace(rootUrl, '') || '/'}</a></div>)}
       </div>
     : pagesList[0]
-      ? <div style={{ marginTop: 8, fontFamily: 'monospace', fontSize: 10, color: '#8A8680' }}>Page : <a href={pagesList[0]} target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>{pagesList[0]}</a></div>
+      ? <div style={{ marginTop: 8, fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>Page : <a href={pagesList[0]} target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>{pagesList[0]}</a></div>
       : null;
 
   return (
@@ -1382,7 +1382,7 @@ function ProRecoCard({ r, index, rootUrl }) {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 14 }}>
           {r.impact && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: pi.bg, color: pi.color }}>Impact {r.impact === 'high' ? 'Élevé' : r.impact === 'medium' ? 'Moyen' : 'Faible'}</span>}
           {r.effort && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: `${ei.color}18`, color: ei.color }}>Effort {ei.label}</span>}
-          {r.timeframe && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: '#F7F5F2', color: '#8A8680', border: '1px solid #E5E2DC' }}>{r.timeframe}</span>}
+          {r.timeframe && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: '#F7F5F2', color: '#6B6762', border: '1px solid #E5E2DC' }}>{r.timeframe}</span>}
         </div>
         {r.problem && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>Le problème</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.problem}</div></div>}
         {r.solution && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#10A37F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>La solution</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.solution}</div></div>}
@@ -1406,7 +1406,7 @@ function ProRecoCard({ r, index, rootUrl }) {
   );
 }
 
-const thStyle = { padding: '9px 12px', fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 400, textAlign: 'center', whiteSpace: 'nowrap' };
+const thStyle = { padding: '9px 12px', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 400, textAlign: 'center', whiteSpace: 'nowrap' };
 
 // ── Sub-components ──────────────────────────────────────────────────────────
 
@@ -1423,16 +1423,16 @@ function CitationCard({ q }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
         <span style={{ display: 'inline-block', padding: '2px 9px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: cited.bg, color: cited.color }}>{cited.icon} {cited.label}</span>
         <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5' }}>{typeLabel}</span>
-        {q.difficulty_to_rank && <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', marginLeft: 'auto' }}>Difficulté : {q.difficulty_to_rank}</span>}
+        {q.difficulty_to_rank && <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', marginLeft: 'auto' }}>Difficulté : {q.difficulty_to_rank}</span>}
       </div>
       <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginTop: 6 }}>{q.query}</div>
       {/* Competitors always visible when present */}
       {competitors.length > 0 && (
-        <div style={{ fontSize: 11, color: '#8A8680', marginTop: 4 }}>{q.cited ? 'Cités avec vous' : 'Cités à votre place'} : {competitors.join(', ')}</div>
+        <div style={{ fontSize: 11, color: '#6B6762', marginTop: 4 }}>{q.cited ? 'Cités avec vous' : 'Cités à votre place'} : {competitors.join(', ')}</div>
       )}
       {open && (
         <div style={{ paddingTop: 10, marginTop: 8, borderTop: '1px solid #F0EDE8' }}>
-          {q.ai_response_excerpt && <div style={{ fontSize: 11, color: '#8A8680', fontStyle: 'italic', marginBottom: 6, background: '#FAFAF9', padding: '8px 12px', borderRadius: 6 }}>{q.ai_response_excerpt}</div>}
+          {q.ai_response_excerpt && <div style={{ fontSize: 11, color: '#6B6762', fontStyle: 'italic', marginBottom: 6, background: '#FAFAF9', padding: '8px 12px', borderRadius: 6 }}>{q.ai_response_excerpt}</div>}
           {q.recommendation && <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.5 }}><strong>Recommandation :</strong> {q.recommendation}</div>}
         </div>
       )}
@@ -1455,7 +1455,7 @@ function RecoCard({ r, index }) {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 14 }}>
           {r.impact && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: pi.bg, color: pi.color }}>Impact {r.impact === 'high' ? 'Élevé' : r.impact === 'medium' ? 'Moyen' : 'Faible'}</span>}
           {r.effort && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: `${ei.color}18`, color: ei.color }}>Effort {ei.label}</span>}
-          {r.timeframe && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: '#F7F5F2', color: '#8A8680', border: '1px solid #E5E2DC' }}>{r.timeframe}</span>}
+          {r.timeframe && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: '#F7F5F2', color: '#6B6762', border: '1px solid #E5E2DC' }}>{r.timeframe}</span>}
         </div>
         {r.problem && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>Le problème</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.problem}</div></div>}
         {r.solution && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#10A37F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>La solution</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.solution}</div></div>}

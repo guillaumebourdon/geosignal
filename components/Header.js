@@ -86,7 +86,7 @@ export default function Header({ variant = 'default', ctaLabel, showLanguageSwit
           {NAV_LINKS.map(({ href, labelKey }) => {
             const isActive = pathname === href || (href === '/blog' && pathname.startsWith('/blog'));
             return (
-              <Link key={href} href={href} className="nav-link-secondary" style={{ fontSize: 13, color: isActive ? '#1A1916' : '#8A8680', fontWeight: isActive ? 600 : 400, textDecoration: 'none', fontFamily: 'system-ui' }}>
+              <Link key={href} href={href} className="nav-link-secondary" style={{ fontSize: 13, color: isActive ? '#1A1916' : '#6B6762', fontWeight: isActive ? 600 : 400, textDecoration: 'none', fontFamily: 'system-ui' }}>
                 {t(labelKey)}
               </Link>
             );

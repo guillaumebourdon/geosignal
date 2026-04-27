@@ -16,8 +16,8 @@ function GroupCard({ color, label, points, criteria, description, priority }) {
         <span style={{ fontFamily: 'monospace', fontSize: 10, color, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600 }}>{label}</span>
         <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#B0ABA5' }}>{points} pts max</span>
       </div>
-      <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', margin: '0 0 8px', lineHeight: 1.5 }}><strong style={{ color: '#3A3835' }}>Critères :</strong> {criteria}</p>
-      <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', margin: '0 0 8px', lineHeight: 1.5 }}>{description}</p>
+      <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', margin: '0 0 8px', lineHeight: 1.5 }}><strong style={{ color: '#3A3835' }}>Critères :</strong> {criteria}</p>
+      <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', margin: '0 0 8px', lineHeight: 1.5 }}>{description}</p>
       <p style={{ fontFamily: 'monospace', fontSize: 10, color, margin: 0, letterSpacing: 1 }}>PRIORITÉ : {priority}</p>
     </div>
   );
@@ -172,7 +172,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
               <span style={{ fontFamily: 'Georgia, serif', fontSize: 18, color, fontWeight: 600 }}>{range}</span>
               <span style={{ fontFamily: 'monospace', fontSize: 10, color, letterSpacing: 2, textTransform: 'uppercase' }}>{label}</span>
             </div>
-            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', margin: 0, lineHeight: 1.6 }}>{text}</p>
+            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', margin: 0, lineHeight: 1.6 }}>{text}</p>
           </div>
         ))}
       </div>

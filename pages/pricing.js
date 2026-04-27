@@ -197,16 +197,16 @@ export default function Pricing() {
       {/* HERO */}
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '64px 24px 0', textAlign: 'center' }}>
         <h1 style={{ fontSize: 'clamp(30px, 5vw, 48px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 14, color: '#1A1916' }}>{t('pricing.hero.title')}</h1>
-        <p style={{ fontSize: 15, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>{t('pricing.hero.subtitle')}</p>
+        <p style={{ fontSize: 15, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>{t('pricing.hero.subtitle')}</p>
       </div>
 
       {/* PLANS */}
       <div className="pricing-cards" style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 48 }}>
         {/* FREE */}
         <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
           <div style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#1A1916', letterSpacing: -1, marginBottom: 4 }}>{t('pricing.free.price')}</div>
-          <div style={{ fontSize: 13, color: '#8A8680', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.free.subtitle')}</div>
+          <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.free.subtitle')}</div>
           <div style={{ fontSize: 11, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>sans inscription</div>
           <Link href="/" style={{ display: 'block', textAlign: 'center', background: '#F0EDE8', color: '#1A1916', padding: '11px 0', borderRadius: 9, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui', marginBottom: 24 }}>{t('pricing.free.cta')}</Link>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
@@ -275,21 +275,21 @@ export default function Pricing() {
           <span style={{ fontSize: 24 }}>🔒</span>
           <div style={{ textAlign: 'left' }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>{t('pricing.guarantee.title')}</div>
-            <div style={{ fontSize: 12, color: '#8A8680', fontFamily: 'system-ui' }}>{t('pricing.guarantee.subtitle')}</div>
+            <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui' }}>{t('pricing.guarantee.subtitle')}</div>
           </div>
         </div>
       </div>
 
       {/* FAQ — Accordion */}
       <div style={{ maxWidth: 600, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{t('pricing.faq.label')}</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{t('pricing.faq.label')}</div>
         {faqItems.map((faq, i) => (
           <details key={i} className="pricing-faq-item" style={{ borderBottom: '1px solid #E5E2DC' }}>
             <summary style={{ padding: '18px 0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, listStyle: 'none' }}>
               <span style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.4 }}>{faq.q}</span>
               <span className="pricing-faq-icon" style={{ fontSize: 18, color: '#B0ABA5', flexShrink: 0, transition: 'transform 0.2s ease', fontWeight: 300 }}>+</span>
             </summary>
-            <div style={{ fontSize: 13, color: '#8A8680', lineHeight: 1.65, fontFamily: 'system-ui', paddingBottom: 18 }}>{faq.a}</div>
+            <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui', paddingBottom: 18 }}>{faq.a}</div>
           </details>
         ))}
       </div>
@@ -309,7 +309,7 @@ export default function Pricing() {
               <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12, fontWeight: 600 }}>{t(`homepage.footer.${section}.label`)}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {t(`homepage.footer.${section}.links`).map((link) => (
-                  <Link key={link.href} href={link.href} style={{ fontSize: 12, color: '#8A8680', textDecoration: 'none', fontFamily: 'system-ui' }}>{link.label}</Link>
+                  <Link key={link.href} href={link.href} style={{ fontSize: 12, color: '#6B6762', textDecoration: 'none', fontFamily: 'system-ui' }}>{link.label}</Link>
                 ))}
               </div>
             </div>
@@ -330,9 +330,9 @@ export default function Pricing() {
             onClick={e => e.stopPropagation()}
             style={{ background: '#fff', borderRadius: 16, maxWidth: 460, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}
           >
-            <button onClick={closeModal} aria-label="Fermer" style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>x</button>
+            <button onClick={closeModal} aria-label="Fermer" style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>x</button>
             <h2 id="modal-title" style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 10, lineHeight: 1.2 }}>{selectedPlan === 'pro' ? t('pricing.modalPro.title') : t('pricing.modal.title')}</h2>
-            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.65, marginBottom: 24 }}>{selectedPlan === 'pro' ? t('pricing.modalPro.subtitle') : t('pricing.modal.subtitle')}</p>
+            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.65, marginBottom: 24 }}>{selectedPlan === 'pro' ? t('pricing.modalPro.subtitle') : t('pricing.modal.subtitle')}</p>
 
             <div style={{ marginBottom: 20 }}>
               <input
@@ -361,7 +361,7 @@ export default function Pricing() {
                 {t('pricing.modal.errorProInsufficient_cta')}
               </button>
             )}
-            <button onClick={closeModal} style={{ display: 'block', width: '100%', background: 'transparent', color: '#8A8680', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
+            <button onClick={closeModal} style={{ display: 'block', width: '100%', background: 'transparent', color: '#6B6762', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
               {t('pricing.modal.cancelButton')}
             </button>
           </div>
@@ -383,7 +383,7 @@ export default function Pricing() {
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{selectedPlan === 'pro' ? t('pricing.proCard.label') : t('pricing.report.label')}</div>
                 <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{selectedPlan === 'pro' ? t('pricing.proCard.price') : t('pricing.report.price')} &middot; {selectedPlan === 'pro' ? t('pricing.proCard.paymentInfo') : t('pricing.report.paymentInfo')}</div>
               </div>
-              <button onClick={closeCheckout} aria-label="Fermer" style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>x</button>
+              <button onClick={closeCheckout} aria-label="Fermer" style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>x</button>
             </div>
             <div style={{ padding: '16px 0 0' }}>
               <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>

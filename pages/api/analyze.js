@@ -710,7 +710,7 @@ export default async function handler(req, res) {
           <p><strong>Verdict :</strong> ${claude.verdict}</p>
           <p><strong>Date :</strong> ${new Date().toLocaleString('fr-FR')}</p>
           <hr style="border: 1px solid #E5E2DC;" />
-          <p style="color: #8A8680; font-size: 12px;">Détails des critères :</p>
+          <p style="color: #6B6762; font-size: 12px;">Détails des critères :</p>
           ${responseData.criteria.map(c =>
             `<p style="font-size: 12px; margin: 4px 0;"><strong>${c.name}</strong> : ${c.score}/${c.max}</p>`
           ).join('')}

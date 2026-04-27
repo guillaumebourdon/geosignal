@@ -72,7 +72,7 @@ function ArticleContent({ slug, locale, fallbackText }) {
   const Content = ContentEN || ContentFR;
   if (Content) return <Content />;
   return (
-    <div style={{ color: '#8A8680', fontFamily: 'system-ui', fontSize: 15, lineHeight: 1.75, padding: '48px 0', textAlign: 'center', border: '1px dashed #E5E2DC', borderRadius: 10 }}>
+    <div style={{ color: '#6B6762', fontFamily: 'system-ui', fontSize: 15, lineHeight: 1.75, padding: '48px 0', textAlign: 'center', border: '1px dashed #E5E2DC', borderRadius: 10 }}>
       {fallbackText} — <code style={{ fontFamily: 'monospace', fontSize: 13, background: 'rgba(229,226,220,0.5)', padding: '2px 6px', borderRadius: 4 }}>content/articles/{slug}.js</code>
     </div>
   );
@@ -84,7 +84,7 @@ export default function ArticlePage({ article, related }) {
 
   if (!article) return null;
 
-  const catColor = CATEGORY_COLORS[article.category] || '#8A8680';
+  const catColor = CATEGORY_COLORS[article.category] || '#6B6762';
   const canonicalUrl = `https://detekia.fr${locale === 'fr' ? '' : '/en'}/blog/${article.slug}`;
   const ogLocale = locale === 'fr' ? 'fr_FR' : 'en_US';
 
@@ -146,7 +146,7 @@ export default function ArticlePage({ article, related }) {
             <span>›</span>
             <Link href="/blog" style={{ color: '#B0ABA5', textDecoration: 'none' }}>{t('blog.article.breadcrumbBlog')}</Link>
             <span>›</span>
-            <span style={{ color: '#8A8680' }}>{article.title}</span>
+            <span style={{ color: '#6B6762' }}>{article.title}</span>
           </nav>
 
           {/* ARTICLE HEADER */}
@@ -188,10 +188,10 @@ export default function ArticlePage({ article, related }) {
           {/* RELATED ARTICLES */}
           {related && related.length > 0 && (
             <div style={{ marginTop: 64 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>{t('blog.article.relatedTitle')}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>{t('blog.article.relatedTitle')}</div>
               <div className="related-grid">
                 {related.map(rel => {
-                  const rc = CATEGORY_COLORS[rel.category] || '#8A8680';
+                  const rc = CATEGORY_COLORS[rel.category] || '#6B6762';
                   return (
                     <Link
                       key={rel.slug}
@@ -217,7 +217,7 @@ export default function ArticlePage({ article, related }) {
             <span style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#1A1916' }}>{t('common.siteName')}</span>
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
               {t('blog.footer.links').map((link) => (
-                <Link key={link.href} href={link.href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', textDecoration: 'none' }}>{link.label}</Link>
+                <Link key={link.href} href={link.href} style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', textDecoration: 'none' }}>{link.label}</Link>
               ))}
             </div>
           </div>
@@ -235,7 +235,7 @@ export default function ArticlePage({ article, related }) {
         .article-body code { font-family: monospace; font-size: 14px; background: rgba(229,226,220,0.5); padding: 2px 6px; border-radius: 4px; }
         .article-body pre { font-family: monospace; font-size: 13px; background: #1A1916; color: #F7F5F2; border-radius: 10px; padding: 24px; overflow-x: auto; margin: 24px 0; }
         .article-body pre code { background: none; padding: 0; font-size: 13px; }
-        .article-body blockquote { border-left: 3px solid #D97757; padding-left: 20px; margin: 24px 0; font-style: italic; font-family: Georgia, serif; color: #8A8680; }
+        .article-body blockquote { border-left: 3px solid #D97757; padding-left: 20px; margin: 24px 0; font-style: italic; font-family: Georgia, serif; color: #6B6762; }
         .article-body img { border-radius: 10px; border: 1px solid #E5E2DC; max-width: 100%; height: auto; }
         .article-body a { color: #D97757; text-decoration: none; }
         .article-body a:hover { text-decoration: underline; }

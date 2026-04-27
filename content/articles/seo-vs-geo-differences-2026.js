@@ -204,8 +204,8 @@ export default function SeoVsGeoDifferences2026() {
             ].map(([crit, seo, geo], i) => (
               <tr key={crit} style={{ background: i % 2 === 0 ? '#fff' : '#F7F5F2', borderBottom: '1px solid #E5E2DC' }}>
                 <td style={{ padding: '11px 16px', fontWeight: 600, color: '#1A1916' }}>{crit}</td>
-                <td style={{ padding: '11px 16px', color: '#8A8680' }}>{seo}</td>
-                <td style={{ padding: '11px 16px', color: '#8A8680' }}>{geo}</td>
+                <td style={{ padding: '11px 16px', color: '#6B6762' }}>{seo}</td>
+                <td style={{ padding: '11px 16px', color: '#6B6762' }}>{geo}</td>
               </tr>
             ))}
           </tbody>
