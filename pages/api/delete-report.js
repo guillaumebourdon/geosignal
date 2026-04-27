@@ -1,4 +1,3 @@
-// TODO [chantier corrections finales] : passer DELETE_REPORT_SECRET en header Authorization (au lieu de query string)
 import { Redis } from '@upstash/redis';
 
 const redis = new Redis({
@@ -11,8 +10,18 @@ const DELETE_SECRET = process.env.DELETE_REPORT_SECRET;
 export default async function handler(req, res) {
   if (req.method !== 'DELETE') return res.status(405).json({ error: 'DELETE only' });
 
-  const { id, secret } = req.query;
+  const { id } = req.query;
   if (!id) return res.status(400).json({ error: 'Missing id' });
+
+  // Read secret from Authorization header (preferred) or query string (deprecated fallback)
+  const authHeader = req.headers.authorization?.replace('Bearer ', '');
+  const querySecret = req.query.secret;
+  const secret = authHeader || querySecret;
+
+  if (querySecret && !authHeader) {
+    console.warn('[delete-report] Deprecated: secret passed as query string. Use Authorization: Bearer <secret> header.');
+  }
+
   if (!DELETE_SECRET || secret !== DELETE_SECRET) return res.status(401).json({ error: 'Unauthorized' });
 
   try {

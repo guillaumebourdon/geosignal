@@ -1,4 +1,3 @@
-// TODO [chantier corrections finales] : passer PRO_ADMIN_SECRET en header Authorization (au lieu de query string)
 /**
  * Manual consolidation + PDF trigger — bypasses QStash signature.
  * Protected by admin secret. Use when QStash callback fails silently.
@@ -30,7 +29,15 @@ const { callWithRetry, parseJson: parseHaikuJson, parseJsonArray: parseHaikuArra
 function callHaikuWithRetry(params, maxRetries = 3) { return callWithRetry(anthropic, params, maxRetries); }
 
 export default async function handler(req, res) {
-  const { siteJobId, secret, action } = req.query;
+  const { siteJobId, action } = req.query;
+
+  // Read secret from Authorization header (preferred) or query string (deprecated fallback)
+  const authHeader = req.headers.authorization?.replace('Bearer ', '');
+  const querySecret = req.query.secret;
+  const secret = authHeader || querySecret;
+  if (querySecret && !authHeader) {
+    console.warn('[pro-trigger] Deprecated: secret passed as query string. Use Authorization: Bearer <secret> header.');
+  }
 
   if (!ADMIN_SECRET || secret !== ADMIN_SECRET) return res.status(401).json({ error: 'Unauthorized' });
   if (!siteJobId) return res.status(400).json({ error: 'Missing siteJobId' });
