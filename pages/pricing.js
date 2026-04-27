@@ -7,6 +7,7 @@ import Head from 'next/head';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
+import { useFocusTrap } from '../lib/useFocusTrap';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -53,6 +54,8 @@ export default function Pricing() {
 
   const inputRef = useRef(null);
   const triggerRef = useRef(null);
+  const modalTrapRef = useFocusTrap(showModal);
+  const checkoutTrapRef = useFocusTrap(showCheckout);
 
   const freeFeatures = t('pricing.free.features');
   const reportFeatures = t('pricing.report.features');
@@ -324,6 +327,7 @@ export default function Pricing() {
           style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}
         >
           <div
+            ref={modalTrapRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
@@ -375,6 +379,8 @@ export default function Pricing() {
           style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}
         >
           <div
+            ref={checkoutTrapRef}
+            role="dialog" aria-modal="true"
             onClick={e => e.stopPropagation()}
             style={{ background: '#fff', borderRadius: 14, maxWidth: 500, width: '100%', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}
           >

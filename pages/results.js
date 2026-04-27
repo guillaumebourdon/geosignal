@@ -5,6 +5,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
+import { useFocusTrap } from '../lib/useFocusTrap';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 

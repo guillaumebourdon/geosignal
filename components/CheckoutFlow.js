@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import { useTranslation } from '../lib/useTranslation';
+import { useFocusTrap } from '../lib/useFocusTrap';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -35,6 +36,8 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
   const [clientSecret, setClientSecret] = useState(null);
   const [showFallback, setShowFallback] = useState(false);
   const inputRef = useRef(null);
+  const modalTrapRef = useFocusTrap(showModal && !showCheckout);
+  const checkoutTrapRef = useFocusTrap(showCheckout);
 
   useEffect(() => {
     if (showModal) {
@@ -135,7 +138,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
       {/* URL Modal */}
       {showModal && !showCheckout && (
         <div onClick={handleClose} style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>
-          <div role="dialog" aria-modal="true" onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 16, maxWidth: 460, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
+          <div ref={modalTrapRef} role="dialog" aria-modal="true" onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 16, maxWidth: 460, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
             <button onClick={handleClose} aria-label="Fermer" style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 10, lineHeight: 1.2 }}>{modalTitle}</h2>
             <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.65, marginBottom: 24 }}>{modalSubtitle}</p>
@@ -168,7 +171,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
       {/* Stripe Checkout */}
       {showCheckout && clientSecret && (
         <div onClick={handleClose} style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 14, maxWidth: 500, width: '100%', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
+          <div ref={checkoutTrapRef} role="dialog" aria-modal="true" onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 14, maxWidth: 500, width: '100%', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
             <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{label}</div>
