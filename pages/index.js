@@ -64,7 +64,7 @@ function CriteriaCard({ icon, color, name, desc, checks, tag, tagColor }) {
   );
 }
 
-/* ─── Hero product mockup — MOD 2 ───────────────────────── */
+/* ─── Hero product mockup ────────────────────────────────── */
 function ProductMockup() {
   const { t } = useTranslation();
   return (
