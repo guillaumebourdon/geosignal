@@ -265,6 +265,8 @@ export default function Results() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState(null);
+  const [checkoutPlan, setCheckoutPlan] = useState('rapport');
+  const [checkError, setCheckError] = useState('');
   const [captureEmail, setCaptureEmail] = useState('');
   const [captureSent, setCaptureSent] = useState(false);
   const [captureLoading, setCaptureLoading] = useState(false);
@@ -288,19 +290,44 @@ export default function Results() {
     } catch (_) { setCaptureSent(true); } finally { setCaptureLoading(false); }
   }
 
-  const fetchClientSecret = useCallback(() =>
-    fetch('/api/create-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ plan: 'rapport', url, score: result?.score, locale: router.locale }) })
-    .then(r => r.json()).then(d => d.clientSecret),
-  [url, result]);
-
-  async function handleCheckout() {
+  async function handleCheckout(selectedPlan) {
+    const plan = selectedPlan || 'rapport';
+    setCheckoutPlan(plan);
     setCheckoutLoading(true);
-    try { const secret = await fetchClientSecret(); if (secret) { setClientSecret(secret); setShowCheckout(true); } }
-    catch (e) { console.error('Checkout error:', e); }
+    setCheckError('');
+
+    // Pre-check for Pro plan (one-page is already confirmed by the free audit)
+    if (plan === 'pro') {
+      try {
+        const checkRes = await fetch('/api/pre-check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, plan: 'pro' }),
+        });
+        const check = await checkRes.json();
+        if (!check.proAuditable) {
+          setCheckError(check.onePageAuditable
+            ? t('pricing.modal.errorProInsufficient')
+            : t('pricing.modal.errorAntibot'));
+          setCheckoutLoading(false);
+          return;
+        }
+      } catch { /* fail-open */ }
+    }
+
+    try {
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, url, score: result?.score, locale: router.locale }),
+      });
+      const data = await res.json();
+      if (data.clientSecret) { setClientSecret(data.clientSecret); setShowCheckout(true); }
+    } catch (e) { console.error('Checkout error:', e); }
     finally { setCheckoutLoading(false); }
   }
 
-  function closeCheckout() { setShowCheckout(false); setClientSecret(null); }
+  function closeCheckout() { setShowCheckout(false); setClientSecret(null); setCheckError(''); }
 
   useEffect(() => { const i = setInterval(() => setLoadingDots(d => d.length >= 3 ? '' : d + '.'), 400); return () => clearInterval(i); }, []);
 
@@ -464,13 +491,18 @@ export default function Results() {
             <div style={{ marginTop: 28, marginBottom: 24 }}>
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('results.doubleCta.intro')}</div>
               <div className="results-double-cta" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-                <Link href="/one-page" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)', textAlign: 'center' }}>
+                <button onClick={() => handleCheckout('rapport')} disabled={checkoutLoading} className="btn-interactive" style={{ background: '#D97757', color: '#fff', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)', textAlign: 'center', opacity: checkoutLoading ? 0.7 : 1 }}>
                   {t('results.doubleCta.onepage')}
-                </Link>
-                <Link href="/pro" className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', border: '1px solid rgba(247,245,242,0.15)', boxShadow: '0 4px 16px rgba(26,25,22,0.2)', textAlign: 'center' }}>
+                </button>
+                <button onClick={() => handleCheckout('pro')} disabled={checkoutLoading} className="btn-interactive" style={{ background: '#1A1916', color: '#F7F5F2', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, border: '1px solid rgba(247,245,242,0.15)', cursor: checkoutLoading ? 'wait' : 'pointer', fontFamily: 'system-ui', boxShadow: '0 4px 16px rgba(26,25,22,0.2)', textAlign: 'center', opacity: checkoutLoading ? 0.7 : 1 }}>
                   {t('results.doubleCta.pro')}
-                </Link>
+                </button>
               </div>
+              {checkError && (
+                <div style={{ textAlign: 'center', marginTop: 12 }}>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', lineHeight: 1.5 }}>{checkError}</div>
+                </div>
+              )}
             </div>
           )}
 
@@ -617,8 +649,8 @@ export default function Results() {
           <div onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 14, maxWidth: 500, width: '100%', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
             <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{t('results.checkout.title')}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{t('results.checkout.subtext')}</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 600, color: '#1A1916' }}>{checkoutPlan === 'pro' ? t('pricing.proCard.label') : t('results.checkout.title')}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 3 }}>{checkoutPlan === 'pro' ? (t('pricing.proCard.price') + ' · ' + t('pricing.proCard.paymentInfo')) : t('results.checkout.subtext')}</div>
               </div>
               <button onClick={closeCheckout} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#8A8680', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>×</button>
             </div>
@@ -645,7 +677,7 @@ export default function Results() {
           .reco-preview-cta > div:last-child { align-items: flex-start !important; width: 100% !important; }
           .reco-preview-cta > div:last-child button { width: 100% !important; }
           .results-double-cta { flex-direction: column !important; }
-          .results-double-cta a { width: 100% !important; }
+          .results-double-cta button { width: 100% !important; }
           .results-capture-share { flex-direction: column !important; }
         }
       `}</style>
