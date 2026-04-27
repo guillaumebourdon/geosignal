@@ -1,6 +1,7 @@
 import { Redis } from '@upstash/redis';
 import Head from 'next/head';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import BeelevenContactModal from '../../components/BeelevenContactModal';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -287,6 +288,7 @@ export default function ReportRouter(props) {
 
 function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCode }) {
   const [downloading, setDownloading] = useState(false);
+  const [showContact, setShowContact] = useState(false);
   const trackedScrolls = useRef(new Set());
   const startTime = useRef(Date.now());
 
@@ -672,10 +674,10 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 8 }}>ALLER PLUS LOIN</div>
               <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Besoin d'aide pour implémenter ?</h2>
               <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations pour vous.</p>
-              <a href="mailto:hello@detekia.fr?subject=Audit GEO — suite du rapport" onClick={() => track('click-beeleven')}
-                style={{ display: 'inline-block', background: 'transparent', color: '#D97757', padding: '12px 32px', borderRadius: 10, fontSize: 14, fontWeight: 600, textDecoration: 'none', border: '1px solid #D97757' }}>
+              <button onClick={() => { track('click-beeleven'); setShowContact(true); }}
+                style={{ display: 'inline-block', background: 'transparent', color: '#D97757', padding: '12px 32px', borderRadius: 10, fontSize: 14, fontWeight: 600, border: '1px solid #D97757', cursor: 'pointer', fontFamily: 'system-ui' }}>
                 Discutons-en →
-              </a>
+              </button>
             </div>
           </section>
 
@@ -731,6 +733,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
           </footer>
         </main>
       </div>
+      <BeelevenContactModal open={showContact} onClose={() => setShowContact(false)} prefillUrl={url || ''} />
     </>
   );
 }
@@ -741,6 +744,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
 
 function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
   const [downloading, setDownloading] = useState(false);
+  const [showContact, setShowContact] = useState(false);
   const trackedScrolls = useRef(new Set());
   const startTime = useRef(Date.now());
 
@@ -1232,7 +1236,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 8 }}>ALLER PLUS LOIN</div>
               <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Besoin d'aide pour implémenter ces recommandations ?</h3>
               <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations pour vous.</p>
-              <a href="mailto:hello@detekia.fr?subject=Audit GEO Pro — suite du rapport" onClick={() => track('click-beeleven')} style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>Discutons-en →</a>
+              <button onClick={() => { track('click-beeleven'); setShowContact(true); }} style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: 'system-ui' }}>Discutons-en →</button>
             </div>
           </section>
 
@@ -1353,6 +1357,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
           </footer>
         </main>
       </div>
+      <BeelevenContactModal open={showContact} onClose={() => setShowContact(false)} prefillUrl={url || ''} />
     </>
   );
 }

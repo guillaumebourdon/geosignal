@@ -3,12 +3,14 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 import Header from '../components/Header';
+import BeelevenContactModal from '../components/BeelevenContactModal';
 import { getAllArticles } from '../lib/articles';
 
 export default function Success() {
   const router = useRouter();
   const { session_id, url } = router.query;
   const [status, setStatus] = useState('verifying');
+  const [showContact, setShowContact] = useState(false);
   const [email, setEmail] = useState('');
   const [plan, setPlan] = useState('rapport');
   const [siteUrl, setSiteUrl] = useState('');
@@ -155,10 +157,10 @@ export default function Success() {
               <div className="reveal reveal-d3 success-cta-grid" style={{ display: 'grid', gridTemplateColumns: isPro ? '1fr' : '1fr 1fr', gap: 14, marginBottom: 40, maxWidth: isPro ? 440 : undefined, margin: isPro ? '0 auto' : undefined }}>
 
                 {/* CTA 1: Accompagnement */}
-                <a href="mailto:hello@detekia.fr?subject=Accompagnement GEO — suite du rapport" className="card-interactive" style={{
+                <button onClick={() => setShowContact(true)} className="card-interactive" style={{
                   background: '#1A1916', borderRadius: 14, padding: '28px 24px', textDecoration: 'none',
                   display: 'flex', flexDirection: 'column', border: '1px solid rgba(247,245,242,0.08)',
-                  position: 'relative', overflow: 'hidden',
+                  position: 'relative', overflow: 'hidden', cursor: 'pointer', textAlign: 'left',
                 }}>
                   <div style={{ position: 'absolute', bottom: -20, right: -20, width: 100, height: 100, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
                   <div className="success-icon-pop" style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(217,119,87,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
@@ -167,7 +169,7 @@ export default function Success() {
                   <div style={{ fontSize: 15, color: '#F7F5F2', fontWeight: 600, fontFamily: 'system-ui', marginBottom: 6 }}>Accompagnement personnalisé</div>
                   <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Beeleven implémente les recommandations pour vous.</div>
                   <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#D97757', fontWeight: 600 }}>Discutons-en →</div>
-                </a>
+                </button>
 
                 {/* CTA 2: Analyser tout le site — one-page only */}
                 {!isPro && (
@@ -217,6 +219,7 @@ export default function Success() {
         )}
 
       </main>
+      <BeelevenContactModal open={showContact} onClose={() => setShowContact(false)} prefillUrl={url || ''} />
         <style>{`
           @keyframes spin { to { transform: rotate(360deg); } }
           * { box-sizing: border-box; margin: 0; padding: 0; }

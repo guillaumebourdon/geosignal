@@ -4,7 +4,7 @@ import { useTranslation } from '../lib/useTranslation';
 export default function BeelevenContactModal({ open, onClose, prefillUrl = '' }) {
   const { t } = useTranslation();
   const b = t('beelevenContact');
-  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', website: prefillUrl, message: '' });
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', company: '', website: prefillUrl, message: '' });
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const overlayRef = useRef(null);
   const firstInputRef = useRef(null);
@@ -49,11 +49,11 @@ export default function BeelevenContactModal({ open, onClose, prefillUrl = '' })
       const res = await fetch('/api/contact-beeleven', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, pageUrl: window.location.href }),
+        body: JSON.stringify({ ...form, pageUrl: window.location.href, locale: document.documentElement.lang || 'fr' }),
       });
       if (!res.ok) throw new Error();
       setStatus('success');
-      setForm({ firstName: '', lastName: '', email: '', website: '', message: '' });
+      setForm({ firstName: '', lastName: '', email: '', company: '', website: '', message: '' });
     } catch {
       setStatus('error');
     }
@@ -101,12 +101,16 @@ export default function BeelevenContactModal({ open, onClose, prefillUrl = '' })
                 <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} style={inputStyle} />
               </div>
               <div>
-                <label style={labelStyle}>{b.website}</label>
+                <label style={labelStyle}>{b.company || 'Entreprise'} <span style={{ color: '#B0ABA5', fontWeight: 400 }}>(optionnel)</span></label>
+                <input value={form.company} onChange={e => setForm(f => ({ ...f, company: e.target.value }))} style={inputStyle} />
+              </div>
+              <div>
+                <label style={labelStyle}>{b.website} <span style={{ color: '#B0ABA5', fontWeight: 400 }}>(optionnel)</span></label>
                 <input value={form.website} onChange={e => setForm(f => ({ ...f, website: e.target.value }))} placeholder="https://…" style={inputStyle} />
               </div>
               <div>
                 <label style={labelStyle}>{b.message}</label>
-                <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} placeholder={b.messagePlaceholder} rows={3} style={{ ...inputStyle, resize: 'vertical', minHeight: 72 }} />
+                <textarea required value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} placeholder={b.messagePlaceholder} rows={4} style={{ ...inputStyle, resize: 'vertical', minHeight: 100 }} />
               </div>
 
               {status === 'error' && (
