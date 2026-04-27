@@ -123,6 +123,8 @@ export default async function handler(req, res) {
     fetchCheck(`${origin}/sitemap_index.xml`, 6000),
   ]);
 
+  console.log(`[pre-check] ${hostname} — page status: ${pageResult.status}, ok: ${pageResult.ok}, error: ${pageResult.error || 'none'}, body: ${pageResult.body?.length || 0} chars`);
+
   // 1. Check if the page is accessible at all
   if (pageResult.error === 'timeout' || pageResult.status === 0) {
     const result = { onePageAuditable: false, proAuditable: false, reason: 'site_unreachable', pagesFound: 0 };
@@ -131,24 +133,37 @@ export default async function handler(req, res) {
     return res.status(200).json(result);
   }
 
-  // 2. Check for anti-bot on the page
-  if (pageResult.status === 403 || (pageResult.ok && detectAntiBot(pageResult.body))) {
+  // 2. Check for anti-bot: 403 status OR anti-bot patterns in response body (regardless of status code)
+  const isAntiBot = pageResult.status === 403
+    || pageResult.status === 429
+    || detectAntiBot(pageResult.body || '');
+  if (isAntiBot) {
+    console.log(`[pre-check] ${hostname} — ANTIBOT DETECTED (status: ${pageResult.status})`);
     const result = { onePageAuditable: false, proAuditable: false, reason: 'antibot_detected', pagesFound: 0 };
     try { await redis.set(cacheKey, result, { ex: CACHE_TTL }); } catch {}
     logPrecheck(hostname, plan, result);
     return res.status(200).json(result);
   }
 
-  // 3. Check for substantial content
-  if (pageResult.ok && !hasSubstantialContent(pageResult.body)) {
+  // 3. Check page is actually accessible (non-200 without anti-bot = site error)
+  if (!pageResult.ok) {
+    console.log(`[pre-check] ${hostname} — page not OK (status: ${pageResult.status})`);
+    const result = { onePageAuditable: false, proAuditable: false, reason: 'site_unreachable', pagesFound: 0 };
+    try { await redis.set(cacheKey, result, { ex: CACHE_TTL }); } catch {}
+    logPrecheck(hostname, plan, result);
+    return res.status(200).json(result);
+  }
+
+  // 4. Check for substantial content
+  if (!hasSubstantialContent(pageResult.body)) {
     const result = { onePageAuditable: false, proAuditable: false, reason: 'no_content', pagesFound: 0 };
     try { await redis.set(cacheKey, result, { ex: CACHE_TTL }); } catch {}
     logPrecheck(hostname, plan, result);
     return res.status(200).json(result);
   }
 
-  // Page is auditable for one-page
-  const onePageAuditable = pageResult.ok;
+  // Page passed all checks — auditable for one-page
+  const onePageAuditable = true;
 
   // 4. Check Pro auditability: count available pages
   let pagesFound = 1; // at least the homepage
@@ -181,6 +196,7 @@ export default async function handler(req, res) {
     : 'ok';
 
   const result = { onePageAuditable, proAuditable, reason, pagesFound };
+  console.log(`[pre-check] ${hostname} — result: onePage=${onePageAuditable}, pro=${proAuditable}, pages=${pagesFound}, reason=${reason}`);
   try { await redis.set(cacheKey, result, { ex: CACHE_TTL }); } catch {}
   logPrecheck(hostname, plan, result);
   return res.status(200).json(result);
