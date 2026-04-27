@@ -210,46 +210,50 @@ export default function Pro() {
         </div>
       </section>
 
-      {/* ═══ 3. POUR QUI + IDÉAL POUR — combined block ═══ */}
+      {/* ═══ 3. POUR QUI + IDÉAL POUR — cards animées ═══ */}
       <section style={{ padding: '56px 24px', background: '#fff' }}>
-        <div ref={targetRef} style={{ maxWidth: 820, margin: '0 auto' }}>
+        <div ref={targetRef} style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 40 }}>
             {locale === 'en' ? 'WHO IS THIS AUDIT FOR' : 'À QUI S\'ADRESSE CET AUDIT'}
           </div>
-          <div className="lp-target-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: 0 }}>
+          <div className="lp-target-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
             {/* Left — Profiles */}
-            <div style={{ padding: '0 36px 0 0' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>
+            <div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 14, fontWeight: 600 }}>
                 {locale === 'en' ? 'YOUR PROFILE' : 'VOTRE PROFIL'}
               </div>
-              {p('audience.items').map((item, i) => (
-                <div key={i} className="lp-target-item" style={{
-                  fontFamily: 'Georgia, serif', fontSize: 'clamp(17px, 2.2vw, 21px)', color: '#1A1916',
-                  padding: '10px 0', borderBottom: '1px solid #F0EDE8', letterSpacing: -0.3, lineHeight: 1.3,
-                  opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateX(0)' : 'translateX(-12px)',
-                  transition: `opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06}s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06}s`,
-                }}>
-                  {item}
-                </div>
-              ))}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {p('audience.items').map((item, i) => (
+                  <div key={i} className="card-interactive" style={{
+                    background: '#F7F5F2', border: '1px solid #E5E2DC', borderLeft: '3px solid #D97757',
+                    borderRadius: '4px 10px 10px 4px', padding: '12px 16px',
+                    fontFamily: 'system-ui', fontSize: 14, color: '#1A1916', fontWeight: 500,
+                    opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateY(0)' : 'translateY(10px)',
+                    transition: `opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05}s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05}s, box-shadow 0.25s, border-color 0.25s`,
+                  }}>
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
-            {/* Divider */}
-            <div style={{ background: '#E5E2DC' }} />
             {/* Right — Site types */}
-            <div style={{ padding: '0 0 0 36px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>
+            <div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 14, fontWeight: 600 }}>
                 {locale === 'en' ? 'YOU ANALYZE' : 'VOUS ANALYSEZ'}
               </div>
-              {p('sites.items').map((item, i) => (
-                <div key={i} className="lp-target-item" style={{
-                  fontFamily: 'Georgia, serif', fontSize: 'clamp(17px, 2.2vw, 21px)', color: '#1A1916',
-                  padding: '10px 0', borderBottom: '1px solid #F0EDE8', letterSpacing: -0.3, lineHeight: 1.3,
-                  opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateX(12px)' : 'translateX(24px)',
-                  transition: `opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06 + 0.15}s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06 + 0.15}s`,
-                }}>
-                  {item}
-                </div>
-              ))}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {p('sites.items').map((item, i) => (
+                  <div key={i} className="card-interactive" style={{
+                    background: '#F7F5F2', border: '1px solid #E5E2DC', borderLeft: '3px solid #10A37F',
+                    borderRadius: '4px 10px 10px 4px', padding: '12px 16px',
+                    fontFamily: 'system-ui', fontSize: 14, color: '#1A1916', fontWeight: 500,
+                    opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateY(0)' : 'translateY(10px)',
+                    transition: `opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05 + 0.2}s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05 + 0.2}s, box-shadow 0.25s, border-color 0.25s`,
+                  }}>
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <p style={{ fontSize: 14, color: '#8A8680', fontFamily: 'system-ui', fontStyle: 'italic', textAlign: 'center', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
@@ -333,8 +337,6 @@ export default function Pro() {
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: rgba(247,245,242,0.3); }
-        .lp-target-item { transition: color 0.2s; }
-        .lp-target-item:hover { color: #D97757 !important; }
         @media (max-width: 767px) {
           .lp-hero-grid { grid-template-columns: 1fr !important; gap: 36px !important; text-align: center; }
           .lp-hero-mockup { justify-content: center !important; }
@@ -342,10 +344,7 @@ export default function Pro() {
           .lp-hero-grid h1 { font-size: clamp(30px, 8vw, 40px) !important; }
           .lp-hero-grid p { margin: 0 auto 32px !important; }
           .lp-features-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-          .lp-target-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .lp-target-grid > div:nth-child(2) { display: none !important; }
-          .lp-target-grid > div:last-child { padding-left: 0 !important; }
-          .lp-target-grid > div:first-child { padding-right: 0 !important; }
+          .lp-target-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
           .lp-steps-grid { grid-template-columns: 1fr !important; }
           .lp-final-input { flex-direction: column !important; }
           .lp-final-input input { border-radius: 10px 10px 0 0 !important; }
