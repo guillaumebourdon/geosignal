@@ -190,8 +190,31 @@ export default async function handler(req, res) {
     pagesFound = countInternalLinks(pageResult.body, hostname);
   }
 
-  const proAuditable = onePageAuditable && pagesFound >= 20;
+  // 5. For Pro: verify 2 sample pages are actually scrapable (not just listed in sitemap)
+  let proScrapable = true;
+  if (plan === 'pro' && pagesFound >= 20 && sitemapXml) {
+    const allLocs = [];
+    const locRe = /<loc>\s*(.*?)\s*<\/loc>/gi;
+    let m;
+    while ((m = locRe.exec(sitemapXml)) !== null) allLocs.push(m[1].trim());
+    // Pick 2 random pages (not the homepage)
+    const sampleUrls = allLocs
+      .filter(u => { try { return new URL(u).pathname !== '/'; } catch { return false; } })
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 2);
+    if (sampleUrls.length > 0) {
+      const sampleResults = await Promise.all(sampleUrls.map(u => fetchCheck(u, 5000)));
+      const scrapableCount = sampleResults.filter(r => r.ok && !detectAntiBot(r.body || '') && hasSubstantialContent(r.body || '')).length;
+      if (scrapableCount === 0) {
+        proScrapable = false;
+        console.log(`[pre-check] ${hostname} — Pro sample scrape FAILED: 0/${sampleUrls.length} pages scrapable`);
+      }
+    }
+  }
+
+  const proAuditable = onePageAuditable && pagesFound >= 20 && proScrapable;
   const reason = !onePageAuditable ? 'page_not_accessible'
+    : !proScrapable ? 'pages_not_scrapable'
     : !proAuditable ? (pagesFound < 20 ? 'insufficient_pages' : 'sitemap_inaccessible')
     : 'ok';
 
