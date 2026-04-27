@@ -181,7 +181,7 @@ export default function Pricing() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
-            <Link href="/one-page" style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(247,245,242,0.12)', paddingBottom: 1 }}>{t('pricing.report.learnMore')}</Link>
+            <Link href="/one-page" style={{ fontSize: 12, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.report.learnMore')}</Link>
           </div>
         </div>
 
@@ -205,7 +205,7 @@ export default function Pricing() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
-            <Link href="/pro" style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(247,245,242,0.12)', paddingBottom: 1 }}>{t('pricing.proCard.learnMore')}</Link>
+            <Link href="/pro" style={{ fontSize: 12, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.proCard.learnMore')}</Link>
           </div>
         </div>
       </div>

@@ -23,7 +23,7 @@ function normalizeUrl(input) {
   return url;
 }
 
-export default function CheckoutFlow({ plan, showModal, onClose }) {
+export default function CheckoutFlow({ plan, showModal, onClose, initialUrl }) {
   const router = useRouter();
   const { t } = useTranslation();
   const [modalUrl, setModalUrl] = useState('');
@@ -35,8 +35,11 @@ export default function CheckoutFlow({ plan, showModal, onClose }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (showModal && inputRef.current) inputRef.current.focus();
-  }, [showModal]);
+    if (showModal) {
+      if (initialUrl) setModalUrl(initialUrl);
+      if (inputRef.current) inputRef.current.focus();
+    }
+  }, [showModal, initialUrl]);
 
   useEffect(() => {
     if (!showModal) return;

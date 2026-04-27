@@ -263,7 +263,7 @@
       "label": "Full report",
       "titleStart": "A report that's ",
       "titleEm": "worth every cent",
-      "subtitle": "14 pages of in-depth analysis with exclusive data you won't find anywhere else.",
+      "subtitle": "In-depth analysis with exclusive data — available for 1 page (€29) or as a complete audit across 20 pages (€99).",
       "cards": [
         {
           "icon": "🔭",
@@ -296,9 +296,8 @@
           ]
         }
       ],
-      "cta": "1-Page audit — €29",
-      "ctaPro": "Complete audit — €99",
-      "ctaSubtext": "One-time payment · Instant access",
+      "cta": "Discover our audits →",
+      "ctaSubtext": "Starting at €29 · One-time payment",
       "exampleLink": "See a sample report →"
     },
     "testimonials": {
@@ -1721,7 +1720,7 @@
     },
     "finalCta": {
       "title": "Ready to audit your site?",
-      "subtitle": "20 pages analyzed, patterns detected, action plan in 15-20 minutes."
+      "subtitle": "Your site analyzed in depth and your action plan sent by email in 15-20 minutes."
     },
     "crossSell": {
       "title": "Need to analyze a single page?",
@@ -1848,7 +1847,7 @@
     },
     "finalCta": {
       "title": "Ready to analyze your page?",
-      "subtitle": "Score, recommendations and action plan in 1 minute."
+      "subtitle": "Score, recommendations and action plan sent by email in 1 minute."
     },
     "crossSell": {
       "title": "Need a broader view?",

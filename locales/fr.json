@@ -263,7 +263,7 @@
       "label": "Rapport complet",
       "titleStart": "Un rapport qui ",
       "titleEm": "vaut le détour",
-      "subtitle": "14 pages d'analyse approfondie avec des données exclusives que vous ne trouverez nulle part ailleurs.",
+      "subtitle": "Une analyse approfondie avec des données exclusives — disponible sur 1 page (29 €) ou en audit complet sur 20 pages (99 €).",
       "cards": [
         {
           "icon": "🔭",
@@ -296,9 +296,8 @@
           ]
         }
       ],
-      "cta": "Audit 1 page — 29 €",
-      "ctaPro": "Audit complet — 99 €",
-      "ctaSubtext": "Paiement unique · Accès immédiat",
+      "cta": "Découvrir nos audits →",
+      "ctaSubtext": "À partir de 29 € · Paiement unique",
       "exampleLink": "Voir un exemple de rapport →"
     },
     "testimonials": {
@@ -1728,7 +1727,7 @@
     },
     "finalCta": {
       "title": "Prêt à auditer votre site ?",
-      "subtitle": "20 pages analysées, patterns détectés, plan d'action livré en 15 à 20 minutes."
+      "subtitle": "Votre site analysé en profondeur et votre plan d'action envoyé par email en 15 à 20 minutes."
     },
     "crossSell": {
       "title": "Besoin d'analyser une seule page ?",
@@ -1855,7 +1854,7 @@
     },
     "finalCta": {
       "title": "Prêt à analyser votre page ?",
-      "subtitle": "Score, recommandations et plan d'action en 1 minute."
+      "subtitle": "Score, recommandations et plan d'action envoyé par email en 1 minute."
     },
     "crossSell": {
       "title": "Besoin d'une vision plus large ?",

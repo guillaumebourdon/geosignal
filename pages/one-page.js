@@ -319,7 +319,7 @@ export default function OnePage() {
         </div>
       </section>
 
-      <CheckoutFlow plan="rapport" showModal={showCheckout} onClose={() => setShowCheckout(false)} />
+      <CheckoutFlow plan="rapport" showModal={showCheckout} onClose={() => setShowCheckout(false)} initialUrl={ctaUrl} />
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }

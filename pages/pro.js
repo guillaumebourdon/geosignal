@@ -332,7 +332,7 @@ export default function Pro() {
         </div>
       </section>
 
-      <CheckoutFlow plan="pro" showModal={showCheckout} onClose={() => setShowCheckout(false)} />
+      <CheckoutFlow plan="pro" showModal={showCheckout} onClose={() => setShowCheckout(false)} initialUrl={ctaUrl} />
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }

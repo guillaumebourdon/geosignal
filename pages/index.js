@@ -507,16 +507,11 @@ export default function Home() {
             })}
           </div>
 
-          {/* CTA — 2 offres */}
+          {/* CTA */}
           <div style={{ textAlign: 'center' }}>
-            <div className="report-cta-buttons" style={{ display: 'inline-flex', gap: 12 }}>
-              <Link href="/one-page" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
-                {t('homepage.report.cta')}
-              </Link>
-              <Link href="/pro" className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', border: '1px solid rgba(247,245,242,0.15)', boxShadow: '0 4px 16px rgba(26,25,22,0.2)' }}>
-                {t('homepage.report.ctaPro')}
-              </Link>
-            </div>
+            <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
+              {t('homepage.report.cta')}
+            </Link>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', marginTop: 12, letterSpacing: 1 }}>
               {t('homepage.report.ctaSubtext')}
             </div>
