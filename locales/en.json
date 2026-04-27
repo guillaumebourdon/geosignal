@@ -316,32 +316,28 @@
       "next": "Next testimonial",
       "items": [
         {
-          "initials": "TL",
-          "name": "Thomas L.",
-          "role": "Founder · Kairos SaaS",
-          "quote": "We thought we had good SEO, but Detekia revealed that <strong>ChatGPT couldn't even access our website</strong>. Two lines changed in robots.txt and our score jumped from 29 to 58 in one week.",
-          "footerType": "score",
-          "before": 29,
-          "after": 58,
-          "delta": "+29 pts"
+          "photo": "/testimonials/cyril-vaneensberghe.jpg",
+          "name": "Cyril Vaneensberghe",
+          "role": "Partner · Saint Clair Patrimoine",
+          "quote": "Detekia helped me identify aspects of my site I hadn't anticipated, especially <strong>how my content is interpreted by ChatGPT</strong>. The recommendations are concrete and easy to implement. I find the tool very promising.",
+          "footerType": "badge",
+          "badge": "ACTIONABLE RECOMMENDATIONS"
         },
         {
-          "initials": "MG",
-          "name": "Marine G.",
-          "role": "Freelance SEO consultant",
-          "quote": "I use Detekia for every new client. In seconds I have <strong>a clear diagnosis to present</strong>, and it lets me upsell an AI optimization service. The ROI is immediate.",
+          "photo": "/testimonials/pauline-ayrignac.jpg",
+          "name": "Pauline Ayrignac",
+          "role": "Digital marketing freelancer",
+          "quote": "I use Detekia for my clients and plan to offer it to all the others. <strong>It's become an indispensable tool for me.</strong> I recommend it 100% — it's an excellent foundation.",
           "footerType": "badge",
           "badge": "USED FOR EVERY CLIENT"
         },
         {
-          "initials": "JB",
-          "name": "Julien B.",
-          "role": "E-commerce Manager · Maison Verdure",
-          "quote": "Our product pages were invisible to AI. The report identified <strong>3 critical issues</strong>. After fixing them, Perplexity started recommending our products within 3 weeks.",
-          "footerType": "score",
-          "before": 34,
-          "after": 71,
-          "delta": "+37 pts"
+          "photo": "/testimonials/nicolas-bohin.jpg",
+          "name": "Nicolas Bohin",
+          "role": "CEO · Iconic Brand",
+          "quote": "The tool is excellent, with plenty of substance and interesting leads in the recommendations. I particularly liked <strong>the AI visibility test</strong>, which shows concretely where you stand.",
+          "footerType": "badge",
+          "badge": "AI VISIBILITY TEST"
         }
       ]
     },

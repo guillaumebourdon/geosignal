@@ -316,32 +316,28 @@
       "next": "Témoignage suivant",
       "items": [
         {
-          "initials": "TL",
-          "name": "Thomas L.",
-          "role": "Fondateur · Kairos SaaS",
-          "quote": "On pensait être bien référencés, mais Detekia a révélé que <strong>ChatGPT ne pouvait même pas accéder à notre site</strong>. Deux lignes modifiées dans le robots.txt et notre score est passé de 29 à 58 en une semaine.",
-          "footerType": "score",
-          "before": 29,
-          "after": 58,
-          "delta": "+29 pts"
+          "photo": "/testimonials/cyril-vaneensberghe.jpg",
+          "name": "Cyril Vaneensberghe",
+          "role": "Associé · Saint Clair Patrimoine",
+          "quote": "Detekia m'a permis d'identifier des points sur mon site que je n'avais pas anticipés, notamment sur <strong>la façon dont mes contenus sont compris par ChatGPT</strong>. Les recommandations sont concrètes et faciles à mettre en place. Je trouve l'outil vraiment prometteur.",
+          "footerType": "badge",
+          "badge": "RECOMMANDATIONS ACTIONNABLES"
         },
         {
-          "initials": "MG",
-          "name": "Marine G.",
-          "role": "Consultante SEO freelance",
-          "quote": "J'utilise Detekia pour chaque nouveau client. En quelques secondes j'ai <strong>un diagnostic clair à présenter</strong>, et ça me permet de vendre une prestation d'optimisation IA derrière. Le ROI est immédiat.",
+          "photo": "/testimonials/pauline-ayrignac.jpg",
+          "name": "Pauline Ayrignac",
+          "role": "Freelance marketing digital",
+          "quote": "J'utilise Detekia pour mes clients et je compte le proposer à tous les autres. <strong>C'est devenu un outil indispensable pour moi.</strong> Je recommande à 100 %, c'est vraiment une excellente base.",
           "footerType": "badge",
           "badge": "UTILISÉ POUR CHAQUE CLIENT"
         },
         {
-          "initials": "JB",
-          "name": "Julien B.",
-          "role": "Resp. e-commerce · Maison Verdure",
-          "quote": "Nos fiches produits étaient invisibles pour les IA. Le rapport a identifié <strong>3 blocages critiques</strong>. Après correction, Perplexity a commencé à recommander nos produits en 3 semaines.",
-          "footerType": "score",
-          "before": 34,
-          "after": 71,
-          "delta": "+37 pts"
+          "photo": "/testimonials/nicolas-bohin.jpg",
+          "name": "Nicolas Bohin",
+          "role": "CEO · Iconic Brand",
+          "quote": "L'outil est top, il y a beaucoup de matière et de pistes intéressantes dans les recommandations. J'ai particulièrement aimé <strong>la partie test de visibilité IA</strong> qui montre concrètement où on en est.",
+          "footerType": "badge",
+          "badge": "TEST DE VISIBILITÉ IA"
         }
       ]
     },
