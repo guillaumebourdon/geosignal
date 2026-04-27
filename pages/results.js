@@ -518,6 +518,67 @@ export default function Results() {
             )}
           </div>
 
+          {/* ── CITATION TEST ─────────────────────────── */}
+          {result?.citationTest?.tests && result.citationTest.tests.length > 0 && (() => {
+            const tests = result.citationTest.tests;
+            // Select 2 most impactful: prefer generic/niche, not cited, with competitors
+            const scored = tests.map((t, i) => {
+              let s = 0;
+              if (!t.cited) s += 10;
+              if (t.competitors_cited?.length > 0) s += 5 + Math.min(t.competitors_cited.length, 3);
+              if (t.difficulty === 'générique' || t.difficulty === 'generic') s += 4;
+              else if (t.difficulty === 'niche') s += 2;
+              return { ...t, _score: s, _idx: i };
+            });
+            scored.sort((a, b) => b._score - a._score);
+            const pick1 = scored[0];
+            const pick2 = scored.find(s => s._idx !== pick1._idx && s.query !== pick1.query) || scored[1];
+            const previewTests = [pick1, pick2].filter(Boolean);
+            const lockedCount = tests.length - previewTests.length;
+
+            return (
+              <div style={{ marginTop: 32 }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#8A8680', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.citation.label')}</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5, marginBottom: 6 }}>{t('results.citation.title')}</div>
+                <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#8A8680', lineHeight: 1.6, marginBottom: 16 }}>{t('results.citation.intro')}</p>
+
+                {previewTests.map((test, i) => (
+                  <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 22px', marginBottom: 10 }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{t('results.citation.queryLabel')}</div>
+                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', marginBottom: 10, lineHeight: 1.3 }}>"{test.query}"</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                      <span style={{ width: 8, height: 8, borderRadius: '50%', background: test.cited ? '#10A37F' : '#D97757', flexShrink: 0 }} />
+                      <span style={{ fontFamily: 'system-ui', fontSize: 13, color: test.cited ? '#10A37F' : '#D97757', fontWeight: 600 }}>
+                        {test.cited ? t('results.citation.cited') : t('results.citation.notCited')}
+                      </span>
+                    </div>
+                    {!test.cited && test.competitors_cited?.length > 0 && (
+                      <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', lineHeight: 1.5 }}>
+                        <span style={{ fontWeight: 600, color: '#3A3835' }}>{t('results.citation.competitorsLabel')}</span>{' '}
+                        {test.competitors_cited.join(', ')}
+                      </div>
+                    )}
+                  </div>
+                ))}
+
+                {!isPaid && lockedCount > 0 && (
+                  <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 12, padding: '20px 22px', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 40, background: 'linear-gradient(to top, #FAFAF9, transparent)', pointerEvents: 'none' }} />
+                    <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 6 }}>
+                      🔒 {t('results.citation.lockedTitle')}
+                    </div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8680', lineHeight: 1.6, marginBottom: 14 }}>
+                      {t('results.citation.lockedDesc')}
+                    </div>
+                    <button onClick={handleCheckout} disabled={checkoutLoading} style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 24px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', cursor: checkoutLoading ? 'wait' : 'pointer' }}>
+                      {t('results.citation.lockedCta')}
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
           {recommendations.length > 0 && (
             <div style={{ marginTop: 32 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>

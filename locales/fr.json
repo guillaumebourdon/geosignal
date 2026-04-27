@@ -1516,17 +1516,30 @@
       "title": "Rapport complet — {count} recommandations",
       "cta": "Débloquer — 29 €"
     },
+    "citation": {
+      "label": "TEST DE VISIBILITÉ IA",
+      "title": "Les IA citent-elles votre site ?",
+      "intro": "Nous avons simulé 10 requêtes que vos clients potentiels pourraient poser à ChatGPT ou Perplexity.",
+      "queryLabel": "Requête testée",
+      "notCited": "Votre site n'apparaît pas",
+      "cited": "Votre site est cité",
+      "competitorsLabel": "Cités à votre place :",
+      "noCompetitors": "Aucun concurrent identifié",
+      "lockedTitle": "8 autres requêtes testées",
+      "lockedDesc": "Le rapport complet révèle les 10 résultats de votre test de visibilité IA — avec les concurrents cités et les recommandations pour chaque requête.",
+      "lockedCta": "Voir les 10 résultats →"
+    },
     "checkout": {
       "title": "Rapport GEO complet",
       "subtext": "29 € · Accès immédiat · Paiement unique"
     },
-    "proTeaser": "Vous voulez analyser plusieurs pages de votre site en un seul rapport ?",
-    "proTeaserLink": "Être notifié du lancement →",
+    "proTeaser": "Besoin d'analyser tout votre site ? L'audit complet analyse 20 pages.",
+    "proTeaserLink": "Découvrir l'audit complet →",
     "proBlock": {
-      "title": "Analyser plusieurs pages d'un coup",
-      "desc": "Detekia Pro arrive en juin 2026 — jusqu'à 10 pages, rapport consolidé, dès 99 €.",
-      "cta": "Rejoindre la liste d'attente →",
-      "note": "SOYEZ NOTIFIÉ·E AU LANCEMENT"
+      "title": "Analyser tout votre site",
+      "desc": "L'audit complet analyse 20 pages, détecte les patterns transverses et produit un plan d'action priorisé.",
+      "cta": "Découvrir l'audit complet →",
+      "note": "20 PAGES · 99 €"
     }
   },
   "success": {
