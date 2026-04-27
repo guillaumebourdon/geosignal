@@ -154,20 +154,37 @@ export default async function handler(req, res) {
         console.log(`[finalize-report] Validation: ${validation.summary}`);
       }
       if (!validation.passed) {
+        const hasCriticalError = validation.errors.some(e =>
+          e.rule === 'score-out-of-range' || e.rule === 'score-average-mismatch' || e.rule === 'page-count-mismatch'
+        );
+        if (hasCriticalError) {
+          // Critical error → trigger auto-refund instead of delivering
+          console.error(`[finalize-report] CRITICAL validation error — triggering refund for ${email}`);
+          const { triggerAutoRefund } = require('../../lib/autoRefund');
+          await triggerAutoRefund({
+            paymentIntentId: req.body.paymentIntentId || null,
+            customerEmail: email,
+            url,
+            plan: 'rapport',
+            reason: `Validation critique: ${validation.errors.map(e => e.rule).join(', ')}`,
+            locale,
+          });
+          return res.status(200).json({ success: false, refunded: true, reason: 'validation_critical' });
+        }
+        // Non-critical errors: deliver but alert Guillaume
         reportRecord.validationErrors = validation.errors;
         await resend.emails.send({
           from: 'Detekia <hello@detekia.fr>',
           to: 'guillaume@beeleven.fr',
-          subject: `⚠️ Rapport dégradé livré — ${url} — ${validation.summary}`,
+          subject: `⚠️ Rapport livré avec warnings — ${url} — ${validation.summary}`,
           html: `<div style="font-family:system-ui;padding:24px;">
-            <h2 style="color:#D97757;">Rapport avec erreurs de validation</h2>
+            <h2 style="color:#D97757;">Rapport avec erreurs de validation (non critiques)</h2>
             <p><strong>URL :</strong> ${url}</p>
             <p><strong>Email client :</strong> ${email}</p>
             <p><strong>Score :</strong> ${reportData.score}/100</p>
             <p><strong>Rapport :</strong> <a href="${reportUrl}">${reportUrl}</a></p>
             <p><strong>Erreurs :</strong></p>
             <ul>${validation.errors.map(e => `<li><strong>${e.rule}</strong>: attendu ${e.expected}, obtenu ${e.actual}</li>`).join('')}</ul>
-            <p style="color:#8A8680;font-size:12px;">Le rapport a été livré. Vérifier manuellement si nécessaire.</p>
           </div>`,
         }).catch(() => {});
       }

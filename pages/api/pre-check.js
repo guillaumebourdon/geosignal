@@ -201,13 +201,13 @@ export default async function handler(req, res) {
     const sampleUrls = allLocs
       .filter(u => { try { return new URL(u).pathname !== '/'; } catch { return false; } })
       .sort(() => Math.random() - 0.5)
-      .slice(0, 2);
+      .slice(0, 5);
     if (sampleUrls.length > 0) {
       const sampleResults = await Promise.all(sampleUrls.map(u => fetchCheck(u, 5000)));
       const scrapableCount = sampleResults.filter(r => r.ok && !detectAntiBot(r.body || '') && hasSubstantialContent(r.body || '')).length;
-      if (scrapableCount === 0) {
+      if (scrapableCount < 3) {
         proScrapable = false;
-        console.log(`[pre-check] ${hostname} — Pro sample scrape FAILED: 0/${sampleUrls.length} pages scrapable`);
+        console.log(`[pre-check] ${hostname} — Pro sample scrape FAILED: ${scrapableCount}/${sampleUrls.length} pages scrapable (need >=3)`);
       }
     }
   }

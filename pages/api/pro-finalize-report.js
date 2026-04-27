@@ -195,12 +195,29 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
         console.log(`[pro-finalize] Validation: ${validation.summary}`);
       }
       if (!validation.passed) {
+        const hasCriticalError = validation.errors.some(e =>
+          e.rule === 'score-out-of-range' || e.rule === 'score-average-mismatch' || e.rule === 'page-count-mismatch'
+        );
+        if (hasCriticalError) {
+          console.error(`[pro-finalize] CRITICAL validation error — triggering refund`);
+          const { triggerAutoRefund } = require('../../lib/autoRefund');
+          await triggerAutoRefund({
+            paymentIntentId: null,
+            customerEmail: meta?.customerEmail,
+            url: consolidated.rootUrl,
+            plan: 'pro',
+            reason: `Validation critique Pro: ${validation.errors.map(e => e.rule).join(', ')}`,
+            locale: consolidated.locale || 'fr',
+          });
+          return res.status(200).json({ success: false, refunded: true, reason: 'validation_critical' });
+        }
+        // Non-critical: deliver but alert
         await resend.emails.send({
           from: 'Detekia <hello@detekia.fr>',
           to: 'guillaume@beeleven.fr',
-          subject: `⚠️ Rapport Pro dégradé — ${consolidated.rootUrl} — ${validation.summary}`,
+          subject: `⚠️ Rapport Pro livré avec warnings — ${consolidated.rootUrl} — ${validation.summary}`,
           html: `<div style="font-family:system-ui;padding:24px;">
-            <h2 style="color:#D97757;">Rapport Pro avec erreurs de validation</h2>
+            <h2 style="color:#D97757;">Rapport Pro avec erreurs de validation (non critiques)</h2>
             <p><strong>Site :</strong> ${consolidated.rootUrl}</p>
             <p><strong>Email client :</strong> ${meta?.customerEmail || 'N/A'}</p>
             <p><strong>Score moyen :</strong> ${consolidated.scoreAverage}/100</p>
