@@ -72,9 +72,9 @@ function effortInfo(e, locale = 'fr') {
   return { label: locale === 'en' ? 'Medium' : 'Moyen', color: '#C9861A' };
 }
 function criterionGroup(name) {
-  if (/extractibilit|donn.*structur|crawlabilit/i.test(name)) return 'Lisibilité IA';
-  if (/v.*rifiabilit|autorit|neutralit/i.test(name)) return 'Crédibilité';
-  if (/pr.*sence|fra.*cheur/i.test(name)) return 'Fraîcheur';
+  if (/extractibilit|donn.*structur|crawlabilit/i.test(name)) return locale === 'en' ? 'AI Readability' : 'Lisibilité IA';
+  if (/v.*rifiabilit|autorit|neutralit/i.test(name)) return locale === 'en' ? 'Credibility' : 'Crédibilité';
+  if (/pr.*sence|fra.*cheur/i.test(name)) return locale === 'en' ? 'Freshness' : 'Fraîcheur';
   return 'Optimisation';
 }
 
@@ -84,7 +84,7 @@ const CRITERIA_ORDER = [
   'Presence externe', 'Fraicheur & maintenance',
 ];
 
-const WHY = {
+const WHY_FR = {
   extractibilite: "44,2% des citations IA proviennent des 30 premiers % du texte d'une page (Growth Memo, 2026). L'étude Princeton/KDD 2024 démontre que l'ajout de statistiques et de citations dans le contenu augmente la visibilité IA de 30 à 40%. Votre introduction est votre atout n°1.",
   verifiabilite: "Les IA favorisent les contenus factuels et sourcés. Les pages avec des données chiffrées sont citées 2,8x plus souvent que les pages sans données vérifiables. (AirOps, 2026)",
   autorite: "L'autorité de domaine est le prédicteur n°1 des citations IA avec un score SHAP de 0,63 (SE Ranking, 2025). Les pages avec des auteurs identifiés et des biographies sont significativement plus citées par les LLM.",
@@ -95,7 +95,20 @@ const WHY = {
   fraicheur: "65% des visites de bots IA ciblent du contenu publié dans les 12 derniers mois (Seer Interactive, 2025). Un contenu non mis à jour depuis plus de 6 mois perd progressivement sa citabilité IA.",
 };
 
-const GUIDES = {
+const WHY_EN = {
+  extractibilite: "44.2% of AI citations come from the first 30% of a page's text (Growth Memo, 2026). The Princeton/KDD 2024 study shows that adding statistics and citations to content increases AI visibility by 30–40%. Your introduction is your #1 asset.",
+  verifiabilite: "AI engines favor factual, sourced content. Pages with hard data are cited 2.8x more often than pages without verifiable data. (AirOps, 2026)",
+  autorite: "Domain authority is the #1 predictor of AI citations with a SHAP score of 0.63 (SE Ranking, 2025). Pages with identified authors and bios are significantly more cited by LLMs.",
+  crawlabilite: "73% of sites are not crawlable by AI bots due to robots.txt, CDN or JavaScript (Otterly.AI, 2026). Unblocking AI crawlers is the #1 quick win — visible impact within 2–4 weeks.",
+  'donnees structurees': "Pages with FAQPage, Article and Organization schemas are more easily parsed by AI engines. Structured, chunked content is cited 3–5x more often than raw content. (Otterly.AI, 2026)",
+  neutralite: "AI engines deprioritize overtly promotional content. The Princeton study shows 'Fluency Optimization' improves AI visibility, but the tone must remain factual and informative to be cited.",
+  presence: "90% of AI citations come from earned and owned media, not paid placements (Edelman, 2026). Reddit is the #1 source for Perplexity (6.6% of citations) and #2 for ChatGPT.",
+  fraicheur: "65% of AI bot visits target content published in the last 12 months (Seer Interactive, 2025). Content not updated for 6+ months gradually loses its AI citability.",
+};
+
+function getWhy(locale) { return locale === 'en' ? WHY_EN : WHY_FR; }
+
+const GUIDES_FR = {
   extractibilite: "Restructurez votre page d'accueil pour répondre directement à la question principale de votre audience dès les 2 premières phrases. Utilisez des listes à puces, des sous-titres H2/H3 descriptifs contenant vos mots-clés cibles. Évitez les introductions vagues.",
   verifiabilite: "Pour chaque donnée chiffrée, ajoutez un lien externe vers la source originale. Visez 5 à 10 liens externes par page principale. Ajoutez des dates explicites (datePublished, dateModified en JSON-LD).",
   autorite: "Créez une page 'À propos' détaillée avec qualifications, certifications, années d'expérience. Ajoutez un schema Organization en JSON-LD. Créez des pages auteur avec bio, photo et liens LinkedIn.",
@@ -106,7 +119,20 @@ const GUIDES = {
   fraicheur: "Ajoutez datePublished et dateModified en schema.org. Mettez à jour vos articles existants avec des données récentes. Affichez la date de dernière mise à jour visiblement.",
 };
 
-const CASES = {
+const GUIDES_EN = {
+  extractibilite: "Restructure your homepage to directly answer your audience's main question in the first 2 sentences. Use bullet lists, descriptive H2/H3 subheadings containing your target keywords. Avoid vague introductions.",
+  verifiabilite: "For each data point, add an external link to the original source. Aim for 5–10 external links per main page. Add explicit dates (datePublished, dateModified in JSON-LD).",
+  autorite: "Create a detailed About page with qualifications, certifications, years of experience. Add an Organization schema in JSON-LD. Create author pages with bio, photo and LinkedIn links.",
+  crawlabilite: "Check your robots.txt: GPTBot, ClaudeBot, PerplexityBot must be allowed. Add an llms.txt file at the root. Make sure main content is not rendered via client-side JavaScript.",
+  'donnees structurees': "Implement at minimum: Organization (name, logo, contact), FAQPage, Article or BlogPosting. Validate with Google's Rich Results Test.",
+  neutralite: "Replace superlatives with factual data. Add a 'Limitations' or 'Who this is NOT for' section. Honestly compare your offering with alternatives.",
+  presence: "Create an active Reddit profile. Participate in your industry discussions. Get mentions in press articles, podcasts, interviews.",
+  fraicheur: "Add datePublished and dateModified in schema.org. Update your existing articles with recent data. Display the last update date visibly.",
+};
+
+function getGuides(locale) { return locale === 'en' ? GUIDES_EN : GUIDES_FR; }
+
+const CASES_FR = {
   extractibilite: "SEO Vendor a obtenu 549 sessions ChatGPT en 7 mois grâce à des tactiques d'extractibilité (sections citables, format question-réponse directe). (SEO Vendor, 2026)",
   verifiabilite: "Ahrefs génère 12,1% de ses inscriptions via le trafic IA grâce à des contenus riches en données vérifiables. (Ahrefs/Semrush, 2025)",
   autorite: "Les marques dans le top 25% des mentions web obtiennent 10x plus de visibilité IA. Le top 50 capture 28,9% de toutes les mentions dans les AI Overviews. (Ahrefs, 2025)",
@@ -117,13 +143,26 @@ const CASES = {
   fraicheur: "79% des pages visitées par les bots IA ont été publiées dans les 2 dernières années. (Seer Interactive, 2025)",
 };
 
+const CASES_EN = {
+  extractibilite: "SEO Vendor got 549 ChatGPT sessions in 7 months through extractability tactics (citable sections, direct Q&A format). (SEO Vendor, 2026)",
+  verifiabilite: "Ahrefs generates 12.1% of its signups via AI traffic thanks to content rich in verifiable data. (Ahrefs/Semrush, 2025)",
+  autorite: "Brands in the top 25% of web mentions get 10x more AI visibility. The top 50 captures 28.9% of all mentions in AI Overviews. (Ahrefs, 2025)",
+  crawlabilite: "Triangle IP created an llms.txt file: 5x more AI traffic and presence on ChatGPT, Gemini, Perplexity and Copilot. (Concurate/SE Ranking, 2025)",
+  'donnees structurees': "A site increased its AI visibility by 340% in 6 months through content restructuring and schema implementation. (Stackmatix, 2026)",
+  neutralite: "'Fluency Optimization' significantly improves AI visibility. Educational content is systematically cited over promotional content.",
+  presence: "Reddit is cited in 46.7% of Perplexity responses and 1.8% of ChatGPT citations. (Profound, 2025)",
+  fraicheur: "79% of pages visited by AI bots were published in the last 2 years. (Seer Interactive, 2025)",
+};
+
+function getCases(locale) { return locale === 'en' ? CASES_EN : CASES_FR; }
+
 function lookupMap(map, name) {
   const n = String(name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   for (const [k, v] of Object.entries(map)) if (n.includes(k)) return v;
   return '';
 }
 
-const CTX_CARDS = [
+const CTX_CARDS_FR = [
   { label: 'Croissance du trafic IA', value: '+527%', text: 'Le trafic référé par les IA a augmenté de 527% entre janvier et mai 2025.', source: 'Previsible, 2025', color: '#D97757' },
   { label: 'Usage ChatGPT', value: '2,5 Mds', text: 'Requêtes traitées par jour. 810 millions de personnes l\'utilisent quotidiennement.', source: 'Search Engine Land, 2026', color: '#D97757' },
   { label: 'Taux de conversion IA', value: '4,4x', text: 'Les visiteurs référés par les IA convertissent 4,4x mieux que les visiteurs organiques classiques.', source: 'Semrush, 2025', color: '#10A37F' },
@@ -131,6 +170,15 @@ const CTX_CARDS = [
   { label: 'Position du texte', value: '44,2%', text: 'Des citations IA proviennent des 30 premiers % du texte. Votre introduction est votre atout n°1.', source: 'Growth Memo, 2026', color: '#C9861A' },
   { label: 'Marché GEO', value: '33,7 Mds$', text: 'Valeur projetée du marché GEO en 2034, contre 848M$ en 2025.', source: 'eMarketer', color: '#10A37F' },
 ];
+const CTX_CARDS_EN = [
+  { label: 'AI traffic growth', value: '+527%', text: 'AI-referred traffic increased by 527% between January and May 2025.', source: 'Previsible, 2025', color: '#D97757' },
+  { label: 'ChatGPT usage', value: '2.5B', text: 'Queries processed per day. 810 million people use it daily.', source: 'Search Engine Land, 2026', color: '#D97757' },
+  { label: 'AI conversion rate', value: '4.4x', text: 'AI-referred visitors convert 4.4x better than traditional organic visitors.', source: 'Semrush, 2025', color: '#10A37F' },
+  { label: 'SEO vs GEO', value: '80%', text: 'Of URLs cited by ChatGPT are NOT in the Google top 100. SEO alone is no longer enough.', source: 'Ahrefs, 2025', color: '#D97757' },
+  { label: 'Text position', value: '44.2%', text: 'Of AI citations come from the first 30% of the text. Your introduction is your #1 asset.', source: 'Growth Memo, 2026', color: '#C9861A' },
+  { label: 'GEO market', value: '$33.7B', text: 'Projected GEO market value in 2034, up from $848M in 2025.', source: 'eMarketer', color: '#10A37F' },
+];
+function getCtxCards(locale) { return locale === 'en' ? CTX_CARDS_EN : CTX_CARDS_FR; }
 
 // ── Criteria name translations (FR keys → localized display) ─────────────────
 const CRITERIA_EN = {
@@ -213,6 +261,76 @@ const REPORT_STRINGS = {
     evidenceLlms: 'llms.txt',
     evidenceTrustLinks: 'Liens de confiance internes',
     noData: 'Non disponible',
+    execSummary: 'Synthèse exécutive', analysisResults: "Résultats de l'analyse",
+    the8Criteria: 'Les 8 critères GEO', context2026: 'Contexte 2026',
+    whyAiMatters: 'Pourquoi la visibilité IA est critique en 2026',
+    whyAiDesc: "Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information. Voici les données clés qui expliquent pourquoi votre visibilité IA est devenue un enjeu business direct.",
+    whyAiDescShort: "Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information.",
+    only11: "Seulement 11% des domaines sont cités à la fois par ChatGPT ET Perplexity. Chaque plateforme IA a ses propres préférences — une raison supplémentaire de travailler votre citabilité de façon transversale. (Profound, 2025)",
+    only11Short: "Seulement 11% des domaines sont cités à la fois par ChatGPT ET Perplexity.",
+    academicSource: 'Source académique de référence', academicSourceShort: 'Source académique',
+    academicRef: '"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. Certaines optimisations augmentent la visibilité IA jusqu\'à 40%.',
+    academicRefShort: '"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024.',
+    citationTestTitle: 'Test de visibilité IA',
+    citationTestDesc10: "Nous avons simulé 10 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.",
+    citationTestDesc30: "Nous avons simulé 30 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.",
+    bestOpportunity: 'Meilleure opportunité', mainBlocker: 'Blocage principal',
+    citationDisclaimer: "Ce test simule des requêtes utilisateur via l'IA. Les résultats varient selon le moteur, la formulation et le moment.",
+    citationDisclaimerShort: "Ce test simule des requêtes via l'IA. Les résultats varient selon le moteur, la formulation et le moment.",
+    whatWeFound: 'Ce que nous avons trouvé',
+    recommendation_s: 'Recommandation', recommendations_s: 'Recommandations',
+    criterionWellOptimized: 'Ce critère est bien optimisé. Continuez à maintenir ce niveau.',
+    criterionWellOptimizedSite: "Ce critère est bien optimisé sur l'ensemble du site.",
+    criterionNeedsWork: "Ce critère nécessite des améliorations",
+    criterionNeedsWorkSuffix: "Les recommandations spécifiques sont intégrées dans le plan d'action ci-dessous.",
+    techGuide: 'Guide technique', documentedCase: 'Cas réel documenté',
+    actionSummary: 'Récapitulatif des actions',
+    actionSummaryDesc: "recommandations classées par priorité d'impact.",
+    theCriterion: 'Critère',
+    transparency: 'Transparence', methodologyH2: 'Méthodologie',
+    analysisLimits: "LIMITES DE L'ANALYSE",
+    analysisLimitsDesc: "Ce rapport est généré par analyse automatisée du contenu accessible via scraping. Certains éléments rendus en JavaScript côté client, protégés par authentification, ou chargés dynamiquement peuvent ne pas être détectés.",
+    methodologyP1: "Ce rapport est généré par analyse automatisée du DOM de votre page via un service de scraping spécialisé pour les IA et évaluation sur <strong>8 critères pondérés</strong>. Le critère Neutralité éditoriale est évalué par intelligence artificielle. Les 7 autres critères sont évalués par analyse technique du HTML.",
+    methodologyP1Pro: "Analyse réalisée sur {n} pages du site prioritisées par leur importance éditoriale (méthodologie de priorisation par sitemap + fraîcheur + profondeur). Chaque page est évaluée sur 8 critères pondérés. Le test IA Pro porte sur 30 requêtes simulées (vs 10 pour le rapport one-page).",
+    methodologyP2: "Le test de visibilité IA est réalisé par simulation de 10 requêtes via l'IA. Les résultats varient selon le moteur IA, la requête et le moment du test.",
+    the8CriteriaWeights: 'Les 8 critères et leur pondération',
+    academicSourceLabel: 'SOURCE ACADÉMIQUE',
+    reportLimits: 'LIMITES DU RAPPORT',
+    reportLimitsDesc: "Les moteurs IA évoluent rapidement. Les résultats reflètent l'état des algorithmes à la date de génération. Le test de visibilité IA est une simulation et non une interrogation directe des moteurs.",
+    reportGenerated: 'Rapport généré le',
+    currentScore: 'Score actuel', projectedScore: 'Score projeté',
+    projectionText: 'En appliquant les recommandations, votre score GEO pourrait passer de',
+    projectionTo: 'à',
+    projectionDisclaimer: "Cette projection est indicative. Elle suppose une implémentation propre des recommandations et ne prend pas en compte l'évolution rapide des moteurs IA.",
+    projectionDisclaimerShort: 'Cette projection est indicative. Elle ne constitue pas une garantie.',
+    fullAudit: 'AUDIT COMPLET',
+    upsellTitle: 'Ce rapport analyse 1 page.',
+    upsellTitle2: 'Votre site en a probablement 20, 50, 100.',
+    upsellDesc: "L'audit complet Detekia analyse vos 20 pages les plus importantes, détecte les patterns transverses et produit un plan d'action priorisé pour l'ensemble du site.",
+    upsellCta: 'Auditer mon site complet — 99€ →',
+    queriesCite: 'requêtes\ncitent votre site',
+    citedLabel: 'Cité', notCitedLabel: 'Non cité',
+    genericLabel: 'GÉNÉRIQUE', longTailLabel: 'LONGUE TRAÎNE',
+    difficultyLabel: 'Difficulté',
+    citedWithYou: 'Cités avec vous', citedInstead: 'Cités à votre place',
+    recommendationLabel: 'Recommandation',
+    theProblem: 'Le problème', theSolution: 'La solution',
+    techImplementation: 'Mise en œuvre technique',
+    pagesAffected: 'pages concernées', pageLabel: 'Page',
+    detailedAnalysis: 'Analyse détaillée',
+    patternsDetected: 'Patterns détectés',
+    consolidatedActions: 'Actions prioritaires consolidées',
+    actionsClassified: 'actions classées par priorité.',
+    belowThreshold: 'sous seuil', pagesBelowThreshold: 'pages sous le seuil 75%',
+    appendix: 'Annexe', pageByPageReview: 'Bilan par page analysée',
+    priorityActions: 'Actions prioritaires',
+    pagesNotAnalyzable: 'page(s) non analysable(s)',
+    siteAvgScore: 'score moyen du site', pagesAnalyzed: 'pages analysées',
+    scope: 'Périmètre', aggregatedScore: 'Score agrégé : moyenne arithmétique des scores individuels.',
+    testIaConsolidated: 'Test IA consolidé', testIa30: 'Test de visibilité IA — 30 requêtes',
+    priorityAction_s: 'action prioritaire', priorityActions_s: 'actions prioritaires',
+    criterion_s: 'Critère', pdfError: 'Erreur lors de la génération du PDF. Réessayez.',
+    average: 'moyenne site',
   },
   en: {
     scoreLabel: 'AI VISIBILITY SCORE',
@@ -251,6 +369,76 @@ const REPORT_STRINGS = {
     evidenceLlms: 'llms.txt',
     evidenceTrustLinks: 'Internal trust links',
     noData: 'Not available',
+    execSummary: 'Executive summary', analysisResults: 'Analysis results',
+    the8Criteria: 'The 8 GEO criteria', context2026: '2026 Context',
+    whyAiMatters: 'Why AI visibility is critical in 2026',
+    whyAiDesc: 'AI search engines are radically changing how people find information. Here are the key data points explaining why your AI visibility has become a direct business issue.',
+    whyAiDescShort: 'AI search engines are radically changing how people find information.',
+    only11: 'Only 11% of domains are cited by both ChatGPT AND Perplexity. Each AI platform has its own preferences — another reason to work on your citability across the board. (Profound, 2025)',
+    only11Short: 'Only 11% of domains are cited by both ChatGPT AND Perplexity.',
+    academicSource: 'Academic reference source', academicSourceShort: 'Academic source',
+    academicRef: '"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. Some optimizations increase AI visibility by up to 40%.',
+    academicRefShort: '"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024.',
+    citationTestTitle: 'AI visibility test',
+    citationTestDesc10: 'We tested 10 user queries to check if your site is cited by AI engines.',
+    citationTestDesc30: 'We tested 30 user queries to check if your site is cited by AI engines.',
+    bestOpportunity: 'Best opportunity', mainBlocker: 'Main blocker',
+    citationDisclaimer: 'This test simulates user queries via AI. Results vary depending on the engine, wording and timing.',
+    citationDisclaimerShort: 'This test simulates queries via AI. Results vary depending on the engine, wording and timing.',
+    whatWeFound: 'What we found',
+    recommendation_s: 'Recommendation', recommendations_s: 'Recommendations',
+    criterionWellOptimized: 'This criterion is well optimized. Keep maintaining this level.',
+    criterionWellOptimizedSite: 'This criterion is well optimized across the entire site.',
+    criterionNeedsWork: 'This criterion needs improvement',
+    criterionNeedsWorkSuffix: 'Specific recommendations are included in the action plan below.',
+    techGuide: 'Technical guide', documentedCase: 'Documented real case',
+    actionSummary: 'Action summary',
+    actionSummaryDesc: 'recommendations ranked by impact priority.',
+    theCriterion: 'Criterion',
+    transparency: 'Transparency', methodologyH2: 'Methodology',
+    analysisLimits: 'ANALYSIS LIMITATIONS',
+    analysisLimitsDesc: 'This report is generated by automated analysis of content accessible via scraping. Some elements rendered via client-side JavaScript, protected by authentication, or loaded dynamically may not be detected.',
+    methodologyP1: 'This report is generated by automated analysis of your page\'s DOM via a specialized AI scraping service and evaluation on <strong>8 weighted criteria</strong>. The Editorial Neutrality criterion is evaluated by artificial intelligence. The other 7 criteria are evaluated by technical HTML analysis.',
+    methodologyP1Pro: 'Analysis performed on {n} pages prioritized by editorial importance (prioritization by sitemap + freshness + depth). Each page is evaluated on 8 weighted criteria. The Pro AI test covers 30 simulated queries (vs 10 for the one-page report).',
+    methodologyP2: 'The AI visibility test is performed by simulating 10 queries via AI. Results vary depending on the AI engine, query and timing.',
+    the8CriteriaWeights: 'The 8 criteria and their weights',
+    academicSourceLabel: 'ACADEMIC SOURCE',
+    reportLimits: 'REPORT LIMITATIONS',
+    reportLimitsDesc: 'AI engines evolve rapidly. Results reflect the state of algorithms at the generation date. The AI visibility test is a simulation, not a direct query to AI engines.',
+    reportGenerated: 'Report generated on',
+    currentScore: 'Current score', projectedScore: 'Projected score',
+    projectionText: 'By implementing the recommendations, your GEO score could go from',
+    projectionTo: 'to',
+    projectionDisclaimer: 'This projection is indicative. It assumes a proper implementation of recommendations and does not account for the rapid evolution of AI engines.',
+    projectionDisclaimerShort: 'This projection is indicative. It does not constitute a guarantee.',
+    fullAudit: 'FULL AUDIT',
+    upsellTitle: 'This report analyzes 1 page.',
+    upsellTitle2: 'Your site likely has 20, 50, 100.',
+    upsellDesc: "Detekia's full audit analyzes your 20 most important pages, detects cross-page patterns and produces a prioritized action plan for the entire site.",
+    upsellCta: 'Audit my full site — €99 →',
+    queriesCite: 'queries\ncite your site',
+    citedLabel: 'Cited', notCitedLabel: 'Not cited',
+    genericLabel: 'GENERIC', longTailLabel: 'LONG TAIL',
+    difficultyLabel: 'Difficulty',
+    citedWithYou: 'Cited with you', citedInstead: 'Cited instead of you',
+    recommendationLabel: 'Recommendation',
+    theProblem: 'The problem', theSolution: 'The solution',
+    techImplementation: 'Technical implementation',
+    pagesAffected: 'pages affected', pageLabel: 'Page',
+    detailedAnalysis: 'Detailed analysis',
+    patternsDetected: 'Patterns detected',
+    consolidatedActions: 'Consolidated priority actions',
+    actionsClassified: 'actions ranked by priority.',
+    belowThreshold: 'below threshold', pagesBelowThreshold: 'pages below 75% threshold',
+    appendix: 'Appendix', pageByPageReview: 'Page-by-page review',
+    priorityActions: 'Priority actions',
+    pagesNotAnalyzable: 'page(s) could not be analyzed',
+    siteAvgScore: 'site average score', pagesAnalyzed: 'pages analyzed',
+    scope: 'Scope', aggregatedScore: 'Aggregated score: arithmetic average of individual scores.',
+    testIaConsolidated: 'Consolidated AI test', testIa30: 'AI visibility test — 30 queries',
+    priorityAction_s: 'priority action', priorityActions_s: 'priority actions',
+    criterion_s: 'Criterion', pdfError: 'Error generating PDF. Please try again.',
+    average: 'site average',
   },
 };
 
@@ -258,9 +446,11 @@ function rs(locale) { return REPORT_STRINGS[locale] || REPORT_STRINGS.fr; }
 
 // ── Evidence Blocks (per-criterion) ─────────────────────────────────────────
 
-function EvidenceBlock({ criterionName, evidence }) {
+function EvidenceBlock({ criterionName, evidence, locale: loc }) {
   if (!evidence) return null;
   const name = criterionName.toLowerCase();
+  const s = rs(loc);
+  const en = loc === 'en';
   const Box = ({ label, children }) => (
     <div style={{ background: '#F7F5F2', borderLeft: '3px solid #E5E2DC', padding: '14px 18px', borderRadius: '0 6px 6px 0', margin: '10px 0' }}>
       {label && <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{label}</div>}
@@ -270,84 +460,83 @@ function EvidenceBlock({ criterionName, evidence }) {
 
   if (/extractibilit/i.test(name)) {
     return (<>
-      {evidence.intro && <Box label="Extrait analysé — 300 premiers caractères du site"><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916', lineHeight: 1.6 }}>{evidence.intro}</div></Box>}
+      {evidence.intro && <Box label={s.evidenceIntro}><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916', lineHeight: 1.6 }}>{evidence.intro}</div></Box>}
       {evidence.headings?.length > 0 && (<>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>Structure H1/H2/H3 détectée</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 14, marginBottom: 8 }}>{en ? 'Detected H1/H2/H3 structure' : 'Structure H1/H2/H3 détectée'}</div>
         <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden', fontSize: 12 }}>
-          <thead><tr style={{ background: '#F7F5F2' }}><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Niveau</th><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Texte</th></tr></thead>
+          <thead><tr style={{ background: '#F7F5F2' }}><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{en ? 'Level' : 'Niveau'}</th><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{en ? 'Text' : 'Texte'}</th></tr></thead>
           <tbody>{evidence.headings.slice(0, 20).map((h, i) => (<tr key={i}><td style={{ padding: '5px 10px', fontFamily: 'monospace', fontSize: 10, color: '#D97757', textTransform: 'uppercase', whiteSpace: 'nowrap', borderBottom: '1px solid #F0EDE8' }}>{h.level}</td><td style={{ padding: '5px 10px', fontSize: 11, color: '#1A1916', borderBottom: '1px solid #F0EDE8' }}>{h.text}</td></tr>))}</tbody>
         </table>
       </>)}
-      {evidence.wordCount != null && <div style={{ fontSize: 12, color: '#6B6762', marginTop: 10 }}>Nombre de mots : <strong style={{ color: '#1A1916' }}>{evidence.wordCount}</strong></div>}
+      {evidence.wordCount != null && <div style={{ fontSize: 12, color: '#6B6762', marginTop: 10 }}>{en ? 'Word count: ' : 'Nombre de mots : '}<strong style={{ color: '#1A1916' }}>{evidence.wordCount}</strong></div>}
     </>);
   }
 
   if (/v.*rifiabilit/i.test(name)) {
     return (<>
-      {evidence.externalLinks != null && <Box label="Liens sortants vers sources externes"><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916' }}>{evidence.externalLinks} lien(s) externe(s) détecté(s)</div></Box>}
-      <Box label="Dates détectées dans le contenu">
+      {evidence.externalLinks != null && <Box label={en ? 'Outgoing links to external sources' : 'Liens sortants vers sources externes'}><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916' }}>{evidence.externalLinks} {en ? 'external link(s) detected' : 'lien(s) externe(s) détecté(s)'}</div></Box>}
+      <Box label={en ? 'Dates detected in content' : 'Dates détectées dans le contenu'}>
         {evidence.dates && Object.keys(evidence.dates).length > 0
           ? Object.entries(evidence.dates).map(([k, v]) => <div key={k} style={{ fontSize: 12, marginBottom: 4 }}><span style={{ color: '#6B6762' }}>{k}:</span> <strong style={{ color: '#1A1916' }}>{String(v)}</strong></div>)
-          : <div style={{ fontSize: 12, color: '#D97757' }}>Aucune date détectée</div>}
+          : <div style={{ fontSize: 12, color: '#D97757' }}>{en ? 'No date detected' : 'Aucune date détectée'}</div>}
       </Box>
     </>);
   }
 
   if (/autorit/i.test(name)) {
     return (<>
-      <Box label="Balise <title>"><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916' }}>{evidence.metaTitle || <span style={{ color: '#D97757' }}>Non définie</span>}</div></Box>
-      <Box label="Meta description"><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916' }}>{evidence.metaDescription || <span style={{ color: '#D97757' }}>Non définie</span>}</div></Box>
-      <Box label="Réseaux sociaux détectés">
+      <Box label={en ? '<title> tag' : 'Balise <title>'}><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916' }}>{evidence.metaTitle || <span style={{ color: '#D97757' }}>{en ? 'Not defined' : 'Non définie'}</span>}</div></Box>
+      <Box label="Meta description"><div style={{ fontFamily: 'monospace', fontSize: 12, color: '#1A1916' }}>{evidence.metaDescription || <span style={{ color: '#D97757' }}>{en ? 'Not defined' : 'Non définie'}</span>}</div></Box>
+      <Box label={en ? 'Social media links detected' : 'Réseaux sociaux détectés'}>
         {evidence.socialLinks?.length > 0
           ? evidence.socialLinks.map((l, i) => <div key={i} style={{ fontSize: 11, fontFamily: 'monospace', color: '#4285F4', marginBottom: 4, wordBreak: 'break-all' }}>{l}</div>)
-          : <div style={{ fontSize: 12, color: '#D97757' }}>Aucun lien vers réseaux sociaux</div>}
+          : <div style={{ fontSize: 12, color: '#D97757' }}>{en ? 'No social media link found' : 'Aucun lien vers réseaux sociaux'}</div>}
       </Box>
     </>);
   }
 
   if (/crawlabilit/i.test(name)) {
     return (<>
-      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Contenu de robots.txt</div>
+      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{en ? 'robots.txt content' : 'Contenu de robots.txt'}</div>
       {evidence.robotsTxt && evidence.robotsTxt !== 'Non accessible'
         ? <pre style={{ background: '#1A1916', color: '#F7F5F2', borderRadius: 8, padding: 16, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.6, whiteSpace: 'pre-wrap', wordBreak: 'break-all', margin: '10px 0' }}>{evidence.robotsTxt}</pre>
-        : <Box><div style={{ fontSize: 12, color: '#D97757' }}>Non accessible</div></Box>}
-      <Box label="Fichier llms.txt">
-        <div style={{ fontSize: 13, fontWeight: 600, color: evidence.hasLlmsTxt ? '#10A37F' : '#D97757' }}>{evidence.hasLlmsTxt ? '✓ Présent' : '✗ Absent'}</div>
+        : <Box><div style={{ fontSize: 12, color: '#D97757' }}>{en ? 'Not accessible' : 'Non accessible'}</div></Box>}
+      <Box label={en ? 'llms.txt file' : 'Fichier llms.txt'}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: evidence.hasLlmsTxt ? '#10A37F' : '#D97757' }}>{evidence.hasLlmsTxt ? (en ? '✓ Present' : '✓ Présent') : (en ? '✗ Absent' : '✗ Absent')}</div>
       </Box>
     </>);
   }
 
   if (/donn.*structur/i.test(name)) {
     if (!evidence.schemas?.length) {
-      return <Box label="Schémas JSON-LD détectés"><div style={{ fontSize: 13, fontWeight: 600, color: '#D97757' }}>Aucun schéma JSON-LD détecté</div></Box>;
+      return <Box label={s.evidenceSchemas}><div style={{ fontSize: 13, fontWeight: 600, color: '#D97757' }}>{en ? 'No JSON-LD schema detected' : 'Aucun schéma JSON-LD détecté'}</div></Box>;
     }
     return (<>
-      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Schémas JSON-LD détectés</div>
+      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{s.evidenceSchemas}</div>
       <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden' }}>
-        <thead><tr style={{ background: '#F7F5F2' }}><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Type</th><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Propriétés</th></tr></thead>
-        <tbody>{evidence.schemas.map((s, i) => <tr key={i}><td style={{ padding: '8px 10px', fontFamily: 'monospace', fontSize: 11, color: '#1A1916', borderBottom: '1px solid #F0EDE8' }}>{s.type}</td><td style={{ padding: '8px 10px', fontSize: 11, color: '#6B6762', borderBottom: '1px solid #F0EDE8' }}>{(s.properties || []).join(', ')}</td></tr>)}</tbody>
+        <thead><tr style={{ background: '#F7F5F2' }}><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Type</th><th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{en ? 'Properties' : 'Propriétés'}</th></tr></thead>
+        <tbody>{evidence.schemas.map((s2, i) => <tr key={i}><td style={{ padding: '8px 10px', fontFamily: 'monospace', fontSize: 11, color: '#1A1916', borderBottom: '1px solid #F0EDE8' }}>{s2.type}</td><td style={{ padding: '8px 10px', fontSize: 11, color: '#6B6762', borderBottom: '1px solid #F0EDE8' }}>{(s2.properties || []).join(', ')}</td></tr>)}</tbody>
       </table>
     </>);
   }
 
   if (/neutralit/i.test(name)) {
-    // Le diagnostic IA du ton éditorial est affiché via c.detail dans le rendu principal
     return null;
   }
 
   if (/pr.*sence/i.test(name)) {
-    return <Box label="Réseaux sociaux détectés">
+    return <Box label={en ? 'Social media links detected' : 'Réseaux sociaux détectés'}>
       {evidence.socialLinks?.length > 0
         ? evidence.socialLinks.map((l, i) => <div key={i} style={{ fontSize: 11, fontFamily: 'monospace', color: '#4285F4', marginBottom: 4, wordBreak: 'break-all' }}>{l}</div>)
-        : <div style={{ fontSize: 12, color: '#D97757' }}>Aucun lien vers réseaux sociaux détecté</div>}
+        : <div style={{ fontSize: 12, color: '#D97757' }}>{en ? 'No social media link detected' : 'Aucun lien vers réseaux sociaux détecté'}</div>}
     </Box>;
   }
 
   if (/fra.*cheur/i.test(name)) {
-    return <Box label="Dates détectées dans le contenu">
+    return <Box label={en ? 'Dates detected in content' : 'Dates détectées dans le contenu'}>
       {evidence.dates && Object.keys(evidence.dates).length > 0
         ? Object.entries(evidence.dates).map(([k, v]) => <div key={k} style={{ fontSize: 12, marginBottom: 4 }}><span style={{ color: '#6B6762' }}>{k}:</span> <strong style={{ color: '#1A1916' }}>{String(v)}</strong></div>)
-        : <div style={{ fontSize: 12, color: '#D97757' }}>Aucune date détectée</div>}
+        : <div style={{ fontSize: 12, color: '#D97757' }}>{en ? 'No date detected' : 'Aucune date détectée'}</div>}
     </Box>;
   }
 
@@ -356,40 +545,40 @@ function EvidenceBlock({ criterionName, evidence }) {
 
 // ── Criteria detail label from score ────────────────────────────────────────
 
-function criteriaDetailLabel(c, evidence) {
+function criteriaDetailLabel(c, evidence, locale) {
   const name = c.name.toLowerCase();
+  const en = locale === 'en';
   const parts = [];
   if (/extractibilit/i.test(name)) {
-    parts.push('Contenu présent ✓');
-    if (evidence?.intro) parts.push('Intro correcte');
-    if (evidence?.headings?.length) parts.push(`${evidence.headings.length} éléments de structure`);
+    parts.push(en ? 'Content present ✓' : 'Contenu présent ✓');
+    if (evidence?.intro) parts.push(en ? 'Good intro' : 'Intro correcte');
+    if (evidence?.headings?.length) parts.push(`${evidence.headings.length} ${en ? 'structural elements' : 'éléments de structure'}`);
   } else if (/v.*rifiabilit/i.test(name)) {
-    parts.push('Contenu vérifiable');
+    parts.push(en ? 'Verifiable content' : 'Contenu vérifiable');
     const nums = c.detail?.match(/(\d+) donn/)?.[1];
-    if (nums) parts.push(`${nums} données chiffrées ✓`);
-    if (evidence?.externalLinks === 0) parts.push('Aucun lien externe identifié ✗');
-    else if (evidence?.externalLinks > 0) parts.push(`${evidence.externalLinks} liens externes ✓`);
+    if (nums) parts.push(`${nums} ${en ? 'data points' : 'données chiffrées'} ✓`);
+    if (evidence?.externalLinks === 0) parts.push(en ? 'No external link found ✗' : 'Aucun lien externe identifié ✗');
+    else if (evidence?.externalLinks > 0) parts.push(`${evidence.externalLinks} ${en ? 'external links' : 'liens externes'} ✓`);
   } else if (/autorit/i.test(name)) {
     if (evidence?.internalTrustLinks) {
       const tl = evidence.internalTrustLinks;
       if (tl.hasContact) parts.push('Contact ✓');
-      if (tl.hasLegal) parts.push('Mentions légales ✓');
-      if (tl.hasAbout) parts.push('Page À propos ✓');
+      if (tl.hasLegal) parts.push(en ? 'Legal notices ✓' : 'Mentions légales ✓');
+      if (tl.hasAbout) parts.push(en ? 'About page ✓' : 'Page À propos ✓');
     }
   } else if (/crawlabilit/i.test(name)) {
-    // chars count comes from c.detail (e.g. "5277 chars ✓ · Indexable ✓"), not evidence.wordCount (which is word count)
-    // Don't duplicate — c.detail is shown separately
+    // chars count comes from c.detail, not evidence.wordCount
   } else if (/donn.*structur/i.test(name)) {
-    if (!evidence?.schemas?.length) parts.push('Aucun schéma JSON-LD identifié ✗');
-    else parts.push(`${evidence.schemas.length} schéma(s) détecté(s) ✓`);
+    if (!evidence?.schemas?.length) parts.push(en ? 'No JSON-LD schema found ✗' : 'Aucun schéma JSON-LD identifié ✗');
+    else parts.push(`${evidence.schemas.length} ${en ? 'schema(s) detected' : 'schéma(s) détecté(s)'} ✓`);
   } else if (/neutralit/i.test(name)) {
     // detail comes from Haiku
   } else if (/pr.*sence/i.test(name)) {
-    if (evidence?.externalLinks > 0) parts.push('Liens externes présents ✓');
-    if (evidence?.internalTrustLinks?.hasPress) parts.push('Mentions presse ✓');
+    if (evidence?.externalLinks > 0) parts.push(en ? 'External links present ✓' : 'Liens externes présents ✓');
+    if (evidence?.internalTrustLinks?.hasPress) parts.push(en ? 'Press mentions ✓' : 'Mentions presse ✓');
   } else if (/fra.*cheur/i.test(name)) {
-    if (evidence?.dates?.yearFound) parts.push(`Année présente · Contenu récent (${evidence.dates.yearFound}) ✓`);
-    if (evidence?.dates?.copyright) parts.push('Copyright à jour ✓');
+    if (evidence?.dates?.yearFound) parts.push(`${en ? 'Year present · Recent content' : 'Année présente · Contenu récent'} (${evidence.dates.yearFound}) ✓`);
+    if (evidence?.dates?.copyright) parts.push(en ? 'Copyright up to date ✓' : 'Copyright à jour ✓');
   }
   return parts;
 }
@@ -444,10 +633,10 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
       const blob = await res.blob();
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `rapport-geo-${url.replace(/[^a-z0-9]/gi, '-')}.pdf`;
+      a.download = `${locale === 'en' ? 'geo-report' : 'rapport-geo'}-${url.replace(/[^a-z0-9]/gi, '-')}.pdf`;
       a.click();
       URL.revokeObjectURL(a.href);
-    } catch { alert('Erreur lors de la génération du PDF. Réessayez.'); }
+    } catch { alert(rs(locale).pdfError); }
     setDownloading(false);
   };
 
@@ -462,7 +651,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
   let projGain = 0;
   criteria.forEach(c => { if (c.score / c.max < 0.75) projGain += Math.round(c.max * 0.8 - c.score); });
   const projected = Math.min(100, reportData.score + Math.round(projGain * 0.7));
-  const date = createdAt ? new Date(createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+  const date = createdAt ? new Date(createdAt).toLocaleDateString(locale === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
 
   // Compute 3 weakest criteria for case study display
   const criteriaSorted = criteria.map(c => ({ name: c.name, pct: c.max > 0 ? c.score / c.max : 1 })).sort((a, b) => a.pct - b.pct);
@@ -479,7 +668,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
   return (
     <>
       <Head>
-        <title>Rapport GEO — {url} — {reportData.score}/100 | Detekia</title>
+        <title>{locale === 'en' ? 'GEO Report' : 'Rapport GEO'} — {url} — {reportData.score}/100 | Detekia</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -495,16 +684,16 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{url}</span>
           </div>
           <button onClick={handleDownload} disabled={downloading} style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'system-ui', opacity: downloading ? 0.6 : 1, flexShrink: 0 }}>
-            {downloading ? 'Génération...' : '↓ Télécharger PDF'}
+            {downloading ? locale === 'en' ? 'Generating...' : 'Génération...' : locale === 'en' ? '↓ Download PDF' : '↓ Télécharger PDF'}
           </button>
         </header>
 
-        <main role="main" aria-label="Rapport GEO" style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
+        <main role="main" aria-label={locale === 'en' ? 'GEO Report' : 'Rapport GEO'} style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
 
           {/* ═══ SECTION 1: SYNTHÈSE EXÉCUTIVE ═══ */}
           <section id="synthese" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Synthèse exécutive</div>
-            <h1 style={{ fontFamily: 'Georgia,serif', fontSize: 30, color: '#1A1916', letterSpacing: -1, marginBottom: 20, lineHeight: 1.1 }}>Résultats de l'analyse</h1>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).execSummary}</div>
+            <h1 style={{ fontFamily: 'Georgia,serif', fontSize: 30, color: '#1A1916', letterSpacing: -1, marginBottom: 20, lineHeight: 1.1 }}>{rs(locale).analysisResults}</h1>
 
             {/* Score hero */}
             <div style={{ background: '#1A1916', borderRadius: 20, padding: '36px 32px', marginBottom: 24, position: 'relative', overflow: 'hidden' }}>
@@ -523,12 +712,12 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             </div>
 
             {/* 8 criteria table */}
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>Les 8 critères GEO</h2>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{rs(locale).the8Criteria}</h2>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 20 }}>
               {criteria.map((c, i) => {
                 const pct = Math.round((c.score / c.max) * 100);
                 const col = pct >= 75 ? '#10A37F' : pct >= 45 ? '#C9861A' : '#D97757';
-                const gradeLabel = pct >= 75 ? 'BON' : pct >= 45 ? 'IMPORTANT' : 'CRITIQUE';
+                const gradeLabel = pct >= 75 ? (locale === 'en' ? 'GOOD' : 'BON') : pct >= 45 ? 'IMPORTANT' : (locale === 'en' ? 'CRITICAL' : 'CRITIQUE');
                 return (
                   <div key={i} style={{ marginBottom: 12 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
@@ -561,7 +750,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             })}</>); })()}
 
             {/* Strengths */}
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginTop: 20, marginBottom: 14 }}>Points forts identifiés</h2>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginTop: 20, marginBottom: 14 }}>{locale === 'en' ? 'Identified strengths' : 'Points forts identifiés'}</h2>
             <div style={{ background: '#E8F7F3', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 10, padding: '20px 24px' }}>
               {(reportData.strengths || []).map((s, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 8 }}>
@@ -574,11 +763,11 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
 
           {/* ═══ SECTION 2: CONTEXTE 2026 ═══ */}
           <section id="contexte" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Contexte 2026</div>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Pourquoi la visibilité IA est critique en 2026</h2>
-            <p style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.7, marginBottom: 20 }}>Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information. Voici les données clés qui expliquent pourquoi votre visibilité IA est devenue un enjeu business direct.</p>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).context2026}</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>{rs(locale).whyAiMatters}</h2>
+            <p style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.7, marginBottom: 20 }}>{rs(locale).whyAiDesc}</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12, marginBottom: 20 }}>
-              {CTX_CARDS.map((card, i) => (
+              {getCtxCards(locale).map((card, i) => (
                 <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px' }}>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{card.label}</div>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 28, color: card.color, lineHeight: 1, marginBottom: 6 }}>{card.value}</div>
@@ -587,36 +776,36 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               ))}
             </div>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px', marginBottom: 12 }}>
-              <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.7, margin: 0 }}><strong>Seulement 11%</strong> des domaines sont cités à la fois par ChatGPT ET Perplexity. Chaque plateforme IA a ses propres préférences — une raison supplémentaire de travailler votre citabilité de façon transversale. (Profound, 2025)</p>
+              <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.7, margin: 0 }} dangerouslySetInnerHTML={{ __html: `<strong>${locale === 'en' ? 'Only 11%' : 'Seulement 11%'}</strong> ${rs(locale).only11.replace(/^[^%]+% /, '')}` }} />
             </div>
             <div style={{ background: '#F7F5F2', borderRadius: 10, padding: '18px 22px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Source académique de référence</div>
-              <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.65, margin: 0 }}>"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. Certaines optimisations augmentent la visibilité IA jusqu'à 40%.</p>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).academicSource}</div>
+              <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.65, margin: 0 }}>{rs(locale).academicRef}</p>
             </div>
           </section>
 
           {/* ═══ SECTION 3: TEST IA ═══ */}
           {citationTests.length > 0 && (
             <section id="test-ia" style={{ marginBottom: 48 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Test IA</div>
-              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Test de visibilité IA</h2>
-              <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>Nous avons simulé 10 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{locale === 'en' ? 'AI Test' : 'Test IA'}</div>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>{rs(locale).citationTestTitle}</h2>
+              <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{rs(locale).citationTestDesc10}</p>
 
               <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap' }}>
                 <div style={{ background: '#1A1916', borderRadius: 14, padding: '20px 28px', textAlign: 'center', flexShrink: 0 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 36, color: '#F7F5F2' }}>{citedCount}/{citationTests.length}</div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', whiteSpace: 'pre-line' }}>{'requêtes\ncitent votre site'}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', whiteSpace: 'pre-line' }}>{rs(locale).queriesCite}</div>
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minWidth: 200 }}>
-                  {citation.summary?.best_opportunity && <div style={{ background: '#E8F7F3', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', marginBottom: 4 }}>Meilleure opportunité</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{citation.summary.best_opportunity}</div></div>}
-                  {citation.summary?.main_blocker && <div style={{ background: 'rgba(217,119,87,0.06)', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', marginBottom: 4 }}>Blocage principal</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{citation.summary.main_blocker}</div></div>}
+                  {citation.summary?.best_opportunity && <div style={{ background: '#E8F7F3', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', marginBottom: 4 }}>{rs(locale).bestOpportunity}</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{citation.summary.best_opportunity}</div></div>}
+                  {citation.summary?.main_blocker && <div style={{ background: 'rgba(217,119,87,0.06)', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', marginBottom: 4 }}>{rs(locale).mainBlocker}</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{citation.summary.main_blocker}</div></div>}
                 </div>
               </div>
 
-              {citationTests.map((q, i) => <CitationCard key={i} q={q} />)}
+              {citationTests.map((q, i) => <CitationCard key={i} q={q} locale={locale} />)}
 
               <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '14px 18px', marginTop: 16 }}>
-                <p style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.7, margin: 0 }}>Ce test simule des requêtes utilisateur via l'IA. Les résultats varient selon le moteur, la formulation et le moment.</p>
+                <p style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.7, margin: 0 }}>{rs(locale).citationDisclaimer}</p>
               </div>
             </section>
           )}
@@ -628,17 +817,17 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               const col = pct >= 75 ? '#10A37F' : pct >= 45 ? '#C9861A' : '#D97757';
               const group = criterionGroup(c.name);
               const criterionRecos = matchRecos(c.name);
-              const why = lookupMap(WHY, c.name);
-              const guide = lookupMap(GUIDES, c.name);
-              const caseStudy = lookupMap(CASES, c.name);
-              const detailParts = criteriaDetailLabel(c, evidence);
+              const why = lookupMap(getWhy(locale), c.name);
+              const guide = lookupMap(getGuides(locale), c.name);
+              const caseStudy = lookupMap(getCases(locale), c.name);
+              const detailParts = criteriaDetailLabel(c, evidence, locale);
               const isMax = c.score === c.max;
 
               return (
                 <div key={i} id={`critere-${i + 1}`} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24, marginBottom: 20, scrollMarginTop: 70 }}>
                   {/* Header */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>{group} · Critère {i + 1} / 8</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>{group} · {rs(locale).criterion_s} {i + 1} / 8</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
                     <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{tc(c.name, locale)}</h3>
@@ -653,18 +842,18 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
 
                   {/* CE QUE NOUS AVONS TROUVÉ */}
                   <div style={{ marginBottom: 20 }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>Ce que nous avons trouvé</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).whatWeFound}</div>
                     {detailParts.length > 0
                       ? <div style={{ fontSize: 12, color: '#1A1916', marginBottom: 10 }}>{detailParts.join(' · ')}</div>
                       : c.detail && <div style={{ fontSize: 12, color: '#6B6762', marginBottom: 10, lineHeight: 1.5 }}>{c.detail}</div>
                     }
-                    <EvidenceBlock criterionName={c.name} evidence={evidence} />
+                    <EvidenceBlock criterionName={c.name} evidence={evidence} locale={locale} />
                   </div>
 
                   {/* POURQUOI C'EST IMPORTANT */}
                   {why && (
                     <div style={{ marginBottom: 20 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>Pourquoi c'est important</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{locale === 'en' ? 'Why it matters' : "Pourquoi c'est important"}</div>
                       <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.75, margin: 0 }}>{why}</p>
                     </div>
                   )}
@@ -673,30 +862,30 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   {isMax || pct >= 75 ? (
                     criterionRecos.length > 0 ? (
                       <div style={{ marginBottom: 16 }}>
-                        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Recommandation{criterionRecos.length > 1 ? 's' : ''}</div>
-                        {criterionRecos.map((r, ri) => <RecoCard key={ri} r={r} index={ri} />)}
+                        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{criterionRecos.length > 1 ? rs(locale).recommendations_s : rs(locale).recommendation_s}</div>
+                        {criterionRecos.map((r, ri) => <RecoCard key={ri} r={r} index={ri} locale={locale} />)}
                       </div>
                     ) : (
                       <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 8, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                         <span style={{ fontSize: 18 }}>✓</span>
-                        <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>Ce critère est bien optimisé. Continuez à maintenir ce niveau.</span>
+                        <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>{rs(locale).criterionWellOptimized}</span>
                       </div>
                     )
                   ) : criterionRecos.length > 0 ? (
                     <div style={{ marginBottom: 16 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Recommandation{criterionRecos.length > 1 ? 's' : ''}</div>
-                      {criterionRecos.map((r, ri) => <RecoCard key={ri} r={r} index={ri} />)}
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{criterionRecos.length > 1 ? rs(locale).recommendations_s : rs(locale).recommendation_s}</div>
+                      {criterionRecos.map((r, ri) => <RecoCard key={ri} r={r} index={ri} locale={locale} />)}
                     </div>
                   ) : (
                     <div style={{ background: 'rgba(201,134,26,0.06)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 8, padding: '16px 20px', fontSize: 13, color: '#C9861A', lineHeight: 1.6, marginBottom: 16 }}>
-                      Ce critère peut être amélioré ({pct}%).
+                      {rs(locale).criterionNeedsWork} ({pct}%).
                     </div>
                   )}
 
                   {/* GUIDE TECHNIQUE */}
                   {guide && (
                     <div style={{ background: 'rgba(217,119,87,0.04)', borderLeft: '3px solid #D97757', borderRadius: '0 10px 10px 0', padding: '18px 22px', marginBottom: 16 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Guide technique</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).techGuide}</div>
                       <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.8, margin: 0 }}>{guide}</p>
                     </div>
                   )}
@@ -704,7 +893,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   {/* CAS RÉEL — only on 3 weakest */}
                   {weakest3.has(c.name) && caseStudy && (
                     <div style={{ background: '#E8F7F3', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 10, padding: '18px 22px' }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Cas réel documenté</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).documentedCase}</div>
                       <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.7, margin: 0 }}>{caseStudy}</p>
                     </div>
                   )}
@@ -715,20 +904,20 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
 
           {/* ═══ SECTION 5: PLAN D'ACTION COMPLET ═══ */}
           <section id="plan-action" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Plan d'action</div>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Récapitulatif des actions</h2>
-            <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{recos.length} recommandations classées par priorité d'impact.</p>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{locale === 'en' ? 'Action plan' : "Plan d'action"}</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>{rs(locale).actionSummary}</h2>
+            <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{recos.length} {rs(locale).actionSummaryDesc}</p>
 
             {/* Full action table */}
             <div style={{ overflowX: 'auto', marginBottom: 28 }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 10, overflow: 'hidden', fontSize: 12 }}>
                 <thead><tr style={{ background: '#F7F5F2' }}>
                   <th style={thStyle}>#</th>
-                  <th style={thStyle}>Priorité</th>
+                  <th style={thStyle}>{locale === 'en' ? 'Priority' : 'Priorité'}</th>
                   <th style={{ ...thStyle, textAlign: 'left' }}>Action</th>
-                  <th style={thStyle}>Critère</th>
+                  <th style={thStyle}>{rs(locale).theCriterion}</th>
                   <th style={thStyle}>Impact</th>
-                  <th style={thStyle}>Délai</th>
+                  <th style={thStyle}>{locale === 'en' ? 'Timeline' : 'Délai'}</th>
                 </tr></thead>
                 <tbody>{recos.map((r, i) => {
                   const pi = priorityInfo(r.priority);
@@ -738,7 +927,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                       <td style={{ padding: '10px 12px', textAlign: 'center' }}><span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 8px', borderRadius: 4, background: pi.bg, color: pi.color }}>{pi.label}</span></td>
                       <td style={{ padding: '10px 12px', fontSize: 12, color: '#1A1916', lineHeight: 1.5, maxWidth: 400 }}><strong>{r.title}</strong>{r.solution ? ` — ${r.solution.substring(0, 100)}` : ''}</td>
                       <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#6B6762', whiteSpace: 'nowrap' }}>{tc(r.criterion || ''  , locale)}</td>
-                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: pi.color, textAlign: 'center' }}>{r.impact === 'high' ? 'Élevé' : r.impact === 'medium' ? 'Moyen' : 'Faible'}</td>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: pi.color, textAlign: 'center' }}>{r.impact === 'high' ? (locale === 'en' ? 'High' : 'Élevé') : r.impact === 'medium' ? (locale === 'en' ? 'Medium' : 'Moyen') : (locale === 'en' ? 'Low' : 'Faible')}</td>
                       <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#6B6762', whiteSpace: 'nowrap', textAlign: 'center' }}>{r.timeframe || ''}</td>
                     </tr>
                   );
@@ -750,35 +939,35 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             <div style={{ background: '#1A1916', borderRadius: 16, padding: '28px 32px', marginBottom: 16 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.35)', marginBottom: 4 }}>Score actuel</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.35)', marginBottom: 4 }}>{rs(locale).currentScore}</div>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 42, color: '#F7F5F2', lineHeight: 1 }}>{reportData.score}</div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
                 </div>
                 <div style={{ fontFamily: 'Georgia,serif', fontSize: 24, color: 'rgba(247,245,242,0.3)' }}>→</div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 4 }}>Score projeté</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 4 }}>{rs(locale).projectedScore}</div>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 42, color: '#10A37F', lineHeight: 1 }}>{projected}</div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 200 }}>
-                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>Si toutes les recommandations sont implémentées, votre score devrait passer de {reportData.score}/100 à environ {projected}/100.</div>
+                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>{locale === 'en' ? `If all recommendations are implemented, your score should go from ${reportData.score}/100 to approximately ${projected}/100.` : `Si toutes les recommandations sont implémentées, votre score devrait passer de ${reportData.score}/100 à environ ${projected}/100.`}</div>
                 </div>
               </div>
             </div>
             <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '12px 16px', marginBottom: 24 }}>
-              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.6, margin: 0 }}>Cette projection est indicative. Elle suppose une implémentation propre des recommandations et ne prend pas en compte l'évolution rapide des moteurs IA.</p>
+              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.6, margin: 0 }}>{rs(locale).projectionDisclaimer}</p>
             </div>
           </section>
 
           {/* ═══ CTA PRO UPSELL ═══ */}
           <section id="upsell-pro" style={{ marginBottom: 28 }}>
             <div style={{ background: '#1A1916', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 12 }}>AUDIT COMPLET</div>
-              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#F7F5F2', marginBottom: 12, lineHeight: 1.3 }}>Ce rapport analyse 1 page.<br />Votre site en a probablement 20, 50, 100.</h2>
-              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', lineHeight: 1.7, maxWidth: 460, margin: '0 auto 20px' }}>L'audit complet Detekia analyse vos 20 pages les plus importantes, détecte les patterns transverses et produit un plan d'action priorisé pour l'ensemble du site.</p>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 12 }}>{rs(locale).fullAudit}</div>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#F7F5F2', marginBottom: 12, lineHeight: 1.3 }}>{rs(locale).upsellTitle}<br />{rs(locale).upsellTitle2}</h2>
+              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', lineHeight: 1.7, maxWidth: 460, margin: '0 auto 20px' }}>{rs(locale).upsellDesc}</p>
               <a href="https://detekia.fr/pricing" onClick={() => track('click-upsell-pro')}
                 style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>
-                Auditer mon site complet — 99€ →
+                {rs(locale).upsellCta}
               </a>
             </div>
           </section>
@@ -786,9 +975,9 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
           {/* ═══ CTA BEELEVEN ═══ */}
           <section id="beeleven" style={{ marginBottom: 48 }}>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 8 }}>ALLER PLUS LOIN</div>
-              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Besoin d'aide pour implémenter ?</h2>
-              <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations pour vous.</p>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 8 }}>{rs(locale).goFurther}</div>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>{rs(locale).beelevenTitle}</h2>
+              <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>{rs(locale).beelevenDesc}</p>
               <button onClick={() => { track('click-beeleven'); setShowContact(true); }}
                 style={{ display: 'inline-block', background: 'transparent', color: '#D97757', padding: '12px 32px', borderRadius: 10, fontSize: 14, fontWeight: 600, border: '1px solid #D97757', cursor: 'pointer', fontFamily: 'system-ui' }}>
                 Discutons-en →
@@ -798,26 +987,26 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
 
           {/* ═══ MÉTHODOLOGIE COMPLÈTE ═══ */}
           <section id="methodologie" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Transparence</div>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>Méthodologie</h2>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).transparency}</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>{rs(locale).methodologyH2}</h2>
 
             <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '12px 16px', marginBottom: 16 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>LIMITES DE L'ANALYSE</div>
-              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.5, margin: 0 }}>Ce rapport est généré par analyse automatisée du contenu accessible via scraping. Certains éléments rendus en JavaScript côté client, protégés par authentification, ou chargés dynamiquement peuvent ne pas être détectés.</p>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>{rs(locale).analysisLimits}</div>
+              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.5, margin: 0 }}>{rs(locale).analysisLimitsDesc}</p>
             </div>
 
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
-              <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>Ce rapport est généré par analyse automatisée du DOM de votre page via un service de scraping spécialisé pour les IA et évaluation sur <strong>8 critères pondérés</strong>. Le critère Neutralité éditoriale est évalué par intelligence artificielle. Les 7 autres critères sont évalués par analyse technique du HTML.</p>
-              <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>Le test de visibilité IA est réalisé par simulation de 10 requêtes via l'IA. Les résultats varient selon le moteur IA, la requête et le moment du test.</p>
+              <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }} dangerouslySetInnerHTML={{ __html: rs(locale).methodologyP1 }} />
+              <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>{rs(locale).methodologyP2}</p>
 
               {/* 8 criteria table */}
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Les 8 critères et leur pondération</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).the8CriteriaWeights}</div>
               <div style={{ overflowX: 'auto', marginBottom: 16 }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden', fontSize: 11 }}>
                   <thead><tr style={{ background: '#F7F5F2' }}>
-                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Critère</th>
-                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Poids</th>
-                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Ce qui est mesuré</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).theCriterion}</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).weight}</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).measured}</th>
                   </tr></thead>
                   <tbody>{METHODOLOGY_TABLE.map((row, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
@@ -830,20 +1019,20 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               </div>
 
               <div style={{ background: '#F7F5F2', borderRadius: 8, padding: '12px 16px', marginBottom: 16 }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1, marginBottom: 6 }}>SOURCE ACADÉMIQUE</div>
-                <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5, margin: 0 }}>"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024. Certaines optimisations augmentent la visibilité IA jusqu'à 40%.</p>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1, marginBottom: 6 }}>{rs(locale).academicSourceLabel}</div>
+                <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5, margin: 0 }}>{rs(locale).academicRef}</p>
               </div>
 
               <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '12px 16px' }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>LIMITES DU RAPPORT</div>
-                <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.5, margin: 0 }}>Les moteurs IA évoluent rapidement. Les résultats reflètent l'état des algorithmes à la date de génération. Le test de visibilité IA est une simulation et non une interrogation directe des moteurs.</p>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>{rs(locale).reportLimits}</div>
+                <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.5, margin: 0 }}>{rs(locale).reportLimitsDesc}</p>
               </div>
             </div>
           </section>
 
           {/* ═══ FOOTER ═══ */}
           <footer style={{ textAlign: 'center', padding: '24px 0', borderTop: '1px solid #E5E2DC' }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginBottom: 4 }}>Rapport généré le {date}</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginBottom: 4 }}>{rs(locale).reportGenerated} {date}</div>
             <div style={{ fontSize: 11, color: '#B0ABA5' }}>Beeleven SASU · hello@detekia.fr · <a href="https://detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>detekia.fr</a></div>
           </footer>
         </main>
@@ -898,17 +1087,17 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
       const blob = await res.blob();
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `rapport-geo-complet-${url.replace(/[^a-z0-9]/gi, '-')}.pdf`;
+      a.download = `${locale === 'en' ? 'geo-report-full' : 'rapport-geo-complet'}-${url.replace(/[^a-z0-9]/gi, '-')}.pdf`;
       a.click();
       URL.revokeObjectURL(a.href);
-    } catch { alert('Erreur lors de la génération du PDF. Réessayez.'); }
+    } catch { alert(rs(locale).pdfError); }
     setDownloading(false);
   };
 
   const r = proReport;
   const g = gradeInfo(r.scoreAverage);
   const totalPages = r.pagesValid + (r.pagesWithError || 0);
-  const date = createdAt ? new Date(createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+  const date = createdAt ? new Date(createdAt).toLocaleDateString(locale === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
   const criteriaAverages = r.criteriaAverages || {};
   const pages = r.pages || [];
   const validPages = pages.filter(p => !p.error);
@@ -1042,7 +1231,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
   return (
     <>
       <Head>
-        <title>Rapport GEO Complet — {url} — {r.scoreAverage}/100 | Detekia</title>
+        <title>{locale === 'en' ? 'Full GEO Report' : 'Rapport GEO Complet'} — {url} — {r.scoreAverage}/100 | Detekia</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -1058,16 +1247,16 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{url} · {totalPages} pages</span>
           </div>
           <button onClick={handleDownload} disabled={downloading} style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'system-ui', opacity: downloading ? 0.6 : 1, flexShrink: 0 }}>
-            {downloading ? 'Génération...' : '↓ Télécharger PDF'}
+            {downloading ? locale === 'en' ? 'Generating...' : 'Génération...' : locale === 'en' ? '↓ Download PDF' : '↓ Télécharger PDF'}
           </button>
         </header>
 
-        <main role="main" aria-label="Rapport GEO" style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
+        <main role="main" aria-label={locale === 'en' ? 'GEO Report' : 'Rapport GEO'} style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 80px' }}>
 
           {/* ═══ PARTIE 1: VUE D'ENSEMBLE ═══ */}
           <section id="synthese" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Synthèse exécutive</div>
-            <h1 style={{ fontFamily: 'Georgia,serif', fontSize: 30, color: '#1A1916', letterSpacing: -1, marginBottom: 20, lineHeight: 1.1 }}>Résultats de l'analyse</h1>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).execSummary}</div>
+            <h1 style={{ fontFamily: 'Georgia,serif', fontSize: 30, color: '#1A1916', letterSpacing: -1, marginBottom: 20, lineHeight: 1.1 }}>{rs(locale).analysisResults}</h1>
 
             {/* Score hero */}
             <div style={{ background: '#1A1916', borderRadius: 20, padding: '36px 32px', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
@@ -1075,13 +1264,13 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 28, flexWrap: 'wrap' }}>
                 <div style={{ textAlign: 'center', flexShrink: 0 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>{r.scoreAverage}</div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.25)' }}>/100 — score moyen du site</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.25)' }}>/100 — {rs(locale).siteAvgScore}</div>
                   <div style={{ marginTop: 10, display: 'inline-block', background: `${g.color}22`, border: `1px solid ${g.color}44`, padding: '3px 14px', borderRadius: 20, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: g.color }}>{g.label}</div>
                 </div>
                 <div style={{ paddingBottom: 4, flex: 1, minWidth: 200 }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 6 }}>{url} — {totalPages} pages analysées</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 6 }}>{url} — {totalPages} {rs(locale).pagesAnalyzed}</div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
-                    {r.distribution?.faible || 0} faible · {r.distribution?.moyen || 0} moyen · {r.distribution?.bon || 0} bon
+                    {r.distribution?.faible || 0} {locale === 'en' ? 'low' : 'faible'} · {r.distribution?.moyen || 0} {locale === 'en' ? 'medium' : 'moyen'} · {r.distribution?.bon || 0} {locale === 'en' ? 'good' : 'bon'}
                   </div>
                 </div>
               </div>
@@ -1095,7 +1284,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             )}
 
             {/* 8 criteria table */}
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>Les 8 critères GEO</h2>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{rs(locale).the8Criteria}</h2>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 20 }}>
               {CRITERIA_NAMES.map((name, i) => {
                 const d = criteriaAverages[name] || { avgScore: 0, max: 1 };
@@ -1107,7 +1296,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
                       <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{name}</a>
                       <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                        <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{below}/{validPages.length} sous seuil</span>
+                        <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{below}/{validPages.length} {rs(locale).belowThreshold}</span>
                         <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{d.avgScore}/{d.max}</span>
                       </div>
                     </div>
@@ -1121,7 +1310,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
             {/* Top actions + strengths/weaknesses */}
             {(() => { const topActs = actionPlan.slice(0, 3); return topActs.length > 0 && (<>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{topActs.length} action{topActs.length > 1 ? 's' : ''} prioritaire{topActs.length > 1 ? 's' : ''}</h2>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{topActs.length} {topActs.length > 1 ? rs(locale).priorityActions_s : rs(locale).priorityAction_s}</h2>
             {topActs.map((a, i) => {
               const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact);
               return (
@@ -1135,11 +1324,11 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, marginTop: 20 }}>
               <div style={{ background: '#E8F7F3', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 14, padding: '20px 24px' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Points forts</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'Strengths' : 'Points forts'}</div>
                 {(r.topStrengths || []).map((s, i) => <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}><span style={{ color: '#10A37F', flexShrink: 0 }}>✓</span><span style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.5 }}>{s}</span></div>)}
               </div>
               <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 14, padding: '20px 24px' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Points faibles</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'Weaknesses' : 'Points faibles'}</div>
                 {(r.topWeaknesses || []).map((s, i) => <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}><span style={{ color: '#D97757', flexShrink: 0 }}>✗</span><span style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.5 }}>{s}</span></div>)}
               </div>
             </div>
@@ -1147,11 +1336,11 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
           {/* ═══ CONTEXTE 2026 (same as one-page) ═══ */}
           <section id="contexte" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Contexte 2026</div>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Pourquoi la visibilité IA est critique en 2026</h2>
-            <p style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.7, marginBottom: 20 }}>Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information.</p>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).context2026}</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>{rs(locale).whyAiMatters}</h2>
+            <p style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.7, marginBottom: 20 }}>{rs(locale).whyAiDescShort}</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12, marginBottom: 20 }}>
-              {CTX_CARDS.map((card, i) => (
+              {getCtxCards(locale).map((card, i) => (
                 <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px' }}>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{card.label}</div>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 28, color: card.color, lineHeight: 1, marginBottom: 6 }}>{card.value}</div>
@@ -1160,10 +1349,10 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               ))}
             </div>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px', marginBottom: 12 }}>
-              <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.7, margin: 0 }}><strong>Seulement 11%</strong> des domaines sont cités à la fois par ChatGPT ET Perplexity.</p>
+              <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.7, margin: 0 }} dangerouslySetInnerHTML={{ __html: `<strong>${locale === 'en' ? 'Only 11%' : 'Seulement 11%'}</strong> ${rs(locale).only11Short.replace(/^[^%]+% /, '')}` }} />
             </div>
             <div style={{ background: '#F7F5F2', borderRadius: 10, padding: '18px 22px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Source académique</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).academicSourceShort}</div>
               <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.65, margin: 0 }}>"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024.</p>
             </div>
           </section>
@@ -1171,41 +1360,41 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
           {/* ═══ PARTIE 2: TEST IA CONSOLIDÉ 30 REQUÊTES ═══ */}
           {queries.length > 0 && (
             <section id="test-ia" style={{ marginBottom: 48 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Test IA consolidé</div>
-              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Test de visibilité IA — 30 requêtes</h2>
-              <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>Nous avons simulé 30 requêtes utilisateur pour vérifier si votre site est cité par les moteurs IA.</p>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).testIaConsolidated}</div>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>{rs(locale).testIa30}</h2>
+              <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{rs(locale).citationTestDesc30}</p>
 
               <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap' }}>
                 <div style={{ background: '#1A1916', borderRadius: 14, padding: '20px 28px', textAlign: 'center', flexShrink: 0 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 36, color: '#F7F5F2' }}>{citedCount}/{queries.length}</div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', whiteSpace: 'pre-line' }}>{'requêtes\ncitent votre site'}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', whiteSpace: 'pre-line' }}>{rs(locale).queriesCite}</div>
                 </div>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, minWidth: 200 }}>
-                  {ct.bestOpportunity && <div style={{ background: '#E8F7F3', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', marginBottom: 4 }}>Meilleure opportunité</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{ct.bestOpportunity}</div></div>}
-                  {ct.mainBlocker && <div style={{ background: 'rgba(217,119,87,0.06)', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', marginBottom: 4 }}>Blocage principal</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{ct.mainBlocker}</div></div>}
+                  {ct.bestOpportunity && <div style={{ background: '#E8F7F3', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', marginBottom: 4 }}>{rs(locale).bestOpportunity}</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{ct.bestOpportunity}</div></div>}
+                  {ct.mainBlocker && <div style={{ background: 'rgba(217,119,87,0.06)', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', marginBottom: 4 }}>{rs(locale).mainBlocker}</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{ct.mainBlocker}</div></div>}
                 </div>
               </div>
 
-              {queries.map((q, i) => <CitationCard key={i} q={q} />)}
+              {queries.map((q, i) => <CitationCard key={i} q={q} locale={locale} />)}
 
               <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '14px 18px', marginTop: 16 }}>
-                <p style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.7, margin: 0 }}>Ce test simule des requêtes via l'IA. Les résultats varient selon le moteur, la formulation et le moment.</p>
+                <p style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.7, margin: 0 }}>{rs(locale).citationDisclaimerShort}</p>
               </div>
             </section>
           )}
 
           {/* ═══ PARTIE 3: 8 CRITÈRES ═══ */}
           <section id="criteres" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Analyse détaillée</div>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 24, lineHeight: 1.2 }}>Les 8 critères GEO</h2>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).detailedAnalysis}</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 24, lineHeight: 1.2 }}>{rs(locale).the8Criteria}</h2>
 
             {CRITERIA_NAMES.map((criterionName, idx) => {
               const avgData = criteriaAverages[criterionName] || { avgScore: 0, max: 1 };
               const pct = Math.round((avgData.avgScore / avgData.max) * 100);
               const col = pct >= 75 ? '#10A37F' : pct >= 45 ? '#C9861A' : '#D97757';
-              const why = lookupMap(WHY, criterionName);
-              const guide = lookupMap(GUIDES, criterionName);
-              const caseStudy = lookupMap(CASES, criterionName);
+              const why = lookupMap(getWhy(locale), criterionName);
+              const guide = lookupMap(getGuides(locale), criterionName);
+              const caseStudy = lookupMap(getCases(locale), criterionName);
               const deduped = dedupRecos(criterionName);
               const below = validPages.filter(p => { const c = (p.criteria || []).find(c => c.name === criterionName); return c && (c.score / c.max) < 0.75; }).length;
               const cc = (r.criteriaConsolidated || []).find(c => c.criterion === criterionName) || {};
@@ -1213,63 +1402,63 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               return (
                 <div key={idx} id={`critere-${idx + 1}`} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24, marginBottom: 20, scrollMarginTop: 70 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>Critère {idx + 1} / 8</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>{rs(locale).criterion_s} {idx + 1} / 8</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
                     <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{criterionName}</h3>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
                       <div style={{ fontFamily: 'Georgia,serif', fontSize: 32, color: col, lineHeight: 1 }}>{avgData.avgScore}<span style={{ fontSize: 14, color: '#C0BBB5' }}>/{avgData.max}</span></div>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5' }}>{pct}% — moyenne site</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5' }}>{pct}% — {rs(locale).average}</div>
                     </div>
                   </div>
                   <div style={{ height: 6, background: '#E5E2DC', borderRadius: 3, overflow: 'hidden', marginBottom: 16 }}>
                     <div style={{ height: '100%', width: `${pct}%`, background: col, borderRadius: 3 }} />
                   </div>
 
-                  {below > 0 && <div style={{ fontSize: 12, color: '#6B6762', marginBottom: 16 }}>{below}/{validPages.length} pages sous le seuil 75%</div>}
+                  {below > 0 && <div style={{ fontSize: 12, color: '#6B6762', marginBottom: 16 }}>{below}/{validPages.length} {rs(locale).pagesBelowThreshold}</div>}
 
                   {/* Consolidated synthesis */}
                   {cc.synthesis && (
                     <div style={{ marginBottom: 16 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>Ce que nous avons trouvé</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).whatWeFound}</div>
                       <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65 }}>{cc.synthesis}</div>
                     </div>
                   )}
 
                   {why && (
                     <div style={{ marginBottom: 16 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>Pourquoi c'est important</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{locale === 'en' ? 'Why it matters' : "Pourquoi c'est important"}</div>
                       <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.75, margin: 0 }}>{why}</p>
                     </div>
                   )}
 
                   {/* Recommendations */}
                   <div style={{ marginBottom: 16 }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Recommandations ({deduped.length})</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{rs(locale).recommendations_s} ({deduped.length})</div>
                     {deduped.length > 0 ? deduped.map((rec, ri) => (
-                      <ProRecoCard key={ri} r={rec} index={ri} rootUrl={url} />
+                      <ProRecoCard key={ri} r={rec} index={ri} rootUrl={url} locale={locale} />
                     )) : pct >= 75 ? (
                       <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 8, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
                         <span style={{ fontSize: 18 }}>✓</span>
-                        <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>Ce critère est bien optimisé sur l'ensemble du site.</span>
+                        <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>{rs(locale).criterionWellOptimizedSite}</span>
                       </div>
                     ) : (
                       <div style={{ background: 'rgba(201,134,26,0.06)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 8, padding: '16px 20px', fontSize: 13, color: '#C9861A', lineHeight: 1.6 }}>
-                        Ce critère nécessite des améliorations ({pct}%). Les recommandations spécifiques sont intégrées dans le plan d'action ci-dessous.
+                        {rs(locale).criterionNeedsWork} ({pct}%). {rs(locale).criterionNeedsWorkSuffix}
                       </div>
                     )}
                   </div>
 
                   {guide && (
                     <div style={{ background: 'rgba(217,119,87,0.04)', borderLeft: '3px solid #D97757', borderRadius: '0 10px 10px 0', padding: '18px 22px', marginBottom: 16 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Guide technique</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).techGuide}</div>
                       <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.8, margin: 0 }}>{guide}</p>
                     </div>
                   )}
 
                   {weakest3.has(criterionName) && caseStudy && (
                     <div style={{ background: '#E8F7F3', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 10, padding: '18px 22px' }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>Cas réel documenté</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).documentedCase}</div>
                       <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.7, margin: 0 }}>{caseStudy}</p>
                     </div>
                   )}
@@ -1281,12 +1470,12 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
           {/* ═══ PARTIE 4: PATTERNS INTER-PAGES ═══ */}
           {patterns.length > 0 && (
             <section id="patterns" style={{ marginBottom: 48 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Patterns détectés</div>
-              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>Patterns transverses</h2>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).patternsDetected}</div>
+              <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>{locale === 'en' ? 'Cross-page patterns' : 'Patterns transverses'}</h2>
               {patterns.map((p, i) => {
-                const sevStyle = String(p.severity || '').toLowerCase().includes('critique') ? { bg: 'rgba(217,119,87,0.12)', color: '#D97757', label: 'CRITIQUE' }
+                const sevStyle = String(p.severity || '').toLowerCase().includes('critique') ? { bg: 'rgba(217,119,87,0.12)', color: '#D97757', label: locale === 'en' ? 'CRITICAL' : 'CRITIQUE' }
                   : String(p.severity || '').toLowerCase().includes('important') ? { bg: 'rgba(201,134,26,0.12)', color: '#C9861A', label: 'IMPORTANT' }
-                  : { bg: 'rgba(16,163,127,0.12)', color: '#10A37F', label: 'MINEUR' };
+                  : { bg: 'rgba(16,163,127,0.12)', color: '#10A37F', label: locale === 'en' ? 'MINOR' : 'MINEUR' };
                 return (
                   <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px 20px', marginBottom: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
@@ -1294,7 +1483,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                       <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{p.criterion || ''}</span>
                     </div>
                     <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6, marginBottom: 6 }}>{p.pattern}</div>
-                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{(p.pagesAffected || []).length} pages concernées</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{(p.pagesAffected || []).length} {rs(locale).pagesAffected}</div>
                   </div>
                 );
               })}
@@ -1303,9 +1492,9 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
           {/* ═══ PARTIE 5: PLAN D'ACTION ═══ */}
           <section id="plan-action" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Plan d'action site</div>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>Actions prioritaires consolidées</h2>
-            <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{actionPlan.length} actions classées par priorité.</p>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{locale === 'en' ? 'Site action plan' : "Plan d'action site"}</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>{rs(locale).consolidatedActions}</h2>
+            <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{actionPlan.length} {rs(locale).actionsClassified}</p>
 
             {actionPlan.map((a, i) => {
               const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact);
@@ -1316,7 +1505,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <span style={{ fontFamily: 'Georgia,serif', fontSize: 18, color: pi.color, minWidth: 24 }}>{i + 1}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 8px', borderRadius: 4, background: pi.bg, color: pi.color }}>{pi.label}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{a.criterion || ''}</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, marginLeft: 'auto', color: ei.color }}>Effort : {ei.label}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, marginLeft: 'auto', color: ei.color }}>{ locale === 'en' ? 'Effort: ' : 'Effort : '}{ei.label}</span>
                   </div>
                   <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6 }}>{a.action}</div>
                 </div>
@@ -1327,38 +1516,38 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             <div style={{ background: '#1A1916', borderRadius: 16, padding: '28px 32px', marginTop: 28, marginBottom: 16 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.35)', marginBottom: 4 }}>Score actuel</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.35)', marginBottom: 4 }}>{rs(locale).currentScore}</div>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 42, color: '#F7F5F2', lineHeight: 1 }}>{r.scoreAverage}</div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
                 </div>
                 <div style={{ fontFamily: 'Georgia,serif', fontSize: 24, color: 'rgba(247,245,242,0.3)' }}>→</div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 4 }}>Score projeté</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 4 }}>{rs(locale).projectedScore}</div>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 42, color: '#10A37F', lineHeight: 1 }}>{projected}</div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 200 }}>
-                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>En appliquant les recommandations, votre score GEO pourrait passer de {r.scoreAverage} à {projected}/100.</div>
+                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>{rs(locale).projectionText} {r.scoreAverage} {rs(locale).projectionTo} {projected}/100.</div>
                 </div>
               </div>
             </div>
             <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '12px 16px', marginBottom: 24 }}>
-              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.6, margin: 0 }}>Cette projection est indicative. Elle ne constitue pas une garantie.</p>
+              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.6, margin: 0 }}>{rs(locale).projectionDisclaimerShort}</p>
             </div>
 
             {/* CTA Beeleven */}
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 8 }}>ALLER PLUS LOIN</div>
-              <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>Besoin d'aide pour implémenter ces recommandations ?</h3>
-              <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations pour vous.</p>
-              <button onClick={() => { track('click-beeleven'); setShowContact(true); }} style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: 'system-ui' }}>Discutons-en →</button>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 8 }}>{rs(locale).goFurther}</div>
+              <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', marginBottom: 10 }}>{rs(locale).beelevenTitle}</h3>
+              <p style={{ fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>{rs(locale).beelevenDesc}</p>
+              <button onClick={() => { track('click-beeleven'); setShowContact(true); }} style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: 'system-ui' }}>{rs(locale).beelevenCta}</button>
             </div>
           </section>
 
           {/* ═══ PARTIE 6: ANNEXE BILAN PAR PAGE (enrichie) ═══ */}
           <section id="annexe" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Annexe</div>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>Bilan par page analysée</h2>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).appendix}</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>{rs(locale).pageByPageReview}</h2>
 
             {validPages.map((p, i) => {
               const sc = gradeInfo(p.score || 0);
@@ -1396,7 +1585,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   {/* Top 3 points faibles */}
                   {top3Weak.length > 0 && (
                     <div style={{ marginBottom: 12 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>Points faibles</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>{locale === 'en' ? 'Weaknesses' : 'Points faibles'}</div>
                       {top3Weak.map((c, ci) => {
                         const cpct = Math.round((c.score / c.max) * 100);
                         return <div key={ci} style={{ fontSize: 11, color: '#3A3835', marginBottom: 3 }}>• {c.name} — {c.score}/{c.max} ({cpct}%)</div>;
@@ -1407,7 +1596,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   {/* Top 3 actions pour cette page */}
                   {top3Recos.length > 0 && (
                     <div>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>Actions prioritaires</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>{rs(locale).priorityActions}</div>
                       {top3Recos.map((rec, ri) => (
                         <div key={ri} style={{ fontSize: 11, color: '#1A1916', lineHeight: 1.4, marginBottom: 4, paddingLeft: 10, borderLeft: '2px solid #E5E2DC' }}>
                           {rec.title || rec.problem?.substring(0, 80) || rec.solution?.substring(0, 80)}
@@ -1421,30 +1610,30 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
             {errorPages.length > 0 && (
               <div style={{ marginTop: 12, fontSize: 12, color: '#D97757' }}>
-                {errorPages.length} page(s) non analysable(s) : {errorPages.map(p => p.url).join(', ')}
+                {errorPages.length} {rs(locale).pagesNotAnalyzable}: {errorPages.map(p => p.url).join(', ')}
               </div>
             )}
           </section>
 
           {/* ═══ PARTIE 7: MÉTHODOLOGIE ═══ */}
           <section id="methodologie" style={{ marginBottom: 48 }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>Transparence</div>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>Méthodologie</h2>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).transparency}</div>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>{rs(locale).methodologyH2}</h2>
 
             <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: '0 8px 8px 0', padding: '12px 16px', marginBottom: 16 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>LIMITES DE L'ANALYSE</div>
-              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.5, margin: 0 }}>Ce rapport fournit une estimation de la citabilité IA basée sur des heuristiques. Il ne constitue pas une garantie de visibilité dans les réponses des moteurs IA.</p>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', marginBottom: 4 }}>{rs(locale).analysisLimits}</div>
+              <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.5, margin: 0 }}>{rs(locale).analysisLimitsDesc}</p>
             </div>
 
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
-              <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>Analyse réalisée sur {totalPages} pages du site prioritisées par leur importance éditoriale (méthodologie de priorisation par sitemap + fraîcheur + profondeur). Chaque page est évaluée sur 8 critères pondérés. Le test IA Pro porte sur 30 requêtes simulées (vs 10 pour le rapport one-page).</p>
+              <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>{rs(locale).methodologyP1Pro.replace('{n}', String(totalPages))}</p>
 
               <div style={{ overflowX: 'auto', marginBottom: 16 }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden', fontSize: 11 }}>
                   <thead><tr style={{ background: '#F7F5F2' }}>
-                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Critère</th>
-                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Poids</th>
-                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>Ce qui est mesuré</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).theCriterion}</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).weight}</th>
+                    <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).measured}</th>
                   </tr></thead>
                   <tbody>{METHODOLOGY_TABLE.map((row, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
@@ -1457,17 +1646,17 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               </div>
 
               <div style={{ background: '#F7F5F2', borderRadius: 8, padding: '12px 16px', marginBottom: 16 }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1, marginBottom: 6 }}>SOURCE ACADÉMIQUE</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1, marginBottom: 6 }}>{rs(locale).academicSourceLabel}</div>
                 <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5, margin: 0 }}>"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024.</p>
               </div>
 
-              <div style={{ fontSize: 10, color: '#B0ABA5' }}>Périmètre : {totalPages} pages analysées sur {url}. Score agrégé : moyenne arithmétique des scores individuels.</div>
+              <div style={{ fontSize: 10, color: '#B0ABA5' }}>{rs(locale).scope}: {totalPages} {rs(locale).pagesAnalyzed} {locale === 'en' ? 'on' : 'sur'} {url}. {rs(locale).aggregatedScore}</div>
             </div>
           </section>
 
           {/* Footer */}
           <footer style={{ textAlign: 'center', padding: '24px 0', borderTop: '1px solid #E5E2DC' }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginBottom: 4 }}>Rapport généré le {date}</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginBottom: 4 }}>{rs(locale).reportGenerated} {date}</div>
             <div style={{ fontSize: 11, color: '#B0ABA5' }}>Beeleven SASU · hello@detekia.fr · <a href="https://detekia.fr" style={{ color: '#D97757', textDecoration: 'none' }}>detekia.fr</a></div>
           </footer>
         </main>
@@ -1478,17 +1667,17 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 }
 
 // Pro reco card with _pages list
-function ProRecoCard({ r, index, rootUrl }) {
+function ProRecoCard({ r, index, rootUrl, locale }) {
   const pi = priorityInfo(r.priority);
   const ei = effortInfo(r.effort);
   const pagesList = r._pages || [];
   const pagesNoteJsx = pagesList.length > 1
     ? <div style={{ marginTop: 8 }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', marginBottom: 4 }}>{pagesList.length} pages concernées :</div>
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', marginBottom: 4 }}>{pagesList.length} {rs(locale).pagesAffected}:</div>
         {pagesList.map((u, i) => <div key={i}><a href={u} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', textDecoration: 'none' }}>{u.replace(rootUrl, '') || '/'}</a></div>)}
       </div>
     : pagesList[0]
-      ? <div style={{ marginTop: 8, fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>Page : <a href={pagesList[0]} target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>{pagesList[0]}</a></div>
+      ? <div style={{ marginTop: 8, fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{rs(locale).pageLabel}: <a href={pagesList[0]} target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>{pagesList[0]}</a></div>
       : null;
 
   return (
@@ -1500,15 +1689,15 @@ function ProRecoCard({ r, index, rootUrl }) {
       </div>
       <div style={{ padding: '12px 18px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 14 }}>
-          {r.impact && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: pi.bg, color: pi.color }}>Impact {r.impact === 'high' ? 'Élevé' : r.impact === 'medium' ? 'Moyen' : 'Faible'}</span>}
+          {r.impact && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: pi.bg, color: pi.color }}>Impact {r.impact === 'high' ? (locale === 'en' ? 'High' : 'Élevé') : r.impact === 'medium' ? (locale === 'en' ? 'Medium' : 'Moyen') : (locale === 'en' ? 'Low' : 'Faible')}</span>}
           {r.effort && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: `${ei.color}18`, color: ei.color }}>Effort {ei.label}</span>}
           {r.timeframe && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: '#F7F5F2', color: '#6B6762', border: '1px solid #E5E2DC' }}>{r.timeframe}</span>}
         </div>
-        {r.problem && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>Le problème</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.problem}</div></div>}
-        {r.solution && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#10A37F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>La solution</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.solution}</div></div>}
+        {r.problem && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>{rs(locale).theProblem}</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.problem}</div></div>}
+        {r.solution && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#10A37F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>{rs(locale).theSolution}</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.solution}</div></div>}
         {r.technicalImplementation && (
           <div style={{ background: '#F7F5F2', borderRadius: 8, padding: '12px 16px', marginBottom: 10 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 6 }}>🛠️ Mise en œuvre technique</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 6 }}>{rs(locale).techImplementation}</div>
             {Array.isArray(r.technicalImplementation)
               ? <ol style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.5, margin: 0, paddingLeft: 20 }}>{r.technicalImplementation.map((s, si) => <li key={si} style={{ marginBottom: 4 }}>{String(s).replace(/^\d+\.\s*/, '')}</li>)}</ol>
               : <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.5 }}>{r.technicalImplementation}</div>}
@@ -1516,7 +1705,7 @@ function ProRecoCard({ r, index, rootUrl }) {
         )}
         {r.codeExample && (
           <div style={{ marginBottom: 10 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 5 }}>&lt;/&gt; Exemple de code</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 5 }}>&lt;/&gt; {locale === 'en' ? 'Code example' : 'Exemple de code'}</div>
             <pre style={{ background: '#1A1916', color: '#F7F5F2', borderRadius: 8, padding: 14, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.55, whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflow: 'auto', maxHeight: 300 }}>{r.codeExample}</pre>
           </div>
         )}
@@ -1530,12 +1719,12 @@ const thStyle = { padding: '9px 12px', fontFamily: 'monospace', fontSize: 9, col
 
 // ── Sub-components ──────────────────────────────────────────────────────────
 
-function CitationCard({ q }) {
+function CitationCard({ q, locale }) {
   const [open, setOpen] = useState(false);
   const cited = q.cited
-    ? { bg: 'rgba(16,163,127,0.12)', color: '#10A37F', label: 'Cité', icon: '✓' }
-    : { bg: 'rgba(217,119,87,0.12)', color: '#D97757', label: 'Non cité', icon: '✗' };
-  const typeLabel = q.difficulty === 'generic' ? 'GÉNÉRIQUE' : q.difficulty === 'niche' ? 'NICHE' : 'LONGUE TRAÎNE';
+    ? { bg: 'rgba(16,163,127,0.12)', color: '#10A37F', label: rs(locale).citedLabel, icon: '✓' }
+    : { bg: 'rgba(217,119,87,0.12)', color: '#D97757', label: rs(locale).notCitedLabel, icon: '✗' };
+  const typeLabel = q.difficulty === 'generic' ? rs(locale).genericLabel : q.difficulty === 'niche' ? 'NICHE' : rs(locale).longTailLabel;
   const competitors = q.competitors_cited || q.competitorsCited || [];
 
   return (
@@ -1543,24 +1732,24 @@ function CitationCard({ q }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
         <span style={{ display: 'inline-block', padding: '2px 9px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: cited.bg, color: cited.color }}>{cited.icon} {cited.label}</span>
         <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5' }}>{typeLabel}</span>
-        {q.difficulty_to_rank && <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', marginLeft: 'auto' }}>Difficulté : {q.difficulty_to_rank}</span>}
+        {q.difficulty_to_rank && <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', marginLeft: 'auto' }}>{rs(locale).difficultyLabel}: {q.difficulty_to_rank}</span>}
       </div>
       <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', marginTop: 6 }}>{q.query}</div>
       {/* Competitors always visible when present */}
       {competitors.length > 0 && (
-        <div style={{ fontSize: 11, color: '#6B6762', marginTop: 4 }}>{q.cited ? 'Cités avec vous' : 'Cités à votre place'} : {competitors.join(', ')}</div>
+        <div style={{ fontSize: 11, color: '#6B6762', marginTop: 4 }}>{q.cited ? locale === 'en' ? 'Cited with you' : 'Cités avec vous' : locale === 'en' ? 'Cited instead of you' : 'Cités à votre place'} : {competitors.join(', ')}</div>
       )}
       {open && (
         <div style={{ paddingTop: 10, marginTop: 8, borderTop: '1px solid #F0EDE8' }}>
           {q.ai_response_excerpt && <div style={{ fontSize: 11, color: '#6B6762', fontStyle: 'italic', marginBottom: 6, background: '#FAFAF9', padding: '8px 12px', borderRadius: 6 }}>{q.ai_response_excerpt}</div>}
-          {q.recommendation && <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.5 }}><strong>Recommandation :</strong> {q.recommendation}</div>}
+          {q.recommendation && <div style={{ fontSize: 12, color: '#3A3835', lineHeight: 1.5 }}><strong>{rs(locale).recommendationLabel}:</strong> {q.recommendation}</div>}
         </div>
       )}
     </div>
   );
 }
 
-function RecoCard({ r, index }) {
+function RecoCard({ r, index, locale }) {
   const pi = priorityInfo(r.priority);
   const ei = effortInfo(r.effort);
 
@@ -1573,15 +1762,15 @@ function RecoCard({ r, index }) {
       </div>
       <div style={{ padding: '12px 18px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 14 }}>
-          {r.impact && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: pi.bg, color: pi.color }}>Impact {r.impact === 'high' ? 'Élevé' : r.impact === 'medium' ? 'Moyen' : 'Faible'}</span>}
+          {r.impact && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: pi.bg, color: pi.color }}>Impact {r.impact === 'high' ? (locale === 'en' ? 'High' : 'Élevé') : r.impact === 'medium' ? (locale === 'en' ? 'Medium' : 'Moyen') : (locale === 'en' ? 'Low' : 'Faible')}</span>}
           {r.effort && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: `${ei.color}18`, color: ei.color }}>Effort {ei.label}</span>}
           {r.timeframe && <span style={{ display: 'inline-block', padding: '3px 10px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, background: '#F7F5F2', color: '#6B6762', border: '1px solid #E5E2DC' }}>{r.timeframe}</span>}
         </div>
-        {r.problem && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>Le problème</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.problem}</div></div>}
-        {r.solution && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#10A37F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>La solution</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.solution}</div></div>}
+        {r.problem && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#D97757', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>{rs(locale).theProblem}</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.problem}</div></div>}
+        {r.solution && <div style={{ marginBottom: 10 }}><div style={{ fontSize: 11, fontWeight: 700, color: '#10A37F', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 5 }}>{rs(locale).theSolution}</div><div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.55 }}>{r.solution}</div></div>}
         {r.technicalImplementation && (
           <div style={{ background: '#F7F5F2', borderRadius: 8, padding: '12px 16px', marginBottom: 10 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 6 }}>🛠️ Mise en œuvre technique</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 6 }}>{rs(locale).techImplementation}</div>
             {Array.isArray(r.technicalImplementation)
               ? <ol style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.5, margin: 0, paddingLeft: 20 }}>{r.technicalImplementation.map((s, si) => <li key={si} style={{ marginBottom: 4 }}>{String(s).replace(/^\d+\.\s*/, '')}</li>)}</ol>
               : <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.5 }}>{r.technicalImplementation}</div>}
@@ -1589,7 +1778,7 @@ function RecoCard({ r, index }) {
         )}
         {r.codeExample && (
           <div style={{ marginBottom: 10 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 5 }}>&lt;/&gt; Exemple de code</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', marginBottom: 5 }}>&lt;/&gt; {locale === 'en' ? 'Code example' : 'Exemple de code'}</div>
             <pre style={{ background: '#1A1916', color: '#F7F5F2', borderRadius: 8, padding: 14, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.55, whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflow: 'auto', maxHeight: 300 }}>{r.codeExample}</pre>
           </div>
         )}
