@@ -113,7 +113,15 @@
     "message": "We use cookies to analyze site usage and improve your experience.",
     "learnMore": "Learn more",
     "decline": "Decline",
-    "accept": "Accept ✓"
+    "customize": "Customize",
+    "accept": "Accept ✓",
+    "essential": "Essential cookies",
+    "essentialDesc": "Site functionality, preferences, consent.",
+    "alwaysOn": "Always on",
+    "analytics": "Analytics cookies",
+    "analyticsDesc": "Google Analytics 4 — anonymized audience measurement.",
+    "declineAll": "Decline all",
+    "saveChoices": "Save my choices"
   },
   "nav": {
     "home": "Home",
@@ -1086,17 +1094,24 @@
         ]
       },
       {
-        "title": "Refund policy — Money-back guarantee",
+        "title": "Refund policy",
         "paragraphs": [
-          "If the full GEO report does not provide any actionable improvement insights, you may request a full refund within 7 days of purchase.",
-          "To request a refund, send an email to <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a> specifying the analyzed URL and the reason for your dissatisfaction. The refund will be processed within 5 business days via the same payment method used for the purchase."
+          "If the audit cannot be completed as promised (delivery time, completeness, quality) due to a technical issue, the customer is automatically and instantly refunded via Stripe. No action is required from the customer.",
+          "If an issue arises despite our safeguards, you can contact <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a> and we will process your request within 48 hours."
+        ]
+      },
+      {
+        "title": "Delivery times",
+        "paragraphs": [
+          "The 1-page audit (€29) is delivered by email in approximately 1 minute after payment. The complete audit (€99) is delivered by email in 15 to 20 minutes after payment.",
+          "These times are indicative and may vary depending on server load and site complexity. In case of significant delay, the automatic refund system is triggered."
         ]
       },
       {
         "title": "Right of withdrawal",
         "paragraphs": [
           "In accordance with Article L221-28 of the Code de la consommation (French Consumer Code), the right of withdrawal cannot be exercised for contracts for the supply of digital content not provided on a tangible medium whose performance has begun with the consumer's consent. By purchasing the report, you acknowledge that the delivery of digital content begins immediately after payment and you expressly waive your right of withdrawal.",
-          "However, the \"Money-back guarantee\" refund policy described above applies and goes beyond legal obligations."
+          "The automatic refund policy described above applies and goes beyond legal obligations."
         ]
       },
       {
@@ -1214,10 +1229,14 @@
           "The data collected by Detekia is processed by the following processors, all compliant with GDPR or the EU-US data protection framework:",
           [
             "<strong>Vercel Inc.</strong> (United States) — website hosting and analytics. Compliant with the EU-US Data Privacy Framework.",
-            "<strong>Database service</strong> (hosted in the EU, eu-west-1 region) — temporary storage of analysis results and email leads. Data hosted in the European Union.",
-            "<strong>Stripe Payments Europe, Ltd.</strong> (Ireland) — payment processing. PCI DSS Level 1 certified, GDPR compliant.",
-            "<strong>Resend</strong> (United States) — transactional email delivery (report by email, confirmation). Compliant with the EU-US Data Privacy Framework.",
-            "<strong>AI provider</strong> (United States) — editorial neutrality analysis of scanned content via an artificial intelligence API. No personal data is transmitted; only the textual content of the analyzed page is sent for evaluation. Compliant with the EU-US Data Privacy Framework."
+            "<strong>Upstash</strong> (hosted in the EU, eu-west-1 region) — storage of analysis results, reports, email leads and asynchronous orchestration (QStash). Data hosted in the European Union.",
+            "<strong>Stripe Payments Europe, Ltd.</strong> (Ireland) — payment processing and refunds. PCI DSS Level 1 certified, GDPR compliant.",
+            "<strong>Resend</strong> (United States) — transactional email delivery (reports, confirmations, alerts). Compliant with the EU-US Data Privacy Framework.",
+            "<strong>Anthropic</strong> (United States) — recommendation generation and editorial neutrality analysis via the Claude API. Only the textual content of the analyzed page is transmitted. Compliant with the EU-US Data Privacy Framework.",
+            "<strong>OpenAI</strong> (United States) — AI visibility testing via the GPT API. Simulated queries do not contain personal data. Compliant with the EU-US Data Privacy Framework.",
+            "<strong>Jina AI</strong> (EU/US) — web page content extraction for analysis. The URL of the analyzed page is transmitted. GDPR compliant.",
+            "<strong>PDFShift</strong> (EU) — PDF report generation. Report HTML content is transmitted for conversion. Hosted in the European Union.",
+            "<strong>Google Analytics 4</strong> — anonymized analytics, subject to user consent. Compliant with the EU-US Data Privacy Framework."
           ],
           "No personal data is transmitted to any third parties other than those listed above."
         ]

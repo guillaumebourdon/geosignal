@@ -159,7 +159,8 @@ export default async function handler(req, res) {
         );
         if (hasCriticalError) {
           // Critical error → trigger auto-refund instead of delivering
-          console.error(`[finalize-report] CRITICAL validation error — triggering refund for ${email}`);
+          const { maskEmail: me } = require('../../lib/maskEmail');
+          console.error(`[finalize-report] CRITICAL validation error — triggering refund for ${me(email)}`);
           const { triggerAutoRefund } = require('../../lib/autoRefund');
           await triggerAutoRefund({
             paymentIntentId: req.body.paymentIntentId || null,

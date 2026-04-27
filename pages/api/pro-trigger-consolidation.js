@@ -249,7 +249,8 @@ export default async function handler(req, res) {
       });
 
       const emailResult = await emailResponse.json();
-      console.log(`[pro-trigger] Email sent to ${customerEmail}:`, emailResult);
+      const { maskEmail } = require('../../lib/maskEmail');
+      console.log(`[pro-trigger] Email sent to ${maskEmail(customerEmail)}:`, emailResult);
 
       // Notification to Guillaume
       if (customerEmail !== 'guillaume@beeleven.fr') {
@@ -260,7 +261,7 @@ export default async function handler(req, res) {
             from: 'Detekia <rapports@detekia.fr>',
             to: ['guillaume@beeleven.fr'],
             subject: `[Notification] Rapport Pro envoyé — ${rootUrl}`,
-            html: `<p>Rapport Pro envoyé à ${customerEmail} pour ${rootUrl}. Score: ${report.scoreAverage}/100. PDF: ${pdfSizeKB} KB.</p>`,
+            html: `<p>Rapport Pro envoyé à ${maskEmail(customerEmail)} pour ${rootUrl}. Score: ${report.scoreAverage}/100. PDF: ${pdfSizeKB} KB.</p>`,
           }),
         });
       }
@@ -268,7 +269,7 @@ export default async function handler(req, res) {
       await redis.set(`${JOB_PREFIX}:${siteJobId}:deliveredAt`, new Date().toISOString(), { ex: CONSOLIDATED_TTL });
       await redis.set(`${JOB_PREFIX}:${siteJobId}:status`, 'delivered', { ex: CONSOLIDATED_TTL });
 
-      return res.status(200).json({ success: true, action: 'pdf_sent', siteJobId, pdfSizeKB, emailTo: customerEmail, emailResult });
+      return res.status(200).json({ success: true, action: 'pdf_sent', siteJobId, pdfSizeKB, emailTo: maskEmail(customerEmail), emailResult });
     } catch (err) {
       console.error(`[pro-trigger] PDF error:`, err.message, err.stack);
       return res.status(500).json({ error: err.message });

@@ -113,7 +113,15 @@
     "message": "On utilise des cookies pour analyser l'usage du site et améliorer votre expérience.",
     "learnMore": "En savoir plus",
     "decline": "Refuser",
-    "accept": "Accepter ✓"
+    "customize": "Personnaliser",
+    "accept": "Accepter ✓",
+    "essential": "Cookies essentiels",
+    "essentialDesc": "Fonctionnement du site, préférences, consentement.",
+    "alwaysOn": "Toujours actif",
+    "analytics": "Cookies analytiques",
+    "analyticsDesc": "Google Analytics 4 — mesure d'audience anonymisée.",
+    "declineAll": "Tout refuser",
+    "saveChoices": "Enregistrer mes choix"
   },
   "nav": {
     "home": "Accueil",
@@ -1093,17 +1101,24 @@
         ]
       },
       {
-        "title": "Politique de remboursement — Satisfait ou remboursé",
+        "title": "Politique de remboursement",
         "paragraphs": [
-          "Si le rapport GEO complet ne vous apporte aucune piste d'amélioration actionnable, vous pouvez demander un remboursement intégral dans les 7 jours suivant l'achat.",
-          "Pour demander un remboursement, envoyez un email à <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a> en précisant l'URL analysée et la raison de votre insatisfaction. Le remboursement sera effectué sous 5 jours ouvrés via le même moyen de paiement utilisé lors de l'achat."
+          "En cas d'impossibilité technique de réaliser l'audit dans les conditions promises (délai, complétude, qualité), le client est remboursé automatiquement et instantanément via Stripe. Aucune démarche n'est nécessaire de la part du client.",
+          "Si un problème survient malgré nos safeguards, vous pouvez contacter <a href='mailto:hello@detekia.fr' style='color:#D97757;text-decoration:none'>hello@detekia.fr</a> et nous traiterons votre demande sous 48 heures."
+        ]
+      },
+      {
+        "title": "Délais de livraison",
+        "paragraphs": [
+          "L'audit 1 page (29 €) est livré par email en environ 1 minute après paiement. L'audit complet (99 €) est livré par email en 15 à 20 minutes après paiement.",
+          "Ces délais sont indicatifs et peuvent varier en fonction de la charge serveur et de la complexité du site analysé. En cas de dépassement significatif, le système de remboursement automatique se déclenche."
         ]
       },
       {
         "title": "Droit de rétractation",
         "paragraphs": [
           "Conformément à l'article L221-28 du Code de la consommation, le droit de rétractation ne peut être exercé pour les contrats de fourniture de contenu numérique non fourni sur un support matériel dont l'exécution a commencé avec l'accord du consommateur. En achetant le rapport, vous reconnaissez que la fourniture du contenu numérique commence immédiatement après le paiement et vous renoncez expressément à votre droit de rétractation.",
-          "Toutefois, la politique de remboursement \"Satisfait ou remboursé\" décrite ci-dessus s'applique et va au-delà des obligations légales."
+          "La politique de remboursement automatique décrite ci-dessus s'applique et va au-delà des obligations légales."
         ]
       },
       {
@@ -1221,10 +1236,14 @@
           "Les données collectées par Detekia sont traitées par les sous-traitants suivants, tous conformes au RGPD ou au cadre de protection des données UE-US :",
           [
             "<strong>Vercel Inc.</strong> (États-Unis) — hébergement du site et analytics. Conforme au Data Privacy Framework UE-US.",
-            "<strong>Service de base de données</strong> (hébergé en UE, région eu-west-1) — stockage temporaire des résultats d'analyse et des leads email. Données hébergées dans l'Union européenne.",
-            "<strong>Stripe Payments Europe, Ltd.</strong> (Irlande) — traitement des paiements. Certifié PCI DSS Level 1, conforme au RGPD.",
-            "<strong>Resend</strong> (États-Unis) — envoi des emails transactionnels (rapport par email, confirmation). Conforme au Data Privacy Framework UE-US.",
-            "<strong>Fournisseur d'IA</strong> (États-Unis) — analyse de la neutralité éditoriale du contenu scanné via une API d'intelligence artificielle. Aucune donnée personnelle n'est transmise ; seul le contenu textuel de la page analysée est envoyé pour évaluation. Conforme au Data Privacy Framework UE-US."
+            "<strong>Upstash</strong> (hébergé en UE, région eu-west-1) — stockage des résultats d'analyse, rapports, leads email et orchestration asynchrone (QStash). Données hébergées dans l'Union européenne.",
+            "<strong>Stripe Payments Europe, Ltd.</strong> (Irlande) — traitement des paiements et remboursements. Certifié PCI DSS Level 1, conforme au RGPD.",
+            "<strong>Resend</strong> (États-Unis) — envoi des emails transactionnels (rapport, confirmation, alertes). Conforme au Data Privacy Framework UE-US.",
+            "<strong>Anthropic</strong> (États-Unis) — génération des recommandations et analyse de la neutralité éditoriale via l'API Claude. Seul le contenu textuel de la page analysée est transmis. Conforme au Data Privacy Framework UE-US.",
+            "<strong>OpenAI</strong> (États-Unis) — test de visibilité IA via l'API GPT. Les requêtes simulées ne contiennent pas de données personnelles. Conforme au Data Privacy Framework UE-US.",
+            "<strong>Jina AI</strong> (UE/US) — extraction du contenu des pages web pour analyse. L'URL de la page analysée est transmise. Conforme au RGPD.",
+            "<strong>PDFShift</strong> (UE) — génération des rapports PDF. Le contenu HTML du rapport est transmis pour conversion. Hébergé dans l'Union européenne.",
+            "<strong>Google Analytics 4</strong> — analytics anonymisées, soumis au consentement de l'utilisateur. Conforme au Data Privacy Framework UE-US."
           ],
           "Aucune donnée personnelle n'est transmise à d'autres tiers que ceux listés ci-dessus."
         ]
