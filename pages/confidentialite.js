@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
@@ -58,6 +59,7 @@ export default function Confidentialite() {
   return (
     <>
       <SEO title={t('privacy.seo.title')} description={t('privacy.seo.description')} />
+      <Head><meta name="robots" content="noindex, follow" /></Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 

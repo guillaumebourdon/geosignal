@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
 import { useTranslation } from '../lib/useTranslation';
@@ -21,6 +22,7 @@ export default function CGU() {
   return (
     <>
       <SEO title={t('terms.seo.title')} description={t('terms.seo.description')} />
+      <Head><meta name="robots" content="noindex, follow" /></Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
