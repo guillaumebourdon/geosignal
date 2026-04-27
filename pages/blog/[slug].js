@@ -97,7 +97,7 @@ export default function ArticlePage({ article, related }) {
     author: { '@type': 'Person', name: article.author },
     publisher: { '@type': 'Organization', name: 'Detekia', url: 'https://detekia.fr' },
     datePublished: article.date,
-    dateModified: article.date,
+    dateModified: article.dateModified || article.date,
     url: canonicalUrl,
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
   };
@@ -121,7 +121,7 @@ export default function ArticlePage({ article, related }) {
         <meta property="og:locale" content={ogLocale} />
         <meta property="og:image" content={`https://detekia.fr/api/og?slug=${article.slug}&locale=${locale}`} />
         <meta property="article:published_time" content={article.date} />
-        <meta property="article:modified_time" content={article.date} />
+        <meta property="article:modified_time" content={article.dateModified || article.date} />
         <meta property="article:author" content={article.author} />
 
         <meta name="twitter:card" content="summary_large_image" />
