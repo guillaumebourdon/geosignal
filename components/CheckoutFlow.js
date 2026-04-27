@@ -70,6 +70,12 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url, plan }),
       });
+      if (checkRes.status === 429) {
+        setModalError(t('pricing.modal.errorCheckFailed'));
+        setModalLoading(false);
+        setLoadingText('');
+        return;
+      }
       const check = await checkRes.json();
 
       // Evaluate result based on selected plan

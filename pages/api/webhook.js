@@ -10,6 +10,7 @@ const redis = new Redis({
 
 export const config = {
   api: { bodyParser: false },
+  maxDuration: 60, // Correction 3: explicit maxDuration to avoid Vercel timeout → Stripe retry loops
 };
 
 export default async function handler(req, res) {
@@ -35,16 +36,37 @@ export default async function handler(req, res) {
     const email   = session.customer_details?.email;
     const amount  = session.amount_total;
 
-    const plan = session.metadata?.plan || (amount >= 9900 ? 'pro' : 'rapport');
-    if (email && (amount >= 900 || plan === 'pro')) {
+    // Correction 1: Idempotence — skip if this session was already processed
+    const idempotencyKey = `webhook:processed:${session.id}`;
+    try {
+      const alreadyProcessed = await redis.set(idempotencyKey, '1', { nx: true, ex: 24 * 60 * 60 });
+      if (!alreadyProcessed) {
+        console.log(`[webhook] Idempotent skip — session ${session.id} already processed`);
+        return res.status(200).json({ received: true, skipped: true });
+      }
+    } catch (e) {
+      // Redis error → continue processing (fail-open to not block payments)
+      console.error('[webhook] Idempotency check failed:', e.message);
+    }
+
+    // Correction 2: Identify plan from metadata (not amount)
+    let plan = session.metadata?.plan;
+    if (!plan) {
+      // Fallback: infer from amount (legacy sessions without metadata)
+      plan = amount >= 9900 ? 'pro' : 'rapport';
+      console.warn(`[webhook] Plan missing from metadata, inferred from amount: ${plan} (amount=${amount})`);
+    }
+
+    if (email && (amount >= 0 || plan)) {
       const key = `paid:${email.toLowerCase()}`;
       await redis.set(key, {
         email, amount, plan,
+        sessionId: session.id,
         date: new Date().toISOString(),
       }, { ex: 30 * 24 * 60 * 60 });
 
       const { maskEmail } = require('../../lib/maskEmail');
-      console.log(`✅ Paiement validé pour ${maskEmail(email)} — plan: ${plan}`);
+      console.log(`✅ Paiement validé pour ${maskEmail(email)} — plan: ${plan}, amount: ${amount}, session: ${session.id}`);
 
       // Auto-trigger Pro audit if plan is pro
       if (plan === 'pro' && session.metadata?.url) {
@@ -60,6 +82,7 @@ export default async function handler(req, res) {
           await redis.set(`detekia:pro:v1:job:${result.siteJobId}:meta`, {
             rootUrl: session.metadata.url, locale: session.metadata.locale || 'fr',
             customerEmail: email, queuedAt: new Date().toISOString(), urls: result.urls,
+            stripeSessionId: session.id, // Corrélation ID pour traçabilité
           }, { ex: JOB_TTL });
           console.log(`🚀 Pro audit triggered for ${session.metadata.url} — job ${result.siteJobId}, pages: ${result.queuedCount}`);
 
@@ -77,6 +100,7 @@ export default async function handler(req, res) {
                 <p><strong>Pages trouvées :</strong> ${result.queuedCount} (attendu : ~20)</p>
                 <p><strong>Email client :</strong> ${email}</p>
                 <p><strong>Job ID :</strong> ${result.siteJobId}</p>
+                <p><strong>Session Stripe :</strong> ${session.id}</p>
                 <p><strong>Cause probable :</strong> Sitemap inaccessible (anti-bot) + crawler fallback bloqué</p>
                 <p style="color:#D97757;font-weight:bold;">Action requise : vérifier le rapport et potentiellement re-lancer manuellement.</p>
               </div>`,
@@ -91,3 +115,6 @@ export default async function handler(req, res) {
 
   res.status(200).json({ received: true });
 }
+
+// TODO [chantier corrections finales] : ajouter corrélation ID complète (session.id → siteJobId → uuid rapport)
+// TODO [chantier corrections finales] : passer DELETE_REPORT_SECRET et PRO_ADMIN_SECRET en header Authorization

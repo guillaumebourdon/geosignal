@@ -1,3 +1,4 @@
+// TODO [chantier corrections finales] : passer PRO_ADMIN_SECRET en header Authorization (au lieu de query string)
 /**
  * Manual consolidation + PDF trigger — bypasses QStash signature.
  * Protected by admin secret. Use when QStash callback fails silently.

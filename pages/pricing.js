@@ -112,6 +112,12 @@ export default function Pricing() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url, plan: selectedPlan }),
       });
+      if (checkRes.status === 429) {
+        setModalError(t('pricing.modal.errorCheckFailed'));
+        setModalLoading(false);
+        setLoadingText('');
+        return;
+      }
       const check = await checkRes.json();
       const isPro = selectedPlan === 'pro';
       const auditable = isPro ? check.proAuditable : check.onePageAuditable;

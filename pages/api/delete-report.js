@@ -1,3 +1,4 @@
+// TODO [chantier corrections finales] : passer DELETE_REPORT_SECRET en header Authorization (au lieu de query string)
 import { Redis } from '@upstash/redis';
 
 const redis = new Redis({

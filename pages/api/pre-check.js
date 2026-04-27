@@ -94,6 +94,10 @@ function countInternalLinks(html, hostname) {
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
+  // Rate limit: 10 req per 2 minutes per IP
+  const { checkRateLimit } = require('../../lib/rateLimit');
+  if (!(await checkRateLimit('preCheck', req, res))) return;
+
   const { url: rawUrl, plan } = req.body;
   if (!rawUrl) return res.status(400).json({ error: 'Missing url' });
 
