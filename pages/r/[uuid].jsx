@@ -52,22 +52,24 @@ export async function getServerSideProps({ params }) {
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-function gradeInfo(score) {
-  if (score >= 70) return { label: 'BON', color: '#10A37F', bg: 'rgba(16,163,127,0.10)' };
-  if (score >= 45) return { label: 'MOYEN', color: '#C9861A', bg: 'rgba(201,134,26,0.10)' };
-  return { label: 'FAIBLE', color: '#D97757', bg: 'rgba(217,119,87,0.10)' };
+function gradeInfo(score, locale = 'fr') {
+  const en = locale === 'en';
+  if (score >= 70) return { label: en ? 'GOOD' : 'BON', color: '#10A37F', bg: 'rgba(16,163,127,0.10)' };
+  if (score >= 45) return { label: en ? 'AVERAGE' : 'MOYEN', color: '#C9861A', bg: 'rgba(201,134,26,0.10)' };
+  return { label: en ? 'POOR' : 'FAIBLE', color: '#D97757', bg: 'rgba(217,119,87,0.10)' };
 }
-function priorityInfo(p) {
+function priorityInfo(p, locale = 'fr') {
   const s = String(p || '').toLowerCase();
-  if (s === 'high') return { label: 'CRITIQUE', color: '#D97757', bg: 'rgba(217,119,87,0.08)' };
-  if (s === 'medium') return { label: 'IMPORTANT', color: '#C9861A', bg: 'rgba(201,134,26,0.08)' };
+  const en = locale === 'en';
+  if (s === 'high') return { label: en ? 'CRITICAL' : 'CRITIQUE', color: '#D97757', bg: 'rgba(217,119,87,0.08)' };
+  if (s === 'medium') return { label: en ? 'IMPORTANT' : 'IMPORTANT', color: '#C9861A', bg: 'rgba(201,134,26,0.08)' };
   return { label: 'BONUS', color: '#10A37F', bg: 'rgba(16,163,127,0.08)' };
 }
-function effortInfo(e) {
+function effortInfo(e, locale = 'fr') {
   const s = String(e || '').toLowerCase();
-  if (s === 'low') return { label: 'Faible', color: '#10A37F' };
-  if (s === 'high') return { label: 'Lourd', color: '#D97757' };
-  return { label: 'Moyen', color: '#C9861A' };
+  if (s === 'low') return { label: locale === 'en' ? 'Low' : 'Faible', color: '#10A37F' };
+  if (s === 'high') return { label: locale === 'en' ? 'Heavy' : 'Lourd', color: '#D97757' };
+  return { label: locale === 'en' ? 'Medium' : 'Moyen', color: '#C9861A' };
 }
 function criterionGroup(name) {
   if (/extractibilit|donn.*structur|crawlabilit/i.test(name)) return 'Lisibilité IA';
@@ -130,7 +132,23 @@ const CTX_CARDS = [
   { label: 'Marché GEO', value: '33,7 Mds$', text: 'Valeur projetée du marché GEO en 2034, contre 848M$ en 2025.', source: 'eMarketer', color: '#10A37F' },
 ];
 
-const METHODOLOGY_TABLE = [
+// ── Criteria name translations (FR keys → localized display) ─────────────────
+const CRITERIA_EN = {
+  'Extractibilité & réponse directe': 'Extractability & Direct Answer',
+  'Vérifiabilité & preuves': 'Verifiability & Evidence',
+  'Autorité & E-E-A-T': 'Authority & E-E-A-T',
+  'Crawlabilité IA': 'AI Crawlability',
+  'Données structurées': 'Structured Data',
+  'Neutralité éditoriale': 'Editorial Neutrality',
+  'Présence externe': 'External Presence',
+  'Fraîcheur & maintenance': 'Freshness & Maintenance',
+};
+
+function tc(name, locale) {
+  return locale === 'en' ? (CRITERIA_EN[name] || name) : name;
+}
+
+const METHODOLOGY_TABLE_FR = [
   { name: 'Extractibilité & réponse directe', weight: '25 pts', measured: 'Longueur intro, structure H2/H3, listes, tableaux, calibrage des paragraphes' },
   { name: 'Vérifiabilité & preuves', weight: '20 pts', measured: 'Données chiffrées, liens externes sourcés, dates, tableaux, citations' },
   { name: 'Autorité & E-E-A-T', weight: '15 pts', measured: 'Page auteur, biographie, À propos, contact, mentions légales, schema Organization' },
@@ -140,6 +158,103 @@ const METHODOLOGY_TABLE = [
   { name: 'Présence externe', weight: '5 pts', measured: 'Mentions presse, liens réseaux sociaux, témoignages tiers détectés' },
   { name: 'Fraîcheur & maintenance', weight: '5 pts', measured: 'dateModified schema, années récentes dans le contenu, copyright à jour' },
 ];
+
+const METHODOLOGY_TABLE_EN = [
+  { name: 'Extractability & Direct Answer', weight: '25 pts', measured: 'Intro length, H2/H3 structure, lists, tables, paragraph calibration' },
+  { name: 'Verifiability & Evidence', weight: '20 pts', measured: 'Data points, sourced external links, dates, tables, citations' },
+  { name: 'Authority & E-E-A-T', weight: '15 pts', measured: 'Author page, bio, About, contact, legal notices, Organization schema' },
+  { name: 'AI Crawlability', weight: '15 pts', measured: 'Content length, lang, canonical, indexability, sitemap, AI bots allowed' },
+  { name: 'Structured Data', weight: '10 pts', measured: 'Semantic HTML, JSON-LD schemas (FAQPage, Article, HowTo, Organization...)' },
+  { name: 'Editorial Neutrality', weight: '10 pts', measured: 'Evaluated by AI — superlatives, promotional tone, honesty' },
+  { name: 'External Presence', weight: '5 pts', measured: 'Press mentions, social media links, third-party testimonials detected' },
+  { name: 'Freshness & Maintenance', weight: '5 pts', measured: 'dateModified schema, recent years in content, copyright up to date' },
+];
+
+function getMethodologyTable(locale) {
+  return locale === 'en' ? METHODOLOGY_TABLE_EN : METHODOLOGY_TABLE_FR;
+}
+
+// ── Report UI strings by locale ──────────────────────────────────────────────
+const REPORT_STRINGS = {
+  fr: {
+    scoreLabel: 'SCORE DE VISIBILITÉ IA',
+    scoreMax: '/100',
+    verdictLabel: 'VERDICT',
+    criteriaLabel: 'ANALYSE PAR CRITÈRE',
+    evidenceLabel: 'PREUVES TECHNIQUES',
+    recoLabel: 'RECOMMANDATIONS',
+    recoCount: 'recommandations personnalisées',
+    priority: { high: 'Critique', medium: 'Important', low: 'Bonus' },
+    impact: 'Impact', effort: 'Effort', timeframe: 'Délai',
+    impactValues: { high: 'Élevé', medium: 'Moyen', low: 'Faible' },
+    effortValues: { high: 'Élevé', medium: 'Moyen', low: 'Faible' },
+    problem: 'Diagnostic', solution: 'Solution', steps: 'Étapes techniques', code: 'Exemple de code',
+    citationLabel: 'TEST DE VISIBILITÉ IA', citationIntro: 'Requêtes testées sur ChatGPT',
+    cited: 'Votre site apparaît', notCited: 'Votre site n\'apparaît pas',
+    competitorsLabel: 'Cités à votre place :',
+    methodology: 'MÉTHODOLOGIE', methodologyTitle: 'Comment ce score est calculé',
+    methodologyDesc: 'Score basé sur 8 critères pondérés, analysés par des règles déterministes + IA.',
+    criterion: 'Critère', weight: 'Poids', measured: 'Ce qu\'on mesure',
+    downloadPdf: 'Télécharger le rapport PDF',
+    poweredBy: 'Rapport généré par',
+    beelevenTitle: 'Besoin d\'aide pour implémenter ?',
+    beelevenDesc: 'Beeleven, l\'agence qui a créé Detekia, peut implémenter les recommandations pour vous.',
+    beelevenCta: 'Discutons-en →',
+    goFurther: 'ALLER PLUS LOIN',
+    evidenceIntro: 'Extrait analysé — 300 premiers caractères du site',
+    evidenceHeadings: 'Structure des titres (H1 / H2 / H3)',
+    evidenceMeta: 'Meta title & description',
+    evidenceSchemas: 'Schémas JSON-LD détectés',
+    evidenceSocial: 'Liens sociaux',
+    evidenceImages: 'Images',
+    evidenceExtLinks: 'Liens externes',
+    evidenceDates: 'Dates détectées',
+    evidenceRobots: 'robots.txt',
+    evidenceLlms: 'llms.txt',
+    evidenceTrustLinks: 'Liens de confiance internes',
+    noData: 'Non disponible',
+  },
+  en: {
+    scoreLabel: 'AI VISIBILITY SCORE',
+    scoreMax: '/100',
+    verdictLabel: 'VERDICT',
+    criteriaLabel: 'ANALYSIS BY CRITERION',
+    evidenceLabel: 'TECHNICAL EVIDENCE',
+    recoLabel: 'RECOMMENDATIONS',
+    recoCount: 'personalized recommendations',
+    priority: { high: 'Critical', medium: 'Important', low: 'Bonus' },
+    impact: 'Impact', effort: 'Effort', timeframe: 'Timeline',
+    impactValues: { high: 'High', medium: 'Medium', low: 'Low' },
+    effortValues: { high: 'High', medium: 'Medium', low: 'Low' },
+    problem: 'Diagnosis', solution: 'Solution', steps: 'Technical steps', code: 'Code example',
+    citationLabel: 'AI VISIBILITY TEST', citationIntro: 'Queries tested on ChatGPT',
+    cited: 'Your site appears', notCited: 'Your site does not appear',
+    competitorsLabel: 'Cited instead of you:',
+    methodology: 'METHODOLOGY', methodologyTitle: 'How this score is calculated',
+    methodologyDesc: 'Score based on 8 weighted criteria, analyzed by deterministic rules + AI.',
+    criterion: 'Criterion', weight: 'Weight', measured: 'What we measure',
+    downloadPdf: 'Download PDF report',
+    poweredBy: 'Report generated by',
+    beelevenTitle: 'Need help implementing?',
+    beelevenDesc: 'Beeleven, the agency behind Detekia, can implement the recommendations for you.',
+    beelevenCta: 'Let\'s talk →',
+    goFurther: 'GO FURTHER',
+    evidenceIntro: 'Analyzed excerpt — first 300 characters',
+    evidenceHeadings: 'Heading structure (H1 / H2 / H3)',
+    evidenceMeta: 'Meta title & description',
+    evidenceSchemas: 'JSON-LD schemas detected',
+    evidenceSocial: 'Social links',
+    evidenceImages: 'Images',
+    evidenceExtLinks: 'External links',
+    evidenceDates: 'Dates detected',
+    evidenceRobots: 'robots.txt',
+    evidenceLlms: 'llms.txt',
+    evidenceTrustLinks: 'Internal trust links',
+    noData: 'Not available',
+  },
+};
+
+function rs(locale) { return REPORT_STRINGS[locale] || REPORT_STRINGS.fr; }
 
 // ── Evidence Blocks (per-criterion) ─────────────────────────────────────────
 
@@ -417,7 +532,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                 return (
                   <div key={i} style={{ marginBottom: 12 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                      <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{c.name}</a>
+                      <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{tc(c.name, locale)}</a>
                       <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                         <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 7px', borderRadius: 4, background: col + '18', color: col }}>{gradeLabel}</span>
                         <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{c.score}/{c.max}</span>
@@ -526,7 +641,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                     <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>{group} · Critère {i + 1} / 8</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
-                    <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{c.name}</h3>
+                    <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{tc(c.name, locale)}</h3>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
                       <div style={{ fontFamily: 'Georgia,serif', fontSize: 32, color: col, lineHeight: 1 }}>{c.score}<span style={{ fontSize: 14, color: '#C0BBB5' }}>/{c.max}</span></div>
                       <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5' }}>{pct}%</div>
@@ -622,7 +737,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                       <td style={{ padding: '10px 12px', fontFamily: 'Georgia,serif', fontSize: 14, color: pi.color, textAlign: 'center' }}>{i + 1}</td>
                       <td style={{ padding: '10px 12px', textAlign: 'center' }}><span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 8px', borderRadius: 4, background: pi.bg, color: pi.color }}>{pi.label}</span></td>
                       <td style={{ padding: '10px 12px', fontSize: 12, color: '#1A1916', lineHeight: 1.5, maxWidth: 400 }}><strong>{r.title}</strong>{r.solution ? ` — ${r.solution.substring(0, 100)}` : ''}</td>
-                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#6B6762', whiteSpace: 'nowrap' }}>{r.criterion || ''}</td>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#6B6762', whiteSpace: 'nowrap' }}>{tc(r.criterion || ''  , locale)}</td>
                       <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: pi.color, textAlign: 'center' }}>{r.impact === 'high' ? 'Élevé' : r.impact === 'medium' ? 'Moyen' : 'Faible'}</td>
                       <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 10, color: '#6B6762', whiteSpace: 'nowrap', textAlign: 'center' }}>{r.timeframe || ''}</td>
                     </tr>
