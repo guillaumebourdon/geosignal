@@ -103,8 +103,10 @@ export default async function handler(req, res) {
     const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
     console.log('PDF generated, size:', pdfBuffer.length);
 
-    // Generate loyalty promo code (non-blocking if it fails)
-    const loyaltyCode = await generateLoyaltyCode(null, url, email, locale);
+    // Generate loyalty promo code — disabled via LOYALTY_COUPON_ENABLED
+    const loyaltyCode = process.env.LOYALTY_COUPON_ENABLED === 'true'
+      ? await generateLoyaltyCode(null, url, email, locale)
+      : null;
     const ls = LOYALTY_STRINGS[locale] || LOYALTY_STRINGS.fr;
 
     const EMAIL_BODY = locale === 'en' ? {

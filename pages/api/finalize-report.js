@@ -155,12 +155,14 @@ export default async function handler(req, res) {
       }
     } catch (e) { console.error('[finalize-report] Validation error:', e.message); }
 
-    // 2. Generate loyalty code (non-blocking)
-    const loyaltyCode = await generateLoyaltyCode(url, email, locale).catch(() => null);
-    if (loyaltyCode) {
-      // Store promo code in report record for display in web report
-      reportRecord.loyaltyCode = loyaltyCode;
-      await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+    // 2. Generate loyalty code (non-blocking) — disabled via LOYALTY_COUPON_ENABLED
+    let loyaltyCode = null;
+    if (process.env.LOYALTY_COUPON_ENABLED === 'true') {
+      loyaltyCode = await generateLoyaltyCode(url, email, locale).catch(() => null);
+      if (loyaltyCode) {
+        reportRecord.loyaltyCode = loyaltyCode;
+        await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+      }
     }
 
     // 3. Send email with link
