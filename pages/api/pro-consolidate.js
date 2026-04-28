@@ -241,6 +241,16 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
     try { synthesis = parseJson(synthR.value.content[0].text); console.log(`[pro-consolidate] Synthesis OK: exec=${(synthesis.executiveSummary || '').length}c`); }
     catch (e) { console.error('[pro-consolidate] Synthesis parse error:', e.message); }
   } else { console.error('[pro-consolidate] Synthesis FAILED:', synthR.reason?.message); }
+  // Retry synthesis if empty (rate limit, parse error, etc.)
+  if (!synthesis.executiveSummary || (synthesis.patterns || []).length === 0) {
+    console.warn('[pro-consolidate] Synthesis empty, retrying after 15s...');
+    await new Promise(r => setTimeout(r, 15000));
+    try {
+      const retryMsg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] });
+      const retrySynthesis = parseJson(retryMsg.content[0].text);
+      if (retrySynthesis.executiveSummary) { synthesis = retrySynthesis; console.log('[pro-consolidate] Synthesis retry OK'); }
+    } catch (e) { console.error('[pro-consolidate] Synthesis retry failed:', e.message); }
+  }
 
   let citationTest = { tests: [], summary: { cited_count: 0, total_tests: 0, best_opportunity: '', main_blocker: '' } };
   if (citR.status === 'fulfilled' && citR.value) {

@@ -114,16 +114,25 @@ export default async function handler(req, res) {
 
       console.log(`[pro-trigger] Starting 3 Haiku calls for ${siteJobId}...`);
 
-      // Call 1: Synthesis
+      // Call 1: Synthesis (with retry on failure)
+      const synthesisPrompt = `${langInstruction}\n\nYou are a senior GEO consultant analyzing a FULL WEBSITE audit (${validPages.length} pages).\n\nSite: ${rootUrl}\nAverage GEO score: ${scoreAverage}/100\nDistribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)\n\nPages analyzed:\n${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}\n\nCriteria averages:\n${Object.entries(criteriaAverages).map(([k, v]) => `- ${k}: ${v.avgScore}/${v.max}`).join('\n')}\n\nGenerate a comprehensive site-level analysis. JSON only, no markdown fences:\n{"executiveSummary":"2-3 paragraphs","topStrengths":["s1","s2","s3"],"topWeaknesses":["w1","w2","w3"],"patterns":[{"pattern":"desc","pagesAffected":["url"],"criterion":"name","severity":"critique|important|mineur"}],"actionPlan":[{"priority":1,"action":"desc","criterion":"name","impact":"eleve|moyen|faible","effort":"faible|moyen|eleve","pagesAffected":["url"]}]}\n\nRules:\n- executiveSummary: 2-3 substantial paragraphs\n- patterns: 5 to 8 cross-page patterns\n- actionPlan: 10 to 15 actions sorted by priority\n- Be specific to ${rootUrl}\n- IMPORTANT: output raw JSON only, no markdown, no explanation`;
+
       let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
-      try {
-        const synthesisMsg = await callHaikuWithRetry({
-          model: 'claude-4-sonnet-20250514', max_tokens: 6000, temperature: 0.2,
-          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant analyzing a FULL WEBSITE audit (${validPages.length} pages).\n\nSite: ${rootUrl}\nAverage GEO score: ${scoreAverage}/100\nDistribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)\n\nPages analyzed:\n${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}\n\nCriteria averages:\n${Object.entries(criteriaAverages).map(([k, v]) => `- ${k}: ${v.avgScore}/${v.max}`).join('\n')}\n\nGenerate a comprehensive site-level analysis. JSON only, no markdown fences:\n{"executiveSummary":"2-3 paragraphs","topStrengths":["s1","s2","s3"],"topWeaknesses":["w1","w2","w3"],"patterns":[{"pattern":"desc","pagesAffected":["url"],"criterion":"name","severity":"critique|important|mineur"}],"actionPlan":[{"priority":1,"action":"desc","criterion":"name","impact":"eleve|moyen|faible","effort":"faible|moyen|eleve","pagesAffected":["url"]}]}\n\nRules:\n- executiveSummary: 2-3 substantial paragraphs\n- patterns: 5 to 8 cross-page patterns\n- actionPlan: 10 to 15 actions sorted by priority\n- Be specific to ${rootUrl}\n- IMPORTANT: output raw JSON only, no markdown, no explanation` }],
-        });
-        synthesis = parseHaikuJson(synthesisMsg.content[0].text);
-        console.log(`[pro-trigger] Synthesis done. Patterns: ${(synthesis.patterns||[]).length}, Actions: ${(synthesis.actionPlan||[]).length}`);
-      } catch (e) { console.error('[pro-trigger] Synthesis parse failed:', e.message); }
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          if (attempt > 0) { console.log('[pro-trigger] Synthesis retry after 15s...'); await new Promise(r => setTimeout(r, 15000)); }
+          const synthesisMsg = await callHaikuWithRetry({
+            model: 'claude-4-sonnet-20250514', max_tokens: 6000, temperature: 0.2,
+            messages: [{ role: 'user', content: synthesisPrompt }],
+          });
+          synthesis = parseHaikuJson(synthesisMsg.content[0].text);
+          if (synthesis.executiveSummary && (synthesis.patterns || []).length > 0) {
+            console.log(`[pro-trigger] Synthesis done. Patterns: ${(synthesis.patterns||[]).length}, Actions: ${(synthesis.actionPlan||[]).length}`);
+            break;
+          }
+          console.warn(`[pro-trigger] Synthesis returned empty fields, retrying...`);
+        } catch (e) { console.error(`[pro-trigger] Synthesis attempt ${attempt + 1} failed:`, e.message); }
+      }
 
       // Call 2: Citation test
       let citationTest = { queries: [], citationRate: '0/30', bestOpportunity: '', mainBlocker: '' };
