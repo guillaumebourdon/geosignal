@@ -438,7 +438,8 @@ async function runClaudeAnalysis(url, textContent, scores, locale = 'fr', detect
   const langInstruction = locale === 'en'
     ? `OUTPUT LANGUAGE: English (US). ALL text values in the JSON (verdict, recommendations, strengths, topPriority, neutralityDetail) MUST be in American English. Use natural, direct, conversational phrasing.
 CRITICAL: The "criterion" field MUST always use the FRENCH criterion name from this exact list (used as a matching key in the frontend): 'Extractibilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Crawlabilité IA', 'Données structurées', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & maintenance'.`
-    : `LANGUE DE SORTIE : Français. Toutes les valeurs texte du JSON doivent être en français professionnel et direct.`;
+    : `LANGUE DE SORTIE : Français. Toutes les valeurs texte du JSON doivent être en français professionnel et direct.
+CRITICAL: The "criterion" field MUST always use a name from this exact list: 'Extractibilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Crawlabilité IA', 'Données structurées', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & maintenance'. No other criterion name is allowed.`;
 
   const today = new Date().toISOString().split('T')[0];
   const prompt = `${langInstruction}
