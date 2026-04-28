@@ -581,6 +581,7 @@ export default async function handler(req, res) {
 
   const rawUrl = req.body.url;
   const locale = req.body.locale === 'en' ? 'en' : 'fr';
+  const plan = req.body.plan || 'free'; // free=2, onepage=10, pro=30
   if (!rawUrl) return res.status(400).json({ error: 'URL manquante' });
   const urlCandidate = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   let url;
@@ -642,11 +643,12 @@ export default async function handler(req, res) {
     const brand = metaTitle ? metaTitle.split(/[-|–·]/)[0].trim() : hostname;
     const intro = textContent.slice(0, 300);
 
-    // Run analysis + evidence in parallel. Citation test uses real GPT-4o-mini queries (2 for free tier).
+    // Run analysis + evidence in parallel. Citation test: 2 free, 10 one-page, 30 pro
+    const queryCount = plan === 'pro' ? 30 : plan === 'onepage' ? 10 : 2;
     const [claude, evidence, citationTest] = await Promise.all([
       runClaudeAnalysis(url, textContent, scores, locale, detectedSignals),
       collectEvidence($, textContent, rawContent, url),
-      runRealCitationTest(url, hostname, brand, metaDescription, intro, 2, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
+      runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
     const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
     const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;
