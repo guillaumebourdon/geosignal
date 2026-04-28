@@ -135,26 +135,32 @@ function scoreVerifiability($, text, html, siteHostname, locale = 'fr') {
   return { score: Math.min(score, 20), max: 20, detail: details.slice(0, 3).join(' · ') };
 }
 
-function scoreAuthority($, html, locale = 'fr') {
+function scoreAuthority($, html, locale = 'fr', directHtml = '') {
   const e = EV[locale] || EV.fr;
   let score = 0;
   const details = [];
   const htmlLinks = [];
   $('a[href]').each((_, el) => htmlLinks.push(($(el).attr('href') || '').toLowerCase()));
+  // Merge links from direct HTML (Jina strips footer where Contact/About/Legal links live)
+  if (directHtml) {
+    const cheerio = require('cheerio');
+    const $d = cheerio.load(directHtml);
+    $d('a[href]').each((_, el) => { const h = ($d(el).attr('href') || '').toLowerCase(); if (!htmlLinks.includes(h)) htmlLinks.push(h); });
+  }
   const links = htmlLinks.length > 0 ? htmlLinks : mdAllLinks(html);
   score += 2; details.push(`${e.structured} ✓`);
-  if (links.some(l => l.includes('contact'))) { score += 3; details.push(`${e.contactPage} ✓`); }
-  if (links.some(l => l.includes('legal') || l.includes('mention') || l.includes('cgu') || l.includes('privacy') || l.includes('confidential'))) { score += 2; details.push(`${e.legalNotices} ✓`); }
-  if (links.some(l => l.includes('about') || l.includes('propos'))) { score += 2; details.push(`${e.aboutPage} ✓`); }
+  if (links.some(l => l.includes('contact') || l.includes('mailto:'))) { score += 3; details.push(`${e.contactPage} ✓`); }
+  if (links.some(l => l.includes('legal') || l.includes('mention') || l.includes('cgu') || l.includes('terms') || l.includes('privacy') || l.includes('confidential'))) { score += 2; details.push(`${e.legalNotices} ✓`); }
+  if (links.some(l => l.includes('about') || l.includes('propos') || l.includes('qui-sommes') || l.includes('a-propos'))) { score += 2; details.push(`${e.aboutPage} ✓`); }
   const hasAuthorPage = links.some(l => l.includes('author') || l.includes('auteur') || l.includes('equipe') || l.includes('team'));
   const hasAuthorSchema = html.includes('"author"') || html.includes('rel="author"');
   const hasAuthorText = /par\s+[A-Z][a-z]+|by\s+[A-Z][a-z]+|r.dig. par|written by/i.test(html);
   if (hasAuthorPage || hasAuthorSchema || hasAuthorText) { score += 3; details.push(`${e.authorId} ✓`); }
-  if (html.includes('"Organization"') || html.includes('"Person"')) { score += 3; details.push(`${e.schemaOrgPerson} ✓`); }
+  if (html.includes('"Organization"') || html.includes('"Person"') || (directHtml && (directHtml.includes('"Organization"') || directHtml.includes('"Person"')))) { score += 3; details.push(`${e.schemaOrgPerson} ✓`); }
   return { score: Math.min(score, 15), max: 15, detail: details.slice(0, 3).join(' · ') };
 }
 
-function scoreCrawlability($, html, locale = 'fr') {
+function scoreCrawlability($, html, locale = 'fr', directHtml = '') {
   const e = EV[locale] || EV.fr;
   let score = 0;
   const details = [];
@@ -165,12 +171,15 @@ function scoreCrawlability($, html, locale = 'fr') {
   else if (textLength > 1000) { score += 3; details.push(`${textLength} chars`); }
   else if (textLength > 500) { score += 1; details.push(`${textLength} chars`); }
   else details.push(`${e.contentTooShort} ✗`);
-  if ($('html[lang]').length > 0) { score += 2; details.push(`${e.langDefined} ✓`); }
-  if ($('link[rel="canonical"]').length > 0) { score += 2; details.push('Canonical ✓'); }
+  // Check lang, canonical, robots in both Jina and direct HTML
+  const hasLang = $('html[lang]').length > 0 || (directHtml && directHtml.includes('lang='));
+  if (hasLang) { score += 2; details.push(`${e.langDefined} ✓`); }
+  const hasCanonical = $('link[rel="canonical"]').length > 0 || (directHtml && directHtml.includes('rel="canonical"'));
+  if (hasCanonical) { score += 2; details.push('Canonical ✓'); }
   const metaRobots = $('meta[name="robots"]').attr('content') || '';
   if (!metaRobots.includes('noindex')) { score += 3; details.push(`${e.indexable} ✓`); }
   else details.push(`${e.noindexDetected} ✗`);
-  if (html.includes('sitemap')) { score += 2; details.push(`${e.sitemapFound} ✓`); }
+  if (html.includes('sitemap') || (directHtml && directHtml.includes('sitemap'))) { score += 2; details.push(`${e.sitemapFound} ✓`); }
   if (html.includes('GPTBot') || html.includes('OAI-SearchBot') || html.includes('ClaudeBot')) {
     score += 1; details.push(`${e.aiBotsFound} ✓`);
   }
@@ -196,8 +205,8 @@ function scoreStructuredData($, html, locale = 'fr') {
     const rawTypeMatches = html.match(/"@type"\s*:\s*"([^"]+)"/g) || [];
     rawTypeMatches.forEach(m => { const tt = m.match(/"@type"\s*:\s*"([^"]+)"/)?.[1]; if (tt && !schemaTypes.includes(tt)) schemaTypes.push(tt); });
   }
-  const highValueTypes = ['FAQPage', 'QAPage', 'HowTo', 'Article', 'BlogPosting'];
-  const medValueTypes = ['Organization', 'Person', 'Product', 'Service', 'WebSite'];
+  const highValueTypes = ['FAQPage', 'QAPage', 'HowTo', 'Article', 'BlogPosting', 'SoftwareApplication', 'WebApplication', 'MobileApplication'];
+  const medValueTypes = ['Organization', 'Corporation', 'LocalBusiness', 'GovernmentOrganization', 'EducationalOrganization', 'Person', 'Product', 'Service', 'WebSite', 'FinancialProduct', 'Event', 'Course', 'Recipe', 'JobPosting', 'VideoObject'];
   const hasHighValue = schemaTypes.some(st => highValueTypes.includes(st));
   const hasMedValue = schemaTypes.some(st => medValueTypes.includes(st));
   if (hasHighValue) { score += 5; details.push(`${e.schemaPrio} ${schemaTypes.filter(st => highValueTypes.includes(st)).join(', ')} ✓`); }
@@ -216,8 +225,9 @@ function scoreExternalPresence($, html, locale = 'fr', directMeta = {}) {
   const externalLinks = htmlExtLinks.length > 0 ? htmlExtLinks : mdExternalLinks(html, null).map(l => l.toLowerCase());
   if (externalLinks.length > 0) { score += 1; details.push(`${e.extLinksPresent} ✓`); }
   if (/presse|m.dia|press|featured|vu dans|as seen/i.test(html)) { score += 2; details.push(`${e.pressMentions} ✓`); }
-  // Check social links from Jina content OR direct HTML fetch
-  const hasSocial = externalLinks.some(l => l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube'))
+  // Check social links from Jina content OR direct HTML fetch (exclude tracking pixels)
+  const socialTrackingExclude = ['analytics.twitter', 'platform.twitter', 'ads.twitter', 'adsct', 'connect.facebook', 'staticxx.facebook'];
+  const hasSocial = externalLinks.some(l => (l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube')) && !socialTrackingExclude.some(e => l.includes(e)))
     || (directMeta.socialLinks && directMeta.socialLinks.length > 0);
   if (hasSocial) { score += 2; details.push(`${e.socialMedia} ✓`); }
   if (/t.moignage|avis client|review|testimonial/i.test(html)) { score += 1; details.push(`${e.testimonials} ✓`); }
@@ -284,16 +294,17 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
 
   // 6. socialLinks — HTML or markdown fallback, enriched with directMeta
   const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'];
+  const socialExclude = ['analytics.twitter', 'platform.twitter', '/intent/', 'ads.twitter', 'adsct', '/widgets/', 'connect.facebook', 'staticxx.facebook'];
   const socialLinks = [];
   $('a[href]').each((_, el) => {
     const href = $(el).attr('href') || '';
-    if (href.startsWith('http') && socialDomains.some(d => href.includes(d)) && !socialLinks.includes(href)) {
+    if (href.startsWith('http') && socialDomains.some(d => href.includes(d)) && !socialExclude.some(e => href.includes(e)) && !socialLinks.includes(href)) {
       socialLinks.push(href);
     }
   });
   if (socialLinks.length === 0) {
     mdExternalLinks(rawContent, null).forEach(href => {
-      if (socialDomains.some(d => href.includes(d)) && !socialLinks.includes(href)) socialLinks.push(href);
+      if (socialDomains.some(d => href.includes(d)) && !socialExclude.some(e => href.includes(e)) && !socialLinks.includes(href)) socialLinks.push(href);
     });
   }
   // Merge social links from direct HTML fetch (Jina often misses footer links)
@@ -373,30 +384,27 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
   let siteHostnameForTrust;
   try { siteHostnameForTrust = new URL(normalizedUrl).hostname; } catch { siteHostnameForTrust = ''; }
 
-  $('a[href]').each((_, el) => {
-    if (internalTrustLinks.length >= 5) return false;
-    const href = ($(el).attr('href') || '').trim();
-    const label = $(el).text().trim().slice(0, 80);
-    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-
-    // Determine if internal
-    let fullUrl;
-    try {
-      fullUrl = new URL(href, normalizedUrl);
-      if (fullUrl.hostname !== siteHostnameForTrust) return;
-    } catch { return; }
-
-    // Skip if same as analyzed URL
-    if (fullUrl.pathname === new URL(normalizedUrl).pathname) return;
-
-    const urlStr = fullUrl.href;
-    if (seenUrls.has(urlStr)) return;
-
-    if (trustPathPatterns.test(fullUrl.pathname) || trustTextPatterns.test(label)) {
-      seenUrls.add(urlStr);
-      internalTrustLinks.push({ url: urlStr, label: label || fullUrl.pathname });
-    }
-  });
+  // Scan both Jina $ and direct HTML for trust links (Jina often strips footer)
+  const scanTrustLinks = (cheerioInstance) => {
+    cheerioInstance('a[href]').each((_, el) => {
+      if (internalTrustLinks.length >= 8) return false;
+      const href = (cheerioInstance(el).attr('href') || '').trim();
+      const label = cheerioInstance(el).text().trim().slice(0, 80);
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+      let fullUrl;
+      try { fullUrl = new URL(href, normalizedUrl); if (fullUrl.hostname !== siteHostnameForTrust) return; } catch { return; }
+      if (fullUrl.pathname === new URL(normalizedUrl).pathname) return;
+      const urlStr = fullUrl.href;
+      if (seenUrls.has(urlStr)) return;
+      if (trustPathPatterns.test(fullUrl.pathname) || trustTextPatterns.test(label)) {
+        seenUrls.add(urlStr);
+        internalTrustLinks.push({ url: urlStr, label: label || fullUrl.pathname });
+      }
+    });
+  };
+  scanTrustLinks($);
+  // Also scan direct HTML if available (catches footer links Jina strips)
+  if (directMeta._$raw) scanTrustLinks(directMeta._$raw);
 
   return {
     intro,
@@ -653,9 +661,10 @@ export default async function handler(req, res) {
 
     // Enrich cheerio $ with data from direct HTML fetch (Jina strips scripts, meta, footer links)
     const directHtml = rawHtmlResult.status === 'fulfilled' ? rawHtmlResult.value : null;
-    let directMeta = { description: '', title: '', socialLinks: [], imageCount: 0, imagesWithAlt: 0 };
+    let directMeta = { description: '', title: '', socialLinks: [], imageCount: 0, imagesWithAlt: 0, _$raw: null };
     if (directHtml && typeof directHtml === 'string') {
       const $raw = cheerio.load(directHtml);
+      directMeta._$raw = $raw;
       // 1. Inject JSON-LD scripts
       $raw('script[type="application/ld+json"]').each((_, el) => {
         const content = $raw(el).html();
@@ -666,9 +675,10 @@ export default async function handler(req, res) {
       directMeta.title = $raw('title').text().trim() || '';
       // 3. Extract social links (Jina strips footer)
       const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'];
+      const socialExclude = ['analytics.twitter', 'platform.twitter', '/intent/', 'ads.twitter', 'adsct', '/widgets/', 'connect.facebook', 'staticxx.facebook'];
       $raw('a[href]').each((_, el) => {
         const href = ($raw(el).attr('href') || '').trim();
-        if (href.startsWith('http') && socialDomains.some(d => href.includes(d)) && !directMeta.socialLinks.includes(href)) {
+        if (href.startsWith('http') && socialDomains.some(d => href.includes(d)) && !socialExclude.some(e => href.includes(e)) && !directMeta.socialLinks.includes(href)) {
           directMeta.socialLinks.push(href);
         }
       });
@@ -686,8 +696,8 @@ export default async function handler(req, res) {
     const scores = {
       extractibility:   scoreExtractibility($, textContent, rawContent, locale),
       verifiability:    scoreVerifiability($, textContent, rawContent, siteHostname, locale),
-      authority:        scoreAuthority($, rawContent, locale),
-      crawlability:     scoreCrawlability($, rawContent, locale),
+      authority:        scoreAuthority($, rawContent, locale, directHtml || ''),
+      crawlability:     scoreCrawlability($, rawContent, locale, directHtml || ''),
       structuredData:   scoreStructuredData($, rawContent, locale),
       externalPresence: scoreExternalPresence($, rawContent, locale, directMeta),
       freshness:        scoreFreshness($, rawContent, locale),
