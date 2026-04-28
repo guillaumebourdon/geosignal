@@ -610,13 +610,30 @@ export default async function handler(req, res) {
 
   try {
     const jinaUrl = `https://r.jina.ai/${url}`;
-    const { data: rawContent, source: scrapeSource } = await fetchJina(jinaUrl);
+
+    // Fetch Jina content + raw HTML in parallel (raw HTML for JSON-LD schema detection)
+    const [jinaResult, rawHtmlResult] = await Promise.allSettled([
+      fetchJina(jinaUrl),
+      axios.get(url, { timeout: 10000, maxRedirects: 5, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DetekiaBot/1.0; +https://detekia.fr)' } }).then(r => r.data).catch(() => null),
+    ]);
+
+    const { data: rawContent, source: scrapeSource } = jinaResult.status === 'fulfilled' ? jinaResult.value : (() => { throw jinaResult.reason; })();
 
     const $ = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
 
     if (textContent.length < 200) {
       return res.status(422).json({ error: "Impossible d'analyser ce site. Contenu trop court ou inaccessible." });
+    }
+
+    // Inject JSON-LD scripts from raw HTML into cheerio $ (Jina strips <script> tags)
+    const directHtml = rawHtmlResult.status === 'fulfilled' ? rawHtmlResult.value : null;
+    if (directHtml && typeof directHtml === 'string') {
+      const $raw = cheerio.load(directHtml);
+      $raw('script[type="application/ld+json"]').each((_, el) => {
+        const content = $raw(el).html();
+        if (content) $('body').append(`<script type="application/ld+json">${content}</script>`);
+      });
     }
 
     const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || jinaTitle(rawContent) || '';
@@ -641,7 +658,11 @@ export default async function handler(req, res) {
     if (metaDescription) signalParts.push(`Meta description: "${metaDescription.substring(0, 80)}..."`);
     const detectedSchemas = [];
     $('script[type="application/ld+json"]').each((_, el) => {
-      try { const d = JSON.parse($(el).html()); if (d['@type']) detectedSchemas.push(d['@type']); } catch {}
+      try {
+        const d = JSON.parse($(el).html());
+        if (d['@type']) detectedSchemas.push(d['@type']);
+        if (Array.isArray(d['@graph'])) d['@graph'].forEach(item => { if (item['@type']) detectedSchemas.push(item['@type']); });
+      } catch {}
     });
     if (detectedSchemas.length) signalParts.push(`JSON-LD schemas: ${detectedSchemas.join(', ')}`);
     else signalParts.push('JSON-LD schemas: NONE');
