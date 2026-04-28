@@ -1008,7 +1008,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                     <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).weight}</th>
                     <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).measured}</th>
                   </tr></thead>
-                  <tbody>{METHODOLOGY_TABLE.map((row, i) => (
+                  <tbody>{getMethodologyTable(locale).map((row, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
                       <td style={{ padding: '6px 10px', color: '#1A1916' }}>{row.name}</td>
                       <td style={{ padding: '6px 10px', textAlign: 'center', fontFamily: 'monospace', color: '#D97757' }}>{row.weight}</td>
@@ -1635,7 +1635,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <th style={{ padding: '7px 10px', textAlign: 'center', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).weight}</th>
                     <th style={{ padding: '7px 10px', textAlign: 'left', fontFamily: 'monospace', fontSize: 9, color: '#6B6762', fontWeight: 400 }}>{rs(locale).measured}</th>
                   </tr></thead>
-                  <tbody>{METHODOLOGY_TABLE.map((row, i) => (
+                  <tbody>{getMethodologyTable(locale).map((row, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
                       <td style={{ padding: '6px 10px', color: '#1A1916' }}>{row.name}</td>
                       <td style={{ padding: '6px 10px', textAlign: 'center', fontFamily: 'monospace', color: '#D97757' }}>{row.weight}</td>
