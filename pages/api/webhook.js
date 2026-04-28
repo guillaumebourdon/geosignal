@@ -65,6 +65,25 @@ export default async function handler(req, res) {
         date: new Date().toISOString(),
       }, { ex: 30 * 24 * 60 * 60 });
 
+      // Store customer info for SAV — indexed by session ID for later retrieval by finalize endpoints
+      const CUSTOMER_TTL = 3 * 365 * 24 * 60 * 60; // 3 years
+      try {
+        await redis.set(`detekia:customer:${session.id}`, {
+          customerEmail: email,
+          customerName: session.customer_details?.name || null,
+          customerCountry: session.customer_details?.address?.country || null,
+          customerStripeId: session.customer || null,
+          purchaseDate: new Date().toISOString(),
+          plan,
+          amount,
+          couponUsed: session.metadata?.coupon || null,
+          locale: session.metadata?.locale || 'fr',
+          url: session.metadata?.url || null,
+        }, { ex: CUSTOMER_TTL });
+      } catch (e) {
+        console.error('[webhook] Customer info store failed:', e.message);
+      }
+
       const { maskEmail } = require('../../lib/maskEmail');
       console.log(`✅ Paiement validé pour ${maskEmail(email)} — plan: ${plan}, amount: ${amount}, session: ${session.id}`);
 

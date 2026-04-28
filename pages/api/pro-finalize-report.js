@@ -170,6 +170,17 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
     const host = req.headers['host'] || 'detekia.fr';
     const reportUrl = `${proto}://${host}/r/${uuid}`;
 
+    // Retrieve customer info from webhook (via stripeSessionId in job meta)
+    let customerInfo = null;
+    if (meta?.stripeSessionId) {
+      try {
+        customerInfo = await redis.get(`detekia:customer:${meta.stripeSessionId}`);
+        if (customerInfo && typeof customerInfo === 'string') customerInfo = JSON.parse(customerInfo);
+      } catch (e) {
+        console.error('[pro-finalize] Customer info lookup failed:', e.message);
+      }
+    }
+
     const reportRecord = {
       reportType: 'pro',
       consolidatedReport: { ...consolidated, pages: mergedPages },
@@ -178,10 +189,28 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
       locale,
       createdAt: new Date().toISOString(),
       siteJobId,
+      ...(customerInfo && { customerInfo }),
     };
 
     await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
     console.log(`[pro-finalize] Report stored: ${uuid} for ${rootUrl}`);
+
+    // Store customer→report mapping for SAV lookup
+    if (customerInfo || meta?.stripeSessionId) {
+      const CUSTOMER_TTL = 3 * 365 * 24 * 60 * 60;
+      await redis.set(`detekia:report:customer:${uuid}`, {
+        ...(customerInfo || {}),
+        customerEmail: customerInfo?.customerEmail || customerEmail,
+        reportUuid: uuid,
+        reportUrl,
+        siteUrl: rootUrl,
+        plan: 'pro',
+        locale,
+        createdAt: new Date().toISOString(),
+        stripeSessionId: meta?.stripeSessionId || null,
+        siteJobId,
+      }, { ex: CUSTOMER_TTL }).catch(e => console.error('[pro-finalize] Customer mapping store failed:', e.message));
+    }
 
     // Increment global audit counter
     try { await redis.incr('detekia:stats:audit-count'); } catch (_) {}

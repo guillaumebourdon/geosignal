@@ -119,7 +119,7 @@ export default async function handler(req, res) {
   const { checkRateLimit } = require('../../lib/rateLimit');
   if (!(await checkRateLimit('finalize', req, res))) return;
 
-  const { email, url, reportData, locale: reqLocale, isFreeViaPromo } = req.body;
+  const { email, url, reportData, locale: reqLocale, isFreeViaPromo, stripeSessionId } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';
   if (!email || !reportData) return res.status(400).json({ error: 'Missing data' });
 
@@ -129,7 +129,18 @@ export default async function handler(req, res) {
   const reportUrl = `${proto}://${host}/r/${uuid}`;
 
   try {
-    // 1. Store report in Redis (no TTL = permanent)
+    // 1. Retrieve customer info from webhook (if available)
+    let customerInfo = null;
+    if (stripeSessionId) {
+      try {
+        customerInfo = await redis.get(`detekia:customer:${stripeSessionId}`);
+        if (customerInfo && typeof customerInfo === 'string') customerInfo = JSON.parse(customerInfo);
+      } catch (e) {
+        console.error('[finalize-report] Customer info lookup failed:', e.message);
+      }
+    }
+
+    // 2. Store report in Redis
     const reportRecord = {
       reportType: 'onepage',
       reportData,
@@ -138,8 +149,25 @@ export default async function handler(req, res) {
       locale,
       createdAt: new Date().toISOString(),
       isFreeViaPromo: isFreeViaPromo || false,
+      ...(customerInfo && { customerInfo }),
     };
     await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+
+    // Store customer→report mapping for SAV lookup
+    if (customerInfo || stripeSessionId) {
+      const CUSTOMER_TTL = 3 * 365 * 24 * 60 * 60;
+      await redis.set(`detekia:report:customer:${uuid}`, {
+        ...(customerInfo || {}),
+        customerEmail: customerInfo?.customerEmail || email,
+        reportUuid: uuid,
+        reportUrl,
+        siteUrl: url,
+        plan: 'onepage',
+        locale,
+        createdAt: new Date().toISOString(),
+        stripeSessionId: stripeSessionId || null,
+      }, { ex: CUSTOMER_TTL }).catch(e => console.error('[finalize-report] Customer mapping store failed:', e.message));
+    }
     console.log(`[finalize-report] Stored report ${uuid} for ${url}`);
 
     // Increment global audit counter

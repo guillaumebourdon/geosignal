@@ -40,7 +40,7 @@ export default function Success() {
               fetch('/api/finalize-report', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report, locale: data.locale || 'fr', isFreeViaPromo: data.isFreeViaPromo || false }),
+                body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report, locale: data.locale || 'fr', isFreeViaPromo: data.isFreeViaPromo || false, stripeSessionId: session_id || null }),
               });
             }
           }).catch(() => {});

@@ -1202,6 +1202,7 @@
           "<strong>Analyzed URL</strong> — When you launch a GEO analysis, the URL you enter is processed in real time to generate your score. The URL and results are cached in our secure database for 24 hours to speed up subsequent analyses of the same website. After 24 hours, this data is automatically deleted. <em>Legal basis: legitimate interest (provision of the requested service).</em>",
           "<strong>Email address (optional)</strong> — If you choose to receive your report by email via the capture form, your email address is stored in our database along with the analyzed URL and the score obtained. This data is used to send you your report and, if you consent, alerts about changes to your score. <em>Legal basis: consent.</em>",
           "<strong>Payment data</strong> — When you purchase the full GEO report, payment is entirely processed by Stripe Payments Europe, Ltd. Beeleven SASU does not collect, store or process any banking data (card number, expiration date, CVV). Only the information transmitted by Stripe after payment is processed: buyer's email, transaction ID, amount. <em>Legal basis: contract performance.</em>",
+          "<strong>Customer data (paid reports)</strong> — When purchasing a paid report (€29 or €99), the following information collected by Stripe during payment is stored in our secure database and associated with the report: email address, name, billing country, Stripe customer ID. This data is used exclusively for customer support (report re-delivery, goodwill gestures) and contract management. It is never used for marketing purposes. Retention period: 3 years from the date of purchase. You can request deletion at any time by writing to guillaume@beeleven.fr or via the /api/delete-report endpoint. <em>Legal basis: contract performance (GDPR Article 6.1.b).</em>",
           "<strong>Browsing data</strong> — Detekia uses Vercel Analytics to measure website traffic (page views, visit duration, geographic origin). Vercel Analytics does not set cookies, does not use third-party trackers and does not collect personally identifiable data. The data is aggregated and anonymous. <em>Legal basis: legitimate interest (service improvement).</em>"
         ]
       },
@@ -1243,6 +1244,7 @@
           "Analyzed URL and results: 24 hours (automatic cache).",
           "Email address (optional capture): retained until deletion is requested by the user.",
           "Stripe transaction data: retained for the legally required accounting document retention period (10 years).",
+          "Customer data (paid reports): email, name, country — retained for 3 years from the date of purchase, deletable upon request.",
           "Vercel Analytics data: aggregated and anonymous, retained by Vercel according to its retention policy."
         ]
       },

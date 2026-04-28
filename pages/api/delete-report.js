@@ -27,6 +27,7 @@ export default async function handler(req, res) {
   try {
     const deleted = await redis.del(`detekia:report:${id}`);
     await redis.del(`detekia:analytics:${id}`);
+    await redis.del(`detekia:report:customer:${id}`);
 
     if (!deleted) return res.status(404).json({ error: 'Report not found' });
     return res.status(200).json({ success: true, deleted: id });
