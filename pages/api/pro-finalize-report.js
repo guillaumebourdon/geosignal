@@ -211,7 +211,14 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
       ...(customerInfo && { customerInfo }),
     };
 
-    await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+    // Store report — retry once on failure (critical: if this fails the client gets nothing)
+    try {
+      await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+    } catch (redisErr) {
+      console.error(`[pro-finalize] Redis write failed, retrying in 2s:`, redisErr.message);
+      await new Promise(r => setTimeout(r, 2000));
+      await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+    }
     console.log(`[pro-finalize] Report stored: ${uuid} for ${rootUrl}`);
 
     // Store customer→report mapping for SAV lookup

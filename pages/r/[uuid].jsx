@@ -660,7 +660,8 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
     setDownloading(false);
   };
 
-  const g = gradeInfo(reportData.score, locale);
+  const score = reportData.score || 0;
+  const g = gradeInfo(score, locale);
   const criteria = reportData.criteria || [];
   const recos = reportData.recommendations || [];
   const evidence = reportData.evidence || {};
@@ -670,7 +671,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
   // Projected score: same formula as PDF (oneReportTemplate.js projectedScore)
   let projGain = 0;
   criteria.forEach(c => { if (c.score / c.max < 0.75) projGain += Math.round(c.max * 0.8 - c.score); });
-  const projected = Math.min(100, reportData.score + Math.round(projGain * 0.7));
+  const projected = Math.min(100, score + Math.round(projGain * 0.7));
   const date = createdAt ? new Date(createdAt).toLocaleDateString(locale === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
 
   // Compute 3 weakest criteria for case study display
@@ -688,7 +689,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
   return (
     <>
       <Head>
-        <title>{locale === 'en' ? 'GEO Report' : 'Rapport GEO'} — {url} — {reportData.score}/100 | Detekia</title>
+        <title>{locale === 'en' ? 'GEO Report' : 'Rapport GEO'} — {url} — {score}/100 | Detekia</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -699,7 +700,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
         <header style={{ position: 'sticky', top: 0, zIndex: 100, background: '#1A1916', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
           <span style={{ fontFamily: 'Georgia,serif', fontSize: 16, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>Detekia</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1, minWidth: 0 }}>
-            <span style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>{reportData.score}<span style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)' }}>/100</span></span>
+            <span style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>{score}<span style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)' }}>/100</span></span>
             <span style={{ padding: '2px 10px', borderRadius: 20, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, background: `${g.color}22`, color: g.color, border: `1px solid ${g.color}44`, flexShrink: 0 }}>{g.label}</span>
             <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{url}</span>
           </div>
@@ -720,7 +721,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               <div style={{ position: 'absolute', top: -80, right: -80, width: 280, height: 280, borderRadius: '50%', background: g.color, opacity: 0.06, pointerEvents: 'none' }} />
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 28, flexWrap: 'wrap' }}>
                 <div style={{ textAlign: 'center', flexShrink: 0 }}>
-                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>{reportData.score}</div>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>{score}</div>
                   <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.3)' }}>/100</div>
                   <div style={{ marginTop: 10, display: 'inline-block', background: `${g.color}22`, border: `1px solid ${g.color}44`, padding: '3px 14px', borderRadius: 20, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, color: g.color }}>{g.label}</div>
                 </div>
@@ -960,7 +961,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.35)', marginBottom: 4 }}>{rs(locale).currentScore}</div>
-                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 42, color: '#F7F5F2', lineHeight: 1 }}>{reportData.score}</div>
+                  <div style={{ fontFamily: 'Georgia,serif', fontSize: 42, color: '#F7F5F2', lineHeight: 1 }}>{score}</div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
                 </div>
                 <div style={{ fontFamily: 'Georgia,serif', fontSize: 24, color: 'rgba(247,245,242,0.3)' }}>→</div>
@@ -970,7 +971,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 200 }}>
-                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>{locale === 'en' ? `If all recommendations are implemented, your score should go from ${reportData.score}/100 to approximately ${projected}/100.` : `Si toutes les recommandations sont implémentées, votre score devrait passer de ${reportData.score}/100 à environ ${projected}/100.`}</div>
+                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>{locale === 'en' ? `If all recommendations are implemented, your score should go from ${score}/100 to approximately ${projected}/100.` : `Si toutes les recommandations sont implémentées, votre score devrait passer de ${score}/100 à environ ${projected}/100.`}</div>
                 </div>
               </div>
             </div>

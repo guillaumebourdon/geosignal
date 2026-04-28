@@ -174,7 +174,13 @@ export default async function handler(req, res) {
       isFreeViaPromo: isFreeViaPromo || false,
       ...(customerInfo && { customerInfo }),
     };
-    await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+    try {
+      await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+    } catch (redisErr) {
+      console.error(`[finalize-report] Redis write failed, retrying:`, redisErr.message);
+      await new Promise(r => setTimeout(r, 2000));
+      await redis.set(`detekia:report:${uuid}`, reportRecord, { ex: REPORT_TTL });
+    }
 
     // Store customer→report mapping for SAV lookup
     if (customerInfo || stripeSessionId) {
