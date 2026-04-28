@@ -590,14 +590,17 @@ export default async function handler(req, res) {
 
   const cacheKey = `detekia:v21:${url.toLowerCase()}:${locale}`;
 
-  try {
-    const cached = await redis.get(cacheKey);
-    if (cached) {
-      console.log(`Cache hit : ${cacheKey}`);
-      return res.status(200).json(cached);
+  // Only use cache for free tier — paid reports always run fresh with full query count
+  if (plan === 'free') {
+    try {
+      const cached = await redis.get(cacheKey);
+      if (cached) {
+        console.log(`Cache hit : ${cacheKey}`);
+        return res.status(200).json(cached);
+      }
+    } catch (e) {
+      console.error('Cache read error:', e.message);
     }
-  } catch (e) {
-    console.error('Cache read error:', e.message);
   }
 
   try {
@@ -722,8 +725,11 @@ export default async function handler(req, res) {
 
     res.status(200).json(responseData);
 
-    redis.set(cacheKey, responseData, { ex: CACHE_DURATION })
-      .catch(e => console.error('Cache write error:', e.message));
+    // Only cache free tier results — paid reports have more citation queries
+    if (plan === 'free') {
+      redis.set(cacheKey, responseData, { ex: CACHE_DURATION })
+        .catch(e => console.error('Cache write error:', e.message));
+    }
 
   } catch (err) {
     console.error('Analysis error:', err.message);
