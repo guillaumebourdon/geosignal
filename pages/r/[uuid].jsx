@@ -755,13 +755,13 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
 
             {/* Top actions */}
             {(() => { const topActions = recos.filter(r => r.priority === 'high').slice(0, 3); return topActions.length > 0 && (<>
-            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{topActions.length} action{topActions.length > 1 ? 's' : ''} prioritaire{topActions.length > 1 ? 's' : ''}</h2>
+            <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{topActions.length} {topActions.length > 1 ? rs(locale).priorityActions_s : rs(locale).priorityAction_s}</h2>
             {topActions.map((a, i) => {
               const pi = priorityInfo(a.impact, locale);
               return (
                 <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: pi.color, lineHeight: 1, flexShrink: 0, minWidth: 24 }}>{i + 1}</div>
-                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.title || a.solution?.substring(0, 80)}</div><div style={{ fontSize: 11, color: '#6B6762', lineHeight: 1.5 }}>{a.criterion || ''}</div></div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.title || a.solution?.substring(0, 80)}</div><div style={{ fontSize: 11, color: '#6B6762', lineHeight: 1.5 }}>{tc(a.criterion || '', locale)}</div></div>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: pi.color, background: pi.bg, padding: '3px 9px', borderRadius: 12, whiteSpace: 'nowrap', flexShrink: 0, border: `1px solid ${pi.color}33` }}>{pi.label}</div>
                 </div>
               );
@@ -1334,7 +1334,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               return (
                 <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: pi.color, lineHeight: 1, flexShrink: 0, minWidth: 24 }}>{i + 1}</div>
-                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.action}</div><div style={{ fontSize: 11, color: '#6B6762' }}>{a.criterion || ''}</div></div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 12, fontWeight: 600, color: '#1A1916', marginBottom: 3 }}>{a.action}</div><div style={{ fontSize: 11, color: '#6B6762' }}>{tc(a.criterion || '', locale)}</div></div>
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: pi.color, padding: '3px 9px', borderRadius: 12, border: `1px solid ${pi.color}33`, background: pi.bg, flexShrink: 0 }}>{pi.label}</div>
                 </div>
               );
@@ -1498,7 +1498,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px 20px', marginBottom: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                       <span style={{ display: 'inline-block', padding: '2px 9px', borderRadius: 10, fontFamily: 'monospace', fontSize: 9, letterSpacing: 1, background: sevStyle.bg, color: sevStyle.color }}>{sevStyle.label}</span>
-                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{p.criterion || ''}</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{tc(p.criterion || '', locale)}</span>
                     </div>
                     <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6, marginBottom: 6 }}>{p.pattern}</div>
                     <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762' }}>{(p.pagesAffected || []).length} {rs(locale).pagesAffected}</div>
@@ -1522,7 +1522,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, flexWrap: 'wrap' }}>
                     <span style={{ fontFamily: 'Georgia,serif', fontSize: 18, color: pi.color, minWidth: 24 }}>{i + 1}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 9, padding: '2px 8px', borderRadius: 4, background: pi.bg, color: pi.color }}>{pi.label}</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{a.criterion || ''}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{tc(a.criterion || '', locale)}</span>
                     <span style={{ fontFamily: 'monospace', fontSize: 9, marginLeft: 'auto', color: ei.color }}>{ locale === 'en' ? 'Effort: ' : 'Effort : '}{ei.label}</span>
                   </div>
                   <div style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.6 }}>{a.action}</div>
