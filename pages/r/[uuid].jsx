@@ -182,6 +182,7 @@ function getCtxCards(locale) { return locale === 'en' ? CTX_CARDS_EN : CTX_CARDS
 
 // ── Criteria name translations (FR keys → localized display) ─────────────────
 const CRITERIA_EN = {
+  // Accented versions (from analyze.js one-page criteria names)
   'Extractibilité & réponse directe': 'Extractability & Direct Answer',
   'Vérifiabilité & preuves': 'Verifiability & Evidence',
   'Autorité & E-E-A-T': 'Authority & E-E-A-T',
@@ -190,10 +191,27 @@ const CRITERIA_EN = {
   'Neutralité éditoriale': 'Editorial Neutrality',
   'Présence externe': 'External Presence',
   'Fraîcheur & maintenance': 'Freshness & Maintenance',
+  // Unaccented versions (from Pro report CRITERIA_NAMES / Haiku output)
+  'Extractibilite & reponse directe': 'Extractability & Direct Answer',
+  'Verifiabilite & preuves': 'Verifiability & Evidence',
+  'Autorite & E-E-A-T': 'Authority & E-E-A-T',
+  'Crawlabilite IA': 'AI Crawlability',
+  'Donnees structurees': 'Structured Data',
+  'Neutralite editoriale': 'Editorial Neutrality',
+  'Presence externe': 'External Presence',
+  'Fraicheur & maintenance': 'Freshness & Maintenance',
+  // Short versions (sometimes used in evidence/detail)
+  'Extractibilité': 'Extractability',
+  'Vérifiabilité': 'Verifiability',
+  'Autorité E-E-A-T': 'Authority & E-E-A-T',
+  'Données structurées': 'Structured Data',
+  'Neutralité': 'Neutrality',
+  'Fraîcheur': 'Freshness',
 };
 
 function tc(name, locale) {
-  return locale === 'en' ? (CRITERIA_EN[name] || name) : name;
+  if (locale !== 'en' || !name) return name || '';
+  return CRITERIA_EN[name] || CRITERIA_EN[name.trim()] || name;
 }
 
 const METHODOLOGY_TABLE_FR = [
@@ -640,7 +658,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
     setDownloading(false);
   };
 
-  const g = gradeInfo(reportData.score);
+  const g = gradeInfo(reportData.score, locale);
   const criteria = reportData.criteria || [];
   const recos = reportData.recommendations || [];
   const evidence = reportData.evidence || {};
@@ -739,7 +757,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             {(() => { const topActions = recos.filter(r => r.priority === 'high').slice(0, 3); return topActions.length > 0 && (<>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{topActions.length} action{topActions.length > 1 ? 's' : ''} prioritaire{topActions.length > 1 ? 's' : ''}</h2>
             {topActions.map((a, i) => {
-              const pi = priorityInfo(a.impact);
+              const pi = priorityInfo(a.impact, locale);
               return (
                 <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: pi.color, lineHeight: 1, flexShrink: 0, minWidth: 24 }}>{i + 1}</div>
@@ -920,7 +938,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   <th style={thStyle}>{locale === 'en' ? 'Timeline' : 'Délai'}</th>
                 </tr></thead>
                 <tbody>{recos.map((r, i) => {
-                  const pi = priorityInfo(r.priority);
+                  const pi = priorityInfo(r.priority, locale);
                   return (
                     <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
                       <td style={{ padding: '10px 12px', fontFamily: 'Georgia,serif', fontSize: 14, color: pi.color, textAlign: 'center' }}>{i + 1}</td>
@@ -1095,7 +1113,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
   };
 
   const r = proReport;
-  const g = gradeInfo(r.scoreAverage);
+  const g = gradeInfo(r.scoreAverage, locale);
   const totalPages = r.pagesValid + (r.pagesWithError || 0);
   const date = createdAt ? new Date(createdAt).toLocaleDateString(locale === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
   const criteriaAverages = r.criteriaAverages || {};
@@ -1294,7 +1312,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                 return (
                   <div key={i} style={{ marginBottom: 12 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                      <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{name}</a>
+                      <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{tc(name, locale)}</a>
                       <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                         <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{below}/{validPages.length} {rs(locale).belowThreshold}</span>
                         <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{d.avgScore}/{d.max}</span>
@@ -1312,7 +1330,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             {(() => { const topActs = actionPlan.slice(0, 3); return topActs.length > 0 && (<>
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{topActs.length} {topActs.length > 1 ? rs(locale).priorityActions_s : rs(locale).priorityAction_s}</h2>
             {topActs.map((a, i) => {
-              const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact);
+              const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact, locale);
               return (
                 <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '14px 16px', background: pi.bg, borderRadius: 8, marginBottom: 8 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: pi.color, lineHeight: 1, flexShrink: 0, minWidth: 24 }}>{i + 1}</div>
@@ -1405,7 +1423,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase' }}>{rs(locale).criterion_s} {idx + 1} / 8</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
-                    <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{criterionName}</h3>
+                    <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{tc(criterionName, locale)}</h3>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
                       <div style={{ fontFamily: 'Georgia,serif', fontSize: 32, color: col, lineHeight: 1 }}>{avgData.avgScore}<span style={{ fontSize: 14, color: '#C0BBB5' }}>/{avgData.max}</span></div>
                       <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5' }}>{pct}% — {rs(locale).average}</div>
@@ -1497,8 +1515,8 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{actionPlan.length} {rs(locale).actionsClassified}</p>
 
             {actionPlan.map((a, i) => {
-              const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact);
-              const ei = effortInfo(a.effort === 'eleve' ? 'high' : a.effort === 'moyen' ? 'medium' : a.effort === 'faible' ? 'low' : a.effort);
+              const pi = priorityInfo(a.impact === 'eleve' ? 'high' : a.impact === 'moyen' ? 'medium' : a.impact === 'faible' ? 'low' : a.impact, locale);
+              const ei = effortInfo(a.effort === 'eleve' ? 'high' : a.effort === 'moyen' ? 'medium' : a.effort === 'faible' ? 'low' : a.effort, locale);
               return (
                 <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '16px 20px', marginBottom: 8, borderLeft: `4px solid ${pi.color}` }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, flexWrap: 'wrap' }}>
@@ -1550,7 +1568,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 20, lineHeight: 1.2 }}>{rs(locale).pageByPageReview}</h2>
 
             {validPages.map((p, i) => {
-              const sc = gradeInfo(p.score || 0);
+              const sc = gradeInfo(p.score || 0, locale);
               const sortedCriteria = [...(p.criteria || [])].sort((a, b) => (a.score / a.max) - (b.score / b.max));
               const top3Weak = sortedCriteria.filter(c => c.score < c.max).slice(0, 3);
               const top3Recos = (p.recommendations || []).filter(rec => rec.priority === 'high').slice(0, 3);
@@ -1572,7 +1590,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                       const ccol = cpct >= 75 ? '#10A37F' : cpct >= 45 ? '#C9861A' : '#D97757';
                       return (
                         <div key={ci} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                          <span style={{ fontSize: 11, color: '#1A1916', minWidth: 200 }}>{c.name}</span>
+                          <span style={{ fontSize: 11, color: '#1A1916', minWidth: 200 }}>{tc(c.name, locale)}</span>
                           <div style={{ flex: 1, height: 4, background: '#F0EDE8', borderRadius: 2, overflow: 'hidden' }}>
                             <div style={{ height: '100%', width: `${cpct}%`, background: ccol, borderRadius: 2 }} />
                           </div>
@@ -1588,7 +1606,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                       <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>{locale === 'en' ? 'Weaknesses' : 'Points faibles'}</div>
                       {top3Weak.map((c, ci) => {
                         const cpct = Math.round((c.score / c.max) * 100);
-                        return <div key={ci} style={{ fontSize: 11, color: '#3A3835', marginBottom: 3 }}>• {c.name} — {c.score}/{c.max} ({cpct}%)</div>;
+                        return <div key={ci} style={{ fontSize: 11, color: '#3A3835', marginBottom: 3 }}>• {tc(c.name, locale)} — {c.score}/{c.max} ({cpct}%)</div>;
                       })}
                     </div>
                   )}
@@ -1668,8 +1686,8 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
 // Pro reco card with _pages list
 function ProRecoCard({ r, index, rootUrl, locale }) {
-  const pi = priorityInfo(r.priority);
-  const ei = effortInfo(r.effort);
+  const pi = priorityInfo(r.priority, locale);
+  const ei = effortInfo(r.effort, locale);
   const pagesList = r._pages || [];
   const pagesNoteJsx = pagesList.length > 1
     ? <div style={{ marginTop: 8 }}>
@@ -1750,8 +1768,8 @@ function CitationCard({ q, locale }) {
 }
 
 function RecoCard({ r, index, locale }) {
-  const pi = priorityInfo(r.priority);
-  const ei = effortInfo(r.effort);
+  const pi = priorityInfo(r.priority, locale);
+  const ei = effortInfo(r.effort, locale);
 
   return (
     <div style={{ border: `1px solid ${pi.color}28`, borderLeft: `4px solid ${pi.color}`, borderRadius: '0 14px 14px 0', overflow: 'hidden', marginBottom: 12 }}>

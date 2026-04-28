@@ -425,10 +425,15 @@ CRITICAL: The "criterion" field MUST always use the FRENCH criterion name from t
 
 TODAY'S DATE: ${today}. The year 2026 is the CURRENT year. Dates in 2026 are RECENT, NOT future.
 
-VOCABULARY CALIBRATION (mandatory):
+${locale === 'en'
+? `VOCABULARY CALIBRATION (mandatory):
+<30% = catastrophic | 30-50% = poor | 50-70% = average | 70-85% = good | >85% = excellent
+FORBIDDEN above 50%: catastrophic, severe, critical gap, failing, alarming.
+Above 50%, acceptable words: average, needs improvement, room for improvement, insufficient, moderate.`
+: `VOCABULARY CALIBRATION (mandatory):
 <30% = catastrophique | 30-50% = faible | 50-70% = moyen | 70-85% = bon | >85% = excellent
 FORBIDDEN above 50%: catastrophique, grave, lacune critique, défaillant, alarmant.
-Above 50%, acceptable words: moyen, à améliorer, perfectible, insuffisant, modéré.
+Above 50%, acceptable words: moyen, à améliorer, perfectible, insuffisant, modéré.`}
 
 You are a senior GEO consultant. Audit ${url}.
 
@@ -456,10 +461,10 @@ RULES:
 8. IMPACT/EFFORT/TIMEFRAME RULES:
    - impact: based on expected visibility gain (high = major, medium = noticeable, low = incremental)
    - effort: based on technical complexity (low = add a tag, medium = restructure content, high = major overhaul)
-   - timeframe: "1-2 sem" for quick fixes, "1 mois" for medium work, "2-3 mois" for complex projects
+   - timeframe: ${locale === 'en' ? '"1-2 weeks" for quick fixes, "1 month" for medium work, "2-3 months" for complex projects' : '"1-2 sem" for quick fixes, "1 mois" for medium work, "2-3 mois" for complex projects'}
 
 JSON only, no markdown:
-{"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois","criterion":"<French criterion name>","title":"<6 words max>","problem":"<3-5 sentences>","solution":"<3-5 sentences>","technicalImplementation":"<2-4 numbered steps>","codeExample":"<code snippet or null>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
+{"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","impact":"high|medium|low","effort":"low|medium|high","timeframe":"${locale === 'en' ? '1-2 weeks|1 month|2-3 months' : '1-2 sem|1 mois|2-3 mois'}","criterion":"<French criterion name>","title":"<6 words max>","problem":"<3-5 sentences>","solution":"<3-5 sentences>","technicalImplementation":"<2-4 numbered steps>","codeExample":"<code snippet or null>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
 
   const message = await client.messages.create({
     model: 'claude-4-sonnet-20250514',
