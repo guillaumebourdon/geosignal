@@ -207,7 +207,7 @@ function scoreStructuredData($, html, locale = 'fr') {
   return { score: Math.min(score, 10), max: 10, detail: details.slice(0, 2).join(' · ') || `${e.noSchema}` };
 }
 
-function scoreExternalPresence($, html, locale = 'fr') {
+function scoreExternalPresence($, html, locale = 'fr', directMeta = {}) {
   const e = EV[locale] || EV.fr;
   let score = 0;
   const details = [];
@@ -216,7 +216,10 @@ function scoreExternalPresence($, html, locale = 'fr') {
   const externalLinks = htmlExtLinks.length > 0 ? htmlExtLinks : mdExternalLinks(html, null).map(l => l.toLowerCase());
   if (externalLinks.length > 0) { score += 1; details.push(`${e.extLinksPresent} ✓`); }
   if (/presse|m.dia|press|featured|vu dans|as seen/i.test(html)) { score += 2; details.push(`${e.pressMentions} ✓`); }
-  if (externalLinks.some(l => l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube'))) { score += 2; details.push(`${e.socialMedia} ✓`); }
+  // Check social links from Jina content OR direct HTML fetch
+  const hasSocial = externalLinks.some(l => l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube'))
+    || (directMeta.socialLinks && directMeta.socialLinks.length > 0);
+  if (hasSocial) { score += 2; details.push(`${e.socialMedia} ✓`); }
   if (/t.moignage|avis client|review|testimonial/i.test(html)) { score += 1; details.push(`${e.testimonials} ✓`); }
   if (details.length === 0) details.push(e.lowExtPresence);
   return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') };
@@ -227,7 +230,7 @@ function scoreFreshness($, html, locale = 'fr') {
   let score = 0;
   const details = [];
   const currentYear = new Date().getFullYear();
-  if (/\b20\d{2}\b/.test(html)) { score += 1; details.push(e.yearPresent); }
+  if (/\b20[12]\d\b/.test(html)) { score += 1; details.push(e.yearPresent); }
   const recentYearRegex = new RegExp(`\\b(${currentYear}|${currentYear - 1})\\b`);
   if (recentYearRegex.test(html)) { score += 1; details.push(`${e.recentContent} (${currentYear}) ✓`); }
   else details.push(`${e.possiblyOutdated} ✗`);
@@ -236,7 +239,7 @@ function scoreFreshness($, html, locale = 'fr') {
   return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') || e.possiblyOutdated };
 }
 
-async function collectEvidence($, textContent, rawContent, url) {
+async function collectEvidence($, textContent, rawContent, url, directMeta = {}) {
   console.log('collectEvidence URL:', url);
   const normalizedUrl = url.startsWith('http') ? url : `https://${url}`;
 
@@ -254,9 +257,9 @@ async function collectEvidence($, textContent, rawContent, url) {
     mdHeadings(rawContent).forEach(h => headings.push(h));
   }
 
-  // 3. metaTitle & metaDescription — HTML or Jina header fallback
-  const metaTitle = $('title').first().text().trim() || jinaTitle(rawContent) || '';
-  const metaDescription = $('meta[name="description"]').attr('content') || jinaDescription(rawContent) || '';
+  // 3. metaTitle & metaDescription — HTML, directMeta, or Jina header fallback
+  const metaTitle = $('title').first().text().trim() || directMeta.title || jinaTitle(rawContent) || '';
+  const metaDescription = $('meta[name="description"]').attr('content') || directMeta.description || jinaDescription(rawContent) || '';
 
   // 4. wordCount
   const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
@@ -279,7 +282,7 @@ async function collectEvidence($, textContent, rawContent, url) {
     } catch {}
   });
 
-  // 6. socialLinks — HTML or markdown fallback
+  // 6. socialLinks — HTML or markdown fallback, enriched with directMeta
   const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'];
   const socialLinks = [];
   $('a[href]').each((_, el) => {
@@ -293,10 +296,27 @@ async function collectEvidence($, textContent, rawContent, url) {
       if (socialDomains.some(d => href.includes(d)) && !socialLinks.includes(href)) socialLinks.push(href);
     });
   }
+  // Merge social links from direct HTML fetch (Jina often misses footer links)
+  if (directMeta.socialLinks) {
+    directMeta.socialLinks.forEach(href => {
+      if (!socialLinks.includes(href)) socialLinks.push(href);
+    });
+  }
 
-  // 7. images
-  const totalImages = $('img').length;
-  const imagesWithAlt = $('img[alt]').filter((_, el) => ($(el).attr('alt') || '').trim().length > 0).length;
+  // 7. images — HTML tags or direct HTML fetch fallback
+  let totalImages = $('img').length;
+  let imagesWithAlt = $('img[alt]').filter((_, el) => ($(el).attr('alt') || '').trim().length > 0).length;
+  // Markdown image fallback: count ![alt](url) patterns
+  if (totalImages === 0) {
+    const mdImages = rawContent.match(/!\[([^\]]*)\]\([^)]+\)/g) || [];
+    totalImages = mdImages.length;
+    imagesWithAlt = mdImages.filter(m => { const alt = m.match(/!\[([^\]]*)\]/)?.[1]; return alt && alt.trim().length > 0; }).length;
+  }
+  // Direct HTML fallback
+  if (totalImages === 0 && directMeta.imageCount > 0) {
+    totalImages = directMeta.imageCount;
+    imagesWithAlt = directMeta.imagesWithAlt;
+  }
   const images = { withAlt: imagesWithAlt, total: totalImages };
 
   // 8. externalLinks count — HTML or markdown fallback
@@ -321,9 +341,9 @@ async function collectEvidence($, textContent, rawContent, url) {
       if (data.dateModified)  dates.dateModified  = data.dateModified;
     } catch {}
   });
-  const copyrightMatch = rawContent.match(/©\s*(20\d{2})/);
+  const copyrightMatch = rawContent.match(/©\s*(20[12]\d)/);
   if (copyrightMatch) dates.copyright = copyrightMatch[1];
-  const yearMatch = textContent.match(/\b(20\d{2})\b/);
+  const yearMatch = textContent.match(/\b(20[12]\d)\b/);
   if (yearMatch) dates.yearFound = yearMatch[1];
 
   // 10. robots.txt + llms.txt — parallel fetches with hard 2s deadline
@@ -622,22 +642,42 @@ export default async function handler(req, res) {
     const $ = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
 
-    if (textContent.length < 200) {
-      return res.status(422).json({ error: "Impossible d'analyser ce site. Contenu trop court ou inaccessible." });
+    const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
+    if (textContent.length < 500 || wordCount < 100) {
+      return res.status(422).json({ error: locale === 'en'
+        ? 'Unable to analyze this site. Content too short or inaccessible (anti-bot protection, JavaScript-only rendering, or empty page).'
+        : "Impossible d'analyser ce site. Contenu trop court ou inaccessible (protection anti-bot, rendu JavaScript uniquement, ou page vide)."
+      });
     }
 
-    // Inject JSON-LD scripts from raw HTML into cheerio $ (Jina strips <script> tags)
+    // Enrich cheerio $ with data from direct HTML fetch (Jina strips scripts, meta, footer links)
     const directHtml = rawHtmlResult.status === 'fulfilled' ? rawHtmlResult.value : null;
+    let directMeta = { description: '', title: '', socialLinks: [], imageCount: 0, imagesWithAlt: 0 };
     if (directHtml && typeof directHtml === 'string') {
       const $raw = cheerio.load(directHtml);
+      // 1. Inject JSON-LD scripts
       $raw('script[type="application/ld+json"]').each((_, el) => {
         const content = $raw(el).html();
         if (content) $('body').append(`<script type="application/ld+json">${content}</script>`);
       });
+      // 2. Extract meta description (Jina often strips it)
+      directMeta.description = $raw('meta[name="description"]').attr('content') || $raw('meta[property="og:description"]').attr('content') || '';
+      directMeta.title = $raw('title').text().trim() || '';
+      // 3. Extract social links (Jina strips footer)
+      const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'];
+      $raw('a[href]').each((_, el) => {
+        const href = ($raw(el).attr('href') || '').trim();
+        if (href.startsWith('http') && socialDomains.some(d => href.includes(d)) && !directMeta.socialLinks.includes(href)) {
+          directMeta.socialLinks.push(href);
+        }
+      });
+      // 4. Count images
+      directMeta.imageCount = $raw('img').length;
+      directMeta.imagesWithAlt = $raw('img[alt]').filter((_, el) => ($raw(el).attr('alt') || '').trim().length > 0).length;
     }
 
-    const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || jinaTitle(rawContent) || '';
-    const metaDescription = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content') || jinaDescription(rawContent) || '';
+    const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || directMeta.title || jinaTitle(rawContent) || '';
+    const metaDescription = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content') || directMeta.description || jinaDescription(rawContent) || '';
 
     let siteHostname = null;
     try { siteHostname = new URL(url).hostname; } catch {}
@@ -648,7 +688,7 @@ export default async function handler(req, res) {
       authority:        scoreAuthority($, rawContent, locale),
       crawlability:     scoreCrawlability($, rawContent, locale),
       structuredData:   scoreStructuredData($, rawContent, locale),
-      externalPresence: scoreExternalPresence($, rawContent, locale),
+      externalPresence: scoreExternalPresence($, rawContent, locale, directMeta),
       freshness:        scoreFreshness($, rawContent, locale),
     };
 
@@ -676,7 +716,7 @@ export default async function handler(req, res) {
     const queryCount = plan === 'pro' ? 30 : plan === 'onepage' ? 10 : 2;
     const [claude, evidence, citationTest] = await Promise.all([
       runClaudeAnalysis(url, textContent, scores, locale, detectedSignals),
-      collectEvidence($, textContent, rawContent, url),
+      collectEvidence($, textContent, rawContent, url, directMeta),
       runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
     const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
