@@ -187,6 +187,26 @@ export default async function handler(req, res) {
     if (allXml) sitemapXml = allXml;
   }
 
+  // Fallback: check robots.txt for Sitemap: directives (handles non-standard paths, .gz, etc.)
+  if (!sitemapXml) {
+    try {
+      const robotsResult = await fetchCheck(`${origin}/robots.txt`, 5000);
+      if (robotsResult.ok) {
+        const sitemapUrls = [];
+        const sitemapRegex = /Sitemap:\s*(\S+)/gi;
+        let rm;
+        while ((rm = sitemapRegex.exec(robotsResult.body)) !== null) sitemapUrls.push(rm[1].trim());
+        // Try each sitemap URL from robots.txt (skip .gz — can't decompress in edge)
+        for (const smUrl of sitemapUrls.filter(u => !u.endsWith('.gz')).slice(0, 3)) {
+          const smResult = await fetchCheck(smUrl, 5000);
+          if (smResult.ok && smResult.body.includes('<loc>')) {
+            sitemapXml = (sitemapXml || '') + smResult.body;
+          }
+        }
+      }
+    } catch {}
+  }
+
   if (sitemapXml) {
     pagesFound = countSitemapUrls(sitemapXml, hostname);
   } else if (pageResult.ok) {
