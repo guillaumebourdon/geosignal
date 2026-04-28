@@ -480,7 +480,7 @@ RULES:
 2. Be SPECIFIC to this site. Reference actual elements found (or missing) in the analyzed content.
 3. Use nuanced phrasing. Prefer "not identified in the analyzed content" over absolute statements. Acknowledge scraping may be partial.
 4. Adapt schema recommendations to the SITE TYPE (e-commerce → Product/AggregateRating, SaaS → SoftwareApplication/Service, Blog → Article/BlogPosting, Corporate → Organization/FAQPage). Do NOT recommend LocalBusiness unless the site is a local physical business.
-5. Be honest in your verdict. If the score seems low due to scraping limits, mention it.
+5. VERDICT RULES: Start with what makes this site UNIQUE (industry, positioning, specific strength or weakness). Do NOT start with "the site has a solid base but needs schemas" — that's generic. Focus on the most distinctive finding. If the score seems low due to scraping limits, mention it.
 6. TOP PRIORITY SELECTION — Pick the ONE action with the best impact × effort × context trade-off. Prefer quick wins (2-4 weeks, low effort) over major overhauls. Do NOT always pick the lowest-scoring criterion.
 7. FIELD LENGTH RULES:
    - "problem": 3-5 dense sentences. Describe what was found (or missing), WHY it blocks AI citation (concrete mechanism), and the observable consequence if not fixed.

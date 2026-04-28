@@ -134,17 +134,19 @@ export default async function handler(req, res) {
         } catch (e) { console.error(`[pro-trigger] Synthesis attempt ${attempt + 1} failed:`, e.message); }
       }
 
-      // Call 2: Citation test
-      let citationTest = { queries: [], citationRate: '0/30', bestOpportunity: '', mainBlocker: '' };
+      // Call 2: Real citation test (GPT-4o-mini, same as pro-consolidate.js)
+      const { runRealCitationTest } = require('../../lib/citationTest');
+      const hostname = new URL(rootUrl).hostname.replace(/^www\./, '');
+      const brand = hostname.split('.')[0];
+      const metaDescription = validPages[0]?.evidence?.metaDescription || '';
+      const intro = validPages[0]?.evidence?.intro || '';
+
+      let citationTest = { tests: [], summary: { cited_count: 0, total_tests: 0, best_opportunity: '', main_blocker: '' } };
       try {
-        const pageTitles = validPages.map(p => `${p.evidence?.metaTitle || p.url} (${p.url})`).slice(0, 10).join(', ');
-        const citationMsg = await callHaikuWithRetry({
-          model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.3,
-          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are an AI visibility expert. Full site audit for ${rootUrl}.\nPages: ${pageTitles}\n\nGenerate 30 queries and simulate citations. JSON only, no markdown fences:\n{"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["c1"],"difficulty_to_rank":"easy|medium|hard","recommendation":"1 sentence"}],"citationRate":"X/30","bestOpportunity":"best query","mainBlocker":"main reason"}\n\nIMPORTANT: output raw JSON only, no markdown, no explanation` }],
-        });
-        citationTest = parseHaikuJson(citationMsg.content[0].text);
-        console.log(`[pro-trigger] Citation test done. Rate: ${citationTest.citationRate}`);
-      } catch (e) { console.error('[pro-trigger] Citation parse failed:', e.message); }
+        const ctResult = await runRealCitationTest(rootUrl, hostname, brand, metaDescription, intro, 30, locale, anthropic);
+        if (ctResult) citationTest = ctResult;
+        console.log(`[pro-trigger] Citation test done. ${citationTest.tests?.length || 0} queries.`);
+      } catch (e) { console.error('[pro-trigger] Citation test failed:', e.message); }
 
       // Call 3: Per-criterion
       let criteriaConsolidated = [];
@@ -179,7 +181,12 @@ export default async function handler(req, res) {
         executiveSummary: synthesis.executiveSummary,
         topStrengths: synthesis.topStrengths || [], topWeaknesses: synthesis.topWeaknesses || [],
         patterns: synthesis.patterns || [], actionPlan: synthesis.actionPlan || [],
-        citationTestConsolidated: citationTest, pages: fullPages,
+        citationTestConsolidated: {
+          queries: citationTest.tests || citationTest.queries || [],
+          citationRate: citationTest.summary ? `${citationTest.summary.cited_count}/${citationTest.summary.total_tests}` : citationTest.citationRate || '0/0',
+          bestOpportunity: citationTest.summary?.best_opportunity || citationTest.bestOpportunity || '',
+          mainBlocker: citationTest.summary?.main_blocker || citationTest.mainBlocker || '',
+        }, pages: fullPages,
       };
 
       await redis.set(`${JOB_PREFIX}:${siteJobId}:consolidated`, consolidatedReport, { ex: CONSOLIDATED_TTL });
