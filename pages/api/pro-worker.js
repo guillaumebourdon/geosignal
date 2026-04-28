@@ -53,16 +53,28 @@ export default async function handler(req, res) {
     }
   } catch {}
 
-  // Run real analysis
-  const result = await analyzePage(url, { locale: locale || 'fr' });
+  // Run real analysis — retry once with backoff on 429
+  let result = await analyzePage(url, { locale: locale || 'fr' });
 
-  // If retryable error (429, timeout), return 500 so QStash retries instead of storing the error
   if (result.error) {
     const errStr = String(result.error);
-    const isRetryable = errStr.includes('429') || errStr.includes('rate_limit') || errStr.includes('timeout') || errStr.includes('ETIMEDOUT');
-    if (isRetryable) {
-      console.warn(`[pro-worker] Retryable error for ${url}: ${errStr.substring(0, 100)}. Returning 500 for QStash retry.`);
-      return res.status(500).json({ error: 'retryable', url, detail: errStr.substring(0, 200) });
+    const is429 = errStr.includes('429') || errStr.includes('rate_limit');
+
+    // On 429: wait 30s and retry once within this worker invocation
+    if (is429) {
+      console.warn(`[pro-worker] 429 for ${url}, waiting 20s before retry...`);
+      await new Promise(r => setTimeout(r, 20000));
+      result = await analyzePage(url, { locale: locale || 'fr' });
+    }
+
+    // If still failing after retry, return 500 for QStash retry
+    if (result.error) {
+      const retryStr = String(result.error);
+      const isRetryable = retryStr.includes('429') || retryStr.includes('rate_limit') || retryStr.includes('timeout') || retryStr.includes('ETIMEDOUT');
+      if (isRetryable) {
+        console.warn(`[pro-worker] Still failing after retry for ${url}: ${retryStr.substring(0, 100)}. Returning 500 for QStash retry.`);
+        return res.status(500).json({ error: 'retryable', url, detail: retryStr.substring(0, 200) });
+      }
     }
   }
 
