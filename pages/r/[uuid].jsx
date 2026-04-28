@@ -71,11 +71,11 @@ function effortInfo(e, locale = 'fr') {
   if (s === 'high') return { label: locale === 'en' ? 'Heavy' : 'Lourd', color: '#D97757' };
   return { label: locale === 'en' ? 'Medium' : 'Moyen', color: '#C9861A' };
 }
-function criterionGroup(name) {
+function criterionGroup(name, locale) {
   if (/extractibilit|donn.*structur|crawlabilit/i.test(name)) return locale === 'en' ? 'AI Readability' : 'Lisibilité IA';
   if (/v.*rifiabilit|autorit|neutralit/i.test(name)) return locale === 'en' ? 'Credibility' : 'Crédibilité';
   if (/pr.*sence|fra.*cheur/i.test(name)) return locale === 'en' ? 'Freshness' : 'Fraîcheur';
-  return 'Optimisation';
+  return locale === 'en' ? 'Optimization' : 'Optimisation';
 }
 
 const CRITERIA_ORDER = [
@@ -815,7 +815,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             {criteria.map((c, i) => {
               const pct = Math.round((c.score / c.max) * 100);
               const col = pct >= 75 ? '#10A37F' : pct >= 45 ? '#C9861A' : '#D97757';
-              const group = criterionGroup(c.name);
+              const group = criterionGroup(c.name, locale);
               const criterionRecos = matchRecos(c.name);
               const why = lookupMap(getWhy(locale), c.name);
               const guide = lookupMap(getGuides(locale), c.name);
