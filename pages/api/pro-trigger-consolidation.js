@@ -179,7 +179,21 @@ export default async function handler(req, res) {
       const duration = Date.now() - startMs;
       console.log(`[pro-trigger] Consolidation complete in ${duration}ms. Score: ${scoreAverage}/100`);
 
-      return res.status(200).json({ success: true, action: 'consolidated', siteJobId, scoreAverage, duration: `${duration}ms` });
+      // Auto-trigger finalize (generate report + send email)
+      try {
+        const finalizeRes = await fetch(`${baseUrl}/api/pro-finalize-report`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ siteJobId }),
+        });
+        const finalizeResult = await finalizeRes.json();
+        console.log(`[pro-trigger] Auto-finalize result:`, finalizeResult.success ? `delivered ${finalizeResult.uuid}` : finalizeResult.error);
+        return res.status(200).json({ success: true, action: 'consolidated_and_finalized', siteJobId, scoreAverage, uuid: finalizeResult.uuid, reportUrl: finalizeResult.reportUrl, duration: `${duration}ms` });
+      } catch (finalizeErr) {
+        console.error(`[pro-trigger] Auto-finalize failed:`, finalizeErr.message);
+        // Still return success for consolidation — finalize can be retried manually
+        return res.status(200).json({ success: true, action: 'consolidated', siteJobId, scoreAverage, duration: `${duration}ms`, finalizeError: finalizeErr.message });
+      }
     } catch (err) {
       console.error(`[pro-trigger] Consolidation error:`, err.message, err.stack);
       return res.status(500).json({ error: err.message });

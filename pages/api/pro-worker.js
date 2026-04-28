@@ -96,6 +96,21 @@ export default async function handler(req, res) {
 
   console.log(`[pro-worker] Completed page ${index + 1}/${total} for ${siteJobId} (url=${url}, score=${result.score || 'error'}, progress=${newCount}/${total})`);
 
+  // Check if all pages are done — trigger consolidation
+  // Also handles catch-up: if a previous worker timed out after incr but before trigger
+  const shouldTrigger = newCount >= total;
+  // Safety net: if we're one of the last workers, double-check stored page count
+  if (!shouldTrigger && newCount >= total - 2) {
+    let storedCount = 0;
+    for (let i = 0; i < total; i++) {
+      const exists = await redis.exists(`${JOB_PREFIX}:${siteJobId}:page:${i}`);
+      if (exists) storedCount++;
+    }
+    if (storedCount >= total) {
+      console.log(`[pro-worker] Safety net: counter=${newCount} but ${storedCount}/${total} pages stored. Triggering consolidation.`);
+    }
+  }
+
   if (newCount >= total) {
     // Atomic guard: SET NX to prevent double consolidation from QStash retries
     const lockKey = `${JOB_PREFIX}:${siteJobId}:consolidation_triggered`;
