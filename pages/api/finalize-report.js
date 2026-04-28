@@ -119,8 +119,31 @@ export default async function handler(req, res) {
   const { checkRateLimit } = require('../../lib/rateLimit');
   if (!(await checkRateLimit('finalize', req, res))) return;
 
-  const { email, url, reportData, locale: reqLocale, isFreeViaPromo, stripeSessionId } = req.body;
+  const { email, url, reportData, locale: reqLocale, isFreeViaPromo, stripeSessionId, analysisFailed } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';
+
+  // Handle analysis failure (site blocked, too short) — alert Guillaume for manual action
+  if (analysisFailed) {
+    const { maskEmail: me } = require('../../lib/maskEmail');
+    console.error(`[finalize-report] Analysis failed for ${url} (${me(email)}): ${analysisFailed}`);
+    try {
+      await resend.emails.send({
+        from: 'Detekia <hello@detekia.fr>',
+        to: 'guillaume@beeleven.fr',
+        subject: `🚨 Analyse échouée après paiement — ${url}`,
+        html: `<div style="font-family:system-ui;padding:24px;">
+          <h2 style="color:#D97757;">Analyse échouée — action requise</h2>
+          <p><strong>Site :</strong> ${url}</p>
+          <p><strong>Client :</strong> ${email}</p>
+          <p><strong>Erreur :</strong> ${analysisFailed}</p>
+          <p><strong>Session Stripe :</strong> ${stripeSessionId || 'N/A'}</p>
+          <p style="color:#D97757;font-weight:bold;">Le client a payé mais l'analyse a échoué. Deux options : re-lancer manuellement ou rembourser via Stripe.</p>
+        </div>`,
+      });
+    } catch (_) {}
+    return res.status(200).json({ success: false, analysisFailed: true, reason: analysisFailed });
+  }
+
   if (!email || !reportData) return res.status(400).json({ error: 'Missing data' });
 
   const uuid = randomUUID();

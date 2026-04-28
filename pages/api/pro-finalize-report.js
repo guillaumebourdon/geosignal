@@ -38,10 +38,9 @@ function gradeColor(score) {
   if (score >= 45) return '#C9861A';
   return '#D97757';
 }
-function gradeLabel(score) {
-  if (score >= 70) return 'BON';
-  if (score >= 45) return 'MOYEN';
-  return 'FAIBLE';
+function gradeLabel(score, locale = 'fr') {
+  if (locale === 'en') return score >= 70 ? 'GOOD' : score >= 45 ? 'AVERAGE' : 'POOR';
+  return score >= 70 ? 'BON' : score >= 45 ? 'MOYEN' : 'FAIBLE';
 }
 
 export default async function handler(req, res) {
@@ -89,6 +88,26 @@ export default async function handler(req, res) {
     const locale = meta?.locale || 'fr';
     const customerEmail = meta?.customerEmail || 'guillaume@beeleven.fr';
     const rootUrl = consolidated.rootUrl || meta?.rootUrl || 'unknown';
+
+    // Guard: alert Guillaume if Pro report is degraded (< 5 valid pages)
+    const validPageCount = consolidated.pagesValid || (consolidated.pages || []).filter(p => !p.error).length;
+    if (validPageCount < 5) {
+      try {
+        await resend.emails.send({
+          from: 'Detekia <hello@detekia.fr>',
+          to: 'guillaume@beeleven.fr',
+          subject: `⚠️ Rapport Pro dégradé — ${validPageCount} pages seulement — ${rootUrl}`,
+          html: `<div style="font-family:system-ui;padding:24px;">
+            <h2 style="color:#D97757;">Rapport Pro dégradé</h2>
+            <p><strong>Site :</strong> ${rootUrl}</p>
+            <p><strong>Pages valides :</strong> ${validPageCount} (attendu : ~20)</p>
+            <p><strong>Client :</strong> ${customerEmail}</p>
+            <p><strong>Job :</strong> ${siteJobId}</p>
+            <p style="color:#D97757;">Le rapport sera livré mais le client recevra peu de valeur. Envisager un geste commercial ou une re-exécution.</p>
+          </div>`,
+        }).catch(() => {});
+      } catch {}
+    }
 
     // Read full page results for the template
     const total = consolidated.pages?.length || 0;
@@ -262,30 +281,31 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
     // Send email with link
     const score = consolidated.scoreAverage;
     const color = gradeColor(score);
-    const grade = gradeLabel(score);
+    const grade = gradeLabel(score, locale);
+    const isFr = locale !== 'en';
 
     const { error: emailError } = await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: customerEmail,
-      subject: `Votre rapport GEO complet est prêt — ${rootUrl}`,
+      subject: isFr ? `Votre rapport GEO complet est prêt — ${rootUrl}` : `Your full GEO report is ready — ${rootUrl}`,
       html: `
         <div style="background:#F7F5F2;padding:40px 20px;font-family:system-ui,-apple-system,sans-serif">
           <div style="max-width:520px;margin:0 auto">
             <div style="text-align:center;margin-bottom:28px">
               <div style="font-family:Georgia,serif;font-size:22px;color:#1A1916;margin-bottom:4px">Detekia</div>
-              <div style="font-family:monospace;font-size:10px;color:#6B6762;letter-spacing:2px">RAPPORT GEO COMPLET — AUDIT SITE</div>
+              <div style="font-family:monospace;font-size:10px;color:#6B6762;letter-spacing:2px">${isFr ? 'RAPPORT GEO COMPLET — AUDIT SITE' : 'FULL GEO REPORT — SITE AUDIT'}</div>
             </div>
             <div style="background:#1A1916;border-radius:16px;padding:32px;text-align:center;margin-bottom:24px">
               <div style="font-family:Georgia,serif;font-size:64px;color:#F7F5F2;line-height:1;letter-spacing:-2px">${score}</div>
               <div style="font-family:monospace;font-size:12px;color:rgba(247,245,242,0.4);margin-top:4px">/100 — ${rootUrl}</div>
               <div style="display:inline-block;margin-top:12px;background:${color}22;border:1px solid ${color}44;padding:3px 14px;border-radius:20px;font-family:monospace;font-size:10px;letter-spacing:2px;color:${color}">${grade}</div>
-              <div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.35);margin-top:8px">${consolidated.pagesValid} pages analysées · ${(consolidated.patterns || []).length} patterns · ${(consolidated.actionPlan || []).length} actions</div>
+              <div style="font-family:monospace;font-size:11px;color:rgba(247,245,242,0.35);margin-top:8px">${consolidated.pagesValid} ${isFr ? 'pages analysées' : 'pages analyzed'} · ${(consolidated.patterns || []).length} patterns · ${(consolidated.actionPlan || []).length} actions</div>
             </div>
             <div style="background:#fff;border-radius:12px;padding:28px;border:1px solid #E5E2DC;margin-bottom:24px;text-align:center">
-              <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 8px">Votre audit GEO complet multi-pages est prêt.</p>
-              <p style="font-size:13px;color:#6B6762;line-height:1.6;margin:0 0 24px">${consolidated.pagesValid} pages analysées, ${(consolidated.patterns || []).length} patterns transverses détectés, ${(consolidated.actionPlan || []).length} actions recommandées.</p>
-              <a href="${reportUrl}" style="display:inline-block;background:#D97757;color:#fff;padding:14px 40px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;font-family:system-ui">Voir mon rapport complet →</a>
-              <p style="font-size:11px;color:#B0ABA5;margin-top:16px;line-height:1.5">Votre rapport reste accessible indéfiniment à cette URL.</p>
+              <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 8px">${isFr ? 'Votre audit GEO complet multi-pages est prêt.' : 'Your full multi-page GEO audit is ready.'}</p>
+              <p style="font-size:13px;color:#6B6762;line-height:1.6;margin:0 0 24px">${consolidated.pagesValid} ${isFr ? 'pages analysées' : 'pages analyzed'}, ${(consolidated.patterns || []).length} ${isFr ? 'patterns transverses détectés' : 'cross-page patterns detected'}, ${(consolidated.actionPlan || []).length} ${isFr ? 'actions recommandées' : 'recommended actions'}.</p>
+              <a href="${reportUrl}" style="display:inline-block;background:#D97757;color:#fff;padding:14px 40px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;font-family:system-ui">${isFr ? 'Voir mon rapport complet →' : 'View my full report →'}</a>
+              <p style="font-size:11px;color:#B0ABA5;margin-top:16px;line-height:1.5">${isFr ? 'Votre rapport reste accessible indéfiniment à cette URL.' : 'Your report is accessible indefinitely at this URL.'}</p>
             </div>
             <div style="text-align:center;font-size:12px;color:#6B6762;line-height:1.6;padding-top:8px">
               Beeleven SASU · hello@detekia.fr · detekia.fr

@@ -42,6 +42,13 @@ export default function Success() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: data.email, url: reportUrl, reportData: report, locale: data.locale || 'fr', isFreeViaPromo: data.isFreeViaPromo || false, stripeSessionId: session_id || null }),
               });
+            } else {
+              // Analysis failed (site blocked, too short, etc.) — trigger finalize with error for alert + potential refund
+              fetch('/api/finalize-report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: data.email, url: reportUrl, reportData: null, locale: data.locale || 'fr', analysisFailed: report.error, stripeSessionId: session_id || null }),
+              }).catch(() => {});
             }
           }).catch(() => {});
         }
