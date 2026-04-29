@@ -829,9 +829,9 @@
       "urlInvalidError": "URL invalide, verifiez le format",
       "errorGeneric": "Une erreur s'est produite, reessayez",
       "checking": "Vérification de votre site...",
-      "errorAntibot": "Votre site est protégé par une technologie anti-bot qui empêche notre outil d'y accéder. Nous ne pouvons pas réaliser cet audit pour le moment.",
-      "errorUnreachable": "Votre site n'est pas accessible. Vérifiez l'URL et réessayez.",
-      "errorNoContent": "La page ne contient pas assez de contenu exploitable pour générer un audit.",
+      "errorAntibot": "Votre site utilise une protection anti-bot (Cloudflare, DataDome...) qui bloque notre analyse automatique. Pour auditer votre site, demandez à votre équipe technique d'autoriser notre crawler (User-Agent : DetekiaBot) ou contactez-nous à hello@detekia.fr pour une solution alternative.",
+      "errorUnreachable": "Votre site n'est pas accessible depuis nos serveurs. Vérifiez l'URL et assurez-vous que le site est en ligne. Si le problème persiste, contactez-nous à hello@detekia.fr.",
+      "errorNoContent": "La page ne contient pas assez de contenu texte pour générer un audit fiable. Cela peut arriver si le contenu est chargé entièrement en JavaScript. Contactez-nous à hello@detekia.fr pour une analyse manuelle.",
       "errorProInsufficient": "Votre site ne permet pas un audit complet (moins de 20 pages détectées). En revanche, nous pouvons analyser cette page en détail.",
       "errorProInsufficient_cta": "Faire l'audit 1 page — 29 € →",
       "errorCheckFailed": "Une erreur est survenue lors de la vérification. Réessayez dans quelques instants."

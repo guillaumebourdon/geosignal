@@ -149,7 +149,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
                 placeholder={t('pricing.modal.urlPlaceholder')}
                 style={{ width: '100%', background: '#F7F5F2', border: urlError ? '1.5px solid #D97757' : '1px solid #E5E2DC', borderRadius: 10, padding: '14px 16px', fontSize: 15, fontFamily: 'system-ui', color: '#1A1916', outline: 'none' }} />
               {urlError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{urlError}</div>}
-              {modalError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{modalError}</div>}
+              {modalError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 10, background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 8, padding: '12px 14px', lineHeight: 1.6 }} dangerouslySetInnerHTML={{ __html: modalError.replace(/hello@detekia\.fr/g, '<a href="mailto:hello@detekia.fr" style="color:#D97757;font-weight:600">hello@detekia.fr</a>').replace(/DetekiaBot/g, '<code style="background:rgba(217,119,87,0.1);padding:2px 5px;border-radius:3px;font-size:11px">DetekiaBot</code>') }} />}
             </div>
             <button onClick={handleSubmit} disabled={modalLoading || !modalUrl.trim()}
               style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
