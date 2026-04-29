@@ -5,7 +5,7 @@
  */
 import { Redis } from '@upstash/redis';
 
-export const config = { maxDuration: 20 };
+export const config = { maxDuration: 30 };
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -169,77 +169,20 @@ export default async function handler(req, res) {
   // Page passed all checks — auditable for one-page
   const onePageAuditable = true;
 
-  // 4. Check Pro auditability: count available pages
-  let pagesFound = 1; // at least the homepage
-  let sitemapXml = null;
-
-  if (sitemapResult.ok && sitemapResult.body.includes('<loc>')) {
-    sitemapXml = sitemapResult.body;
-  } else if (sitemapIndexResult.ok && sitemapIndexResult.body.includes('<sitemap>')) {
-    // Sitemap index: fetch first 3 sub-sitemaps to estimate page count
-    const subLocs = [];
-    const subRegex = /<sitemap>[\s\S]*?<loc>\s*(.*?)\s*<\/loc>[\s\S]*?<\/sitemap>/gi;
-    let sm;
-    while ((sm = subRegex.exec(sitemapIndexResult.body)) !== null) subLocs.push(sm[1].trim());
-
-    const subFetches = await Promise.all(subLocs.slice(0, 3).map(u => fetchCheck(u, 5000)));
-    const allXml = subFetches.filter(r => r.ok).map(r => r.body).join('');
-    if (allXml) sitemapXml = allXml;
+  // 4. Check Pro auditability: use the real sitemapPrioritizer (same logic as the actual audit)
+  let pagesFound = 1;
+  let proAuditable = false;
+  try {
+    const { getTopPrioritizedUrls } = require('../../lib/sitemapPrioritizer');
+    const pages = await getTopPrioritizedUrls(url, { maxUrls: 20, timeoutMs: 8000 });
+    pagesFound = pages.length;
+    proAuditable = pagesFound >= 10; // 10+ pages = viable Pro report
+  } catch (e) {
+    console.log(`[pre-check] ${hostname} — sitemapPrioritizer error: ${e.message.slice(0, 40)}`);
   }
 
-  // Fallback: check robots.txt for Sitemap: directives (handles non-standard paths, .gz, etc.)
-  if (!sitemapXml) {
-    try {
-      const robotsResult = await fetchCheck(`${origin}/robots.txt`, 5000);
-      if (robotsResult.ok) {
-        const sitemapUrls = [];
-        const sitemapRegex = /Sitemap:\s*(\S+)/gi;
-        let rm;
-        while ((rm = sitemapRegex.exec(robotsResult.body)) !== null) sitemapUrls.push(rm[1].trim());
-        // Try each sitemap URL from robots.txt (skip .gz — can't decompress in edge)
-        for (const smUrl of sitemapUrls.filter(u => !u.endsWith('.gz')).slice(0, 3)) {
-          const smResult = await fetchCheck(smUrl, 5000);
-          if (smResult.ok && smResult.body.includes('<loc>')) {
-            sitemapXml = (sitemapXml || '') + smResult.body;
-          }
-        }
-      }
-    } catch {}
-  }
-
-  if (sitemapXml) {
-    pagesFound = countSitemapUrls(sitemapXml, hostname);
-  } else if (pageResult.ok) {
-    // No sitemap: count internal links on homepage as fallback
-    pagesFound = countInternalLinks(pageResult.body, hostname);
-  }
-
-  // 5. For Pro: verify 2 sample pages are actually scrapable (not just listed in sitemap)
-  let proScrapable = true;
-  if (plan === 'pro' && pagesFound >= 20 && sitemapXml) {
-    const allLocs = [];
-    const locRe = /<loc>\s*(.*?)\s*<\/loc>/gi;
-    let m;
-    while ((m = locRe.exec(sitemapXml)) !== null) allLocs.push(m[1].trim());
-    // Pick 2 random pages (not the homepage)
-    const sampleUrls = allLocs
-      .filter(u => { try { return new URL(u).pathname !== '/'; } catch { return false; } })
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 5);
-    if (sampleUrls.length > 0) {
-      const sampleResults = await Promise.all(sampleUrls.map(u => fetchCheck(u, 5000)));
-      const scrapableCount = sampleResults.filter(r => r.ok && !detectAntiBot(r.body || '') && hasSubstantialContent(r.body || '')).length;
-      if (scrapableCount < 3) {
-        proScrapable = false;
-        console.log(`[pre-check] ${hostname} — Pro sample scrape FAILED: ${scrapableCount}/${sampleUrls.length} pages scrapable (need >=3)`);
-      }
-    }
-  }
-
-  const proAuditable = onePageAuditable && pagesFound >= 20 && proScrapable;
   const reason = !onePageAuditable ? 'page_not_accessible'
-    : !proScrapable ? 'pages_not_scrapable'
-    : !proAuditable ? (pagesFound < 20 ? 'insufficient_pages' : 'sitemap_inaccessible')
+    : !proAuditable ? (pagesFound < 10 ? 'insufficient_pages' : 'pages_not_scrapable')
     : 'ok';
 
   const result = { onePageAuditable, proAuditable, reason, pagesFound };
