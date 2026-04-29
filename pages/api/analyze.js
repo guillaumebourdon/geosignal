@@ -663,6 +663,20 @@ export default async function handler(req, res) {
           scrapeSource = 'direct-fallback';
         }
       }
+      // Last resort: Browserless headless Chrome
+      if (!rawContent) {
+        const { fetchRenderedHtml } = require('../../lib/browserless');
+        const rendered = await fetchRenderedHtml(url);
+        if (rendered) {
+          const $br = cheerio.load(rendered);
+          $br('script, style').remove();
+          if ($br('body').text().replace(/\s+/g, ' ').trim().length > 500) {
+            console.log(`[analyze] Using Browserless fallback for ${url}`);
+            rawContent = rendered;
+            scrapeSource = 'browserless';
+          }
+        }
+      }
       if (!rawContent) throw jinaResult.reason;
     }
 
