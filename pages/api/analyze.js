@@ -646,7 +646,25 @@ export default async function handler(req, res) {
       axios.get(url, { timeout: 10000, maxRedirects: 5, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DetekiaBot/1.0; +https://detekia.fr)' } }).then(r => r.data).catch(() => null),
     ]);
 
-    const { data: rawContent, source: scrapeSource } = jinaResult.status === 'fulfilled' ? jinaResult.value : (() => { throw jinaResult.reason; })();
+    let rawContent, scrapeSource;
+    if (jinaResult.status === 'fulfilled') {
+      rawContent = jinaResult.value.data;
+      scrapeSource = jinaResult.value.source;
+    } else {
+      // Jina failed — try to use direct HTML as fallback content
+      const directFallback = rawHtmlResult.status === 'fulfilled' ? rawHtmlResult.value : null;
+      if (directFallback && typeof directFallback === 'string') {
+        const $fb = cheerio.load(directFallback);
+        $fb('script, style').remove();
+        const fbText = $fb('body').text().replace(/\s+/g, ' ').trim();
+        if (fbText.length > 500) {
+          console.log(`[analyze] Jina failed, using direct HTML fallback (${fbText.length} chars)`);
+          rawContent = directFallback;
+          scrapeSource = 'direct-fallback';
+        }
+      }
+      if (!rawContent) throw jinaResult.reason;
+    }
 
     const $ = cheerio.load(rawContent);
     const textContent = $('body').text().replace(/\s+/g, ' ').trim();
