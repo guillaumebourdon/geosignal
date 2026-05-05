@@ -131,7 +131,7 @@ export default function Success() {
 
                   <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 0 }}>
                     {isPro
-                      ? <>Notre IA analyse les 20 pages les plus importantes de votre site. Rapport envoyé à <strong style={{ color: 'rgba(247,245,242,0.8)' }}>{email}</strong>.</>
+                      ? <>Notre IA analyse les 10 pages les plus stratégiques de votre site. Rapport envoyé à <strong style={{ color: 'rgba(247,245,242,0.8)' }}>{email}</strong>.</>
                       : <>Rapport envoyé à <strong style={{ color: 'rgba(247,245,242,0.8)' }}>{email}</strong> dès qu'il sera prêt.</>
                     }
                   </p>
@@ -190,7 +190,7 @@ export default function Success() {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2" strokeLinecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
                   </div>
                   <div style={{ fontSize: 15, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', marginBottom: 6 }}>Analyser tout mon site</div>
-                  <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Audit complet sur 20 pages avec patterns et plan d'action.</div>
+                  <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Audit complet sur 10 pages stratégiques avec patterns et plan d'action.</div>
                   <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#10A37F', fontWeight: 600 }}>Découvrir l'audit Pro →</div>
                 </Link>
                 )}

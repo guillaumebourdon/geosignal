@@ -104,7 +104,7 @@ function HeroMockup({ locale }) {
       </div>
       <div style={{ padding: '14px 18px 10px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>
-          {locale === 'en' ? '8 CRITERIA × 20 PAGES' : '8 CRITÈRES × 20 PAGES'}
+          {locale === 'en' ? '8 CRITERIA × 10 PAGES' : '8 CRITÈRES × 10 PAGES'}
         </div>
         {criteria.map((c, i) => (
           <div key={i} style={{ marginBottom: 6 }}>
@@ -188,7 +188,7 @@ export default function Pro() {
               {p('hero.cta')}
             </button>
             <div className="reveal reveal-d4" style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)', letterSpacing: 1.5, marginTop: 8 }}>
-              {locale === 'en' ? '20 PAGES • 15-20 MIN • NO SUBSCRIPTION' : '20 PAGES • 15-20 MIN • SANS ABONNEMENT'}
+              {locale === 'en' ? '10 PAGES • 5-10 MIN • NO SUBSCRIPTION' : '10 PAGES • 5-10 MIN • SANS ABONNEMENT'}
             </div>
           </div>
           <div className="lp-hero-mockup reveal reveal-d2" style={{ display: 'flex', justifyContent: 'center' }}>

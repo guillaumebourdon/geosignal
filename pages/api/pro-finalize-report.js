@@ -100,7 +100,7 @@ export default async function handler(req, res) {
           html: `<div style="font-family:system-ui;padding:24px;">
             <h2 style="color:#D97757;">Rapport Pro dégradé</h2>
             <p><strong>Site :</strong> ${rootUrl}</p>
-            <p><strong>Pages valides :</strong> ${validPageCount} (attendu : ~20)</p>
+            <p><strong>Pages valides :</strong> ${validPageCount} (attendu : ~10)</p>
             <p><strong>Client :</strong> ${customerEmail}</p>
             <p><strong>Job :</strong> ${siteJobId}</p>
             <p style="color:#D97757;">Le rapport sera livré mais le client recevra peu de valeur. Envisager un geste commercial ou une re-exécution.</p>

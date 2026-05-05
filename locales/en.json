@@ -271,7 +271,7 @@
       "label": "Full report",
       "titleStart": "A report that's ",
       "titleEm": "worth every cent",
-      "subtitle": "In-depth analysis with exclusive data — available for 1 page (€29) or as a complete audit across 20 pages (€99).",
+      "subtitle": "In-depth analysis with exclusive data — available for 1 page (€29) or as a complete audit across 10 pages (€99).",
       "cards": [
         {
           "icon": "🔭",
@@ -360,7 +360,7 @@
         },
         {
           "q": "Why is the analysis really free?",
-          "a": "The basic analysis — score out of 100, 8 detailed criteria, one recommendation preview — is completely free with no signup. No credit card needed. To go further: the 1-page audit (€29) gives a full diagnosis, and the complete audit (€99) analyzes 20 pages of your site."
+          "a": "The basic analysis — score out of 100, 8 detailed criteria, one recommendation preview — is completely free with no signup. No credit card needed. To go further: the 1-page audit (€29) gives a full diagnosis, and the complete audit (€99) analyzes 10 strategic pages of your site."
         },
         {
           "q": "What's a good GEO Score?",
@@ -641,7 +641,7 @@
         ["Per-page breakdown", false, false, true],
         ["Downloadable PDF", false, true, true],
         ["Report accessible", "24h", "10 years", "10 years"],
-        ["Delivery time", "30 sec", "1 min", "15-20 min"]
+        ["Delivery time", "30 sec", "1 min", "5-10 min"]
       ],
       "cta": "See our detailed plans →"
     },
@@ -763,11 +763,11 @@
       "items": [
         {
           "q": "What's the difference between the 3 audits?",
-          "a": "The free audit gives a quick overview of your AI visibility on 1 page. The 1-page audit (€29) analyzes a URL in depth with 8 detailed recommendations and code examples. The complete audit (€99) analyzes 20 pages, detects cross-page patterns and produces a prioritized action plan."
+          "a": "The free audit gives a quick overview of your AI visibility on 1 page. The 1-page audit (€29) analyzes a URL in depth with 8 detailed recommendations and code examples. The complete audit (€99) analyzes 10 pages, detects cross-page patterns and produces a prioritized action plan."
         },
         {
           "q": "How long to receive my report?",
-          "a": "Free audit: about 30 seconds. 1-page audit (€29): 1 minute. Complete audit (€99): 15 to 20 minutes (analysis of 20 pages by AI)."
+          "a": "Free audit: about 30 seconds. 1-page audit (€29): 1 minute. Complete audit (€99): 5 to 10 minutes (analysis of 10 pages by AI)."
         },
         {
           "q": "Can I switch between plans?",
@@ -792,10 +792,10 @@
       "badge": "",
       "features": [
         {
-          "text": "Average /100 score across 20 pages"
+          "text": "Average /100 score across 10 pages"
         },
         {
-          "text": "8 criteria × 20 pages analyzed"
+          "text": "8 criteria × 10 pages analyzed"
         },
         {
           "text": "Consolidated recommendations with affected pages"
@@ -830,7 +830,7 @@
       "errorAntibot": "Your site uses bot protection (Cloudflare, DataDome...) that blocks our automated analysis. To audit your site, ask your technical team to allow our crawler (User-Agent: DetekiaBot) or contact us at hello@detekia.fr for an alternative solution.",
       "errorUnreachable": "Your site is not accessible from our servers. Please check the URL and make sure the site is online. If the issue persists, contact us at hello@detekia.fr.",
       "errorNoContent": "The page does not contain enough text content to generate a reliable audit. This can happen if content is loaded entirely via JavaScript. Contact us at hello@detekia.fr for a manual analysis.",
-      "errorProInsufficient": "Your site doesn't support a complete audit (fewer than 20 pages detected). However, we can analyze this page in detail.",
+      "errorProInsufficient": "Your site doesn't support a complete audit (fewer than 10 pages detected). However, we can analyze this page in detail.",
       "errorProInsufficient_cta": "Get the 1-page audit — €29 →",
       "errorCheckFailed": "An error occurred during verification. Please try again in a moment."
     }
@@ -1099,7 +1099,7 @@
       {
         "title": "Delivery times",
         "paragraphs": [
-          "The 1-page audit (€29) is delivered by email in approximately 1 minute after payment. The complete audit (€99) is delivered by email in 15 to 20 minutes after payment.",
+          "The 1-page audit (€29) is delivered by email in approximately 1 minute after payment. The complete audit (€99) is delivered by email in 5 to 10 minutes after payment.",
           "These times are indicative and may vary depending on server load and site complexity. In case of significant delay, the automatic refund system is triggered."
         ]
       },
@@ -1576,16 +1576,16 @@
     },
     "fullSite": {
       "title": "What about your entire site?",
-      "desc": "The complete audit analyzes 20 pages of your site, detects cross-page patterns that a single page can't reveal, and delivers a consolidated action plan.",
+      "desc": "The complete audit analyzes 10 strategic pages of your site, detects cross-page patterns that a single page can't reveal, and delivers a consolidated action plan.",
       "cta": "Discover the complete audit — €99 →"
     },
-    "proTeaser": "Need to analyze your entire site? The complete audit covers 20 pages.",
+    "proTeaser": "Need to analyze your entire site? The complete audit covers 10 pages.",
     "proTeaserLink": "Discover the complete audit →",
     "proBlock": {
       "title": "Analyze your entire site",
-      "desc": "The complete audit analyzes 20 pages, detects cross-page patterns and produces a prioritized action plan.",
+      "desc": "The complete audit analyzes 10 pages, detects cross-page patterns and produces a prioritized action plan.",
       "cta": "Discover the complete audit →",
-      "note": "20 PAGES · €99"
+      "note": "10 PAGES · €99"
     }
   },
   "success": {
@@ -1655,12 +1655,12 @@
   "pro": {
     "seo": {
       "title": "Complete GEO Audit — €99 | Detekia",
-      "description": "Full site audit on 20 pages. Cross-page patterns, prioritized action plan, per-page breakdown. Princeton/KDD 2024 methodology."
+      "description": "Full site audit on 10 pages. Cross-page patterns, prioritized action plan, per-page breakdown. Princeton/KDD 2024 methodology."
     },
     "hero": {
       "badge": "COMPLETE AUDIT",
       "title": "Your entire site, audited by AI",
-      "subtitle": "20 pages analyzed, cross-page patterns detected, prioritized action plan. The most comprehensive GEO diagnosis available.",
+      "subtitle": "10 pages analyzed, cross-page patterns detected, prioritized action plan. The most comprehensive GEO diagnosis available.",
       "cta": "Audit my site — €99 →",
       "exampleLink": "See an example report"
     },
@@ -1688,7 +1688,7 @@
     },
     "included": {
       "label": "WHAT YOU GET",
-      "title": "A professional audit, delivered in 15-20 minutes",
+      "title": "A professional audit, delivered in 5-10 minutes",
       "features": [
         {
           "title": "Overall site score out of 100",
@@ -1708,7 +1708,7 @@
         },
         {
           "title": "Cross-page pattern detection",
-          "desc": "Cross-analyzing 20 pages reveals systemic issues invisible page by page: missing schemas everywhere, absent FAQs, weak authority signals across the entire site."
+          "desc": "Cross-analyzing 10 pages reveals systemic issues invisible page by page: missing schemas everywhere, absent FAQs, weak authority signals across the entire site."
         },
         {
           "title": "Consolidated recommendations",
@@ -1752,7 +1752,7 @@
         {
           "num": "03",
           "title": "Get your report",
-          "desc": "Complete report sent by email in 15-20 minutes."
+          "desc": "Complete report sent by email in 5-10 minutes."
         }
       ]
     },
@@ -1769,7 +1769,7 @@
         },
         {
           "q": "How long for the report?",
-          "a": "15-20 minutes. Analyzing 20 pages takes time — that's the price of depth."
+          "a": "5-10 minutes. Analyzing 10 pages in depth takes time — that's the price of thoroughness."
         },
         {
           "q": "How is it different from the 1-page audit?",
@@ -1787,7 +1787,7 @@
     },
     "finalCta": {
       "title": "Ready to audit your site?",
-      "subtitle": "Your site analyzed in depth and your action plan sent by email in 15-20 minutes."
+      "subtitle": "Your site analyzed in depth and your action plan sent by email in 5-10 minutes."
     },
     "crossSell": {
       "title": "Need to analyze a single page?",
@@ -1908,7 +1908,7 @@
         },
         {
           "q": "What if I need to analyze my entire site?",
-          "a": "The complete audit (€99) analyzes 20 pages with cross-page patterns."
+          "a": "The complete audit (€99) analyzes 10 pages with cross-page patterns."
         }
       ]
     },
@@ -1918,7 +1918,7 @@
     },
     "crossSell": {
       "title": "Need a broader view?",
-      "desc": "The complete audit analyzes 20 pages and detects patterns a single-page analysis can't see.",
+      "desc": "The complete audit analyzes 10 pages and detects patterns a single-page analysis can't see.",
       "cta": "Discover the complete audit →"
     }
   }

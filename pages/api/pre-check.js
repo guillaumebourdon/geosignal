@@ -174,7 +174,7 @@ export default async function handler(req, res) {
   let proAuditable = false;
   try {
     const { getTopPrioritizedUrls } = require('../../lib/sitemapPrioritizer');
-    const pages = await getTopPrioritizedUrls(url, { maxUrls: 20, timeoutMs: 8000 });
+    const pages = await getTopPrioritizedUrls(url, { maxUrls: 10, timeoutMs: 8000 });
     pagesFound = pages.length;
     proAuditable = pagesFound >= 10; // 10+ pages = viable Pro report
   } catch (e) {

@@ -100,7 +100,7 @@ function buildEmailHTML(reportUrl, url, score, verdict, locale) {
         </div>
         <div style="background:#F7F5F2;border-radius:10px;padding:20px 24px;margin-bottom:20px;text-align:center">
           <p style="font-size:13px;color:#1A1916;font-weight:600;margin:0 0 6px">${isFr ? 'Envie d\'une vision globale ?' : 'Want the full picture?'}</p>
-          <p style="font-size:12px;color:#6B6762;line-height:1.6;margin:0 0 12px">${isFr ? 'L\'audit complet analyse 20 pages de votre site et detecte les patterns que cette analyse page par page ne peut pas voir.' : 'The complete audit analyzes 20 pages of your site and detects patterns that a single-page analysis cannot reveal.'}</p>
+          <p style="font-size:12px;color:#6B6762;line-height:1.6;margin:0 0 12px">${isFr ? 'L\'audit complet analyse les 10 pages stratégiques de votre site et detecte les patterns que cette analyse page par page ne peut pas voir.' : 'The complete audit analyzes 10 strategic pages of your site and detects patterns that a single-page analysis cannot reveal.'}</p>
           <a href="https://detekia.fr/pricing" style="font-size:12px;color:#D97757;text-decoration:none;font-weight:600">${isFr ? 'En savoir plus →' : 'Learn more →'}</a>
         </div>
         <div style="text-align:center;font-size:12px;color:#6B6762;line-height:1.6;padding-top:8px">

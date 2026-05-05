@@ -116,7 +116,7 @@ export default async function handler(req, res) {
               html: `<div style="font-family:system-ui;max-width:480px;padding:24px;">
                 <h2 style="color:#D97757;">Audit Pro dégradé détecté</h2>
                 <p><strong>Site :</strong> ${session.metadata.url}</p>
-                <p><strong>Pages trouvées :</strong> ${result.queuedCount} (attendu : ~20)</p>
+                <p><strong>Pages trouvées :</strong> ${result.queuedCount} (attendu : ~10)</p>
                 <p><strong>Email client :</strong> ${email}</p>
                 <p><strong>Job ID :</strong> ${result.siteJobId}</p>
                 <p><strong>Session Stripe :</strong> ${session.id}</p>

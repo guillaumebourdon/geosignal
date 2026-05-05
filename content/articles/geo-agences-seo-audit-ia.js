@@ -114,7 +114,7 @@ export default function GeoAgencesSeoAuditIa() {
         inclus={[
           "Score GEO sur les 8 critères avec benchmark sectoriel",
           "Tests de citabilité dans ChatGPT, Perplexity, Gemini",
-          "Rapport PDF de 15-20 pages avec captures d'écran",
+          "Rapport PDF détaillé avec recommandations et exemples de code",
           "Plan d'action priorisé (quick wins + moyen terme)",
           "1 heure de restitution en visio",
         ]}

@@ -256,8 +256,8 @@ For smaller apartments, a more compact model may be sufficient."`}</code></pre>
       <h3>Week 1 — The fundamentals</h3>
 
       <ol>
-        <li><strong>Day 1-2:</strong> rewrite descriptions for your top 20 best-selling products (extractable opening paragraphs, precise specs)</li>
-        <li><strong>Day 3:</strong> add <code>Product</code> + <code>AggregateRating</code> Schema to those 20 pages</li>
+        <li><strong>Day 1-2:</strong> rewrite descriptions for your top 10 best-selling products (extractable opening paragraphs, precise specs)</li>
+        <li><strong>Day 3:</strong> add <code>Product</code> + <code>AggregateRating</code> Schema to those 10 pages</li>
         <li><strong>Day 4:</strong> add 3-5 FAQs per product page, marked up with <code>FAQPage</code></li>
         <li><strong>Day 5:</strong> check your <code>robots.txt</code> (unblock AI bots) + run a Detekia audit</li>
       </ol>

@@ -114,7 +114,7 @@ export default function GeoAgencesSeoAuditIa() {
         inclus={[
           "GEO score across 8 criteria with industry benchmark",
           "Citability tests in ChatGPT, Perplexity, Gemini",
-          "15-20 page PDF report with screenshots",
+          "Detailed PDF report with recommendations and code examples",
           "Prioritized action plan (quick wins + medium term)",
           "1-hour video walkthrough",
         ]}
