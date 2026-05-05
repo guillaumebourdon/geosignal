@@ -633,7 +633,7 @@
       "headers": ["", "Gratuit", "1 page — 29 €", "Complet — 99 €"],
       "rows": [
         ["8 critères GEO analysés", true, true, true],
-        ["Pages analysées", "1", "1", "20"],
+        ["Pages analysées", "1", "1", "10"],
         ["Test de visibilité IA", "Partiel", "10 requêtes", "30 requêtes"],
         ["Recommandations", "Aperçu", "Détaillées + code", "Détaillées + code"],
         ["Patterns transverses", false, false, true],

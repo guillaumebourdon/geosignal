@@ -633,7 +633,7 @@
       "headers": ["", "Free", "1 page — €29", "Complete — €99"],
       "rows": [
         ["8 GEO criteria analyzed", true, true, true],
-        ["Pages analyzed", "1", "1", "20"],
+        ["Pages analyzed", "1", "1", "10"],
         ["AI visibility test", "Partial", "10 queries", "30 queries"],
         ["Recommendations", "Preview", "Detailed + code", "Detailed + code"],
         ["Cross-page patterns", false, false, true],
@@ -771,7 +771,7 @@
         },
         {
           "q": "Can I switch between plans?",
-          "a": "Yes, anytime. Your 1-page audit remains accessible. The complete audit is independent and analyzes 20 additional pages."
+          "a": "Yes, anytime. Your 1-page audit remains accessible. The complete audit is independent and analyzes 10 key pages."
         },
         {
           "q": "Does my report expire?",
@@ -1709,7 +1709,7 @@
           "desc": "Structured data, content depth, authority signals, freshness, citations, technical SEO… Each criterion is evaluated individually on every analyzed page."
         },
         {
-          "title": "20 priority pages analyzed",
+          "title": "10 key pages analyzed",
           "desc": "Our algorithm automatically selects your most strategic pages via sitemap — homepage, products, recent articles, conversion pages."
         },
         {
