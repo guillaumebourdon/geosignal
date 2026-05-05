@@ -49,6 +49,12 @@ export default async function handler(req, res) {
     }
 
     const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
+
+    if (pdfBuffer.length < 5000) {
+      console.error(`[report-pdf] PDF too small (${pdfBuffer.length} bytes) — page may be down`);
+      return res.status(500).json({ error: 'PDF generation returned an empty or invalid document' });
+    }
+
     const safeName = (record.url || 'report').replace(/[^a-z0-9]/gi, '-');
     const filename = isPro ? `rapport-geo-complet-${safeName}.pdf` : `rapport-geo-${safeName}.pdf`;
 

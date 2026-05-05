@@ -267,5 +267,5 @@ export async function getStaticProps({ params, locale }) {
   const article = getArticleBySlug(params.slug, locale);
   if (!article) return { notFound: true };
   const related = getRelatedArticles(params.slug, 3, locale);
-  return { props: { article, related } };
+  return { props: { article, related }, revalidate: 3600 };
 }
