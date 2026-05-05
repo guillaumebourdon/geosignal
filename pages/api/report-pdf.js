@@ -7,9 +7,6 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-const { generateReportHTML } = require('../../lib/oneReportTemplate');
-const { generateProReportHTML } = require('../../lib/proReportTemplate');
-
 export default async function handler(req, res) {
   const { checkRateLimit } = require('../../lib/rateLimit');
   if (!(await checkRateLimit('reportPdf', req, res))) return;
@@ -22,27 +19,26 @@ export default async function handler(req, res) {
 
     const record = typeof raw === 'string' ? JSON.parse(raw) : raw;
     const isPro = record.reportType === 'pro';
-    const locale = record.locale || 'fr';
-    let html;
 
-    if (isPro) {
-      const report = record.consolidatedReport;
-      if (!report) return res.status(404).json({ error: 'Pro report data missing' });
-      html = generateProReportHTML(report, locale);
-    } else {
-      const { reportData, url } = record;
-      if (!reportData) return res.status(404).json({ error: 'Report data missing' });
-      html = generateReportHTML({ url, ...reportData }, locale);
-    }
+    // Generate PDF from the LIVE web page (same content as what the user sees)
+    const proto = req.headers['x-forwarded-proto'] || 'https';
+    const host = req.headers['host'] || 'detekia.fr';
+    const reportUrl = `${proto}://${host}/r/${id}`;
 
-    // Call PDFShift
     const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + Buffer.from('api:' + process.env.PDFSHIFT_API_KEY).toString('base64'),
       },
-      body: JSON.stringify({ source: html, landscape: false, use_print: true, format: 'A4' }),
+      body: JSON.stringify({
+        source: reportUrl,
+        landscape: false,
+        use_print: true,
+        format: 'A4',
+        wait_for: 'network_idle',
+        css: '@media print { .no-print, button, header[style*="sticky"] { display: none !important; } }',
+      }),
       signal: AbortSignal.timeout(240000),
     });
 
