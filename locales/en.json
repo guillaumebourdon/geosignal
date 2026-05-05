@@ -384,7 +384,7 @@
         },
         {
           "q": "What's the difference between the 1-page and complete audit?",
-          "a": "The 1-page audit (€29) analyzes one URL in depth: score, 8 criteria, recommendations with code, results in 1 minute. The complete audit (€99) analyzes the 20 most important pages of your site, detects cross-page patterns and produces a prioritized action plan for the entire site."
+          "a": "The 1-page audit (€29) analyzes one URL in depth: score, 8 criteria, recommendations with code, results in 1 minute. The complete audit (€99) analyzes the 10 key pages of your site, detects cross-page patterns and produces a prioritized action plan for the entire site."
         }
       ]
     },
@@ -1232,6 +1232,7 @@
             "<strong>Anthropic</strong> (United States) — recommendation generation and editorial neutrality analysis via the Claude API. Only the textual content of the analyzed page is transmitted. Compliant with the EU-US Data Privacy Framework.",
             "<strong>OpenAI</strong> (United States) — AI visibility testing via the GPT API. Simulated queries do not contain personal data. Compliant with the EU-US Data Privacy Framework.",
             "<strong>Jina AI</strong> (EU/US) — web page content extraction for analysis. The URL of the analyzed page is transmitted. GDPR compliant.",
+            "<strong>Browserless.io</strong> (United States) — JavaScript web page rendering for sites requiring a headless browser. The URL of the analyzed page is transmitted. Compliant with the EU-US Data Privacy Framework.",
             "<strong>PDFShift</strong> (EU) — PDF report generation. Report HTML content is transmitted for conversion. Hosted in the European Union.",
             "<strong>Google Analytics 4</strong> — anonymized analytics, subject to user consent. Compliant with the EU-US Data Privacy Framework."
           ],
@@ -1624,6 +1625,15 @@
     },
     "cta": "Analyze another website →"
   },
+  "serverError": {
+    "seo": {
+      "title": "500 — Server Error | Detekia"
+    },
+    "code": "500",
+    "title": "Internal server error",
+    "subtitle": "Something went wrong on our end. Please try again in a moment.",
+    "cta": "Back to homepage →"
+  },
   "notFound": {
     "seo": {
       "title": "404 — Page not found | Detekia"
@@ -1742,7 +1752,7 @@
         {
           "num": "01",
           "title": "Enter your site URL",
-          "desc": "Our AI identifies the 20 most important pages."
+          "desc": "Our AI identifies the 10 key pages."
         },
         {
           "num": "02",
@@ -1765,7 +1775,7 @@
       "items": [
         {
           "q": "Which pages are analyzed?",
-          "a": "Our algorithm identifies the 20 most important via sitemap, prioritizing strategic pages."
+          "a": "Our algorithm identifies the 10 key pages via sitemap, prioritizing strategic pages."
         },
         {
           "q": "How long for the report?",

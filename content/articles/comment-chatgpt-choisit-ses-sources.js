@@ -147,7 +147,7 @@ export default function CommentChatgptChoisitSesSources() {
 
       <h3>Le test manuel</h3>
 
-      <p>Ouvrez ChatGPT (modèle GPT-4 avec navigation web activée) et posez des requêtes que vos clients poseraient. Par exemple :</p>
+      <p>Ouvrez ChatGPT (modèle GPT-4o avec navigation web activée) et posez des requêtes que vos clients poseraient. Par exemple :</p>
 
       <ul>
         <li>"Quel est le meilleur [votre catégorie] en France ?"</li>

@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis';
+import { checkRateLimit } from '../../lib/rateLimit';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -8,6 +9,7 @@ const redis = new Redis({
 const ANALYTICS_TTL = 10 * 365 * 24 * 60 * 60; // 10 years
 
 export default async function handler(req, res) {
+  if (!(await checkRateLimit('track', req, res))) return;
   // Accept both GET (for beacon/img) and POST
   const params = req.method === 'POST' ? req.body : req.query;
   const { id, event } = params;

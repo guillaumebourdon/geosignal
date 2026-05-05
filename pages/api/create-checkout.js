@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import { checkRateLimit } from '../../lib/rateLimit';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -18,6 +19,7 @@ const PRODUCT_STRINGS = {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
+  if (!(await checkRateLimit('createCheckout', req, res))) return;
 
   const { plan, url, score, locale: reqLocale } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';

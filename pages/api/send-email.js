@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { checkRateLimit } from '../../lib/rateLimit';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -6,6 +7,7 @@ export const maxDuration = 30;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
+  if (!(await checkRateLimit('sendEmail', req, res))) return;
 
   const { email, url, score, criteria, recommendations, verdict, locale: reqLocale } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';

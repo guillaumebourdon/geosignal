@@ -147,7 +147,7 @@ export default function CommentChatgptChoisitSesSources() {
 
       <h3>Manual testing</h3>
 
-      <p>Open ChatGPT (GPT-4 model with web browsing enabled) and run queries your customers would ask. For example:</p>
+      <p>Open ChatGPT (GPT-4o model with web browsing enabled) and run queries your customers would ask. For example:</p>
 
       <ul>
         <li>"What's the best [your category] in [your city/the US]?"</li>
