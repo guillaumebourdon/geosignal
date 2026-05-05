@@ -32,6 +32,7 @@ CONTENT_MAP_EN['contenu-long-vs-court-ia'] = require('../../content/articles/en/
 CONTENT_MAP_EN['backlinks-geo-autorite-domaine-ia'] = require('../../content/articles/en/backlinks-geo-autorite-domaine-ia').default;
 CONTENT_MAP_EN['sitemap-robots-txt-bots-ia-2026'] = require('../../content/articles/en/sitemap-robots-txt-bots-ia-2026').default;
 CONTENT_MAP_EN['saas-b2b-chatgpt-recommandations'] = require('../../content/articles/en/saas-b2b-chatgpt-recommandations').default;
+CONTENT_MAP_EN['erreurs-geo-ecommerce'] = require('../../content/articles/en/erreurs-geo-ecommerce').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
@@ -59,6 +60,7 @@ const CONTENT_MAP = {
   'backlinks-geo-autorite-domaine-ia': require('../../content/articles/backlinks-geo-autorite-domaine-ia').default,
   'sitemap-robots-txt-bots-ia-2026': require('../../content/articles/sitemap-robots-txt-bots-ia-2026').default,
   'saas-b2b-chatgpt-recommandations': require('../../content/articles/saas-b2b-chatgpt-recommandations').default,
+  'erreurs-geo-ecommerce': require('../../content/articles/erreurs-geo-ecommerce').default,
 };
 
 const CATEGORY_COLORS = {
