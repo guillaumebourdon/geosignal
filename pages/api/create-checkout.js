@@ -11,8 +11,8 @@ const PRODUCT_STRINGS = {
     en: { name: 'Detekia — Single-page GEO audit', description: 'AI visibility audit on a single page — GEO score, 8 criteria analyzed, detailed recommendations, HTML + PDF report' },
   },
   pro: {
-    fr: { name: 'Detekia — Audit GEO complet (10 pages)', description: 'Audit GEO sur les 10 pages stratégiques de votre site — score global, patterns transverses, plan d\'action priorisé, bilan page par page, rapport HTML + PDF' },
-    en: { name: 'Detekia — Full website GEO audit (10 pages)', description: 'GEO audit on 10 strategic pages of your site — global score, cross-page patterns, prioritized action plan, page-by-page review, HTML + PDF report' },
+    fr: { name: 'Detekia — Audit GEO complet (10 pages clés)', description: 'Audit GEO sur les 10 pages clés de votre site — score global, patterns transverses, plan d\'action priorisé, bilan page par page, rapport HTML + PDF' },
+    en: { name: 'Detekia — Full website GEO audit (10 key pages)', description: 'GEO audit on 10 key pages of your site — global score, cross-page patterns, prioritized action plan, page-by-page review, HTML + PDF report' },
   },
 };
 

@@ -271,7 +271,7 @@
       "label": "Rapport complet",
       "titleStart": "Un rapport qui ",
       "titleEm": "vaut le détour",
-      "subtitle": "Une analyse approfondie avec des données exclusives — disponible sur 1 page (29 €) ou en audit complet sur 10 pages (99 €).",
+      "subtitle": "Une analyse approfondie avec des données exclusives — disponible sur 1 page (29 €) ou en audit complet sur les 10 pages clés (99 €).",
       "cards": [
         {
           "icon": "🔭",
@@ -688,7 +688,7 @@
   "pricing": {
     "seo": {
       "title": "Tarifs — Audit GEO 1 page ou site complet | Detekia",
-      "description": "Choisissez l'audit GEO qui correspond à votre besoin : analyse 1 page (29€) ou audit complet 10 pages (99€). Score, recommandations, plan d'action."
+      "description": "Choisissez l'audit GEO qui correspond à votre besoin : analyse 1 page (29€) ou audit complet 10 pages clés (99€). Score, recommandations, plan d'action."
     },
     "hero": {
       "title": "Choisissez l'audit qui correspond à votre besoin",
@@ -768,11 +768,11 @@
         },
         {
           "q": "Combien de temps pour recevoir mon rapport ?",
-          "a": "L'audit gratuit : environ 30 secondes. L'audit 1 page (29 €) : 1 minute. L'audit complet (99 €) : 5 à 10 minutes (analyse de 10 pages par IA)."
+          "a": "L'audit gratuit : environ 30 secondes. L'audit 1 page (29 €) : 1 minute. L'audit complet (99 €) : 5 à 10 minutes (analyse de 10 pages clés par IA)."
         },
         {
           "q": "Puis-je passer d'une offre à l'autre ?",
-          "a": "Oui, à tout moment. Votre audit 1 page reste accessible. L'audit complet est indépendant et analyse 10 pages supplémentaires."
+          "a": "Oui, à tout moment. Votre audit 1 page reste accessible. L'audit complet est indépendant et analyse 10 pages clés supplémentaires."
         },
         {
           "q": "Mon rapport expire-t-il ?",
@@ -793,10 +793,10 @@
       "badge": "",
       "features": [
         {
-          "text": "Score moyen /100 sur 10 pages"
+          "text": "Score moyen /100 sur 10 pages clés clés"
         },
         {
-          "text": "8 critères × 10 pages analysées"
+          "text": "8 critères × 10 pages clés analysées"
         },
         {
           "text": "Recommandations consolidées avec pages concernées"
@@ -832,7 +832,7 @@
       "errorAntibot": "Votre site utilise une protection anti-bot (Cloudflare, DataDome...) qui bloque notre analyse automatique. Pour auditer votre site, demandez à votre équipe technique d'autoriser notre crawler (User-Agent : DetekiaBot) ou contactez-nous à hello@detekia.fr pour une solution alternative.",
       "errorUnreachable": "Votre site n'est pas accessible depuis nos serveurs. Vérifiez l'URL et assurez-vous que le site est en ligne. Si le problème persiste, contactez-nous à hello@detekia.fr.",
       "errorNoContent": "La page ne contient pas assez de contenu texte pour générer un audit fiable. Cela peut arriver si le contenu est chargé entièrement en JavaScript. Contactez-nous à hello@detekia.fr pour une analyse manuelle.",
-      "errorProInsufficient": "Votre site ne permet pas un audit complet (moins de 10 pages détectées). En revanche, nous pouvons analyser cette page en détail.",
+      "errorProInsufficient": "Votre site ne permet pas un audit complet (moins de 10 pages clés détectées). En revanche, nous pouvons analyser cette page en détail.",
       "errorProInsufficient_cta": "Faire l'audit 1 page — 29 € →",
       "errorCheckFailed": "Une erreur est survenue lors de la vérification. Réessayez dans quelques instants."
     },
@@ -1586,11 +1586,11 @@
       "desc": "L'audit complet analyse 10 pages stratégiques de votre site, détecte les patterns transverses qu'une seule page ne peut pas révéler, et vous livre un plan d'action consolidé.",
       "cta": "Découvrir l'audit complet — 99 € →"
     },
-    "proTeaser": "Besoin d'analyser tout votre site ? L'audit complet analyse 10 pages.",
+    "proTeaser": "Besoin d'analyser tout votre site ? L'audit complet analyse les 10 pages clés.",
     "proTeaserLink": "Découvrir l'audit complet →",
     "proBlock": {
       "title": "Analyser tout votre site",
-      "desc": "L'audit complet analyse 10 pages, détecte les patterns transverses et produit un plan d'action priorisé.",
+      "desc": "L'audit complet analyse 10 pages clés, détecte les patterns transverses et produit un plan d'action priorisé.",
       "cta": "Découvrir l'audit complet →",
       "note": "10 PAGES · 99 €"
     }
@@ -1662,12 +1662,12 @@
   "pro": {
     "seo": {
       "title": "Audit GEO complet — 99 € | Detekia",
-      "description": "Audit complet de votre site sur 10 pages. Patterns transverses, plan d'action priorisé, bilan détaillé par page. Méthodologie Princeton/KDD 2024."
+      "description": "Audit complet de votre site sur les 10 pages clés. Patterns transverses, plan d'action priorisé, bilan détaillé par page. Méthodologie Princeton/KDD 2024."
     },
     "hero": {
       "badge": "AUDIT COMPLET",
       "title": "Votre site entier, audité par l'IA",
-      "subtitle": "10 pages analysées, patterns transverses détectés, plan d'action priorisé. Le diagnostic GEO le plus complet du marché.",
+      "subtitle": "10 pages clés analysées, patterns transverses détectés, plan d'action priorisé. Le diagnostic GEO le plus complet du marché.",
       "cta": "Auditer mon site — 99 € →",
       "exampleLink": "Voir un exemple de rapport"
     },
@@ -1715,7 +1715,7 @@
         },
         {
           "title": "Détection de patterns transverses",
-          "desc": "L'analyse croisée de 10 pages révèle les problèmes systémiques invisibles page par page : schémas manquants partout, FAQ absentes, signaux d'autorité faibles sur tout le site."
+          "desc": "L'analyse croisée de 10 pages clés révèle les problèmes systémiques invisibles page par page : schémas manquants partout, FAQ absentes, signaux d'autorité faibles sur tout le site."
         },
         {
           "title": "Recommandations consolidées",
@@ -1776,7 +1776,7 @@
         },
         {
           "q": "Combien de temps pour recevoir le rapport ?",
-          "a": "5 à 10 minutes. L'analyse de 10 pages par IA prend du temps — c'est le prix de la profondeur. Vous recevez un email dès que le rapport est prêt."
+          "a": "5 à 10 minutes. L'analyse de 10 pages clés par IA prend du temps — c'est le prix de la profondeur. Vous recevez un email dès que le rapport est prêt."
         },
         {
           "q": "En quoi c'est différent de l'audit 1 page ?",
