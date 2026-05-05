@@ -29,7 +29,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <h2>AI doesn't read PageRank, but it reads credibility</h2>
 
-      <p>Unlike Google, LLMs like GPT-4 or Gemini don't have access to the link graph in real time. They don't compute PageRank. Yet recent studies show that high-authority sites are systematically overrepresented in AI responses.</p>
+      <p>Unlike Google, LLMs like ChatGPT or Gemini don't have access to the link graph in real time. They don't compute PageRank. Yet recent studies show that high-authority sites are systematically overrepresented in AI responses.</p>
 
       <p>An Otterly.AI analysis published in early 2026, covering over 50,000 responses from ChatGPT and Perplexity, reveals that <strong>78% of cited sources have a Domain Rating (DR) above 60</strong>. Sites below DR 30 account for less than 5% of citations. This is not coincidental.</p>
 

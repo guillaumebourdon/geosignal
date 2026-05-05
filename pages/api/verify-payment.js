@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { Redis } from '@upstash/redis';
+import { checkRateLimit } from '../../lib/rateLimit';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const redis = new Redis({
@@ -10,6 +11,8 @@ const redis = new Redis({
 export const maxDuration = 30;
 
 export default async function handler(req, res) {
+  if (!(await checkRateLimit('verifyPayment', req, res))) return;
+
   const { session_id } = req.query;
   if (!session_id) return res.status(400).json({ error: 'session_id manquant' });
 
