@@ -600,7 +600,7 @@
       "items": [
         {
           "title": "Page-level analysis",
-          "desc": "Detekia analyzes precisely the page you submit (homepage by default, or any other URL of your site), not the entire site. For most sites, the homepage concentrates the global signals (robots.txt, Organization schema, authority, social presence) and provides a representative diagnostic. To analyze multiple pages with a consolidated report, see our Pro offer (coming soon)."
+          "desc": "Detekia analyzes precisely the page you submit (homepage by default, or any other URL of your site), not the entire site. For most sites, the homepage concentrates the global signals (robots.txt, Organization schema, authority, social presence) and provides a representative diagnostic. To analyze multiple pages with a consolidated report, see our complete audit."
         },
         {
           "title": "Non-measurable factors",
@@ -1502,6 +1502,10 @@
       "title": "Analysis failed",
       "timeout": "The analysis took too long. Please try again.",
       "retry": "← Try again"
+    },
+    "errors": {
+      "checkoutFailed": "Error creating payment session",
+      "checkoutConnection": "Payment connection error"
     },
     "accordion": {
       "hide": "▲ Hide",

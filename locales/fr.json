@@ -600,7 +600,7 @@
       "items": [
         {
           "title": "Analyse page-level",
-          "desc": "Detekia analyse précisément la page que vous soumettez (homepage par défaut, ou toute autre URL de votre site), pas l'intégralité du site. Pour la majorité des sites, la homepage concentre les signaux globaux (robots.txt, schema Organization, autorité, présence sociale) et donne un diagnostic représentatif. Pour analyser plusieurs pages avec un rapport consolidé, voir notre offre Pro (bientôt disponible)."
+          "desc": "Detekia analyse précisément la page que vous soumettez (homepage par défaut, ou toute autre URL de votre site), pas l'intégralité du site. Pour la majorité des sites, la homepage concentre les signaux globaux (robots.txt, schema Organization, autorité, présence sociale) et donne un diagnostic représentatif. Pour analyser plusieurs pages avec un rapport consolidé, voir notre audit complet."
         },
         {
           "title": "Facteurs non mesurables",
@@ -794,7 +794,7 @@
       "badge": "",
       "features": [
         {
-          "text": "Score moyen /100 sur 10 pages clés clés"
+          "text": "Score moyen /100 sur 10 pages clés"
         },
         {
           "text": "8 critères × 10 pages clés analysées"
@@ -823,12 +823,12 @@
     "errorAlert": "Erreur de paiement, réessayez.",
     "modal": {
       "title": "Analyser votre page",
-      "subtitle": "Entrez l'URL de la page a analyser. Votre rapport GEO sera pret en environ 1 minute apres paiement. Vous le recevrez par email.",
+      "subtitle": "Entrez l'URL de la page à analyser. Votre rapport GEO sera prêt en environ 1 minute après paiement. Vous le recevrez par email.",
       "urlPlaceholder": "https://www.votre-site.fr",
       "submitButton": "Payer 29 EUR et recevoir mon rapport",
       "cancelButton": "Annuler",
-      "urlInvalidError": "URL invalide, verifiez le format",
-      "errorGeneric": "Une erreur s'est produite, reessayez",
+      "urlInvalidError": "URL invalide, vérifiez le format",
+      "errorGeneric": "Une erreur s'est produite, réessayez",
       "checking": "Vérification de votre site...",
       "errorAntibot": "Votre site utilise une protection anti-bot (Cloudflare, DataDome...) qui bloque notre analyse automatique. Pour auditer votre site, demandez à votre équipe technique d'autoriser notre crawler (User-Agent : DetekiaBot) ou contactez-nous à hello@detekia.fr pour une solution alternative.",
       "errorUnreachable": "Votre site n'est pas accessible depuis nos serveurs. Vérifiez l'URL et assurez-vous que le site est en ligne. Si le problème persiste, contactez-nous à hello@detekia.fr.",
@@ -839,7 +839,7 @@
     },
     "modalPro": {
       "title": "Auditer votre site complet",
-      "subtitle": "Entrez l'URL de votre site. Nous analyserons les 10 pages les plus stratégiques. Votre rapport sera pret en 5-10 minutes et envoye par email.",
+      "subtitle": "Entrez l'URL de votre site. Nous analyserons les 10 pages les plus stratégiques. Votre rapport sera prêt en 5-10 minutes et envoyé par email.",
       "submitButton": "Payer 99 EUR et lancer l'audit"
     }
   },
@@ -1505,6 +1505,10 @@
       "timeout": "L'analyse a pris trop de temps. Veuillez réessayer.",
       "retry": "← Réessayer"
     },
+    "errors": {
+      "checkoutFailed": "Erreur lors de la création du paiement",
+      "checkoutConnection": "Erreur de connexion au paiement"
+    },
     "accordion": {
       "hide": "▲ Masquer",
       "show": "▼ Voir l'analyse"
@@ -1947,23 +1951,23 @@
     }
   },
   "pageSelector": {
-    "title": "Pages a analyser",
-    "subtitle": "Nous avons detecte les pages cles de votre site. Vous pouvez en retirer ou en ajouter avant de passer au paiement.",
-    "selectedCount": "{count} / {max} pages selectionnees",
-    "addPlaceholder": "Ajouter une URL du meme site...",
+    "title": "Pages à analyser",
+    "subtitle": "Nous avons détecté les pages clés de votre site. Vous pouvez en retirer ou en ajouter avant de passer au paiement.",
+    "selectedCount": "{count} / {max} pages sélectionnées",
+    "addPlaceholder": "Ajouter une URL du même site...",
     "addButton": "Ajouter",
     "confirmButton": "Valider et payer",
     "backButton": "Retour",
     "remove": "Retirer",
-    "check": "Selectionner",
-    "uncheck": "Deselectionner",
-    "typeCustom": "Ajoutee",
-    "errorMin": "Vous devez selectionner au moins 5 pages.",
-    "errorMax": "Maximum 10 pages autorisees.",
-    "errorHostname": "L'URL doit appartenir au meme site ({hostname}).",
-    "errorDuplicate": "Cette page est deja dans la liste.",
+    "check": "Sélectionner",
+    "uncheck": "Désélectionner",
+    "typeCustom": "Ajoutée",
+    "errorMin": "Vous devez sélectionner au moins 5 pages.",
+    "errorMax": "Maximum 10 pages autorisées.",
+    "errorHostname": "L'URL doit appartenir au même site ({hostname}).",
+    "errorDuplicate": "Cette page est déjà dans la liste.",
     "errorInvalidUrl": "URL invalide.",
-    "errorLoading": "Impossible de detecter les pages. Veuillez reessayer.",
-    "loading": "Detection des pages cles..."
+    "errorLoading": "Impossible de détecter les pages. Veuillez réessayer.",
+    "loading": "Détection des pages clés..."
   }
 }

@@ -15,6 +15,10 @@
 - [Score GEO : mesurer sa visibilite](https://detekia.fr/blog/score-geo-mesurer-visibilite-ia) : Comment interpreter un score GEO
 - [8 criteres GEO expliques](https://detekia.fr/blog/8-criteres-geo-methodologie-detekia) : Detail de la methodologie Detekia
 - [Visibilite IA pour debutants](https://detekia.fr/blog/visibilite-ia-guide-debutant) : Premiers pas en GEO
+- [Backlinks et GEO : autorite de domaine pour les IA](https://detekia.fr/blog/backlinks-geo-autorite-domaine-ia) : Backlinks, mentions, E-E-A-T et autorite GEO
+- [SaaS B2B : comment ChatGPT recommande vos concurrents](https://detekia.fr/blog/saas-b2b-chatgpt-recommandations) : 7 leviers pour etre cite par ChatGPT en B2B
+- [5 erreurs GEO qui plombent les sites e-commerce](https://detekia.fr/blog/erreurs-geo-ecommerce) : Les erreurs qui rendent votre boutique invisible pour les IA
+- [E-E-A-T et IA : Google et ChatGPT veulent les memes preuves](https://detekia.fr/blog/eeat-ia-experience-expertise) : Checklist E-E-A-T pour la visibilite IA
 
 ## Blog - Moteurs IA
 - [Comment ChatGPT choisit ses sources](https://detekia.fr/blog/comment-chatgpt-choisit-ses-sources) : Fonctionnement interne de ChatGPT pour la selection de sources
@@ -35,3 +39,4 @@
 - [Pourquoi le trafic Google baisse en 2026](https://detekia.fr/blog/pourquoi-trafic-google-baisse-2026) : Analyse et alternatives
 - [E-commerce et recommandations IA](https://detekia.fr/blog/ecommerce-recommandations-ia) : GEO pour les sites marchands
 - [GEO pour agences SEO](https://detekia.fr/blog/geo-agences-seo-audit-ia) : Integrer le GEO dans les offres d'agence
+- [Sitemap et robots.txt pour les bots IA en 2026](https://detekia.fr/blog/sitemap-robots-txt-bots-ia-2026) : Configuration robots.txt et sitemap.xml pour GPTBot, ClaudeBot, PerplexityBot

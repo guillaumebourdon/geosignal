@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
@@ -361,7 +362,7 @@ export default function Results() {
       if (!res.ok || !data.clientSecret) {
         console.error('[results] create-checkout failed:', JSON.stringify(data));
         setShowPageSelector(false);
-        setCheckError(data.error || 'Erreur lors de la creation du paiement');
+        setCheckError(data.error || t('results.errors.checkoutFailed'));
         return;
       }
       setShowPageSelector(false);
@@ -370,7 +371,7 @@ export default function Results() {
     } catch (e) {
       console.error('[results] Checkout error:', e);
       setShowPageSelector(false);
-      setCheckError('Erreur de connexion au paiement');
+      setCheckError(t('results.errors.checkoutConnection'));
     }
     finally { setCheckoutLoading(false); }
   }
@@ -442,6 +443,10 @@ export default function Results() {
 
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
+      <Head>
+        <title>{`${url ? url + ' — ' : ''}Score GEO | Detekia`}</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
 
       <Header showLanguageSwitcher={false} ctaLabel={t('results.nav.newAnalysis')} />
       <main>
