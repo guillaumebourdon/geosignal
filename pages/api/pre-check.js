@@ -169,21 +169,62 @@ export default async function handler(req, res) {
   // Page passed all checks — auditable for one-page
   const onePageAuditable = true;
 
-  // 4. Check Pro auditability: use the real sitemapPrioritizer (same logic as the actual audit)
+  // 4. Check Pro auditability: find pages + validate quality + test scrapability
   let pagesFound = 1;
   let proAuditable = false;
+  let proBlockReason = 'insufficient_pages';
   try {
     const { getTopPrioritizedUrls } = require('../../lib/sitemapPrioritizer');
     const pages = await getTopPrioritizedUrls(url, { maxUrls: 10, timeoutMs: 8000 });
-    pagesFound = pages.length;
-    proAuditable = pagesFound >= 10; // 10+ pages = viable Pro report
+
+    // Validate: pages must be on the SAME hostname (no subdomain blog pages)
+    const sameHostPages = pages.filter(p => {
+      try { return new URL(p.url).hostname.replace(/^www\./, '') === hostname; } catch { return false; }
+    });
+
+    // Validate: pages must be unique paths (not duplicates with different query strings)
+    const uniquePaths = new Set(sameHostPages.map(p => {
+      try { return new URL(p.url).pathname.replace(/\/+$/, '') || '/'; } catch { return p.url; }
+    }));
+
+    pagesFound = Math.min(sameHostPages.length, uniquePaths.size);
+    console.log(`[pre-check] ${hostname} — pages: ${pages.length} total, ${sameHostPages.length} same-host, ${uniquePaths.size} unique paths`);
+
+    if (pagesFound >= 10) {
+      // Spot-check: test 2 random internal pages (not homepage) for scrapability
+      const internalPages = sameHostPages.filter(p => {
+        try { return new URL(p.url).pathname !== '/'; } catch { return false; }
+      });
+      const samplesToTest = internalPages.sort(() => Math.random() - 0.5).slice(0, 2);
+
+      let scrapableCount = 0;
+      for (const sample of samplesToTest) {
+        const check = await fetchCheck(sample.url, 6000);
+        const isBlocked = !check.ok || check.status === 403 || check.status === 429 || detectAntiBot(check.body || '');
+        const hasContent = hasSubstantialContent(check.body || '');
+        if (!isBlocked && hasContent) {
+          scrapableCount++;
+        } else {
+          console.log(`[pre-check] ${hostname} — sample page NOT scrapable: ${sample.url} (status: ${check.status}, antibot: ${detectAntiBot(check.body || '')}, content: ${hasContent})`);
+        }
+      }
+
+      if (samplesToTest.length === 0 || scrapableCount >= 1) {
+        proAuditable = true;
+        proBlockReason = 'ok';
+      } else {
+        proBlockReason = 'pages_not_scrapable';
+        console.log(`[pre-check] ${hostname} — Pro BLOCKED: ${samplesToTest.length} sample pages tested, ${scrapableCount} scrapable`);
+      }
+    } else {
+      proBlockReason = pagesFound < 5 ? 'insufficient_pages' : 'insufficient_unique_pages';
+    }
   } catch (e) {
-    console.log(`[pre-check] ${hostname} — sitemapPrioritizer error: ${e.message.slice(0, 40)}`);
+    console.log(`[pre-check] ${hostname} — sitemapPrioritizer error: ${e.message.slice(0, 80)}`);
+    proBlockReason = 'sitemap_error';
   }
 
-  const reason = !onePageAuditable ? 'page_not_accessible'
-    : !proAuditable ? (pagesFound < 10 ? 'insufficient_pages' : 'pages_not_scrapable')
-    : 'ok';
+  const reason = !onePageAuditable ? 'page_not_accessible' : proBlockReason;
 
   const result = { onePageAuditable, proAuditable, reason, pagesFound };
   console.log(`[pre-check] ${hostname} — result: onePage=${onePageAuditable}, pro=${proAuditable}, pages=${pagesFound}, reason=${reason}`);
