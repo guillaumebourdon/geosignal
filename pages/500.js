@@ -8,7 +8,7 @@ export default function Custom500() {
 
   return (
     <>
-      <SEO title={t('serverError.seo.title')} description="" />
+      <SEO title={t('serverError.seo.title')} description="" noindex />
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
         <Header />

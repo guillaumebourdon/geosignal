@@ -62,7 +62,7 @@ export default function Success() {
     <>
       <Head>
         <title>Paiement confirmé | Detekia</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex, nofollow" />
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>

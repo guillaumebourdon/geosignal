@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 const SITE_URL = 'https://detekia.fr';
 
-export default function SEO({ title, description, image, schema }) {
+export default function SEO({ title, description, image, schema, noindex }) {
   const { locale = 'fr', asPath } = useRouter();
   const path = asPath.split('?')[0].split('#')[0];
   const ogLocale = locale === 'fr' ? 'fr_FR' : 'en_US';
@@ -16,6 +16,7 @@ export default function SEO({ title, description, image, schema }) {
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       {/* Open Graph */}
       <meta property="og:type" content="website" />
@@ -23,6 +24,7 @@ export default function SEO({ title, description, image, schema }) {
       <meta property="og:description" content={description} />
       <meta property="og:locale" content={ogLocale} />
       <meta property="og:url" content={canonical} />
+      <meta property="og:site_name" content="Detekia" />
       <meta property="og:image" content={ogImage} />
 
       {/* Twitter */}

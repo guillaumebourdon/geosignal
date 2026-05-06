@@ -9,7 +9,7 @@ export default function Custom404() {
 
   return (
     <>
-      <SEO title={t('notFound.seo.title')} description="" />
+      <SEO title={t('notFound.seo.title')} description="" noindex />
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 
         <Header />
