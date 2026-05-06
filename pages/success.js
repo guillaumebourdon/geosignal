@@ -5,8 +5,10 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import BeelevenContactModal from '../components/BeelevenContactModal';
 import { getAllArticles } from '../lib/articles';
+import { useTranslation } from '../lib/useTranslation';
 
 export default function Success() {
+  const { t, locale } = useTranslation();
   const router = useRouter();
   const { session_id, url } = router.query;
   const [status, setStatus] = useState('verifying');
@@ -16,7 +18,7 @@ export default function Success() {
   const [siteUrl, setSiteUrl] = useState('');
 
   const isPro = plan === 'pro';
-  const articles = getAllArticles('fr').slice(0, 3);
+  const articles = getAllArticles(locale).slice(0, 3);
 
   useEffect(() => {
     if (!session_id) return;
@@ -189,9 +191,9 @@ export default function Success() {
                   <div className="success-icon-pop" style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(16,163,127,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2" strokeLinecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
                   </div>
-                  <div style={{ fontSize: 15, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', marginBottom: 6 }}>Analyser tout mon site</div>
-                  <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Audit complet sur 10 pages stratégiques avec patterns et plan d'action.</div>
-                  <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#10A37F', fontWeight: 600 }}>Découvrir l'audit Pro →</div>
+                  <div style={{ fontSize: 15, color: '#1A1916', fontWeight: 600, fontFamily: 'system-ui', marginBottom: 6 }}>{t('success.proCard.title')}</div>
+                  <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>{t('success.proCard.desc')}</div>
+                  <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#10A37F', fontWeight: 600 }}>{t('success.proCard.cta')}</div>
                 </Link>
                 )}
 
@@ -201,7 +203,7 @@ export default function Success() {
             {/* ── ARTICLES ── */}
             <div style={{ maxWidth: 720, margin: '0 auto', padding: '24px 24px 40px' }}>
               <div className="reveal reveal-d4">
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>En attendant votre rapport</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('success.articlesLabel')}</div>
                 <div className="success-articles" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
                   {articles.map((a, i) => (
                     <Link key={i} href={`/blog/${a.slug}`} className="card-interactive" style={{

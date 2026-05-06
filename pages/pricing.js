@@ -249,7 +249,7 @@ export default function Pricing() {
         "brand": { "@type": "Organization", "name": "Detekia" },
         "offers": [
           { "@type": "Offer", "name": "Rapport One-Page", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/pricing" },
-          { "@type": "Offer", "name": "Audit Pro Multi-Pages", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pricing" }
+          { "@type": "Offer", "name": "Audit GEO complet (10 pages clés)", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pricing" }
         ]
       }} />
       <Head>
@@ -280,7 +280,7 @@ export default function Pricing() {
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
           <div style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#1A1916', letterSpacing: -1, marginBottom: 4 }}>{t('pricing.free.price')}</div>
           <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.free.subtitle')}</div>
-          <div style={{ fontSize: 11, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>sans inscription</div>
+          <div style={{ fontSize: 11, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.free.noSignup')}</div>
           <Link href="/" style={{ display: 'block', textAlign: 'center', background: '#F0EDE8', color: '#1A1916', padding: '11px 0', borderRadius: 9, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui', marginBottom: 24 }}>{t('pricing.free.cta')}</Link>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {freeFeatures.map((feat, i) => (

@@ -48,7 +48,7 @@ function useScrollReveal(threshold = 0.15) {
 /* ─── Animated hero mockup — Pro version ─────────────────── */
 function HeroMockup({ locale }) {
   const score = useAnimatedCounter(58);
-  const pagesCount = useAnimatedCounter(20, 800, 1200);
+  const pagesCount = useAnimatedCounter(10, 800, 1200);
   const [barsVisible, setBarsVisible] = useState(false);
   const [badgesVisible, setBadgesVisible] = useState(false);
 

@@ -1,9 +1,13 @@
 import { Resend } from 'resend';
+import { checkRateLimit } from '../../lib/rateLimit';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  const allowed = await checkRateLimit('proWaitlist', req, res);
+  if (!allowed) return;
 
   const { email, locale } = req.body || {};
 

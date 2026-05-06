@@ -73,8 +73,11 @@ const { generateReportHTML, S } = require('../../lib/oneReportTemplate');
 
 // ─── API Handler ─────────────────────────────────────────────────────────────
 
+const { checkRateLimit } = require('../../lib/rateLimit');
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
+  if (!(await checkRateLimit('reportPdf', req, res))) return;
 
   const { email, url, reportData, locale: reqLocale, isFreeViaPromo } = req.body;
   const locale = reqLocale === 'en' ? 'en' : 'fr';

@@ -171,7 +171,7 @@
       { "value": "4", "label": "AI engines covered" },
       { "value": "8", "label": "GEO criteria analyzed" },
       { "value": "2025-2026", "label": "sourced methodology" },
-      { "value": "30", "label": "AI queries (Pro audit)" },
+      { "value": "30", "label": "AI queries (complete audit)" },
       { "value": "FR + EN", "label": "available" },
       { "value": "10 years", "label": "report accessible online" },
       { "value": "1 min", "label": "one-page audit" }
@@ -402,7 +402,7 @@
       "products": {
         "label": "Products",
         "links": [
-          { "label": "Free audit", "href": "/" },
+          { "label": "Free scoring", "href": "/" },
           { "label": "1-Page audit — €29", "href": "/one-page" },
           { "label": "Complete audit — €99", "href": "/pro" }
         ]
@@ -699,6 +699,7 @@
       "price": "0€",
       "subtitle": "To discover Detekia",
       "cta": "Start for free",
+      "noSignup": "no sign-up required",
       "features": [
         {
           "included": true,
@@ -822,7 +823,7 @@
       "title": "Unlock your full report",
       "subtitle": "Enter the URL of the page to analyze. Your GEO report will be ready in about 1 minute after payment. You'll receive it by email.",
       "urlPlaceholder": "https://www.your-website.com",
-      "submitButton": "Pay $29 and receive my report",
+      "submitButton": "Pay €29 and receive my report",
       "cancelButton": "Cancel",
       "urlInvalidError": "Invalid URL, please check the format",
       "errorGeneric": "Something went wrong, please try again",
@@ -833,6 +834,11 @@
       "errorProInsufficient": "Your site doesn't support a complete audit (fewer than 10 key pages detected). However, we can analyze this page in detail.",
       "errorProInsufficient_cta": "Get the 1-page audit — €29 →",
       "errorCheckFailed": "An error occurred during verification. Please try again in a moment."
+    },
+    "modalPro": {
+      "title": "Audit your entire site",
+      "subtitle": "Enter your website URL. We will analyze the 10 most strategic pages. Your report will be ready in 5-10 minutes and sent by email.",
+      "submitButton": "Pay €99 and start the audit"
     }
   },
   "about": {
@@ -1623,7 +1629,13 @@
       "importantLabel": "— Important",
       "bonusLabel": "— Bonus"
     },
-    "cta": "Analyze another website →"
+    "cta": "Analyze another website →",
+    "proCard": {
+      "title": "Analyze my entire site",
+      "desc": "Complete audit on 10 strategic pages with patterns and action plan.",
+      "cta": "Discover the complete audit →"
+    },
+    "articlesLabel": "While you wait for your report"
   },
   "serverError": {
     "seo": {

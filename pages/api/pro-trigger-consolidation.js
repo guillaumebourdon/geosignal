@@ -9,7 +9,7 @@
  */
 import { Redis } from '@upstash/redis';
 import Anthropic from '@anthropic-ai/sdk';
-import { triggerConsolidation, triggerPdfGeneration } from '../../lib/proQueue';
+import { triggerConsolidation } from '../../lib/proQueue';
 import { generateProReportHTML } from '../../lib/proReportTemplate';
 
 export const config = { maxDuration: 300 };

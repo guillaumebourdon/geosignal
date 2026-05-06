@@ -171,7 +171,7 @@
       { "value": "4", "label": "moteurs IA couverts" },
       { "value": "8", "label": "critères GEO analysés" },
       { "value": "2025-2026", "label": "méthodologie sourcée" },
-      { "value": "30", "label": "requêtes IA (audit Pro)" },
+      { "value": "30", "label": "requêtes IA (audit complet)" },
       { "value": "FR + EN", "label": "disponible" },
       { "value": "10 ans", "label": "rapport accessible en ligne" },
       { "value": "1 min", "label": "audit one-page" }
@@ -699,6 +699,7 @@
       "price": "0€",
       "subtitle": "Testez votre visibilité IA en 30 secondes",
       "cta": "Lancer un scoring gratuit →",
+      "noSignup": "sans inscription",
       "features": [
         {
           "included": true,
@@ -1630,7 +1631,13 @@
       "importantLabel": "— Important",
       "bonusLabel": "— Bonus"
     },
-    "cta": "Analyser un autre site →"
+    "cta": "Analyser un autre site →",
+    "proCard": {
+      "title": "Analyser tout mon site",
+      "desc": "Audit complet sur 10 pages stratégiques avec patterns et plan d'action.",
+      "cta": "Découvrir l'audit complet →"
+    },
+    "articlesLabel": "En attendant votre rapport"
   },
   "serverError": {
     "seo": {

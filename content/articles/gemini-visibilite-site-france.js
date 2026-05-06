@@ -98,7 +98,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <p>La structure recommandée : une page principale qui couvre le sujet large (ex : "GEO : le guide complet"), des articles spécifiques sur chaque sous-thème (ex : "Schema.org pour l'IA", "Données structurées et visibilité"), et des liens internes entre toutes ces pages. Ce maillage interne signale à Gemini que votre site fait autorité sur l'ensemble du sujet.</p>
 
-      <InternalLink href="/blog/donnees-structurees-visibilite-ia">Données structurées et visibilité IA : le guide complet</InternalLink>
+      <InternalLink href="/blog/schema-org-ia-guide-pratique">Données structurées et visibilité IA : le guide complet</InternalLink>
 
       <h3>5. Optimiser la technique</h3>
 
