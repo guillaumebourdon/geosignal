@@ -1501,7 +1501,9 @@
     "error": {
       "title": "Analysis failed",
       "timeout": "The analysis took too long. Please try again.",
-      "retry": "← Try again"
+      "hint": "The site may be protected by an anti-bot system, rendered entirely in JavaScript, or temporarily unavailable.",
+      "retry": "Try another site",
+      "contact": "Contact us"
     },
     "errors": {
       "checkoutFailed": "Error creating payment session",

@@ -1503,7 +1503,9 @@
     "error": {
       "title": "Analyse impossible",
       "timeout": "L'analyse a pris trop de temps. Veuillez réessayer.",
-      "retry": "← Réessayer"
+      "hint": "Le site est peut-être protégé par un anti-bot, rendu entièrement en JavaScript, ou temporairement inaccessible.",
+      "retry": "Essayer un autre site",
+      "contact": "Nous contacter"
     },
     "errors": {
       "checkoutFailed": "Erreur lors de la création du paiement",

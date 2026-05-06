@@ -495,12 +495,18 @@ export default function Results() {
       )}
 
       {error && (
-        <div style={{ maxWidth: 560, margin: '80px auto', padding: '0 24px' }}>
-          <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 16, padding: '28px 32px' }}>
-            <div style={{ fontSize: 24, marginBottom: 12 }}>⚠️</div>
-            <div style={{ fontSize: 15, fontWeight: 500, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 8 }}>{t('results.error.title')}</div>
-            <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 20 }}>{error}</div>
-            <Link href="/" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>{t('results.error.retry')}</Link>
+        <div style={{ minHeight: 'calc(100vh - 56px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 24px' }}>
+          <div style={{ maxWidth: 480, width: '100%', textAlign: 'center' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(217,119,87,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', border: '1px solid rgba(217,119,87,0.15)' }}>
+              <span style={{ fontSize: 28, lineHeight: 1 }}>!</span>
+            </div>
+            <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#1A1916', marginBottom: 12, letterSpacing: -0.5 }}>{t('results.error.title')}</h1>
+            <p style={{ fontFamily: 'system-ui', fontSize: 15, color: '#6B6762', lineHeight: 1.7, marginBottom: 8 }}>{error}</p>
+            <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#B0ABA5', lineHeight: 1.6, marginBottom: 32 }}>{t('results.error.hint')}</p>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 700 }}>{t('results.error.retry')}</Link>
+              <Link href="/contact" style={{ display: 'inline-block', background: '#F0EDE8', color: '#6B6762', padding: '14px 32px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>{t('results.error.contact')}</Link>
+            </div>
           </div>
         </div>
       )}
