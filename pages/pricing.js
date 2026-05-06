@@ -243,14 +243,21 @@ export default function Pricing() {
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
       <SEO title={t('pricing.seo.title')} description={t('pricing.seo.description')} schema={{
         "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Detekia GEO Audit",
-        "description": "Audit de visibilite IA pour sites web — score GEO sur 100, 8 criteres, recommandations priorisees",
-        "brand": { "@type": "Organization", "name": "Detekia" },
-        "offers": [
-          { "@type": "Offer", "name": "Rapport One-Page", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/pricing" },
-          { "@type": "Offer", "name": "Audit GEO complet (10 pages clés)", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pricing" }
-        ]
+        "@type": "Service",
+        "name": "Detekia — Audit de visibilité IA",
+        "description": "Audit GEO pour sites web — score sur 100, 8 critères pondérés, recommandations priorisées, test de citation IA.",
+        "serviceType": "AI Visibility Audit",
+        "provider": { "@type": "Organization", "name": "Detekia", "url": "https://detekia.fr" },
+        "areaServed": { "@type": "Country", "name": "France" },
+        "image": "https://detekia.fr/og-default.png",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Audits GEO Detekia",
+          "itemListElement": [
+            { "@type": "Offer", "name": "Audit GEO 1 page", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/one-page" },
+            { "@type": "Offer", "name": "Audit GEO complet (10 pages clés)", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro" }
+          ]
+        }
       }} />
       <Head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({

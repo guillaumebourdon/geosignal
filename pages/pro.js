@@ -161,7 +161,14 @@ export default function Pro() {
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
       <SEO title={p('seo.title')} description={p('seo.description')} schema={{
-        "@context": "https://schema.org", "@type": "Product", "name": "Detekia — Audit GEO complet",
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Detekia — Audit GEO complet (10 pages clés)",
+        "description": "Audit GEO sur les 10 pages clés de votre site — score global, patterns transverses, plan d'action priorisé, test de citation IA sur 30 requêtes, rapport HTML + PDF.",
+        "serviceType": "AI Visibility Audit",
+        "provider": { "@type": "Organization", "name": "Detekia", "url": "https://detekia.fr" },
+        "areaServed": { "@type": "Country", "name": "France" },
+        "image": "https://detekia.fr/og-default.png",
         "offers": { "@type": "Offer", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro" }
       }} />
       <Head>
