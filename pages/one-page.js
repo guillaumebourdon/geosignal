@@ -149,8 +149,24 @@ export default function OnePage() {
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
       <SEO title={p('seo.title')} description={p('seo.description')} schema={{
-        "@context": "https://schema.org", "@type": "Product", "name": "Detekia — Audit GEO 1 page",
-        "offers": { "@type": "Offer", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/one-page" }
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Detekia — Audit GEO 1 page",
+        "description": "Audit de visibilité IA sur 1 page — score GEO sur 100, 8 critères analysés, recommandations détaillées, test de citation ChatGPT, rapport HTML + PDF.",
+        "serviceType": "AI Visibility Audit",
+        "provider": {
+          "@type": "Organization",
+          "name": "Detekia",
+          "url": "https://detekia.fr"
+        },
+        "areaServed": { "@type": "Country", "name": "France" },
+        "image": "https://detekia.fr/og-default.png",
+        "offers": {
+          "@type": "Offer",
+          "price": "29",
+          "priceCurrency": "EUR",
+          "url": "https://detekia.fr/one-page"
+        }
       }} />
       <Head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
