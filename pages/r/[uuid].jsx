@@ -698,7 +698,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
 
         {/* ═══ STICKY HEADER ═══ */}
         <header style={{ position: 'sticky', top: 0, zIndex: 100, background: '#1A1916', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: 'Georgia,serif', fontSize: 16, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>Detekia</span>
+          <a href="https://detekia.fr" style={{ fontFamily: 'Georgia,serif', fontSize: 16, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0, textDecoration: 'none' }}>Detekia</a>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1, minWidth: 0 }}>
             <span style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>{score}<span style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)' }}>/100</span></span>
             <span style={{ padding: '2px 10px', borderRadius: 20, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, background: `${g.color}22`, color: g.color, border: `1px solid ${g.color}44`, flexShrink: 0 }}>{g.label}</span>
@@ -1272,7 +1272,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
         {/* STICKY HEADER */}
         <header style={{ position: 'sticky', top: 0, zIndex: 100, background: '#1A1916', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: 'Georgia,serif', fontSize: 16, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>Detekia</span>
+          <a href="https://detekia.fr" style={{ fontFamily: 'Georgia,serif', fontSize: 16, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0, textDecoration: 'none' }}>Detekia</a>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1, minWidth: 0 }}>
             <span style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#F7F5F2', fontWeight: 'bold', flexShrink: 0 }}>{r.scoreAverage}<span style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)' }}>/100</span></span>
             <span style={{ padding: '2px 10px', borderRadius: 20, fontFamily: 'monospace', fontSize: 9, letterSpacing: 2, background: `${g.color}22`, color: g.color, border: `1px solid ${g.color}44`, flexShrink: 0 }}>{g.label}</span>
