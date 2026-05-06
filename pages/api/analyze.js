@@ -423,7 +423,53 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
   };
 }
 
-async function runClaudeAnalysis(url, textContent, scores, locale = 'fr', detectedSignals = '') {
+function detectSiteType(url, textContent, $) {
+  const u = url.toLowerCase();
+  const t = textContent.toLowerCase();
+  const hostname = (() => { try { return new URL(url).hostname.toLowerCase(); } catch { return ''; } })();
+
+  // E-commerce signals
+  if ($('script[type="application/ld+json"]').text().includes('"Product"') ||
+      /panier|cart|add.to.cart|acheter|buy.now|ajouter.au.panier|prix|price|\bshop\b|boutique|produit|product/i.test(t.slice(0, 2000)) ||
+      /shop\.|store\.|boutique/i.test(hostname)) return 'ecommerce';
+
+  // SaaS signals
+  if (/pricing|tarif|plan.gratuit|free.plan|start.free|essai.gratuit|free.trial|sign.up|s.inscrire|dashboard|api|integrations|saas/i.test(t.slice(0, 3000)) ||
+      /\.app$|\.io$|\.dev$|\.tools$|\.ai$|\.co$/.test(hostname)) return 'saas';
+
+  // Blog / media
+  if (/blog\.|magazine\.|journal\.|news\.|media\./i.test(hostname) ||
+      $('article').length >= 2 || (t.match(/publi[eé]|posted|written by|par\s+[A-Z]/g) || []).length >= 3) return 'blog';
+
+  // Agency / services
+  if (/agence|agency|cabinet|conseil|consulting|studio|freelance|prestation|nos.services|our.services|expertise/i.test(t.slice(0, 2000))) return 'agency';
+
+  // Local business
+  if (/horaires|opening.hours|ouverture|rendez-vous|appointment|nous.trouver|find.us|adresse|visite/i.test(t.slice(0, 2000)) &&
+      /restaurant|salon|clinique|cabinet|garage|boulangerie|coiffeur|dentiste|m[eé]decin/i.test(t)) return 'local';
+
+  // Corporate
+  if (/investor|actionnaire|shareholders|rapport.annuel|annual.report|nos.engagements|our.mission|careers|recrutement/i.test(t.slice(0, 3000))) return 'corporate';
+
+  return 'generic';
+}
+
+function getRecommendedSchemas(siteType, existingSchemas) {
+  const schemaMap = {
+    ecommerce: ['Product', 'AggregateRating', 'FAQPage', 'BreadcrumbList', 'Offer'],
+    saas: ['SoftwareApplication', 'FAQPage', 'HowTo', 'Service', 'Organization'],
+    blog: ['Article', 'BlogPosting', 'FAQPage', 'BreadcrumbList', 'Person'],
+    agency: ['Service', 'FAQPage', 'Organization', 'Person', 'HowTo'],
+    local: ['LocalBusiness', 'FAQPage', 'Review', 'PostalAddress', 'OpeningHoursSpecification'],
+    corporate: ['Organization', 'FAQPage', 'Article', 'Person', 'WebSite'],
+    generic: ['Organization', 'FAQPage', 'WebSite', 'BreadcrumbList', 'Article'],
+  };
+  const recommended = schemaMap[siteType] || schemaMap.generic;
+  const existing = existingSchemas.map(s => s.toLowerCase());
+  return recommended.filter(s => !existing.some(e => e.toLowerCase() === s.toLowerCase()));
+}
+
+async function runClaudeAnalysis(url, textContent, scores, locale = 'fr', detectedSignals = '', siteType = 'generic', missingSchemas = []) {
   const total = Object.values(scores).reduce((s, c) => s + c.score, 0);
 
   // All criteria below 80% threshold, sorted by worst score first
@@ -468,18 +514,25 @@ You are a senior GEO consultant. Audit ${url}.
 
 URL: ${url}
 SCORE: ${total}/100
+SITE TYPE DETECTED: ${siteType}
 CRITERIA BELOW THRESHOLD:
 ${criteriaList}
 
 CONTENT (first 300 characters):
 ${textContent.slice(0, 300)}
 
-${detectedSignals ? `ALREADY DETECTED ON THIS PAGE (do NOT recommend adding elements already present):\n${detectedSignals}\n` : ''}
+${detectedSignals ? `ALREADY DETECTED ON THIS PAGE (do NOT recommend adding elements already present):\n${detectedSignals}\n` : ''}${missingSchemas.length > 0 ? `MISSING SCHEMAS FOR THIS SITE TYPE (${siteType}): ${missingSchemas.join(', ')}\n` : ''}
 RULES:
 1. Generate EXACTLY 8 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
 2. Be SPECIFIC to this site. Reference actual elements found (or missing) in the analyzed content.
 3. Use nuanced phrasing. Prefer "not identified in the analyzed content" over absolute statements. Acknowledge scraping may be partial.
-4. Adapt schema recommendations to the SITE TYPE (e-commerce → Product/AggregateRating, SaaS → SoftwareApplication/Service, Blog → Article/BlogPosting, Corporate → Organization/FAQPage). Do NOT recommend LocalBusiness unless the site is a local physical business.
+4. STRUCTURED DATA RECOMMENDATION RULES (CRITICAL — this must NOT feel generic):
+   - Site type is "${siteType}". Tailor the schema recommendation to THIS type.
+   - If schemas are already present (listed in ALREADY DETECTED), do NOT repeat them. Recommend only the MISSING ones listed above.
+   - NEVER write a generic "add JSON-LD schemas" recommendation. Always name the EXACT schema type and explain WHY it matters for this specific site type.
+   - If the site already has Organization + WebSite (score 3+/10), focus on the HIGH-VALUE missing schema (FAQPage, Product, Article, SoftwareApplication) — not on adding more entity schemas.
+   - For ${siteType === 'ecommerce' ? 'e-commerce: prioritize Product + AggregateRating + Offer' : siteType === 'saas' ? 'SaaS: prioritize SoftwareApplication + FAQPage' : siteType === 'blog' ? 'blogs: prioritize Article/BlogPosting + Person (author)' : siteType === 'agency' ? 'agencies: prioritize Service + FAQPage + Person' : siteType === 'local' ? 'local businesses: prioritize LocalBusiness + OpeningHours + Review' : 'this site type: pick the most impactful schema'}.
+   - Title must reflect the SPECIFIC schema, not "Add structured data" (e.g., "Add FAQPage schema to pricing page", "Implement Product + Review markup").
 5. VERDICT RULES: Start with what makes this site UNIQUE (industry, positioning, specific strength or weakness). Do NOT start with "the site has a solid base but needs schemas" — that's generic. Focus on the most distinctive finding. If the score seems low due to scraping limits, mention it.
 6. TOP PRIORITY SELECTION — Pick the ONE action with the best impact × effort × context trade-off. Prefer quick wins (2-4 weeks, low effort) over major overhauls. Do NOT always pick the lowest-scoring criterion.
 7. FIELD LENGTH RULES:
@@ -751,6 +804,11 @@ export default async function handler(req, res) {
     else signalParts.push('JSON-LD schemas: NONE');
     const detectedSignals = signalParts.join('\n');
 
+    // Detect site type and missing schemas for targeted recommendations
+    const siteType = detectSiteType(url, textContent, $);
+    const missingSchemas = getRecommendedSchemas(siteType, detectedSchemas);
+    console.log(`[analyze] Site type: ${siteType}, schemas: [${detectedSchemas.join(', ')}], missing: [${missingSchemas.join(', ')}]`);
+
     const hostname = new URL(url).hostname.replace(/^www\./, '');
     const brand = metaTitle ? metaTitle.split(/[-|–·]/)[0].trim() : hostname;
     const intro = textContent.slice(0, 300);
@@ -758,7 +816,7 @@ export default async function handler(req, res) {
     // Run analysis + evidence in parallel. Citation test: 2 free, 10 one-page, 30 pro
     const queryCount = plan === 'pro' ? 30 : plan === 'onepage' ? 10 : 2;
     const [claude, evidence, citationTest] = await Promise.all([
-      runClaudeAnalysis(url, textContent, scores, locale, detectedSignals),
+      runClaudeAnalysis(url, textContent, scores, locale, detectedSignals, siteType, missingSchemas),
       collectEvidence($, textContent, rawContent, url, directMeta),
       runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
