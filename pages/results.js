@@ -357,15 +357,21 @@ export default function Results() {
         body: JSON.stringify(body),
       });
       const data = await res.json();
-      console.log('[results] create-checkout response:', data.clientSecret ? 'OK' : JSON.stringify(data));
-      if (data.clientSecret) {
+      console.log('[results] create-checkout response status:', res.status, 'has secret:', !!data.clientSecret);
+      if (!res.ok || !data.clientSecret) {
+        console.error('[results] create-checkout failed:', JSON.stringify(data));
         setShowPageSelector(false);
-        setClientSecret(data.clientSecret);
-        setShowCheckout(true);
-      } else {
-        setCheckError(data.error || 'Checkout failed');
+        setCheckError(data.error || 'Erreur lors de la creation du paiement');
+        return;
       }
-    } catch (e) { console.error('[results] Checkout error:', e); }
+      setShowPageSelector(false);
+      setClientSecret(data.clientSecret);
+      setShowCheckout(true);
+    } catch (e) {
+      console.error('[results] Checkout error:', e);
+      setShowPageSelector(false);
+      setCheckError('Erreur de connexion au paiement');
+    }
     finally { setCheckoutLoading(false); }
   }
 
@@ -719,7 +725,7 @@ export default function Results() {
               </div>
               <button onClick={closeCheckout} style={{ background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>×</button>
             </div>
-            <div style={{ padding: '16px 0 0' }}>
+            <div style={{ padding: '16px 0 0', minHeight: 400 }}>
               <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
                 <EmbeddedCheckout />
               </EmbeddedCheckoutProvider>
