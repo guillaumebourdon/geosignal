@@ -1052,6 +1052,16 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
             </div>
           </section>
 
+          {/* ═══ REPORT A PROBLEM ═══ */}
+          <div style={{ textAlign: 'center', marginBottom: 16 }}>
+            <a
+              href={`mailto:hello@detekia.fr?subject=${encodeURIComponent((locale === 'en' ? 'Problem with report' : 'Problème avec le rapport') + ` — ${url} — Score ${score}/100 — https://detekia.fr/r/${uuid}`)}`}
+              style={{ fontSize: 11, color: '#B0ABA5', textDecoration: 'underline', fontFamily: 'system-ui, sans-serif' }}
+            >
+              {locale === 'en' ? 'Report a problem with this report' : 'Signaler un problème avec ce rapport'}
+            </a>
+          </div>
+
           {/* ═══ FOOTER ═══ */}
           <footer style={{ textAlign: 'center', padding: '24px 0', borderTop: '1px solid #E5E2DC' }}>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginBottom: 4 }}>{rs(locale).reportGenerated} {date}</div>
@@ -1675,6 +1685,16 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               <div style={{ fontSize: 10, color: '#B0ABA5' }}>{rs(locale).scope}: {totalPages} {rs(locale).pagesAnalyzed} {locale === 'en' ? 'on' : 'sur'} {url}. {rs(locale).aggregatedScore}</div>
             </div>
           </section>
+
+          {/* Report a problem */}
+          <div style={{ textAlign: 'center', marginBottom: 16 }}>
+            <a
+              href={`mailto:hello@detekia.fr?subject=${encodeURIComponent((locale === 'en' ? 'Problem with report' : 'Problème avec le rapport') + ` — ${url} — Score ${r.scoreAverage}/100 — https://detekia.fr/r/${uuid}`)}`}
+              style={{ fontSize: 11, color: '#B0ABA5', textDecoration: 'underline', fontFamily: 'system-ui, sans-serif' }}
+            >
+              {locale === 'en' ? 'Report a problem with this report' : 'Signaler un problème avec ce rapport'}
+            </a>
+          </div>
 
           {/* Footer */}
           <footer style={{ textAlign: 'center', padding: '24px 0', borderTop: '1px solid #E5E2DC' }}>
