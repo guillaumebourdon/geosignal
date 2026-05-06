@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import Header from '../components/Header';
+import PageSelector from '../components/PageSelector';
 import { useTranslation } from '../lib/useTranslation';
 import { useFocusTrap } from '../lib/useFocusTrap';
 
@@ -291,6 +292,10 @@ export default function Results() {
     } catch (_) { setCaptureSent(true); } finally { setCaptureLoading(false); }
   }
 
+  const [showPageSelector, setShowPageSelector] = useState(false);
+  const [suggestedPages, setSuggestedPages] = useState([]);
+  const [pageSelectorHostname, setPageSelectorHostname] = useState('');
+
   async function handleCheckout(selectedPlan) {
     const plan = selectedPlan || 'rapport';
     setCheckoutPlan(plan);
@@ -314,18 +319,58 @@ export default function Results() {
           return;
         }
       } catch { /* fail-open */ }
+
+      // Show page selector for Pro
+      try {
+        const suggestRes = await fetch('/api/suggest-pages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, locale: router.locale }),
+        });
+        if (suggestRes.ok) {
+          const suggestData = await suggestRes.json();
+          if (suggestData.pages && suggestData.pages.length >= 1) {
+            setSuggestedPages(suggestData.pages);
+            setPageSelectorHostname(suggestData.hostname);
+            setShowPageSelector(true);
+            setCheckoutLoading(false);
+            return;
+          }
+        }
+      } catch {
+        console.warn('[results] suggest-pages failed, proceeding without page selection');
+      }
     }
 
+    await proceedToCheckout(plan, url);
+  }
+
+  async function proceedToCheckout(plan, checkoutUrl, pages) {
+    setCheckoutLoading(true);
     try {
+      const body = { plan, url: checkoutUrl, score: result?.score, locale: router.locale };
+      if (pages) body.pages = pages;
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, url, score: result?.score, locale: router.locale }),
+        body: JSON.stringify(body),
       });
       const data = await res.json();
-      if (data.clientSecret) { setClientSecret(data.clientSecret); setShowCheckout(true); }
+      if (data.clientSecret) {
+        setShowPageSelector(false);
+        setClientSecret(data.clientSecret);
+        setShowCheckout(true);
+      }
     } catch (e) { console.error('Checkout error:', e); }
     finally { setCheckoutLoading(false); }
+  }
+
+  function handlePageSelectorConfirm(pages) {
+    proceedToCheckout('pro', url, pages);
+  }
+
+  function handlePageSelectorBack() {
+    setShowPageSelector(false);
   }
 
   function closeCheckout() { setShowCheckout(false); setClientSecret(null); setCheckError(''); }
@@ -643,6 +688,20 @@ export default function Results() {
               </div>
             );
           })()}
+        </div>
+      )}
+
+      {showPageSelector && (
+        <div onClick={handlePageSelectorBack} style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#fff', borderRadius: 16, maxWidth: 560, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)', maxHeight: '90vh', overflowY: 'auto' }}>
+            <button onClick={handlePageSelectorBack} style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
+            <PageSelector
+              pages={suggestedPages}
+              hostname={pageSelectorHostname}
+              onConfirm={handlePageSelectorConfirm}
+              onBack={handlePageSelectorBack}
+            />
+          </div>
         </div>
       )}
 
