@@ -94,7 +94,14 @@ export default async function handler(req, res) {
           const host = req.headers['host'] || 'detekia.fr';
           const baseUrl = `${proto}://${host}`;
           const { createSiteAuditJob } = require('../../lib/proQueue');
-          const result = await createSiteAuditJob(session.metadata.url, { baseUrl, locale: session.metadata.locale || 'fr' });
+
+          // Parse customer-selected pages from Stripe metadata (if present)
+          let customerPages;
+          if (session.metadata?.pages) {
+            try { customerPages = JSON.parse(session.metadata.pages); } catch { customerPages = undefined; }
+          }
+
+          const result = await createSiteAuditJob(session.metadata.url, { baseUrl, locale: session.metadata.locale || 'fr', pages: customerPages });
           // Store job metadata
           const JOB_TTL = 24 * 60 * 60;
           await redis.set(`detekia:pro:v1:job:${result.siteJobId}:total`, result.queuedCount, { ex: JOB_TTL });

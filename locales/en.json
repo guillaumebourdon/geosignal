@@ -1931,5 +1931,25 @@
       "desc": "The complete audit analyzes 10 key pages and detects patterns a single-page analysis can't see.",
       "cta": "Discover the complete audit →"
     }
+  },
+  "pageSelector": {
+    "title": "Pages to analyze",
+    "subtitle": "We detected the key pages on your site. You can remove or add pages before proceeding to payment.",
+    "selectedCount": "{count} / {max} pages selected",
+    "addPlaceholder": "Add a URL from the same site...",
+    "addButton": "Add",
+    "confirmButton": "Confirm and pay",
+    "backButton": "Back",
+    "remove": "Remove",
+    "check": "Select",
+    "uncheck": "Deselect",
+    "typeCustom": "Custom",
+    "errorMin": "You must select at least 5 pages.",
+    "errorMax": "Maximum 10 pages allowed.",
+    "errorHostname": "The URL must belong to the same site ({hostname}).",
+    "errorDuplicate": "This page is already in the list.",
+    "errorInvalidUrl": "Invalid URL.",
+    "errorLoading": "Could not detect pages. Please try again.",
+    "loading": "Detecting key pages..."
   }
 }

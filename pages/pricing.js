@@ -6,6 +6,7 @@ import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe
 import Head from 'next/head';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
+import PageSelector from '../components/PageSelector';
 import { useTranslation } from '../lib/useTranslation';
 import { useFocusTrap } from '../lib/useFocusTrap';
 
@@ -52,9 +53,17 @@ export default function Pricing() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState(null);
 
+  // Page selector state (Pro flow only)
+  const [showPageSelector, setShowPageSelector] = useState(false);
+  const [suggestedPages, setSuggestedPages] = useState([]);
+  const [pageSelectorHostname, setPageSelectorHostname] = useState('');
+  const [pageSelectorUrl, setPageSelectorUrl] = useState('');
+  const [selectedPages, setSelectedPages] = useState(null);
+
   const inputRef = useRef(null);
   const triggerRef = useRef(null);
-  const modalTrapRef = useFocusTrap(showModal);
+  const modalTrapRef = useFocusTrap(showModal && !showPageSelector);
+  const pageSelectorTrapRef = useFocusTrap(showPageSelector);
   const checkoutTrapRef = useFocusTrap(showCheckout);
 
   const freeFeatures = t('pricing.free.features');
@@ -83,6 +92,11 @@ export default function Pricing() {
 
   function closeModal() {
     setShowModal(false);
+    setShowPageSelector(false);
+    setSuggestedPages([]);
+    setPageSelectorHostname('');
+    setPageSelectorUrl('');
+    setSelectedPages(null);
     setModalUrl('');
     setUrlError('');
     setModalError('');
@@ -146,27 +160,83 @@ export default function Pricing() {
     } catch {
       // Pre-check failed — proceed to checkout (fail-open)
     }
-    setLoadingText('');
 
+    // For Pro plan: show page selector step before checkout
+    if (selectedPlan === 'pro') {
+      setLoadingText(t('pageSelector.loading'));
+      try {
+        const suggestRes = await fetch('/api/suggest-pages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, locale: router.locale }),
+        });
+        if (suggestRes.ok) {
+          const suggestData = await suggestRes.json();
+          if (suggestData.pages && suggestData.pages.length >= 1) {
+            setSuggestedPages(suggestData.pages);
+            setPageSelectorHostname(suggestData.hostname);
+            setPageSelectorUrl(url);
+            setShowModal(false);
+            setShowPageSelector(true);
+            setModalLoading(false);
+            setLoadingText('');
+            return;
+          }
+        }
+        // If suggest-pages fails, fall through to checkout without page selection
+        console.warn('[pricing] suggest-pages failed or returned no pages, proceeding without page selection');
+      } catch {
+        console.warn('[pricing] suggest-pages error, proceeding without page selection');
+      }
+    }
+
+    setLoadingText('');
+    await proceedToCheckout(url);
+  }
+
+  async function proceedToCheckout(url, pages) {
+    setModalLoading(true);
     try {
+      const body = { plan: selectedPlan, url, locale: router.locale };
+      if (pages) body.pages = pages;
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: selectedPlan, url, locale: router.locale }),
+        body: JSON.stringify(body),
       });
       const data = await res.json();
       if (data.clientSecret) {
         setShowModal(false);
+        setShowPageSelector(false);
         setClientSecret(data.clientSecret);
         setShowCheckout(true);
       } else {
         setModalError(t('pricing.modal.errorGeneric'));
+        // Reopen modal if page selector was showing
+        if (showPageSelector) {
+          setShowPageSelector(false);
+          setShowModal(true);
+        }
       }
     } catch {
       setModalError(t('pricing.modal.errorGeneric'));
+      if (showPageSelector) {
+        setShowPageSelector(false);
+        setShowModal(true);
+      }
     } finally {
       setModalLoading(false);
     }
+  }
+
+  function handlePageSelectorConfirm(pages) {
+    setSelectedPages(pages);
+    proceedToCheckout(pageSelectorUrl, pages);
+  }
+
+  function handlePageSelectorBack() {
+    setShowPageSelector(false);
+    setShowModal(true);
   }
 
   return (
@@ -368,6 +438,30 @@ export default function Pricing() {
             <button onClick={closeModal} style={{ display: 'block', width: '100%', background: 'transparent', color: '#6B6762', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
               {t('pricing.modal.cancelButton')}
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* PAGE SELECTOR MODAL (Pro only) */}
+      {showPageSelector && (
+        <div
+          onClick={closeModal}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}
+        >
+          <div
+            ref={pageSelectorTrapRef}
+            role="dialog"
+            aria-modal="true"
+            onClick={e => e.stopPropagation()}
+            style={{ background: '#fff', borderRadius: 16, maxWidth: 560, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)', maxHeight: '90vh', overflowY: 'auto' }}
+          >
+            <button onClick={closeModal} aria-label="Fermer" style={{ position: 'absolute', top: 16, right: 16, background: '#F0EDE8', border: 'none', borderRadius: '50%', width: 32, height: 32, cursor: 'pointer', fontSize: 16, color: '#6B6762', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>x</button>
+            <PageSelector
+              pages={suggestedPages}
+              hostname={pageSelectorHostname}
+              onConfirm={handlePageSelectorConfirm}
+              onBack={handlePageSelectorBack}
+            />
           </div>
         </div>
       )}

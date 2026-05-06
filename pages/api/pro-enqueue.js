@@ -27,12 +27,18 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid URL format' });
   }
 
+  // Accept optional pages parameter (JSON stringified array or query param)
+  let customerPages;
+  if (req.query.pages) {
+    try { customerPages = JSON.parse(req.query.pages); } catch { customerPages = undefined; }
+  }
+
   const proto = req.headers['x-forwarded-proto'] || 'https';
   const host = req.headers['host'] || 'localhost:3000';
   const baseUrl = `${proto}://${host}`;
 
   try {
-    const result = await createSiteAuditJob(url, { baseUrl, locale });
+    const result = await createSiteAuditJob(url, { baseUrl, locale, pages: customerPages });
 
     // Store job metadata in Redis
     try {

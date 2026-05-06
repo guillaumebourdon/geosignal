@@ -1938,5 +1938,25 @@
       "desc": "L'audit complet analyse 10 pages stratégiques de votre site et détecte les patterns que l'analyse d'une seule page ne peut pas voir.",
       "cta": "Découvrir l'audit complet →"
     }
+  },
+  "pageSelector": {
+    "title": "Pages a analyser",
+    "subtitle": "Nous avons detecte les pages cles de votre site. Vous pouvez en retirer ou en ajouter avant de passer au paiement.",
+    "selectedCount": "{count} / {max} pages selectionnees",
+    "addPlaceholder": "Ajouter une URL du meme site...",
+    "addButton": "Ajouter",
+    "confirmButton": "Valider et payer",
+    "backButton": "Retour",
+    "remove": "Retirer",
+    "check": "Selectionner",
+    "uncheck": "Deselectionner",
+    "typeCustom": "Ajoutee",
+    "errorMin": "Vous devez selectionner au moins 5 pages.",
+    "errorMax": "Maximum 10 pages autorisees.",
+    "errorHostname": "L'URL doit appartenir au meme site ({hostname}).",
+    "errorDuplicate": "Cette page est deja dans la liste.",
+    "errorInvalidUrl": "URL invalide.",
+    "errorLoading": "Impossible de detecter les pages. Veuillez reessayer.",
+    "loading": "Detection des pages cles..."
   }
 }
