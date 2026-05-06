@@ -95,10 +95,13 @@ export default async function handler(req, res) {
           const baseUrl = `${proto}://${host}`;
           const { createSiteAuditJob } = require('../../lib/proQueue');
 
-          // Parse customer-selected pages from Stripe metadata (if present)
+          // Retrieve customer-selected pages from Redis (stored by create-checkout, Stripe metadata limited to 500 chars)
           let customerPages;
-          if (session.metadata?.pages) {
-            try { customerPages = JSON.parse(session.metadata.pages); } catch { customerPages = undefined; }
+          if (session.metadata?.pagesKey) {
+            try {
+              const pagesData = await redis.get(session.metadata.pagesKey);
+              if (pagesData) customerPages = typeof pagesData === 'string' ? JSON.parse(pagesData) : pagesData;
+            } catch { customerPages = undefined; }
           }
 
           const result = await createSiteAuditJob(session.metadata.url, { baseUrl, locale: session.metadata.locale || 'fr', pages: customerPages });

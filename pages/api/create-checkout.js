@@ -1,7 +1,12 @@
 import Stripe from 'stripe';
+import { Redis } from '@upstash/redis';
 import { checkRateLimit } from '../../lib/rateLimit';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
 export const maxDuration = 30;
 
@@ -42,6 +47,13 @@ export default async function handler(req, res) {
   const returnUrl = `${origin}${locale === 'en' ? '/en' : ''}/success?session_id={CHECKOUT_SESSION_ID}`;
 
   try {
+    // Store selected pages in Redis (Stripe metadata is limited to 500 chars per value)
+    let pagesKey = '';
+    if (pages && Array.isArray(pages) && pages.length > 0) {
+      pagesKey = `detekia:checkout-pages:${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+      await redis.set(pagesKey, JSON.stringify(pages), { ex: 24 * 60 * 60 }); // 24h TTL
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       allow_promotion_codes: true,
@@ -54,7 +66,7 @@ export default async function handler(req, res) {
         score: score != null ? String(score) : '',
         locale,
         plan: plan || 'rapport',
-        ...(pages ? { pages: JSON.stringify(pages) } : {}),
+        ...(pagesKey ? { pagesKey } : {}),
       },
       return_url: returnUrl,
     });
