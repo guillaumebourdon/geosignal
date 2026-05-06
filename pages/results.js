@@ -349,24 +349,28 @@ export default function Results() {
     setCheckoutLoading(true);
     try {
       const body = { plan, url: checkoutUrl, score: result?.score, locale: router.locale };
-      if (pages) body.pages = pages;
+      if (pages) body.pages = pages.map(p => typeof p === 'string' ? { url: p } : p);
+      console.log('[results] create-checkout body:', JSON.stringify(body).slice(0, 200));
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
       const data = await res.json();
+      console.log('[results] create-checkout response:', data.clientSecret ? 'OK' : JSON.stringify(data));
       if (data.clientSecret) {
         setShowPageSelector(false);
         setClientSecret(data.clientSecret);
         setShowCheckout(true);
+      } else {
+        setCheckError(data.error || 'Checkout failed');
       }
-    } catch (e) { console.error('Checkout error:', e); }
+    } catch (e) { console.error('[results] Checkout error:', e); }
     finally { setCheckoutLoading(false); }
   }
 
-  function handlePageSelectorConfirm(pages) {
-    proceedToCheckout('pro', url, pages);
+  async function handlePageSelectorConfirm(pages) {
+    await proceedToCheckout('pro', url, pages);
   }
 
   function handlePageSelectorBack() {
