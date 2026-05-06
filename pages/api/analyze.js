@@ -526,13 +526,16 @@ RULES:
 1. Generate EXACTLY 8 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
 2. Be SPECIFIC to this site. Reference actual elements found (or missing) in the analyzed content.
 3. Use nuanced phrasing. Prefer "not identified in the analyzed content" over absolute statements. Acknowledge scraping may be partial.
-4. STRUCTURED DATA RECOMMENDATION RULES (CRITICAL — this must NOT feel generic):
-   - Site type is "${siteType}". Tailor the schema recommendation to THIS type.
-   - If schemas are already present (listed in ALREADY DETECTED), do NOT repeat them. Recommend only the MISSING ones listed above.
-   - NEVER write a generic "add JSON-LD schemas" recommendation. Always name the EXACT schema type and explain WHY it matters for this specific site type.
-   - If the site already has Organization + WebSite (score 3+/10), focus on the HIGH-VALUE missing schema (FAQPage, Product, Article, SoftwareApplication) — not on adding more entity schemas.
-   - For ${siteType === 'ecommerce' ? 'e-commerce: prioritize Product + AggregateRating + Offer' : siteType === 'saas' ? 'SaaS: prioritize SoftwareApplication + FAQPage' : siteType === 'blog' ? 'blogs: prioritize Article/BlogPosting + Person (author)' : siteType === 'agency' ? 'agencies: prioritize Service + FAQPage + Person' : siteType === 'local' ? 'local businesses: prioritize LocalBusiness + OpeningHours + Review' : 'this site type: pick the most impactful schema'}.
-   - Title must reflect the SPECIFIC schema, not "Add structured data" (e.g., "Add FAQPage schema to pricing page", "Implement Product + Review markup").
+4. STRUCTURED DATA RECOMMENDATION RULES (CRITICAL — avoid repetitive schema advice):
+   - Site type is "${siteType}".
+   - If the site has NO schemas at all (score 0/10): recommend adding the most impactful schema for this site type. Name the EXACT type (e.g., "Add FAQPage schema to your pricing page", not "Add structured data").
+   - If the site ALREADY HAS basic schemas (score 3+/10, e.g., Organization or WebSite already present): do NOT recommend "adding more schemas". Instead, focus on one of these ALTERNATIVE structured data improvements:
+     * Enrich existing schema properties (add missing fields like foundingDate, founder, sameAs, address to Organization)
+     * Improve HTML semantics (replace generic <div> with <article>, <section>, <nav>, <aside> — AI parses semantic HTML better)
+     * Add structured headings hierarchy (proper H1 → H2 → H3 nesting for better content parsing)
+     * Add microdata or structured content patterns (definition lists for specs, comparison tables, step-by-step with numbered lists)
+     * Add BreadcrumbList for navigation context
+   - The title MUST reflect the specific advice, not a generic "add schemas" or "improve structured data". Examples: "Enrich Organization schema properties", "Semantic HTML for AI parsing", "Add breadcrumb navigation markup".
 5. VERDICT RULES: Start with what makes this site UNIQUE (industry, positioning, specific strength or weakness). Do NOT start with "the site has a solid base but needs schemas" — that's generic. Focus on the most distinctive finding. If the score seems low due to scraping limits, mention it.
 6. TOP PRIORITY SELECTION — Pick the ONE action with the best impact × effort × context trade-off. Prefer quick wins (2-4 weeks, low effort) over major overhauls. Do NOT always pick the lowest-scoring criterion.
 7. FIELD LENGTH RULES:
