@@ -285,6 +285,10 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
         if (fakeWords.has(lower)) return false;
         if (fakeCompetitorPattern.test(c)) return false;
         if (hostname && lower.includes(hostname)) return false;
+        // Reject if contains any blacklisted word
+        const rejectContains = ['consultez', 'conclusion', 'contactez', 'appelez', 'renseignez',
+          'comparez', 'utilisez', 'choisissez', 'optez', 'inscrivez', 'demandez', 'expliquez'];
+        if (rejectContains.some(w => lower.includes(w))) return false;
         // Reject single words that look like common verbs/nouns (end in -ez, -er, -ion, -ent, -ment)
         if (/^[A-Z][a-zéèêë]+$/.test(c) && /(?:ez|er|ir|re|ion|ent|ment|tion|ité|eur|eux|aux|ons|ées|ant)$/i.test(c)) return false;
         return true;
