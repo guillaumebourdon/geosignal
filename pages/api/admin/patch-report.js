@@ -42,6 +42,14 @@ export default async function handler(req, res) {
   if (!raw) return res.status(404).json({ error: 'Report not found' });
   const report = typeof raw === 'string' ? JSON.parse(raw) : raw;
 
+  if (action === 'debug-structure') {
+    const keys = Object.keys(report);
+    const crKeys = report.consolidatedReport ? Object.keys(report.consolidatedReport) : [];
+    const ctKeys = report.consolidatedReport?.citationTestConsolidated ? Object.keys(report.consolidatedReport.citationTestConsolidated) : [];
+    const q0 = report.consolidatedReport?.citationTestConsolidated?.queries?.[0];
+    return res.json({ topKeys: keys, consolidatedKeys: crKeys, ctKeys, firstQuery: q0 ? Object.keys(q0) : [], firstQuerySample: q0 || null });
+  }
+
   if (action === 'clean-competitors') {
     let cleaned = 0;
     const hostname = (report.url || '').replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
