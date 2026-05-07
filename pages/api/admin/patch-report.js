@@ -43,11 +43,25 @@ export default async function handler(req, res) {
   const report = typeof raw === 'string' ? JSON.parse(raw) : raw;
 
   if (action === 'debug-structure') {
-    const keys = Object.keys(report);
-    const crKeys = report.consolidatedReport ? Object.keys(report.consolidatedReport) : [];
-    const ctKeys = report.consolidatedReport?.citationTestConsolidated ? Object.keys(report.consolidatedReport.citationTestConsolidated) : [];
-    const q0 = report.consolidatedReport?.citationTestConsolidated?.queries?.[0];
-    return res.json({ topKeys: keys, consolidatedKeys: crKeys, ctKeys, firstQuery: q0 ? Object.keys(q0) : [], firstQuerySample: q0 || null });
+    const cr = report.consolidatedReport || {};
+    const pages = cr.pages || [];
+    const pageInfo = pages.slice(0, 2).map((p, i) => {
+      const ct = p.citationTest || {};
+      const tests = ct.tests || [];
+      return {
+        pageIndex: i,
+        url: p.url,
+        citationTestKeys: Object.keys(ct),
+        testCount: tests.length,
+        firstTest: tests[0] ? { keys: Object.keys(tests[0]), competitors: tests[0].competitors_cited || tests[0].competitorsCited || 'NONE' } : null,
+      };
+    });
+    const ctConsolidated = cr.citationTestConsolidated || {};
+    const consolidatedQueries = (ctConsolidated.queries || []).slice(0, 2).map(q => ({
+      query: q.query?.slice(0, 50),
+      competitors: q.competitors_cited || q.competitorsCited || 'NONE',
+    }));
+    return res.json({ pagesCount: pages.length, pageInfo, consolidatedQueries });
   }
 
   if (action === 'clean-competitors') {
