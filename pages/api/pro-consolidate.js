@@ -167,7 +167,9 @@ Rules:
 - patterns: 5 to 8 cross-page patterns detected
 - actionPlan: 10 to 15 site-level actions, sorted by priority (impact/effort ratio)
 - Be specific: reference actual URLs from the audit
-- NEVER write "${ctx.totalValid} pages sur ${ctx.totalValid}" — that's trivially obvious. Write "${ctx.totalValid} pages" or "toutes les ${ctx.totalValid} pages".`;
+- NEVER write "${ctx.totalValid} pages sur ${ctx.totalValid}" — that's trivially obvious. Write "${ctx.totalValid} pages" or "toutes les ${ctx.totalValid} pages".
+- Each action in the plan should affect 2+ pages. If a recommendation only applies to 1 page, it belongs in the per-page analysis, not in the site-level action plan. Consolidate single-page issues into broader patterns (e.g., instead of "add legal references to the insurance page", write "add external source citations across content pages").
+- The executive summary should describe SITE-WIDE patterns, not drill into one specific page's content.`;
 }
 
 function buildCitationPrompt(ctx, rootUrl, scoreAverage, validPages) {

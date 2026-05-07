@@ -1325,7 +1325,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
                       <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{tc(name, locale)}</a>
                       <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                        <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762' }}>{below}/{validPages.length} {rs(locale).belowThreshold}</span>
+                        {below > 0 && <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757' }}>{below}/{validPages.length} {rs(locale).belowThreshold}</span>}
                         <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{d.avgScore}/{d.max}</span>
                       </div>
                     </div>
