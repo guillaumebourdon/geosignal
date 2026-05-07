@@ -1301,9 +1301,6 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                 </div>
                 <div style={{ paddingBottom: 4, flex: 1, minWidth: 200 }}>
                   <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#D97757', marginBottom: 6 }}>{url} — {totalPages} {rs(locale).pagesAnalyzed}</div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
-                    {r.distribution?.faible || 0} {locale === 'en' ? 'low' : 'faible'} · {r.distribution?.moyen || 0} {locale === 'en' ? 'medium' : 'moyen'} · {r.distribution?.bon || 0} {locale === 'en' ? 'good' : 'bon'}
-                  </div>
                 </div>
               </div>
             </div>
