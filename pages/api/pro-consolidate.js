@@ -186,8 +186,16 @@ Step 1: Generate 30 queries users would ask ChatGPT/Perplexity about this site's
 
 Step 2: For each query, simulate whether ${new URL(rootUrl).hostname} would be cited. Consider the site's actual content quality (average score: ${scoreAverage}/100).
 
+CRITICAL RULES for competitorsCited:
+- ONLY include real company/brand names or domain names (e.g., "Club Med", "Edenred", "booking.com")
+- NEVER include generic words, verbs, or common phrases (e.g., "Conclusion", "Consultez", "Ressources Humaines", "Calcul Automatique")
+- NEVER include action verbs in imperative form (e.g., "Comparez", "Utilisez", "Renseignez", "Contactez")
+- NEVER include the analyzed site (${new URL(rootUrl).hostname}) as a competitor
+- If no real competitor is identifiable for a query, use an empty array []
+- Maximum 3 competitors per query
+
 JSON only:
-{"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["competitor1"],"difficulty_to_rank":"easy|medium|hard","recommendation":"1 sentence","ai_response_excerpt":"first 100 chars of simulated AI answer"}],"citationRate":"X/30","bestOpportunity":"best query opportunity","mainBlocker":"main reason for low citations"}`;
+{"queries":[{"query":"","type":"generic|niche|long_tail","cited":false,"competitorsCited":["competitor1"],"difficulty_to_rank":"easy|medium|hard","recommendation":"1 sentence","ai_response_excerpt":"first 100 chars of simulated AI answer"}],"citationRate":"X/30","bestOpportunity":"best query opportunity","mainBlocker":"main competitor blocking citations (must be a real brand name)"}`;
 }
 
 function buildCriteriaPrompt(ctx, rootUrl, scoreAverage, validPages, criteriaAverages) {
@@ -259,7 +267,38 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
   let citationTest = { tests: [], summary: { cited_count: 0, total_tests: 0, best_opportunity: '', main_blocker: '' } };
   if (citR.status === 'fulfilled' && citR.value) {
     citationTest = citR.value;
-    console.log(`[pro-consolidate] Citation test OK: ${citationTest.tests?.length || 0} queries tested`);
+    // Clean up fake competitors from AI responses
+    const fakeCompetitorPattern = /^(le |la |les |l'|un |une |des |du |de |en |au |the |a |an |for |with )/i;
+    const fakeWords = new Set(['conclusion', 'consultez', 'contactez', 'appelez', 'expliquez', 'demandez',
+      'renseignez', 'comparez', 'utilisez', 'choisissez', 'optez', 'inscrivez', 'recherche',
+      'certaines', 'plusieurs', 'notamment', 'activit', 'randonn', 'flexibilit', 'natation',
+      'nouveau prestataire', 'ancien prestataire', 'parties prenantes', 'ressources humaines',
+      'calcul automatique', 'titres restaurant', 'appels api', 'petit', 'habituellement',
+      'pension', 'demi', 'destinations', 'stations', 'clubs', 'villages', 'cours']);
+    const hostname = (() => { try { return new URL(rootUrl).hostname.replace(/^www\./, ''); } catch { return ''; } })();
+    const queries = citationTest.queries || citationTest.tests || [];
+    for (const q of queries) {
+      const field = q.competitorsCited || q.competitors_cited || [];
+      const cleaned = field.filter(c => {
+        const lower = (c || '').toLowerCase().trim();
+        if (!lower || lower.length < 3) return false;
+        if (fakeWords.has(lower)) return false;
+        if (fakeCompetitorPattern.test(c)) return false;
+        if (hostname && lower.includes(hostname)) return false;
+        // Reject single words that look like common verbs/nouns (end in -ez, -er, -ion, -ent, -ment)
+        if (/^[A-Z][a-zéèêë]+$/.test(c) && /(?:ez|er|ir|re|ion|ent|ment|tion|ité|eur|eux|aux|ons|ées|ant)$/i.test(c)) return false;
+        return true;
+      });
+      if (q.competitorsCited) q.competitorsCited = cleaned;
+      if (q.competitors_cited) q.competitors_cited = cleaned;
+    }
+    // Clean mainBlocker
+    const blocker = citationTest.mainBlocker || citationTest.summary?.main_blocker || '';
+    if (fakeWords.has(blocker.toLowerCase().trim())) {
+      if (citationTest.mainBlocker) citationTest.mainBlocker = '';
+      if (citationTest.summary?.main_blocker) citationTest.summary.main_blocker = '';
+    }
+    console.log(`[pro-consolidate] Citation test OK: ${queries.length} queries, competitors cleaned`);
   } else { console.error('[pro-consolidate] Citation test FAILED:', citR.reason?.message || 'null result'); }
 
   let criteriaConsolidated = [];
