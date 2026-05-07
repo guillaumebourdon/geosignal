@@ -51,6 +51,8 @@ async function readJobData(siteJobId) {
   const total = Number(totalRaw) || 0;
   const meta = typeof metaRaw === 'string' ? JSON.parse(metaRaw) : metaRaw;
   if (!total || !meta) return null;
+  // Normalize rootUrl — ensure it has a protocol (some entries stored without https://)
+  if (meta.rootUrl && !/^https?:\/\//i.test(meta.rootUrl)) meta.rootUrl = `https://${meta.rootUrl}`;
 
   const pageKeys = Array.from({ length: total }, (_, i) => `${JOB_PREFIX}:${siteJobId}:page:${i}`);
   const pageResults = await Promise.all(pageKeys.map(k => redis.get(k).catch(() => null)));

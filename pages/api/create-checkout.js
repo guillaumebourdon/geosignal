@@ -26,7 +26,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
   if (!(await checkRateLimit('createCheckout', req, res))) return;
 
-  const { plan, url, score, locale: reqLocale, pages } = req.body;
+  const { plan, score, locale: reqLocale, pages } = req.body;
+  let url = req.body.url || '';
+  if (url && !/^https?:\/\//i.test(url)) url = `https://${url}`;
   const locale = reqLocale === 'en' ? 'en' : 'fr';
 
   if (!['rapport', 'pro'].includes(plan)) return res.status(400).json({ error: 'Plan invalide' });

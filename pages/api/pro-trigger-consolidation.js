@@ -69,7 +69,8 @@ export default async function handler(req, res) {
       if (!total || !meta) return res.status(404).json({ error: 'Job not found' });
 
       const locale = meta.locale || 'fr';
-      const rootUrl = meta.rootUrl;
+      let rootUrl = meta.rootUrl;
+      if (rootUrl && !/^https?:\/\//i.test(rootUrl)) rootUrl = `https://${rootUrl}`;
 
       const pageKeys = Array.from({ length: total }, (_, i) => `${JOB_PREFIX}:${siteJobId}:page:${i}`);
       const pageResults = await Promise.all(pageKeys.map(k => redis.get(k).catch(() => null)));
