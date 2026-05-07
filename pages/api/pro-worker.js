@@ -97,21 +97,22 @@ export default async function handler(req, res) {
   console.log(`[pro-worker] Completed page ${index + 1}/${total} for ${siteJobId} (url=${url}, score=${result.score || 'error'}, progress=${newCount}/${total})`);
 
   // Check if all pages are done — trigger consolidation
-  // Also handles catch-up: if a previous worker timed out after incr but before trigger
-  const shouldTrigger = newCount >= total;
-  // Safety net: if we're one of the last workers, double-check stored page count
+  let shouldTrigger = newCount >= total;
+
+  // Safety net: if we're one of the last workers (within 2 of total),
+  // double-check stored page count in case counter drifted
   if (!shouldTrigger && newCount >= total - 2) {
-    let storedCount = 0;
-    for (let i = 0; i < total; i++) {
-      const exists = await redis.exists(`${JOB_PREFIX}:${siteJobId}:page:${i}`);
-      if (exists) storedCount++;
-    }
+    const pageChecks = await Promise.all(
+      Array.from({ length: total }, (_, i) => redis.exists(`${JOB_PREFIX}:${siteJobId}:page:${i}`))
+    );
+    const storedCount = pageChecks.filter(Boolean).length;
     if (storedCount >= total) {
-      console.log(`[pro-worker] Safety net: counter=${newCount} but ${storedCount}/${total} pages stored. Triggering consolidation.`);
+      console.log(`[pro-worker] Safety net: counter=${newCount} but ${storedCount}/${total} pages stored. Forcing consolidation.`);
+      shouldTrigger = true;
     }
   }
 
-  if (newCount >= total) {
+  if (shouldTrigger) {
     // Atomic guard: SET NX to prevent double consolidation from QStash retries
     const lockKey = `${JOB_PREFIX}:${siteJobId}:consolidation_triggered`;
     const acquired = await redis.set(lockKey, '1', { nx: true, ex: JOB_TTL });
@@ -119,7 +120,13 @@ export default async function handler(req, res) {
       console.log(`[pro-worker] All pages done for ${siteJobId}, triggering consolidation`);
       const proto = req.headers['x-forwarded-proto'] || 'https';
       const host = req.headers['host'] || 'localhost:3000';
-      await triggerConsolidation(siteJobId, { baseUrl: `${proto}://${host}` });
+      try {
+        await triggerConsolidation(siteJobId, { baseUrl: `${proto}://${host}` });
+      } catch (err) {
+        // If QStash trigger fails, release the lock so another worker can retry
+        console.error(`[pro-worker] Consolidation trigger FAILED for ${siteJobId}: ${err.message}. Releasing lock.`);
+        await redis.del(lockKey).catch(() => {});
+      }
     } else {
       console.log(`[pro-worker] All pages done for ${siteJobId}, but consolidation already triggered`);
     }

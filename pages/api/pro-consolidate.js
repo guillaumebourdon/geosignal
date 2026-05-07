@@ -373,6 +373,25 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true, siteJobId, status: 'consolidated' });
   } catch (err) {
     console.error(`[pro-consolidate] Error for ${siteJobId}:`, err.message);
+    // Alert admin — client paid but consolidation failed
+    try {
+      const { Resend } = require('resend');
+      const alertResend = new Resend(process.env.RESEND_API_KEY);
+      const meta = await redis.get(`${JOB_PREFIX}:${siteJobId}:meta`).catch(() => null);
+      await alertResend.emails.send({
+        from: 'Detekia <hello@detekia.fr>',
+        to: 'guillaume@beeleven.fr',
+        subject: `🚨 Consolidation échouée — ${siteJobId}`,
+        html: `<div style="font-family:system-ui;padding:24px;">
+          <h2 style="color:#D97757;">Consolidation Pro échouée</h2>
+          <p><strong>Job :</strong> ${siteJobId}</p>
+          <p><strong>Site :</strong> ${meta?.rootUrl || 'inconnu'}</p>
+          <p><strong>Email client :</strong> ${meta?.customerEmail || 'inconnu'}</p>
+          <p><strong>Erreur :</strong> ${err.message}</p>
+          <p style="color:#D97757;font-weight:bold;">Action requise : relancer manuellement via /api/pro-trigger-consolidation</p>
+        </div>`,
+      });
+    } catch (_) {}
     return res.status(500).json({ error: err.message });
   }
 }
