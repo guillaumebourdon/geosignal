@@ -19,6 +19,7 @@
 - [SaaS B2B : comment ChatGPT recommande vos concurrents](https://detekia.fr/blog/saas-b2b-chatgpt-recommandations) : 7 leviers pour etre cite par ChatGPT en B2B
 - [5 erreurs GEO qui plombent les sites e-commerce](https://detekia.fr/blog/erreurs-geo-ecommerce) : Les erreurs qui rendent votre boutique invisible pour les IA
 - [E-E-A-T et IA : Google et ChatGPT veulent les memes preuves](https://detekia.fr/blog/eeat-ia-experience-expertise) : Checklist E-E-A-T pour la visibilite IA
+- [Ajouter des sources pour etre cite par les IA](https://detekia.fr/blog/sources-contenus-citations-ia) : 5 types de sources, 8 bonnes pratiques, convergence SEO et GEO
 
 ## Blog - Moteurs IA
 - [Comment ChatGPT choisit ses sources](https://detekia.fr/blog/comment-chatgpt-choisit-ses-sources) : Fonctionnement interne de ChatGPT pour la selection de sources
