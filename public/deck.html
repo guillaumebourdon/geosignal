@@ -170,13 +170,20 @@
 <!-- ═══ SLIDE 1 — COVER ═══ -->
 <div class="slide active" id="s1">
   <div class="split">
-    <div class="split-left cream-bg">
-      <div class="cover-orb animate d1">
+    <div class="split-left cream-bg" style="flex-direction:column;gap:24px;">
+      <!-- Logo Detekia -->
+      <div class="animate d1" style="display:flex;align-items:center;gap:12px;">
+        <svg width="36" height="36" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1A1916"/><path d="M8 22V10l8 6-8 6z" fill="#D97757"/><path d="M16 22V10l8 6-8 6z" fill="#D97757" opacity="0.5"/></svg>
+        <span style="font-family:Georgia,serif;font-size:26px;color:var(--dark);letter-spacing:-0.5px;">Detekia</span>
+      </div>
+      <!-- Orb -->
+      <div class="cover-orb animate d2">
         <div class="cover-orb-text">
           <div class="geo">GEO</div>
-          <div class="brand">Detekia</div>
+          <div class="brand" style="font-size:18px;color:rgba(247,245,242,0.5);">Generative Engine<br>Optimization</div>
         </div>
       </div>
+      <div class="animate d3" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;">Edition 2026</div>
     </div>
     <div class="split-right dark-bg" style="justify-content:center;">
       <div class="animate d2" style="margin-bottom:32px;">
@@ -218,8 +225,8 @@
               </div>
               <div style="font-size:20px;color:var(--muted);">&#8594;</div>
               <div>
-                <div style="font-size:14px;color:var(--orange);">Dec 2025</div>
-                <div style="font-size:42px;font-weight:900;color:var(--orange);">27,7<span style="font-size:22px;">M</span></div>
+                <div style="font-size:14px;color:var(--orange);">2025</div>
+                <div style="font-size:42px;font-weight:900;color:var(--orange);">28,1<span style="font-size:22px;">M</span></div>
               </div>
             </div>
             <div style="background:rgba(217,119,87,0.1);border:1px solid rgba(217,119,87,0.3);border-radius:10px;padding:10px 16px;text-align:center;margin-top:12px;display:inline-block;">
@@ -249,19 +256,20 @@
         </div>
       </div>
       <div class="data-panel" style="flex:0.9;">
-        <div class="panel-title">Top IA — Decembre 2025</div>
+        <div class="panel-title">Top IA en France — 2025</div>
         <div class="llm-list">
-          <div class="llm-row"><div class="llm-name">ChatGPT</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:100%;background:linear-gradient(90deg,rgba(217,119,87,0.5),var(--orange));">24,5M</div></div></div>
-          <div class="llm-row"><div class="llm-name">Gemini</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:40%;background:linear-gradient(90deg,rgba(66,133,244,0.4),var(--blue));">4M</div></div></div>
-          <div class="llm-row"><div class="llm-name">Perplexity</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:32%;background:linear-gradient(90deg,rgba(16,163,127,0.4),var(--green));">2,2M</div></div></div>
-          <div class="llm-row"><div class="llm-name">Mistral AI</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:26%;background:linear-gradient(90deg,rgba(247,245,242,0.15),rgba(247,245,242,0.3));">1,3M</div></div></div>
-          <div class="llm-row"><div class="llm-name">Copilot</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:26%;background:linear-gradient(90deg,rgba(247,245,242,0.15),rgba(247,245,242,0.3));">1,3M</div></div></div>
-          <div class="llm-row"><div class="llm-name">Claude</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:18%;background:linear-gradient(90deg,rgba(201,134,26,0.4),var(--gold));">530K</div></div></div>
+          <div class="llm-row"><div class="llm-name">ChatGPT</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:100%;background:linear-gradient(90deg,rgba(217,119,87,0.5),var(--orange));">24,4M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Gemini</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:38%;background:linear-gradient(90deg,rgba(66,133,244,0.4),var(--blue));">4M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Perplexity</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:30%;background:linear-gradient(90deg,rgba(16,163,127,0.4),var(--green));">2,2M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Grok</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:24%;background:linear-gradient(90deg,rgba(247,245,242,0.2),rgba(247,245,242,0.4));">1,5M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Mistral AI</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:22%;background:linear-gradient(90deg,rgba(247,245,242,0.15),rgba(247,245,242,0.3));">1,3M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Copilot</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:22%;background:linear-gradient(90deg,rgba(247,245,242,0.15),rgba(247,245,242,0.3));">1,3M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Claude</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:14%;background:linear-gradient(90deg,rgba(201,134,26,0.4),var(--gold));">500K</div></div></div>
         </div>
         <div style="font-size:11px;color:rgba(247,245,242,0.25);margin-top:8px;">VU / mois en France</div>
       </div>
     </div>
-    <div class="source animate d3">Source : Mediametrie — Mediamat Net Ratings — Decembre 2025</div>
+    <div class="source animate d3">Source : Mediametrie — Mediamat Net Ratings, 2025 (publie fev. 2026)</div>
   </div>
 </div>
 
@@ -269,26 +277,25 @@
 <div class="slide" id="s3">
   <div class="split">
     <div class="split-left dark-bg" style="flex-direction:column;padding:60px 48px;align-items:flex-start;justify-content:center;">
-      <div class="tag animate d1">Barometre Gen-IA 2025</div>
-      <h2 class="animate d2" style="text-align:left;font-size:34px;">Quels sont les<br>principaux usages ?</h2>
+      <div class="tag animate d1">Etude SEMrush — Dec. 2025</div>
+      <h2 class="animate d2" style="text-align:left;font-size:34px;">L'IA dans le<br>parcours d'achat</h2>
       <p class="subtitle animate d3" style="margin-top:20px;font-size:17px;">
-        Les LLM s'imposent comme un <strong style="color:var(--cream);">nouvel intermediaire dans le parcours d'achat</strong>
+        Les consommateurs utilisent l'IA a <strong style="color:var(--cream);">chaque etape de la decision d'achat</strong>
       </p>
       <div class="source animate d4" style="position:relative;bottom:auto;left:auto;margin-top:40px;">
-        Barometre Gen-IA — Iligo x Media Figaro — Decembre 2025<br>
-        1022 Francais 18-69 ans ayant deja prompte
+        SEMrush Consumer Study — Decembre 2025<br>
+        1 030 consommateurs interroges
       </div>
     </div>
     <div class="split-right dark-bg" style="justify-content:center;padding-left:40px;">
       <div class="bar-chart">
-        <div class="bar-row animate d2"><div class="bar-label">Conseils vie privee (couple, enfants...)</div><div class="bar-track"><div class="bar-fill" style="--w:77%;">77%</div></div></div>
-        <div class="bar-row animate d3"><div class="bar-label">Se divertir (images, videos...)</div><div class="bar-track"><div class="bar-fill" style="--w:70%;">70%</div></div></div>
-        <div class="bar-row animate d4"><div class="bar-label">Conseils vie quotidienne (sport, voyage...)</div><div class="bar-track"><div class="bar-fill" style="--w:66%;">66%</div></div></div>
-        <div class="bar-row animate d5"><div class="bar-label">Apprendre (devoirs, travail, sante...)</div><div class="bar-track"><div class="bar-fill" style="--w:64%;">64%</div></div></div>
-        <div class="bar-row bar-highlight animate d6"><div class="bar-label">Recommandation produit ou service</div><div class="bar-track"><div class="bar-fill" style="--w:61%;">61%</div></div></div>
-        <div class="bar-row bar-highlight animate d7"><div class="bar-label">Trouver de l'inspiration (voyages, cadeaux...)</div><div class="bar-track"><div class="bar-fill" style="--w:60%;">60%</div></div></div>
-        <div class="bar-row animate d8"><div class="bar-label">Etre assiste (mail, CV, lettre...)</div><div class="bar-track"><div class="bar-fill" style="--w:54%;">54%</div></div></div>
-        <div class="bar-row animate d8"><div class="bar-label">Faire une recherche rapide</div><div class="bar-track"><div class="bar-fill" style="--w:44%;">44%</div></div></div>
+        <div class="bar-row animate d2"><div class="bar-label">Utilisent l'IA au moins 1x par semaine</div><div class="bar-track"><div class="bar-fill" style="--w:85%;">85%</div></div></div>
+        <div class="bar-row bar-highlight animate d3"><div class="bar-label">Comparent des produits via l'IA</div><div class="bar-track"><div class="bar-fill" style="--w:57%;">57%</div></div></div>
+        <div class="bar-row bar-highlight animate d4"><div class="bar-label">Utilisent l'IA en phase de decouverte</div><div class="bar-track"><div class="bar-fill" style="--w:51%;">51%</div></div></div>
+        <div class="bar-row bar-highlight animate d5"><div class="bar-label">Consultent l'IA pour la decision finale</div><div class="bar-track"><div class="bar-fill" style="--w:50%;">50%</div></div></div>
+        <div class="bar-row animate d6"><div class="bar-label">Ont deja achete apres recherche IA</div><div class="bar-track"><div class="bar-fill" style="--w:50%;">50%</div></div></div>
+        <div class="bar-row animate d7"><div class="bar-label">Utilisent l'IA quotidiennement</div><div class="bar-track"><div class="bar-fill" style="--w:48%;">48%</div></div></div>
+        <div class="bar-row animate d8"><div class="bar-label">Recherchent un produit/marque via ChatGPT</div><div class="bar-track"><div class="bar-fill" style="--w:42%;">42%</div></div></div>
       </div>
     </div>
   </div>
@@ -665,8 +672,8 @@
         en 30 secondes
       </h1>
       <div class="divider animate d3"></div>
-      <div class="cta-url animate d4">detekia.fr</div>
-      <p class="cta-sub animate d5">Score gratuit &middot; Aucune inscription requise</p>
+      <a href="https://detekia.fr" target="_blank" class="animate d4" style="display:inline-block;background:var(--orange);color:#fff;padding:16px 40px;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;font-family:'Inter',system-ui,sans-serif;transition:transform 0.2s;margin-top:4px;" onmouseenter="this.style.transform='translateY(-2px)'" onmouseleave="this.style.transform='none'">Analyser mon site gratuitement →</a>
+      <p class="cta-sub animate d5" style="margin-top:16px;">Score gratuit en 30 secondes &middot; Aucune inscription &middot; detekia.fr</p>
       <div class="animate d6" style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(247,245,242,0.08);">
         <div style="font-size:13px;color:var(--muted);">Contact</div>
         <div style="font-size:15px;margin-top:6px;">contact@detekia.fr</div>
