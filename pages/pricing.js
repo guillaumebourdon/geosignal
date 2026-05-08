@@ -275,7 +275,8 @@ export default function Pricing() {
       <main>
 
       {/* HERO */}
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: '64px 24px 0', textAlign: 'center' }}>
+      <div style={{ maxWidth: 700, margin: '0 auto', padding: '64px 24px 0', textAlign: 'center', position: 'relative' }}>
+        <div style={{ display: 'inline-block', fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', border: '1px solid rgba(217,119,87,0.3)', borderRadius: 20, padding: '5px 14px', marginBottom: 20 }}>Tarifs & formules</div>
         <h1 style={{ fontSize: 'clamp(30px, 5vw, 48px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 14, color: '#1A1916' }}>{t('pricing.hero.title')}</h1>
         <p style={{ fontSize: 15, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>{t('pricing.hero.subtitle')}</p>
       </div>
@@ -345,6 +346,78 @@ export default function Pricing() {
           </div>
           <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
             <Link href="/pro" style={{ fontSize: 12, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.proCard.learnMore')}</Link>
+          </div>
+        </div>
+      </div>
+
+      {/* ACCOMPAGNEMENT */}
+      <div style={{ maxWidth: 960, margin: '0 auto 48px', padding: '0 24px' }}>
+        <div style={{
+          background: 'linear-gradient(135deg, #1A1916 0%, #2A2520 100%)',
+          borderRadius: 20,
+          padding: '40px 44px',
+          position: 'relative',
+          overflow: 'hidden',
+          border: '1px solid rgba(201,134,26,0.25)',
+        }}>
+          {/* Subtle glow */}
+          <div style={{ position: 'absolute', top: -60, right: -60, width: 200, height: 200, background: 'radial-gradient(circle, rgba(201,134,26,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: -40, left: -40, width: 160, height: 160, background: 'radial-gradient(circle, rgba(217,119,87,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+          <div style={{ display: 'flex', gap: 48, alignItems: 'flex-start', position: 'relative', flexWrap: 'wrap' }}>
+            {/* Left — pitch */}
+            <div style={{ flex: '1 1 320px', minWidth: 280 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'CUSTOM SUPPORT' : 'ACCOMPAGNEMENT SUR MESURE'}</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', lineHeight: 1.2, marginBottom: 12, letterSpacing: -0.5 }}>{locale === 'en' ? 'A dedicated expert to maximize your AI visibility' : 'Un expert dedie pour maximiser votre visibilite IA'}</div>
+              <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.55)', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 24 }}>
+                {locale === 'en'
+                  ? 'Beyond the audit: a continuous strategy to ensure your brand is cited by ChatGPT, Gemini and Perplexity on your key queries.'
+                  : 'Au-dela de l\'audit : une strategie continue pour que votre marque soit citee par ChatGPT, Gemini et Perplexity sur vos requetes cles.'}
+              </p>
+              <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+                <Link href="/contact" style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #C9861A, #D97757)',
+                  color: '#fff',
+                  padding: '12px 28px',
+                  borderRadius: 10,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  textDecoration: 'none',
+                  fontFamily: 'system-ui',
+                }}>{locale === 'en' ? 'Contact us' : 'Nous contacter'} →</Link>
+                <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui' }}>{locale === 'en' ? 'Quarterly commitment' : 'Engagement trimestriel'}</span>
+              </div>
+            </div>
+
+            {/* Right — features */}
+            <div style={{ flex: '1 1 300px', minWidth: 260 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                {[
+                  { icon: '🔍', title: locale === 'en' ? 'Deep audit' : 'Audit approfondi', desc: locale === 'en' ? 'Complete analysis of your digital ecosystem' : 'Analyse complete de votre ecosysteme digital' },
+                  { icon: '📊', title: locale === 'en' ? 'LLM monitoring' : 'Monitoring LLM', desc: locale === 'en' ? 'Monthly tracking of your AI presence' : 'Suivi mensuel de votre presence sur les IA' },
+                  { icon: '🎯', title: locale === 'en' ? 'GEO strategy' : 'Strategie GEO', desc: locale === 'en' ? 'Personalized action plan' : 'Plan d\'action personnalise' },
+                  { icon: '📈', title: locale === 'en' ? 'Monthly reports' : 'Rapports mensuels', desc: locale === 'en' ? 'KPI tracking and optimization' : 'Suivi des KPIs et optimisation' },
+                ].map((item, i) => (
+                  <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 12, padding: '16px 14px' }}>
+                    <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: '#F7F5F2', fontFamily: 'system-ui', marginBottom: 4 }}>{item.title}</div>
+                    <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.4 }}>{item.desc}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 16, marginTop: 12 }}>
+                {[
+                  { icon: '🏆', text: locale === 'en' ? 'Competitive tracking in AI responses' : 'Suivi concurrentiel dans les reponses IA' },
+                  { icon: '👤', text: locale === 'en' ? 'Dedicated contact' : 'Interlocuteur dedie' },
+                ].map((item, i) => (
+                  <div key={i} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 12, padding: '12px 14px' }}>
+                    <span style={{ fontSize: 16, flexShrink: 0 }}>{item.icon}</span>
+                    <span style={{ fontSize: 11, color: 'rgba(247,245,242,0.55)', fontFamily: 'system-ui', lineHeight: 1.3 }}>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
