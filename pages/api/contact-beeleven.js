@@ -82,6 +82,7 @@ export default async function handler(req, res) {
     await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: email,
+      bcc: 'guillaume@beeleven.fr',
       subject: isFr ? 'Votre demande d\'accompagnement — Detekia' : 'Your support request — Detekia',
       html: isFr
         ? `<div style="font-family:system-ui,sans-serif;max-width:520px;margin:0 auto;padding:32px 24px;">

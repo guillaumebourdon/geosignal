@@ -28,6 +28,7 @@ export default async function handler(req, res) {
     await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: email,
+      bcc: 'guillaume@beeleven.fr',
       subject: `Votre score GEO : ${score}/100 — ${siteLabel}`,
       html: `<!DOCTYPE html>
 <html lang="fr">

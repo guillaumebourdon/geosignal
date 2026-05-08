@@ -163,6 +163,7 @@ export default async function handler(req, res) {
     const { data, error } = await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: email,
+      bcc: 'guillaume@beeleven.fr',
       subject: `${t.email.subject} — ${url} · Score ${reportData.score}/100`,
       html: `
         <div style="background:#F7F5F2;padding:40px 20px;font-family:system-ui">

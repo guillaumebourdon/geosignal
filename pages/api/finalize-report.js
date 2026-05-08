@@ -264,6 +264,7 @@ export default async function handler(req, res) {
     const { error: emailError } = await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: email,
+      bcc: 'guillaume@beeleven.fr',
       subject,
       html: body,
     });

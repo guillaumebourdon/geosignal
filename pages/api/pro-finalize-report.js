@@ -294,6 +294,7 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
     const { error: emailError } = await resend.emails.send({
       from: 'Detekia <hello@detekia.fr>',
       to: customerEmail,
+      bcc: 'guillaume@beeleven.fr',
       subject: isFr ? `Votre rapport GEO complet est prêt — ${rootUrl}` : `Your full GEO report is ready — ${rootUrl}`,
       html: `
         <div style="background:#F7F5F2;padding:40px 20px;font-family:system-ui,-apple-system,sans-serif">
