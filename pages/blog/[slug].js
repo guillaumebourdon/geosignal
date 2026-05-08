@@ -35,6 +35,7 @@ CONTENT_MAP_EN['saas-b2b-chatgpt-recommandations'] = require('../../content/arti
 CONTENT_MAP_EN['erreurs-geo-ecommerce'] = require('../../content/articles/en/erreurs-geo-ecommerce').default;
 CONTENT_MAP_EN['eeat-ia-experience-expertise'] = require('../../content/articles/en/eeat-ia-experience-expertise').default;
 CONTENT_MAP_EN['sources-contenus-citations-ia'] = require('../../content/articles/en/sources-contenus-citations-ia').default;
+CONTENT_MAP_EN['avis-clients-temoignages-visibilite-ia'] = require('../../content/articles/en/avis-clients-temoignages-visibilite-ia').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
@@ -65,6 +66,7 @@ const CONTENT_MAP = {
   'erreurs-geo-ecommerce': require('../../content/articles/erreurs-geo-ecommerce').default,
   'eeat-ia-experience-expertise': require('../../content/articles/eeat-ia-experience-expertise').default,
   'sources-contenus-citations-ia': require('../../content/articles/sources-contenus-citations-ia').default,
+  'avis-clients-temoignages-visibilite-ia': require('../../content/articles/avis-clients-temoignages-visibilite-ia').default,
 };
 
 const CATEGORY_COLORS = {
