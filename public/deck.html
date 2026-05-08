@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detekia — Visibilite IA pour les entreprises</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --dark: #1A1916;
+    --cream: #F7F5F2;
+    --orange: #D97757;
+    --green: #10A37F;
+    --blue: #4285F4;
+    --muted: #6B6762;
+    --border: #E5E2DC;
+    --gold: #C9861A;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.active .animate { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .slide.active .animate.d1 { animation-delay: 0.1s; }
+  .slide.active .animate.d2 { animation-delay: 0.2s; }
+  .slide.active .animate.d3 { animation-delay: 0.3s; }
+  .slide.active .animate.d4 { animation-delay: 0.4s; }
+  .slide.active .animate.d5 { animation-delay: 0.5s; }
+  .slide.active .animate.d6 { animation-delay: 0.6s; }
+  .slide.active .animate.d7 { animation-delay: 0.7s; }
+  .slide.active .animate.d8 { animation-delay: 0.8s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate { opacity: 0; }
+
+  /* ─── Navigation ─── */
+  .nav { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 100; }
+  .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(247,245,242,0.2); border: none; cursor: pointer; transition: all 0.3s; }
+  .nav-dot.active { background: var(--orange); width: 28px; border-radius: 5px; }
+  .slide-counter { position: fixed; bottom: 30px; right: 40px; font-family: 'DM Mono', monospace; font-size: 12px; color: rgba(247,245,242,0.35); z-index: 100; letter-spacing: 1px; }
+
+  /* ─── Layout ─── */
+  .split { display: flex; width: 100%; height: 100vh; }
+  .split-left { flex: 0 0 42%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .split-right { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px 80px; position: relative; }
+  .full-dark { background: var(--dark); width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 80px; position: relative; }
+  .cream-bg { background: var(--cream); }
+  .dark-bg { background: var(--dark); }
+
+  /* ─── Typography ─── */
+  .logo { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; color: var(--cream); letter-spacing: -0.5px; }
+  .logo-sub { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+  h1 { font-size: 52px; font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; text-transform: uppercase; }
+  h1 .accent { color: var(--orange); }
+  h2 { font-size: 38px; font-weight: 800; line-height: 1.15; letter-spacing: -1px; text-transform: uppercase; }
+  h2 .sub { display: block; font-size: 22px; font-weight: 400; letter-spacing: 0; text-transform: uppercase; color: rgba(247,245,242,0.7); margin-top: 8px; }
+  h3 { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .subtitle { font-size: 20px; font-weight: 400; line-height: 1.6; color: rgba(247,245,242,0.7); max-width: 560px; }
+  .divider { width: 64px; height: 2px; background: var(--orange); margin: 24px 0; }
+  .tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); border: 1px solid rgba(217,119,87,0.3); padding: 6px 16px; border-radius: 20px; margin-bottom: 20px; }
+  .source { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(247,245,242,0.3); position: absolute; bottom: 30px; left: 40px; letter-spacing: 0.5px; }
+
+  /* ─── Cover orb ─── */
+  .cover-orb { width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(217,119,87,0.4), rgba(16,163,127,0.2) 50%, rgba(66,133,244,0.15) 70%, transparent); position: relative; display: flex; align-items: center; justify-content: center; animation: orbPulse 4s ease-in-out infinite; }
+  .cover-orb::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(from 0deg, var(--orange), var(--green), var(--blue), var(--orange)); opacity: 0.5; animation: orbSpin 8s linear infinite; filter: blur(1px); }
+  .cover-orb::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--dark); }
+  .cover-orb-text { position: relative; z-index: 2; text-align: center; }
+  .cover-orb-text .geo { font-size: 64px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+  .cover-orb-text .brand { font-family: Georgia, serif; font-size: 24px; color: rgba(247,245,242,0.7); }
+  @keyframes orbPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+  @keyframes orbSpin { to { transform: rotate(360deg); } }
+
+  /* ─── Cards ─── */
+  .card-grid { display: flex; gap: 24px; margin-top: 32px; width: 100%; max-width: 1100px; }
+  .card { flex: 1; background: rgba(247,245,242,0.04); border: 1px solid rgba(247,245,242,0.08); border-radius: 16px; padding: 36px 28px; transition: all 0.3s; }
+  .card:hover { border-color: rgba(217,119,87,0.3); background: rgba(217,119,87,0.04); }
+
+  .stat-big { font-size: 56px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+  .stat-big .unit { font-size: 32px; font-weight: 600; }
+
+  /* ─── Bar chart ─── */
+  .bar-chart { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 640px; }
+  .bar-row { display: flex; align-items: center; gap: 16px; }
+  .bar-label { font-size: 13px; color: rgba(247,245,242,0.7); width: 280px; text-align: right; flex-shrink: 0; line-height: 1.3; }
+  .bar-track { flex: 1; height: 38px; background: rgba(247,245,242,0.04); border-radius: 6px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, rgba(217,119,87,0.6), var(--orange)); display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 600; color: #fff; width: 0; }
+  .slide.active .bar-fill { animation: barGrow 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .slide.active .animate.d2 .bar-fill { animation-delay: 0.3s; }
+  .slide.active .animate.d3 .bar-fill { animation-delay: 0.4s; }
+  .slide.active .animate.d4 .bar-fill { animation-delay: 0.5s; }
+  .slide.active .animate.d5 .bar-fill { animation-delay: 0.6s; }
+  .slide.active .animate.d6 .bar-fill { animation-delay: 0.7s; }
+  .slide.active .animate.d7 .bar-fill { animation-delay: 0.8s; }
+  .slide.active .animate.d8 .bar-fill { animation-delay: 0.9s; }
+  @keyframes barGrow { from { width: 0; } to { width: var(--w); } }
+  .bar-highlight .bar-fill { background: linear-gradient(90deg, rgba(217,119,87,0.8), var(--orange)); box-shadow: 0 0 20px rgba(217,119,87,0.3); }
+  .bar-highlight .bar-label { color: var(--cream); font-weight: 600; }
+
+  /* ─── LLM bars ─── */
+  .llm-list { display: flex; flex-direction: column; gap: 14px; }
+  .llm-row { display: flex; align-items: center; gap: 16px; }
+  .llm-name { font-size: 14px; font-weight: 600; width: 100px; text-align: right; flex-shrink: 0; }
+  .llm-bar-wrap { flex: 1; min-width: 0; }
+  .llm-bar { height: 32px; border-radius: 16px; display: flex; align-items: center; padding: 0 14px; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; justify-content: flex-end; width: 0; white-space: nowrap; }
+  .slide.active .llm-bar { animation: barGrow 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards; }
+
+  /* ─── Criteria ─── */
+  .criteria-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1100px; width: 100%; }
+  .criterion { background: rgba(247,245,242,0.04); border: 1px solid rgba(247,245,242,0.08); border-radius: 14px; padding: 24px 20px; text-align: center; transition: all 0.3s; }
+  .criterion:hover { border-color: rgba(217,119,87,0.3); transform: translateY(-2px); }
+  .criterion-icon { font-size: 28px; margin-bottom: 10px; }
+  .criterion-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; line-height: 1.3; }
+  .criterion-pts { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--orange); }
+  .criterion-pts .small { font-size: 12px; color: var(--muted); }
+
+  /* ─── Pricing ─── */
+  .pricing-grid { display: flex; gap: 20px; max-width: 1200px; width: 100%; align-items: stretch; }
+  .price-card { flex: 1; background: rgba(247,245,242,0.03); border: 1px solid rgba(247,245,242,0.1); border-radius: 18px; padding: 32px 24px; display: flex; flex-direction: column; transition: all 0.3s; }
+  .price-card.featured { border-color: var(--orange); background: rgba(217,119,87,0.06); transform: scale(1.02); }
+  .price-card .plan-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .price-card .plan-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .price-card .plan-price { font-size: 38px; font-weight: 900; letter-spacing: -2px; margin-bottom: 4px; }
+  .price-card .plan-price .currency { font-size: 22px; }
+  .price-card .plan-once { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .plan-features li { font-size: 12px; color: rgba(247,245,242,0.7); padding-left: 18px; position: relative; line-height: 1.4; }
+  .plan-features li::before { content: ''; position: absolute; left: 0; top: 5px; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+  .price-card.featured .plan-features li::before { background: var(--green); }
+  .price-card.premium { border-color: var(--gold); background: linear-gradient(135deg, rgba(201,134,26,0.08), rgba(217,119,87,0.04)); }
+  .price-card.premium .plan-features li::before { background: var(--gold); }
+
+  /* ─── Steps ─── */
+  .steps { display: flex; flex-direction: column; gap: 0; max-width: 900px; width: 100%; }
+  .step { display: flex; align-items: flex-start; gap: 24px; padding: 18px 0; border-bottom: 1px solid rgba(247,245,242,0.06); }
+  .step-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--dark); background: var(--orange); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
+  .step-content { flex: 1; }
+  .step-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .step-desc { font-size: 13px; color: rgba(247,245,242,0.5); line-height: 1.5; }
+
+  /* ─── Data panels ─── */
+  .data-panel { background: rgba(247,245,242,0.03); border: 1px solid rgba(247,245,242,0.08); border-radius: 18px; padding: 36px 32px; }
+  .panel-title { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(247,245,242,0.5); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(247,245,242,0.08); }
+
+  .cta-url { font-family: 'DM Mono', monospace; font-size: 28px; color: var(--orange); letter-spacing: 1px; margin-top: 20px; }
+  .cta-sub { font-size: 16px; color: var(--muted); margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ SLIDE 1 — COVER ═══ -->
+<div class="slide active" id="s1">
+  <div class="split">
+    <div class="split-left cream-bg">
+      <div class="cover-orb animate d1">
+        <div class="cover-orb-text">
+          <div class="geo">GEO</div>
+          <div class="brand">Detekia</div>
+        </div>
+      </div>
+    </div>
+    <div class="split-right dark-bg" style="justify-content:center;">
+      <div class="animate d2" style="margin-bottom:32px;">
+        <div class="logo">Detekia</div>
+        <div class="logo-sub">Visibilite IA pour les entreprises</div>
+      </div>
+      <div class="divider animate d3"></div>
+      <h1 class="animate d4" style="margin-top:16px;">
+        <span class="accent">Mesurez</span> et optimisez<br>
+        votre visibilite<br>
+        dans les IA
+      </h1>
+      <p class="subtitle animate d5" style="margin-top:24px;">
+        ChatGPT, Gemini, Perplexity, Claude : vos clients posent des questions.<br>
+        Est-ce que les IA parlent de vous ?
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2 — ADOPTION MASSIVE ═══ -->
+<div class="slide" id="s2">
+  <div class="full-dark">
+    <h2 class="animate d1" style="text-align:center;">
+      Une adoption desormais massive des LLM
+      <span class="sub">Au-dela des profils technophiles</span>
+    </h2>
+    <div class="card-grid animate d2" style="margin-top:40px;">
+      <div class="data-panel" style="flex:1;">
+        <div class="panel-title">Evolution des visiteurs uniques en France (tous LLM)</div>
+        <div style="display:flex;gap:32px;">
+          <!-- Mensuels -->
+          <div style="flex:1;">
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;">Mensuels</div>
+            <div style="display:flex;align-items:baseline;gap:12px;">
+              <div>
+                <div style="font-size:14px;color:var(--muted);">Dec 2023</div>
+                <div style="font-size:32px;font-weight:900;color:rgba(247,245,242,0.4);">12<span style="font-size:18px;">M</span></div>
+              </div>
+              <div style="font-size:20px;color:var(--muted);">&#8594;</div>
+              <div>
+                <div style="font-size:14px;color:var(--orange);">Dec 2025</div>
+                <div style="font-size:42px;font-weight:900;color:var(--orange);">27,7<span style="font-size:22px;">M</span></div>
+              </div>
+            </div>
+            <div style="background:rgba(217,119,87,0.1);border:1px solid rgba(217,119,87,0.3);border-radius:10px;padding:10px 16px;text-align:center;margin-top:12px;display:inline-block;">
+              <span style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:var(--orange);">x 2,5</span>
+              <span style="font-size:12px;color:var(--muted);margin-left:6px;">vs 2024</span>
+            </div>
+          </div>
+          <!-- Quotidiens -->
+          <div style="flex:1;border-left:1px solid rgba(247,245,242,0.08);padding-left:32px;">
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;">Quotidiens</div>
+            <div style="display:flex;align-items:baseline;gap:12px;">
+              <div>
+                <div style="font-size:14px;color:var(--muted);">Dec 2023</div>
+                <div style="font-size:32px;font-weight:900;color:rgba(247,245,242,0.4);">1,9<span style="font-size:18px;">M</span></div>
+              </div>
+              <div style="font-size:20px;color:var(--muted);">&#8594;</div>
+              <div>
+                <div style="font-size:14px;color:var(--cream);">Dec 2025</div>
+                <div style="font-size:42px;font-weight:900;color:var(--cream);">7<span style="font-size:22px;">M</span></div>
+              </div>
+            </div>
+            <div style="background:rgba(247,245,242,0.05);border:1px solid rgba(247,245,242,0.12);border-radius:10px;padding:10px 16px;text-align:center;margin-top:12px;display:inline-block;">
+              <span style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:var(--cream);">x 3,5</span>
+              <span style="font-size:12px;color:var(--muted);margin-left:6px;">vs 2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="data-panel" style="flex:0.9;">
+        <div class="panel-title">Top IA — Decembre 2025</div>
+        <div class="llm-list">
+          <div class="llm-row"><div class="llm-name">ChatGPT</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:100%;background:linear-gradient(90deg,rgba(217,119,87,0.5),var(--orange));">24,5M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Gemini</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:40%;background:linear-gradient(90deg,rgba(66,133,244,0.4),var(--blue));">4M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Perplexity</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:32%;background:linear-gradient(90deg,rgba(16,163,127,0.4),var(--green));">2,2M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Mistral AI</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:26%;background:linear-gradient(90deg,rgba(247,245,242,0.15),rgba(247,245,242,0.3));">1,3M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Copilot</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:26%;background:linear-gradient(90deg,rgba(247,245,242,0.15),rgba(247,245,242,0.3));">1,3M</div></div></div>
+          <div class="llm-row"><div class="llm-name">Claude</div><div class="llm-bar-wrap"><div class="llm-bar" style="--w:18%;background:linear-gradient(90deg,rgba(201,134,26,0.4),var(--gold));">530K</div></div></div>
+        </div>
+        <div style="font-size:11px;color:rgba(247,245,242,0.25);margin-top:8px;">VU / mois en France</div>
+      </div>
+    </div>
+    <div class="source animate d3">Source : Mediametrie — Mediamat Net Ratings — Decembre 2025</div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3 — USAGES ═══ -->
+<div class="slide" id="s3">
+  <div class="split">
+    <div class="split-left dark-bg" style="flex-direction:column;padding:60px 48px;align-items:flex-start;justify-content:center;">
+      <div class="tag animate d1">Barometre Gen-IA 2025</div>
+      <h2 class="animate d2" style="text-align:left;font-size:34px;">Quels sont les<br>principaux usages ?</h2>
+      <p class="subtitle animate d3" style="margin-top:20px;font-size:17px;">
+        Les LLM s'imposent comme un <strong style="color:var(--cream);">nouvel intermediaire dans le parcours d'achat</strong>
+      </p>
+      <div class="source animate d4" style="position:relative;bottom:auto;left:auto;margin-top:40px;">
+        Barometre Gen-IA — Iligo x Media Figaro — Decembre 2025<br>
+        1022 Francais 18-69 ans ayant deja prompte
+      </div>
+    </div>
+    <div class="split-right dark-bg" style="justify-content:center;padding-left:40px;">
+      <div class="bar-chart">
+        <div class="bar-row animate d2"><div class="bar-label">Conseils vie privee (couple, enfants...)</div><div class="bar-track"><div class="bar-fill" style="--w:77%;">77%</div></div></div>
+        <div class="bar-row animate d3"><div class="bar-label">Se divertir (images, videos...)</div><div class="bar-track"><div class="bar-fill" style="--w:70%;">70%</div></div></div>
+        <div class="bar-row animate d4"><div class="bar-label">Conseils vie quotidienne (sport, voyage...)</div><div class="bar-track"><div class="bar-fill" style="--w:66%;">66%</div></div></div>
+        <div class="bar-row animate d5"><div class="bar-label">Apprendre (devoirs, travail, sante...)</div><div class="bar-track"><div class="bar-fill" style="--w:64%;">64%</div></div></div>
+        <div class="bar-row bar-highlight animate d6"><div class="bar-label">Recommandation produit ou service</div><div class="bar-track"><div class="bar-fill" style="--w:61%;">61%</div></div></div>
+        <div class="bar-row bar-highlight animate d7"><div class="bar-label">Trouver de l'inspiration (voyages, cadeaux...)</div><div class="bar-track"><div class="bar-fill" style="--w:60%;">60%</div></div></div>
+        <div class="bar-row animate d8"><div class="bar-label">Etre assiste (mail, CV, lettre...)</div><div class="bar-track"><div class="bar-fill" style="--w:54%;">54%</div></div></div>
+        <div class="bar-row animate d8"><div class="bar-label">Faire une recherche rapide</div><div class="bar-track"><div class="bar-fill" style="--w:44%;">44%</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4 — STATS : L'IMPACT BUSINESS ═══ -->
+<div class="slide" id="s4">
+  <div class="full-dark" style="text-align:center;">
+    <div class="tag animate d1">L'impact business</div>
+    <h2 class="animate d2">
+      Les IA redessinent<br>le parcours d'achat
+      <span class="sub">Les moteurs de recherche ne sont plus le seul point d'entree</span>
+    </h2>
+    <div class="card-grid animate d3" style="margin-top:40px;">
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--orange);letter-spacing:-3px;line-height:1;">-25%</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">de trafic organique d'ici 2026<br>pour les sites non optimises IA</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">Gartner, 2025</div>
+      </div>
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--orange);letter-spacing:-3px;line-height:1;">61%</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">des utilisateurs demandent des<br><strong style="color:var(--cream);">recommandations produits</strong> aux IA</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">Iligo x Media Figaro, 2025</div>
+      </div>
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--orange);letter-spacing:-3px;line-height:1;">79%</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">des reponses IA ne citent que<br><strong style="color:var(--cream);">3 a 5 sources</strong> maximum</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">Otterly.AI, 2026</div>
+      </div>
+    </div>
+    <p class="animate d4" style="font-size:16px;color:rgba(247,245,242,0.5);margin-top:32px;max-width:700px;text-align:center;line-height:1.6;">
+      Si votre site n'apparait pas dans ces 3 a 5 sources, vos concurrents captent le trafic a votre place.
+    </p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5 — STATS : L'OPPORTUNITE GEO ═══ -->
+<div class="slide" id="s5">
+  <div class="full-dark" style="text-align:center;">
+    <div class="tag animate d1">L'opportunite</div>
+    <h2 class="animate d2">
+      Le GEO est un avantage<br>concurrentiel massif
+      <span class="sub">La majorite des sites ne sont pas optimises — c'est le moment d'agir</span>
+    </h2>
+    <div class="card-grid animate d3" style="margin-top:40px;">
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--green);letter-spacing:-3px;line-height:1;">+40%</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">de citabilite IA en ajoutant<br>des <strong style="color:var(--cream);">sources et statistiques</strong></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">Princeton, KDD 2024</div>
+      </div>
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--green);letter-spacing:-3px;line-height:1;">2,4x</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">plus de citations pour les contenus<br>avec <strong style="color:var(--cream);">donnees structurees Schema.org</strong></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">AirOps, 2026</div>
+      </div>
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--green);letter-spacing:-3px;line-height:1;">78%</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">des sources citees par ChatGPT ont<br>un <strong style="color:var(--cream);">Domain Rating &gt; 60</strong></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">Otterly.AI, 2026</div>
+      </div>
+    </div>
+    <p class="animate d4" style="font-size:16px;color:rgba(247,245,242,0.5);margin-top:32px;max-width:700px;text-align:center;line-height:1.6;">
+      Ces leviers sont mesurables et actionnables. C'est exactement ce que Detekia diagnostique.
+    </p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6 — GEO : LE PROBLEME ═══ -->
+<div class="slide" id="s6">
+  <div class="split">
+    <div class="split-left dark-bg" style="flex:0 0 50%;flex-direction:column;padding:60px 56px;align-items:flex-start;justify-content:center;">
+      <div class="animate d1" style="font-family:'DM Mono',monospace;font-size:72px;font-weight:500;color:var(--cream);letter-spacing:-3px;line-height:1;">GEO</div>
+      <div class="animate d2" style="display:flex;gap:6px;margin-top:8px;margin-left:4px;">
+        <span style="font-size:14px;color:var(--muted);line-height:1.6;">GENERATIVE<br>ENGINE<br>OPTIMIZATION</span>
+      </div>
+      <h2 class="animate d3" style="margin-top:36px;font-size:30px;text-align:left;">
+        Un nouveau territoire<br>
+        <span style="color:var(--orange);">a conquerir pour<br>les entreprises</span>
+      </h2>
+      <div style="display:flex;gap:16px;margin-top:28px;width:100%;">
+        <div class="animate d4" style="flex:1;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:24px 20px;text-align:center;">
+          <div style="font-size:11px;color:rgba(247,245,242,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;border:1px solid rgba(247,245,242,0.15);display:inline-block;padding:4px 12px;border-radius:20px;">Enjeu de visibilite</div>
+          <p style="font-size:14px;color:rgba(247,245,242,0.8);line-height:1.5;">Comment maximiser<br>ma <strong style="color:var(--cream);">presence</strong><br>dans les reponses<br>generees par les LLM ?</p>
+          <div style="font-size:11px;color:var(--muted);margin-top:12px;border-top:1px solid rgba(247,245,242,0.08);padding-top:8px;">Citations | Position</div>
+        </div>
+        <div class="animate d5" style="flex:1;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:24px 20px;text-align:center;">
+          <div style="font-size:11px;color:rgba(247,245,242,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;border:1px solid rgba(247,245,242,0.15);display:inline-block;padding:4px 12px;border-radius:20px;">Enjeu de reputation</div>
+          <p style="font-size:14px;color:rgba(247,245,242,0.8);line-height:1.5;">Comment ameliorer la<br><strong style="color:var(--cream);">valeur percue</strong><br>de mes produits<br>dans les LLM ?</p>
+          <div style="font-size:11px;color:var(--muted);margin-top:12px;border-top:1px solid rgba(247,245,242,0.08);padding-top:8px;">Sentiment</div>
+        </div>
+      </div>
+    </div>
+    <div class="split-right dark-bg" style="flex:0 0 50%;align-items:center;justify-content:center;">
+      <div class="animate d3" style="width:360px;background:#fff;border-radius:24px;padding:28px 22px;color:var(--dark);box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--green);"></div>
+          <span style="font-size:13px;font-weight:600;">ChatGPT</span>
+        </div>
+        <div style="background:#f0f0f0;border-radius:14px;padding:12px 16px;font-size:13px;line-height:1.5;color:#333;margin-bottom:16px;max-width:85%;margin-left:auto;">
+          Quel est le meilleur outil d'audit GEO en France ?
+        </div>
+        <div style="background:var(--dark);border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.6;color:var(--cream);max-width:92%;">
+          Pour un audit GEO complet en France, plusieurs options existent. <strong style="color:var(--orange);">Detekia</strong> propose un scoring sur 8 criteres avec un rapport detaille...
+          <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(247,245,242,0.1);font-size:11px;color:var(--muted);">
+            Sources : detekia.fr, ...
+          </div>
+        </div>
+        <div style="margin-top:16px;background:#f7f7f7;border-radius:20px;padding:10px 16px;font-size:12px;color:#999;text-align:center;">
+          Demander a ChatGPT...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7 — 8 CRITERES ═══ -->
+<div class="slide" id="s7">
+  <div class="full-dark" style="text-align:center;">
+    <div class="tag animate d1">Notre approche</div>
+    <h2 class="animate d2" style="font-size:34px;">
+      Plus qu'une opinion IA :<br>un diagnostic reproductible
+    </h2>
+    <p class="animate d3" style="font-size:16px;color:rgba(247,245,242,0.6);margin-top:12px;max-width:680px;text-align:center;line-height:1.6;">
+      Detekia analyse le code source de vos pages — HTML, JSON-LD, headers, robots.txt — et mesure objectivement <strong style="color:var(--cream);">8 criteres de citabilite IA</strong>. Pas d'IA qui donne son avis : un diagnostic technique, reproductible, score sur 100.
+    </p>
+    <div class="criteria-grid animate d4" style="margin-top:32px;">
+      <div class="criterion">
+        <div class="criterion-icon">&#127919;</div>
+        <div class="criterion-name">Extractabilite &<br>reponse directe</div>
+        <div class="criterion-pts">25 <span class="small">pts</span></div>
+      </div>
+      <div class="criterion">
+        <div class="criterion-icon">&#128300;</div>
+        <div class="criterion-name">Verificabilite &<br>preuves</div>
+        <div class="criterion-pts">20 <span class="small">pts</span></div>
+      </div>
+      <div class="criterion">
+        <div class="criterion-icon">&#127942;</div>
+        <div class="criterion-name">Autorite<br>E-E-A-T</div>
+        <div class="criterion-pts">15 <span class="small">pts</span></div>
+      </div>
+      <div class="criterion">
+        <div class="criterion-icon">&#129302;</div>
+        <div class="criterion-name">Crawlabilite<br>IA</div>
+        <div class="criterion-pts">15 <span class="small">pts</span></div>
+      </div>
+      <div class="criterion">
+        <div class="criterion-icon">&#129513;</div>
+        <div class="criterion-name">Donnees<br>structurees</div>
+        <div class="criterion-pts">10 <span class="small">pts</span></div>
+      </div>
+      <div class="criterion">
+        <div class="criterion-icon">&#9878;</div>
+        <div class="criterion-name">Neutralite<br>editoriale</div>
+        <div class="criterion-pts">10 <span class="small">pts</span></div>
+      </div>
+      <div class="criterion">
+        <div class="criterion-icon">&#127760;</div>
+        <div class="criterion-name">Presence<br>externe</div>
+        <div class="criterion-pts">5 <span class="small">pts</span></div>
+      </div>
+      <div class="criterion">
+        <div class="criterion-icon">&#128197;</div>
+        <div class="criterion-name">Fraicheur &<br>maintenance</div>
+        <div class="criterion-pts">5 <span class="small">pts</span></div>
+      </div>
+    </div>
+    <div class="animate d5" style="display:flex;gap:24px;margin-top:28px;align-items:center;">
+      <div style="background:rgba(217,119,87,0.08);border:1px solid rgba(217,119,87,0.2);border-radius:12px;padding:14px 24px;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Score &gt; 70</div>
+        <div style="font-size:14px;color:var(--green);font-weight:700;margin-top:4px;">Bien optimise</div>
+      </div>
+      <div style="background:rgba(217,119,87,0.08);border:1px solid rgba(217,119,87,0.2);border-radius:12px;padding:14px 24px;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Score 45 — 70</div>
+        <div style="font-size:14px;color:var(--orange);font-weight:700;margin-top:4px;">A optimiser</div>
+      </div>
+      <div style="background:rgba(217,119,87,0.08);border:1px solid rgba(217,119,87,0.2);border-radius:12px;padding:14px 24px;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Score &lt; 45</div>
+        <div style="font-size:14px;color:#E05252;font-weight:700;margin-top:4px;">Prioritaire</div>
+      </div>
+      <div style="font-size:13px;color:var(--muted);margin-left:8px;line-height:1.4;">La majorite des sites<br>se situent entre <strong style="color:var(--cream);">20 et 50</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8 — COMMENT CA MARCHE ═══ -->
+<div class="slide" id="s8">
+  <div class="split">
+    <div class="split-left dark-bg" style="flex-direction:column;padding:60px 48px;align-items:flex-start;justify-content:center;">
+      <div class="logo animate d1">Detekia</div>
+      <div class="divider animate d2"></div>
+      <h2 class="animate d3" style="font-size:32px;text-align:left;">
+        Comment<br>ca marche
+      </h2>
+      <p class="subtitle animate d4" style="font-size:15px;margin-top:16px;">
+        Du diagnostic gratuit<br>au plan d'action complet.
+      </p>
+    </div>
+    <div class="split-right dark-bg" style="justify-content:center;padding-right:60px;">
+      <div class="steps">
+        <div class="step animate d1">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Scoring gratuit en 30 secondes</div>
+            <div class="step-desc">Entrez votre URL sur detekia.fr. Vous obtenez immediatement votre score GEO /100 et un apercu de vos 8 criteres.</div>
+          </div>
+        </div>
+        <div class="step animate d2">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Choisissez votre formule</div>
+            <div class="step-desc">Audit One-Page (29 &euro;) pour une page, ou Audit Pro (99 &euro;) pour analyser 10 pages cles de votre site. Paiement unique, rapport en minutes.</div>
+          </div>
+        </div>
+        <div class="step animate d3">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Analyse technique + test de citation IA</div>
+            <div class="step-desc">On analyse votre code source (HTML, JSON-LD, headers, robots.txt) et on envoie 10 a 30 requetes a ChatGPT pour mesurer votre presence dans les reponses IA.</div>
+          </div>
+        </div>
+        <div class="step animate d4">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Rapport complet avec plan d'action</div>
+            <div class="step-desc">Score detaille par critere, liste des concurrents cites par les IA, recommandations priorisees par impact, exemples de code prets a copier. Rapport web permanent + PDF.</div>
+          </div>
+        </div>
+        <div class="step animate d5">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-title">Implementez et mesurez la progression</div>
+            <div class="step-desc">Suivez les recommandations, relancez un audit pour mesurer l'amelioration. Chaque point gagne est un signal de plus pour les IA.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9 — OFFRES & PRICING ═══ -->
+<div class="slide" id="s9">
+  <div class="full-dark" style="text-align:center;">
+    <div class="tag animate d1">Nos offres</div>
+    <h2 class="animate d2" style="margin-bottom:28px;font-size:34px;">
+      Un diagnostic adapte<br>a chaque besoin
+    </h2>
+    <div class="pricing-grid animate d3">
+      <div class="price-card">
+        <div class="plan-name">Decouverte</div>
+        <div class="plan-title">Score gratuit</div>
+        <div class="plan-price">0<span class="currency">&euro;</span></div>
+        <div class="plan-once">Sans engagement</div>
+        <ul class="plan-features">
+          <li>Score GEO /100 sur 1 page</li>
+          <li>8 criteres analyses</li>
+          <li>1 recommandation en apercu</li>
+          <li>Resultat en 30 secondes</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="plan-name">Audit 1 page</div>
+        <div class="plan-title">One-Page</div>
+        <div class="plan-price">29<span class="currency">&euro;</span></div>
+        <div class="plan-once">Paiement unique</div>
+        <ul class="plan-features">
+          <li>Score detaille + 8 criteres en profondeur</li>
+          <li>8 recommandations avec exemples de code</li>
+          <li>Test de citation IA (10 requetes ChatGPT)</li>
+          <li>Rapport web permanent + PDF</li>
+          <li>Livraison en 1 minute</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="plan-name">Audit complet</div>
+        <div class="plan-title">Pro</div>
+        <div class="plan-price">99<span class="currency">&euro;</span></div>
+        <div class="plan-once">Paiement unique</div>
+        <ul class="plan-features">
+          <li>10 pages cles analysees automatiquement</li>
+          <li>8 criteres x 10 pages</li>
+          <li>30 requetes IA (3x plus)</li>
+          <li>Detection de patterns cross-pages</li>
+          <li>Plan d'action priorise impact + effort</li>
+          <li>Analyse page par page</li>
+          <li>Rapport web + PDF</li>
+        </ul>
+      </div>
+      <div class="price-card premium">
+        <div class="plan-name">Sur mesure</div>
+        <div class="plan-title">Accompagnement</div>
+        <div class="plan-price" style="font-size:28px;letter-spacing:0;">Sur devis</div>
+        <div class="plan-once">Engagement trimestriel</div>
+        <ul class="plan-features">
+          <li>Audit approfondi de votre ecosysteme digital</li>
+          <li>Strategie GEO personnalisee</li>
+          <li>Monitoring mensuel de presence sur les LLM</li>
+          <li>Suivi concurrentiel dans les reponses IA</li>
+          <li>Recommandations d'optimisation continues</li>
+          <li>Rapport d'evolution mensuel</li>
+          <li>Interlocuteur dedie</li>
+        </ul>
+      </div>
+    </div>
+    <div class="animate d4" style="margin-top:20px;font-size:12px;color:var(--muted);">
+      Paiement securise Stripe &middot; Aucune donnee bancaire stockee &middot; Remboursement automatique en cas de probleme technique
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10 — POUR QUI ═══ -->
+<div class="slide" id="s10">
+  <div class="split">
+    <div class="split-left dark-bg" style="flex:0 0 40%;flex-direction:column;padding:60px 56px;align-items:flex-start;justify-content:center;">
+      <div class="tag animate d1">Pour qui</div>
+      <h2 class="animate d2" style="font-size:36px;text-align:left;">
+        Tout site qui veut<br>etre <span style="color:var(--orange);">cite par les IA</span>
+      </h2>
+      <div class="divider animate d3"></div>
+      <p class="animate d4" style="font-size:15px;color:rgba(247,245,242,0.5);line-height:1.7;">
+        Que vous soyez une PME locale, un SaaS B2B, un e-commerce ou une agence : si vos clients posent des questions aux IA, vous devez apparaitre dans les reponses.
+      </p>
+    </div>
+    <div class="split-right dark-bg" style="flex:0 0 60%;justify-content:center;padding:48px 56px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;">
+        <div class="animate d2" style="background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:24px 22px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(217,119,87,0.3)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">SaaS & B2B</div>
+          <p style="font-size:12px;color:rgba(247,245,242,0.5);line-height:1.5;">"Meilleur CRM pour PME" — votre concurrent est cite, pas vous. L'audit identifie pourquoi.</p>
+        </div>
+        <div class="animate d3" style="background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:24px 22px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(217,119,87,0.3)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">E-commerce</div>
+          <p style="font-size:12px;color:rgba(247,245,242,0.5);line-height:1.5;">Les IA recommandent des produits. Schema, avis, FAQ : on mesure si vos fiches sont optimisees.</p>
+        </div>
+        <div class="animate d4" style="background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:24px 22px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(217,119,87,0.3)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Sites vitrine & PME</div>
+          <p style="font-size:12px;color:rgba(247,245,242,0.5);line-height:1.5;">"Meilleur plombier a Lyon" — les IA citent vos concurrents. L'audit revele les signaux manquants.</p>
+        </div>
+        <div class="animate d5" style="background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:24px 22px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(217,119,87,0.3)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Agences & freelances</div>
+          <p style="font-size:12px;color:rgba(247,245,242,0.5);line-height:1.5;">Integrez le GEO a vos prestations SEO. Le rapport Pro est un delivrable client pret a presenter.</p>
+        </div>
+        <div class="animate d6" style="background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:24px 22px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(217,119,87,0.3)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Blogueurs & medias</div>
+          <p style="font-size:12px;color:rgba(247,245,242,0.5);line-height:1.5;">Vos articles sont-ils citables par les IA ? L'audit One-Page donne les corrections exactes.</p>
+        </div>
+        <div class="animate d7" style="background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:24px 22px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(217,119,87,0.3)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Portails & annuaires</div>
+          <p style="font-size:12px;color:rgba(247,245,242,0.5);line-height:1.5;">Vos pages de reference sont-elles crawlees par les bots IA ? L'audit Pro le verifie page par page.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 11 — CTA ═══ -->
+<div class="slide" id="s11">
+  <div class="split">
+    <div class="split-left cream-bg" style="flex-direction:column;">
+      <div class="animate d1" style="text-align:center;">
+        <div style="font-family:Georgia,serif;font-size:48px;color:var(--dark);letter-spacing:-1px;">Detekia</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:8px;">Visibilite IA pour les entreprises</div>
+        <div style="margin-top:32px;display:flex;gap:8px;justify-content:center;">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--green);"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--orange);"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--blue);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="split-right dark-bg" style="justify-content:center;">
+      <div class="animate d1"><div class="tag">Commencez maintenant</div></div>
+      <h1 class="animate d2" style="font-size:44px;margin-top:16px;">
+        Testez votre<br>
+        <span class="accent">visibilite IA</span><br>
+        en 30 secondes
+      </h1>
+      <div class="divider animate d3"></div>
+      <div class="cta-url animate d4">detekia.fr</div>
+      <p class="cta-sub animate d5">Score gratuit &middot; Aucune inscription requise</p>
+      <div class="animate d6" style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(247,245,242,0.08);">
+        <div style="font-size:13px;color:var(--muted);">Contact</div>
+        <div style="font-size:15px;margin-top:6px;">contact@detekia.fr</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Nav ─── -->
+<div class="nav" id="nav"></div>
+<div class="slide-counter" id="counter"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const nav = document.getElementById('nav');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    nav.appendChild(dot);
+  });
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].querySelectorAll('.animate').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    nav.children[current].classList.remove('active');
+    current = n;
+    slides[current].offsetHeight;
+    slides[current].classList.add('active');
+    nav.children[current].classList.add('active');
+    counter.textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+  });
+
+  document.addEventListener('click', e => {
+    if (e.target.closest('.nav') || e.target.closest('a') || e.target.closest('button')) return;
+    if (e.clientX > window.innerWidth * 0.5) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { if (diff > 0) goTo(current + 1); else goTo(current - 1); }
+  });
+
+  counter.textContent = `1 / ${slides.length}`;
+</script>
+</body>
+</html>
