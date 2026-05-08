@@ -12,6 +12,11 @@
 
 # testing
 /coverage
+/tests/
+
+# local audit/diagnostic notes
+audit_*.md
+diagnostic_*.md
 
 # next.js
 /.next/

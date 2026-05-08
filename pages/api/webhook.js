@@ -145,5 +145,6 @@ export default async function handler(req, res) {
   res.status(200).json({ received: true });
 }
 
-// TODO [chantier corrections finales] : ajouter corrélation ID complète (session.id → siteJobId → uuid rapport)
-// TODO [chantier corrections finales] : passer DELETE_REPORT_SECRET et PRO_ADMIN_SECRET en header Authorization
+// Future improvements:
+// - Add full ID correlation chain (session.id → siteJobId → report uuid)
+// - Move DELETE_REPORT_SECRET and PRO_ADMIN_SECRET to Authorization headers

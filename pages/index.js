@@ -528,8 +528,7 @@ export default function Home() {
 
       <SectionDivider />
 
-      {/* ── RÉSULTATS / TÉMOIGNAGES ──────────────────────────── */}
-      {/* TODO: réactiver une fois la validation des 3 personnes obtenue */}
+      {/* ── RÉSULTATS / TÉMOIGNAGES (désactivé — en attente de validation témoignages) ── */}
       {false && <section style={{ background: '#1A1916', padding: '96px 48px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '20%', left: '20%', width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', top: '60%', left: '80%', width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
