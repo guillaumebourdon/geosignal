@@ -947,13 +947,13 @@
       "description": "Contact the Detekia team. Questions about a report, feedback, enterprise requests or partnerships — we respond within 24 hours."
     },
     "hero": {
-      "badge": "We respond within 24h",
-      "title": "Got a question?",
-      "subtitle": "A suggestion, feedback, a partnership request — we read every message."
+      "badge": "Response within 24h",
+      "title": "Let's talk about your AI visibility",
+      "subtitle": "Questions about our services, quote request, schedule a call, or general inquiry — we're here to help."
     },
     "success": {
       "title": "Message sent!",
-      "subtitle": "Thank you for your message. We'll get back to you within 24 hours."
+      "subtitle": "Thank you for your message. We'll get back to you within 24 business hours."
     },
     "form": {
       "nameLabel": "Name",
@@ -961,27 +961,32 @@
       "emailLabel": "Email",
       "emailPlaceholder": "john@example.com",
       "messageLabel": "Message",
-      "messagePlaceholder": "Hello, I'd like to...",
-      "submit": "Send message →"
+      "messagePlaceholder": "Hello, I'd like to know more about...",
+      "submit": "Send →"
     },
     "emailDirect": "Or directly by email:",
     "reasons": {
-      "label": "You can contact us about",
+      "label": "We can help with",
       "items": [
+        {
+          "icon": "📊",
+          "title": "Quote or information request",
+          "desc": "GEO Monitor, custom support, tailored audit — we'll respond with a quote adapted to your needs."
+        },
+        {
+          "icon": "📅",
+          "title": "Schedule a call",
+          "desc": "Prefer to discuss it live? We'll set up a 20-minute call to understand your needs."
+        },
         {
           "icon": "💬",
           "title": "Question about a report or score",
-          "desc": "Got a score that puzzles you? We'll explain."
-        },
-        {
-          "icon": "🐛",
-          "title": "Feedback or technical issue",
-          "desc": "Analysis error, report not received, payment issue."
+          "desc": "Got a score that puzzles you? We'll explain and guide you."
         },
         {
           "icon": "🏢",
-          "title": "Enterprise or volume request",
-          "desc": "Bulk analyses, integration, specific team needs."
+          "title": "Enterprise or agency request",
+          "desc": "Volume analyses, integration, team-specific needs, white label."
         },
         {
           "icon": "🤝",

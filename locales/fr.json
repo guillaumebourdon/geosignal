@@ -949,13 +949,13 @@
       "description": "Contactez l'équipe Detekia. Question sur un rapport, remarque, demande entreprise ou partenariat — on vous répond sous 24h."
     },
     "hero": {
-      "badge": "On vous répond sous 24h",
-      "title": "Une question ?",
-      "subtitle": "Une suggestion, une remarque, une demande de partenariat — on lit tous les messages."
+      "badge": "Réponse sous 24h",
+      "title": "Parlons de votre visibilité IA",
+      "subtitle": "Question sur nos offres, demande de devis, prise de rendez-vous, ou simple renseignement — on est là pour vous aider."
     },
     "success": {
       "title": "Message envoyé !",
-      "subtitle": "Merci pour votre message. Nous vous répondrons dans les 24 heures."
+      "subtitle": "Merci pour votre message. Nous vous répondrons dans les 24 heures ouvrées."
     },
     "form": {
       "nameLabel": "Nom",
@@ -963,27 +963,32 @@
       "emailLabel": "Email",
       "emailPlaceholder": "jean@exemple.fr",
       "messageLabel": "Message",
-      "messagePlaceholder": "Bonjour, je voudrais...",
-      "submit": "Envoyer le message →"
+      "messagePlaceholder": "Bonjour, je souhaite en savoir plus sur...",
+      "submit": "Envoyer →"
     },
     "emailDirect": "Ou directement par email :",
     "reasons": {
-      "label": "Vous pouvez nous contacter pour",
+      "label": "On peut vous aider sur",
       "items": [
+        {
+          "icon": "📊",
+          "title": "Demande de devis ou renseignements",
+          "desc": "GEO Monitor, accompagnement personnalisé, audit sur mesure — on vous répond avec un chiffrage adapté."
+        },
+        {
+          "icon": "📅",
+          "title": "Prendre rendez-vous",
+          "desc": "Vous préférez en discuter de vive voix ? On organise un appel de 20 minutes pour comprendre votre besoin."
+        },
         {
           "icon": "💬",
           "title": "Question sur un rapport ou un score",
-          "desc": "Vous avez reçu un score qui vous interroge ? On vous explique."
-        },
-        {
-          "icon": "🐛",
-          "title": "Remarque ou problème technique",
-          "desc": "Erreur d'analyse, rapport non reçu, problème de paiement."
+          "desc": "Vous avez reçu un score qui vous interroge ? On vous explique et on vous guide."
         },
         {
           "icon": "🏢",
-          "title": "Demande entreprise ou volume",
-          "desc": "Analyses en masse, intégration, besoins spécifiques équipe."
+          "title": "Demande entreprise ou agence",
+          "desc": "Analyses en volume, intégration, besoins spécifiques équipe, marque blanche."
         },
         {
           "icon": "🤝",
