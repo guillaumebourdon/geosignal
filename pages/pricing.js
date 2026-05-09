@@ -367,15 +367,15 @@ export default function Pricing() {
           <div style={{ display: 'flex', gap: 48, alignItems: 'flex-start', position: 'relative', flexWrap: 'wrap' }}>
             {/* Left — pitch */}
             <div style={{ flex: '1 1 320px', minWidth: 280 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'CUSTOM SUPPORT' : 'ACCOMPAGNEMENT SUR MESURE'}</div>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', lineHeight: 1.2, marginBottom: 12, letterSpacing: -0.5 }}>{locale === 'en' ? 'A dedicated expert to maximize your AI visibility' : 'Un expert dedie pour maximiser votre visibilite IA'}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', lineHeight: 1.2, marginBottom: 12, letterSpacing: -0.5 }}>{locale === 'en' ? 'Discover what AI engines say about your brand' : 'Découvrez ce que les IA disent de votre marque'}</div>
               <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.55)', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 24 }}>
                 {locale === 'en'
-                  ? 'Beyond the audit: a continuous strategy to ensure your brand is cited by ChatGPT, Gemini and Perplexity on your key queries.'
-                  : 'Au-dela de l\'audit : une strategie continue pour que votre marque soit citee par ChatGPT, Gemini et Perplexity sur vos requetes cles.'}
+                  ? 'We query ChatGPT, Gemini, Claude and Perplexity with your strategic queries and measure your real visibility: mention rate, position, sentiment, competitors.'
+                  : 'On interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques et on mesure votre visibilité réelle : taux de mention, position, sentiment, concurrents.'}
               </p>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-                <Link href="/contact" style={{
+                <Link href="/monitor" style={{
                   display: 'inline-block',
                   background: 'linear-gradient(135deg, #C9861A, #D97757)',
                   color: '#fff',
@@ -385,8 +385,8 @@ export default function Pricing() {
                   fontSize: 13,
                   textDecoration: 'none',
                   fontFamily: 'system-ui',
-                }}>{locale === 'en' ? 'Contact us' : 'Nous contacter'} →</Link>
-                <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui' }}>{locale === 'en' ? 'Quarterly commitment' : 'Engagement trimestriel'}</span>
+                }}>{locale === 'en' ? 'Learn more' : 'En savoir plus'} →</Link>
+                <Link href="/contact" style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.2)', paddingBottom: 1 }}>{locale === 'en' ? 'or contact us directly' : 'ou nous contacter directement'}</Link>
               </div>
             </div>
 

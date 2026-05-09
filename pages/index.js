@@ -528,6 +528,41 @@ export default function Home() {
 
       <SectionDivider />
 
+      {/* ── PRÉSENCE IA — upsell Monitor ── */}
+      <section style={{ background: '#1A1916', padding: '72px 48px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: -80, right: -80, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ maxWidth: 840, margin: '0 auto', display: 'flex', gap: 48, alignItems: 'center', flexWrap: 'wrap', position: 'relative' }}>
+          <div style={{ flex: '1 1 400px' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'GO FURTHER' : 'ALLER PLUS LOIN'}</div>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(24px, 3vw, 32px)', color: '#F7F5F2', letterSpacing: -1, lineHeight: 1.15, marginBottom: 14 }}>
+              {locale === 'en' ? <>What do AI engines <span style={{ color: '#C9861A' }}>actually say</span> about your brand?</> : <>Que disent <span style={{ color: '#C9861A' }}>réellement</span> les IA sur votre marque ?</>}
+            </h2>
+            <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 24 }}>
+              {locale === 'en'
+                ? 'Beyond the technical audit, Présence IA queries ChatGPT, Gemini, Claude and Perplexity with your strategic queries. Mention rate, position, sentiment, competitors — all measured.'
+                : 'Au-delà de l\'audit technique, Présence IA interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques. Taux de mention, position, sentiment, concurrents — tout est mesuré.'}
+            </p>
+            <Link href="/monitor" style={{ display: 'inline-block', background: 'linear-gradient(135deg, #C9861A, #D97757)', color: '#fff', padding: '12px 28px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+              {locale === 'en' ? 'Discover Présence IA →' : 'Découvrir Présence IA →'}
+            </Link>
+          </div>
+          <div style={{ flex: '0 0 260px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {[
+              { num: '45,9%', label: locale === 'en' ? 'mention rate' : 'taux de mention', color: '#D97757' },
+              { num: '2,08', label: locale === 'en' ? 'avg. position' : 'position moyenne', color: '#10A37F' },
+              { num: '2 400', label: locale === 'en' ? 'responses analyzed' : 'réponses analysées', color: '#C9861A' },
+            ].map((s, i) => (
+              <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 12, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 22, fontWeight: 900, color: s.color, letterSpacing: -1, minWidth: 70 }}>{s.num}</div>
+                <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui' }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       {/* ── RÉSULTATS / TÉMOIGNAGES (désactivé — en attente de validation témoignages) ── */}
       {false && <section style={{ background: '#1A1916', padding: '96px 48px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '20%', left: '20%', width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />

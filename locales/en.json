@@ -127,7 +127,7 @@
     "home": "Home",
     "methodology": "Methodology",
     "pricing": "Pricing",
-    "monitor": "GEO Monitor",
+    "monitor": "Présence IA",
     "about": "About",
     "contact": "Contact",
     "blog": "Blog",
@@ -405,7 +405,8 @@
         "links": [
           { "label": "Free scoring", "href": "/" },
           { "label": "1-Page audit — €29", "href": "/one-page" },
-          { "label": "Complete audit — €99", "href": "/pro" }
+          { "label": "Complete audit — €99", "href": "/pro" },
+          { "label": "AI Presence", "href": "/monitor" }
         ]
       },
       "resources": {
@@ -971,7 +972,7 @@
         {
           "icon": "📊",
           "title": "Quote or information request",
-          "desc": "GEO Monitor, custom support, tailored audit — we'll respond with a quote adapted to your needs."
+          "desc": "Présence IA, custom support, tailored audit — we'll respond with a quote adapted to your needs."
         },
         {
           "icon": "📅",

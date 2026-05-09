@@ -10,14 +10,14 @@ export default function Monitor() {
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
       <SEO
-        title={isFr ? 'GEO Monitor — Surveillez votre visibilité dans les IA — Detekia' : 'GEO Monitor — Track Your AI Visibility — Detekia'}
+        title={isFr ? 'Présence IA — Surveillez votre visibilité dans les IA — Detekia' : 'Présence IA — Track Your AI Visibility — Detekia'}
         description={isFr
           ? 'Découvrez ce que ChatGPT, Gemini, Perplexity et Claude disent de votre marque. Taux de mention, position, sentiment, concurrents — un audit complet de votre présence IA.'
           : 'Discover what ChatGPT, Gemini, Perplexity and Claude say about your brand. Mention rate, position, sentiment, competitors — a complete audit of your AI presence.'}
         schema={{
           "@context": "https://schema.org",
           "@type": "Service",
-          "name": "Detekia GEO Monitor",
+          "name": "Detekia Présence IA",
           "description": "Monitoring de présence de marque dans les réponses des moteurs IA",
           "provider": { "@type": "Organization", "name": "Detekia", "url": "https://detekia.fr" },
           "serviceType": "AI Brand Monitoring",
@@ -34,7 +34,7 @@ export default function Monitor() {
 
         <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'inline-block', fontFamily: 'monospace', fontSize: 11, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', border: '1px solid rgba(217,119,87,0.3)', padding: '5px 14px', borderRadius: 20, marginBottom: 24, background: 'rgba(217,119,87,0.06)' }}>
-            GEO Monitor
+            Présence IA
           </div>
           <h1 style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.08, letterSpacing: -1.5, marginBottom: 20, color: '#F7F5F2', fontWeight: 800 }}>
             {isFr ? <>Découvrez ce que les IA<br /><span style={{ color: '#D97757' }}>disent de votre marque</span></> : <>Discover what AI engines<br /><span style={{ color: '#D97757' }}>say about your brand</span></>}
@@ -179,14 +179,14 @@ export default function Monitor() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           {(isFr ? [
-            { title: 'Grandes entreprises & ETI', desc: 'Vous savez que vos clients utilisent ChatGPT. Vous ne savez pas ce qu\'il dit de vous. Le GEO Monitor vous donne la réponse — et les leviers pour l\'améliorer.' },
+            { title: 'Grandes entreprises & ETI', desc: 'Vous savez que vos clients utilisent ChatGPT. Vous ne savez pas ce qu\'il dit de vous. Le Présence IA vous donne la réponse — et les leviers pour l\'améliorer.' },
             { title: 'Marques grand public', desc: 'Quand un consommateur demande "meilleur [votre catégorie]" à une IA, êtes-vous dans la réponse ? Avec quel sentiment ? Le Monitor le mesure.' },
-            { title: 'Agences & consultants', desc: 'Proposez le GEO Monitor comme prestation premium à vos clients. Un livrable différenciant que vos concurrents ne proposent pas encore.' },
+            { title: 'Agences & consultants', desc: 'Proposez le Présence IA comme prestation premium à vos clients. Un livrable différenciant que vos concurrents ne proposent pas encore.' },
             { title: 'Direction marketing & e-reputation', desc: 'Les IA sont le nouveau canal de réputation. Des centaines de mentions négatives non détectées peuvent coûter cher. Le Monitor les identifie.' },
           ] : [
-            { title: 'Large companies & mid-caps', desc: 'You know your customers use ChatGPT. You don\'t know what it says about you. GEO Monitor gives you the answer — and the levers to improve it.' },
+            { title: 'Large companies & mid-caps', desc: 'You know your customers use ChatGPT. You don\'t know what it says about you. Présence IA gives you the answer — and the levers to improve it.' },
             { title: 'Consumer brands', desc: 'When a consumer asks "best [your category]" to an AI, are you in the response? With what sentiment? Monitor measures it.' },
-            { title: 'Agencies & consultants', desc: 'Offer GEO Monitor as a premium service to your clients. A differentiating deliverable your competitors don\'t offer yet.' },
+            { title: 'Agencies & consultants', desc: 'Offer Présence IA as a premium service to your clients. A differentiating deliverable your competitors don\'t offer yet.' },
             { title: 'Marketing & e-reputation teams', desc: 'AI is the new reputation channel. Hundreds of undetected negative mentions can be costly. Monitor identifies them.' },
           ]).map((item, i) => (
             <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px 22px', boxShadow: '0 2px 12px rgba(26,25,22,0.05)' }}>
@@ -194,6 +194,28 @@ export default function Monitor() {
               <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6 }}>{item.desc}</div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* ─── LIEN VERS AUDITS ─── */}
+      <div style={{ maxWidth: 780, margin: '0 auto', padding: '60px 24px 0', textAlign: 'center' }}>
+        <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 36px', boxShadow: '0 2px 12px rgba(26,25,22,0.05)' }}>
+          <div style={{ fontSize: 15, color: '#1A1916', fontFamily: 'system-ui', fontWeight: 600, marginBottom: 8 }}>
+            {isFr ? 'Vous voulez d\'abord mesurer la citabilité technique de votre site ?' : 'Want to first measure your site\'s technical citability?'}
+          </div>
+          <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+            {isFr
+              ? 'Commencez par un audit GEO gratuit en 30 secondes — ou passez à l\'audit détaillé pour un diagnostic complet avec plan d\'action.'
+              : 'Start with a free 30-second GEO audit — or upgrade to a detailed audit for a full diagnosis with action plan.'}
+          </p>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ display: 'inline-block', background: '#F0EDE8', color: '#1A1916', padding: '10px 24px', borderRadius: 9, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+              {isFr ? 'Score gratuit →' : 'Free score →'}
+            </Link>
+            <Link href="/pricing" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '10px 24px', borderRadius: 9, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+              {isFr ? 'Voir les audits →' : 'View audits →'}
+            </Link>
+          </div>
         </div>
       </div>
 

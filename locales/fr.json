@@ -127,7 +127,7 @@
     "home": "Accueil",
     "methodology": "Méthodologie",
     "pricing": "Tarifs",
-    "monitor": "GEO Monitor",
+    "monitor": "Présence IA",
     "about": "À propos",
     "contact": "Contact",
     "blog": "Blog",
@@ -405,7 +405,8 @@
         "links": [
           { "label": "Scoring gratuit", "href": "/" },
           { "label": "Audit 1 page — 29 €", "href": "/one-page" },
-          { "label": "Audit complet — 99 €", "href": "/pro" }
+          { "label": "Audit complet — 99 €", "href": "/pro" },
+          { "label": "Présence IA", "href": "/monitor" }
         ]
       },
       "resources": {
@@ -973,7 +974,7 @@
         {
           "icon": "📊",
           "title": "Demande de devis ou renseignements",
-          "desc": "GEO Monitor, accompagnement personnalisé, audit sur mesure — on vous répond avec un chiffrage adapté."
+          "desc": "Présence IA, accompagnement personnalisé, audit sur mesure — on vous répond avec un chiffrage adapté."
         },
         {
           "icon": "📅",
