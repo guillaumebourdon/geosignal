@@ -86,7 +86,7 @@ export default function Monitor() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           {[
-            { n: '1', title: isFr ? 'Définition des requêtes stratégiques' : 'Strategic query definition', desc: isFr ? 'Nous identifions avec vous les 50 à 200 requêtes que vos prospects posent aux IA. Par thématique, par intention, par zone géographique.' : 'We identify with you the 50 to 200 queries your prospects ask AI engines. By theme, intent, and geography.' },
+            { n: '1', title: isFr ? 'Définition des requêtes stratégiques' : 'Strategic query definition', desc: isFr ? 'Nous définissons avec vous les requêtes stratégiques que vos prospects posent aux IA. Par thématique, par intention, par zone géographique — sans limite de volume.' : 'We define with you the strategic queries your prospects ask AI engines. By theme, intent, geography — no volume limit.' },
             { n: '2', title: isFr ? 'Interrogation des 4 LLM majeurs' : 'Querying the 4 major LLMs', desc: isFr ? 'Chaque requête est envoyée à ChatGPT, Gemini, Claude et Perplexity. Les réponses complètes sont collectées et analysées.' : 'Each query is sent to ChatGPT, Gemini, Claude and Perplexity. Full responses are collected and analyzed.' },
             { n: '3', title: isFr ? 'Analyse multi-dimensionnelle' : 'Multi-dimensional analysis', desc: isFr ? 'Taux de mention, position dans la réponse, sentiment (positif/neutre/négatif), concurrents cités, sources utilisées, verbatims exacts.' : 'Mention rate, response position, sentiment, competitors cited, sources used, exact verbatims.' },
             { n: '4', title: isFr ? 'Dashboard interactif + recommandations' : 'Interactive dashboard + recommendations', desc: isFr ? 'Un rapport web interactif avec filtres par thématique, par LLM, par concurrent. Incluant les actions prioritaires pour améliorer votre présence.' : 'An interactive web report with filters by theme, LLM, competitor. Including priority actions to improve your presence.' },
@@ -113,8 +113,8 @@ export default function Monitor() {
           </h2>
           <p style={{ fontSize: 15, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto' }}>
             {isFr
-              ? '75 requêtes stratégiques × 4 LLM = 300 réponses analysées. Voici les résultats.'
-              : '75 strategic queries × 4 LLMs = 300 responses analyzed. Here are the results.'}
+              ? '600 requêtes stratégiques × 4 LLM = 2 400 réponses analysées. Voici les résultats.'
+              : '600 strategic queries × 4 LLMs = 2,400 responses analyzed. Here are the results.'}
           </p>
         </div>
 
@@ -132,7 +132,7 @@ export default function Monitor() {
           <div style={{ background: '#1A1916', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
             <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: '#C9861A', letterSpacing: -2 }}>102</div>
             <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', marginTop: 8 }}>{isFr ? 'Mentions totales' : 'Total mentions'}</div>
-            <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'Sur 300 réponses analysées' : 'Across 300 analyzed responses'}</div>
+            <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'Sur 2 400 réponses analysées' : 'Across 2,400 analyzed responses'}</div>
           </div>
         </div>
 
@@ -157,8 +157,8 @@ export default function Monitor() {
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{isFr ? 'Livrables' : 'Deliverables'}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {(isFr
-                ? ['Dashboard interactif avec filtres', 'Analyse par thématique (5 axes)', 'Benchmark concurrentiel détaillé', 'Verbatims négatifs avec sources', 'Tableau des 75 requêtes × 4 LLM', 'Recommandations prioritaires']
-                : ['Interactive dashboard with filters', 'Analysis by theme (5 axes)', 'Detailed competitive benchmark', 'Negative verbatims with sources', 'Table of 75 queries × 4 LLMs', 'Priority recommendations']
+                ? ['Dashboard interactif avec filtres', 'Analyse par thématique (5 axes)', 'Benchmark concurrentiel détaillé', 'Verbatims négatifs avec sources', 'Tableau des 600 requêtes × 4 LLM', 'Recommandations prioritaires']
+                : ['Interactive dashboard with filters', 'Analysis by theme (5 axes)', 'Detailed competitive benchmark', 'Negative verbatims with sources', 'Table of 600 queries × 4 LLMs', 'Priority recommendations']
               ).map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: '#10A37F', fontSize: 12 }}>✓</span>
