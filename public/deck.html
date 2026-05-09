@@ -411,110 +411,55 @@
 
 <!-- ═══ SLIDE 7 — 8 CRITERES ═══ -->
 <div class="slide" id="s7">
-  <div class="full-dark" style="text-align:center;padding:40px 60px;">
+  <div class="full-dark" style="text-align:center;">
     <div class="tag animate d1">Notre approche</div>
-    <h2 class="animate d2" style="font-size:32px;margin-bottom:8px;">
-      8 critères. Un score <span style="color:var(--orange);">/100</span>.
+    <h2 class="animate d2" style="font-size:34px;">
+      Plus qu'une opinion IA :<br>un diagnostic reproductible
     </h2>
-    <p class="animate d3" style="font-size:14px;color:rgba(247,245,242,0.5);margin-bottom:28px;">Diagnostic technique, reproductible, basé sur le code source de vos pages.</p>
-
-    <!-- Donut chart central + labels autour -->
-    <div class="animate d4" style="position:relative;width:820px;height:440px;margin:0 auto;">
-
-      <!-- Donut SVG au centre -->
-      <svg style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);" width="280" height="280" viewBox="0 0 280 280">
-        <!-- Segments du donut (rayon=110, cx=140, cy=140, stroke-width=32) -->
-        <!-- Périmètre = 2*PI*110 = 691.15 -->
-        <!-- 25% = 172.8, 20% = 138.2, 15% = 103.7, 15% = 103.7, 10% = 69.1, 10% = 69.1, 2.5% = 17.3, 2.5% = 17.3 (5% split in 2 for the last two) -->
-        <!-- Actually: 25/100*691=172.8, gap=5 -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="rgba(247,245,242,0.03)" stroke-width="32"/>
-        <!-- Segment 1: Extractabilité 25% -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="#D97757" stroke-width="32"
-          stroke-dasharray="168 523" stroke-dashoffset="173" stroke-linecap="round" opacity="0.9"/>
-        <!-- Segment 2: Vérifiabilité 20% -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="#E8956F" stroke-width="32"
-          stroke-dasharray="133 558" stroke-dashoffset="0" stroke-linecap="round" opacity="0.8"/>
-        <!-- Segment 3: Autorité 15% -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="#C9861A" stroke-width="32"
-          stroke-dasharray="98 593" stroke-dashoffset="-138" stroke-linecap="round" opacity="0.75"/>
-        <!-- Segment 4: Crawlabilité 15% -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="#B07A40" stroke-width="32"
-          stroke-dasharray="98 593" stroke-dashoffset="-241" stroke-linecap="round" opacity="0.65"/>
-        <!-- Segment 5: Données structurées 10% -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="rgba(247,245,242,0.25)" stroke-width="32"
-          stroke-dasharray="64 627" stroke-dashoffset="-344" stroke-linecap="round"/>
-        <!-- Segment 6: Neutralité 10% -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="rgba(247,245,242,0.18)" stroke-width="32"
-          stroke-dasharray="64 627" stroke-dashoffset="-413" stroke-linecap="round"/>
-        <!-- Segment 7: Présence 5% -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="rgba(247,245,242,0.12)" stroke-width="32"
-          stroke-dasharray="30 661" stroke-dashoffset="-482" stroke-linecap="round"/>
-        <!-- Segment 8: Fraîcheur 5% -->
-        <circle cx="140" cy="140" r="110" fill="none" stroke="rgba(247,245,242,0.08)" stroke-width="32"
-          stroke-dasharray="30 661" stroke-dashoffset="-517" stroke-linecap="round"/>
-
-        <!-- Texte central -->
-        <text x="140" y="128" text-anchor="middle" font-family="'DM Mono',monospace" font-size="13" fill="rgba(247,245,242,0.4)" letter-spacing="2">SCORE</text>
-        <text x="140" y="158" text-anchor="middle" font-family="Georgia,serif" font-size="42" font-weight="900" fill="#D97757">/100</text>
-      </svg>
-
-      <!-- Labels positionnés autour du donut -->
-      <!-- Haut-gauche : Extractabilité 25% -->
-      <div style="position:absolute;left:0;top:30px;width:170px;text-align:right;">
-        <div style="font-family:'DM Mono',monospace;font-size:28px;font-weight:900;color:var(--orange);line-height:1;">25%</div>
-        <div style="font-size:12px;font-weight:700;color:var(--cream);margin-top:4px;">Extractabilité</div>
-        <div style="font-size:10px;color:rgba(247,245,242,0.35);">Réponse directe & citable</div>
+    <p class="animate d3" style="font-size:16px;color:rgba(247,245,242,0.6);margin-top:12px;max-width:680px;text-align:center;line-height:1.6;">
+      Detekia analyse le code source de vos pages — HTML, JSON-LD, headers, robots.txt — et mesure objectivement <strong style="color:var(--cream);">8 critères de citabilité IA</strong>. Pas d'IA qui donne son avis : un diagnostic technique, reproductible, score sur 100.
+    </p>
+    <div class="criteria-grid animate d4" style="margin-top:32px;">
+      <div class="criterion">
+        <div class="criterion-icon">&#127919;</div>
+        <div class="criterion-name">Extractabilité &<br>réponse directe</div>
+        <div class="criterion-pts">25 <span class="small">pts</span></div>
       </div>
-
-      <!-- Haut : Vérifiabilité 20% -->
-      <div style="position:absolute;left:50%;transform:translateX(-50%);top:0;width:170px;text-align:center;">
-        <div style="font-family:'DM Mono',monospace;font-size:28px;font-weight:900;color:#E8956F;line-height:1;">20%</div>
-        <div style="font-size:12px;font-weight:700;color:var(--cream);margin-top:4px;">Vérifiabilité</div>
-        <div style="font-size:10px;color:rgba(247,245,242,0.35);">Sources & preuves datées</div>
+      <div class="criterion">
+        <div class="criterion-icon">&#128300;</div>
+        <div class="criterion-name">Vérifiabilité &<br>preuves</div>
+        <div class="criterion-pts">20 <span class="small">pts</span></div>
       </div>
-
-      <!-- Haut-droite : Autorité 15% -->
-      <div style="position:absolute;right:0;top:30px;width:170px;text-align:left;">
-        <div style="font-family:'DM Mono',monospace;font-size:28px;font-weight:900;color:var(--gold);line-height:1;">15%</div>
-        <div style="font-size:12px;font-weight:700;color:var(--cream);margin-top:4px;">Autorité E-E-A-T</div>
-        <div style="font-size:10px;color:rgba(247,245,242,0.35);">Expertise vérifiable</div>
+      <div class="criterion">
+        <div class="criterion-icon">&#127942;</div>
+        <div class="criterion-name">Autorité<br>E-E-A-T</div>
+        <div class="criterion-pts">15 <span class="small">pts</span></div>
       </div>
-
-      <!-- Droite : Crawlabilité 15% -->
-      <div style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:170px;text-align:left;">
-        <div style="font-family:'DM Mono',monospace;font-size:28px;font-weight:900;color:#B07A40;line-height:1;">15%</div>
-        <div style="font-size:12px;font-weight:700;color:var(--cream);margin-top:4px;">Crawlabilité IA</div>
-        <div style="font-size:10px;color:rgba(247,245,242,0.35);">Accès des bots</div>
+      <div class="criterion">
+        <div class="criterion-icon">&#129302;</div>
+        <div class="criterion-name">Crawlabilité<br>IA</div>
+        <div class="criterion-pts">15 <span class="small">pts</span></div>
       </div>
-
-      <!-- Bas-droite : Données structurées 10% -->
-      <div style="position:absolute;right:0;bottom:30px;width:170px;text-align:left;">
-        <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:rgba(247,245,242,0.4);line-height:1;">10%</div>
-        <div style="font-size:12px;font-weight:700;color:rgba(247,245,242,0.6);margin-top:4px;">Données structurées</div>
-        <div style="font-size:10px;color:rgba(247,245,242,0.25);">Schema.org JSON-LD</div>
+      <div class="criterion">
+        <div class="criterion-icon">&#129513;</div>
+        <div class="criterion-name">Données<br>structurées</div>
+        <div class="criterion-pts">10 <span class="small">pts</span></div>
       </div>
-
-      <!-- Bas : Neutralité 10% -->
-      <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:170px;text-align:center;">
-        <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:rgba(247,245,242,0.4);line-height:1;">10%</div>
-        <div style="font-size:12px;font-weight:700;color:rgba(247,245,242,0.6);margin-top:4px;">Neutralité éditoriale</div>
-        <div style="font-size:10px;color:rgba(247,245,242,0.25);">Faits vs marketing</div>
+      <div class="criterion">
+        <div class="criterion-icon">&#9878;</div>
+        <div class="criterion-name">Neutralité<br>éditoriale</div>
+        <div class="criterion-pts">10 <span class="small">pts</span></div>
       </div>
-
-      <!-- Bas-gauche : Présence externe 5% -->
-      <div style="position:absolute;left:0;bottom:30px;width:170px;text-align:right;">
-        <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:rgba(247,245,242,0.35);line-height:1;">5%</div>
-        <div style="font-size:12px;font-weight:700;color:rgba(247,245,242,0.55);margin-top:4px;">Présence externe</div>
-        <div style="font-size:10px;color:rgba(247,245,242,0.25);">Reddit, avis, presse</div>
+      <div class="criterion">
+        <div class="criterion-icon">&#127760;</div>
+        <div class="criterion-name">Présence<br>externe</div>
+        <div class="criterion-pts">5 <span class="small">pts</span></div>
       </div>
-
-      <!-- Gauche : Fraîcheur 5% -->
-      <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:170px;text-align:right;">
-        <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:rgba(247,245,242,0.35);line-height:1;">5%</div>
-        <div style="font-size:12px;font-weight:700;color:rgba(247,245,242,0.55);margin-top:4px;">Fraîcheur</div>
-        <div style="font-size:10px;color:rgba(247,245,242,0.25);">Maintenance & dates</div>
+      <div class="criterion">
+        <div class="criterion-icon">&#128197;</div>
+        <div class="criterion-name">Fraîcheur &<br>maintenance</div>
+        <div class="criterion-pts">5 <span class="small">pts</span></div>
       </div>
-
     </div>
   </div>
 </div>
