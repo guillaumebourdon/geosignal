@@ -406,7 +406,7 @@
           { "label": "Free scoring", "href": "/" },
           { "label": "1-Page audit — €29", "href": "/one-page" },
           { "label": "Complete audit — €99", "href": "/pro" },
-          { "label": "AI Presence", "href": "/monitor" }
+          { "label": "AI Presence", "href": "/presence-ia" }
         ]
       },
       "resources": {

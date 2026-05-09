@@ -15,7 +15,7 @@ const Logo = () => (
 const NAV_LINKS = [
   { href: '/blog', labelKey: 'nav.blog' },
   { href: '/pricing', labelKey: 'nav.pricing' },
-  { href: '/monitor', labelKey: 'nav.monitor' },
+  { href: '/presence-ia', labelKey: 'nav.monitor' },
   { href: '/methodologie', labelKey: 'nav.methodology' },
   { href: '/a-propos', labelKey: 'nav.about' },
   { href: '/contact', labelKey: 'nav.contact' },

@@ -375,7 +375,7 @@ export default function Pricing() {
                   : 'On interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques et on mesure votre visibilité réelle : taux de mention, position, sentiment, concurrents.'}
               </p>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-                <Link href="/monitor" style={{
+                <Link href="/presence-ia" style={{
                   display: 'inline-block',
                   background: 'linear-gradient(135deg, #C9861A, #D97757)',
                   color: '#fff',

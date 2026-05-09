@@ -25,7 +25,7 @@ function generateSiteMap() {
   const staticPages = [
     { path: '', changefreq: 'weekly', priority: '1.0' },
     { path: '/pricing', changefreq: 'monthly', priority: '0.8' },
-    { path: '/monitor', changefreq: 'monthly', priority: '0.8' },
+    { path: '/presence-ia', changefreq: 'monthly', priority: '0.8' },
     { path: '/methodologie', changefreq: 'monthly', priority: '0.8' },
     { path: '/a-propos', changefreq: 'monthly', priority: '0.7' },
     { path: '/contact', changefreq: 'monthly', priority: '0.7' },
