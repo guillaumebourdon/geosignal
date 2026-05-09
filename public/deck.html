@@ -411,67 +411,95 @@
 
 <!-- ═══ SLIDE 7 — 8 CRITERES ═══ -->
 <div class="slide" id="s7">
-  <div class="split">
-    <!-- Gauche : titre + explication -->
-    <div class="split-left dark-bg" style="flex:0 0 38%;flex-direction:column;padding:60px 52px;align-items:flex-start;justify-content:center;">
-      <div class="tag animate d1">Notre approche</div>
-      <h2 class="animate d2" style="font-size:30px;text-align:left;">
-        8 critères.<br>Un score <span style="color:var(--orange);">/100</span>.
-      </h2>
-      <p class="animate d3" style="font-size:14px;color:rgba(247,245,242,0.5);margin-top:16px;line-height:1.65;">
-        Detekia analyse le code source de vos pages — HTML, JSON-LD, headers, robots.txt — et mesure objectivement chaque critère de citabilité IA. Pas d'IA qui donne son avis : un diagnostic technique et reproductible.
-      </p>
-      <div class="animate d4" style="margin-top:24px;padding:16px 20px;background:rgba(217,119,87,0.08);border:1px solid rgba(217,119,87,0.2);border-radius:12px;">
-        <div style="font-family:'DM Mono',monospace;font-size:32px;font-weight:900;color:var(--orange);letter-spacing:-2px;">100 <span style="font-size:14px;color:var(--muted);font-weight:400;">points</span></div>
-        <div style="font-size:12px;color:rgba(247,245,242,0.45);margin-top:4px;">Score total pondéré par impact</div>
+  <div class="full-dark" style="text-align:center;padding:40px 60px;">
+    <div class="tag animate d1">Notre approche</div>
+    <h2 class="animate d2" style="font-size:32px;margin-bottom:8px;">
+      8 critères. Un score <span style="color:var(--orange);">/100</span>.
+    </h2>
+    <p class="animate d3" style="font-size:14px;color:rgba(247,245,242,0.5);margin-bottom:32px;">Diagnostic technique, reproductible, basé sur le code source de vos pages.</p>
+
+    <!-- Radar-style layout : cercle central + critères autour -->
+    <div class="animate d4" style="position:relative;width:700px;height:480px;margin:0 auto;">
+
+      <!-- Cercle central avec score -->
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(217,119,87,0.12) 0%,rgba(217,119,87,0.03) 60%,transparent 100%);border:1px solid rgba(217,119,87,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:48px;font-weight:900;color:var(--orange);letter-spacing:-3px;line-height:1;">100</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;margin-top:4px;">POINTS</div>
       </div>
-    </div>
-    <!-- Droite : les 8 critères en liste avec barres -->
-    <div class="split-right dark-bg" style="flex:0 0 62%;justify-content:center;padding:48px 56px;">
-      <div style="display:flex;flex-direction:column;gap:10px;width:100%;" class="animate d3">
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:12px;">
-          <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--orange);min-width:50px;">25</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--cream);">Extractabilité & réponse directe</div><div style="font-size:11px;color:rgba(247,245,242,0.4);margin-top:2px;">Votre contenu est-il directement citable par les IA ?</div></div>
-          <div style="width:120px;height:6px;background:rgba(247,245,242,0.06);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--orange);border-radius:3px;"></div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:12px;">
-          <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--orange);min-width:50px;">20</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--cream);">Vérifiabilité & preuves</div><div style="font-size:11px;color:rgba(247,245,242,0.4);margin-top:2px;">Vos affirmations sont-elles sourcées et vérifiables ?</div></div>
-          <div style="width:120px;height:6px;background:rgba(247,245,242,0.06);border-radius:3px;overflow:hidden;"><div style="width:80%;height:100%;background:var(--orange);border-radius:3px;"></div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:12px;">
-          <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--orange);min-width:50px;">15</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--cream);">Autorité E-E-A-T</div><div style="font-size:11px;color:rgba(247,245,242,0.4);margin-top:2px;">Qui êtes-vous et pourquoi vous faire confiance ?</div></div>
-          <div style="width:120px;height:6px;background:rgba(247,245,242,0.06);border-radius:3px;overflow:hidden;"><div style="width:60%;height:100%;background:var(--orange);border-radius:3px;"></div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:12px;">
-          <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--orange);min-width:50px;">15</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--cream);">Crawlabilité IA</div><div style="font-size:11px;color:rgba(247,245,242,0.4);margin-top:2px;">Les bots IA peuvent-ils accéder à votre contenu ?</div></div>
-          <div style="width:120px;height:6px;background:rgba(247,245,242,0.06);border-radius:3px;overflow:hidden;"><div style="width:60%;height:100%;background:var(--orange);border-radius:3px;"></div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:12px;">
-          <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:rgba(247,245,242,0.4);min-width:50px;">10</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--cream);">Données structurées</div><div style="font-size:11px;color:rgba(247,245,242,0.4);margin-top:2px;">Schema.org JSON-LD parsé avant le contenu textuel</div></div>
-          <div style="width:120px;height:6px;background:rgba(247,245,242,0.06);border-radius:3px;overflow:hidden;"><div style="width:40%;height:100%;background:rgba(247,245,242,0.25);border-radius:3px;"></div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:12px;">
-          <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:rgba(247,245,242,0.4);min-width:50px;">10</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--cream);">Neutralité éditoriale</div><div style="font-size:11px;color:rgba(247,245,242,0.4);margin-top:2px;">Les IA préfèrent les faits aux superlatifs</div></div>
-          <div style="width:120px;height:6px;background:rgba(247,245,242,0.06);border-radius:3px;overflow:hidden;"><div style="width:40%;height:100%;background:rgba(247,245,242,0.25);border-radius:3px;"></div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:12px;">
-          <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:rgba(247,245,242,0.4);min-width:50px;">5</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--cream);">Présence externe</div><div style="font-size:11px;color:rgba(247,245,242,0.4);margin-top:2px;">Signaux off-site : Reddit, avis, presse, LinkedIn</div></div>
-          <div style="width:120px;height:6px;background:rgba(247,245,242,0.06);border-radius:3px;overflow:hidden;"><div style="width:20%;height:100%;background:rgba(247,245,242,0.25);border-radius:3px;"></div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(247,245,242,0.04);border:1px solid rgba(247,245,242,0.08);border-radius:12px;">
-          <div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:rgba(247,245,242,0.4);min-width:50px;">5</div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--cream);">Fraîcheur & maintenance</div><div style="font-size:11px;color:rgba(247,245,242,0.4);margin-top:2px;">Un site maintenu est un site fiable pour les IA</div></div>
-          <div style="width:120px;height:6px;background:rgba(247,245,242,0.06);border-radius:3px;overflow:hidden;"><div style="width:20%;height:100%;background:rgba(247,245,242,0.25);border-radius:3px;"></div></div>
-        </div>
+
+      <!-- Anneau decoratif -->
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:220px;height:220px;border-radius:50%;border:1px solid rgba(247,245,242,0.04);"></div>
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:320px;height:320px;border-radius:50%;border:1px dashed rgba(247,245,242,0.04);"></div>
+
+      <!-- Lignes de connexion (simples traits) -->
+      <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" viewBox="0 0 700 480">
+        <line x1="350" y1="240" x2="100" y2="60" stroke="rgba(217,119,87,0.15)" stroke-width="1"/>
+        <line x1="350" y1="240" x2="300" y2="50" stroke="rgba(217,119,87,0.15)" stroke-width="1"/>
+        <line x1="350" y1="240" x2="530" y2="45" stroke="rgba(217,119,87,0.15)" stroke-width="1"/>
+        <line x1="350" y1="240" x2="640" y2="110" stroke="rgba(217,119,87,0.15)" stroke-width="1"/>
+        <line x1="350" y1="240" x2="640" y2="360" stroke="rgba(247,245,242,0.06)" stroke-width="1"/>
+        <line x1="350" y1="240" x2="520" y2="440" stroke="rgba(247,245,242,0.06)" stroke-width="1"/>
+        <line x1="350" y1="240" x2="180" y2="440" stroke="rgba(247,245,242,0.06)" stroke-width="1"/>
+        <line x1="350" y1="240" x2="60" y2="340" stroke="rgba(247,245,242,0.06)" stroke-width="1"/>
+      </svg>
+
+      <!-- Critère 1 — top-left -->
+      <div style="position:absolute;left:10px;top:20px;text-align:center;width:150px;">
+        <div style="font-family:'DM Mono',monospace;font-size:24px;font-weight:900;color:var(--orange);">25</div>
+        <div style="font-size:11px;font-weight:700;color:var(--cream);text-transform:uppercase;letter-spacing:0.3px;line-height:1.3;margin-top:2px;">Extractabilité</div>
+        <div style="font-size:10px;color:rgba(247,245,242,0.35);">Réponse directe</div>
       </div>
+
+      <!-- Critère 2 — top-center -->
+      <div style="position:absolute;left:240px;top:10px;text-align:center;width:150px;">
+        <div style="font-family:'DM Mono',monospace;font-size:24px;font-weight:900;color:var(--orange);">20</div>
+        <div style="font-size:11px;font-weight:700;color:var(--cream);text-transform:uppercase;letter-spacing:0.3px;line-height:1.3;margin-top:2px;">Vérifiabilité</div>
+        <div style="font-size:10px;color:rgba(247,245,242,0.35);">Sources & preuves</div>
+      </div>
+
+      <!-- Critère 3 — top-right -->
+      <div style="position:absolute;right:80px;top:10px;text-align:center;width:150px;">
+        <div style="font-family:'DM Mono',monospace;font-size:24px;font-weight:900;color:var(--orange);">15</div>
+        <div style="font-size:11px;font-weight:700;color:var(--cream);text-transform:uppercase;letter-spacing:0.3px;line-height:1.3;margin-top:2px;">Autorité E-E-A-T</div>
+        <div style="font-size:10px;color:rgba(247,245,242,0.35);">Expertise vérifiable</div>
+      </div>
+
+      <!-- Critère 4 — right -->
+      <div style="position:absolute;right:0;top:80px;text-align:center;width:150px;">
+        <div style="font-family:'DM Mono',monospace;font-size:24px;font-weight:900;color:var(--orange);">15</div>
+        <div style="font-size:11px;font-weight:700;color:var(--cream);text-transform:uppercase;letter-spacing:0.3px;line-height:1.3;margin-top:2px;">Crawlabilité IA</div>
+        <div style="font-size:10px;color:rgba(247,245,242,0.35);">Accès des bots</div>
+      </div>
+
+      <!-- Critère 5 — bottom-right -->
+      <div style="position:absolute;right:0;bottom:70px;text-align:center;width:150px;">
+        <div style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:rgba(247,245,242,0.4);">10</div>
+        <div style="font-size:11px;font-weight:700;color:rgba(247,245,242,0.6);text-transform:uppercase;letter-spacing:0.3px;line-height:1.3;margin-top:2px;">Données structurées</div>
+        <div style="font-size:10px;color:rgba(247,245,242,0.25);">Schema.org</div>
+      </div>
+
+      <!-- Critère 6 — bottom-center-right -->
+      <div style="position:absolute;right:120px;bottom:0;text-align:center;width:150px;">
+        <div style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:rgba(247,245,242,0.4);">10</div>
+        <div style="font-size:11px;font-weight:700;color:rgba(247,245,242,0.6);text-transform:uppercase;letter-spacing:0.3px;line-height:1.3;margin-top:2px;">Neutralité éditoriale</div>
+        <div style="font-size:10px;color:rgba(247,245,242,0.25);">Faits vs marketing</div>
+      </div>
+
+      <!-- Critère 7 — bottom-center-left -->
+      <div style="position:absolute;left:100px;bottom:0;text-align:center;width:150px;">
+        <div style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:rgba(247,245,242,0.4);">5</div>
+        <div style="font-size:11px;font-weight:700;color:rgba(247,245,242,0.6);text-transform:uppercase;letter-spacing:0.3px;line-height:1.3;margin-top:2px;">Présence externe</div>
+        <div style="font-size:10px;color:rgba(247,245,242,0.25);">Reddit, avis, presse</div>
+      </div>
+
+      <!-- Critère 8 — left -->
+      <div style="position:absolute;left:0;bottom:100px;text-align:center;width:150px;">
+        <div style="font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:rgba(247,245,242,0.4);">5</div>
+        <div style="font-size:11px;font-weight:700;color:rgba(247,245,242,0.6);text-transform:uppercase;letter-spacing:0.3px;line-height:1.3;margin-top:2px;">Fraîcheur</div>
+        <div style="font-size:10px;color:rgba(247,245,242,0.25);">Maintenance & dates</div>
+      </div>
+
     </div>
-  </div>
   </div>
 </div>
 
