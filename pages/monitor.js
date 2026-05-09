@@ -130,7 +130,7 @@ export default function Monitor() {
             <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'Citée en 2ème position en moyenne' : 'Cited in 2nd position on average'}</div>
           </div>
           <div style={{ background: '#1A1916', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: '#C9861A', letterSpacing: -2 }}>102</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: '#C9861A', letterSpacing: -2 }}>1 102</div>
             <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', marginTop: 8 }}>{isFr ? 'Mentions totales' : 'Total mentions'}</div>
             <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'Sur 2 400 réponses analysées' : 'Across 2,400 analyzed responses'}</div>
           </div>
@@ -143,12 +143,12 @@ export default function Monitor() {
               {isFr ? (
                 <>
                   <strong style={{ color: '#F7F5F2' }}>Leader sur le crédit et l'assurance</strong> — mais quasi absent sur l'épargne et la retraite, deux thématiques à fort volume de requêtes.<br /><br />
-                  <strong style={{ color: '#F7F5F2' }}>22 mentions négatives détectées</strong> — principalement sur les frais et le financement d'énergies fossiles. Des verbatims exacts permettent d'identifier les contenus source.
+                  <strong style={{ color: '#F7F5F2' }}>187 mentions négatives détectées</strong> — principalement sur les frais et le financement d'énergies fossiles. Des verbatims exacts permettent d'identifier les contenus source.
                 </>
               ) : (
                 <>
                   <strong style={{ color: '#F7F5F2' }}>Leader on credit and insurance</strong> — but nearly absent on savings and retirement, two high-volume query topics.<br /><br />
-                  <strong style={{ color: '#F7F5F2' }}>22 negative mentions detected</strong> — mainly about fees and fossil fuel financing. Exact verbatims identify the source content.
+                  <strong style={{ color: '#F7F5F2' }}>187 negative mentions detected</strong> — mainly about fees and fossil fuel financing. Exact verbatims identify the source content.
                 </>
               )}
             </div>
@@ -182,12 +182,12 @@ export default function Monitor() {
             { title: 'Grandes entreprises & ETI', desc: 'Vous savez que vos clients utilisent ChatGPT. Vous ne savez pas ce qu\'il dit de vous. Le GEO Monitor vous donne la réponse — et les leviers pour l\'améliorer.' },
             { title: 'Marques grand public', desc: 'Quand un consommateur demande "meilleur [votre catégorie]" à une IA, êtes-vous dans la réponse ? Avec quel sentiment ? Le Monitor le mesure.' },
             { title: 'Agences & consultants', desc: 'Proposez le GEO Monitor comme prestation premium à vos clients. Un livrable différenciant que vos concurrents ne proposent pas encore.' },
-            { title: 'Direction marketing & e-reputation', desc: 'Les IA sont le nouveau canal de réputation. 22 mentions négatives non détectées peuvent coûter cher. Le Monitor les identifie.' },
+            { title: 'Direction marketing & e-reputation', desc: 'Les IA sont le nouveau canal de réputation. Des centaines de mentions négatives non détectées peuvent coûter cher. Le Monitor les identifie.' },
           ] : [
             { title: 'Large companies & mid-caps', desc: 'You know your customers use ChatGPT. You don\'t know what it says about you. GEO Monitor gives you the answer — and the levers to improve it.' },
             { title: 'Consumer brands', desc: 'When a consumer asks "best [your category]" to an AI, are you in the response? With what sentiment? Monitor measures it.' },
             { title: 'Agencies & consultants', desc: 'Offer GEO Monitor as a premium service to your clients. A differentiating deliverable your competitors don\'t offer yet.' },
-            { title: 'Marketing & e-reputation teams', desc: 'AI is the new reputation channel. 22 undetected negative mentions can be costly. Monitor identifies them.' },
+            { title: 'Marketing & e-reputation teams', desc: 'AI is the new reputation channel. Hundreds of undetected negative mentions can be costly. Monitor identifies them.' },
           ]).map((item, i) => (
             <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px 22px', boxShadow: '0 2px 12px rgba(26,25,22,0.05)' }}>
               <div style={{ fontSize: 15, fontWeight: 700, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 6 }}>{item.title}</div>
