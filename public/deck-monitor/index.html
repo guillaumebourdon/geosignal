@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detekia — Presence IA</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --dark: #1A1916;
+    --cream: #F7F5F2;
+    --orange: #D97757;
+    --green: #10A37F;
+    --blue: #4285F4;
+    --purple: #8B5CF6;
+    --muted: #6B6762;
+    --border: #E5E2DC;
+    --gold: #C9861A;
+    --red: #E05252;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.active .animate { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .slide.active .animate.d1 { animation-delay: 0.1s; }
+  .slide.active .animate.d2 { animation-delay: 0.2s; }
+  .slide.active .animate.d3 { animation-delay: 0.3s; }
+  .slide.active .animate.d4 { animation-delay: 0.4s; }
+  .slide.active .animate.d5 { animation-delay: 0.5s; }
+  .slide.active .animate.d6 { animation-delay: 0.6s; }
+  .slide.active .animate.d7 { animation-delay: 0.7s; }
+  .slide.active .animate.d8 { animation-delay: 0.8s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate { opacity: 0; }
+
+  /* Navigation */
+  .nav { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 100; }
+  .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(247,245,242,0.2); border: none; cursor: pointer; transition: all 0.3s; }
+  .nav-dot.active { background: var(--orange); width: 28px; border-radius: 5px; }
+  .slide-counter { position: fixed; bottom: 30px; right: 40px; font-family: 'DM Mono', monospace; font-size: 12px; color: rgba(247,245,242,0.35); z-index: 100; letter-spacing: 1px; }
+
+  /* Layout */
+  .split { display: flex; width: 100%; height: 100vh; }
+  .split-left { flex: 0 0 42%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .split-right { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px 80px; position: relative; }
+  .full-dark { background: var(--dark); width: 100%; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 80px; position: relative; }
+  .cream-bg { background: var(--cream); }
+  .dark-bg { background: var(--dark); }
+
+  /* Typography */
+  .logo { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; color: var(--cream); letter-spacing: -0.5px; }
+  .logo-sub { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+  h1 { font-size: 52px; font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; text-transform: uppercase; }
+  h1 .accent { color: var(--orange); }
+  h2 { font-size: 38px; font-weight: 800; line-height: 1.15; letter-spacing: -1px; text-transform: uppercase; }
+  h2 .sub { display: block; font-size: 22px; font-weight: 400; letter-spacing: 0; text-transform: uppercase; color: rgba(247,245,242,0.7); margin-top: 8px; }
+  h3 { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .subtitle { font-size: 20px; font-weight: 400; line-height: 1.6; color: rgba(247,245,242,0.7); max-width: 560px; }
+  .divider { width: 64px; height: 2px; background: var(--orange); margin: 24px 0; }
+  .tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); border: 1px solid rgba(217,119,87,0.3); padding: 6px 16px; border-radius: 20px; margin-bottom: 20px; }
+  .source { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(247,245,242,0.3); position: absolute; bottom: 30px; left: 40px; letter-spacing: 0.5px; }
+
+  /* Cover orb */
+  .cover-orb { width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(217,119,87,0.4), rgba(16,163,127,0.2) 50%, rgba(66,133,244,0.15) 70%, transparent); position: relative; display: flex; align-items: center; justify-content: center; animation: orbPulse 4s ease-in-out infinite; }
+  .cover-orb::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(from 0deg, var(--orange), var(--green), var(--blue), var(--orange)); opacity: 0.5; animation: orbSpin 8s linear infinite; filter: blur(1px); }
+  .cover-orb::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--dark); }
+  .cover-orb-text { position: relative; z-index: 2; text-align: center; }
+  @keyframes orbPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+  @keyframes orbSpin { to { transform: rotate(360deg); } }
+
+  /* Cards */
+  .card-grid { display: flex; gap: 24px; margin-top: 32px; width: 100%; max-width: 1100px; }
+  .card { flex: 1; background: rgba(247,245,242,0.04); border: 1px solid rgba(247,245,242,0.08); border-radius: 16px; padding: 36px 28px; transition: all 0.3s; }
+  .card:hover { border-color: rgba(217,119,87,0.3); background: rgba(217,119,87,0.04); }
+
+  /* Bar chart */
+  .bar-chart { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 700px; }
+  .bar-row { display: flex; align-items: center; gap: 16px; }
+  .bar-label { font-size: 13px; color: rgba(247,245,242,0.7); width: 160px; text-align: right; flex-shrink: 0; line-height: 1.3; }
+  .bar-track { flex: 1; height: 36px; background: rgba(247,245,242,0.04); border-radius: 6px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 600; color: #fff; width: 0; }
+  .slide.active .bar-fill { animation: barGrow 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .slide.active .animate.d2 .bar-fill { animation-delay: 0.3s; }
+  .slide.active .animate.d3 .bar-fill { animation-delay: 0.4s; }
+  .slide.active .animate.d4 .bar-fill { animation-delay: 0.5s; }
+  .slide.active .animate.d5 .bar-fill { animation-delay: 0.6s; }
+  .slide.active .animate.d6 .bar-fill { animation-delay: 0.7s; }
+  .slide.active .animate.d7 .bar-fill { animation-delay: 0.8s; }
+  @keyframes barGrow { from { width: 0; } to { width: var(--w); } }
+  .bar-highlight .bar-fill { box-shadow: 0 0 20px rgba(217,119,87,0.3); }
+  .bar-highlight .bar-label { color: var(--cream); font-weight: 600; }
+
+  /* LLM pills */
+  .llm-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 0; max-width: 900px; width: 100%; }
+  .step { display: flex; align-items: flex-start; gap: 24px; padding: 18px 0; border-bottom: 1px solid rgba(247,245,242,0.06); }
+  .step-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--dark); background: var(--orange); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
+  .step-content { flex: 1; }
+  .step-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .step-desc { font-size: 13px; color: rgba(247,245,242,0.5); line-height: 1.5; }
+
+  /* Data panels */
+  .data-panel { background: rgba(247,245,242,0.03); border: 1px solid rgba(247,245,242,0.08); border-radius: 18px; padding: 36px 32px; }
+  .panel-title { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(247,245,242,0.5); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(247,245,242,0.08); }
+
+  /* KPI mini */
+  .kpi-row { display: flex; gap: 16px; width: 100%; max-width: 1100px; }
+  .kpi-mini { flex: 1; background: rgba(247,245,242,0.04); border: 1px solid rgba(247,245,242,0.08); border-radius: 14px; padding: 24px 20px; text-align: center; transition: all 0.3s; }
+  .kpi-mini:hover { border-color: rgba(217,119,87,0.3); }
+  .kpi-mini-value { font-size: 42px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+  .kpi-mini-label { font-size: 12px; color: rgba(247,245,242,0.5); margin-top: 8px; line-height: 1.4; }
+
+  /* Pricing compact */
+  .pricing-grid { display: flex; gap: 16px; max-width: 1100px; width: 100%; align-items: stretch; }
+  .price-card { flex: 1; background: rgba(247,245,242,0.03); border: 1px solid rgba(247,245,242,0.1); border-radius: 18px; padding: 28px 22px; display: flex; flex-direction: column; transition: all 0.3s; }
+  .price-card.featured { border-color: var(--orange); background: rgba(217,119,87,0.06); transform: scale(1.02); }
+  .price-card .plan-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .price-card .plan-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+  .price-card .plan-price { font-size: 32px; font-weight: 900; letter-spacing: -2px; margin-bottom: 4px; }
+  .price-card .plan-price .currency { font-size: 20px; }
+  .price-card .plan-once { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .plan-features li { font-size: 11px; color: rgba(247,245,242,0.7); padding-left: 16px; position: relative; line-height: 1.4; }
+  .plan-features li::before { content: ''; position: absolute; left: 0; top: 5px; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+  .price-card.featured .plan-features li::before { background: var(--green); }
+
+  .cta-url { font-family: 'DM Mono', monospace; font-size: 28px; color: var(--orange); letter-spacing: 1px; margin-top: 20px; }
+  .cta-sub { font-size: 16px; color: var(--muted); margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 — COVER -->
+<div class="slide active" id="s1">
+  <div class="split">
+    <div class="split-left cream-bg">
+      <div class="cover-orb animate d1">
+        <div class="cover-orb-text">
+          <div style="font-size:18px;font-weight:600;color:rgba(247,245,242,0.6);text-transform:uppercase;letter-spacing:3px;">Presence</div>
+          <div style="font-size:56px;font-weight:900;letter-spacing:-2px;line-height:1;">IA</div>
+          <div style="font-family:Georgia,serif;font-size:22px;color:rgba(247,245,242,0.7);margin-top:4px;">Detekia</div>
+        </div>
+      </div>
+    </div>
+    <div class="split-right dark-bg" style="justify-content:center;">
+      <div class="animate d2" style="margin-bottom:32px;">
+        <div class="logo">Detekia</div>
+        <div class="logo-sub">Presence IA</div>
+      </div>
+      <div class="divider animate d3"></div>
+      <h1 class="animate d4" style="margin-top:16px;">
+        Ce que les IA<br>
+        <span class="accent">disent de vous</span><br>
+        quand on leur demande
+      </h1>
+      <p class="subtitle animate d5" style="margin-top:24px;">
+        Vos clients posent des questions a ChatGPT, Gemini, Perplexity, Claude.<br>
+        Que repondent-ils sur votre marque ?
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2 — LE CONSTAT -->
+<div class="slide" id="s2">
+  <div class="full-dark" style="text-align:center;">
+    <div class="tag animate d1">Le constat</div>
+    <h2 class="animate d2">
+      Les IA sont le nouveau<br>reflexe des consommateurs
+      <span class="sub">Et vous ne savez pas ce qu'elles disent de vous</span>
+    </h2>
+    <div class="card-grid animate d3" style="margin-top:40px;">
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--orange);letter-spacing:-3px;line-height:1;">27,7M</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">d'utilisateurs mensuels<br>de LLM <strong style="color:var(--cream);">en France</strong></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">Mediametrie, dec. 2025</div>
+      </div>
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--orange);letter-spacing:-3px;line-height:1;">61%</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">demandent des<br><strong style="color:var(--cream);">recommandations produits</strong></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">Iligo x Media Figaro, 2025</div>
+      </div>
+      <div class="card" style="text-align:center;padding:40px 28px;">
+        <div style="font-size:56px;font-weight:900;color:var(--orange);letter-spacing:-3px;line-height:1;">79%</div>
+        <div style="font-size:14px;color:rgba(247,245,242,0.6);margin-top:12px;line-height:1.5;">des reponses ne citent que<br><strong style="color:var(--cream);">3 a 5 sources</strong></div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:12px;">Otterly.AI, 2026</div>
+      </div>
+    </div>
+    <p class="animate d4" style="font-size:16px;color:rgba(247,245,242,0.5);margin-top:32px;max-width:700px;text-align:center;line-height:1.6;">
+      Quand un client demande <em>"quelle est la meilleure banque pour epargner ?"</em>, est-ce que l'IA parle de vous ?<br>En quelle position ? Avec quel sentiment ?
+    </p>
+  </div>
+</div>
+
+<!-- SLIDE 3 — LE PROBLEME -->
+<div class="slide" id="s3">
+  <div class="split">
+    <div class="split-left dark-bg" style="flex:0 0 45%;flex-direction:column;padding:60px 56px;align-items:flex-start;justify-content:center;">
+      <div class="tag animate d1">Le probleme</div>
+      <h2 class="animate d2" style="font-size:32px;text-align:left;">
+        Vous n'avez aucune<br>visibilite sur votre<br><span style="color:var(--orange);">reputation IA</span>
+      </h2>
+      <div class="divider animate d3"></div>
+      <p class="animate d4" style="font-size:15px;color:rgba(247,245,242,0.6);line-height:1.7;">
+        Les outils SEO traditionnels ne mesurent pas ce que les IA disent de vous. Les reponses changent selon les modeles, les formulations, le moment. Impossible de piloter ce qu'on ne mesure pas.
+      </p>
+    </div>
+    <div class="split-right dark-bg" style="flex:0 0 55%;align-items:center;justify-content:center;">
+      <div class="animate d3" style="width:380px;background:#fff;border-radius:24px;padding:28px 22px;color:var(--dark);box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--green);"></div>
+          <span style="font-size:13px;font-weight:600;">ChatGPT</span>
+        </div>
+        <div style="background:#f0f0f0;border-radius:14px;padding:12px 16px;font-size:13px;line-height:1.5;color:#333;margin-bottom:16px;max-width:85%;margin-left:auto;">
+          Quelle banque propose les meilleurs produits d'epargne ?
+        </div>
+        <div style="background:var(--dark);border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.6;color:var(--cream);max-width:92%;">
+          Parmi les options les plus competitives, <strong style="color:var(--green);">BoursoBank</strong> et <strong style="color:var(--green);">Fortuneo</strong> se distinguent avec des taux attractifs. Les banques traditionnelles comme <span style="color:rgba(247,245,242,0.5);">Societe Generale</span> proposent aussi...
+          <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(247,245,242,0.1);font-size:11px;color:var(--muted);">
+            <span style="color:var(--red);">&#10007; Votre marque n'apparait pas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 — CE QU'ON MESURE -->
+<div class="slide" id="s4">
+  <div class="full-dark" style="text-align:center;">
+    <div class="tag animate d1">Notre approche</div>
+    <h2 class="animate d2" style="font-size:34px;">
+      On interroge les IA<br>comme vos clients le font
+      <span class="sub">Et on analyse chaque reponse en profondeur</span>
+    </h2>
+    <div class="card-grid animate d3" style="margin-top:36px;">
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#128269;</div>
+        <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Taux de mention</div>
+        <div style="font-size:13px;color:rgba(247,245,242,0.5);line-height:1.5;">Dans combien de reponses votre marque est-elle citee ?</div>
+      </div>
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#127942;</div>
+        <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Position</div>
+        <div style="font-size:13px;color:rgba(247,245,242,0.5);line-height:1.5;">En quelle position apparaissez-vous ? 1er cite ou dernier mentionne ?</div>
+      </div>
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#128172;</div>
+        <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Sentiment</div>
+        <div style="font-size:13px;color:rgba(247,245,242,0.5);line-height:1.5;">L'IA vous recommande-t-elle ? Ou vous critique-t-elle ?</div>
+      </div>
+    </div>
+    <div class="card-grid animate d4" style="margin-top:16px;">
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#9878;</div>
+        <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Concurrents</div>
+        <div style="font-size:13px;color:rgba(247,245,242,0.5);line-height:1.5;">Qui sont les marques les plus citees a votre place ?</div>
+      </div>
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#127760;</div>
+        <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Sources</div>
+        <div style="font-size:13px;color:rgba(247,245,242,0.5);line-height:1.5;">Quels sites web sont cites par les IA pour justifier leurs reponses ?</div>
+      </div>
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:12px;">&#128200;</div>
+        <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Thematiques</div>
+        <div style="font-size:13px;color:rgba(247,245,242,0.5);line-height:1.5;">Sur quels sujets etes-vous visible ? Sur lesquels etes-vous absent ?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 — METHODOLOGIE -->
+<div class="slide" id="s5">
+  <div class="split">
+    <div class="split-left dark-bg" style="flex:0 0 40%;flex-direction:column;padding:60px 48px;align-items:flex-start;justify-content:center;">
+      <div class="tag animate d1">Methodologie</div>
+      <h2 class="animate d2" style="font-size:30px;text-align:left;">
+        Des vraies questions,<br>de vraies reponses,<br><span style="color:var(--orange);">une analyse rigoureuse</span>
+      </h2>
+      <div class="divider animate d3"></div>
+      <div class="animate d4" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+        <span class="llm-pill" style="background:var(--green);color:#fff;">ChatGPT</span>
+        <span class="llm-pill" style="background:var(--orange);color:#fff;">Claude</span>
+        <span class="llm-pill" style="background:var(--blue);color:#fff;">Perplexity</span>
+        <span class="llm-pill" style="background:var(--purple);color:#fff;">Gemini</span>
+      </div>
+      <p class="animate d5" style="font-size:13px;color:rgba(247,245,242,0.4);margin-top:20px;line-height:1.6;">
+        Chaque requete est envoyee aux 4 modeles avec la recherche web activee. Les reponses sont analysees automatiquement pour en extraire marques, positions, sentiments et sources.
+      </p>
+    </div>
+    <div class="split-right dark-bg" style="justify-content:center;padding-right:60px;">
+      <div class="steps">
+        <div class="step animate d1">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Definition du perimetre</div>
+            <div class="step-desc">Selection des thematiques, des concurrents a surveiller et des requetes representatives du parcours client.</div>
+          </div>
+        </div>
+        <div class="step animate d2">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Interrogation des 4 LLM</div>
+            <div class="step-desc">Chaque requete est envoyee a ChatGPT, Claude, Perplexity et Gemini avec recherche web. Les reponses brutes et sources sont collectees.</div>
+          </div>
+        </div>
+        <div class="step animate d3">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Extraction & analyse</div>
+            <div class="step-desc">Pour chaque reponse : marques detectees, position d'apparition, sentiment (positif/neutre/negatif), sources web citees et leur classification.</div>
+          </div>
+        </div>
+        <div class="step animate d4">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Agregation & rapport</div>
+            <div class="step-desc">Les donnees sont consolidees en KPIs, classements et visualisations dans un dashboard interactif accessible en ligne.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6 — RESULTATS EXEMPLE -->
+<div class="slide" id="s6">
+  <div class="full-dark" style="text-align:center;">
+    <div class="tag animate d1">Exemple de resultats</div>
+    <h2 class="animate d2" style="font-size:34px;">
+      Audit d'une grande banque francaise
+      <span class="sub">1 000 requetes &times; 4 LLM &mdash; Secteur banque & epargne</span>
+    </h2>
+    <div class="kpi-row animate d3" style="margin-top:36px;">
+      <div class="kpi-mini">
+        <div class="kpi-mini-value" style="color:var(--orange);">47,5%</div>
+        <div class="kpi-mini-label">Taux de mention<br>dans les reponses IA</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="kpi-mini-value" style="color:var(--cream);">2,85</div>
+        <div class="kpi-mini-label">Position moyenne<br>(1 = premier cite)</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="kpi-mini-value" style="color:var(--red);">23%</div>
+        <div class="kpi-mini-label">Mentions negatives<br>(frais, ESG...)</div>
+      </div>
+      <div class="kpi-mini">
+        <div class="kpi-mini-value" style="color:var(--green);">312</div>
+        <div class="kpi-mini-label">Requetes manquees<br>(concurrents cites, pas la marque)</div>
+      </div>
+    </div>
+    <div class="card-grid animate d4" style="margin-top:28px;">
+      <div class="data-panel" style="flex:1;text-align:left;">
+        <div class="panel-title">Top marques citees par les IA</div>
+        <div class="bar-chart">
+          <div class="bar-row bar-highlight animate d4"><div class="bar-label" style="width:130px;">Concurrent #1</div><div class="bar-track"><div class="bar-fill" style="--w:100%;background:linear-gradient(90deg,rgba(16,163,127,0.5),var(--green));">1 647</div></div></div>
+          <div class="bar-row animate d5"><div class="bar-label" style="width:130px;color:var(--orange);font-weight:700;">La marque auditee</div><div class="bar-track"><div class="bar-fill" style="--w:70%;background:linear-gradient(90deg,rgba(217,119,87,0.5),var(--orange));">1 156</div></div></div>
+          <div class="bar-row animate d6"><div class="bar-label" style="width:130px;">Concurrent #2</div><div class="bar-track"><div class="bar-fill" style="--w:55%;background:rgba(247,245,242,0.2);">911</div></div></div>
+          <div class="bar-row animate d7"><div class="bar-label" style="width:130px;">Concurrent #3</div><div class="bar-track"><div class="bar-fill" style="--w:48%;background:rgba(247,245,242,0.15);">789</div></div></div>
+          <div class="bar-row animate d8"><div class="bar-label" style="width:130px;">Concurrent #4</div><div class="bar-track"><div class="bar-fill" style="--w:40%;background:rgba(247,245,242,0.1);">667</div></div></div>
+        </div>
+      </div>
+      <div class="data-panel" style="flex:0.8;text-align:left;">
+        <div class="panel-title">Repartition des negatifs</div>
+        <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;">Frais & tarification</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--orange);">98</span></div>
+            <div style="height:6px;background:rgba(247,245,242,0.06);border-radius:3px;"><div style="height:100%;width:45%;background:var(--red);border-radius:3px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;">ESG & climat</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--orange);">77</span></div>
+            <div style="height:6px;background:rgba(247,245,242,0.06);border-radius:3px;"><div style="height:100%;width:35%;background:var(--red);border-radius:3px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;">Rendement</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--orange);">24</span></div>
+            <div style="height:6px;background:rgba(247,245,242,0.06);border-radius:3px;"><div style="height:100%;width:10%;background:var(--red);border-radius:3px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;">Image & reputation</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--orange);">21</span></div>
+            <div style="height:6px;background:rgba(247,245,242,0.06);border-radius:3px;"><div style="height:100%;width:10%;background:var(--red);border-radius:3px;"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding-top:14px;border-top:1px solid rgba(247,245,242,0.08);font-size:12px;color:rgba(247,245,242,0.4);line-height:1.5;">
+          Chaque critique est categorisee et rattachee a la reponse LLM originale pour action.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 — LE RAPPORT -->
+<div class="slide" id="s7">
+  <div class="split">
+    <div class="split-left dark-bg" style="flex:0 0 55%;padding:40px;align-items:center;justify-content:center;">
+      <!-- Browser mockup -->
+      <div class="animate d1" style="width:100%;max-width:580px;background:#0f1119;border-radius:12px;border:1px solid rgba(255,255,255,0.1);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.5);">
+        <!-- Browser bar -->
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.06);">
+          <div style="display:flex;gap:5px;">
+            <div style="width:9px;height:9px;border-radius:50%;background:#ff5f57;"></div>
+            <div style="width:9px;height:9px;border-radius:50%;background:#ffbd2e;"></div>
+            <div style="width:9px;height:9px;border-radius:50%;background:#28c840;"></div>
+          </div>
+          <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:10px;color:rgba(247,245,242,0.3);background:rgba(255,255,255,0.04);padding:4px 12px;border-radius:6px;">audit-presence-ia.vercel.app</div>
+        </div>
+        <!-- Dashboard content -->
+        <div style="padding:20px 18px;">
+          <!-- Mini KPI row -->
+          <div style="display:flex;gap:8px;margin-bottom:14px;">
+            <div style="flex:1;background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.15);border-radius:8px;padding:10px;border-top:2px solid #22d3ee;">
+              <div style="font-family:'DM Mono',monospace;font-size:8px;color:#22d3ee;text-transform:uppercase;letter-spacing:1px;">Mentions</div>
+              <div style="font-size:22px;font-weight:900;margin-top:4px;">47,5%</div>
+              <div style="font-size:7px;color:rgba(247,245,242,0.4);margin-top:2px;">Taux de mention</div>
+            </div>
+            <div style="flex:1;background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.15);border-radius:8px;padding:10px;border-top:2px solid #22d3ee;">
+              <div style="font-family:'DM Mono',monospace;font-size:8px;color:#22d3ee;text-transform:uppercase;letter-spacing:1px;">Mentions</div>
+              <div style="font-size:22px;font-weight:900;margin-top:4px;">312</div>
+              <div style="font-size:7px;color:rgba(247,245,242,0.4);margin-top:2px;">Requetes manquees</div>
+            </div>
+            <div style="flex:1;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:8px;padding:10px;border-top:2px solid #10b981;">
+              <div style="font-family:'DM Mono',monospace;font-size:8px;color:#10b981;text-transform:uppercase;letter-spacing:1px;">Citations</div>
+              <div style="font-size:22px;font-weight:900;margin-top:4px;">0,6%</div>
+              <div style="font-size:7px;color:rgba(247,245,242,0.4);margin-top:2px;">Part sources client</div>
+            </div>
+          </div>
+          <!-- Mini chart placeholders -->
+          <div style="display:flex;gap:8px;margin-bottom:14px;">
+            <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;">
+              <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(247,245,242,0.6);margin-bottom:10px;">Top marques</div>
+              <div style="display:flex;flex-direction:column;gap:5px;">
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:8px;color:rgba(247,245,242,0.5);width:55px;text-align:right;">BoursoBank</span><div style="height:10px;width:80%;background:linear-gradient(90deg,rgba(248,174,19,0.3),#F8AE13);border-radius:3px;"></div></div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:8px;color:#F8AE13;width:55px;text-align:right;font-weight:700;">Client</span><div style="height:10px;width:60%;background:linear-gradient(90deg,rgba(248,174,19,0.5),#F8AE13);border-radius:3px;"></div></div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:8px;color:rgba(247,245,242,0.5);width:55px;text-align:right;">Fortuneo</span><div style="height:10px;width:45%;background:rgba(255,255,255,0.1);border-radius:3px;"></div></div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:8px;color:rgba(247,245,242,0.5);width:55px;text-align:right;">Credit Agric.</span><div style="height:10px;width:38%;background:rgba(255,255,255,0.08);border-radius:3px;"></div></div>
+              </div>
+            </div>
+            <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;">
+              <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(247,245,242,0.6);margin-bottom:10px;">Top sources</div>
+              <div style="display:flex;flex-direction:column;gap:5px;">
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:8px;color:rgba(247,245,242,0.5);width:65px;text-align:right;">finance-heros.fr</span><div style="height:10px;width:75%;background:linear-gradient(90deg,rgba(34,211,238,0.3),#22d3ee);border-radius:3px;"></div></div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:8px;color:rgba(247,245,242,0.5);width:65px;text-align:right;">meilleurtaux.com</span><div style="height:10px;width:60%;background:linear-gradient(90deg,rgba(244,114,182,0.3),#f472b6);border-radius:3px;"></div></div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:8px;color:rgba(247,245,242,0.5);width:65px;text-align:right;">service-public.fr</span><div style="height:10px;width:48%;background:linear-gradient(90deg,rgba(59,130,246,0.3),#3b82f6);border-radius:3px;"></div></div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:8px;color:rgba(247,245,242,0.5);width:65px;text-align:right;">moneyvox.fr</span><div style="height:10px;width:38%;background:linear-gradient(90deg,rgba(59,130,246,0.3),#3b82f6);border-radius:3px;"></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Mini sentiment row -->
+          <div style="display:flex;gap:8px;">
+            <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px;text-align:center;">
+              <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(247,245,242,0.6);margin-bottom:8px;">Sentiment</div>
+              <div style="display:flex;gap:3px;height:8px;border-radius:4px;overflow:hidden;">
+                <div style="width:40%;background:#10b981;"></div>
+                <div style="width:37%;background:#475569;"></div>
+                <div style="width:23%;background:#ef4444;"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:7px;color:rgba(247,245,242,0.4);">
+                <span>40% positif</span><span>37% neutre</span><span style="color:#ef4444;">23% negatif</span>
+              </div>
+            </div>
+            <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px;">
+              <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(247,245,242,0.6);margin-bottom:6px;">Taux mention par LLM</div>
+              <div style="display:flex;gap:6px;">
+                <div style="flex:1;text-align:center;"><div style="font-size:14px;font-weight:900;">52%</div><div style="font-size:7px;color:var(--green);">ChatGPT</div></div>
+                <div style="flex:1;text-align:center;"><div style="font-size:14px;font-weight:900;">48%</div><div style="font-size:7px;color:var(--orange);">Claude</div></div>
+                <div style="flex:1;text-align:center;"><div style="font-size:14px;font-weight:900;">44%</div><div style="font-size:7px;color:var(--blue);">Perplexity</div></div>
+                <div style="flex:1;text-align:center;"><div style="font-size:14px;font-weight:900;">46%</div><div style="font-size:7px;color:var(--purple);">Gemini</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="split-right dark-bg" style="flex:0 0 45%;justify-content:center;padding:60px 56px;">
+      <div class="tag animate d2">Le livrable</div>
+      <h2 class="animate d3" style="font-size:30px;text-align:left;margin-top:8px;">
+        Un dashboard<br>interactif accessible<br><span style="color:var(--orange);">en ligne</span>
+      </h2>
+      <div class="divider animate d4"></div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:8px;">
+        <div class="animate d4" style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="color:var(--orange);font-size:18px;line-height:1;">&#9679;</div>
+          <div><div style="font-size:14px;font-weight:700;">KPIs & classements</div><div style="font-size:12px;color:rgba(247,245,242,0.5);margin-top:2px;">Mentions, position, sentiment, sources &mdash; par LLM et par thematique</div></div>
+        </div>
+        <div class="animate d5" style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="color:var(--orange);font-size:18px;line-height:1;">&#9679;</div>
+          <div><div style="font-size:14px;font-weight:700;">Analyse des negatifs</div><div style="font-size:12px;color:rgba(247,245,242,0.5);margin-top:2px;">Chaque critique categorisee, avec la reponse LLM complete consultable</div></div>
+        </div>
+        <div class="animate d6" style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="color:var(--orange);font-size:18px;line-height:1;">&#9679;</div>
+          <div><div style="font-size:14px;font-weight:700;">10 000+ domaines sources</div><div style="font-size:12px;color:rgba(247,245,242,0.5);margin-top:2px;">Classification automatique + recherche pour retrouver n'importe quel site</div></div>
+        </div>
+        <div class="animate d7" style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="color:var(--orange);font-size:18px;line-height:1;">&#9679;</div>
+          <div><div style="font-size:14px;font-weight:700;">Detail requete par requete</div><div style="font-size:12px;color:rgba(247,245,242,0.5);margin-top:2px;">Chaque question testee, chaque reponse brute des 4 IA en un clic</div></div>
+        </div>
+        <div class="animate d8" style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="color:var(--orange);font-size:18px;line-height:1;">&#9679;</div>
+          <div><div style="font-size:14px;font-weight:700;">URL privee + export</div><div style="font-size:12px;color:rgba(247,245,242,0.5);margin-top:2px;">Dashboard en ligne permanent, export CSV, responsive mobile</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 — ECOSYSTEME DETEKIA -->
+<div class="slide" id="s8">
+  <div class="split">
+    <div class="split-left dark-bg" style="flex:0 0 38%;flex-direction:column;padding:60px 56px;align-items:flex-start;justify-content:center;">
+      <div class="animate d1" style="font-family:Georgia,serif;font-size:36px;letter-spacing:-1px;">Detekia</div>
+      <div class="divider animate d2"></div>
+      <h2 class="animate d3" style="font-size:28px;text-align:left;">
+        Tout le spectre<br>de la <span style="color:var(--orange);">visibilite IA</span>
+      </h2>
+      <p class="animate d4" style="font-size:14px;color:rgba(247,245,242,0.5);line-height:1.7;margin-top:16px;">
+        Du diagnostic gratuit en 30 secondes a l'audit de presence complet sur 1 000 requetes.
+      </p>
+      <div class="animate d5" style="margin-top:28px;font-family:'DM Mono',monospace;font-size:13px;color:var(--orange);">detekia.fr</div>
+    </div>
+    <div class="split-right dark-bg" style="flex:0 0 62%;justify-content:center;padding:48px 48px;">
+      <div style="display:flex;flex-direction:column;gap:16px;width:100%;">
+        <!-- Score gratuit -->
+        <div class="animate d2" style="display:flex;gap:20px;align-items:center;background:rgba(247,245,242,0.03);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:22px 24px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(247,245,242,0.15)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="flex-shrink:0;width:56px;text-align:center;">
+            <div style="font-size:28px;font-weight:900;color:var(--cream);">0&euro;</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">Score GEO gratuit</div>
+            <div style="font-size:12px;color:rgba(247,245,242,0.5);margin-top:3px;">Score /100 sur 8 criteres techniques &mdash; resultat en 30 secondes</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Decouverte</div>
+        </div>
+        <!-- Audit One-Page / Pro -->
+        <div class="animate d3" style="display:flex;gap:20px;align-items:center;background:rgba(247,245,242,0.03);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:22px 24px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(247,245,242,0.15)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="flex-shrink:0;width:56px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;color:var(--cream);">29&ndash;99&euro;</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">Audit technique One-Page & Pro</div>
+            <div style="font-size:12px;color:rgba(247,245,242,0.5);margin-top:3px;">Audit code source, recommandations, test de citation IA &mdash; 1 a 10 pages</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Self-service</div>
+        </div>
+        <!-- Presence IA (featured) -->
+        <div class="animate d4" style="display:flex;gap:20px;align-items:center;background:rgba(217,119,87,0.06);border:2px solid var(--orange);border-radius:14px;padding:22px 24px;">
+          <div style="flex-shrink:0;width:56px;text-align:center;">
+            <div style="font-size:16px;font-weight:900;color:var(--orange);">Sur devis</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;color:var(--orange);">Presence IA &mdash; le produit presente ici</div>
+            <div style="font-size:12px;color:rgba(247,245,242,0.6);margin-top:3px;">1 000+ requetes &times; 4 LLM, analyse marques & sentiment, dashboard interactif, 10 000+ sources</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);letter-spacing:1px;text-transform:uppercase;">Premium</div>
+        </div>
+        <!-- Accompagnement -->
+        <div class="animate d5" style="display:flex;gap:20px;align-items:center;background:rgba(247,245,242,0.03);border:1px solid rgba(247,245,242,0.08);border-radius:14px;padding:22px 24px;transition:all 0.3s;" onmouseenter="this.style.borderColor='rgba(247,245,242,0.15)'" onmouseleave="this.style.borderColor='rgba(247,245,242,0.08)'">
+          <div style="flex-shrink:0;width:56px;text-align:center;">
+            <div style="font-size:16px;font-weight:900;color:var(--cream);">Sur devis</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">Accompagnement sur mesure</div>
+            <div style="font-size:12px;color:rgba(247,245,242,0.5);margin-top:3px;">Strategie GEO, monitoring mensuel, suivi concurrentiel, interlocuteur dedie</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Trimestriel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9 — CTA -->
+<div class="slide" id="s9">
+  <div class="split">
+    <div class="split-left cream-bg" style="flex-direction:column;">
+      <div class="animate d1" style="text-align:center;">
+        <div style="font-family:Georgia,serif;font-size:48px;color:var(--dark);letter-spacing:-1px;">Detekia</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:8px;">Presence IA</div>
+        <div style="margin-top:32px;display:flex;gap:8px;justify-content:center;">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--green);"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--orange);"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--blue);"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--purple);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="split-right dark-bg" style="justify-content:center;">
+      <div class="animate d1"><div class="tag">Passez a l'action</div></div>
+      <h1 class="animate d2" style="font-size:44px;margin-top:16px;">
+        Decouvrez ce que<br>
+        <span class="accent">les IA disent</span><br>
+        de votre marque
+      </h1>
+      <div class="divider animate d3"></div>
+      <p class="subtitle animate d4" style="font-size:16px;margin-top:8px;">
+        Premier audit en quelques jours.<br>Resultats concrets et actionnables.
+      </p>
+      <div class="cta-url animate d5">detekia.fr</div>
+      <p class="cta-sub animate d6">Score gratuit &middot; Audit Presence IA sur devis</p>
+      <div class="animate d7" style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(247,245,242,0.08);">
+        <div style="font-size:13px;color:var(--muted);">Contact</div>
+        <div style="font-size:15px;margin-top:6px;">contact@detekia.fr</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Nav -->
+<div class="nav" id="nav"></div>
+<div class="slide-counter" id="counter"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const nav = document.getElementById('nav');
+  const counter = document.getElementById('counter');
+  let current = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    nav.appendChild(dot);
+  });
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].querySelectorAll('.animate').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+      el.style.opacity = '0';
+    });
+    nav.children[current].classList.remove('active');
+    current = n;
+    slides[current].offsetHeight;
+    slides[current].classList.add('active');
+    nav.children[current].classList.add('active');
+    counter.textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+  });
+
+  document.addEventListener('click', e => {
+    if (e.target.closest('.nav') || e.target.closest('a') || e.target.closest('button')) return;
+    if (e.clientX > window.innerWidth * 0.5) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { if (diff > 0) goTo(current + 1); else goTo(current - 1); }
+  });
+
+  counter.textContent = `1 / ${slides.length}`;
+</script>
+</body>
+</html>
