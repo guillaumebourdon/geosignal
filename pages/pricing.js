@@ -254,8 +254,8 @@ export default function Pricing() {
           "@type": "OfferCatalog",
           "name": "Audits GEO Detekia",
           "itemListElement": [
-            { "@type": "Offer", "name": "Audit GEO 1 page", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/one-page" },
-            { "@type": "Offer", "name": "Audit GEO complet (10 pages clés)", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro" }
+            { "@type": "Offer", "name": "Audit GEO 1 page", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/one-page", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO détaillé sur 1 page avec recommandations et test IA" },
+            { "@type": "Offer", "name": "Audit GEO complet (10 pages clés)", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO sur 10 pages clés avec plan d'action priorisé et test IA 30 requêtes" }
           ]
         }
       }} />

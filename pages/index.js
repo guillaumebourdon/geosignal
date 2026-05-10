@@ -290,11 +290,12 @@ export default function Home() {
         "name": "Detekia",
         "description": t('homepage.schema.appDescription'),
         "url": "https://detekia.fr",
+        "image": "https://detekia.fr/og-default.png",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "offers": [
-          { "@type": "Offer", "name": t('homepage.schema.freeOffer'), "price": "0", "priceCurrency": "EUR" },
-          { "@type": "Offer", "name": t('homepage.schema.paidOffer'), "price": "29", "priceCurrency": "EUR" }
+          { "@type": "Offer", "name": t('homepage.schema.freeOffer'), "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/OnlineOnly", "description": "Score GEO gratuit en 30 secondes" },
+          { "@type": "Offer", "name": t('homepage.schema.paidOffer'), "price": "29", "priceCurrency": "EUR", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO détaillé avec recommandations" }
         ],
         "featureList": t('homepage.schema.featureList'),
         "inLanguage": locale,

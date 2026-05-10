@@ -165,7 +165,9 @@ export default function OnePage() {
           "@type": "Offer",
           "price": "29",
           "priceCurrency": "EUR",
-          "url": "https://detekia.fr/one-page"
+          "url": "https://detekia.fr/one-page",
+          "availability": "https://schema.org/OnlineOnly",
+          "description": "Audit GEO 1 page — score détaillé, 8 recommandations, test IA 10 requêtes"
         }
       }} />
       <Head>

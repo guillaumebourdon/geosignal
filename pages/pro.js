@@ -169,7 +169,7 @@ export default function Pro() {
         "provider": { "@type": "Organization", "name": "Detekia", "url": "https://detekia.fr" },
         "areaServed": { "@type": "Country", "name": "France" },
         "image": "https://detekia.fr/og-default.png",
-        "offers": { "@type": "Offer", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro" }
+        "offers": { "@type": "Offer", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO complet sur 10 pages clés — score, recommandations, test IA 30 requêtes" }
       }} />
       <Head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
