@@ -167,7 +167,9 @@ export default function OnePage() {
           "priceCurrency": "EUR",
           "url": "https://detekia.fr/one-page",
           "availability": "https://schema.org/OnlineOnly",
-          "description": "Audit GEO 1 page — score détaillé, 8 recommandations, test IA 10 requêtes"
+          "description": "Audit GEO 1 page — score détaillé, 8 recommandations, test IA 10 requêtes",
+          "hasMerchantReturnPolicy": { "@type": "MerchantReturnPolicy", "applicableCountry": "FR", "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow", "merchantReturnDays": 14, "returnMethod": "https://schema.org/ReturnByMail", "returnFees": "https://schema.org/FreeReturn" },
+          "shippingDetails": { "@type": "OfferShippingDetails", "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "EUR" }, "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" }, "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" } } }
         }
       }} />
       <Head>
