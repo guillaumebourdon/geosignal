@@ -1405,12 +1405,12 @@
     },
     "loading": {
       "title": "Audit GEO en cours",
-      "subtitle": "Analyse en cours, merci de patienter jusqu'à 60 secondes...",
+      "subtitle": "Moins d'une minute, merci de patienter...",
       "progress": "Progression",
       "finalizing": "Finalisation de votre rapport...",
       "stats": [
         {
-          "text": "80% des URL citees par ChatGPT ne sont pas dans le top 100 Google.",
+          "text": "80% des URL citées par ChatGPT ne sont pas dans le top 100 Google.",
           "source": "Ahrefs, 2025"
         },
         {
@@ -1418,7 +1418,7 @@
           "source": "Superlines, 2026"
         },
         {
-          "text": "Les pages avec donnees structurees sont citees 3 a 5x plus par les IA.",
+          "text": "Les pages avec données structurées sont citées 3 à 5x plus par les IA.",
           "source": "Otterly.AI, 2026"
         },
         {
@@ -1426,11 +1426,11 @@
           "source": "Semrush, 2025"
         },
         {
-          "text": "44% des citations IA proviennent des 30% premiers caracteres d'une page.",
+          "text": "44% des citations IA proviennent des 30% premiers caractères d'une page.",
           "source": "Growth Memo, 2026"
         },
         {
-          "text": "44% des marques top-10 sur Google obtiennent zero citation sur ChatGPT.",
+          "text": "44% des marques top-10 sur Google obtiennent zéro citation sur ChatGPT.",
           "source": "EMGI, 2026"
         },
         {

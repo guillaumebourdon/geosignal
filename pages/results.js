@@ -397,14 +397,22 @@ export default function Results() {
 
   useEffect(() => {
     if (!url) return;
-    let stepInterval = setInterval(() => setStep(s => s < loadingSteps.length - 1 ? s + 1 : s), 1200);
+    // Steps advance progressively: 4s, 6s, 8s, 10s — covers ~28s before last step
+    const stepDelays = [4000, 6000, 8000, 10000];
+    let stepIdx = 0;
+    function advanceStep() {
+      setStep(s => { if (s < loadingSteps.length - 1) return s + 1; return s; });
+      stepIdx++;
+      if (stepIdx < stepDelays.length) setTimeout(advanceStep, stepDelays[stepIdx]);
+    }
+    const stepTimeout = setTimeout(advanceStep, stepDelays[0]);
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 90000);
     fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url, locale }), signal: controller.signal })
       .then(r => r.json())
-      .then(data => { clearTimeout(timeoutId); clearInterval(stepInterval); setStep(loadingSteps.length); if (data.error) setError(data.error); else setResult(data); })
-      .catch(e => { clearTimeout(timeoutId); clearInterval(stepInterval); setError(e.name === 'AbortError' ? t('results.error.timeout') : e.message); });
-    return () => clearInterval(stepInterval);
+      .then(data => { clearTimeout(timeoutId); clearTimeout(stepTimeout); setStep(loadingSteps.length); if (data.error) setError(data.error); else setResult(data); })
+      .catch(e => { clearTimeout(timeoutId); clearTimeout(stepTimeout); setError(e.name === 'AbortError' ? t('results.error.timeout') : e.message); });
+    return () => clearTimeout(stepTimeout);
   }, [url]);
 
   function getGrade(score) {
@@ -490,6 +498,9 @@ export default function Results() {
               })}
             </div>
             <RotatingStats stats={t('results.loading.stats')} finalizingText={t('results.loading.finalizing')} locale={locale} />
+            <div style={{ marginTop: 24, textAlign: 'center', fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>
+              {locale === 'en' ? 'Methodology based on Princeton/KDD 2024 study · 8 weighted criteria' : 'Méthodologie basée sur l\'étude Princeton/KDD 2024 · 8 critères pondérés'}
+            </div>
           </div>
         </div>
       )}

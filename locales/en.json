@@ -1403,7 +1403,7 @@
     },
     "loading": {
       "title": "GEO Audit in progress",
-      "subtitle": "Analysis in progress, please wait up to 60 seconds...",
+      "subtitle": "Less than a minute, please wait...",
       "progress": "Progress",
       "finalizing": "Finalizing your report...",
       "stats": [
