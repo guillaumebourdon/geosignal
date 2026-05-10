@@ -163,6 +163,7 @@ export default function OnePage() {
         "image": "https://detekia.fr/og-default.png",
         "offers": {
           "@type": "Offer",
+          "offeredBy": { "@type": "Organization", "name": "Detekia" },
           "price": "29",
           "priceCurrency": "EUR",
           "url": "https://detekia.fr/one-page",
