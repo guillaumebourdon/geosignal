@@ -823,9 +823,11 @@ export default async function handler(req, res) {
       collectEvidence($, textContent, rawContent, url, directMeta),
       runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
-    const baseScore = Object.values(scores).reduce((s, c) => s + c.score, 0);
-    const neutralityBonus = Math.round((claude.neutralityScore / 10) * 6) - 3;
-    const totalScore = Math.max(0, Math.min(100, baseScore + neutralityBonus));
+    // Raw scores: 7 technical criteria (max 95) + neutrality (max 10) = max 105
+    // Normalize to /100 for client-facing score
+    const RAW_MAX = 105;
+    const rawTotal = Object.values(scores).reduce((s, c) => s + c.score, 0) + (claude.neutralityScore || 0);
+    const totalScore = Math.max(0, Math.min(100, Math.round((rawTotal / RAW_MAX) * 100)));
 
     // Regenerate verdict with final score (includes neutrality bonus)
     if (totalScore !== baseScore) {
@@ -857,14 +859,14 @@ export default async function handler(req, res) {
       strengths: claude.strengths || [],
       topPriority: claude.topPriority || '',
       criteria: [
-        { name: 'Extractibilité & réponse directe', ...scores.extractibility },
-        { name: 'Vérifiabilité & preuves',          ...scores.verifiability },
-        { name: 'Autorité & E-E-A-T',               ...scores.authority },
-        { name: 'Crawlabilité IA',                  ...scores.crawlability },
-        { name: 'Données structurées',              ...scores.structuredData },
-        { name: 'Neutralité éditoriale',            score: claude.neutralityScore, max: 10, detail: claude.neutralityDetail },
-        { name: 'Présence externe',                 ...scores.externalPresence },
-        { name: 'Fraîcheur & maintenance',          ...scores.freshness },
+        { name: 'Extractibilité & réponse directe', score: scores.extractibility.score, max: 25, detail: scores.extractibility.detail },
+        { name: 'Vérifiabilité & preuves',          score: scores.verifiability.score,  max: 20, detail: scores.verifiability.detail },
+        { name: 'Autorité & E-E-A-T',               score: scores.authority.score,      max: 15, detail: scores.authority.detail },
+        { name: 'Crawlabilité IA',                  score: scores.crawlability.score,   max: 15, detail: scores.crawlability.detail },
+        { name: 'Données structurées',              score: scores.structuredData.score,  max: 10, detail: scores.structuredData.detail },
+        { name: 'Neutralité éditoriale',            score: claude.neutralityScore || 0,  max: 10, detail: claude.neutralityDetail },
+        { name: 'Présence externe',                 score: scores.externalPresence.score, max: 5, detail: scores.externalPresence.detail },
+        { name: 'Fraîcheur & maintenance',          score: scores.freshness.score,       max: 5, detail: scores.freshness.detail },
       ],
       recommendations: claude.recommendations,
       evidence,
