@@ -829,19 +829,7 @@ export default async function handler(req, res) {
     const rawTotal = Object.values(scores).reduce((s, c) => s + c.score, 0) + (claude.neutralityScore || 0);
     const totalScore = Math.max(0, Math.min(100, Math.round((rawTotal / RAW_MAX) * 100)));
 
-    // Regenerate verdict with final score (includes neutrality bonus)
-    if (totalScore !== baseScore) {
-      const verdictLang = locale === 'en'
-        ? `OUTPUT LANGUAGE: English (US). Respond in American English only.`
-        : `LANGUE DE SORTIE : Français.`;
-      const verdictMsg = await client.messages.create({
-        model: 'claude-4-sonnet-20250514',
-        max_tokens: 150,
-        temperature: 0.2,
-        messages: [{ role: 'user', content: `${verdictLang}\nYou are a senior GEO consultant. The site ${url} gets a final score of ${totalScore}/100. Strengths: ${(claude.strengths || []).join(', ')}. Priority: ${claude.topPriority || 'none'}. Generate a verdict in 1 concise sentence. Reply ONLY with the sentence, no quotes, no JSON.` }],
-      });
-      claude.verdict = verdictMsg.content[0].text.trim();
-    }
+    // Verdict is already generated in runClaudeAnalysis with the pre-normalization score
 
     // Sanity checks — detect likely scraping gaps
     const hasSubstantialContent = textContent.length > 1000;
