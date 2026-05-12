@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 function ChecklistSection({ title, items }) {
   return (
     <div style={{ marginBottom: 20 }}>
@@ -40,12 +49,12 @@ export default function SchemaOrgIaGuidePratique() {
 
       <p>Les données structurées répondent exactement à ces questions, dans un format que les machines lisent sans interprétation.</p>
 
-      <p>Concrètement, Schema.org impacte 3 des 8 critères du score GEO Detekia :</p>
+      <p>Concrètement, Schema.org impacte 3 des <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 critères du score GEO Detekia</InternalLink> :</p>
 
       <ul>
         <li><strong>Données structurées (10 points)</strong> — impact direct et mesurable</li>
         <li><strong>Autorité & E-E-A-T (15 points)</strong> — le schema <code>Organization</code> et les informations d'auteur renforcent les signaux de crédibilité</li>
-        <li><strong>Extractibilité (25 points)</strong> — le schema <code>FAQPage</code> structure vos contenus dans un format nativement extractible par les IA</li>
+        <li><strong>Extractibilité (25 points)</strong> — le schema <code>FAQPage</code> <InternalLink href="/blog/faq-schema-faqpage-combo-ia">structure vos contenus dans un format nativement extractible</InternalLink> par les IA</li>
       </ul>
 
       <p>Soit un impact potentiel sur <strong>50 points sur 100</strong> de votre score GEO.</p>
@@ -234,7 +243,7 @@ export default function SchemaOrgIaGuidePratique() {
       <h3>E-commerce</h3>
 
       <ul>
-        <li><code>Product</code> — nom, prix, disponibilité, avis. Les IA les utilisent pour les comparaisons produits.</li>
+        <li><code>Product</code> — nom, prix, disponibilité, avis. Les IA les utilisent pour les <InternalLink href="/blog/ecommerce-recommandations-ia">comparaisons produits</InternalLink>.</li>
         <li><code>AggregateRating</code> — note moyenne et nombre d'avis. Signal de confiance fort.</li>
         <li><code>Offer</code> — prix, devise, conditions. Permet aux IA de citer des prix précis.</li>
       </ul>

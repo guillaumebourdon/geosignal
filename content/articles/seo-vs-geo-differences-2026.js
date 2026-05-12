@@ -9,10 +9,19 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 export default function SeoVsGeoDifferences2026() {
   return (
     <>
-      <p>Le SEO vous rend visible dans une liste de liens. Le GEO vous rend citable dans une réponse. En 2026, les deux sont indispensables — mais ils ne fonctionnent pas de la même manière.</p>
+      <p>Le SEO vous rend visible dans une liste de liens. Le <InternalLink href="/blog/geo-guide-complet-2026">GEO</InternalLink> vous rend citable dans une réponse. En 2026, les deux sont indispensables — mais ils ne fonctionnent pas de la même manière.</p>
 
       <p>Si vous investissez déjà dans le SEO, vous avez une longueur d'avance : <strong>99 % des sources citées dans les AI Overviews de Google proviennent du top 10 des résultats organiques</strong>. Le SEO reste la fondation. Mais il ne suffit plus. Les moteurs génératifs ajoutent une couche de critères que le SEO classique ne couvre pas.</p>
 
@@ -26,7 +35,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <p>Le <strong>GEO (Generative Engine Optimization)</strong> optimise votre contenu pour être cité, repris et recommandé dans les réponses synthétiques générées par les IA : ChatGPT, Gemini, Perplexity, Claude, Google AI Overviews.</p>
 
-      <p>Les leviers principaux du GEO : extractibilité du contenu, données structurées, crawlabilité par les bots IA, vérifiabilité des informations, neutralité éditoriale, présence sur des sources tierces.</p>
+      <p>Les leviers principaux du GEO : extractibilité du contenu, données structurées, crawlabilité par les bots IA, vérifiabilité des informations, neutralité éditoriale, présence sur des sources tierces. Ces leviers sont détaillés dans les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 critères de la méthodologie Detekia</InternalLink>.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">Pour une définition complète du GEO et ses 8 critères, consultez notre guide complet GEO 2026.</ArrowLink>
 
@@ -260,7 +269,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <h3>Quel est le ROI du GEO ?</h3>
 
-      <p>Le ROI dépend de votre secteur et de votre maturité. Mais un chiffre résume l'opportunité : un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique. Le GEO ne génère pas forcément plus de trafic — il génère un trafic de meilleure qualité.</p>
+      <p>Le ROI dépend de votre secteur et de votre maturité. Mais un chiffre résume l'opportunité : un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique. Le GEO ne génère pas forcément plus de trafic — surtout dans un contexte où le <InternalLink href="/blog/pourquoi-trafic-google-baisse-2026">trafic Google est en baisse</InternalLink> — il génère un trafic de meilleure qualité.</p>
 
       <h2>Mesurez votre situation</h2>
 

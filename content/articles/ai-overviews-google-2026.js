@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 export default function AiOverviewsGoogle2026() {
   return (
     <>
@@ -26,11 +35,11 @@ export default function AiOverviewsGoogle2026() {
 
       <h2>Pourquoi c'est différent d'apparaître dans ChatGPT ou Perplexity</h2>
 
-      <p>Les AI Overviews de Google ont une particularité majeure : ils s'appuient quasi exclusivement sur les pages déjà indexées et bien classées dans Google. ChatGPT et Perplexity utilisent leurs propres crawlers (GPTBot, PerplexityBot) et peuvent citer des sources que Google ne classe pas en première page.</p>
+      <p>Les AI Overviews de Google ont une particularité majeure : ils s'appuient quasi exclusivement sur les pages déjà indexées et bien classées dans Google. ChatGPT et Perplexity utilisent leurs propres crawlers (GPTBot, PerplexityBot) et peuvent citer des sources que Google ne classe pas en première page. Pour en savoir plus sur l'IA de Google, consultez notre article sur <InternalLink href="/blog/gemini-visibilite-site-france">Gemini et la visibilité des sites en France</InternalLink>.</p>
 
       <p>Concrètement, cela signifie que pour les AI Overviews, le SEO classique est la condition préalable. Vous devez d'abord être dans le top 10 Google pour une requête avant d'espérer être cité dans l'AI Overview de cette requête.</p>
 
-      <p>C'est la couche GEO qui fait ensuite la différence : parmi les 10 résultats organiques, lequel sera sélectionné comme source de l'AI Overview ? C'est là que l'extractibilité, la structure et la vérifiabilité de votre contenu entrent en jeu.</p>
+      <p>C'est la couche <InternalLink href="/blog/geo-guide-complet-2026">GEO</InternalLink> qui fait ensuite la différence : parmi les 10 résultats organiques, lequel sera sélectionné comme source de l'AI Overview ? C'est là que l'extractibilité, la structure et la vérifiabilité de votre contenu entrent en jeu.</p>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 →</ArrowLink>
 
@@ -72,7 +81,7 @@ export default function AiOverviewsGoogle2026() {
 
       <h3>4. Données structurées Schema.org</h3>
 
-      <p>Les pages avec un balisage Schema.org complet (Article, FAQPage, HowTo) ont un avantage significatif. Le balisage aide Google AI à comprendre le type de contenu, l'auteur, la date et la structure.</p>
+      <p>Les pages avec un balisage <InternalLink href="/blog/schema-org-ia-guide-pratique">Schema.org</InternalLink> complet (Article, FAQPage, HowTo) ont un avantage significatif. Le balisage aide Google AI à comprendre le type de contenu, l'auteur, la date et la structure.</p>
 
       <p>Le schema FAQPage est particulièrement efficace pour les AI Overviews : les questions-réponses structurées correspondent exactement au format que l'IA cherche à générer.</p>
 

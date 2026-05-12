@@ -195,7 +195,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
 
       <h2>Erreur n°5 — Zéro signal d'autorité (E-E-A-T absent)</h2>
 
-      <p><strong>Les IA recommandent en priorité les marques dont elles peuvent vérifier l'expertise et la légitimité.</strong> C'est le principe E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) appliqué par Google et repris par les LLM. Sans ces signaux, votre marque est un inconnu non vérifiable — et les IA ne recommandent pas les inconnus.</p>
+      <p><strong>Les IA recommandent en priorité les marques dont elles peuvent vérifier l'expertise et la légitimité.</strong> C'est le principe <InternalLink href="/blog/eeat-ia-experience-expertise">E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness)</InternalLink> appliqué par Google et repris par les LLM. Sans ces signaux, votre marque est un inconnu non vérifiable — et les IA ne recommandent pas les inconnus.</p>
 
       <h3>Le diagnostic</h3>
 
@@ -206,7 +206,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
         <li>Schema Organization complet (fondateurs, date de création, nombre d'employés, adresse)</li>
         <li>Mentions presse référencées sur le site (logos, liens vers articles)</li>
         <li>Certifications et labels affichés (B Corp, Oeko-Tex, Made in France, etc.)</li>
-        <li>Avis clients structurés et visibles (pas juste des étoiles, des vrais témoignages)</li>
+        <li><InternalLink href="/blog/avis-clients-temoignages-visibilite-ia">Avis clients structurés et visibles</InternalLink> (pas juste des étoiles, des vrais témoignages)</li>
       </ul>
 
       <p>Si vous cochez moins de 3 sur 5, votre autorité est insuffisante pour les IA.</p>

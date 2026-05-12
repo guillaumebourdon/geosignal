@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 function GroupCard({ color, label, points, criteria, description, priority }) {
   return (
     <div style={{ border: `1px solid ${color}30`, borderLeft: `3px solid ${color}`, borderRadius: 10, padding: '20px 24px', marginBottom: 16, background: `${color}06` }}>
@@ -30,7 +39,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p>Pourtant, la visibilité IA se mesure. Pas avec les mêmes outils ni les mêmes métriques qu'en SEO, mais avec une approche structurée qui vous donne un diagnostic clair et des priorités d'action.</p>
 
-      <p>Cet article vous explique ce qu'est un score GEO, comment il se calcule, comment interpréter vos résultats, et surtout par quoi commencer pour améliorer votre visibilité dans les réponses des IA.</p>
+      <p>Cet article vous explique ce qu'est un score GEO, comment il se calcule — en complément du <InternalLink href="/blog/geo-guide-complet-2026">guide complet GEO 2026</InternalLink>, comment interpréter vos résultats, et surtout par quoi commencer pour améliorer votre visibilité dans les réponses des IA.</p>
 
       <h2>Pourquoi mesurer sa visibilité IA est difficile</h2>
 
@@ -89,7 +98,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h2>Les 8 critères du score GEO Detekia</h2>
 
-      <p>Chaque critère est mesuré par analyse du DOM réel de votre page — pas par estimation ou approximation.</p>
+      <p>Chaque critère est mesuré par analyse du DOM réel de votre page — pas par estimation ou approximation. Pour une explication détaillée de chaque critère, consultez <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">les 8 critères de la méthodologie Detekia</InternalLink>.</p>
 
       <h3>1. Extractibilité & réponse directe (25 points)</h3>
 
@@ -245,7 +254,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h2>Suivre l'évolution dans le temps</h2>
 
-      <p>Un score unique est utile pour diagnostiquer. Mais c'est le suivi dans le temps qui permet de piloter une stratégie GEO.</p>
+      <p>Un score unique est utile pour diagnostiquer. Mais c'est le <InternalLink href="/blog/mesurer-visibilite-ia-outils-methodes-2026">suivi dans le temps</InternalLink> qui permet de piloter une stratégie GEO.</p>
 
       <h3>Ce qu'il faut suivre</h3>
 

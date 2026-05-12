@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 export default function EcommerceRecommandationsIa() {
   return (
     <>
@@ -68,7 +77,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
         <li>"[Produit] vaut-il son prix ?"</li>
       </ul>
 
-      <p>Intégrez ces questions et leurs réponses directement dans vos fiches, idéalement dans une section FAQ balisée en <code>Schema FAQPage</code>.</p>
+      <p>Intégrez ces questions et leurs réponses directement dans vos fiches, idéalement dans une section <InternalLink href="/blog/faq-schema-faqpage-combo-ia">FAQ balisée en <code>Schema FAQPage</code></InternalLink>.</p>
 
       <h2>Optimiser vos fiches produits pour les IA</h2>
 
@@ -113,7 +122,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <h3>Étape 3 — Implémenter les données structurées Product</h3>
 
-      <p>Le schema <code>Product</code> est le plus important pour l'e-commerce. Il permet aux IA de comprendre instantanément ce que vous vendez.</p>
+      <p>Le schema <code>Product</code> est le plus important pour l'e-commerce. Il permet aux IA de comprendre instantanément ce que vous vendez. Pour un guide complet d'implémentation, consultez notre article sur <InternalLink href="/blog/schema-org-ia-guide-pratique">Schema.org et IA</InternalLink>.</p>
 
       <pre><code>{`{
   "@context": "https://schema.org",
@@ -171,7 +180,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <h3>Étape 5 — Enrichir avec des avis clients structurés</h3>
 
-      <p>Les avis clients sont un signal de crédibilité pour les IA. Mais tous les avis n'ont pas la même valeur.</p>
+      <p>Les <InternalLink href="/blog/avis-clients-temoignages-visibilite-ia">avis clients</InternalLink> sont un signal de crédibilité pour les IA. Mais tous les avis n'ont pas la même valeur.</p>
 
       <p><strong>Avis utiles pour le GEO (souvent extraits par les IA) :</strong></p>
       <ul>

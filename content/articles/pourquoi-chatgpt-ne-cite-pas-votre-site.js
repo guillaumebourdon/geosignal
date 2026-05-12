@@ -9,12 +9,21 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 export default function PourquoiChatGPTNeCitePasVotreSite() {
   return (
     <>
       <p>Vous avez tapé le nom de votre entreprise dans ChatGPT. Ou pire : vous avez demandé une recommandation dans votre secteur. Et votre site n'apparaît nulle part. Vos concurrents, si.</p>
 
-      <p>Ce n'est pas un bug. Ce n'est pas non plus une question de budget publicitaire. Si ChatGPT, Gemini ou Perplexity ne citent pas votre site, c'est parce que votre contenu ne remplit pas les critères que ces moteurs utilisent pour sélectionner leurs sources.</p>
+      <p>Ce n'est pas un bug. Ce n'est pas non plus une question de budget publicitaire. Si ChatGPT, Gemini ou Perplexity ne citent pas votre site, c'est parce que votre contenu ne remplit pas les critères que ces moteurs utilisent pour <InternalLink href="/blog/comment-chatgpt-choisit-ses-sources">sélectionner leurs sources</InternalLink>.</p>
 
       <p>La bonne nouvelle : c'est corrigible. Et souvent plus rapidement qu'on ne le pense. Voici les 6 raisons les plus fréquentes — et comment les résoudre.</p>
 
@@ -61,7 +70,7 @@ export default function PourquoiChatGPTNeCitePasVotreSite() {
 
       <h2>Raison n°2 : vous bloquez les robots IA sans le savoir</h2>
 
-      <p>C'est le problème le plus simple à diagnostiquer — et le plus absurde quand on le découvre. Beaucoup de sites bloquent les crawlers IA dans leur fichier <code>robots.txt</code> sans même le savoir.</p>
+      <p>C'est le problème le plus simple à diagnostiquer — et le plus absurde quand on le découvre. Beaucoup de sites bloquent les <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">crawlers IA dans leur fichier <code>robots.txt</code></InternalLink> sans même le savoir.</p>
 
       <p><strong>Vérifiez maintenant :</strong> allez sur <code>votresite.fr/robots.txt</code> et cherchez ces lignes :</p>
 
@@ -133,7 +142,7 @@ Disallow: /`}</code></pre>
 
       <h2>Raison n°5 : votre site n'existe pas en dehors de lui-même</h2>
 
-      <p>Les IA croisent les sources. Quand elles évaluent la crédibilité d'un site, elles cherchent des confirmations externes : votre marque est-elle mentionnée ailleurs sur le web ? D'autres sites vous citent-ils comme référence ?</p>
+      <p>Les IA <InternalLink href="/blog/sources-contenus-citations-ia">croisent les sources</InternalLink>. Quand elles évaluent la crédibilité d'un site, elles cherchent des confirmations externes : votre marque est-elle mentionnée ailleurs sur le web ? D'autres sites vous citent-ils comme référence ?</p>
 
       <p>Si votre entreprise n'existe que sur son propre site — pas de mentions presse, pas de profils forums, pas de citations dans des articles tiers — l'IA n'a aucun moyen de confirmer votre expertise.</p>
 

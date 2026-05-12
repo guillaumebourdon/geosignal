@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 function BotTable() {
   const bots = [
     { ia: 'ChatGPT / OpenAI', agent: 'GPTBot', agent2: 'OAI-SearchBot', doc: 'openai.com/gptbot' },
@@ -45,7 +54,7 @@ function BotTable() {
 export default function LlmsTxtRobotsCrawlabiliteIa() {
   return (
     <>
-      <p>Avant de se demander si les IA comprennent votre contenu, il y a une question plus fondamentale : est-ce qu'elles peuvent y accéder ? Un nombre surprenant de sites bien optimisés pour Google bloquent involontairement les robots des IA dans leur fichier robots.txt. D'autres laissent les bots accéder au site mais leur servent du JavaScript non rendu, illisible pour les crawlers.</p>
+      <p>Avant de se demander si les IA comprennent votre contenu, il y a une question plus fondamentale : est-ce qu'elles peuvent y accéder ? Un nombre surprenant de <InternalLink href="/blog/sites-bloquent-bots-ia">sites bien optimisés pour Google bloquent involontairement les robots des IA</InternalLink> dans leur fichier robots.txt. D'autres laissent les bots accéder au site mais leur servent du JavaScript non rendu, illisible pour les crawlers.</p>
 
       <p>Ce guide technique couvre tout ce qu'il faut savoir sur la crawlabilité IA : les user-agents à connaître, la configuration robots.txt correcte, le nouveau standard llms.txt, et les vérifications à faire pour s'assurer que votre site est réellement indexable par les LLM.</p>
 
@@ -103,6 +112,8 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.votresite.fr/sitemap.xml`}</code></pre>
+
+      <p>Pour en savoir plus sur la configuration optimale du sitemap et du robots.txt, consultez notre guide sur le <InternalLink href="/blog/sitemap-robots-txt-bots-ia-2026">sitemap, robots.txt et bots IA en 2026</InternalLink>.</p>
 
       <p>Si vous souhaitez autoriser les IA tout en bloquant certains scrapers, vous pouvez combiner des directives spécifiques avec une règle générale restrictive :</p>
 
@@ -196,7 +207,7 @@ Disallow: /`}</code></pre>
 
       <h3>Le JavaScript côté client</h3>
 
-      <p>C'est le problème le plus sous-estimé. Si votre contenu est rendu en JavaScript côté client (React, Vue, Angular sans SSR), les bots IA basiques ne verront pas ce contenu — ils reçoivent le HTML initial, sans attendre l'exécution du JS.</p>
+      <p>C'est le problème le plus sous-estimé. Si votre contenu est rendu en JavaScript côté client (React, Vue, Angular sans SSR), les bots IA basiques ne verront pas ce contenu — ils reçoivent le HTML initial, sans attendre l'exécution du JS. Pour maximiser la lisibilité, pensez aussi à implémenter vos <InternalLink href="/blog/schema-org-ia-guide-pratique">données structurées Schema.org</InternalLink>.</p>
 
       <pre><code>{`<!-- ❌ Contenu invisible pour les bots basiques -->
 <div id="app"></div>

@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 function CritereCard({ numero, nom, poids, couleur, children }) {
   return (
     <div style={{ border: `1px solid ${couleur}30`, borderLeft: `4px solid ${couleur}`, borderRadius: 10, padding: '20px 24px', marginBottom: 20, background: `${couleur}08` }}>
@@ -25,9 +34,9 @@ function CritereCard({ numero, nom, poids, couleur, children }) {
 export default function HuitCriteresGeoMethodologieDetekia() {
   return (
     <>
-      <p>Le score GEO Detekia n'est pas une boîte noire. Derrière chaque note de 0 à 100 se cachent 8 critères précis, mesurés automatiquement à partir de l'analyse de votre site. Comprendre comment chaque critère est évalué, pourquoi il compte, et comment l'améliorer — c'est l'objet de cet article.</p>
+      <p>Le score GEO Detekia n'est pas une boîte noire. Derrière chaque <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">note de 0 à 100</InternalLink> se cachent 8 critères précis, mesurés automatiquement à partir de l'analyse de votre site. Comprendre comment chaque critère est évalué, pourquoi il compte, et comment l'améliorer — c'est l'objet de cet article.</p>
 
-      <p>Cette méthodologie est le fruit de plusieurs mois de recherche sur ce qui détermine réellement la citabilité d'un site par les LLM. Elle s'appuie sur les travaux académiques en GEO (notamment Aggarwal et al., 2023), les guidelines de Google pour l'E-E-A-T, et les observations empiriques faites sur des centaines d'audits.</p>
+      <p>Cette méthodologie est le fruit de plusieurs mois de recherche sur ce qui détermine réellement la citabilité d'un site par les LLM. Elle s'appuie sur les travaux académiques en <InternalLink href="/blog/geo-guide-complet-2026">GEO</InternalLink> (notamment Aggarwal et al., 2023), les guidelines de Google pour l'E-E-A-T, et les observations empiriques faites sur des centaines d'audits.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">Comment interpréter votre score GEO global →</ArrowLink>
 
@@ -100,7 +109,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
       <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Guide technique complet : robots.txt et llms.txt pour les bots IA →</ArrowLink>
 
       <CritereCard numero={5} nom="Données structurées" poids="Pondération : 15%" couleur="#9B59B6">
-        <p><strong>Ce que c'est :</strong> La présence et la qualité du balisage Schema.org en JSON-LD sur les pages clés.</p>
+        <p><strong>Ce que c'est :</strong> La présence et la qualité du balisage <InternalLink href="/blog/schema-org-ia-guide-pratique">Schema.org en JSON-LD</InternalLink> sur les pages clés.</p>
         <p><strong>Comment c'est mesuré :</strong> Détection et validation des schemas JSON-LD (Organization, WebSite, Article, FAQPage, Product, BreadcrumbList, LocalBusiness). On vérifie la présence, la complétude et la cohérence avec le contenu de la page.</p>
         <p><strong>Pourquoi ça compte :</strong> Les schemas JSON-LD sont conçus exactement pour que les machines comprennent le contenu sans ambiguïté. Un schema FAQPage bien rempli sera extrait directement par les LLM pour répondre aux questions des utilisateurs.</p>
         <p><strong>Comment améliorer :</strong></p>

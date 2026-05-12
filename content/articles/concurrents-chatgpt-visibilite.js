@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 export default function ConcurrentsChattgptVisibilite() {
   return (
     <>
@@ -20,7 +29,7 @@ export default function ConcurrentsChattgptVisibilite() {
 
       <h2>Pourquoi l'IA cite votre concurrent et pas vous</h2>
 
-      <p>Les IA ne citent pas les marques qu'elles "préfèrent". Elles citent les sources dont le contenu remplit le mieux leurs critères de sélection. Comprendre pourquoi votre concurrent est cité est la première étape pour le détrôner.</p>
+      <p>Les IA ne citent pas les marques qu'elles "préfèrent". Elles citent les sources dont le contenu remplit le mieux leurs <InternalLink href="/blog/comment-chatgpt-choisit-ses-sources">critères de sélection</InternalLink>. Comprendre pourquoi votre concurrent est cité est la première étape pour le détrôner.</p>
 
       <h3>Il répond directement aux questions</h3>
 
@@ -61,7 +70,7 @@ export default function ConcurrentsChattgptVisibilite() {
 
       <h3>Étape 2 — Auditer leurs sites</h3>
 
-      <p>Pour chaque concurrent GEO identifié, lancez un audit sur Detekia. Comparez leur score global et leurs scores par critère avec les vôtres.</p>
+      <p>Pour chaque concurrent GEO identifié, lancez un <InternalLink href="/blog/audit-geo-visibilite-ia">audit</InternalLink> sur Detekia. Comparez leur <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">score global</InternalLink> et leurs scores par critère avec les vôtres.</p>
 
       <p>Cherchez les écarts significatifs :</p>
       <ul>

@@ -9,10 +9,19 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 export default function AuditGeoVisibiliteIa() {
   return (
     <>
-      <p>Vous voulez savoir si ChatGPT, Gemini ou Perplexity citent votre site — et si non, pourquoi. Un audit GEO répond à ces deux questions. Il évalue votre site sur les critères que les moteurs IA utilisent pour sélectionner leurs sources, identifie les blocages, et vous donne un plan d'action priorisé.</p>
+      <p>Vous voulez savoir si ChatGPT, Gemini ou Perplexity citent votre site — et si non, pourquoi. Un audit GEO répond à ces deux questions. Il évalue votre site sur les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">critères que les moteurs IA utilisent</InternalLink> pour sélectionner leurs sources, identifie les blocages, et vous donne un plan d'action priorisé.</p>
 
       <p>Cet article vous guide à travers un audit GEO complet, étape par étape, que vous pouvez réaliser vous-même ou accélérer avec un outil automatisé.</p>
 
@@ -128,7 +137,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <h2>Étape 3 — L'audit d'extractibilité (30 minutes)</h2>
 
-      <p>C'est le critère le plus lourd du score GEO (25 points sur 100) et le plus souvent défaillant.</p>
+      <p>C'est le critère le plus lourd du <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">score GEO</InternalLink> (25 points sur 100) et le plus souvent défaillant.</p>
 
       <h3>Analyser les 5 pages principales</h3>
 
@@ -302,7 +311,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>L'audit manuel que nous venons de décrire prend environ 2 heures. C'est un excellent exercice pour comprendre les enjeux, mais ce n'est pas tenable pour un suivi régulier.</p>
 
-      <p>Detekia automatise les 8 critères en moins de 60 secondes : il scrape le DOM réel de votre page, analyse chaque critère, et vous donne un score sur 100 avec des recommandations priorisées par impact.</p>
+      <p>Detekia automatise les 8 critères en moins de 60 secondes, avec les <InternalLink href="/blog/mesurer-visibilite-ia-outils-methodes-2026">outils et méthodes de mesure</InternalLink> les plus récents : il scrape le DOM réel de votre page, analyse chaque critère, et vous donne un score sur 100 avec des recommandations priorisées par impact.</p>
 
       <p>L'audit automatisé est particulièrement utile pour :</p>
       <ul>

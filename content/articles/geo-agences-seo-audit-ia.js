@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 function OffreCard({ titre, prix, description, inclus }) {
   return (
     <div style={{ border: '1px solid #E5E2DC', borderRadius: 10, padding: '20px 24px', marginBottom: 16, background: '#fff' }}>
@@ -27,7 +36,7 @@ function OffreCard({ titre, prix, description, inclus }) {
 export default function GeoAgencesSeoAuditIa() {
   return (
     <>
-      <p>Le GEO (Generative Engine Optimization) est en train de devenir ce que le SEO était en 2008 : une nouvelle discipline que vos clients commencent à entendre parler, sans savoir exactement ce que c'est — et qui cherchent quelqu'un pour les guider.</p>
+      <p>Le <InternalLink href="/blog/geo-guide-complet-2026">GEO (Generative Engine Optimization)</InternalLink> est en train de devenir ce que le SEO était en 2008 : une nouvelle discipline que vos clients commencent à entendre parler, sans savoir exactement ce que c'est — et qui cherchent quelqu'un pour les guider.</p>
 
       <p>Pour les agences SEO, c'est une opportunité rare : être présent sur un marché avant qu'il soit saturé. Les agences qui intègrent l'audit GEO dans leurs prestations dès maintenant prendront 2 à 3 ans d'avance sur les concurrents qui attendront que ça devienne "mainstream".</p>
 
@@ -46,7 +55,7 @@ export default function GeoAgencesSeoAuditIa() {
         <li>La présence externe (netlinking, mentions) est déjà dans votre scope</li>
       </ul>
 
-      <p>Ce qui change avec le GEO, c'est l'angle : au lieu d'optimiser pour Google, vous optimisez pour les LLM. Les techniques se recoupent largement, mais l'évaluation et le reporting sont nouveaux.</p>
+      <p>Ce qui change avec le GEO, c'est l'angle : au lieu d'optimiser pour Google, vous optimisez pour les LLM. Pour comprendre les différences fondamentales, consultez notre article <InternalLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO</InternalLink>. Les techniques se recoupent largement, mais l'évaluation et le reporting sont nouveaux.</p>
 
       <p><strong>Avantage concurrentiel :</strong> Vos clients existants vous font déjà confiance pour leur visibilité en ligne. Proposer l'audit GEO, c'est étendre cette confiance à un nouveau canal — sans devoir repartir de zéro sur la relation commerciale.</p>
 
@@ -56,7 +65,7 @@ export default function GeoAgencesSeoAuditIa() {
 
       <h3>Phase 1 : Diagnostic (1-2 heures)</h3>
 
-      <p>Évaluez l'état actuel du site sur les 8 critères GEO :</p>
+      <p>Évaluez l'état actuel du site sur les 8 critères GEO, en vous basant sur le <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">score GEO</InternalLink> :</p>
 
       <ul>
         <li>Crawlabilité IA : robots.txt, llms.txt, rendu côté serveur</li>

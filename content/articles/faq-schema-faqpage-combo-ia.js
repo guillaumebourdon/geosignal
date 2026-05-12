@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
@@ -35,7 +44,7 @@ export default function FaqSchemaFaqpageComboIa() {
 
       <p>Le format question-réponse est <strong>nativement extractible</strong>. L'IA n'a pas besoin de deviner où commence la réponse ni où elle finit. Chaque paire Q/R est un bloc indépendant, citable tel quel. C'est le format le plus facile à consommer pour un LLM.</p>
 
-      <p>Côté score GEO Detekia, le combo impacte deux critères directement :</p>
+      <p>Côté <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">score GEO Detekia</InternalLink>, le combo impacte deux critères directement :</p>
 
       <ul>
         <li><strong>Extractibilité et réponse directe (25 points)</strong> : la FAQ fournit des passages autonomes, structurés, avec des phrases sujet-verbe-complément. C'est le format idéal pour la citation IA.</li>
@@ -94,7 +103,7 @@ export default function FaqSchemaFaqpageComboIa() {
 
       <h2>Le Schema FAQPage : implémentation technique</h2>
 
-      <p>Le Schema FAQPage est un balisage JSON-LD qui dit explicitement aux IA : "cette page contient des questions-réponses structurées." Sans ce balisage, l'IA doit deviner la structure à partir du HTML. Avec le balisage, elle sait immédiatement quoi extraire.</p>
+      <p>Le Schema FAQPage est un balisage <InternalLink href="/blog/schema-org-ia-guide-pratique">JSON-LD</InternalLink> qui dit explicitement aux IA : "cette page contient des questions-réponses structurées." Sans ce balisage, l'IA doit deviner la structure à partir du HTML. Avec le balisage, elle sait immédiatement quoi extraire.</p>
 
       <h3>Code JSON-LD complet</h3>
 
@@ -249,7 +258,7 @@ export default function FaqSchemaFaqpageComboIa() {
 
       <h3>Page FAQ dédiée ou FAQ intégrée dans chaque page produit/service ?</h3>
 
-      <p>Les deux. Une page FAQ centrale regroupe les questions transversales (livraison, paiement, politique de retour). Des FAQ spécifiques sur les pages produits ou services répondent aux questions liées à cette offre précise. Chaque page a son propre Schema FAQPage. Les IA traitent chaque page indépendamment — plus vos FAQ sont contextualisées, plus elles ont de chances d'être citées pour la bonne requête.</p>
+      <p>Les deux. Une page FAQ centrale regroupe les questions transversales (livraison, paiement, politique de retour). Des FAQ spécifiques sur les pages produits ou services répondent aux questions liées à cette offre précise, comme dans le cas du <InternalLink href="/blog/ecommerce-recommandations-ia">e-commerce</InternalLink>. Chaque page a son propre Schema FAQPage. Les IA traitent chaque page indépendamment — plus vos FAQ sont contextualisées, plus elles ont de chances d'être citées pour la bonne requête.</p>
 
       <ArrowLink href="/blog/audit-geo-visibilite-ia">Audit GEO : comment analyser la visibilité IA de votre site étape par étape</ArrowLink>
 

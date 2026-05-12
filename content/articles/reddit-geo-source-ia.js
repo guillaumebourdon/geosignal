@@ -9,6 +9,15 @@ function ArrowLink({ href, children }) {
   );
 }
 
+function InternalLink({ href, children }) {
+  return (
+    <Link href={href} style={{ color: '#D97757', textDecoration: 'none' }}
+      onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+      onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+    >{children}</Link>
+  );
+}
+
 export default function RedditGeoSourceIa() {
   return (
     <>
@@ -41,8 +50,8 @@ export default function RedditGeoSourceIa() {
       <p>La présence sur Reddit agit sur plusieurs critères du score GEO Detekia :</p>
 
       <ul>
-        <li><strong>Présence externe (5 points)</strong> — des mentions actives sur des subreddits pertinents renforcent directement ce critère. C'est le plus évident.</li>
-        <li><strong>Autorité E-E-A-T (15 points)</strong> — quand votre marque est mentionnée positivement dans des discussions Reddit, les IA la perçoivent comme une entité reconnue par des pairs. C'est l'équivalent GEO du bouche-à-oreille.</li>
+        <li><strong>Présence externe (5 points)</strong> — des mentions actives sur des subreddits pertinents renforcent directement ce critère, en complément de vos <InternalLink href="/blog/backlinks-geo-autorite-domaine-ia">backlinks et signaux d'autorité de domaine</InternalLink>. C'est le plus évident.</li>
+        <li><strong><InternalLink href="/blog/eeat-ia-experience-expertise">Autorité E-E-A-T</InternalLink> (15 points)</strong> — quand votre marque est mentionnée positivement dans des discussions Reddit, les IA la perçoivent comme une entité reconnue par des pairs. C'est l'équivalent GEO du bouche-à-oreille.</li>
         <li><strong>Vérifiabilité (20 points)</strong> — les discussions Reddit contenant des retours d'expérience sur votre produit/service créent des données vérifiables que les IA peuvent croiser avec votre propre site.</li>
       </ul>
 
@@ -178,7 +187,7 @@ Commencez par les points 1 et 2, c'est corrigeable en une journée."`}</code></p
 
       <p>Le marché francophone sur Reddit est plus petit que l'anglophone, mais la concurrence est aussi plus faible. Être actif sur r/EntrepreneurFR avec du contenu GEO de qualité peut vous positionner rapidement comme la référence francophone sur le sujet.</p>
 
-      <p>Pour un impact maximal sur les IA, combinez des participations en français (marché cible) et en anglais (volume de données d'entraînement beaucoup plus important).</p>
+      <p>Pour un impact maximal sur les IA, combinez Reddit avec d'autres plateformes comme <InternalLink href="/blog/linkedin-geo-profil-visibilite-ia">LinkedIn</InternalLink>, et des participations en français (marché cible) et en anglais (volume de données d'entraînement beaucoup plus important).</p>
 
       <h2>Mesurer l'impact de Reddit sur votre GEO</h2>
 
