@@ -410,7 +410,7 @@ export default function Results() {
     const timeoutId = setTimeout(() => controller.abort(), 90000);
     fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url, locale }), signal: controller.signal })
       .then(r => r.json())
-      .then(data => { clearTimeout(timeoutId); clearTimeout(stepTimeout); setStep(loadingSteps.length); if (data.error) setError(data.error); else setResult(data); })
+      .then(data => { clearTimeout(timeoutId); clearTimeout(stepTimeout); setStep(loadingSteps.length); if (data.dailyLimitReached) { router.push('/contact'); return; } if (data.error) setError(data.error); else setResult(data); })
       .catch(e => { clearTimeout(timeoutId); clearTimeout(stepTimeout); setError(e.name === 'AbortError' ? t('results.error.timeout') : e.message); });
     return () => clearTimeout(stepTimeout);
   }, [url]);

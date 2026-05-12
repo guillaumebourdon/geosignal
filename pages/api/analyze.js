@@ -666,12 +666,26 @@ async function fetchJina(jinaUrl) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-  const { checkRateLimit } = require('../../lib/rateLimit');
+  const { checkRateLimit, checkDailyLimit } = require('../../lib/rateLimit');
   if (!(await checkRateLimit('analyze', req, res))) return;
+
+  // Daily limit: 3 free scans per IP per day
+  const plan = req.body.plan || 'free';
+  if (plan === 'free') {
+    const dailyOk = await checkDailyLimit(req);
+    if (!dailyOk) {
+      const locale = req.body.locale === 'en' ? 'en' : 'fr';
+      return res.status(429).json({
+        error: locale === 'en'
+          ? 'You have reached the daily limit of 3 free analyses. Contact us for more.'
+          : 'Vous avez atteint la limite de 3 analyses gratuites par jour. Contactez-nous pour en faire davantage.',
+        dailyLimitReached: true,
+      });
+    }
+  }
 
   const rawUrl = req.body.url;
   const locale = req.body.locale === 'en' ? 'en' : 'fr';
-  const plan = req.body.plan || 'free'; // free=2, onepage=10, pro=30
   if (!rawUrl) return res.status(400).json({ error: 'URL manquante' });
   const urlCandidate = rawUrl.startsWith('http') ? rawUrl.trim() : `https://${rawUrl.trim()}`;
   let url;
