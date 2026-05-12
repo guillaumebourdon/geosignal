@@ -38,6 +38,7 @@ CONTENT_MAP_EN['sources-contenus-citations-ia'] = require('../../content/article
 CONTENT_MAP_EN['avis-clients-temoignages-visibilite-ia'] = require('../../content/articles/en/avis-clients-temoignages-visibilite-ia').default;
 CONTENT_MAP_EN['linkedin-geo-profil-visibilite-ia'] = require('../../content/articles/en/linkedin-geo-profil-visibilite-ia').default;
 CONTENT_MAP_EN['pourquoi-ia-adorent-chiffres-contenu-factuel'] = require('../../content/articles/en/pourquoi-ia-adorent-chiffres-contenu-factuel').default;
+CONTENT_MAP_EN['mesurer-visibilite-ia-outils-methodes-2026'] = require('../../content/articles/en/mesurer-visibilite-ia-outils-methodes-2026').default;
 
 const CONTENT_MAP = {
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
@@ -71,6 +72,7 @@ const CONTENT_MAP = {
   'avis-clients-temoignages-visibilite-ia': require('../../content/articles/avis-clients-temoignages-visibilite-ia').default,
   'linkedin-geo-profil-visibilite-ia': require('../../content/articles/linkedin-geo-profil-visibilite-ia').default,
   'pourquoi-ia-adorent-chiffres-contenu-factuel': require('../../content/articles/pourquoi-ia-adorent-chiffres-contenu-factuel').default,
+  'mesurer-visibilite-ia-outils-methodes-2026': require('../../content/articles/mesurer-visibilite-ia-outils-methodes-2026').default,
 };
 
 const CATEGORY_COLORS = {
