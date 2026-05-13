@@ -14701,9 +14701,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
         }
       });
     })();
-  </script>
 
-  <script>
     const LLM_PILL_COLORS = { openai: '#10A37F', anthropic: '#D97757', perplexity: '#1C7DC4', gemini: '#8B5CF6' };
     const LLM_PILL_NAMES = { openai: 'ChatGPT', anthropic: 'Claude', perplexity: 'Perplexity', gemini: 'Gemini' };
 
@@ -14762,6 +14760,8 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
 
     // ── View mode toggle (raw vs weighted) ──
     let currentMode = 'weighted';
+    var brandSortCol = null;
+    var brandSortAsc = false;
     const WEIGHTED_BRANDS = [{"rank":1,"name":"Société Générale","score":2125.58,"mentions_raw":90},{"rank":2,"name":"Crédit Agricole","score":2028.31,"mentions_raw":91},{"rank":3,"name":"BNP Paribas","score":1988.5,"mentions_raw":110},{"rank":4,"name":"BoursoBank","score":1650.56,"mentions_raw":97},{"rank":5,"name":"Fortuneo","score":817.9,"mentions_raw":53},{"rank":6,"name":"Crédit Mutuel","score":709.7,"mentions_raw":37},{"rank":7,"name":"Yomoni","score":655.27,"mentions_raw":35},{"rank":8,"name":"La Banque Postale","score":639.99,"mentions_raw":38},{"rank":9,"name":"LCL","score":525.87,"mentions_raw":19},{"rank":10,"name":"Hello Bank","score":452.51,"mentions_raw":21}];
 
     function setViewMode(mode) {
@@ -15020,8 +15020,6 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
     }
 
     // ── Brand table: dynamic rendering with sort ──
-    var brandSortCol = null;
-    var brandSortAsc = false;
     var clientName = REPORT_DATA.clientName;
 
     function renderBrandTable() {
