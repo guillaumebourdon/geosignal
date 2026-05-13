@@ -15070,8 +15070,15 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
         }
         var style = c.width ? 'width:' + c.width + ';' : '';
         var cursor = c.sortable ? 'cursor:pointer;' : '';
-        return '<th style="' + style + cursor + '" ' + (c.sortable ? 'onclick="sortBrandTable(\'' + c.key + '\')"' : '') + '>' + c.label + arrow + '</th>';
+        return '<th style="' + style + cursor + '" ' + (c.sortable ? 'data-sort-key="' + c.key + '"' : '') + '>' + c.label + arrow + '</th>';
       }).join('');
+
+      // Attach click handlers for sorting
+      header.querySelectorAll('th[data-sort-key]').forEach(function(th) {
+        th.addEventListener('click', function() {
+          sortBrandTable(th.getAttribute('data-sort-key'));
+        });
+      });
 
       // Pre-compute weighted ranks (sort by weightedScore desc)
       var weightedRanks = {};
