@@ -14780,7 +14780,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
       // Re-render brand table for current mode
       window.brandSortCol = null;
       window.brandSortAsc = false;
-      if (typeof renderBrandTable === 'function') renderBrandTable();
+      if (typeof window.renderBrandTable === "function") window.renderBrandTable();
     }
 
     function updateChartsForMode(mode) {
@@ -15078,7 +15078,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
       // Attach click handlers for sorting
       header.querySelectorAll('th[data-sort-key]').forEach(function(th) {
         th.addEventListener('click', function() {
-          sortBrandTable(th.getAttribute('data-sort-key'));
+          window.sortBrandTable(th.getAttribute('data-sort-key'));
         });
       });
 
@@ -15108,12 +15108,12 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
 
     window.sortBrandTable = function(col) {
       if (window.brandSortCol === col) {
-        window.brandSortAsc = !brandSortAsc;
+        window.brandSortAsc = !window.brandSortAsc;
       } else {
         window.brandSortCol = col;
         window.brandSortAsc = false;
       }
-      renderBrandTable();
+      window.renderBrandTable();
     }
 
     // Initialize weighted mode on page load
