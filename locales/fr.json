@@ -1533,7 +1533,7 @@
       "price": "29 €",
       "priceNote": "paiement unique",
       "ctaLoading": "Chargement...",
-      "cta": "Débloquer mon rapport →"
+      "cta": "Débloquer mon audit →"
     },
     "share": {
       "button": "Partagez votre score",
@@ -1593,7 +1593,7 @@
     },
     "doubleCta": {
       "intro": "Pour aller plus loin",
-      "onepage": "Rapport 1 page — 29 €",
+      "onepage": "Audit 1 page — 29 €",
       "pro": "Audit complet — 99 €"
     },
     "fullSite": {
