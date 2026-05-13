@@ -282,7 +282,7 @@ export default function Pricing() {
       </div>
 
       {/* PLANS */}
-      <div className="pricing-cards" style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 48 }}>
+      <div className="pricing-cards" style={{ maxWidth: 1120, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 48 }}>
         {/* FREE */}
         <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
@@ -348,76 +348,32 @@ export default function Pricing() {
             <Link href="/pro" style={{ fontSize: 12, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.proCard.learnMore')}</Link>
           </div>
         </div>
-      </div>
-
-      {/* ACCOMPAGNEMENT */}
-      <div style={{ maxWidth: 960, margin: '0 auto 48px', padding: '0 24px' }}>
-        <div style={{
-          background: 'linear-gradient(135deg, #1A1916 0%, #2A2520 100%)',
-          borderRadius: 20,
-          padding: '40px 44px',
-          position: 'relative',
-          overflow: 'hidden',
-          border: '1px solid rgba(201,134,26,0.25)',
-        }}>
-          {/* Subtle glow */}
-          <div style={{ position: 'absolute', top: -60, right: -60, width: 200, height: 200, background: 'radial-gradient(circle, rgba(201,134,26,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', bottom: -40, left: -40, width: 160, height: 160, background: 'radial-gradient(circle, rgba(217,119,87,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
-
-          <div style={{ display: 'flex', gap: 48, alignItems: 'flex-start', position: 'relative', flexWrap: 'wrap' }}>
-            {/* Left — pitch */}
-            <div style={{ flex: '1 1 320px', minWidth: 280 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}</div>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', lineHeight: 1.2, marginBottom: 12, letterSpacing: -0.5 }}>{locale === 'en' ? 'Discover what AI engines say about your brand' : 'Découvrez ce que les IA disent de votre marque'}</div>
-              <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.55)', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 24 }}>
-                {locale === 'en'
-                  ? 'We query ChatGPT, Gemini, Claude and Perplexity with your strategic queries and measure your real visibility: mention rate, position, sentiment, competitors.'
-                  : 'On interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques et on mesure votre visibilité réelle : taux de mention, position, sentiment, concurrents.'}
-              </p>
-              <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-                <Link href="/presence-ia" style={{
-                  display: 'inline-block',
-                  background: 'linear-gradient(135deg, #C9861A, #D97757)',
-                  color: '#fff',
-                  padding: '12px 28px',
-                  borderRadius: 10,
-                  fontWeight: 700,
-                  fontSize: 13,
-                  textDecoration: 'none',
-                  fontFamily: 'system-ui',
-                }}>{locale === 'en' ? 'Learn more' : 'En savoir plus'} →</Link>
-                <Link href="/contact" style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.2)', paddingBottom: 1 }}>{locale === 'en' ? 'or contact us directly' : 'ou nous contacter directement'}</Link>
+        {/* PRÉSENCE IA */}
+        <div className="card-interactive" style={{ background: 'linear-gradient(135deg, #1A1916 0%, #2A2520 100%)', border: '1px solid rgba(201,134,26,0.25)', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{locale === 'en' ? 'AI Presence' : 'Présence IA'}</div>
+          <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', letterSpacing: -0.5 }}>{locale === 'en' ? 'Custom' : 'Sur devis'}</span></div>
+          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{locale === 'en' ? 'Quarterly commitment' : 'Engagement trimestriel'}</div>
+          <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{locale === 'en' ? 'What do AI engines say about your brand?' : 'Que disent les IA de votre marque ?'}</div>
+          <Link href="/presence-ia" style={{ display: 'block', width: '100%', textAlign: 'center', background: 'linear-gradient(135deg, #C9861A, #D97757)', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', marginBottom: 24 }}>
+            {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
+          </Link>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
+            {[
+              locale === 'en' ? 'Queries on ChatGPT, Gemini, Claude, Perplexity' : 'Requêtes sur ChatGPT, Gemini, Claude, Perplexity',
+              locale === 'en' ? 'Mention rate, position, sentiment' : 'Taux de mention, position, sentiment',
+              locale === 'en' ? 'Competitor tracking' : 'Suivi concurrentiel',
+              locale === 'en' ? 'Interactive dashboard' : 'Dashboard interactif',
+              locale === 'en' ? 'Monthly reports + recommendations' : 'Rapports mensuels + recommandations',
+              locale === 'en' ? 'Dedicated contact' : 'Interlocuteur dédié',
+            ].map((feat, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 12, color: '#C9861A', flexShrink: 0 }}>✓</span>
+                <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.75)', fontFamily: 'system-ui' }}>{feat}</span>
               </div>
-            </div>
-
-            {/* Right — features */}
-            <div style={{ flex: '1 1 300px', minWidth: 260 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                {[
-                  { icon: '🔍', title: locale === 'en' ? 'Deep audit' : 'Audit approfondi', desc: locale === 'en' ? 'Complete analysis of your digital ecosystem' : 'Analyse complete de votre ecosysteme digital' },
-                  { icon: '📊', title: locale === 'en' ? 'LLM monitoring' : 'Monitoring LLM', desc: locale === 'en' ? 'Monthly tracking of your AI presence' : 'Suivi mensuel de votre presence sur les IA' },
-                  { icon: '🎯', title: locale === 'en' ? 'GEO strategy' : 'Strategie GEO', desc: locale === 'en' ? 'Personalized action plan' : 'Plan d\'action personnalise' },
-                  { icon: '📈', title: locale === 'en' ? 'Monthly reports' : 'Rapports mensuels', desc: locale === 'en' ? 'KPI tracking and optimization' : 'Suivi des KPIs et optimisation' },
-                ].map((item, i) => (
-                  <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 12, padding: '16px 14px' }}>
-                    <div style={{ fontSize: 20, marginBottom: 6 }}>{item.icon}</div>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: '#F7F5F2', fontFamily: 'system-ui', marginBottom: 4 }}>{item.title}</div>
-                    <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.4 }}>{item.desc}</div>
-                  </div>
-                ))}
-              </div>
-              <div style={{ display: 'flex', gap: 16, marginTop: 12 }}>
-                {[
-                  { icon: '🏆', text: locale === 'en' ? 'Competitive tracking in AI responses' : 'Suivi concurrentiel dans les reponses IA' },
-                  { icon: '👤', text: locale === 'en' ? 'Dedicated contact' : 'Interlocuteur dedie' },
-                ].map((item, i) => (
-                  <div key={i} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 12, padding: '12px 14px' }}>
-                    <span style={{ fontSize: 16, flexShrink: 0 }}>{item.icon}</span>
-                    <span style={{ fontSize: 11, color: 'rgba(247,245,242,0.55)', fontFamily: 'system-ui', lineHeight: 1.3 }}>{item.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
+            <Link href="/contact" style={{ fontSize: 12, color: '#C9861A', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(201,134,26,0.3)', paddingBottom: 1 }}>{locale === 'en' ? 'Contact us →' : 'Nous contacter →'}</Link>
           </div>
         </div>
       </div>
@@ -576,6 +532,9 @@ export default function Pricing() {
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        @media (max-width: 900px) {
+          .pricing-cards { grid-template-columns: 1fr 1fr !important; }
+        }
         @media (max-width: 600px) {
           .pricing-cards { grid-template-columns: 1fr !important; }
           .pricing-footer-inner { flex-direction: column !important; gap: 24px !important; }

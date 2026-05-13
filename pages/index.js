@@ -476,6 +476,67 @@ export default function Home() {
 
       <SectionDivider />
 
+      {/* ── NOS SOLUTIONS ─────────────────────────────────────── */}
+      <section style={{ background: '#1A1916', padding: '80px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{locale === 'en' ? 'OUR SOLUTIONS' : 'NOS SOLUTIONS'}</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+            {locale === 'en' ? 'From diagnosis to monitoring' : 'Du diagnostic au monitoring'}
+          </h2>
+          <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.5)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
+            {locale === 'en'
+              ? 'Three levels of analysis, one goal: ensure AI engines cite you.'
+              : 'Trois niveaux d\'analyse, un seul objectif : que les IA vous citent.'}
+          </p>
+          <div className="hp-solutions-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+            {/* Audit technique */}
+            <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'TECHNICAL AUDIT' : 'AUDIT TECHNIQUE'}</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 4 }}>{locale === 'en' ? 'Is your site citable?' : 'Votre site est-il citable ?'}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', marginBottom: 12 }}>{locale === 'en' ? 'Free / €29 / €99' : 'Gratuit / 29 € / 99 €'}</div>
+              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                {locale === 'en'
+                  ? 'We analyze your source code across 8 GEO criteria. Score /100, actionable recommendations, real ChatGPT citation test.'
+                  : 'On analyse votre code source sur 8 critères GEO. Score /100, recommandations actionnables, test de citation ChatGPT réel.'}
+              </p>
+              <Link href="/pricing" style={{ fontSize: 13, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
+                {locale === 'en' ? 'See plans →' : 'Voir les offres →'}
+              </Link>
+            </div>
+            {/* Présence IA */}
+            <div style={{ background: 'rgba(201,134,26,0.04)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 16, padding: '28px 24px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 4 }}>{locale === 'en' ? 'What do AIs say about you?' : 'Que disent les IA de vous ?'}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#C9861A', marginBottom: 12 }}>{locale === 'en' ? 'Custom pricing' : 'Sur devis'}</div>
+              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                {locale === 'en'
+                  ? 'We query ChatGPT, Gemini, Claude and Perplexity on your strategic queries. Mention rate, position, sentiment, competitors.'
+                  : 'On interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques. Taux de mention, position, sentiment, concurrents.'}
+              </p>
+              <Link href="/presence-ia" style={{ fontSize: 13, color: '#C9861A', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
+                {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
+              </Link>
+            </div>
+            {/* Accompagnement */}
+            <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.4)', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'SUPPORT' : 'ACCOMPAGNEMENT'}</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 4 }}>{locale === 'en' ? 'A dedicated expert' : 'Un expert dédié'}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(247,245,242,0.4)', marginBottom: 12 }}>{locale === 'en' ? 'Custom pricing' : 'Sur devis'}</div>
+              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                {locale === 'en'
+                  ? 'Personalized GEO strategy, monthly monitoring, continuous optimization. A dedicated contact who knows your business.'
+                  : 'Stratégie GEO personnalisée, suivi mensuel, optimisation continue. Un interlocuteur dédié qui connaît votre business.'}
+              </p>
+              <Link href="/contact" style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
+                {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
       {/* ── UN RAPPORT QUI VAUT LE DÉTOUR ─────────────────────── */}
       <section style={{ background: '#fff', padding: '96px 48px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
@@ -712,6 +773,7 @@ export default function Home() {
           .hero-input-wrap button { border-radius: 0 0 10px 10px !important; width: 100% !important; justify-content: center; }
           .report-cta-buttons { flex-direction: column !important; width: 100% !important; }
           .report-cta-buttons a { width: 100% !important; text-align: center !important; }
+          .hp-solutions-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
