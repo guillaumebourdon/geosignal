@@ -14764,7 +14764,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
     var brandSortAsc = false;
     const WEIGHTED_BRANDS = [{"rank":1,"name":"Société Générale","score":2125.58,"mentions_raw":90},{"rank":2,"name":"Crédit Agricole","score":2028.31,"mentions_raw":91},{"rank":3,"name":"BNP Paribas","score":1988.5,"mentions_raw":110},{"rank":4,"name":"BoursoBank","score":1650.56,"mentions_raw":97},{"rank":5,"name":"Fortuneo","score":817.9,"mentions_raw":53},{"rank":6,"name":"Crédit Mutuel","score":709.7,"mentions_raw":37},{"rank":7,"name":"Yomoni","score":655.27,"mentions_raw":35},{"rank":8,"name":"La Banque Postale","score":639.99,"mentions_raw":38},{"rank":9,"name":"LCL","score":525.87,"mentions_raw":19},{"rank":10,"name":"Hello Bank","score":452.51,"mentions_raw":21}];
 
-    function setViewMode(mode) {
+    window.setViewMode = function(mode) {
       currentMode = mode;
       document.getElementById('btn-weighted').classList.toggle('active', mode === 'weighted');
       document.getElementById('btn-raw').classList.toggle('active', mode === 'raw');
@@ -14928,7 +14928,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
       document.getElementById('delta-label').textContent = dd.label;
     }
 
-    function exportExcel() {
+    window.exportExcel = function() {
       var wb = XLSX.utils.book_new();
 
       // Sheet 1: KPIs
@@ -15022,7 +15022,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
     // ── Brand table: dynamic rendering with sort ──
     var clientName = REPORT_DATA.clientName;
 
-    function renderBrandTable() {
+    window.renderBrandTable = function() {
       var mode = currentMode || 'weighted';
       var isWeighted = mode === 'weighted';
       var data = BRAND_DATA.slice();
@@ -15104,7 +15104,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
 
     }
 
-    function sortBrandTable(col) {
+    window.sortBrandTable = function(col) {
       if (brandSortCol === col) {
         brandSortAsc = !brandSortAsc;
       } else {
