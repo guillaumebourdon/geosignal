@@ -15042,14 +15042,14 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
       var cols = [
         { key: 'rank', label: 'Rang', width: '55px', align: 'center', sortable: false },
         { key: 'name', label: 'Marque', width: '', align: 'left', sortable: true },
-        { key: 'mentions', label: 'Mentions', width: '80px', align: 'center', sortable: true },
       ];
       if (isWeighted) {
-        cols.push({ key: 'weightedScore', label: 'Score pond.', width: '90px', align: 'center', sortable: true });
+        cols.push({ key: 'weightedRank', label: 'Classement pond.', width: '110px', align: 'center', sortable: false, isAccent: true });
       }
       cols.push(
-        { key: 'avg_position', label: 'Pos. moy.', width: '80px', align: 'center', sortable: true },
-        { key: 'negatives', label: 'N\u00e9gatifs', width: '70px', align: 'center', sortable: true },
+        { key: 'mentions', label: 'Mentions', width: '80px', align: 'center', sortable: true, isAccent: !isWeighted },
+        { key: 'avg_position', label: 'Pos. moy.', width: '80px', align: 'center', sortable: false },
+        { key: 'negatives', label: 'N\u00e9gatifs', width: '70px', align: 'center', sortable: false },
         { key: 'openai', label: 'ChatGPT', width: '80px', align: 'center', sortable: true },
         { key: 'anthropic', label: 'Claude', width: '70px', align: 'center', sortable: true },
         { key: 'perplexity', label: 'Perplexity', width: '80px', align: 'center', sortable: true },
@@ -15068,16 +15068,24 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
         return '<th style="' + style + cursor + '" ' + (c.sortable ? 'onclick="sortBrandTable(\'' + c.key + '\')"' : '') + '>' + c.label + arrow + '</th>';
       }).join('');
 
+      // Pre-compute weighted ranks (sort by weightedScore desc)
+      var weightedRanks = {};
+      BRAND_DATA.slice().sort(function(a, b) { return b.weightedScore - a.weightedScore; }).forEach(function(b, i) {
+        weightedRanks[b.name] = i + 1;
+      });
+
       // Render body
       var body = document.getElementById('brand-table-body');
       body.innerHTML = data.map(function(b, i) {
         var isClient = b.name === clientName;
         var rowClass = isClient ? 'row-highlight' : '';
         return '<tr class="' + rowClass + '">' + cols.map(function(c) {
-          var val = c.key === 'rank' ? (i + 1) : b[c.key];
+          var val;
+          if (c.key === 'rank') val = i + 1;
+          else if (c.key === 'weightedRank') val = '#' + weightedRanks[b.name];
+          else val = b[c.key];
           if (val === null || val === undefined) val = '\u2014';
-          if (c.key === 'weightedScore') val = val.toFixed ? val.toFixed(2) : val;
-          var cls = c.key === 'rank' ? 'col-num' : c.key === 'name' ? ('col-brand' + (isClient ? ' is-client' : '')) : c.key === 'mentions' ? 'col-accent' : 'col-center';
+          var cls = c.key === 'rank' ? 'col-num' : c.key === 'name' ? ('col-brand' + (isClient ? ' is-client' : '')) : c.isAccent ? 'col-accent' : 'col-center';
           return '<td class="' + cls + '">' + val + '</td>';
         }).join('') + '</tr>';
       }).join('');
