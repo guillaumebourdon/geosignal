@@ -13577,8 +13577,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
 
       <!-- Full brand ranking table (dynamic) -->
       <div style="margin-top:40px;">
-        <div class="chart-title">Classement complet des marques</div>
-        <div style="font-size:11px;color:var(--text-tertiary);margin-top:4px;margin-bottom:8px;" id="classement-note">Classement par nombre de mentions brutes.</div>
+        <div class="chart-title">Classement complet des marques <span class="info-tip" id="classement-tip" style="position:relative;top:auto;right:auto;display:inline-flex;margin-left:8px;">i<span class="info-bubble" style="left:-140px;right:auto;"><div class="info-bubble-title" id="classement-tip-title">Classement</div><div class="info-bubble-text" id="classement-tip-text">Classement par nombre de mentions brutes. Chaque mention sur chaque IA a le même poids.</div></span></span></div>
         <div class="data-table-wrap" style="margin-top:16px;">
           <table class="data-table" id="brand-table">
             <thead>
@@ -14819,12 +14818,17 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
         titleEl.textContent = mode === 'weighted' ? 'Top 10 marques \u2014 Score pond\u00e9r\u00e9' : 'Top 10 marques \u2014 Mentions';
       }
 
-      // Point 1: Update classement note based on mode
-      var noteEl = document.getElementById('classement-note');
-      if (noteEl) {
-        noteEl.textContent = mode === 'weighted'
-          ? 'Classement par nombre de mentions brutes. Le classement pond\u00e9r\u00e9 par audience est visible dans le graphique Top 10 ci-dessus.'
-          : 'Classement par nombre de mentions brutes.';
+      // Update classement tooltip based on mode
+      var tipTitle = document.getElementById('classement-tip-title');
+      var tipText = document.getElementById('classement-tip-text');
+      if (tipTitle && tipText) {
+        if (mode === 'weighted') {
+          tipTitle.textContent = 'Classement pond\u00e9r\u00e9';
+          tipText.textContent = 'Le classement pond\u00e9r\u00e9 attribue un poids \u00e0 chaque mention selon l\u2019audience de l\u2019IA : ChatGPT (78%), Gemini (13%), Perplexity (7%), Claude (2%). Une marque cit\u00e9e 10 fois sur ChatGPT p\u00e8se plus qu\u2019une marque cit\u00e9e 50 fois sur Claude. Le classement refl\u00e8te l\u2019impact r\u00e9el sur l\u2019audience fran\u00e7aise.';
+        } else {
+          tipTitle.textContent = 'Classement brut';
+          tipText.textContent = 'Classement par nombre de mentions brutes. Chaque mention sur chaque IA a le m\u00eame poids (25%).';
+        }
       }
 
       // Rebuild the sentiment donut
@@ -15090,13 +15094,6 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
         }).join('') + '</tr>';
       }).join('');
 
-      // Update note
-      var noteEl = document.getElementById('classement-note');
-      if (noteEl) {
-        noteEl.textContent = isWeighted
-          ? 'Classement par score pond\u00e9r\u00e9 par audience. Cliquez sur un en-t\u00eate de colonne pour trier.'
-          : 'Classement par nombre de mentions brutes. Cliquez sur un en-t\u00eate de colonne pour trier.';
-      }
     }
 
     function sortBrandTable(col) {
