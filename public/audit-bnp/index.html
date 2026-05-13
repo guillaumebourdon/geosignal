@@ -1266,7 +1266,7 @@ body {
         </div>
 
         <div class="kpi-card kpi-card--cyan">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Requêtes manquées</div><div class="info-bubble-text">Nombre de requêtes où des concurrents sont cités mais pas le client. C'est un indicateur d'opportunité. <strong>Réponses négatives</strong> : nombre de mentions où l'IA critique explicitement le client. En mode pondéré, ce chiffre reflète le poids par audience. <strong>Appels API</strong> : 100 requêtes × 4 LLMs = 400 appels.</div></span></span>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Requêtes manquées</div><div class="info-bubble-text">Nombre de requêtes où des concurrents sont cités mais pas le client. C'est un indicateur d'opportunité. En mode brut, le sous-indicateur affiche le nombre de réponses négatives. En mode pondéré, il affiche le pourcentage de sentiment négatif (pondéré par audience).</div></span></span>
           <div class="kpi-category kpi-category--cyan">Mentions</div>
           <div class="kpi-value">39</div>
           <div class="kpi-desc">Requ&ecirc;tes manqu&eacute;es</div>
@@ -1356,7 +1356,7 @@ body {
       <!-- Two charts side by side -->
       <div class="charts-row">
         <div class="chart-card">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Top 10 marques</div><div class="info-bubble-text">Classement des 10 marques les plus fréquemment citées dans les réponses des 4 IA, tous thèmes confondus. La marque client est en orange.</div></span></span>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Top 10 marques</div><div class="info-bubble-text">En mode brut : classement par nombre de mentions (chaque IA pèse 25%). En mode pondéré : classement par score pondéré (ChatGPT 78%, Gemini 13%, Perplexity 7%, Claude 2%). L'ordre des marques peut changer entre les deux modes. La marque client est en orange.</div></span></span>
           <div class="chart-title" id="chart-brands-title">Top 10 marques &mdash; Mentions</div>
           <div class="chart-wrap">
             <canvas id="chartBrands" height="320"></canvas>
@@ -1396,7 +1396,7 @@ body {
 
         <!-- Center: Sentiment donut -->
         <div class="glass-card" style="display:flex;flex-direction:column;align-items:center;">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Distribution sentiment</div><div class="info-bubble-text">Répartition du sentiment des IA envers le client, sur l'ensemble des mentions. Positif = la marque est recommandée. Neutre = citée factuellement. Négatif = explicitement critiquée.</div></span></span>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Distribution sentiment</div><div class="info-bubble-text">Répartition du sentiment des IA envers le client. Positif = recommandé. Neutre = cité factuellement. Négatif = explicitement critiqué. En mode pondéré, les pourcentages reflètent l'audience de chaque IA — le sentiment sur ChatGPT pèse plus que celui sur Claude.</div></span></span>
           <div class="chart-title" style="align-self:flex-start;">Distribution sentiment</div>
           <div class="chart-wrap" style="max-width:260px;margin-top:12px;">
             <canvas id="chartSentiment" height="260"></canvas>
@@ -1405,7 +1405,7 @@ body {
 
         <!-- Right: Delta vs leader/2nd -->
         <div class="glass-card">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Écart</div><div class="info-bubble-text">Différence de position moyenne entre le client et la marque la plus citée (ou la 2ème si le client est leader). Un écart positif = mieux positionné.</div></span></span>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Écart</div><div class="info-bubble-text">En mode brut : écart de position moyenne entre le client et le 2ème (si leader) ou le leader. En mode pondéré : position du client dans le classement pondéré par audience. Le classement peut différer du mode brut car ChatGPT (78% de l'audience) pèse davantage.</div></span></span>
           <div class="chart-title" id="delta-title">&Eacute;cart vs 2&egrave;me</div>
           <div class="delta-insight" id="delta-insight"><strong>BNP Paribas</strong> domine le classement avec <strong>110 mentions</strong>, devançant <strong>BoursoBank</strong> de <strong>13 mentions</strong> (<strong>97 mentions</strong>), ce qui confirme son statut de leader en termes de visibilité LLM dans le secteur bancaire français.</div>
           <div class="delta-big">
@@ -1417,7 +1417,7 @@ body {
 
       <!-- Theme insights -->
       <div class="section-header" style="margin-top:16px;">
-        <div class="chart-title">Insights par th&eacute;matique <span class="info-tip" style="position:relative;top:auto;right:auto;display:inline-flex;margin-left:8px;">i<span class="info-bubble" style="left:-140px;right:auto;"><div class="info-bubble-title">Insights par thématique</div><div class="info-bubble-text">Analyse détaillée par thème. Le taux indique le pourcentage de réponses mentionnant le client sur cette thématique. La position moyenne indique le rang d'apparition (1 = cité en premier). Le texte est généré par IA à partir des données collectées.</div></span></span></div>
+        <div class="chart-title">Insights par th&eacute;matique <span class="info-tip" style="position:relative;top:auto;right:auto;display:inline-flex;margin-left:8px;">i<span class="info-bubble" style="left:-140px;right:auto;"><div class="info-bubble-title">Insights par thématique</div><div class="info-bubble-text">Analyse détaillée par thème. Le taux et la position moyenne changent entre les modes brut et pondéré. En mode pondéré, les chiffres reflètent l'importance de chaque IA par audience. Le texte narratif est adapté à chaque mode.</div></span></span></div>
       </div>
       <div class="theme-cards" id="theme-cards">
         <div class="theme-card">
