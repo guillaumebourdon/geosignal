@@ -207,7 +207,7 @@ body {
   border-radius: var(--radius-lg);
   padding: 28px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transition: border-color 0.2s ease;
 }
 
@@ -281,7 +281,7 @@ body {
   border-radius: var(--radius-lg);
   padding: 24px 28px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .kpi-card::before {
@@ -710,7 +710,7 @@ body {
   padding: 18px 20px;
   transition: border-color 0.2s;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .source-card:hover {
@@ -872,6 +872,96 @@ body {
   cursor: pointer;
 }
 .export-btn:hover { opacity: 0.9; }
+
+/* ============================================================
+   INFO TOOLTIPS
+   ============================================================ */
+
+.info-tip {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: help;
+  vertical-align: middle;
+  margin-left: 0;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  z-index: 50;
+}
+
+.info-tip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.info-tip .info-bubble {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: -10px;
+  left: auto;
+  transform: none;
+  background: #1e2235;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  width: 300px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 200;
+}
+
+.info-tip .info-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 16px;
+  left: auto;
+  transform: none;
+  border: 6px solid transparent;
+  border-top-color: #1e2235;
+}
+
+.info-tip:hover .info-bubble {
+  display: block;
+}
+
+.info-bubble-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.info-bubble-text {
+  font-family: var(--font-body);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   TOOLTIP CONTAINER — ensure position:relative
+   ============================================================ */
+
+.kpi-card, .chart-card, .glass-card, .llm-kpi-card, .theme-card, .data-table-wrap {
+  position: relative;
+}
 
 /* ============================================================
    NEGATIVE ANALYSIS ROW
@@ -1058,7 +1148,7 @@ body {
     </div>
     <div style="display:flex;align-items:center;gap:16px;">
       <button onclick="exportCSV()" class="export-btn">Exporter CSV</button>
-      <span class="nav-date">12 mai 2026</span>
+      <span class="nav-date">13 mai 2026</span>
     </div>
   </nav>
 
@@ -1116,6 +1206,7 @@ body {
       <div class="kpi-grid">
         <!-- Row 1: MENTIONS -->
         <div class="kpi-card kpi-card--cyan">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Mentions</div><div class="info-bubble-text"><strong>44%</strong> — Taux de mention : pourcentage de réponses IA mentionnant le client parmi celles citant au moins une marque. <strong>Position moyenne</strong> : rang moyen d'apparition du client dans les réponses (1 = cité en premier). <strong>Requêtes testées</strong> : nombre total de requêtes soumises aux 4 IA.</div></span></span>
           <div class="kpi-category kpi-category--cyan">Mentions</div>
           <div class="kpi-value">44%</div>
           <div class="kpi-desc">Taux de mention client</div>
@@ -1132,6 +1223,7 @@ body {
         </div>
 
         <div class="kpi-card kpi-card--cyan">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Requêtes manquées</div><div class="info-bubble-text"><strong>39</strong> — Nombre de requêtes où des concurrents sont cités mais pas le client. <strong>Réponses négatives</strong> : nombre de mentions où l'IA critique explicitement le client. <strong>400 appels API</strong> : 100 requêtes × 4 LLMs.</div></span></span>
           <div class="kpi-category kpi-category--cyan">Mentions</div>
           <div class="kpi-value">39</div>
           <div class="kpi-desc">Requ&ecirc;tes manqu&eacute;es</div>
@@ -1149,6 +1241,7 @@ body {
 
         <!-- Row 1 cont: CITATIONS -->
         <div class="kpi-card kpi-card--green">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Citations</div><div class="info-bubble-text"><strong>0.6%</strong> — Part des URLs sources citées par les IA qui pointent vers le domaine client. <strong>Rang domaine</strong> : position du site client parmi tous les domaines cités. <strong>Domaines détectés</strong> : nombre total de domaines uniques trouvés dans les réponses.</div></span></span>
           <div class="kpi-category kpi-category--green">Citations</div>
           <div class="kpi-value">0.6%</div>
           <div class="kpi-desc">Part des citations source</div>
@@ -1166,6 +1259,7 @@ body {
 
         <!-- Row 2: REQUETES -->
         <div class="kpi-card kpi-card--pink">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Sentiment</div><div class="info-bubble-text"><strong>35%</strong> — Pourcentage de mentions positives (recommandation explicite). <strong>Neutre</strong> : mention factuelle sans jugement. <strong>Négatif</strong> : critique explicite (frais élevés, service déconseillé...).</div></span></span>
           <div class="kpi-category kpi-category--pink">Requ&ecirc;tes</div>
           <div class="kpi-value">35%</div>
           <div class="kpi-desc">Sentiment positif</div>
@@ -1182,6 +1276,7 @@ body {
         </div>
 
         <div class="kpi-card kpi-card--pink">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Positionnement</div><div class="info-bubble-text"><strong>#1</strong> — Le client est la marque la plus mentionnée par les IA. <strong>Mentions client</strong> : nombre total de mentions. <strong>2ème</strong> : la marque concurrente la plus citée et son nombre de mentions.</div></span></span>
           <div class="kpi-category kpi-category--pink">Positionnement</div>
           <div class="kpi-value" style="color:var(--accent-green);">#1</div>
           <div class="kpi-desc">Leader en mentions</div>
@@ -1198,6 +1293,7 @@ body {
         </div>
 
         <div class="kpi-card kpi-card--green">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Marques émergentes</div><div class="info-bubble-text">Marques détectées dans les réponses qui ne figurent pas dans la liste de concurrents prédéfinie. <strong>Marques détectées</strong> : nombre total de marques identifiées. <strong>Thématiques</strong> : nombre de thèmes analysés.</div></span></span>
           <div class="kpi-category kpi-category--green">Citations</div>
           <div class="kpi-value">395</div>
           <div class="kpi-desc">Marques &eacute;mergentes d&eacute;tect&eacute;es</div>
@@ -1217,12 +1313,14 @@ body {
       <!-- Two charts side by side -->
       <div class="charts-row">
         <div class="chart-card">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Top 10 marques</div><div class="info-bubble-text">Classement des 10 marques les plus fréquemment citées dans les réponses des 4 IA, tous thèmes confondus. La marque client est en orange.</div></span></span>
           <div class="chart-title">Top 10 marques &mdash; Mentions</div>
           <div class="chart-wrap">
             <canvas id="chartBrands" height="320"></canvas>
           </div>
         </div>
         <div class="chart-card">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Top 10 sources</div><div class="info-bubble-text">Les 10 domaines web les plus fréquemment cités par les IA comme références dans leurs réponses. Ce sont les sites que les IA considèrent comme fiables sur vos thématiques.</div></span></span>
           <div class="chart-title">Top 10 sources &mdash; Citations</div>
           <div class="chart-wrap">
             <canvas id="chartSources" height="320"></canvas>
@@ -1255,6 +1353,7 @@ body {
 
         <!-- Center: Sentiment donut -->
         <div class="glass-card" style="display:flex;flex-direction:column;align-items:center;">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Distribution sentiment</div><div class="info-bubble-text">Répartition du sentiment des IA envers le client, sur l'ensemble des mentions. Positif = la marque est recommandée. Neutre = citée factuellement. Négatif = explicitement critiquée.</div></span></span>
           <div class="chart-title" style="align-self:flex-start;">Distribution sentiment</div>
           <div class="chart-wrap" style="max-width:260px;margin-top:12px;">
             <canvas id="chartSentiment" height="260"></canvas>
@@ -1263,6 +1362,7 @@ body {
 
         <!-- Right: Delta vs leader/2nd -->
         <div class="glass-card">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Écart vs 2ème</div><div class="info-bubble-text">Différence de position moyenne entre le client et la 2ème marque la plus citée. Un écart positif signifie que le client est mieux positionné en moyenne dans les réponses.</div></span></span>
           <div class="chart-title">&Eacute;cart vs 2&egrave;me</div>
           <div class="delta-insight"><strong>BNP Paribas</strong> domine le classement avec <strong>110 mentions</strong>, devançant <strong>BoursoBank</strong> de <strong>13 mentions</strong> (<strong>97 mentions</strong>), ce qui confirme son statut de leader en termes de visibilité LLM dans le secteur bancaire français.</div>
           <div class="delta-big">
@@ -1274,7 +1374,7 @@ body {
 
       <!-- Theme insights -->
       <div class="section-header" style="margin-top:16px;">
-        <div class="chart-title">Insights par th&eacute;matique</div>
+        <div class="chart-title">Insights par th&eacute;matique <span class="info-tip" style="position:relative;top:auto;right:auto;display:inline-flex;margin-left:8px;">i<span class="info-bubble" style="left:-140px;right:auto;"><div class="info-bubble-title">Insights par thématique</div><div class="info-bubble-text">Analyse détaillée par thème. Le taux indique le pourcentage de réponses mentionnant le client sur cette thématique. La position moyenne indique le rang d'apparition (1 = cité en premier). Le texte est généré par IA à partir des données collectées.</div></span></span></div>
       </div>
       <div class="theme-cards">
         <div class="theme-card">
@@ -1320,6 +1420,7 @@ body {
       </div>
 
       <div class="glass-card" style="margin-top:32px;position:relative;">
+        <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Retours négatifs</div><div class="info-bubble-text">Nombre de mentions où l'IA critique explicitement le client. Filtré pour exclure les faux négatifs (mentions factuelles sans jugement). Catégorisé par sujet (frais, ESG, rendement, image).</div></span></span>
         <div class="chart-title">Analyse des retours n&eacute;gatifs</div>
         <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:20px;">16 retours n&eacute;gatifs identifi&eacute;s &mdash; r&eacute;partition par cat&eacute;gorie</div>
 
@@ -1756,10 +1857,10 @@ Il est important de souligner que l&#x27;impact environnemental des banques fran
     <section class="section" id="queries">
       <div class="section-header">
         <div class="section-label">D&eacute;tail des requ&ecirc;tes</div>
-        <h1 class="section-title">Tableau de synth&egrave;se &mdash; 100 requ&ecirc;tes</h1>
+        <h1 class="section-title">Tableau de synth&egrave;se &mdash; 100 requ&ecirc;tes <span class="info-tip" style="position:relative;top:auto;right:auto;display:inline-flex;margin-left:8px;">i<span class="info-bubble" style="left:-140px;right:auto;"><div class="info-bubble-title">Comment lire ce tableau</div><div class="info-bubble-text">Chaque ligne représente une requête envoyée aux 4 IA. ✓ (vert) = le client est mentionné dans la réponse. ✗ (rouge) = le client est absent mais des concurrents sont cités. — (tiret) = aucune marque détectée dans la réponse. Pos. moy. = position moyenne du client sur les IA qui le mentionnent.</div></span></span></h1>
         <div style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;background:var(--accent-cyan-dim);border:1px solid rgba(34,211,238,0.2);border-radius:var(--radius-pill);padding:6px 14px;">
           <span style="color:var(--accent-cyan);font-size:14px;">&#9432;</span>
-          <span style="font-size:12px;color:var(--accent-cyan);font-family:var(--font-display);font-weight:600;">Cliquez sur une ligne pour afficher les r&eacute;ponses des 4 LLMs</span>
+          <span style="font-size:12px;color:var(--accent-cyan);font-family:var(--font-display);font-weight:600;">Cliquez sur une ligne pour afficher les r&eacute;ponses compl&egrave;tes des 4 LLMs</span>
         </div>
       </div>
 
@@ -13311,6 +13412,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
 
       <!-- Stacked bar chart -->
       <div class="chart-card" style="margin-bottom:32px;">
+        <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Répartition par LLM</div><div class="info-bubble-text">Nombre de mentions de chaque marque, ventilé par LLM. Chaque couleur représente un LLM différent. Permet de voir quelles IA favorisent quelles marques.</div></span></span>
         <div class="chart-title">Top 10 marques &mdash; R&eacute;partition par LLM</div>
         <div class="chart-wrap">
           <canvas id="chartStacked" height="360"></canvas>
@@ -13931,16 +14033,19 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
       <!-- Source KPIs -->
       <div class="source-kpi-row">
         <div class="kpi-card kpi-card--green">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Part citations source</div><div class="info-bubble-text">Pourcentage des URLs sources citées par les IA qui pointent vers le domaine client (mabanque.bnpparibas). Indique si les IA utilisent votre site comme référence.</div></span></span>
           <div class="kpi-category kpi-category--green">Citations</div>
           <div class="kpi-value">0.6%</div>
           <div class="kpi-desc">Part citations client</div>
         </div>
         <div class="kpi-card kpi-card--cyan">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Pages uniques</div><div class="info-bubble-text">Nombre total d'URLs distinctes citées par les IA. Un même domaine peut avoir plusieurs pages citées (ex: plusieurs articles de finance-heros.fr).</div></span></span>
           <div class="kpi-category kpi-category--cyan">Pages</div>
           <div class="kpi-value">1438</div>
           <div class="kpi-desc">Pages uniques cit&eacute;es</div>
         </div>
         <div class="kpi-card kpi-card--pink">
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Domaines</div><div class="info-bubble-text">Nombre total de domaines uniques cités comme sources par les 4 IA dans l'ensemble des réponses. Inclut tous les types : sites institutionnels, médias, comparateurs, blogs, concurrents.</div></span></span>
           <div class="kpi-category kpi-category--pink">Domaines</div>
           <div class="kpi-value">1235</div>
           <div class="kpi-desc">Domaines d&eacute;tect&eacute;s</div>
@@ -14711,7 +14816,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
         <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODUuOCAzOC43IiB4bWxuczp2PSJodHRwczovL3ZlY3RhLmlvL25hbm8iPjxwYXRoIGQ9Ik0zNi40IDExLjhjMC0xLjkgMS4yLTMgMy44LTNhMTMuNiAxMy42IDAgMCAxIDIuOS4zbC0uMyAxLjhhMTEuMyAxMS4zIDAgMCAwLTIuNS0uM2MtMS40IDAtMS45LjUtMS45IDEuNnY0YzAgMS4yLjUgMS42IDEuOSAxLjZsMi41LS4yLjMgMS43YTEzLjYgMTMuNiAwIDAgMS0yLjkuM2MtMi42IDAtMy44LTEuMS0zLjgtM3ptNy45IDBjMC0xLjkgMS4xLTMgMy44LTNhMTIuNyAxMi43IDAgMCAxIDIuOC4zbC0uMiAxLjgtMi42LS4zYy0xLjQgMC0xLjguNS0xLjggMS42djRjMCAxLjIuNCAxLjYgMS44IDEuNmwyLjYtLjIuMiAxLjdhMTMuMyAxMy4zIDAgMCAxLTIuOC4zYy0yLjcgMC0zLjgtMS4xLTMuOC0zem0xNC42IDYuM2gtMi41bC0xLjktNS40LS4yIDYuOGgtMi4xbC41LTEwLjZINTVsMi43IDcuNSAyLjctNy41aDIuMmwuNSAxMC42aC0ybC0uMi02Ljh6IiBmaWxsPSIjZjhhZTEzIi8+PHBhdGggZD0iTTY1LjggOC45aDcuMWMzIDAgMy43IDEuOCAzLjcgMy4ycy0xLjIgMy42LTMuNSAzLjZoLTQuNHYzLjhoLTIuOVY4Ljl6bTIuOSA0LjloM2MuOSAwIDIgMCAyLTEuNHMtLjktMS41LTEuNy0xLjVoLTMuM3YyLjl6bTE5LjQgMy4zYy0uNyAxLjktMi41IDIuNy00LjkgMi43Uzc4IDE4LjUgNzggMTUuNXMyLjEtNC4yIDUuMi00LjIgNS4xIDEuNyA1LjEgNC43di4yaC03LjdhMi4zIDIuMyAwIDAgMCAyLjYgMiAyLjEgMi4xIDAgMCAwIDIuMS0xLjF6bS0yLjUtMi40YzAtLjUtLjYtMS44LTIuNS0xLjhhMi40IDIuNCAwIDAgMC0yLjUgMS44aDV6bTQuNC0zLjFoMi41djEuNWMxLTEuMiAxLjctMS44IDMuMi0xLjhoLjl2Mi41YTMuMiAzLjIgMCAwIDAtMS40LS4zYy0xLjggMC0yLjYuOS0yLjYgMi41djMuNUg5MHptOC45IDEuN2gtMS42di0xLjdoMS42di0uNGMwLTIuMi43LTIuNSAzLjEtMi41aDEuNnYxLjZoLTEuM2MtLjQgMC0uOC4xLS44Ljh2LjVoMi4xdjEuN2gtMi4xdjYuMmgtMi42di02LjJ6bTEwLjctMmMzLjIgMCA1LjMgMS4zIDUuMyA0LjJzLTIuMSA0LjMtNS4zIDQuMy01LjItMS4zLTUuMi00LjMgMi4xLTQuMiA1LjItNC4yem0wIDYuN2EyLjMgMi4zIDAgMCAwIDIuNi0yLjUgMi4zIDIuMyAwIDAgMC0yLjYtMi40IDIuMiAyLjIgMCAwIDAtMi41IDIuNCAyLjMgMi4zIDAgMCAwIDIuNSAyLjV6bTcuMS02LjRoMi41djEuNWMxLTEuMiAxLjctMS44IDMuMi0xLjhoLjl2Mi41YTMuNSAzLjUgMCAwIDAtMS40LS4zYy0xLjggMC0yLjYuOS0yLjYgMi41djMuNWgtMi42di03Ljl6bTIwLjQgMy4xYzAtMS0uOS0xLjMtMS42LTEuM2ExLjggMS44IDAgMCAwLTIgMS44djQuM2gtMi42di00LjhjMC0xLS44LTEuMy0xLjYtMS4zYTEuNyAxLjcgMCAwIDAtMS45IDEuOHY0LjNoLTIuNnYtNy45aDIuNXYxLjFhNC4zIDQuMyAwIDAgMSAzLjItMS4zYzEuNSAwIDIuNC42IDIuNyAxLjVhNCA0IDAgMCAxIDMuMy0xLjVjMS42IDAgMy4xLjYgMy4xIDIuN3Y1LjRIMTM3di00Ljh6bTQuOC0uN2MuMy0yLjUgMi41LTIuNyA0LjctMi43czQuNSAxLjIgNC41IDIuNnY0YTMuNSAzLjUgMCAwIDAgLjMgMS42aC0yLjZhMi45IDIuOSAwIDAgMS0uMi0uOSA1LjUgNS41IDAgMCAxLTMuNyAxLjJjLTIuMSAwLTMuNS0uOC0zLjUtMi42czEuNy0yLjMgMy4zLTIuNGwyLjctLjJjLjgtLjEgMS4xLS4yIDEuMS0uOXMtLjUtLjktMi4xLS45LTEuNi4xLTIgMS4yem02LjcgMS42YTQuMiA0LjIgMCAwIDEtMS42LjRoLTEuNWMtLjkuMS0xLjMuMy0xLjMgMXMuNiAxLjIgMS42IDEuMiAyLjgtLjcgMi44LTJ6bTExLjItLjZjMC0xLjEtLjYtMS42LTEuOC0xLjZhMiAyIDAgMCAwLTIuMiAyLjN2My44aC0yLjZ2LTcuOWgyLjV2MS4xYTQuNCA0LjQgMCAwIDEgMy4zLTEuM2MxLjMgMCAzLjQuNSAzLjQgMi44djUuM2gtMi42em0xMS44LS41YTIuMiAyLjIgMCAwIDAtMi4yLTEuNCAyLjIgMi4yIDAgMCAwLTIuNSAyLjQgMi4zIDIuMyAwIDAgMCAyLjUgMi41IDIuMiAyLjIgMCAwIDAgMi4yLTEuN2gyLjdjLS41IDIuOC0yLjUgMy41LTUuMSAzLjVzLTUtMS4zLTUtNC4zIDIuMS00LjIgNS4yLTQuMiA0LjQuNiA0LjkgMy4yem0xNCAyLjZjLS43IDEuOS0yLjUgMi43LTQuOSAyLjdzLTUuMi0xLjMtNS4yLTQuMyAyLjEtNC4yIDUuMi00LjIgNS4xIDEuNyA1LjEgNC43di4yaC03LjdhMi4zIDIuMyAwIDAgMCAyLjYgMiAyLjEgMi4xIDAgMCAwIDIuMS0xLjF6bS0yLjUtMi40YzAtLjUtLjYtMS44LTIuNS0xLjhhMi40IDIuNCAwIDAgMC0yLjUgMS44aDV6IiBmaWxsPSIjMTgxNzFkIi8+PGcgZmlsbD0iI2Y4YWUxMyI+PHBhdGggZD0iTTE2IDBDNy43LjE1Ny45MTQgNi42Mi4zNDIgMTQuODkzUzUuNjEgMzAuNTAzIDEzLjggMzEuOHY2LjljMS44LTQuMiA3LjctNy43IDcuOC03LjdBMTYgMTYgMCAwIDAgMTYgMHptNi4xIDE4LjhMMTguNCAyMmMtMS44IDEuNS0yIDIuMi0yIDMuOHYxLjdoLTIuMmEyLjkgMi45IDAgMCAxLTIuOS0yLjhjMC0yLjIuOC00IDMuMS01LjhsMy4zLTIuN2EzLjggMy44IDAgMCAwIDEuNC0yLjhjMC0yLjItMS42LTMuNS00LjctMy41UzguMyAxMS4xIDYuOCAxM2gtLjJ2LTIuMmMwLTMuMSAyLjctNi40IDguOC02LjRzMTAgMy44IDEwIDguM2MwIDIuNC0uOCA0LjEtMy4zIDYuMXoiLz48cGF0aCBkPSJNMTYgMzUuNWMyLjMtMi42IDYuNC00LjUgOC40LTUuOXMtOC41IDEuMS04LjUgMS4xeiIvPjwvZz48L3N2Zz4&#x3D;" alt="CCM Performance" class="footer-logo">
         <span class="footer-text">CCM Performance &mdash; Groupe Figaro</span>
       </div>
-      <span class="footer-text">12 mai 2026</span>
+      <span class="footer-text">13 mai 2026</span>
     </div>
     <div class="footer-disclaimer">
       Ce rapport mesure la visibilit&eacute; de BNP Paribas dans les r&eacute;ponses g&eacute;n&eacute;r&eacute;es par 4 LLMs (ChatGPT, Claude, Perplexity, Gemini) &agrave; un instant T.
