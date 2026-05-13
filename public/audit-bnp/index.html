@@ -15033,8 +15033,11 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
       if (brandSortCol === null) {
         data.sort(function(a, b) { return isWeighted ? b.weightedScore - a.weightedScore : b.mentions - a.mentions; });
       } else {
+        // Resolve sortKey: some columns sort by a different key than their display key
+        var actualSortKey = brandSortCol;
+        cols.forEach(function(c) { if (c.key === brandSortCol && c.sortKey) actualSortKey = c.sortKey; });
         data.sort(function(a, b) {
-          var va = a[brandSortCol], vb = b[brandSortCol];
+          var va = a[actualSortKey], vb = b[actualSortKey];
           if (typeof va === 'string') { va = va.toLowerCase(); vb = (vb||'').toLowerCase(); }
           if (va === null || va === undefined || va === '—') va = -999;
           if (vb === null || vb === undefined || vb === '—') vb = -999;
@@ -15048,7 +15051,7 @@ L&#x27;influence des taux directeurs de la BCE sur les crédits immobiliers en F
         { key: 'name', label: 'Marque', width: '', align: 'left', sortable: true },
       ];
       if (isWeighted) {
-        cols.push({ key: 'weightedRank', label: 'Classement pond.', width: '110px', align: 'center', sortable: false, isAccent: true });
+        cols.push({ key: 'weightedRank', label: 'Classement pond.', width: '110px', align: 'center', sortable: true, sortKey: 'weightedScore', isAccent: true });
       }
       cols.push(
         { key: 'mentions', label: 'Mentions', width: '80px', align: 'center', sortable: true, isAccent: !isWeighted },
