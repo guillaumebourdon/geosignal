@@ -438,9 +438,9 @@ export default function Home() {
 
           <div className="hp-dimensions-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
             {/* Audit GEO */}
-            <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 20, padding: '36px 32px', position: 'relative', overflow: 'hidden' }}>
+            <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 20, padding: '36px 32px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
               <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.1), transparent 70%)', pointerEvents: 'none' }} />
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
                   {locale === 'en' ? 'TECHNICAL AUDIT' : 'AUDIT GEO'}
                 </div>
@@ -463,25 +463,27 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', marginBottom: 16 }}>
-                  {locale === 'en' ? 'Free / €29 / €99' : 'Gratuit / 29 € / 99 €'}
-                </div>
-                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                  <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '11px 24px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                    {locale === 'en' ? 'See plans →' : 'Voir les offres →'}
-                  </Link>
-                  <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" style={{ display: 'inline-flex', alignItems: 'center', fontSize: 12, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1 }}>
-                    {locale === 'en' ? 'See a sample report →' : 'Voir un exemple →'}
-                  </a>
+                <div style={{ marginTop: 'auto' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', marginBottom: 16 }}>
+                    {locale === 'en' ? 'Free / €29 / €99' : 'Gratuit / 29 € / 99 €'}
+                  </div>
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                    <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '11px 24px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                      {locale === 'en' ? 'See plans →' : 'Voir les offres →'}
+                    </Link>
+                    <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" style={{ display: 'inline-flex', alignItems: 'center', fontSize: 12, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1 }}>
+                      {locale === 'en' ? 'See a sample report →' : 'Voir un exemple →'}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Présence IA */}
-            <div className="card-interactive" style={{ background: 'linear-gradient(135deg, #1A1916 0%, #2A2520 100%)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 20, padding: '36px 32px', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.1), transparent 70%)', pointerEvents: 'none' }} />
-              <div style={{ position: 'relative' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
+            <div className="card-interactive" style={{ background: 'linear-gradient(135deg, #1A1916 0%, #1E2330 100%)', border: '1px solid rgba(66,133,244,0.2)', borderRadius: 20, padding: '36px 32px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(66,133,244,0.1), transparent 70%)', pointerEvents: 'none' }} />
+              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#4285F4', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
                   {locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}
                 </div>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 12, letterSpacing: -0.5 }}>
@@ -498,93 +500,62 @@ export default function Home() {
                     : ['4 LLM majeurs interrogés', 'Taux de mention + position', 'Analyse de sentiment + verbatims', 'Dashboard interactif']
                   ).map((f, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ fontSize: 11, color: '#C9861A' }}>✓</span>
+                      <span style={{ fontSize: 11, color: '#4285F4' }}>✓</span>
                       <span style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', fontFamily: 'system-ui' }}>{f}</span>
                     </div>
                   ))}
                 </div>
-                <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#C9861A', marginBottom: 16 }}>
-                  {locale === 'en' ? 'Custom pricing' : 'Sur devis'}
-                </div>
-                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                  <Link href="/presence-ia" className="btn-interactive" style={{ display: 'inline-block', background: 'linear-gradient(135deg, #C9861A, #D97757)', color: '#fff', padding: '11px 24px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                    {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
-                  </Link>
-                  <Link href="/contact" style={{ display: 'inline-flex', alignItems: 'center', fontSize: 12, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1 }}>
-                    {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
-                  </Link>
+                <div style={{ marginTop: 'auto' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#4285F4', marginBottom: 16 }}>
+                    {locale === 'en' ? 'Custom pricing' : 'Sur devis'}
+                  </div>
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                    <Link href="/presence-ia" className="btn-interactive" style={{ display: 'inline-block', background: '#4285F4', color: '#fff', padding: '11px 24px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                      {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
+                    </Link>
+                    <Link href="/contact" style={{ display: 'inline-flex', alignItems: 'center', fontSize: 12, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1 }}>
+                      {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
+                    </Link>
+                  </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Accompagnement — bandeau pleine largeur sous les 2 cards */}
+          <div style={{ marginTop: 20, background: '#1A1916', borderRadius: 16, padding: '28px 32px', display: 'flex', alignItems: 'center', gap: 32, flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: 280 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.4)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>
+                {locale === 'en' ? 'STRATEGIC SUPPORT' : 'ACCOMPAGNEMENT STRATÉGIQUE'}
+              </div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#F7F5F2', lineHeight: 1.2, marginBottom: 8 }}>
+                {locale === 'en' ? 'A dedicated expert to build your GEO strategy' : 'Un expert dédié pour piloter votre stratégie GEO'}
+              </div>
+              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, margin: 0 }}>
+                {locale === 'en'
+                  ? 'Personalized strategy, monthly monitoring, continuous optimization. For companies that want measurable, lasting results.'
+                  : 'Stratégie personnalisée, suivi mensuel, optimisation continue. Pour les entreprises qui veulent des résultats mesurables et durables.'}
+              </p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start' }}>
+              {(locale === 'en'
+                ? ['GEO strategy', 'Monthly reports', 'Dedicated expert']
+                : ['Stratégie GEO', 'Rapports mensuels', 'Expert dédié']
+              ).map((tag, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ fontSize: 11, color: '#10A37F' }}>✓</span>
+                  <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui' }}>{tag}</span>
+                </div>
+              ))}
+              <Link href="/contact" className="btn-interactive" style={{ display: 'inline-block', background: 'rgba(247,245,242,0.08)', color: '#F7F5F2', padding: '10px 22px', borderRadius: 9, fontWeight: 600, fontSize: 12, textDecoration: 'none', fontFamily: 'system-ui', border: '1px solid rgba(247,245,242,0.12)', marginTop: 4 }}>
+                {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
       <SectionDivider />
-
-      {/* ══ SECTION 5 — CAS CONCRET PRÉSENCE IA (fond dark) ══ */}
-      <section style={{ background: '#1A1916', padding: '72px 48px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-            {locale === 'en' ? 'CASE STUDY — AI PRESENCE' : 'CAS CONCRET — PRÉSENCE IA'}
-          </div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(26px,3.5vw,36px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1, marginBottom: 12, lineHeight: 1.1 }}>
-            {locale === 'en' ? '100 queries × 4 LLMs — banking sector' : '100 requêtes × 4 LLM — secteur bancaire'}
-          </h2>
-          <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.6, maxWidth: 520, margin: '0 auto 36px' }}>
-            {locale === 'en'
-              ? 'AI presence audit for a major French bank. 400 responses analyzed across ChatGPT, Gemini, Claude and Perplexity.'
-              : 'Audit de présence IA pour une grande banque française. 400 réponses analysées sur ChatGPT, Gemini, Claude et Perplexity.'}
-          </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }} className="hp-case-grid">
-            {[
-              { num: '44%', label: locale === 'en' ? 'Mention rate' : 'Taux de mention', color: '#D97757' },
-              { num: '2,11', label: locale === 'en' ? 'Avg. position' : 'Position moyenne', color: '#10A37F' },
-              { num: '110', label: locale === 'en' ? 'Total mentions' : 'Mentions totales', color: '#C9861A' },
-              { num: '15', label: locale === 'en' ? 'Negative detected' : 'Négatives détectées', color: '#E05252' },
-            ].map((s, i) => (
-              <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 14, padding: '22px 18px', textAlign: 'center' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 34, fontWeight: 900, color: s.color, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
-                <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginTop: 8, lineHeight: 1.3 }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ══ SECTION 6 — ACCOMPAGNEMENT (fond cream) ══ */}
-      <section style={{ background: '#F7F5F2', padding: '72px 48px' }}>
-        <div style={{ maxWidth: 740, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 14 }}>
-            {locale === 'en' ? 'GO FURTHER' : 'ALLER PLUS LOIN'}
-          </div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(26px,3.5vw,36px)', color: '#1A1916', letterSpacing: -1, marginBottom: 12, lineHeight: 1.1 }}>
-            {locale === 'en' ? 'Strategic support to maximize your AI visibility' : 'Un accompagnement stratégique pour maximiser votre visibilité IA'}
-          </h2>
-          <p style={{ fontSize: 15, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 32px' }}>
-            {locale === 'en'
-              ? 'Beyond audits and monitoring: a dedicated expert who builds and executes your GEO strategy over time. Monthly tracking, continuous optimization, measurable results.'
-              : 'Au-delà de l\'audit et du monitoring : un expert dédié qui construit et exécute votre stratégie GEO dans la durée. Suivi mensuel, optimisation continue, résultats mesurables.'}
-          </p>
-          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 32 }}>
-            {(locale === 'en'
-              ? ['GEO strategy', 'Monthly monitoring', 'Dedicated expert', 'Quarterly reports']
-              : ['Stratégie GEO', 'Suivi mensuel', 'Expert dédié', 'Rapports trimestriels']
-            ).map((tag, i) => (
-              <div key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 20, padding: '8px 16px' }}>
-                <span style={{ fontSize: 11, color: '#10A37F' }}>✓</span>
-                <span style={{ fontSize: 12, color: '#1A1916', fontFamily: 'system-ui', fontWeight: 500 }}>{tag}</span>
-              </div>
-            ))}
-          </div>
-          <Link href="/contact" className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', padding: '14px 36px', borderRadius: 10, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui' }}>
-            {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
-          </Link>
-        </div>
-      </section>
-
 
       {/* ── RÉSULTATS / TÉMOIGNAGES (temporairement activé pour screenshot) ── */}
       {<section style={{ background: '#1A1916', padding: '96px 48px', position: 'relative', overflow: 'hidden' }}>
