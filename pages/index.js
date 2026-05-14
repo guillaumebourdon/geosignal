@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -6,6 +6,36 @@ import SEO from '../components/SEO';
 import Header from '../components/Header';
 import BeelevenContactModal from '../components/BeelevenContactModal';
 import { useTranslation } from '../lib/useTranslation';
+
+/* ─── Scroll reveal hook ────────────────────────────────── */
+function useScrollReveal(threshold = 0.15) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
+    }, { threshold });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
+
+function RevealSection({ children, className = '', style = {}, delay = 0 }) {
+  const [ref, visible] = useScrollReveal(0.1);
+  return (
+    <div ref={ref} className={className} style={{
+      ...style,
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(32px)',
+      transition: `opacity 0.7s cubic-bezier(0.22,1,0.36,1) ${delay}s, transform 0.7s cubic-bezier(0.22,1,0.36,1) ${delay}s`,
+    }}>
+      {children}
+    </div>
+  );
+}
 
 /* ─── Helpers ───────────────────────────────────────────── */
 const Logo = () => (
@@ -387,6 +417,18 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ══ LOGOS LLM ══ */}
+      <div style={{ background: '#F7F5F2', padding: '32px 48px', textAlign: 'center' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
+          {locale === 'en' ? 'WE ANALYZE YOUR VISIBILITY ON' : 'NOUS ANALYSONS VOTRE VISIBILITÉ SUR'}
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 40, alignItems: 'center', flexWrap: 'wrap', opacity: 0.5 }}>
+          {['ChatGPT', 'Gemini', 'Perplexity', 'Claude'].map(name => (
+            <span key={name} style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 700, color: '#1A1916', letterSpacing: -0.3 }}>{name}</span>
+          ))}
+        </div>
+      </div>
+
       <SectionDivider />
 
       {/* ══ SECTION 3 — POURQUOI C'EST IMPORTANT (fond dark) ══ */}
@@ -409,11 +451,95 @@ export default function Home() {
               { num: '57%', desc: locale === 'en' ? 'compare products via AI before buying' : 'comparent des produits via l\'IA avant d\'acheter', src: 'SEMrush, 2025', color: '#D97757' },
               { num: '4,4x', desc: locale === 'en' ? 'higher conversion from AI traffic' : 'de conversion en plus via le trafic IA', src: 'SEMrush, 2025', color: '#10A37F' },
             ].map((s, i) => (
-              <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '32px 24px', textAlign: 'center' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: s.color, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
-                <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', marginTop: 10, lineHeight: 1.5 }}>{s.desc}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)', marginTop: 8 }}>{s.src}</div>
+              <RevealSection key={i} delay={i * 0.12}>
+                <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '32px 24px', textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: s.color, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
+                  <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', marginTop: 10, lineHeight: 1.5 }}>{s.desc}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)', marginTop: 8 }}>{s.src}</div>
+                </div>
+              </RevealSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ══ SANS / AVEC DETEKIA (fond cream) ══ */}
+      <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <RevealSection>
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+              {locale === 'en' ? 'THE DIFFERENCE' : 'LA DIFFÉRENCE'}
+            </div>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 48, lineHeight: 1.1 }}>
+              {locale === 'en' ? <>Without vs. <em style={{ color: '#D97757' }}>with</em> Detekia</> : <>Sans vs. <em style={{ color: '#D97757' }}>avec</em> Detekia</>}
+            </h2>
+          </RevealSection>
+          <div className="hp-compare-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderRadius: 20, overflow: 'hidden' }}>
+            <RevealSection delay={0.1}>
+              <div style={{ background: '#1A1916', padding: '36px 32px', height: '100%' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>
+                  {locale === 'en' ? 'WITHOUT DETEKIA' : 'SANS DETEKIA'}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {(locale === 'en'
+                    ? ['No idea if AI cites you or your competitors', 'robots.txt may block AI bots without you knowing', 'Content written for Google, not for AI extraction', 'No visibility on AI reputation or sentiment', 'Zero measurement = zero improvement']
+                    : ['Aucune idée si les IA vous citent ou vos concurrents', 'Votre robots.txt bloque peut-être les bots IA sans que vous le sachiez', 'Contenu écrit pour Google, pas pour l\'extraction IA', 'Aucune visibilité sur votre réputation IA', 'Zéro mesure = zéro amélioration']
+                  ).map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <span style={{ color: '#E05252', fontSize: 14, flexShrink: 0, marginTop: 1 }}>✗</span>
+                      <span style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
+            </RevealSection>
+            <RevealSection delay={0.2}>
+              <div style={{ background: '#10A37F', padding: '36px 32px', height: '100%' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(255,255,255,0.6)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>
+                  {locale === 'en' ? 'WITH DETEKIA' : 'AVEC DETEKIA'}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {(locale === 'en'
+                    ? ['Score /100 on 8 criteria — you know exactly where you stand', 'Every technical blocker identified with fix instructions', 'Recommendations with code examples ready to implement', 'Mention rate, position and sentiment tracked across 4 LLMs', 'Measurable progress at every audit cycle']
+                    : ['Score /100 sur 8 critères — vous savez exactement où vous en êtes', 'Chaque blocage technique identifié avec les instructions de correction', 'Recommandations avec exemples de code prêts à implémenter', 'Taux de mention, position et sentiment suivis sur 4 LLM', 'Progression mesurable à chaque cycle d\'audit']
+                  ).map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <span style={{ color: '#fff', fontSize: 14, flexShrink: 0, marginTop: 1 }}>✓</span>
+                      <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.9)', fontFamily: 'system-ui', lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ══ COMMENT ÇA MARCHE (fond blanc) ══ */}
+      <section style={{ background: '#fff', padding: '72px 48px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <RevealSection>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,38px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 48, lineHeight: 1.1 }}>
+              {locale === 'en' ? <>How it works — in <em style={{ color: '#D97757' }}>60 seconds</em></> : <>Comment ça marche — en <em style={{ color: '#D97757' }}>60 secondes</em></>}
+            </h2>
+          </RevealSection>
+          <div className="hp-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+            {[
+              { num: '1', color: '#10A37F', title: locale === 'en' ? 'Enter your URL' : 'Entrez votre URL', desc: locale === 'en' ? 'Free, no signup. Your GEO score /100 in 30 seconds.' : 'Gratuit, sans inscription. Votre score GEO /100 en 30 secondes.' },
+              { num: '2', color: '#D97757', title: locale === 'en' ? 'Get your diagnosis' : 'Recevez votre diagnostic', desc: locale === 'en' ? '8 criteria analyzed, prioritized recommendations, real ChatGPT citation test.' : '8 critères analysés, recommandations priorisées, test de citation ChatGPT réel.' },
+              { num: '3', color: '#4285F4', title: locale === 'en' ? 'Optimize & measure' : 'Optimisez et mesurez', desc: locale === 'en' ? 'Implement the fixes, re-audit, track your AI presence over time.' : 'Implémentez les corrections, ré-auditez, suivez votre présence IA dans le temps.' },
+            ].map((step, i) => (
+              <RevealSection key={i} delay={i * 0.15}>
+                <div className="card-interactive" style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 38, color: step.color, marginBottom: 14, letterSpacing: -1 }}>{step.num}</div>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui' }}>{step.title}</div>
+                  <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui' }}>{step.desc}</div>
+                </div>
+              </RevealSection>
             ))}
           </div>
         </div>
@@ -741,6 +867,8 @@ export default function Home() {
           .report-cta-buttons { flex-direction: column !important; width: 100% !important; }
           .report-cta-buttons a { width: 100% !important; text-align: center !important; }
           .hp-stats-grid { grid-template-columns: 1fr !important; }
+          .hp-compare-grid { grid-template-columns: 1fr !important; }
+          .hp-steps { grid-template-columns: 1fr !important; }
           .hp-dimensions-grid { grid-template-columns: 1fr !important; }
           .hp-case-grid { grid-template-columns: 1fr 1fr !important; }
         }
