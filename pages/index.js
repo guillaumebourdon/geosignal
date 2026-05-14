@@ -370,220 +370,195 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── BANDEAU STATS DÉFILANT ────────────────────────────── */}
-      <div className="stats-marquee-wrap" style={{ background: '#fff', borderTop: '1px solid rgba(26,25,22,0.07)', borderBottom: '1px solid rgba(26,25,22,0.07)', overflow: 'hidden', position: 'relative' }}>
-        <div className="stats-marquee">
-          {[0, 1].map(copy => (
-            <div key={copy} className="stats-marquee-inner" aria-hidden={copy === 1 ? 'true' : undefined}>
-              {t('homepage.stats').map((stat, idx) => (
-                <div key={`${copy}-${idx}`} style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-                  <span style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#1A1916', letterSpacing: -0.5 }}>{stat.dynamic ? (auditCount ? auditCount.toLocaleString(locale === 'en' ? 'en-US' : 'fr-FR') : '…') : stat.value}</span>
-                  <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{stat.label}</span>
-                  <span style={{ color: '#E5E2DC', fontSize: 8, margin: '0 20px' }}>●</span>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <SectionDivider />
-
-      {/* ── PLUS QU'UN AVIS IA ───────────────────────────────── */}
-      <section style={{ background: '#1A1916', padding: '80px 48px', position: 'relative', backgroundImage: 'radial-gradient(rgba(247,245,242,0.03) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
-        <div style={{ maxWidth: 1040, margin: '0 auto', position: 'relative' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.comparison.label')}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(30px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
-            {t('homepage.comparison.titleStart')}<em style={{ color: '#D97757' }}>{t('homepage.comparison.titleEm')}</em>
-          </h2>
-          <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.5)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 620, margin: '0 auto 48px' }}>
-            {t('homepage.comparison.subtitle')}
-          </p>
-
-          <div className="diff-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
-            {t('homepage.comparison.columns').map((col, idx) => {
-              const s = compStyles[idx];
-              return (
-                <div key={col.title} className="card-interactive" style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: 16, padding: 28 }}>
-                  <div style={{ fontSize: 26, marginBottom: 14 }}>{col.icon}</div>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: s.titleColor, fontFamily: 'Georgia, serif', marginBottom: 4 }}>{col.title}</div>
-                  <div style={{ fontSize: 11, color: s.subtitleColor, fontFamily: 'monospace', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 18 }}>{col.subtitle}</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    {col.items.map((item, i) => (
-                      <div key={i} style={{ fontSize: 13, color: s.itemColor, fontFamily: 'system-ui', lineHeight: 1.55, display: 'flex', gap: 8 }}>
-                        <span style={{ color: s.markColor, fontWeight: 700, flexShrink: 0 }}>{s.mark}</span>
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* ── POURQUOI C'EST URGENT — stats d'impact business ───── */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <section style={{ background: '#1A1916', padding: '64px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+            {locale === 'en' ? 'WHY IT MATTERS' : 'POURQUOI C\'EST IMPORTANT'}
           </div>
-
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 40, lineHeight: 1.1 }}>
+            {locale === 'en' ? 'AI is the new front door for your customers' : 'Les IA sont la nouvelle porte d\'entrée de vos clients'}
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }} className="hp-stats-grid">
+            {[
+              { num: '28,1M', desc: locale === 'en' ? 'French people use AI monthly' : 'de Français utilisent les IA chaque mois', src: 'Médiamétrie, 2025', color: '#D97757' },
+              { num: '57%', desc: locale === 'en' ? 'compare products via AI' : 'comparent des produits via l\'IA', src: 'SEMrush, 2025', color: '#D97757' },
+              { num: '4,4x', desc: locale === 'en' ? 'higher conversion from AI traffic' : 'de conversion en plus via le trafic IA', src: 'SEMrush, 2025', color: '#10A37F' },
+            ].map((s, i) => (
+              <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '32px 24px', textAlign: 'center' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: s.color, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
+                <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', marginTop: 10, lineHeight: 1.5 }}>{s.desc}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)', marginTop: 8 }}>{s.src}</div>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.4)', textAlign: 'center', fontFamily: 'system-ui', marginTop: 28, lineHeight: 1.6, maxWidth: 600, margin: '28px auto 0' }}>
+            {locale === 'en'
+              ? 'When a prospect asks ChatGPT "best CRM for SMBs" and your competitor is cited but not you — that\'s a lost lead.'
+              : 'Quand un prospect demande à ChatGPT "meilleur CRM pour PME" et que votre concurrent est cité mais pas vous — c\'est un lead perdu.'}
+          </p>
         </div>
       </section>
 
       <SectionDivider />
 
-      {/* ── POUR QUI ─────────────────────────────────────────── */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* ── LES DEUX DIMENSIONS — split Audit / Présence ──────── */}
+      {/* ══════════════════════════════════════════════════════════ */}
       <section style={{ background: '#F7F5F2', padding: '80px 48px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.targetAudience.label')}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-            {t('homepage.targetAudience.title')}
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+            {locale === 'en' ? 'OUR APPROACH' : 'NOTRE APPROCHE'}
+          </div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+            {locale === 'en' ? 'Two dimensions, one platform' : 'Deux dimensions, une plateforme'}
           </h2>
           <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 48px' }}>
-            {t('homepage.targetAudience.subtitle')}
+            {locale === 'en'
+              ? 'Being citable and being cited are not the same thing. Detekia measures both.'
+              : 'Être citable et être cité, ce n\'est pas la même chose. Detekia mesure les deux.'}
           </p>
-          <div className="target-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20 }}>
-            {t('homepage.targetAudience.items').map((item) => (
-              <div key={item.title} className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: 28 }}>
-                <div style={{ fontSize: 28, marginBottom: 12 }}>{item.emoji}</div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 10 }}>{item.title}</div>
-                <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui' }}>{item.desc}</div>
+
+          <div className="hp-dimensions-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            {/* Dimension 1 — Audit GEO */}
+            <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 20, padding: '36px 32px', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.1), transparent 70%)', pointerEvents: 'none' }} />
+              <div style={{ position: 'relative' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
+                  {locale === 'en' ? 'TECHNICAL AUDIT' : 'AUDIT GEO'}
+                </div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 26, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 12, letterSpacing: -0.5 }}>
+                  {locale === 'en' ? 'Is your site ready to be cited by AI?' : 'Votre site est-il prêt à être cité par les IA ?'}
+                </div>
+                <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.55)', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 20 }}>
+                  {locale === 'en'
+                    ? 'We analyze your source code across 8 weighted criteria. Score /100, actionable recommendations with code examples, real ChatGPT citation test.'
+                    : 'On analyse votre code source sur 8 critères pondérés. Score /100, recommandations actionnables avec exemples de code, test de citation ChatGPT réel.'}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
+                  {[
+                    locale === 'en' ? '8 GEO criteria analyzed' : '8 critères GEO analysés',
+                    locale === 'en' ? 'Up to 30 real ChatGPT queries' : 'Jusqu\'à 30 requêtes ChatGPT réelles',
+                    locale === 'en' ? 'Competitors cited instead of you' : 'Concurrents cités à votre place',
+                    locale === 'en' ? 'Permanent web report + PDF' : 'Rapport web permanent + PDF',
+                  ].map((f, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 11, color: '#10A37F' }}>✓</span>
+                      <span style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', fontFamily: 'system-ui' }}>{f}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', marginBottom: 20 }}>
+                  {locale === 'en' ? 'Free / €29 / €99' : 'Gratuit / 29 € / 99 €'}
+                </div>
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                  <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '12px 28px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                    {locale === 'en' ? 'See plans →' : 'Voir les offres →'}
+                  </Link>
+                  <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" style={{ display: 'inline-block', background: 'rgba(247,245,242,0.06)', color: 'rgba(247,245,242,0.6)', padding: '12px 28px', borderRadius: 10, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui', border: '1px solid rgba(247,245,242,0.1)' }}>
+                    {locale === 'en' ? 'See a sample report →' : 'Voir un exemple de rapport →'}
+                  </a>
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Dimension 2 — Présence IA */}
+            <div className="card-interactive" style={{ background: 'linear-gradient(135deg, #1A1916 0%, #2A2520 100%)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 20, padding: '36px 32px', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.1), transparent 70%)', pointerEvents: 'none' }} />
+              <div style={{ position: 'relative' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
+                  {locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}
+                </div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 26, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 12, letterSpacing: -0.5 }}>
+                  {locale === 'en' ? 'What do AI engines say when asked about you?' : 'Que disent les IA quand on leur parle de vous ?'}
+                </div>
+                <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.55)', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 20 }}>
+                  {locale === 'en'
+                    ? 'We query ChatGPT, Gemini, Claude and Perplexity with your strategic queries. Mention rate, position, sentiment, competitors — everything measured.'
+                    : 'On interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques. Taux de mention, position, sentiment, concurrents — tout est mesuré.'}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
+                  {[
+                    locale === 'en' ? 'Queries on 4 major LLMs' : 'Requêtes sur les 4 LLM majeurs',
+                    locale === 'en' ? 'Mention rate + average position' : 'Taux de mention + position moyenne',
+                    locale === 'en' ? 'Sentiment analysis (positive/negative)' : 'Analyse de sentiment (positif/négatif)',
+                    locale === 'en' ? 'Interactive dashboard + verbatims' : 'Dashboard interactif + verbatims',
+                  ].map((f, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 11, color: '#C9861A' }}>✓</span>
+                      <span style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', fontFamily: 'system-ui' }}>{f}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#C9861A', marginBottom: 20 }}>
+                  {locale === 'en' ? 'Custom pricing' : 'Sur devis'}
+                </div>
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                  <Link href="/presence-ia" className="btn-interactive" style={{ display: 'inline-block', background: 'linear-gradient(135deg, #C9861A, #D97757)', color: '#fff', padding: '12px 28px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                    {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
+                  </Link>
+                  <Link href="/contact" style={{ display: 'inline-block', background: 'rgba(247,245,242,0.06)', color: 'rgba(247,245,242,0.6)', padding: '12px 28px', borderRadius: 10, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui', border: '1px solid rgba(247,245,242,0.1)' }}>
+                    {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <SectionDivider />
 
-      {/* ── COMMENT ÇA MARCHE ────────────────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.howItWorks.label')}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 56, lineHeight: 1.1 }}>
-            {t('homepage.howItWorks.titleStart')}<em style={{ color: '#D97757' }}>{t('homepage.howItWorks.titleEm')}</em>
-          </h2>
-          <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
-            {t('homepage.howItWorks.steps').map((step, idx) => (
-              <div key={step.num} className="card-interactive" style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '24px', boxShadow: '0 2px 12px rgba(26,25,22,0.06)' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 38, color: stepColors[idx], marginBottom: 16, letterSpacing: -1 }}>{step.num}</div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'Georgia, serif' }}>{step.title}</div>
-                <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui' }}>{step.desc}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 28 }}>
-            <Link href="/methodologie" style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
-              {t('homepage.howItWorks.methodologyLink')}
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── NOS SOLUTIONS ─────────────────────────────────────── */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* ── CAS CONCRET — preuve que ça marche ────────────────── */}
+      {/* ══════════════════════════════════════════════════════════ */}
       <section style={{ background: '#1A1916', padding: '80px 48px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{locale === 'en' ? 'OUR SOLUTIONS' : 'NOS SOLUTIONS'}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-            {locale === 'en' ? 'From diagnosis to monitoring' : 'Du diagnostic au monitoring'}
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+            {locale === 'en' ? 'CASE STUDY' : 'CAS CONCRET'}
+          </div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,38px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+            {locale === 'en' ? 'Real results, measured' : 'Des résultats réels, mesurés'}
           </h2>
-          <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.5)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
+          <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
             {locale === 'en'
-              ? 'Three levels of analysis, one goal: ensure AI engines cite you.'
-              : 'Trois niveaux d\'analyse, un seul objectif : que les IA vous citent.'}
-          </p>
-          <div className="hp-solutions-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-            {/* Audit technique */}
-            <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'TECHNICAL AUDIT' : 'AUDIT TECHNIQUE'}</div>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 4 }}>{locale === 'en' ? 'Is your site citable?' : 'Votre site est-il citable ?'}</div>
-              <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', marginBottom: 12 }}>{locale === 'en' ? 'Free / €29 / €99' : 'Gratuit / 29 € / 99 €'}</div>
-              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-                {locale === 'en'
-                  ? 'We analyze your source code across 8 GEO criteria. Score /100, actionable recommendations, real ChatGPT citation test.'
-                  : 'On analyse votre code source sur 8 critères GEO. Score /100, recommandations actionnables, test de citation ChatGPT réel.'}
-              </p>
-              <Link href="/pricing" style={{ fontSize: 13, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
-                {locale === 'en' ? 'See plans →' : 'Voir les offres →'}
-              </Link>
-            </div>
-            {/* Présence IA */}
-            <div style={{ background: 'rgba(201,134,26,0.04)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 16, padding: '28px 24px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}</div>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 4 }}>{locale === 'en' ? 'What do AIs say about you?' : 'Que disent les IA de vous ?'}</div>
-              <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#C9861A', marginBottom: 12 }}>{locale === 'en' ? 'Custom pricing' : 'Sur devis'}</div>
-              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-                {locale === 'en'
-                  ? 'We query ChatGPT, Gemini, Claude and Perplexity on your strategic queries. Mention rate, position, sentiment, competitors.'
-                  : 'On interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques. Taux de mention, position, sentiment, concurrents.'}
-              </p>
-              <Link href="/presence-ia" style={{ fontSize: 13, color: '#C9861A', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
-                {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
-              </Link>
-            </div>
-            {/* Accompagnement */}
-            <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.4)', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 12 }}>{locale === 'en' ? 'SUPPORT' : 'ACCOMPAGNEMENT'}</div>
-              <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 4 }}>{locale === 'en' ? 'A dedicated expert' : 'Un expert dédié'}</div>
-              <div style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(247,245,242,0.4)', marginBottom: 12 }}>{locale === 'en' ? 'Custom pricing' : 'Sur devis'}</div>
-              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-                {locale === 'en'
-                  ? 'Personalized GEO strategy, monthly monitoring, continuous optimization. A dedicated contact who knows your business.'
-                  : 'Stratégie GEO personnalisée, suivi mensuel, optimisation continue. Un interlocuteur dédié qui connaît votre business.'}
-              </p>
-              <Link href="/contact" style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
-                {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ── UN RAPPORT QUI VAUT LE DÉTOUR ─────────────────────── */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.report.label')}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.1 }}>
-            {t('homepage.report.titleStart')}<em style={{ color: '#D97757' }}>{t('homepage.report.titleEm')}</em>
-          </h2>
-          <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 56px' }}>
-            {t('homepage.report.subtitle')}
+              ? 'AI presence audit for a major French bank — 100 queries × 4 LLMs = 400 responses analyzed.'
+              : 'Audit de présence IA pour une grande banque française — 100 requêtes × 4 LLM = 400 réponses analysées.'}
           </p>
 
-          <div className="reports-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginBottom: 48 }}>
-            {t('homepage.report.cards').map((card, idx) => {
-              const s = reportStyles[idx];
-              return (
-                <div key={card.title} className="card-interactive" style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 12, background: s.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>{card.icon}</div>
-                  <div>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, fontWeight: 700, color: s.titleColor, marginBottom: 8, lineHeight: 1.2 }}>{card.title}</div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 13, color: s.descColor, lineHeight: 1.7 }}>{card.desc}</div>
-                  </div>
-                  <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 7 }}>
-                    {card.checks.map(item => (
-                      <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <div style={{ width: 5, height: 5, borderRadius: '50%', background: s.dotColor, flexShrink: 0 }} />
-                        <span style={{ fontFamily: 'system-ui', fontSize: 12, color: s.checkText }}>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }} className="hp-case-grid">
+            {[
+              { num: '44%', label: locale === 'en' ? 'Mention rate' : 'Taux de mention', color: '#D97757' },
+              { num: '2,11', label: locale === 'en' ? 'Avg. position' : 'Position moyenne', color: '#10A37F' },
+              { num: '110', label: locale === 'en' ? 'Total mentions' : 'Mentions totales', color: '#C9861A' },
+              { num: '15', label: locale === 'en' ? 'Negative mentions detected' : 'Mentions négatives détectées', color: '#E05252' },
+            ].map((s, i) => (
+              <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 14, padding: '24px 20px', textAlign: 'center' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 36, fontWeight: 900, color: s.color, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
+                <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginTop: 8, lineHeight: 1.4 }}>{s.label}</div>
+              </div>
+            ))}
           </div>
 
-          {/* CTA */}
-          <div style={{ textAlign: 'center' }}>
-            <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
-              {t('homepage.report.cta')}
-            </Link>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C2BDB8', marginTop: 12, letterSpacing: 1 }}>
-              {t('homepage.report.ctaSubtext')}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="hp-case-insights">
+            <div style={{ background: 'rgba(16,163,127,0.04)', border: '1px solid rgba(16,163,127,0.15)', borderRadius: 14, padding: '24px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>{locale === 'en' ? 'DISCOVERED' : 'DÉCOUVERT'}</div>
+              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', lineHeight: 1.6 }}>
+                {locale === 'en'
+                  ? 'Market leader on financial advice — but nearly absent on savings, investment and retirement topics.'
+                  : 'Leader sur le conseil financier — mais quasi absent sur l\'épargne, l\'investissement et la retraite.'}
+              </p>
             </div>
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 28 }}>
-            <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" style={{ display: 'inline-block', background: '#1A1916', color: '#F7F5F2', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', padding: '10px 24px', borderRadius: 9, textDecoration: 'none' }}>
-              {t('homepage.report.exampleLink')}
-            </a>
+            <div style={{ background: 'rgba(224,82,82,0.04)', border: '1px solid rgba(224,82,82,0.15)', borderRadius: 14, padding: '24px' }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#E05252', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>{locale === 'en' ? 'ALERTED' : 'ALERTÉ'}</div>
+              <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', lineHeight: 1.6 }}>
+                {locale === 'en'
+                  ? '15 negative mentions on fees and ESG commitments — exact verbatims and sources identified.'
+                  : '15 mentions négatives sur les frais et les engagements ESG — verbatims exacts et sources identifiées.'}
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -774,6 +749,10 @@ export default function Home() {
           .report-cta-buttons { flex-direction: column !important; width: 100% !important; }
           .report-cta-buttons a { width: 100% !important; text-align: center !important; }
           .hp-solutions-grid { grid-template-columns: 1fr !important; }
+          .hp-stats-grid { grid-template-columns: 1fr !important; }
+          .hp-dimensions-grid { grid-template-columns: 1fr !important; }
+          .hp-case-grid { grid-template-columns: 1fr 1fr !important; }
+          .hp-case-insights { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
