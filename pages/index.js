@@ -234,10 +234,10 @@ export default function Home() {
   const faqItems = t('homepage.faq.items');
 
   const features = [
-    { icon: '🎯', color: '#4285F4', tag: 'Contenu', tagColor: '#4285F4', name: 'Extractibilité', desc: "Votre contenu répond-il clairement dès les premières lignes ? Les IA cherchent des réponses prêtes à citer.", checks: ['Intro directe en 1-2 phrases', 'Listes et tableaux structurés'] },
+    { icon: '🎯', color: '#10A37F', tag: 'Contenu', tagColor: '#4285F4', name: 'Extractibilité', desc: "Votre contenu répond-il clairement dès les premières lignes ? Les IA cherchent des réponses prêtes à citer.", checks: ['Intro directe en 1-2 phrases', 'Listes et tableaux structurés'] },
     { icon: '🔬', color: '#10A37F', tag: 'Contenu', tagColor: '#4285F4', name: 'Vérifiabilité', desc: "Chiffres sourcés, dates, liens vers preuves — les IA citent ce qu'elles peuvent vérifier.", checks: ['Données chiffrées avec source', 'Liens vers études ou références'] },
     { icon: '🏆', color: '#D97757', tag: 'Autorité', tagColor: '#C9861A', name: 'Autorité E-E-A-T', desc: "Expérience, Expertise, Autorité, Confiance — les 4 piliers que les IA évaluent en priorité.", checks: ['Auteur identifié avec biographie', 'Schema Organization JSON-LD'] },
-    { icon: '🤖', color: '#4285F4', tag: 'Technique', tagColor: '#10A37F', name: 'Crawlabilité IA', desc: "GPTBot, ClaudeBot, OAI-SearchBot — votre site leur est-il accessible sans friction ?", checks: ['Pas de noindex bloquant', 'Balise lang définie'] },
+    { icon: '🤖', color: '#10A37F', tag: 'Technique', tagColor: '#10A37F', name: 'Crawlabilité IA', desc: "GPTBot, ClaudeBot, OAI-SearchBot — votre site leur est-il accessible sans friction ?", checks: ['Pas de noindex bloquant', 'Balise lang définie'] },
     { icon: '🧩', color: '#1C7DC4', tag: 'Technique', tagColor: '#10A37F', name: 'Données structurées', desc: "Schema.org FAQPage, Organization, Article — le langage natif des IA pour comprendre votre contenu.", checks: ['Schema FAQPage ou Article', 'JSON-LD bien formé'] },
     { icon: '⚖️', color: '#10A37F', tag: 'Contenu', tagColor: '#4285F4', name: 'Neutralité éditoriale', desc: "Un contenu factuel et nuancé est 3× plus cité qu'un contenu promotionnel ou superlatif.", checks: ['Ton informatif et factuel', 'Absence de superlatifs non prouvés'] },
     { icon: '🌐', color: '#8B5CF6', tag: 'Autorité', tagColor: '#C9861A', name: 'Présence externe', desc: "Mentions presse, réseaux sociaux, citations tierces — les signaux d'autorité croisés.", checks: ['Mentions presse avec liens', 'Réseaux sociaux actifs'] },
@@ -417,20 +417,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ LOGOS LLM ══ */}
-      <div style={{ background: '#F7F5F2', padding: '32px 48px', textAlign: 'center' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
-          {locale === 'en' ? 'WE ANALYZE YOUR VISIBILITY ON' : 'NOUS ANALYSONS VOTRE VISIBILITÉ SUR'}
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 40, alignItems: 'center', flexWrap: 'wrap', opacity: 0.5 }}>
-          {['ChatGPT', 'Gemini', 'Perplexity', 'Claude'].map(name => (
-            <span key={name} style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 700, color: '#1A1916', letterSpacing: -0.3 }}>{name}</span>
-          ))}
-        </div>
-      </div>
-
-      <SectionDivider />
-
       {/* ══ SECTION 3 — POURQUOI C'EST IMPORTANT (fond dark) ══ */}
       <section style={{ background: '#1A1916', padding: '72px 48px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
@@ -524,20 +510,21 @@ export default function Home() {
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <RevealSection>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,38px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 48, lineHeight: 1.1 }}>
-              {locale === 'en' ? <>How it works — in <em style={{ color: '#D97757' }}>60 seconds</em></> : <>Comment ça marche — en <em style={{ color: '#D97757' }}>60 secondes</em></>}
+              {locale === 'en' ? 'How it works' : 'Comment ça marche'}
             </h2>
           </RevealSection>
-          <div className="hp-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+          <div className="hp-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
             {[
-              { num: '1', color: '#10A37F', title: locale === 'en' ? 'Enter your URL' : 'Entrez votre URL', desc: locale === 'en' ? 'Free, no signup. Your GEO score /100 in 30 seconds.' : 'Gratuit, sans inscription. Votre score GEO /100 en 30 secondes.' },
-              { num: '2', color: '#D97757', title: locale === 'en' ? 'Get your diagnosis' : 'Recevez votre diagnostic', desc: locale === 'en' ? '8 criteria analyzed, prioritized recommendations, real ChatGPT citation test.' : '8 critères analysés, recommandations priorisées, test de citation ChatGPT réel.' },
-              { num: '3', color: '#4285F4', title: locale === 'en' ? 'Optimize & measure' : 'Optimisez et mesurez', desc: locale === 'en' ? 'Implement the fixes, re-audit, track your AI presence over time.' : 'Implémentez les corrections, ré-auditez, suivez votre présence IA dans le temps.' },
+              { num: '1', color: '#10A37F', title: locale === 'en' ? 'Free score' : 'Score gratuit', desc: locale === 'en' ? 'Enter your URL. GEO score /100 in 30 seconds, no signup.' : 'Entrez votre URL. Score GEO /100 en 30 secondes, sans inscription.' },
+              { num: '2', color: '#D97757', title: locale === 'en' ? 'Technical audit' : 'Audit technique', desc: locale === 'en' ? '8 criteria, recommendations with code, real ChatGPT citation test.' : '8 critères, recommandations avec code, test de citation ChatGPT réel.' },
+              { num: '3', color: '#D97757', title: locale === 'en' ? 'Optimize' : 'Optimisez', desc: locale === 'en' ? 'Implement the fixes, re-audit, measure your progress.' : 'Implémentez les corrections, ré-auditez, mesurez votre progression.' },
+              { num: '4', color: '#1A1916', title: locale === 'en' ? 'AI Presence' : 'Présence IA', desc: locale === 'en' ? 'Track what AI engines say about your brand over time.' : 'Suivez ce que les IA disent de votre marque dans le temps.' },
             ].map((step, i) => (
-              <RevealSection key={i} delay={i * 0.15}>
-                <div className="card-interactive" style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: 24 }}>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 38, color: step.color, marginBottom: 14, letterSpacing: -1 }}>{step.num}</div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1916', marginBottom: 8, fontFamily: 'system-ui' }}>{step.title}</div>
-                  <div style={{ fontSize: 13, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui' }}>{step.desc}</div>
+              <RevealSection key={i} delay={i * 0.12}>
+                <div className="card-interactive" style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: 22 }}>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 34, color: step.color, marginBottom: 12, letterSpacing: -1 }}>{step.num}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 6, fontFamily: 'system-ui' }}>{step.title}</div>
+                  <div style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
                 </div>
               </RevealSection>
             ))}
@@ -606,10 +593,10 @@ export default function Home() {
             </div>
 
             {/* Présence IA */}
-            <div className="card-interactive" style={{ background: 'linear-gradient(135deg, #1A1916 0%, #1E2330 100%)', border: '1px solid rgba(66,133,244,0.2)', borderRadius: 20, padding: '36px 32px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(66,133,244,0.1), transparent 70%)', pointerEvents: 'none' }} />
+            <div className="card-interactive" style={{ background: '#1A1916', border: '1px solid rgba(247,245,242,0.12)', borderRadius: 20, padding: '36px 32px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.08), transparent 70%)', pointerEvents: 'none' }} />
               <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#4285F4', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
                   {locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}
                 </div>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 12, letterSpacing: -0.5 }}>
@@ -626,17 +613,17 @@ export default function Home() {
                     : ['4 LLM majeurs interrogés', 'Taux de mention + position', 'Analyse de sentiment + verbatims', 'Dashboard interactif']
                   ).map((f, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ fontSize: 11, color: '#4285F4' }}>✓</span>
+                      <span style={{ fontSize: 11, color: '#10A37F' }}>✓</span>
                       <span style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', fontFamily: 'system-ui' }}>{f}</span>
                     </div>
                   ))}
                 </div>
                 <div style={{ marginTop: 'auto' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#4285F4', marginBottom: 16 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#10A37F', marginBottom: 16 }}>
                     {locale === 'en' ? 'Custom pricing' : 'Sur devis'}
                   </div>
                   <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                    <Link href="/presence-ia" className="btn-interactive" style={{ display: 'inline-block', background: '#4285F4', color: '#fff', padding: '11px 24px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                    <Link href="/presence-ia" className="btn-interactive" style={{ display: 'inline-block', background: '#10A37F', color: '#fff', padding: '11px 24px', borderRadius: 10, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
                       {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
                     </Link>
                     <Link href="/contact" style={{ display: 'inline-flex', alignItems: 'center', fontSize: 12, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1 }}>
@@ -868,7 +855,7 @@ export default function Home() {
           .report-cta-buttons a { width: 100% !important; text-align: center !important; }
           .hp-stats-grid { grid-template-columns: 1fr !important; }
           .hp-compare-grid { grid-template-columns: 1fr !important; }
-          .hp-steps { grid-template-columns: 1fr !important; }
+          .hp-steps { grid-template-columns: 1fr 1fr !important; }
           .hp-dimensions-grid { grid-template-columns: 1fr !important; }
           .hp-case-grid { grid-template-columns: 1fr 1fr !important; }
         }
