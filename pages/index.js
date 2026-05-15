@@ -323,99 +323,127 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ── Hero visual — Score dashboard animé ── */}
+          {/* ── Hero visual — Mini rapport fidèle ── */}
           <div className="hero-visual" style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            {/* Glow background */}
-            <div style={{ position: 'absolute', width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.08) 0%, transparent 70%)', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }} />
+            {/* Glow */}
+            <div style={{ position: 'absolute', width: 340, height: 340, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.07) 0%, transparent 70%)', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }} />
 
-            {/* Main card */}
-            <div className="hero-card" style={{ background: '#1A1916', borderRadius: 20, padding: '28px 24px 24px', width: '100%', maxWidth: 360, boxShadow: '0 24px 80px rgba(26,25,22,0.25), 0 8px 24px rgba(0,0,0,0.12)', border: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
+            {/* Rapport preview card */}
+            <div className="hero-card" style={{ background: '#fff', borderRadius: 18, width: '100%', maxWidth: 380, boxShadow: '0 24px 80px rgba(26,25,22,0.18), 0 4px 16px rgba(0,0,0,0.06)', border: '1px solid rgba(26,25,22,0.06)', overflow: 'hidden', position: 'relative' }}>
 
-              {/* Subtle gradient overlay */}
-              <div style={{ position: 'absolute', top: -60, right: -60, width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
-
-              {/* Header */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              {/* ─ Header sticky style (comme le vrai rapport) ─ */}
+              <div style={{ background: '#1A1916', padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <Logo />
-                  <span style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 600, color: 'rgba(247,245,242,0.5)', letterSpacing: 0.5 }}>DETEKIA</span>
+                  <div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 11, fontWeight: 600, color: '#F7F5F2', letterSpacing: 0.3 }}>Audit GEO</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)' }}>example.com</div>
+                  </div>
                 </div>
-                <div style={{ display: 'flex', gap: 4 }}>
-                  {['#10A37F', '#D97757', '#4285F4'].map((c, i) => (
-                    <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: c, opacity: 0.6 }} />
-                  ))}
-                </div>
-              </div>
-
-              {/* Score central */}
-              <div style={{ textAlign: 'center', marginBottom: 20, position: 'relative' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, marginBottom: 8, textTransform: 'uppercase' }}>
-                  {locale === 'en' ? 'GEO SCORE' : 'SCORE GEO'}
-                </div>
-                <div className="hero-score" style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>
-                  73
-                </div>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.2)', marginTop: 2 }}>/100</div>
-                <div style={{ display: 'inline-block', background: '#D97757', borderRadius: 20, padding: '3px 12px', fontFamily: 'monospace', fontSize: 8, color: '#fff', letterSpacing: 2, fontWeight: 700, marginTop: 8 }}>
-                  {locale === 'en' ? 'INTERMEDIATE' : 'INTERMÉDIAIRE'}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', letterSpacing: -1 }}>73</span>
+                  <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.3)' }}>/100</span>
+                  <span style={{ background: 'rgba(217,119,87,0.22)', border: '1px solid rgba(217,119,87,0.4)', borderRadius: 10, padding: '2px 8px', fontFamily: 'monospace', fontSize: 7, color: '#D97757', letterSpacing: 1, fontWeight: 700 }}>
+                    {locale === 'en' ? 'AVERAGE' : 'MOYEN'}
+                  </span>
                 </div>
               </div>
 
-              {/* Mini bar chart — 4 critères */}
-              <div style={{ display: 'flex', gap: 6, marginBottom: 16, padding: '0 8px' }}>
+              {/* ─ 8 critères avec barres (comme le tableau récap du rapport) ─ */}
+              <div style={{ padding: '14px 20px 10px' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#B0ABA5', letterSpacing: 1.5, marginBottom: 8, textTransform: 'uppercase' }}>
+                  {locale === 'en' ? '8 CRITERIA BREAKDOWN' : '8 CRITÈRES ANALYSÉS'}
+                </div>
                 {[
-                  { label: 'E-E-A-T', pct: 85, color: '#10A37F' },
-                  { label: 'Extract.', pct: 60, color: '#D97757' },
-                  { label: 'Schema', pct: 90, color: '#4285F4' },
-                  { label: 'Fraîch.', pct: 45, color: '#C9861A' },
-                ].map((bar, i) => (
-                  <div key={i} style={{ flex: 1, textAlign: 'center' }}>
-                    <div style={{ height: 48, background: 'rgba(255,255,255,0.04)', borderRadius: 6, position: 'relative', overflow: 'hidden', marginBottom: 4 }}>
-                      <div className="hero-bar" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: `${bar.pct}%`, background: bar.color, borderRadius: 6, opacity: 0.7, transition: 'height 1.2s cubic-bezier(0.22,1,0.36,1)', transitionDelay: `${0.5 + i * 0.15}s` }} />
+                  { name: locale === 'en' ? 'Extractability' : 'Extractibilité', score: '18/25', pct: 72, color: '#C9861A' },
+                  { name: locale === 'en' ? 'Verifiability' : 'Vérifiabilité', score: '14/20', pct: 70, color: '#C9861A' },
+                  { name: locale === 'en' ? 'Authority E-E-A-T' : 'Autorité E-E-A-T', score: '12/15', pct: 80, color: '#10A37F' },
+                  { name: locale === 'en' ? 'AI Crawlability' : 'Crawlabilité IA', score: '13/15', pct: 87, color: '#10A37F' },
+                  { name: locale === 'en' ? 'Structured Data' : 'Données structurées', score: '8/10', pct: 80, color: '#10A37F' },
+                  { name: locale === 'en' ? 'Editorial Neutrality' : 'Neutralité éditoriale', score: '3/10', pct: 30, color: '#D97757' },
+                  { name: locale === 'en' ? 'External Presence' : 'Présence externe', score: '2/5', pct: 40, color: '#D97757' },
+                  { name: locale === 'en' ? 'Freshness' : 'Fraîcheur', score: '3/5', pct: 60, color: '#C9861A' },
+                ].map((c, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 9, color: '#6B6762', width: 90, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.name}</div>
+                    <div style={{ flex: 1, height: 4, background: '#F0EDE8', borderRadius: 2, overflow: 'hidden' }}>
+                      <div className="hero-bar" style={{ height: '100%', width: `${c.pct}%`, background: c.color, borderRadius: 2, transition: 'width 1s cubic-bezier(0.22,1,0.36,1)', transitionDelay: `${0.4 + i * 0.08}s` }} />
                     </div>
-                    <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'rgba(247,245,242,0.3)', letterSpacing: 0.5 }}>{bar.label}</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#B0ABA5', width: 30, textAlign: 'right', flexShrink: 0 }}>{c.score}</div>
                   </div>
                 ))}
               </div>
 
-              {/* Recommandation critique */}
-              <div style={{ background: 'rgba(217,119,87,0.08)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '10px 12px', marginBottom: 12 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                  <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#D97757' }} />
-                  <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#D97757', letterSpacing: 1, fontWeight: 700 }}>CRITIQUE</span>
-                </div>
-                <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', lineHeight: 1.4 }}>
-                  {locale === 'en' ? 'Missing Schema.org FAQ — add JSON-LD to boost extractibility.' : 'Schema.org FAQ manquant — ajoutez du JSON-LD pour la citabilité.'}
+              {/* ─ Recommandation avec code (comme le vrai rapport) ─ */}
+              <div style={{ padding: '0 20px 12px' }}>
+                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 10, padding: '10px 12px', borderLeft: '3px solid #D97757' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+                    <span style={{ fontFamily: 'Georgia, serif', fontSize: 12, color: '#D97757', fontWeight: 700 }}>1</span>
+                    <span style={{ background: 'rgba(217,119,87,0.12)', borderRadius: 4, padding: '1px 6px', fontFamily: 'monospace', fontSize: 7, color: '#D97757', letterSpacing: 0.5, fontWeight: 700 }}>CRITIQUE</span>
+                    <span style={{ fontFamily: 'system-ui', fontSize: 10, color: '#1A1916', fontWeight: 600 }}>
+                      {locale === 'en' ? 'Add FAQ Schema' : 'Ajouter Schema FAQ'}
+                    </span>
+                  </div>
+                  <div style={{ background: '#1A1916', borderRadius: 6, padding: '8px 10px', fontFamily: 'monospace', fontSize: 8, color: '#F7F5F2', lineHeight: 1.5, overflow: 'hidden' }}>
+                    <span style={{ color: '#D97757' }}>{'{'}</span> <span style={{ color: '#10A37F' }}>"@type"</span>: <span style={{ color: '#C9861A' }}>"FAQPage"</span>,<br/>
+                    &nbsp;&nbsp;<span style={{ color: '#10A37F' }}>"mainEntity"</span>: <span style={{ color: '#D97757' }}>{'[{'}</span><br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: '#10A37F' }}>"@type"</span>: <span style={{ color: '#C9861A' }}>"Question"</span>,<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: '#10A37F' }}>"name"</span>: <span style={{ color: '#C9861A' }}>"..."</span> <span style={{ color: '#D97757' }}>{'}]}'}</span>
+                  </div>
                 </div>
               </div>
 
-              {/* LLM badges */}
-              <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
-                {[
-                  { name: 'ChatGPT', color: '#10A37F', cited: true },
-                  { name: 'Gemini', color: '#4285F4', cited: false },
-                  { name: 'Claude', color: '#D97757', cited: true },
-                  { name: 'Perplexity', color: '#1C7DC4', cited: false },
-                ].map((llm, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 6, background: llm.cited ? `${llm.color}15` : 'rgba(255,255,255,0.03)', border: `1px solid ${llm.cited ? `${llm.color}30` : 'rgba(255,255,255,0.06)'}` }}>
-                    <div style={{ width: 5, height: 5, borderRadius: '50%', background: llm.cited ? llm.color : 'rgba(255,255,255,0.15)' }} />
-                    <span style={{ fontFamily: 'monospace', fontSize: 8, color: llm.cited ? llm.color : 'rgba(247,245,242,0.3)', letterSpacing: 0.3 }}>{llm.name}</span>
+              {/* ─ Test citation ChatGPT (comme le vrai rapport) ─ */}
+              <div style={{ padding: '0 20px 14px' }}>
+                <div style={{ background: '#1A1916', borderRadius: 10, padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'rgba(247,245,242,0.3)', letterSpacing: 1.5, marginBottom: 3 }}>
+                      {locale === 'en' ? 'CHATGPT CITATION TEST' : 'TEST CITATION CHATGPT'}
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+                      <span style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#F7F5F2', letterSpacing: -1 }}>3</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)' }}>/10</span>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 9, color: 'rgba(247,245,242,0.4)', marginLeft: 4 }}>
+                        {locale === 'en' ? 'queries cite you' : 'requêtes vous citent'}
+                      </span>
+                    </div>
                   </div>
-                ))}
+                  <div style={{ display: 'flex', gap: 3 }}>
+                    {[1,1,1,0,0,0,0,0,0,0].map((v, i) => (
+                      <div key={i} style={{ width: 4, height: 16, borderRadius: 2, background: v ? '#10A37F' : 'rgba(247,245,242,0.08)' }} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* ─ Score projeté (comme le vrai rapport) ─ */}
+              <div style={{ background: '#F7F5F2', padding: '10px 20px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, borderTop: '1px solid #E5E2DC' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#B0ABA5', letterSpacing: 1 }}>{locale === 'en' ? 'CURRENT' : 'ACTUEL'}</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#D97757' }}>73</div>
+                </div>
+                <div style={{ fontSize: 14, color: '#B0ABA5' }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#B0ABA5', letterSpacing: 1 }}>{locale === 'en' ? 'PROJECTED' : 'PROJETÉ'}</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#10A37F' }}>91</div>
+                </div>
+                <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#10A37F', background: 'rgba(16,163,127,0.1)', borderRadius: 6, padding: '2px 6px' }}>+18 pts</div>
               </div>
             </div>
 
-            {/* Floating badge — Présence IA teaser */}
+            {/* Floating badge — Présence IA */}
             <Link href="/presence-ia" style={{ textDecoration: 'none' }}>
-              <div className="hero-floating-badge" style={{ position: 'absolute', bottom: -10, right: -16, background: '#fff', borderRadius: 14, padding: '12px 16px', boxShadow: '0 8px 32px rgba(0,0,0,0.12)', border: '1px solid #E5E2DC', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }}>
-                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(16,163,127,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontSize: 14 }}>📡</span>
+              <div className="hero-floating-badge" style={{ position: 'absolute', bottom: 20, right: -24, background: '#1A1916', borderRadius: 14, padding: '10px 14px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }}>
+                <div style={{ display: 'flex', gap: 3 }}>
+                  {['#10A37F', '#4285F4', '#D97757', '#1C7DC4'].map((c, i) => (
+                    <div key={i} style={{ width: 5, height: 5, borderRadius: '50%', background: c }} />
+                  ))}
                 </div>
                 <div>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 11, fontWeight: 700, color: '#1A1916' }}>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 10, fontWeight: 700, color: '#F7F5F2' }}>
                     {locale === 'en' ? 'AI Presence' : 'Présence IA'}
                   </div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 0.5 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#10A37F', letterSpacing: 0.5 }}>
                     {locale === 'en' ? '4 LLMs monitored →' : '4 LLMs monitorés →'}
                   </div>
                 </div>
