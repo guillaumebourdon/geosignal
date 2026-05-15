@@ -323,10 +323,103 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Lien secondaire Présence IA */}
-          <div style={{ marginTop: 12 }}>
-            <Link href="/presence-ia" style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
-              {locale === 'en' ? 'Or discover AI Presence monitoring →' : 'Ou découvrez le monitoring Présence IA →'}
+          {/* ── Hero visual — Score dashboard animé ── */}
+          <div className="hero-visual" style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {/* Glow background */}
+            <div style={{ position: 'absolute', width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.08) 0%, transparent 70%)', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }} />
+
+            {/* Main card */}
+            <div className="hero-card" style={{ background: '#1A1916', borderRadius: 20, padding: '28px 24px 24px', width: '100%', maxWidth: 360, boxShadow: '0 24px 80px rgba(26,25,22,0.25), 0 8px 24px rgba(0,0,0,0.12)', border: '1px solid rgba(255,255,255,0.06)', position: 'relative', overflow: 'hidden' }}>
+
+              {/* Subtle gradient overlay */}
+              <div style={{ position: 'absolute', top: -60, right: -60, width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+              {/* Header */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <Logo />
+                  <span style={{ fontFamily: 'system-ui', fontSize: 12, fontWeight: 600, color: 'rgba(247,245,242,0.5)', letterSpacing: 0.5 }}>DETEKIA</span>
+                </div>
+                <div style={{ display: 'flex', gap: 4 }}>
+                  {['#10A37F', '#D97757', '#4285F4'].map((c, i) => (
+                    <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: c, opacity: 0.6 }} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Score central */}
+              <div style={{ textAlign: 'center', marginBottom: 20, position: 'relative' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, marginBottom: 8, textTransform: 'uppercase' }}>
+                  {locale === 'en' ? 'GEO SCORE' : 'SCORE GEO'}
+                </div>
+                <div className="hero-score" style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>
+                  73
+                </div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.2)', marginTop: 2 }}>/100</div>
+                <div style={{ display: 'inline-block', background: '#D97757', borderRadius: 20, padding: '3px 12px', fontFamily: 'monospace', fontSize: 8, color: '#fff', letterSpacing: 2, fontWeight: 700, marginTop: 8 }}>
+                  {locale === 'en' ? 'INTERMEDIATE' : 'INTERMÉDIAIRE'}
+                </div>
+              </div>
+
+              {/* Mini bar chart — 4 critères */}
+              <div style={{ display: 'flex', gap: 6, marginBottom: 16, padding: '0 8px' }}>
+                {[
+                  { label: 'E-E-A-T', pct: 85, color: '#10A37F' },
+                  { label: 'Extract.', pct: 60, color: '#D97757' },
+                  { label: 'Schema', pct: 90, color: '#4285F4' },
+                  { label: 'Fraîch.', pct: 45, color: '#C9861A' },
+                ].map((bar, i) => (
+                  <div key={i} style={{ flex: 1, textAlign: 'center' }}>
+                    <div style={{ height: 48, background: 'rgba(255,255,255,0.04)', borderRadius: 6, position: 'relative', overflow: 'hidden', marginBottom: 4 }}>
+                      <div className="hero-bar" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: `${bar.pct}%`, background: bar.color, borderRadius: 6, opacity: 0.7, transition: 'height 1.2s cubic-bezier(0.22,1,0.36,1)', transitionDelay: `${0.5 + i * 0.15}s` }} />
+                    </div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'rgba(247,245,242,0.3)', letterSpacing: 0.5 }}>{bar.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Recommandation critique */}
+              <div style={{ background: 'rgba(217,119,87,0.08)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '10px 12px', marginBottom: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                  <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#D97757' }} />
+                  <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#D97757', letterSpacing: 1, fontWeight: 700 }}>CRITIQUE</span>
+                </div>
+                <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', lineHeight: 1.4 }}>
+                  {locale === 'en' ? 'Missing Schema.org FAQ — add JSON-LD to boost extractibility.' : 'Schema.org FAQ manquant — ajoutez du JSON-LD pour la citabilité.'}
+                </div>
+              </div>
+
+              {/* LLM badges */}
+              <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
+                {[
+                  { name: 'ChatGPT', color: '#10A37F', cited: true },
+                  { name: 'Gemini', color: '#4285F4', cited: false },
+                  { name: 'Claude', color: '#D97757', cited: true },
+                  { name: 'Perplexity', color: '#1C7DC4', cited: false },
+                ].map((llm, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 6, background: llm.cited ? `${llm.color}15` : 'rgba(255,255,255,0.03)', border: `1px solid ${llm.cited ? `${llm.color}30` : 'rgba(255,255,255,0.06)'}` }}>
+                    <div style={{ width: 5, height: 5, borderRadius: '50%', background: llm.cited ? llm.color : 'rgba(255,255,255,0.15)' }} />
+                    <span style={{ fontFamily: 'monospace', fontSize: 8, color: llm.cited ? llm.color : 'rgba(247,245,242,0.3)', letterSpacing: 0.3 }}>{llm.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Floating badge — Présence IA teaser */}
+            <Link href="/presence-ia" style={{ textDecoration: 'none' }}>
+              <div className="hero-floating-badge" style={{ position: 'absolute', bottom: -10, right: -16, background: '#fff', borderRadius: 14, padding: '12px 16px', boxShadow: '0 8px 32px rgba(0,0,0,0.12)', border: '1px solid #E5E2DC', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }}>
+                <div style={{ width: 32, height: 32, borderRadius: 10, background: 'rgba(16,163,127,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: 14 }}>📡</span>
+                </div>
+                <div>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 11, fontWeight: 700, color: '#1A1916' }}>
+                    {locale === 'en' ? 'AI Presence' : 'Présence IA'}
+                  </div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 0.5 }}>
+                    {locale === 'en' ? '4 LLMs monitored →' : '4 LLMs monitorés →'}
+                  </div>
+                </div>
+              </div>
             </Link>
           </div>
         </div>
@@ -669,17 +762,32 @@ export default function Home() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: #6B6762; }
         @keyframes ai-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes heroCardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes heroFadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero-grid { grid-template-columns: 55% 45%; }
+        .hero-card { animation: heroCardFloat 6s ease-in-out infinite, heroFadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.3s, 0s; }
+        .hero-floating-badge { animation: heroFadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.6s both; }
+        .hero-floating-badge:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.16); }
+
         .hp-dimensions-grid { grid-template-columns: 1fr 1fr; }
         .hp-stats-grid { grid-template-columns: repeat(3, 1fr); }
         .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+
         @media (max-width: 900px) {
+          .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .hero-visual { max-width: 340px; margin: 0 auto; }
+          .hero-floating-badge { right: 0 !important; bottom: -20px !important; }
           .testimonials-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 640px) {
           .hp-dimensions-grid { grid-template-columns: 1fr !important; }
           .hp-stats-grid { grid-template-columns: 1fr !important; }
           section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 64px !important; padding-bottom: 64px !important; }
+          .hero-section { padding: 16px 20px 40px !important; }
+          .hero-card { max-width: 300px !important; }
         }
+
         #ai-cursor { animation: ai-blink 1.06s step-end infinite; font-weight: 300; }
         .testimonial-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.35); transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
         .testimonial-quote strong { color: #F7F5F2; font-weight: 700; }
