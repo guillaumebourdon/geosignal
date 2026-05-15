@@ -94,72 +94,107 @@ function CriteriaCard({ icon, color, name, desc, checks, tag, tagColor }) {
   );
 }
 
-/* ─── Hero product mockup ────────────────────────────────── */
+/* ─── Hero product mockup — tabbed (Audit GEO + Présence IA) ── */
 function ProductMockup() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
+  const [tab, setTab] = useState(0); // 0 = Audit, 1 = Présence
+
+  // Auto-switch tabs every 5s
+  useEffect(() => {
+    const interval = setInterval(() => setTab(t => (t + 1) % 2), 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="audit-mockup" style={{ background: '#fff', borderRadius: 22, boxShadow: '0 8px 32px rgba(0,0,0,0.12), 0 32px 80px rgba(26,25,22,0.18), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 390, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
 
-      {/* macOS-style mini header — hidden on mobile */}
-      <div className="audit-mockup-chrome" style={{ background: '#F0EDE8', borderBottom: '1px solid #E5E2DC', padding: '8px 18px', display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div style={{ display: 'flex', gap: 5 }}>
-          {['#F87171','#FBBF24','#34D399'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
-        </div>
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 0.5, marginLeft: 6 }}>{t('homepage.mockup.headerLabel')}</div>
+      {/* Tab header */}
+      <div style={{ display: 'flex', borderBottom: '1px solid #E5E2DC' }}>
+        {[
+          { label: 'Audit GEO', color: '#D97757' },
+          { label: locale === 'en' ? 'AI Presence' : 'Présence IA', color: '#10A37F' },
+        ].map((t, i) => (
+          <button key={i} onClick={() => setTab(i)} style={{
+            flex: 1, padding: '10px 0', background: tab === i ? '#fff' : '#F7F5F2',
+            border: 'none', borderBottom: tab === i ? `2px solid ${t.color}` : '2px solid transparent',
+            fontFamily: 'system-ui', fontSize: 11, fontWeight: tab === i ? 700 : 500,
+            color: tab === i ? t.color : '#B0ABA5', cursor: 'pointer', transition: 'all 0.2s',
+            letterSpacing: 0.5,
+          }}>{t.label}</button>
+        ))}
       </div>
 
-      {/* EXEMPLE badge — mobile only */}
-      <div className="audit-mockup-label">{t('homepage.hero.mockupLabel')}</div>
+      {/* Tab content with transition */}
+      <div style={{ position: 'relative', minHeight: 320 }}>
 
-      {/* Score block */}
-      <div style={{ background: '#1A1916', padding: '36px 32px 28px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '40%', left: 24, transform: 'translateY(-50%)', width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.18) 0%, transparent 70%)' }} />
-        <div style={{ position: 'absolute', top: -50, right: -50, width: 180, height: 180, borderRadius: '50%', background: '#D97757', opacity: 0.05 }} />
-
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, marginBottom: 18, textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 6, border: '1px solid rgba(255,255,255,0.06)', padding: '3px 10px', borderRadius: 4 }}>
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#D97757' }} /> {t('homepage.mockup.scoreBadge')}
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 18, position: 'relative' }}>
-          <div>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 96, color: '#F7F5F2', lineHeight: 1, letterSpacing: -4 }}>{t('homepage.mockup.score')}</div>
-            <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.25)', letterSpacing: 1 }}>{t('homepage.mockup.scoreMax')}</div>
+        {/* TAB 0: Audit GEO */}
+        <div style={{ opacity: tab === 0 ? 1 : 0, transition: 'opacity 0.4s', position: tab === 0 ? 'relative' : 'absolute', top: 0, left: 0, right: 0, pointerEvents: tab === 0 ? 'auto' : 'none' }}>
+          <div style={{ background: '#1A1916', padding: '28px 28px 22px', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: -50, right: -50, width: 150, height: 150, borderRadius: '50%', background: '#D97757', opacity: 0.05 }} />
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, marginBottom: 14, textTransform: 'uppercase' }}>
+              {t('homepage.mockup.scoreBadge')}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14 }}>
+              <div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 1, letterSpacing: -3 }}>{t('homepage.mockup.score')}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>{t('homepage.mockup.scoreMax')}</div>
+              </div>
+              <div style={{ paddingBottom: 12 }}>
+                <div style={{ display: 'inline-block', background: '#D97757', borderRadius: 20, padding: '3px 11px', fontFamily: 'monospace', fontSize: 8, color: '#fff', letterSpacing: 2, fontWeight: 700 }}>{t('homepage.mockup.level')}</div>
+              </div>
+            </div>
           </div>
-          <div style={{ paddingBottom: 16 }}>
-            <div style={{ display: 'inline-block', background: '#D97757', borderRadius: 20, padding: '4px 13px', fontFamily: 'monospace', fontSize: 9, color: '#fff', letterSpacing: 2, marginBottom: 10, fontWeight: 700 }}>{t('homepage.mockup.level')}</div>
-            <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6 }} dangerouslySetInnerHTML={{ __html: t('homepage.mockup.levelDesc') }} />
+          <div style={{ padding: '16px 24px 12px' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1, padding: '3px 9px', borderRadius: 4, background: 'rgba(217,119,87,0.12)', color: '#D97757', fontWeight: 700, display: 'inline-block', marginBottom: 8 }}>{t('homepage.mockup.criticalTag')}</div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 14, color: '#1A1916', lineHeight: 1.3, marginBottom: 6 }}>{t('homepage.mockup.criticalTitle')}</div>
+            <div style={{ fontSize: 11, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5 }}>{t('homepage.mockup.criticalDesc')}</div>
+          </div>
+          <div style={{ margin: '0 24px 16px', padding: '10px 12px', background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.25)', borderRadius: 8 }}>
+            <div style={{ fontSize: 10, color: '#0E8A6B', fontFamily: 'system-ui', lineHeight: 1.5 }} dangerouslySetInnerHTML={{ __html: t('homepage.mockup.fixText') }} />
           </div>
         </div>
-      </div>
 
-      {/* Critique */}
-      <div style={{ padding: '20px 26px 8px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 10 }}>
-          <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1, padding: '3px 9px', borderRadius: 4, background: 'rgba(217,119,87,0.12)', color: '#D97757', fontWeight: 700 }}>{t('homepage.mockup.criticalTag')}</span>
+        {/* TAB 1: Présence IA */}
+        <div style={{ opacity: tab === 1 ? 1 : 0, transition: 'opacity 0.4s', position: tab === 1 ? 'relative' : 'absolute', top: 0, left: 0, right: 0, pointerEvents: tab === 1 ? 'auto' : 'none' }}>
+          <div style={{ background: '#1A1916', padding: '28px 28px 22px', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: -50, right: -50, width: 150, height: 150, borderRadius: '50%', background: '#10A37F', opacity: 0.05 }} />
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, marginBottom: 14, textTransform: 'uppercase' }}>
+              {locale === 'en' ? 'AI PRESENCE AUDIT' : 'AUDIT DE PRÉSENCE IA'}
+            </div>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <div style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#D97757', lineHeight: 1 }}>44%</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.3)', marginTop: 4 }}>{locale === 'en' ? 'MENTION RATE' : 'TAUX DE MENTION'}</div>
+              </div>
+              <div style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#10A37F', lineHeight: 1 }}>2.11</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.3)', marginTop: 4 }}>{locale === 'en' ? 'AVG. POSITION' : 'POSITION MOY.'}</div>
+              </div>
+              <div style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#E05252', lineHeight: 1 }}>15</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.3)', marginTop: 4 }}>{locale === 'en' ? 'NEGATIVE' : 'NÉGATIVES'}</div>
+              </div>
+            </div>
+          </div>
+          <div style={{ padding: '16px 24px' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{locale === 'en' ? 'KEY INSIGHT' : 'INSIGHT CLÉ'}</div>
+            <div style={{ fontSize: 12, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 12 }}>
+              {locale === 'en'
+                ? 'Leader on financial advice — but nearly absent on savings and retirement topics.'
+                : 'Leader sur le conseil financier — mais quasi absent sur l\'épargne et la retraite.'}
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {['ChatGPT', 'Gemini', 'Claude', 'Perplexity'].map(llm => (
+                <span key={llm} style={{ fontFamily: 'monospace', fontSize: 9, padding: '3px 8px', borderRadius: 4, background: 'rgba(16,163,127,0.08)', color: '#10A37F', letterSpacing: 0.5 }}>{llm}</span>
+              ))}
+            </div>
+          </div>
+          <div style={{ margin: '0 24px 16px', padding: '10px 12px', background: 'rgba(224,82,82,0.06)', border: '1px solid rgba(224,82,82,0.15)', borderRadius: 8 }}>
+            <div style={{ fontSize: 10, color: '#E05252', fontFamily: 'system-ui', lineHeight: 1.5 }}>
+              {locale === 'en' ? '15 negative mentions on fees and ESG — exact verbatims identified.' : '15 mentions négatives sur les frais et l\'ESG — verbatims exacts identifiés.'}
+            </div>
+          </div>
         </div>
-        <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', lineHeight: 1.3, marginBottom: 8 }}>
-          {t('homepage.mockup.criticalTitle')}
-        </div>
-        <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6 }}>
-          {t('homepage.mockup.criticalDesc')}
-        </div>
-      </div>
-
-      {/* Action verte */}
-      <div style={{ margin: '14px 26px 0', padding: '12px 14px', background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.25)', borderRadius: 10 }}>
-        <div style={{ fontSize: 11, color: '#0E8A6B', fontFamily: 'system-ui', lineHeight: 1.55 }} dangerouslySetInnerHTML={{ __html: t('homepage.mockup.fixText') }} />
-      </div>
-
-      {/* Impact doré */}
-      <div style={{ margin: '10px 26px 18px', padding: '10px 14px', background: 'rgba(201,134,26,0.10)', border: '1px solid rgba(201,134,26,0.28)', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: 14 }}>↑</span>
-        <span style={{ fontSize: 11, color: '#A06A14', fontFamily: 'system-ui', fontWeight: 600 }}>{t('homepage.mockup.impactPoints')}</span>
-      </div>
-
-      {/* Footer CTA */}
-      <div style={{ padding: '13px 26px 15px', background: 'rgba(217,119,87,0.05)', borderTop: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', fontFamily: 'system-ui' }}>{t('homepage.mockup.lockedCount')}</div>
-        <div style={{ fontSize: 11, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui', background: 'rgba(217,119,87,0.12)', padding: '6px 14px', borderRadius: 20 }}>{t('homepage.mockup.unlock')}</div>
       </div>
     </div>
   );
