@@ -380,6 +380,18 @@
           "a": "Les recommandations du rapport sont concrètes et priorisées par impact. Si vous les appliquez et que votre score n'évolue pas, contactez-nous à hello@detekia.fr — on analyse le cas avec vous gratuitement."
         },
         {
+          "q": "Pourquoi Detekia coûte-t-il 30x moins cher que les outils GEO du marché ?",
+          "a": "Plusieurs raisons : nous proposons un paiement unique au lieu d'un abonnement, notre infrastructure est largement automatisée par IA, nous sommes une équipe française à coûts maîtrisés, et nous n'avons pas de levée de fonds à rentabiliser. Vous bénéficiez d'un outil de niveau professionnel sans payer pour un dashboard SaaS dont vous n'utiliseriez pas 90% des fonctionnalités."
+        },
+        {
+          "q": "Combien de temps pour voir un impact sur ma visibilité IA après les corrections ?",
+          "a": "La fenêtre habituelle est de 4 à 12 semaines. Les IA réindexent les sites à des rythmes variables (ChatGPT et Claude ré-évaluent à chaque requête, Gemini et Perplexity ont des cycles plus longs). Les corrections techniques (robots.txt, balises) prennent effet rapidement, les corrections éditoriales (autorité, présence externe) demandent plus de temps. Le rapport Pro inclut une projection de score post-corrections pour vous donner un ordre de grandeur."
+        },
+        {
+          "q": "Qu'est-ce que la Présence IA exactement, et en quoi c'est différent de l'audit ?",
+          "a": "L'audit Detekia analyse votre site (le code, la structure, le contenu) pour identifier ce qui bloque votre citabilité. La Présence IA, elle, interroge réellement ChatGPT, Claude, Gemini et Perplexity sur les requêtes stratégiques de votre marché pour mesurer si — et comment — vous êtes cité. C'est complémentaire : l'audit corrige les causes, la Présence IA mesure les effets. Disponible en rapport one-shot ou avec un monitoring mensuel."
+        },
+        {
           "q": "Qui est derrière Detekia ?",
           "a": "Detekia est développé par Beeleven, une agence spécialisée en stratégie digitale et IA basée à Paris. L'outil est conçu par des experts en SEO, GEO et intelligence artificielle qui travaillent quotidiennement avec les moteurs génératifs."
         },

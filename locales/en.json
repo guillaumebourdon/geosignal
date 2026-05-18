@@ -380,6 +380,18 @@
           "a": "The report's recommendations are concrete and prioritized by impact. If you implement them and your score doesn't change, contact us at hello@detekia.fr — we'll analyze your case with you for free."
         },
         {
+          "q": "Why is Detekia 30x cheaper than other GEO tools?",
+          "a": "Several reasons: we offer one-time payment instead of a subscription, our infrastructure is largely AI-automated, we're a lean French team with controlled costs, and we don't have venture capital to recoup. You get a professional-grade tool without paying for a SaaS dashboard you'd only use 10% of."
+        },
+        {
+          "q": "How long before I see an impact on my AI visibility after making fixes?",
+          "a": "The typical window is 4 to 12 weeks. AI engines re-index sites at different rates (ChatGPT and Claude re-evaluate with each query, Gemini and Perplexity have longer cycles). Technical fixes (robots.txt, meta tags) take effect quickly, while editorial improvements (authority, external presence) take more time. The Pro report includes a projected post-fix score to give you a rough estimate."
+        },
+        {
+          "q": "What exactly is AI Presence, and how is it different from the audit?",
+          "a": "The Detekia audit analyzes your site (code, structure, content) to identify what blocks your citability. AI Presence actually queries ChatGPT, Claude, Gemini and Perplexity on your market's strategic queries to measure whether — and how — you're cited. They're complementary: the audit fixes the causes, AI Presence measures the effects. Available as a one-shot report or with monthly monitoring."
+        },
+        {
           "q": "Who's behind Detekia?",
           "a": "Detekia is developed by Beeleven, a digital strategy and AI agency based in Paris. The tool is built by SEO, GEO and artificial intelligence experts who work daily with generative engines."
         },
