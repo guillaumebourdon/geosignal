@@ -428,6 +428,37 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ══ POURQUOI C'EST IMPORTANT (3 stats marché) ══ */}
+      <section style={{ background: '#fff', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <RevealSection>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+              {locale === 'en' ? 'AI is the new front door' : 'Les IA sont la nouvelle porte d\'entrée'}
+            </h2>
+            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
+              {locale === 'en'
+                ? 'When a prospect asks ChatGPT "best CRM for SMBs" and your competitor is cited but not you — that\'s a lost lead.'
+                : 'Quand un prospect demande à ChatGPT "meilleur CRM pour PME" et que votre concurrent est cité mais pas vous — c\'est un lead perdu.'}
+            </p>
+          </RevealSection>
+          <div className="hp-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+            {[
+              { num: '28,1M', desc: locale === 'en' ? 'French people use AI monthly' : 'de Français utilisent les IA chaque mois', src: 'Médiamétrie, 2025', color: '#D97757' },
+              { num: '57%', desc: locale === 'en' ? 'compare products via AI before buying' : 'comparent des produits via l\'IA avant d\'acheter', src: 'SEMrush, 2025', color: '#D97757' },
+              { num: '4,4x', desc: locale === 'en' ? 'higher conversion from AI traffic' : 'de conversion en plus via le trafic IA', src: 'SEMrush, 2025', color: '#1A1916' },
+            ].map((s, i) => (
+              <RevealSection key={i} delay={i * 0.12} direction="scale">
+                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '32px 24px', textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: s.color, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
+                  <div style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', marginTop: 10, lineHeight: 1.5 }}>{s.desc}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginTop: 8 }}>{s.src}</div>
+                </div>
+              </RevealSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══ POURQUOI DETEKIA — comparatif 3 colonnes ══ */}
       <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
@@ -473,34 +504,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ POURQUOI C'EST IMPORTANT (3 stats marché) ══ */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+      {/* ══ COMPARATIF CONCURRENTS ══ */}
+      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <RevealSection>
-            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-              {locale === 'en' ? 'AI is the new front door' : 'Les IA sont la nouvelle porte d\'entrée'}
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+              {locale === 'en' ? 'POSITIONING' : 'POSITIONNEMENT'}
+            </div>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+              {locale === 'en' ? 'Detekia vs GEO tools on the market' : 'Detekia vs les outils GEO du marché'}
             </h2>
-            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
+            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 680, margin: '0 auto 48px' }}>
               {locale === 'en'
-                ? 'When a prospect asks ChatGPT "best CRM for SMBs" and your competitor is cited but not you — that\'s a lost lead.'
-                : 'Quand un prospect demande à ChatGPT "meilleur CRM pour PME" et que votre concurrent est cité mais pas vous — c\'est un lead perdu.'}
+                ? 'GEO tools are mostly Anglo-Saxon, subscription-based, and cost between €75 and €100/month. Detekia is French, one-time payment, and 30x cheaper annually on the entry tier.'
+                : 'Les outils de visibilité IA sont majoritairement anglo-saxons, sur abonnement, et coûtent entre 75 € et 100 €/mois. Detekia est français, à paiement unique, et 30x moins cher en coût annuel sur l\'entrée de gamme.'}
             </p>
           </RevealSection>
-          <div className="hp-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-            {[
-              { num: '28,1M', desc: locale === 'en' ? 'French people use AI monthly' : 'de Français utilisent les IA chaque mois', src: 'Médiamétrie, 2025', color: '#D97757' },
-              { num: '57%', desc: locale === 'en' ? 'compare products via AI before buying' : 'comparent des produits via l\'IA avant d\'acheter', src: 'SEMrush, 2025', color: '#D97757' },
-              { num: '4,4x', desc: locale === 'en' ? 'higher conversion from AI traffic' : 'de conversion en plus via le trafic IA', src: 'SEMrush, 2025', color: '#1A1916' },
-            ].map((s, i) => (
-              <RevealSection key={i} delay={i * 0.12} direction="scale">
-                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '32px 24px', textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: s.color, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
-                  <div style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', marginTop: 10, lineHeight: 1.5 }}>{s.desc}</div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginTop: 8 }}>{s.src}</div>
-                </div>
-              </RevealSection>
-            ))}
-          </div>
+
+          <RevealSection delay={0.1}>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'system-ui', fontSize: 13 }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #E5E2DC' }}>
+                    <th style={{ textAlign: 'left', padding: '12px 16px', color: '#6B6762', fontWeight: 500, fontSize: 12 }}>{locale === 'en' ? 'Criteria' : 'Critère'}</th>
+                    <th style={{ textAlign: 'center', padding: '12px 16px', color: '#D97757', fontWeight: 700, fontSize: 13, background: 'rgba(217,119,87,0.06)', borderRadius: '8px 8px 0 0' }}>Detekia</th>
+                    <th style={{ textAlign: 'center', padding: '12px 16px', color: '#6B6762', fontWeight: 500, fontSize: 12 }}>Peec.ai</th>
+                    <th style={{ textAlign: 'center', padding: '12px 16px', color: '#6B6762', fontWeight: 500, fontSize: 12 }}>Profound</th>
+                    <th style={{ textAlign: 'center', padding: '12px 16px', color: '#6B6762', fontWeight: 500, fontSize: 12 }}>ACERANK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { label: locale === 'en' ? 'Entry price' : 'Tarif d\'entrée', d: locale === 'en' ? '€29 one-shot' : '29 € one-shot', p: '75 €/mois', pr: '99 $/mois', a: '99 $/mois' },
+                    { label: locale === 'en' ? 'Technical code audit' : 'Audit technique du code', d: locale === 'en' ? '✅ 8 criteria' : '✅ 8 critères', p: '⚠️', pr: '⚠️', a: '⚠️' },
+                    { label: locale === 'en' ? 'Multi-LLM test' : 'Test multi-LLM', d: locale === 'en' ? '✅ 4 AI' : '✅ 4 IA', p: '✅', pr: '✅', a: '✅' },
+                    { label: locale === 'en' ? 'No subscription' : 'Sans abonnement', d: '✅', p: '❌', pr: '❌', a: '❌' },
+                    { label: 'Made in France', d: '✅', p: '❌', pr: '❌', a: '❌' },
+                    { label: locale === 'en' ? 'Open methodology' : 'Méthodologie ouverte', d: '✅', p: '❌', pr: '❌', a: '❌' },
+                    { label: locale === 'en' ? 'PDF + web report' : 'Rapport PDF + web', d: locale === 'en' ? '✅ Permanent' : '✅ Permanent', p: '⚠️ Dashboard', pr: '⚠️ Dashboard', a: '⚠️ Dashboard' },
+                  ].map((row, i) => (
+                    <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
+                      <td style={{ padding: '10px 16px', color: '#3A3835', fontWeight: 500, fontSize: 12 }}>{row.label}</td>
+                      <td style={{ padding: '10px 16px', textAlign: 'center', fontWeight: 700, color: '#1A1916', background: 'rgba(217,119,87,0.04)' }}>{row.d}</td>
+                      <td style={{ padding: '10px 16px', textAlign: 'center', color: '#6B6762' }}>{row.p}</td>
+                      <td style={{ padding: '10px 16px', textAlign: 'center', color: '#6B6762' }}>{row.pr}</td>
+                      <td style={{ padding: '10px 16px', textAlign: 'center', color: '#6B6762' }}>{row.a}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p style={{ fontSize: 10, color: '#B0ABA5', fontFamily: 'system-ui', marginTop: 16, textAlign: 'center' }}>
+              {locale === 'en' ? 'Competitor pricing publicly observed in May 2026. Sources available on request.' : 'Tarifs concurrents constatés publiquement en mai 2026. Sources disponibles sur demande.'}
+            </p>
+            <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', marginTop: 20, textAlign: 'center', lineHeight: 1.6, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
+              {locale === 'en'
+                ? 'Detekia is not another SaaS dashboard. It\'s a complete diagnosis, delivered once, that belongs to you.'
+                : 'Detekia n\'est pas un dashboard SaaS de plus. C\'est un diagnostic complet, livré une fois, qui vous appartient.'}
+            </p>
+          </RevealSection>
         </div>
       </section>
 
@@ -726,6 +789,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ══ COMMENT ÇA MARCHE (4 étapes) ══ */}
+      <section style={{ background: '#fff', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <RevealSection>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 48, lineHeight: 1.1 }}>
+              {locale === 'en' ? 'How it works' : 'Comment ça marche'}
+            </h2>
+          </RevealSection>
+          <div className="hp-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+            {[
+              { num: '01', title: locale === 'en' ? 'Paste your URL' : 'Collez votre URL', desc: locale === 'en' ? 'No signup. No credit card. You paste, we analyze.' : 'Aucune inscription. Aucune carte bancaire. Vous collez, on analyse.' },
+              { num: '02', title: locale === 'en' ? 'We inspect your source code' : 'On inspecte votre code source', desc: locale === 'en' ? '8 criteria analyzed: crawlability, structured data, authority, extractability... Plus a real ChatGPT citation test.' : '8 critères passés au crible : crawlabilité, données structurées, autorité, extractabilité… Plus un test de citation ChatGPT réel.' },
+              { num: '03', title: locale === 'en' ? 'You get your diagnosis' : 'Vous recevez votre diagnostic', desc: locale === 'en' ? 'Score /100, critical blockers identified, prioritized recommendations with code examples.' : 'Score /100, blocages critiques identifiés, recommandations priorisées avec exemples de code.' },
+              { num: '04', title: locale === 'en' ? 'Track your AI presence' : 'Suivez votre présence IA', desc: locale === 'en' ? 'Implement fixes, re-audit, and monitor what AI engines say about your brand over time.' : 'Implémentez les corrections, ré-auditez, et suivez ce que les IA disent de votre marque dans le temps.' },
+            ].map((step, i) => (
+              <RevealSection key={i} delay={i * 0.1}>
+                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 12, padding: 22 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 28, color: '#D97757', marginBottom: 12, letterSpacing: -1, fontWeight: 700 }}>{step.num}</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#1A1916', marginBottom: 6, fontFamily: 'system-ui' }}>{step.title}</div>
+                  <div style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
+                </div>
+              </RevealSection>
+            ))}
+          </div>
+          <RevealSection delay={0.5}>
+            <div style={{ textAlign: 'center', marginTop: 28 }}>
+              <Link href="/methodologie" style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
+                {locale === 'en' ? 'How we calculate your score (open methodology) →' : 'Comment on calcule votre score (méthodologie ouverte) →'}
+              </Link>
+            </div>
+          </RevealSection>
+        </div>
+      </section>
+
       {/* ══ UN RAPPORT QUI VAUT LE DÉTOUR ══ */}
       <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
@@ -784,40 +881,6 @@ export default function Home() {
                   {locale === 'en' ? 'See a sample report →' : 'Voir un exemple de rapport →'}
                 </a>
               </div>
-            </div>
-          </RevealSection>
-        </div>
-      </section>
-
-      {/* ══ COMMENT ÇA MARCHE (4 étapes) ══ */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <RevealSection>
-            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 48, lineHeight: 1.1 }}>
-              {locale === 'en' ? 'How it works' : 'Comment ça marche'}
-            </h2>
-          </RevealSection>
-          <div className="hp-steps" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-            {[
-              { num: '01', title: locale === 'en' ? 'Paste your URL' : 'Collez votre URL', desc: locale === 'en' ? 'No signup. No credit card. You paste, we analyze.' : 'Aucune inscription. Aucune carte bancaire. Vous collez, on analyse.' },
-              { num: '02', title: locale === 'en' ? 'We inspect your source code' : 'On inspecte votre code source', desc: locale === 'en' ? '8 criteria analyzed: crawlability, structured data, authority, extractability... Plus a real ChatGPT citation test.' : '8 critères passés au crible : crawlabilité, données structurées, autorité, extractabilité… Plus un test de citation ChatGPT réel.' },
-              { num: '03', title: locale === 'en' ? 'You get your diagnosis' : 'Vous recevez votre diagnostic', desc: locale === 'en' ? 'Score /100, critical blockers identified, prioritized recommendations with code examples.' : 'Score /100, blocages critiques identifiés, recommandations priorisées avec exemples de code.' },
-              { num: '04', title: locale === 'en' ? 'Track your AI presence' : 'Suivez votre présence IA', desc: locale === 'en' ? 'Implement fixes, re-audit, and monitor what AI engines say about your brand over time.' : 'Implémentez les corrections, ré-auditez, et suivez ce que les IA disent de votre marque dans le temps.' },
-            ].map((step, i) => (
-              <RevealSection key={i} delay={i * 0.1}>
-                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 12, padding: 22 }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 28, color: '#D97757', marginBottom: 12, letterSpacing: -1, fontWeight: 700 }}>{step.num}</div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#1A1916', marginBottom: 6, fontFamily: 'system-ui' }}>{step.title}</div>
-                  <div style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.6, fontFamily: 'system-ui' }}>{step.desc}</div>
-                </div>
-              </RevealSection>
-            ))}
-          </div>
-          <RevealSection delay={0.5}>
-            <div style={{ textAlign: 'center', marginTop: 28 }}>
-              <Link href="/methodologie" style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 2 }}>
-                {locale === 'en' ? 'How we calculate your score (open methodology) →' : 'Comment on calcule votre score (méthodologie ouverte) →'}
-              </Link>
             </div>
           </RevealSection>
         </div>
@@ -933,69 +996,6 @@ export default function Home() {
               </div>
             </RevealSection>
           </div>
-        </div>
-      </section>
-
-      {/* ══ COMPARATIF CONCURRENTS ══ */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <RevealSection>
-            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'POSITIONING' : 'POSITIONNEMENT'}
-            </div>
-            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-              {locale === 'en' ? 'Detekia vs GEO tools on the market' : 'Detekia vs les outils GEO du marché'}
-            </h2>
-            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 680, margin: '0 auto 48px' }}>
-              {locale === 'en'
-                ? 'GEO tools are mostly Anglo-Saxon, subscription-based, and cost between €75 and €100/month. Detekia is French, one-time payment, and 30x cheaper annually on the entry tier.'
-                : 'Les outils de visibilité IA sont majoritairement anglo-saxons, sur abonnement, et coûtent entre 75 € et 100 €/mois. Detekia est français, à paiement unique, et 30x moins cher en coût annuel sur l\'entrée de gamme.'}
-            </p>
-          </RevealSection>
-
-          <RevealSection delay={0.1}>
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'system-ui', fontSize: 13 }}>
-                <thead>
-                  <tr style={{ borderBottom: '2px solid #E5E2DC' }}>
-                    <th style={{ textAlign: 'left', padding: '12px 16px', color: '#6B6762', fontWeight: 500, fontSize: 12 }}>{locale === 'en' ? 'Criteria' : 'Critère'}</th>
-                    <th style={{ textAlign: 'center', padding: '12px 16px', color: '#D97757', fontWeight: 700, fontSize: 13, background: 'rgba(217,119,87,0.06)', borderRadius: '8px 8px 0 0' }}>Detekia</th>
-                    <th style={{ textAlign: 'center', padding: '12px 16px', color: '#6B6762', fontWeight: 500, fontSize: 12 }}>Peec.ai</th>
-                    <th style={{ textAlign: 'center', padding: '12px 16px', color: '#6B6762', fontWeight: 500, fontSize: 12 }}>Profound</th>
-                    <th style={{ textAlign: 'center', padding: '12px 16px', color: '#6B6762', fontWeight: 500, fontSize: 12 }}>ACERANK</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { label: locale === 'en' ? 'Entry price' : 'Tarif d\'entrée', d: locale === 'en' ? '€29 one-shot' : '29 € one-shot', p: '75 €/mois', pr: '99 $/mois', a: '99 $/mois' },
-                    { label: locale === 'en' ? 'Technical code audit' : 'Audit technique du code', d: locale === 'en' ? '✅ 8 criteria' : '✅ 8 critères', p: '⚠️', pr: '⚠️', a: '⚠️' },
-                    { label: locale === 'en' ? 'Multi-LLM test' : 'Test multi-LLM', d: locale === 'en' ? '✅ 4 AI' : '✅ 4 IA', p: '✅', pr: '✅', a: '✅' },
-                    { label: locale === 'en' ? 'No subscription' : 'Sans abonnement', d: '✅', p: '❌', pr: '❌', a: '❌' },
-                    { label: 'Made in France', d: '✅', p: '❌', pr: '❌', a: '❌' },
-                    { label: locale === 'en' ? 'Open methodology' : 'Méthodologie ouverte', d: '✅', p: '❌', pr: '❌', a: '❌' },
-                    { label: locale === 'en' ? 'PDF + web report' : 'Rapport PDF + web', d: locale === 'en' ? '✅ Permanent' : '✅ Permanent', p: '⚠️ Dashboard', pr: '⚠️ Dashboard', a: '⚠️ Dashboard' },
-                  ].map((row, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid #F0EDE8' }}>
-                      <td style={{ padding: '10px 16px', color: '#3A3835', fontWeight: 500, fontSize: 12 }}>{row.label}</td>
-                      <td style={{ padding: '10px 16px', textAlign: 'center', fontWeight: 700, color: '#1A1916', background: 'rgba(217,119,87,0.04)' }}>{row.d}</td>
-                      <td style={{ padding: '10px 16px', textAlign: 'center', color: '#6B6762' }}>{row.p}</td>
-                      <td style={{ padding: '10px 16px', textAlign: 'center', color: '#6B6762' }}>{row.pr}</td>
-                      <td style={{ padding: '10px 16px', textAlign: 'center', color: '#6B6762' }}>{row.a}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <p style={{ fontSize: 10, color: '#B0ABA5', fontFamily: 'system-ui', marginTop: 16, textAlign: 'center' }}>
-              {locale === 'en' ? 'Competitor pricing publicly observed in May 2026. Sources available on request.' : 'Tarifs concurrents constatés publiquement en mai 2026. Sources disponibles sur demande.'}
-            </p>
-            <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', marginTop: 20, textAlign: 'center', lineHeight: 1.6, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
-              {locale === 'en'
-                ? 'Detekia is not another SaaS dashboard. It\'s a complete diagnosis, delivered once, that belongs to you.'
-                : 'Detekia n\'est pas un dashboard SaaS de plus. C\'est un diagnostic complet, livré une fois, qui vous appartient.'}
-            </p>
-          </RevealSection>
         </div>
       </section>
 
