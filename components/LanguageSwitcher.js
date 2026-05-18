@@ -35,7 +35,7 @@ export default function LanguageSwitcher() {
             borderColor: locale === l ? '#D5D0CA' : '#E5E2DC',
           }}
         >
-          {l.toUpperCase()}
+          {l === 'fr' ? '🇫🇷' : '🇬🇧'}
         </button>
       ))}
     </div>
