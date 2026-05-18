@@ -94,6 +94,77 @@ function CriteriaCard({ icon, color, name, desc, checks, tag, tagColor }) {
   );
 }
 
+/* ─── Hero product mockup ────────────────────────────────── */
+function ProductMockup() {
+  const { t } = useTranslation();
+  return (
+    <div className="audit-mockup" style={{ background: '#fff', borderRadius: 22, boxShadow: '0 8px 32px rgba(0,0,0,0.12), 0 32px 80px rgba(26,25,22,0.18), 0 4px 16px rgba(26,25,22,0.06)', overflow: 'hidden', maxWidth: 390, width: '100%', border: '1px solid rgba(26,25,22,0.06)' }}>
+
+      {/* macOS-style mini header — hidden on mobile */}
+      <div className="audit-mockup-chrome" style={{ background: '#F0EDE8', borderBottom: '1px solid #E5E2DC', padding: '8px 18px', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 5 }}>
+          {['#F87171','#FBBF24','#34D399'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
+        </div>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 0.5, marginLeft: 6 }}>{t('homepage.mockup.headerLabel')}</div>
+      </div>
+
+      {/* EXEMPLE badge — mobile only */}
+      <div className="audit-mockup-label">{t('homepage.hero.mockupLabel')}</div>
+
+      {/* Score block */}
+      <div style={{ background: '#1A1916', padding: '36px 32px 28px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '40%', left: 24, transform: 'translateY(-50%)', width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.18) 0%, transparent 70%)' }} />
+        <div style={{ position: 'absolute', top: -50, right: -50, width: 180, height: 180, borderRadius: '50%', background: '#D97757', opacity: 0.05 }} />
+
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, marginBottom: 18, textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 6, border: '1px solid rgba(255,255,255,0.06)', padding: '3px 10px', borderRadius: 4 }}>
+          <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#D97757' }} /> {t('homepage.mockup.scoreBadge')}
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 18, position: 'relative' }}>
+          <div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 96, color: '#F7F5F2', lineHeight: 1, letterSpacing: -4 }}>{t('homepage.mockup.score')}</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.25)', letterSpacing: 1 }}>{t('homepage.mockup.scoreMax')}</div>
+          </div>
+          <div style={{ paddingBottom: 16 }}>
+            <div style={{ display: 'inline-block', background: '#D97757', borderRadius: 20, padding: '4px 13px', fontFamily: 'monospace', fontSize: 9, color: '#fff', letterSpacing: 2, marginBottom: 10, fontWeight: 700 }}>{t('homepage.mockup.level')}</div>
+            <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6 }} dangerouslySetInnerHTML={{ __html: t('homepage.mockup.levelDesc') }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Critique */}
+      <div style={{ padding: '20px 26px 8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 10 }}>
+          <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: 1, padding: '3px 9px', borderRadius: 4, background: 'rgba(217,119,87,0.12)', color: '#D97757', fontWeight: 700 }}>{t('homepage.mockup.criticalTag')}</span>
+        </div>
+        <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', lineHeight: 1.3, marginBottom: 8 }}>
+          {t('homepage.mockup.criticalTitle')}
+        </div>
+        <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6 }}>
+          {t('homepage.mockup.criticalDesc')}
+        </div>
+      </div>
+
+      {/* Action verte */}
+      <div style={{ margin: '14px 26px 0', padding: '12px 14px', background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.25)', borderRadius: 10 }}>
+        <div style={{ fontSize: 11, color: '#0E8A6B', fontFamily: 'system-ui', lineHeight: 1.55 }} dangerouslySetInnerHTML={{ __html: t('homepage.mockup.fixText') }} />
+      </div>
+
+      {/* Impact doré */}
+      <div style={{ margin: '10px 26px 18px', padding: '10px 14px', background: 'rgba(201,134,26,0.10)', border: '1px solid rgba(201,134,26,0.28)', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span style={{ fontSize: 14 }}>↑</span>
+        <span style={{ fontSize: 11, color: '#A06A14', fontFamily: 'system-ui', fontWeight: 600 }}>{t('homepage.mockup.impactPoints')}</span>
+      </div>
+
+      {/* Footer CTA */}
+      <div style={{ padding: '13px 26px 15px', background: 'rgba(217,119,87,0.05)', borderTop: '1px solid #EDEBE6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: '#1A1916', fontFamily: 'system-ui' }}>{t('homepage.mockup.lockedCount')}</div>
+        <div style={{ fontSize: 11, fontWeight: 600, color: '#D97757', fontFamily: 'system-ui', background: 'rgba(217,119,87,0.12)', padding: '6px 14px', borderRadius: 20 }}>{t('homepage.mockup.unlock')}</div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Main page ──────────────────────────────────────────── */
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -279,32 +350,37 @@ export default function Home() {
       <main>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="hero-section" style={{ background: '#F7F5F2', padding: '48px 48px 56px' }}>
-        <div className="hero-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '55% 45%', gap: 48, alignItems: 'center' }}>
+      <section className="hero-section" style={{ background: '#F7F5F2', padding: '20px 48px 32px' }}>
+        <div className="hero-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
           <div>
-            <h1 style={{ fontSize: 'clamp(40px, 5vw, 64px)', lineHeight: 1.05, letterSpacing: -2.5, marginBottom: 14, color: '#1A1916', maxWidth: 540 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.12)', border: '1.5px solid rgba(16,163,127,0.35)', borderRadius: 20, padding: '8px 18px', marginBottom: 10 }}>
+              <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
+              <span style={{ fontSize: 13, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 600 }}>{t('homepage.hero.badge')}</span>
+            </div>
+
+            <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 10, color: '#1A1916', maxWidth: 540 }}>
               {t('homepage.hero.titleLine1')}<br className="mobile-break" /> <span id="ai-engine-name">ChatGPT.</span><span id="ai-cursor" style={{ color: '#D97757' }}>|</span><br /><span style={{ color: '#D97757' }}>{t('homepage.hero.titleLine2')}</span>
             </h1>
 
-            <p style={{ fontSize: 18, color: '#6B6762', maxWidth: 500, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 20 }}>
+            <p style={{ fontSize: 18, color: '#6B6762', maxWidth: 480, lineHeight: 1.55, fontFamily: 'system-ui', marginBottom: 16 }}>
               {t('homepage.hero.subtitle')}
             </p>
 
             {/* ── URL input principal ──────────────────────────── */}
-            <div style={{ maxWidth: 560, width: '100%' }}>
-              <div className="hero-input-wrap" style={{ display: 'flex', background: '#fff', border: '1.5px solid #E5E2DC', borderRadius: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.06)', overflow: 'hidden' }}>
+            <div style={{ maxWidth: 600, width: '100%' }}>
+              <div className="hero-input-wrap" style={{ display: 'flex', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
                 <input
                   value={url}
                   onChange={e => setUrl(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && analyze()}
                   aria-label="URL du site à analyser"
                   placeholder={t('homepage.hero.inputPlaceholder')}
-                  style={{ flex: 1, border: 'none', outline: 'none', padding: '15px 20px', fontSize: 16, fontFamily: 'system-ui', color: '#1A1916', background: 'transparent', minWidth: 0 }}
+                  style={{ flex: 1, border: 'none', outline: 'none', padding: '13px 20px', fontSize: 16, fontFamily: 'system-ui', color: '#1A1916', background: 'transparent', minWidth: 0 }}
                 />
                 <button
                   onClick={analyze}
                   className="btn-interactive"
-                  style={{ background: '#D97757', color: '#fff', border: 'none', padding: '15px 36px', borderRadius: '0 12px 12px 0', fontWeight: 700, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                  style={{ background: '#D97757', color: '#fff', border: 'none', padding: '13px 32px', borderRadius: '0 10px 10px 0', fontWeight: 600, fontSize: 15, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', flexShrink: 0 }}>
                   {t('homepage.hero.cta')}
                 </button>
               </div>
@@ -313,118 +389,14 @@ export default function Home() {
                   {t('homepage.hero.easterEgg')}
                 </div>
               )}
-            </div>
-
-            {/* ── STAMP gratuit + sans inscription ── */}
-            <div className="hero-stamp" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 10,
-              marginTop: 16,
-              padding: '10px 22px 10px 14px',
-              background: 'rgba(16,163,127,0.06)',
-              border: '1.5px dashed #10A37F',
-              borderRadius: 12,
-              transform: 'rotate(-1.5deg)',
-            }}>
-              <div style={{ width: 34, height: 34, borderRadius: 9, background: '#10A37F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6.5 11.5L2.5 7.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-              <div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 800, color: '#10A37F', letterSpacing: 0.5, lineHeight: 1.1 }}>
-                  {locale === 'en' ? 'FREE scoring' : 'Scoring GRATUIT'}
-                </div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', marginTop: 2 }}>
-                  <strong>{locale === 'en' ? 'No signup and in less than 60 seconds' : 'Sans inscription et en moins de 60 secondes'}</strong>
-                </div>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 1, marginTop: 8 }}>
+                {t('homepage.hero.trustBadge')}
               </div>
             </div>
           </div>
 
-          {/* ── Hero visual — Score + mini rapport ── */}
-          <div className="hero-visual" style={{ position: 'relative', perspective: 1200 }}>
-            <div style={{ position: 'absolute', width: '130%', height: '130%', top: '-15%', left: '-15%', background: 'radial-gradient(ellipse at 55% 45%, rgba(217,119,87,0.12) 0%, rgba(16,163,127,0.06) 35%, transparent 65%)', pointerEvents: 'none', filter: 'blur(50px)' }} />
-
-            <div className="hero-card" style={{ width: '100%', maxWidth: 420, position: 'relative', borderRadius: 20, overflow: 'hidden', boxShadow: '0 40px 120px rgba(26,25,22,0.2), 0 12px 40px rgba(0,0,0,0.08)', border: '1px solid rgba(26,25,22,0.06)', transform: 'rotateY(-2deg) rotateX(1deg)' }}>
-
-              {/* Score header — dark, impactant */}
-              <div style={{ background: '#1A1916', padding: '28px 28px 24px', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: -50, right: -50, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.12) 0%, transparent 60%)' }} />
-                <div style={{ position: 'absolute', bottom: -30, left: -30, width: 100, height: 100, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.08) 0%, transparent 60%)' }} />
-
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <Logo />
-                    <span style={{ fontFamily: 'system-ui', fontSize: 11, fontWeight: 600, color: 'rgba(247,245,242,0.4)', letterSpacing: 0.5 }}>AUDIT GEO</span>
-                  </div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.2)', letterSpacing: 1 }}>example.com</div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12 }}>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 0.85, letterSpacing: -4 }}>58</div>
-                  <div style={{ paddingBottom: 6 }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#F7F5F2' }}>/100</div>
-                    <div style={{ display: 'inline-block', background: 'rgba(217,119,87,0.18)', border: '1px solid rgba(217,119,87,0.3)', borderRadius: 12, padding: '2px 10px', fontFamily: 'monospace', fontSize: 8, color: '#D97757', letterSpacing: 1, fontWeight: 700, marginTop: 4 }}>
-                      {locale === 'en' ? 'NEEDS WORK' : 'À AMÉLIORER'}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* 8 critères — ordre d'importance (poids décroissant) */}
-              <div style={{ background: '#F7F5F2', padding: '14px 28px 10px' }}>
-                {[
-                  { name: locale === 'en' ? 'Extractability' : 'Extractibilité', pct: 45, color: '#D97757' },
-                  { name: locale === 'en' ? 'Verifiability' : 'Vérifiabilité', pct: 55, color: '#C9861A' },
-                  { name: locale === 'en' ? 'Authority E-E-A-T' : 'Autorité E-E-A-T', pct: 60, color: '#C9861A' },
-                  { name: locale === 'en' ? 'AI Crawlability' : 'Crawlabilité IA', pct: 82, color: '#10A37F' },
-                  { name: locale === 'en' ? 'Structured Data' : 'Données structurées', pct: 35, color: '#D97757' },
-                  { name: locale === 'en' ? 'Neutrality' : 'Neutralité éditoriale', pct: 70, color: '#C9861A' },
-                  { name: locale === 'en' ? 'External Presence' : 'Présence externe', pct: 40, color: '#D97757' },
-                  { name: locale === 'en' ? 'Freshness' : 'Fraîcheur', pct: 65, color: '#C9861A' },
-                ].map((c, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 9, color: '#6B6762', width: 115, flexShrink: 0 }}>{c.name}</div>
-                    <div style={{ flex: 1, height: 4, background: '#E5E2DC', borderRadius: 2, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${c.pct}%`, background: c.color, borderRadius: 2 }} />
-                    </div>
-                    <div style={{ fontFamily: 'monospace', fontSize: 8, color: c.color, fontWeight: 700, width: 26, textAlign: 'right' }}>{c.pct}%</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* 3 recos — accessibles grand public */}
-              <div style={{ background: '#F7F5F2', padding: '0 28px 14px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {[
-                  { n: '1', level: 'CRITIQUE', color: '#D97757', title: locale === 'en' ? 'Answer questions in your first sentences' : 'Répondre aux questions dès les premières phrases' },
-                  { n: '2', level: 'IMPORTANT', color: '#C9861A', title: locale === 'en' ? 'Add author bio and credentials' : 'Ajouter une bio auteur avec vos expertises' },
-                  { n: '3', level: 'IMPORTANT', color: '#C9861A', title: locale === 'en' ? 'Include verifiable data and sources' : 'Inclure des chiffres vérifiables et sourcés' },
-                ].map((r, i) => (
-                  <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 8, padding: '8px 12px', borderLeft: `3px solid ${r.color}` }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                      <span style={{ background: r.color, color: '#fff', fontFamily: 'monospace', fontSize: 7, fontWeight: 700, width: 14, height: 14, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{r.n}</span>
-                      <span style={{ fontFamily: 'monospace', fontSize: 6, color: r.color, background: `${r.color}18`, padding: '1px 4px', borderRadius: 2, fontWeight: 700 }}>{r.level}</span>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 9, color: '#1A1916', fontWeight: 600 }}>{r.title}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Footer — ChatGPT test teaser */}
-              <div style={{ background: '#1A1916', padding: '12px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <div style={{ display: 'flex', gap: 2 }}>
-                    {[1,1,0,0,0,0,0,0,0,0].map((v, i) => (
-                      <div key={i} style={{ width: 3, height: 12, borderRadius: 1.5, background: v ? '#10A37F' : 'rgba(247,245,242,0.06)' }} />
-                    ))}
-                  </div>
-                  <span style={{ fontFamily: 'system-ui', fontSize: 9, color: 'rgba(247,245,242,0.35)' }}>
-                    {locale === 'en' ? '2/10 queries cite you' : '2/10 requêtes vous citent'}
-                  </span>
-                </div>
-                <span style={{ fontFamily: 'system-ui', fontSize: 8, color: '#D97757', fontWeight: 600 }}>
-                  {locale === 'en' ? 'Bonus: visibility test' : 'Bonus : test de visibilité'}
-                </span>
-              </div>
-            </div>
+          <div className="hero-mockup" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <ProductMockup />
           </div>
         </div>
       </section>
