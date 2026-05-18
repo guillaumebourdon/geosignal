@@ -333,7 +333,7 @@ export default function Home() {
                   {locale === 'en' ? '100% FREE' : '100% GRATUIT'}
                 </div>
                 <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', marginTop: 2 }}>
-                  {locale === 'en' ? 'No signup · 60 seconds' : 'Sans inscription · 60 secondes'}
+                  {locale === 'en' ? 'No signup · Less than 60 seconds' : 'Sans inscription · - de 60 secondes'}
                 </div>
               </div>
             </div>
@@ -359,11 +359,11 @@ export default function Home() {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12 }}>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 0.85, letterSpacing: -4 }}>73</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 0.85, letterSpacing: -4 }}>58</div>
                   <div style={{ paddingBottom: 6 }}>
                     <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.2)' }}>/100</div>
-                    <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.18)', border: '1px solid rgba(201,134,26,0.3)', borderRadius: 12, padding: '2px 10px', fontFamily: 'monospace', fontSize: 8, color: '#C9861A', letterSpacing: 1, fontWeight: 700, marginTop: 4 }}>
-                      {locale === 'en' ? 'AVERAGE' : 'MOYEN'}
+                    <div style={{ display: 'inline-block', background: 'rgba(217,119,87,0.18)', border: '1px solid rgba(217,119,87,0.3)', borderRadius: 12, padding: '2px 10px', fontFamily: 'monospace', fontSize: 8, color: '#D97757', letterSpacing: 1, fontWeight: 700, marginTop: 4 }}>
+                      {locale === 'en' ? 'NEEDS WORK' : 'À AMÉLIORER'}
                     </div>
                   </div>
                 </div>
@@ -372,11 +372,11 @@ export default function Home() {
               {/* Critères + barres */}
               <div style={{ background: '#F7F5F2', padding: '18px 28px 14px' }}>
                 {[
-                  { name: locale === 'en' ? 'Extractability' : 'Extractibilité', pct: 72, color: '#C9861A' },
-                  { name: 'E-E-A-T', pct: 80, color: '#10A37F' },
-                  { name: locale === 'en' ? 'Structured Data' : 'Données structurées', pct: 80, color: '#10A37F' },
-                  { name: locale === 'en' ? 'AI Crawlability' : 'Crawlabilité IA', pct: 87, color: '#10A37F' },
-                  { name: locale === 'en' ? 'Neutrality' : 'Neutralité', pct: 30, color: '#D97757' },
+                  { name: locale === 'en' ? 'Extractability' : 'Extractibilité', pct: 45, color: '#D97757' },
+                  { name: 'E-E-A-T', pct: 60, color: '#C9861A' },
+                  { name: locale === 'en' ? 'Structured Data' : 'Données structurées', pct: 35, color: '#D97757' },
+                  { name: locale === 'en' ? 'AI Crawlability' : 'Crawlabilité IA', pct: 82, color: '#10A37F' },
+                  { name: locale === 'en' ? 'Neutrality' : 'Neutralité', pct: 70, color: '#C9861A' },
                 ].map((c, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 7 }}>
                     <div style={{ fontFamily: 'system-ui', fontSize: 10, color: '#6B6762', width: 95, flexShrink: 0 }}>{c.name}</div>
@@ -388,17 +388,21 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Reco critique */}
-              <div style={{ background: '#F7F5F2', padding: '0 28px 14px' }}>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '10px 14px', borderLeft: '3px solid #D97757' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <span style={{ background: '#D97757', color: '#fff', fontFamily: 'monospace', fontSize: 8, fontWeight: 700, width: 16, height: 16, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>1</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 7, color: '#D97757', background: 'rgba(217,119,87,0.1)', padding: '1px 5px', borderRadius: 3, fontWeight: 700 }}>CRITIQUE</span>
-                    <span style={{ fontFamily: 'system-ui', fontSize: 10, color: '#1A1916', fontWeight: 600 }}>
-                      {locale === 'en' ? 'Add FAQ Schema' : 'Ajouter Schema FAQ'}
-                    </span>
+              {/* 3 recos — accessibles grand public */}
+              <div style={{ background: '#F7F5F2', padding: '0 28px 14px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {[
+                  { n: '1', level: 'CRITIQUE', color: '#D97757', title: locale === 'en' ? 'Answer questions in your first sentences' : 'Répondre aux questions dès les premières phrases' },
+                  { n: '2', level: 'IMPORTANT', color: '#C9861A', title: locale === 'en' ? 'Add author bio and credentials' : 'Ajouter une bio auteur avec vos expertises' },
+                  { n: '3', level: 'IMPORTANT', color: '#C9861A', title: locale === 'en' ? 'Include verifiable data and sources' : 'Inclure des chiffres vérifiables et sourcés' },
+                ].map((r, i) => (
+                  <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 8, padding: '8px 12px', borderLeft: `3px solid ${r.color}` }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                      <span style={{ background: r.color, color: '#fff', fontFamily: 'monospace', fontSize: 7, fontWeight: 700, width: 14, height: 14, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{r.n}</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: 6, color: r.color, background: `${r.color}18`, padding: '1px 4px', borderRadius: 2, fontWeight: 700 }}>{r.level}</span>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 9, color: '#1A1916', fontWeight: 600 }}>{r.title}</span>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
 
               {/* Footer — ChatGPT test teaser */}
