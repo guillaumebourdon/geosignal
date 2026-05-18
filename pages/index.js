@@ -282,11 +282,6 @@ export default function Home() {
       <section className="hero-section" style={{ background: '#F7F5F2', padding: '20px 48px 32px' }}>
         <div className="hero-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '60% 40%', gap: 64, alignItems: 'center' }}>
           <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,163,127,0.12)', border: '1.5px solid rgba(16,163,127,0.35)', borderRadius: 20, padding: '8px 18px', marginBottom: 10 }}>
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10A37F' }} />
-              <span style={{ fontSize: 13, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 600 }}>{t('homepage.hero.badge')}</span>
-            </div>
-
             <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 10, color: '#1A1916', maxWidth: 540 }}>
               {t('homepage.hero.titleLine1')}<br className="mobile-break" /> <span id="ai-engine-name">ChatGPT.</span><span id="ai-cursor" style={{ color: '#D97757' }}>|</span><br /><span style={{ color: '#D97757' }}>{t('homepage.hero.titleLine2')}</span>
             </h1>
@@ -318,27 +313,8 @@ export default function Home() {
                   {t('homepage.hero.easterEgg')}
                 </div>
               )}
-              {/* Badge 100% gratuit */}
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 10, background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.25)', borderRadius: 8, padding: '6px 14px' }}>
-                <span style={{ color: '#10A37F', fontSize: 13 }}>&#x2714;</span>
-                <span style={{ fontFamily: 'system-ui', fontSize: 13, color: '#10A37F', fontWeight: 600 }}>
-                  {locale === 'en' ? '100% free — no signup required' : '100% gratuit — sans inscription'}
-                </span>
-              </div>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 6 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 8 }}>
                 {t('homepage.hero.trustBadge')}
-              </div>
-
-              {/* Liens secondaires pour les autres profils */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 14 }}>
-                <Link href="/presence-ia" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ color: '#D97757' }}>→</span>
-                  {locale === 'en' ? 'Monitor what AI engines say about your brand' : 'Surveiller ce que les IA disent de votre marque'}
-                </Link>
-                <Link href="/contact" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ color: '#D97757' }}>→</span>
-                  {locale === 'en' ? 'Need hands-on GEO consulting?' : 'Besoin d\'un accompagnement GEO sur mesure ?'}
-                </Link>
               </div>
             </div>
           </div>
@@ -391,13 +367,51 @@ export default function Home() {
                 ))}
               </div>
 
+              {/* Recommandation critique — aperçu qui donne envie */}
+              <div style={{ background: '#F7F5F2', padding: '0 24px 12px' }}>
+                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 8, padding: '10px 14px', borderLeft: '3px solid #D97757' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                    <span style={{ background: '#D97757', color: '#fff', fontFamily: 'monospace', fontSize: 8, fontWeight: 700, width: 16, height: 16, borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>1</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 7, color: '#D97757', background: 'rgba(217,119,87,0.1)', padding: '1px 5px', borderRadius: 3, fontWeight: 700 }}>CRITIQUE</span>
+                    <span style={{ fontFamily: 'system-ui', fontSize: 10, color: '#1A1916', fontWeight: 600 }}>
+                      {locale === 'en' ? 'Add FAQ Schema' : 'Ajouter Schema FAQ'}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: 10, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.4 }}>
+                    {locale === 'en' ? 'Missing FAQPage JSON-LD — AI engines can\'t extract your Q&A content.' : 'JSON-LD FAQPage manquant — les IA ne peuvent pas extraire vos Q&R.'}
+                  </div>
+                </div>
+              </div>
+
               {/* Verdict */}
               <div style={{ background: '#F7F5F2', padding: '0 24px 16px' }}>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 8, padding: '10px 14px', fontSize: 11, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5 }}>
-                  {locale === 'en'
-                    ? 'Your site is partially ready for AI engines. 3 critical blockers identified — structured data, editorial neutrality, and external presence need attention.'
-                    : 'Votre site est partiellement prêt pour les IA. 3 blocages critiques identifiés — données structurées, neutralité éditoriale et présence externe à améliorer.'}
+                <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 8, padding: '8px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 10, color: '#6B6762', fontFamily: 'system-ui' }}>
+                    {locale === 'en' ? '3 critical blockers identified' : '3 blocages critiques identifiés'}
+                  </span>
+                  <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#10A37F', fontWeight: 700 }}>
+                    {locale === 'en' ? 'VIEW FULL REPORT →' : 'VOIR LE RAPPORT →'}
+                  </span>
                 </div>
+              </div>
+            </div>
+
+            {/* ── STAMP "GRATUIT" — tampon incliné ── */}
+            <div className="hero-stamp" style={{
+              position: 'absolute', top: 20, right: -12,
+              transform: 'rotate(12deg)',
+              background: 'transparent',
+              border: '3px solid #10A37F',
+              borderRadius: 8,
+              padding: '6px 16px',
+              boxShadow: '0 2px 12px rgba(16,163,127,0.2)',
+              zIndex: 2,
+            }}>
+              <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 900, color: '#10A37F', letterSpacing: 1.5, lineHeight: 1.1, textTransform: 'uppercase', textAlign: 'center' }}>
+                {locale === 'en' ? 'FREE' : 'GRATUIT'}
+              </div>
+              <div style={{ fontFamily: 'system-ui', fontSize: 7, color: '#10A37F', letterSpacing: 0.5, textAlign: 'center', marginTop: 1, opacity: 0.7 }}>
+                {locale === 'en' ? 'No signup' : 'Sans inscription'}
               </div>
             </div>
           </div>
