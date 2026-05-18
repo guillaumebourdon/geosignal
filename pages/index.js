@@ -330,10 +330,10 @@ export default function Home() {
               </div>
               <div>
                 <div style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 800, color: '#10A37F', letterSpacing: 0.5, lineHeight: 1.1 }}>
-                  {locale === 'en' ? '100% FREE' : '100% GRATUIT'}
+                  {locale === 'en' ? 'FREE scoring' : 'Scoring GRATUIT'}
                 </div>
                 <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', marginTop: 2 }}>
-                  {locale === 'en' ? 'No signup · Less than 60 seconds' : 'Sans inscription · - de 60 secondes'}
+                  <strong>{locale === 'en' ? 'No signup and in less than 60 seconds' : 'Sans inscription et en moins de 60 secondes'}</strong>
                 </div>
               </div>
             </div>
@@ -361,7 +361,7 @@ export default function Home() {
                 <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12 }}>
                   <div style={{ fontFamily: 'Georgia, serif', fontSize: 72, color: '#F7F5F2', lineHeight: 0.85, letterSpacing: -4 }}>58</div>
                   <div style={{ paddingBottom: 6 }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(247,245,242,0.2)' }}>/100</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 11, color: '#F7F5F2' }}>/100</div>
                     <div style={{ display: 'inline-block', background: 'rgba(217,119,87,0.18)', border: '1px solid rgba(217,119,87,0.3)', borderRadius: 12, padding: '2px 10px', fontFamily: 'monospace', fontSize: 8, color: '#D97757', letterSpacing: 1, fontWeight: 700, marginTop: 4 }}>
                       {locale === 'en' ? 'NEEDS WORK' : 'À AMÉLIORER'}
                     </div>
@@ -369,21 +369,24 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Critères + barres */}
-              <div style={{ background: '#F7F5F2', padding: '18px 28px 14px' }}>
+              {/* 8 critères — ordre d'importance (poids décroissant) */}
+              <div style={{ background: '#F7F5F2', padding: '14px 28px 10px' }}>
                 {[
                   { name: locale === 'en' ? 'Extractability' : 'Extractibilité', pct: 45, color: '#D97757' },
-                  { name: 'E-E-A-T', pct: 60, color: '#C9861A' },
-                  { name: locale === 'en' ? 'Structured Data' : 'Données structurées', pct: 35, color: '#D97757' },
+                  { name: locale === 'en' ? 'Verifiability' : 'Vérifiabilité', pct: 55, color: '#C9861A' },
+                  { name: locale === 'en' ? 'Authority E-E-A-T' : 'Autorité E-E-A-T', pct: 60, color: '#C9861A' },
                   { name: locale === 'en' ? 'AI Crawlability' : 'Crawlabilité IA', pct: 82, color: '#10A37F' },
-                  { name: locale === 'en' ? 'Neutrality' : 'Neutralité', pct: 70, color: '#C9861A' },
+                  { name: locale === 'en' ? 'Structured Data' : 'Données structurées', pct: 35, color: '#D97757' },
+                  { name: locale === 'en' ? 'Neutrality' : 'Neutralité éditoriale', pct: 70, color: '#C9861A' },
+                  { name: locale === 'en' ? 'External Presence' : 'Présence externe', pct: 40, color: '#D97757' },
+                  { name: locale === 'en' ? 'Freshness' : 'Fraîcheur', pct: 65, color: '#C9861A' },
                 ].map((c, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 7 }}>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 10, color: '#6B6762', width: 95, flexShrink: 0 }}>{c.name}</div>
-                    <div style={{ flex: 1, height: 5, background: '#E5E2DC', borderRadius: 3, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${c.pct}%`, background: c.color, borderRadius: 3 }} />
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 9, color: '#6B6762', width: 115, flexShrink: 0 }}>{c.name}</div>
+                    <div style={{ flex: 1, height: 4, background: '#E5E2DC', borderRadius: 2, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${c.pct}%`, background: c.color, borderRadius: 2 }} />
                     </div>
-                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: c.color, fontWeight: 700, width: 28, textAlign: 'right' }}>{c.pct}%</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 8, color: c.color, fontWeight: 700, width: 26, textAlign: 'right' }}>{c.pct}%</div>
                   </div>
                 ))}
               </div>
@@ -417,7 +420,9 @@ export default function Home() {
                     {locale === 'en' ? '2/10 queries cite you' : '2/10 requêtes vous citent'}
                   </span>
                 </div>
-                <span style={{ fontFamily: 'monospace', fontSize: 7, color: '#D97757', letterSpacing: 0.5 }}>TEST CHATGPT</span>
+                <span style={{ fontFamily: 'system-ui', fontSize: 8, color: '#D97757', fontWeight: 600 }}>
+                  {locale === 'en' ? 'Bonus: visibility test' : 'Bonus : test de visibilité'}
+                </span>
               </div>
             </div>
           </div>
