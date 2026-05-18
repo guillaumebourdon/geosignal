@@ -313,30 +313,27 @@ export default function Home() {
                   {t('homepage.hero.easterEgg')}
                 </div>
               )}
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 10 }}>
-                {t('homepage.hero.trustBadge')}
-              </div>
             </div>
 
-            {/* ── STAMP gratuit + sans inscription — moderne, entre texte et visuel ── */}
+            {/* ── STAMP gratuit + sans inscription ── */}
             <div className="hero-stamp" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              marginTop: 20,
-              padding: '8px 18px 8px 12px',
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              marginTop: 16,
+              padding: '10px 22px 10px 14px',
               background: 'rgba(16,163,127,0.06)',
               border: '1.5px dashed #10A37F',
-              borderRadius: 10,
+              borderRadius: 12,
               transform: 'rotate(-1.5deg)',
             }}>
-              <div style={{ width: 28, height: 28, borderRadius: 7, background: '#10A37F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6.5 11.5L2.5 7.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <div style={{ width: 34, height: 34, borderRadius: 9, background: '#10A37F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6.5 11.5L2.5 7.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
               <div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 800, color: '#10A37F', letterSpacing: 0.5, lineHeight: 1.1 }}>
+                <div style={{ fontFamily: 'system-ui', fontSize: 16, fontWeight: 800, color: '#10A37F', letterSpacing: 0.5, lineHeight: 1.1 }}>
                   {locale === 'en' ? '100% FREE' : '100% GRATUIT'}
                 </div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 10, color: '#6B6762', marginTop: 1 }}>
-                  {locale === 'en' ? 'No signup · 30 seconds' : 'Sans inscription · 30 secondes'}
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', marginTop: 2 }}>
+                  {locale === 'en' ? 'No signup · 60 seconds' : 'Sans inscription · 60 secondes'}
                 </div>
               </div>
             </div>
