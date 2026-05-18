@@ -101,7 +101,6 @@ export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showBeeleven, setShowBeeleven] = useState(false);
   const [auditCount, setAuditCount] = useState(null);
-  const [heroTab, setHeroTab] = useState(0);
   const router = useRouter();
   const { t, locale } = useTranslation();
 
@@ -109,11 +108,6 @@ export default function Home() {
     fetch('/api/stats').then(r => r.json()).then(d => setAuditCount(d.audits)).catch(() => {});
   }, []);
 
-  // Auto-switch hero tabs every 4s
-  useEffect(() => {
-    const interval = setInterval(() => setHeroTab(t => (t + 1) % 3), 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const engines = ['ChatGPT', 'Gemini', 'Claude', 'Perplexity'];
@@ -326,7 +320,7 @@ export default function Home() {
               )}
               {/* Badge 100% gratuit */}
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 10, background: 'rgba(16,163,127,0.08)', border: '1px solid rgba(16,163,127,0.25)', borderRadius: 8, padding: '6px 14px' }}>
-                <span style={{ fontSize: 14 }}>&#x2714;</span>
+                <span style={{ color: '#10A37F', fontSize: 13 }}>&#x2714;</span>
                 <span style={{ fontFamily: 'system-ui', fontSize: 13, color: '#10A37F', fontWeight: 600 }}>
                   {locale === 'en' ? '100% free — no signup required' : '100% gratuit — sans inscription'}
                 </span>
@@ -334,18 +328,27 @@ export default function Home() {
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', letterSpacing: 1, marginTop: 6 }}>
                 {t('homepage.hero.trustBadge')}
               </div>
+
+              {/* Liens secondaires pour les autres profils */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 14 }}>
+                <Link href="/presence-ia" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ color: '#D97757' }}>→</span>
+                  {locale === 'en' ? 'Monitor what AI engines say about your brand' : 'Surveiller ce que les IA disent de votre marque'}
+                </Link>
+                <Link href="/contact" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ color: '#D97757' }}>→</span>
+                  {locale === 'en' ? 'Need hands-on GEO consulting?' : 'Besoin d\'un accompagnement GEO sur mesure ?'}
+                </Link>
+              </div>
             </div>
           </div>
 
-          {/* ── Hero visual — App window mockup avec 3 écrans ── */}
+          {/* ── Hero visual — Score statique (le hook) ── */}
           <div className="hero-visual" style={{ position: 'relative', perspective: 1200 }}>
-            {/* Glow derrière la fenêtre */}
             <div style={{ position: 'absolute', width: '120%', height: '120%', top: '-10%', left: '-10%', background: 'radial-gradient(ellipse at 60% 40%, rgba(217,119,87,0.1) 0%, rgba(16,163,127,0.05) 40%, transparent 70%)', pointerEvents: 'none', filter: 'blur(40px)' }} />
 
-            {/* Browser window */}
-            <div className="hero-card" style={{ width: '100%', maxWidth: 420, position: 'relative', borderRadius: 16, overflow: 'hidden', boxShadow: '0 32px 100px rgba(26,25,22,0.25), 0 8px 32px rgba(0,0,0,0.1), 0 0 0 1px rgba(26,25,22,0.08)', transform: 'rotateY(-2deg) rotateX(1deg)' }}>
-
-              {/* ─ Browser chrome ─ */}
+            <div className="hero-card" style={{ width: '100%', maxWidth: 400, position: 'relative', borderRadius: 16, overflow: 'hidden', boxShadow: '0 32px 100px rgba(26,25,22,0.25), 0 8px 32px rgba(0,0,0,0.1), 0 0 0 1px rgba(26,25,22,0.08)', transform: 'rotateY(-2deg) rotateX(1deg)' }}>
+              {/* Browser chrome */}
               <div style={{ background: '#1A1916', padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
                 <div style={{ display: 'flex', gap: 5 }}>
                   <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#E05252' }} />
@@ -354,178 +357,48 @@ export default function Home() {
                 </div>
                 <div style={{ flex: 1, background: 'rgba(247,245,242,0.06)', borderRadius: 6, padding: '4px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
                   <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M8 1a5 5 0 00-5 5v.5a1.5 1.5 0 001 1.42V12a2 2 0 002 2h4a2 2 0 002-2V7.92A1.5 1.5 0 0013 6.5V6a5 5 0 00-5-5z" stroke="rgba(247,245,242,0.2)" strokeWidth="1.2"/></svg>
-                  <span style={{ fontFamily: 'system-ui', fontSize: 9, color: 'rgba(247,245,242,0.3)' }}>detekia.fr/r/a3f2...</span>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 9, color: 'rgba(247,245,242,0.3)' }}>detekia.fr</span>
                 </div>
               </div>
 
-              {/* ─ Product tabs (styled as app tabs, not browser tabs) ─ */}
-              <div style={{ display: 'flex', background: '#232220', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              {/* Score hero — gros impact */}
+              <div style={{ background: '#1A1916', padding: '32px 24px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: -40, right: -40, width: 140, height: 140, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.12) 0%, transparent 70%)' }} />
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.25)', letterSpacing: 3, marginBottom: 10 }}>SCORE GEO</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 80, color: '#F7F5F2', lineHeight: 1, letterSpacing: -4 }}>
+                  73<span style={{ fontSize: 24, color: 'rgba(247,245,242,0.2)', letterSpacing: 0 }}>/100</span>
+                </div>
+                <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.18)', border: '1px solid rgba(201,134,26,0.35)', borderRadius: 20, padding: '4px 14px', fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 1.5, fontWeight: 700, marginTop: 10 }}>
+                  {locale === 'en' ? 'AVERAGE' : 'MOYEN'}
+                </div>
+              </div>
+
+              {/* 4 critères — aperçu rapide */}
+              <div style={{ background: '#F7F5F2', padding: '16px 24px 12px' }}>
                 {[
-                  { label: locale === 'en' ? 'Free Score' : 'Score Gratuit', price: locale === 'en' ? 'Free' : 'Gratuit', color: '#10A37F' },
-                  { label: locale === 'en' ? 'One-Page' : 'One-Page', price: '29 €', color: '#D97757' },
-                  { label: 'Pro', price: '99 €', color: '#D97757' },
-                ].map((tab, i) => (
-                  <button key={i} onClick={() => setHeroTab(i)} style={{
-                    flex: 1, padding: '10px 6px 9px', background: 'transparent',
-                    border: 'none', borderBottom: heroTab === i ? `2.5px solid ${tab.color}` : '2.5px solid transparent',
-                    cursor: 'pointer', transition: 'all 0.3s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1,
-                  }}>
-                    <span style={{ fontFamily: 'system-ui', fontSize: 11, fontWeight: heroTab === i ? 700 : 500, color: heroTab === i ? '#F7F5F2' : 'rgba(247,245,242,0.3)', transition: 'color 0.3s' }}>{tab.label}</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 8, color: heroTab === i ? tab.color : 'rgba(247,245,242,0.15)', transition: 'color 0.3s' }}>{tab.price}</span>
-                  </button>
+                  { name: locale === 'en' ? 'Extractability' : 'Extractibilité', pct: 72, color: '#C9861A' },
+                  { name: 'E-E-A-T', pct: 80, color: '#10A37F' },
+                  { name: locale === 'en' ? 'Structured Data' : 'Données structurées', pct: 80, color: '#10A37F' },
+                  { name: locale === 'en' ? 'AI Crawlability' : 'Crawlabilité IA', pct: 87, color: '#10A37F' },
+                ].map((c, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 10, color: '#6B6762', width: 100, flexShrink: 0 }}>{c.name}</div>
+                    <div style={{ flex: 1, height: 6, background: '#E5E2DC', borderRadius: 3, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${c.pct}%`, background: c.color, borderRadius: 3, transition: 'width 1.2s cubic-bezier(0.22,1,0.36,1)' }} />
+                    </div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 10, color: c.color, fontWeight: 700, width: 28, textAlign: 'right' }}>{c.pct}%</div>
+                  </div>
                 ))}
               </div>
 
-              {/* ─ Content area ─ */}
-              <div style={{ background: '#F7F5F2', position: 'relative', minHeight: 300 }}>
-
-                {/* ═══ SCREEN 0 : Score Gratuit — Le gros score ═══ */}
-                <div className={`hero-screen ${heroTab === 0 ? 'hero-screen-active' : ''}`} style={{ opacity: heroTab === 0 ? 1 : 0, position: heroTab === 0 ? 'relative' : 'absolute', top: 0, left: 0, right: 0, transition: 'opacity 0.4s ease, transform 0.4s ease', transform: heroTab === 0 ? 'none' : 'scale(0.96)', pointerEvents: heroTab === 0 ? 'auto' : 'none' }}>
-                  <div style={{ background: '#1A1916', padding: '32px 24px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ position: 'absolute', top: -40, right: -40, width: 140, height: 140, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,134,26,0.12) 0%, transparent 70%)' }} />
-                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.25)', letterSpacing: 3, marginBottom: 10 }}>SCORE GEO</div>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 80, color: '#F7F5F2', lineHeight: 1, letterSpacing: -4, position: 'relative' }}>
-                      73<span style={{ fontSize: 24, color: 'rgba(247,245,242,0.2)', letterSpacing: 0 }}>/100</span>
-                    </div>
-                    <div style={{ display: 'inline-block', background: 'rgba(201,134,26,0.18)', border: '1px solid rgba(201,134,26,0.35)', borderRadius: 20, padding: '4px 14px', fontFamily: 'monospace', fontSize: 9, color: '#C9861A', letterSpacing: 1.5, fontWeight: 700, marginTop: 10 }}>
-                      {locale === 'en' ? 'AVERAGE' : 'MOYEN'}
-                    </div>
-                  </div>
-                  <div style={{ padding: '16px 24px 20px' }}>
-                    {[
-                      { name: locale === 'en' ? 'Extractability' : 'Extractibilité', pct: 72, color: '#C9861A' },
-                      { name: 'E-E-A-T', pct: 80, color: '#10A37F' },
-                      { name: locale === 'en' ? 'Structured Data' : 'Données structurées', pct: 80, color: '#10A37F' },
-                      { name: locale === 'en' ? 'AI Crawlability' : 'Crawlabilité IA', pct: 87, color: '#10A37F' },
-                    ].map((c, i) => (
-                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                        <div style={{ fontFamily: 'system-ui', fontSize: 10, color: '#6B6762', width: 100, flexShrink: 0 }}>{c.name}</div>
-                        <div style={{ flex: 1, height: 6, background: '#E5E2DC', borderRadius: 3, overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: `${c.pct}%`, background: c.color, borderRadius: 3, transition: 'width 1.2s cubic-bezier(0.22,1,0.36,1)' }} />
-                        </div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 10, color: c.color, fontWeight: 700, width: 28, textAlign: 'right' }}>{c.pct}%</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* ═══ SCREEN 1 : Audit One-Page — 8 critères complets ═══ */}
-                <div className={`hero-screen ${heroTab === 1 ? 'hero-screen-active' : ''}`} style={{ opacity: heroTab === 1 ? 1 : 0, position: heroTab === 1 ? 'relative' : 'absolute', top: 0, left: 0, right: 0, transition: 'opacity 0.4s ease, transform 0.4s ease', transform: heroTab === 1 ? 'none' : 'scale(0.96)', pointerEvents: heroTab === 1 ? 'auto' : 'none' }}>
-                  <div style={{ padding: '18px 24px 12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1.5 }}>
-                        {locale === 'en' ? '8 CRITERIA' : '8 CRITÈRES'}
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: '#1A1916', letterSpacing: -1 }}>73</span>
-                        <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#B0ABA5' }}>/100</span>
-                      </div>
-                    </div>
-                    {[
-                      { name: locale === 'en' ? 'Extractability' : 'Extractibilité', score: '18/25', pct: 72, color: '#C9861A', w: 25 },
-                      { name: locale === 'en' ? 'Verifiability' : 'Vérifiabilité', score: '14/20', pct: 70, color: '#C9861A', w: 20 },
-                      { name: 'E-E-A-T', score: '12/15', pct: 80, color: '#10A37F', w: 15 },
-                      { name: locale === 'en' ? 'AI Crawlability' : 'Crawlabilité IA', score: '13/15', pct: 87, color: '#10A37F', w: 15 },
-                      { name: locale === 'en' ? 'Structured Data' : 'Données structurées', score: '8/10', pct: 80, color: '#10A37F', w: 10 },
-                      { name: locale === 'en' ? 'Neutrality' : 'Neutralité', score: '3/10', pct: 30, color: '#D97757', w: 10 },
-                      { name: locale === 'en' ? 'External' : 'Externe', score: '2/5', pct: 40, color: '#D97757', w: 5 },
-                      { name: locale === 'en' ? 'Freshness' : 'Fraîcheur', score: '3/5', pct: 60, color: '#C9861A', w: 5 },
-                    ].map((c, i) => (
-                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                        <div style={{ fontFamily: 'system-ui', fontSize: 10, color: '#3A3835', width: 95, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.name}</div>
-                        <div style={{ flex: 1, height: 6, background: '#E5E2DC', borderRadius: 3, overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: `${c.pct}%`, background: c.color, borderRadius: 3 }} />
-                        </div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', width: 32, textAlign: 'right', flexShrink: 0 }}>{c.score}</div>
-                        <div style={{ fontFamily: 'monospace', fontSize: 7, color: c.pct >= 75 ? '#10A37F' : c.pct >= 45 ? '#C9861A' : '#D97757', width: 14, textAlign: 'center', flexShrink: 0 }}>
-                          {c.pct >= 75 ? '✓' : c.pct >= 45 ? '~' : '✗'}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {/* Reco aperçu */}
-                  <div style={{ padding: '0 24px 16px' }}>
-                    <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '10px 14px', borderLeft: '3px solid #D97757' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span style={{ background: '#D97757', color: '#fff', fontFamily: 'monospace', fontSize: 9, fontWeight: 700, width: 18, height: 18, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>1</span>
-                        <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#1A1916', fontWeight: 600 }}>
-                          {locale === 'en' ? 'Add FAQ Schema' : 'Ajouter Schema FAQ'}
-                        </span>
-                        <span style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 8, color: '#D97757', background: 'rgba(217,119,87,0.1)', padding: '2px 6px', borderRadius: 4 }}>CRITIQUE</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* ═══ SCREEN 2 : Audit Pro — ChatGPT test + code + projection ═══ */}
-                <div className={`hero-screen ${heroTab === 2 ? 'hero-screen-active' : ''}`} style={{ opacity: heroTab === 2 ? 1 : 0, position: heroTab === 2 ? 'relative' : 'absolute', top: 0, left: 0, right: 0, transition: 'opacity 0.4s ease, transform 0.4s ease', transform: heroTab === 2 ? 'none' : 'scale(0.96)', pointerEvents: heroTab === 2 ? 'auto' : 'none' }}>
-                  {/* ChatGPT citation test — élément fort */}
-                  <div style={{ padding: '16px 24px 12px' }}>
-                    <div style={{ background: '#1A1916', borderRadius: 12, padding: '16px 18px', position: 'relative', overflow: 'hidden' }}>
-                      <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.1) 0%, transparent 70%)' }} />
-                      <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.25)', letterSpacing: 2, marginBottom: 10 }}>
-                        {locale === 'en' ? 'REAL CHATGPT CITATION TEST' : 'TEST CITATION CHATGPT RÉEL'}
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                          <span style={{ fontFamily: 'Georgia, serif', fontSize: 36, color: '#F7F5F2', letterSpacing: -2 }}>3</span>
-                          <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(247,245,242,0.25)' }}>/30</span>
-                        </div>
-                        <div style={{ fontFamily: 'system-ui', fontSize: 10, color: 'rgba(247,245,242,0.4)', textAlign: 'right', lineHeight: 1.4 }}>
-                          {locale === 'en' ? 'queries cite' : 'requêtes citent'}<br/>{locale === 'en' ? 'your site' : 'votre site'}
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', gap: 3, alignItems: 'flex-end' }}>
-                        {[1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0].map((v, i) => (
-                          <div key={i} style={{ flex: 1, height: v ? 20 : 10, borderRadius: 2, background: v ? '#10A37F' : 'rgba(247,245,242,0.06)', transition: 'height 0.6s cubic-bezier(0.22,1,0.36,1)', transitionDelay: `${i * 0.02}s` }} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  {/* Code snippet */}
-                  <div style={{ padding: '0 24px 10px' }}>
-                    <div style={{ background: '#1A1916', borderRadius: 10, padding: '12px 14px', position: 'relative' }}>
-                      <div style={{ position: 'absolute', top: 8, right: 10, fontFamily: 'monospace', fontSize: 7, color: 'rgba(247,245,242,0.15)' }}>JSON-LD</div>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#F7F5F2', lineHeight: 1.7, letterSpacing: 0.3 }}>
-                        <span style={{ color: '#D97757' }}>{'{'}</span> <span style={{ color: '#10A37F' }}>"@type"</span>: <span style={{ color: '#C9861A' }}>"FAQPage"</span>,<br/>
-                        &nbsp;&nbsp;<span style={{ color: '#10A37F' }}>"mainEntity"</span>: <span style={{ color: '#D97757' }}>{'[{'}</span><br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: '#10A37F' }}>"@type"</span>: <span style={{ color: '#C9861A' }}>"Question"</span>,<br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: '#10A37F' }}>"name"</span>: <span style={{ color: '#C9861A' }}>"Comment..."</span><br/>
-                        &nbsp;&nbsp;<span style={{ color: '#D97757' }}>{'}]}'}</span>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Projected score */}
-                  <div style={{ padding: '0 24px 16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '12px 20px' }}>
-                      <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#B0ABA5', letterSpacing: 1 }}>{locale === 'en' ? 'CURRENT' : 'ACTUEL'}</div>
-                        <div style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#D97757', letterSpacing: -1 }}>73</div>
-                      </div>
-                      <svg width="20" height="12" viewBox="0 0 20 12"><path d="M0 6h16m0 0l-4-4m4 4l-4 4" stroke="#B0ABA5" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#B0ABA5', letterSpacing: 1 }}>{locale === 'en' ? 'PROJECTED' : 'PROJETÉ'}</div>
-                        <div style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#10A37F', letterSpacing: -1 }}>91</div>
-                      </div>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', background: 'rgba(16,163,127,0.1)', borderRadius: 6, padding: '3px 8px', fontWeight: 700 }}>+18</div>
-                    </div>
-                  </div>
+              {/* Verdict */}
+              <div style={{ background: '#F7F5F2', padding: '0 24px 16px' }}>
+                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 8, padding: '10px 14px', fontSize: 11, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5 }}>
+                  {locale === 'en'
+                    ? 'Your site is partially ready for AI engines. 3 critical blockers identified — structured data, editorial neutrality, and external presence need attention.'
+                    : 'Votre site est partiellement prêt pour les IA. 3 blocages critiques identifiés — données structurées, neutralité éditoriale et présence externe à améliorer.'}
                 </div>
               </div>
-            </div>
-
-            {/* Dots indicator — plus gros et lisibles */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16 }}>
-              {[
-                { label: locale === 'en' ? 'Free' : 'Gratuit', color: '#10A37F' },
-                { label: 'One-Page', color: '#D97757' },
-                { label: 'Pro', color: '#D97757' },
-              ].map((d, i) => (
-                <button key={i} onClick={() => setHeroTab(i)} style={{ display: 'flex', alignItems: 'center', gap: 4, background: heroTab === i ? `${d.color}12` : 'transparent', border: heroTab === i ? `1px solid ${d.color}30` : '1px solid transparent', borderRadius: 20, padding: '4px 10px', cursor: 'pointer', transition: 'all 0.3s' }}>
-                  <div style={{ width: 6, height: 6, borderRadius: '50%', background: heroTab === i ? d.color : '#E5E2DC', transition: 'background 0.3s' }} />
-                  <span style={{ fontFamily: 'system-ui', fontSize: 10, color: heroTab === i ? d.color : '#B0ABA5', fontWeight: heroTab === i ? 600 : 400, transition: 'all 0.3s' }}>{d.label}</span>
-                </button>
-              ))}
             </div>
           </div>
         </div>
@@ -558,102 +431,186 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ DEUX DIMENSIONS (position 2 — juste après le hero) ══ */}
+      {/* ══ DIAGNOSTIQUER → SURVEILLER → OPTIMISER ══ */}
       <section style={{ background: '#1A1916', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <RevealSection>
             <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'OUR PLATFORM' : 'NOTRE PLATEFORME'}
+              {locale === 'en' ? 'THE PLATFORM' : 'LA PLATEFORME'}
             </div>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-              {locale === 'en' ? <>Being citable is not enough.<br/>You need to <em style={{ color: '#D97757' }}>be cited</em>.</> : <>Être citable ne suffit pas.<br/>Il faut être <em style={{ color: '#D97757' }}>cité</em>.</>}
+              {locale === 'en' ? <>Diagnose. Monitor. <em style={{ color: '#D97757' }}>Optimize.</em></> : <>Diagnostiquer. Surveiller. <em style={{ color: '#D97757' }}>Optimiser.</em></>}
             </h2>
-            <p style={{ fontSize: 16, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
+            <p style={{ fontSize: 16, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 640, margin: '0 auto 56px' }}>
               {locale === 'en'
-                ? 'Detekia covers two dimensions of your AI visibility: technical optimization of your site and monitoring of what AI engines actually say about your brand.'
-                : 'Detekia couvre les deux dimensions de votre visibilité IA : l\'optimisation technique de votre site et le monitoring de ce que les IA disent réellement de votre marque.'}
+                ? 'A complete platform for your AI visibility — from the first diagnostic to ongoing monitoring and hands-on optimization.'
+                : 'Une plateforme complète pour votre visibilité IA — du premier diagnostic au monitoring continu et à l\'optimisation terrain.'}
             </p>
           </RevealSection>
 
-          <div className="hp-dimensions-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-            {/* Audit GEO */}
-            <RevealSection delay={0.1} direction="right">
-              <div className="card-interactive" style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s, transform 0.3s' }} onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(217,119,87,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(247,245,242,0.08)'; e.currentTarget.style.transform = 'none'; }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 14 }}>
-                  {locale === 'en' ? 'TECHNICAL AUDIT' : 'AUDIT GEO'}
+          <div className="hp-journey-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+            {/* ── COL 1 : DIAGNOSTIQUER ── */}
+            <RevealSection delay={0.1}>
+              <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, marginBottom: 10 }}>
+                  {locale === 'en' ? 'STEP 1' : 'ÉTAPE 1'}
                 </div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 10 }}>
-                  {locale === 'en' ? 'Is your site technically ready for AI?' : 'Votre site est-il techniquement prêt pour les IA ?'}
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 6 }}>
+                  {locale === 'en' ? 'Diagnose' : 'Diagnostiquer'}
                 </div>
-                <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-                  {locale === 'en'
-                    ? 'We scan your source code across 8 citability criteria. Score /100, recommendations with code examples, real ChatGPT citation test.'
-                    : 'On passe votre code source au crible sur 8 critères de citabilité. Score /100, recommandations avec exemples de code, test de citation ChatGPT réel.'}
+                <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                  {locale === 'en' ? 'Understand where you stand. Score /100 on 8 citability criteria, recommendations, and a real ChatGPT citation test.' : 'Comprenez où vous en êtes. Score /100 sur 8 critères de citabilité, recommandations et test de citation ChatGPT réel.'}
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
-                  {(locale === 'en'
-                    ? ['Score /100 on 8 weighted criteria', 'Up to 30 real ChatGPT queries', 'Competitors cited instead of you', 'Web report + PDF']
-                    : ['Score /100 sur 8 critères pondérés', 'Jusqu\'à 30 requêtes ChatGPT réelles', 'Concurrents cités à votre place', 'Rapport web permanent + PDF']
-                  ).map((f, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ fontSize: 11, color: '#D97757' }}>✓</span>
-                      <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui' }}>{f}</span>
+
+                {/* Mini-visuel : score + barres */}
+                <div style={{ background: '#1A1916', borderRadius: 10, padding: '14px 16px', marginBottom: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', letterSpacing: -2 }}>73<span style={{ fontSize: 11, color: 'rgba(247,245,242,0.2)' }}>/100</span></div>
+                    <div style={{ background: 'rgba(201,134,26,0.18)', border: '1px solid rgba(201,134,26,0.3)', borderRadius: 12, padding: '2px 8px', fontFamily: 'monospace', fontSize: 7, color: '#C9861A', fontWeight: 700 }}>{locale === 'en' ? 'AVG' : 'MOYEN'}</div>
+                  </div>
+                  {[72, 80, 87, 30].map((pct, i) => (
+                    <div key={i} style={{ height: 3, background: 'rgba(247,245,242,0.06)', borderRadius: 2, marginBottom: 4, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${pct}%`, background: pct >= 75 ? '#10A37F' : pct >= 45 ? '#C9861A' : '#D97757', borderRadius: 2 }} />
                     </div>
                   ))}
                 </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 16 }}>
+                  {(locale === 'en'
+                    ? ['Free score in 30 seconds', 'One-Page audit — 29 €', 'Pro audit with AI reco — 99 €']
+                    : ['Score gratuit en 30 secondes', 'Audit One-Page — 29 €', 'Audit Pro avec reco IA — 99 €']
+                  ).map((f, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontSize: 10, color: i === 0 ? '#10A37F' : '#D97757' }}>{i === 0 ? '✓' : '→'}</span>
+                      <span style={{ fontSize: 11, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui' }}>{f}</span>
+                    </div>
+                  ))}
+                </div>
+
                 <div style={{ marginTop: 'auto' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', marginBottom: 14 }}>
-                    {locale === 'en' ? 'Free / €29 / €99' : 'Gratuit / 29 € / 99 €'}
-                  </div>
-                  <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                    <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '10px 22px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                      {locale === 'en' ? 'See plans →' : 'Voir les offres →'}
-                    </Link>
-                    <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.12)', paddingBottom: 1 }}>
-                      {locale === 'en' ? 'Sample report →' : 'Voir un exemple →'}
-                    </a>
-                  </div>
+                  <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '10px 20px', borderRadius: 9, fontWeight: 700, fontSize: 12, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                    {locale === 'en' ? 'Get my score →' : 'Obtenir mon score →'}
+                  </Link>
                 </div>
               </div>
             </RevealSection>
 
-            {/* Présence IA */}
-            <RevealSection delay={0.2} direction="left">
-              <div className="card-interactive" style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s, transform 0.3s' }} onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(217,119,87,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(247,245,242,0.08)'; e.currentTarget.style.transform = 'none'; }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 14 }}>
-                  {locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}
+            {/* ── COL 2 : SURVEILLER (Présence IA) ── */}
+            <RevealSection delay={0.2}>
+              <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, marginBottom: 10 }}>
+                  {locale === 'en' ? 'STEP 2' : 'ÉTAPE 2'}
                 </div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 10 }}>
-                  {locale === 'en' ? 'What do AI engines recommend when asked about your market?' : 'Que recommandent les IA quand on parle de votre marché ?'}
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 6 }}>
+                  {locale === 'en' ? 'Monitor' : 'Surveiller'}
                 </div>
-                <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-                  {locale === 'en'
-                    ? 'We query ChatGPT, Claude, Gemini and Perplexity on your strategic queries. See who is cited, at what position, with what sentiment — and how it evolves.'
-                    : 'On interroge ChatGPT, Claude, Gemini et Perplexity sur vos requêtes stratégiques. Vous voyez qui est cité, à quelle position, avec quel sentiment — et comment ça évolue.'}
+                <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                  {locale === 'en' ? 'Track what ChatGPT, Claude, Gemini and Perplexity say about your brand on 75+ strategic queries.' : 'Suivez ce que ChatGPT, Claude, Gemini et Perplexity disent de votre marque sur 75+ requêtes stratégiques.'}
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
+
+                {/* Mini-visuel : dashboard Présence IA (inspiré du vrai rapport) */}
+                <div style={{ background: '#0f1119', borderRadius: 10, padding: '14px 16px', marginBottom: 16 }}>
+                  {/* KPIs row */}
+                  <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
+                    {[
+                      { val: '44%', label: locale === 'en' ? 'Mentioned' : 'Mention', color: '#22d3ee' },
+                      { val: '2.1', label: 'Position', color: '#10b981' },
+                      { val: '12%', label: locale === 'en' ? 'Negative' : 'Négatif', color: '#f472b6' },
+                    ].map((kpi, i) => (
+                      <div key={i} style={{ flex: 1, textAlign: 'center' }}>
+                        <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: kpi.color, lineHeight: 1 }}>{kpi.val}</div>
+                        <div style={{ fontFamily: 'monospace', fontSize: 6, color: 'rgba(247,245,242,0.25)', marginTop: 2, letterSpacing: 0.5 }}>{kpi.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Mini query grid */}
+                  <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 8 }}>
+                    {[
+                      { q: locale === 'en' ? 'best bank for...' : 'meilleure banque...', results: [1, 1, 0, 1] },
+                      { q: locale === 'en' ? 'savings account...' : 'livret épargne...', results: [0, 0, 0, 1] },
+                      { q: locale === 'en' ? 'investment app...' : 'app investir...', results: [1, 0, 1, 0] },
+                    ].map((row, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                        <div style={{ fontFamily: 'system-ui', fontSize: 8, color: 'rgba(247,245,242,0.35)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.q}</div>
+                        <div style={{ display: 'flex', gap: 3 }}>
+                          {['GPT', 'Cld', 'Gem', 'Ppl'].map((llm, j) => (
+                            <div key={j} style={{ width: 12, height: 12, borderRadius: 3, background: row.results[j] ? 'rgba(16,163,127,0.2)' : 'rgba(247,245,242,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              <span style={{ fontSize: 7, color: row.results[j] ? '#10A37F' : 'rgba(247,245,242,0.15)' }}>{row.results[j] ? '✓' : '✗'}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 16 }}>
                   {(locale === 'en'
-                    ? ['4 major LLMs queried in real conditions', 'Mention rate, position, sentiment', 'Competitor benchmarking per query', 'Interactive HTML dashboard']
-                    : ['4 LLM majeurs interrogés en conditions réelles', 'Taux de mention, position, sentiment', 'Benchmark concurrentiel par requête', 'Dashboard HTML interactif']
+                    ? ['4 LLMs queried in real conditions', 'Mention rate, position, sentiment', 'Competitor benchmarking', 'Interactive dashboard']
+                    : ['4 LLMs interrogés en conditions réelles', 'Taux de mention, position, sentiment', 'Benchmark concurrentiel', 'Dashboard interactif']
                   ).map((f, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ fontSize: 11, color: '#D97757' }}>✓</span>
-                      <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui' }}>{f}</span>
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontSize: 10, color: '#10A37F' }}>✓</span>
+                      <span style={{ fontSize: 11, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui' }}>{f}</span>
                     </div>
                   ))}
                 </div>
+
                 <div style={{ marginTop: 'auto' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 13, color: '#D97757', marginBottom: 14 }}>
-                    {locale === 'en' ? 'Custom pricing' : 'Sur devis'}
+                  <Link href="/presence-ia" className="btn-interactive" style={{ display: 'inline-block', background: '#10A37F', color: '#fff', padding: '10px 20px', borderRadius: 9, fontWeight: 700, fontSize: 12, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                    {locale === 'en' ? 'Request a demo →' : 'Demander une démo →'}
+                  </Link>
+                </div>
+              </div>
+            </RevealSection>
+
+            {/* ── COL 3 : OPTIMISER (Accompagnement) ── */}
+            <RevealSection delay={0.3}>
+              <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4285F4', letterSpacing: 2, marginBottom: 10 }}>
+                  {locale === 'en' ? 'STEP 3' : 'ÉTAPE 3'}
+                </div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', lineHeight: 1.15, marginBottom: 6 }}>
+                  {locale === 'en' ? 'Optimize' : 'Optimiser'}
+                </div>
+                <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+                  {locale === 'en' ? 'We implement the fixes for you. Content strategy, technical optimization, ongoing GEO support.' : 'On implémente les corrections pour vous. Stratégie de contenu, optimisation technique, accompagnement GEO continu.'}
+                </p>
+
+                {/* Mini-visuel : progression score */}
+                <div style={{ background: '#1A1916', borderRadius: 10, padding: '14px 16px', marginBottom: 16 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'rgba(247,245,242,0.2)', letterSpacing: 1, marginBottom: 8 }}>
+                    {locale === 'en' ? 'SCORE PROGRESSION' : 'PROGRESSION DU SCORE'}
                   </div>
-                  <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                    <Link href="/presence-ia" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '10px 22px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                      {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
-                    </Link>
-                    <Link href="/contact" style={{ fontSize: 12, color: 'rgba(247,245,242,0.4)', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.12)', paddingBottom: 1 }}>
-                      {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
-                    </Link>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 48 }}>
+                    {[34, 42, 55, 63, 71, 78, 85, 91].map((v, i) => (
+                      <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                        <div style={{ width: '100%', height: `${v * 0.5}px`, background: i < 2 ? '#D97757' : i < 5 ? '#C9861A' : '#10A37F', borderRadius: 2, transition: 'height 0.8s cubic-bezier(0.22,1,0.36,1)' }} />
+                      </div>
+                    ))}
                   </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+                    <span style={{ fontFamily: 'monospace', fontSize: 7, color: '#D97757' }}>M1</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 7, color: '#10A37F' }}>M8</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 16 }}>
+                  {(locale === 'en'
+                    ? ['Audit recommendations implemented', 'Content optimized for AI citation', 'Monthly re-audit & tracking', 'Dedicated GEO expert']
+                    : ['Recommandations d\'audit implémentées', 'Contenu optimisé pour la citation IA', 'Ré-audit et suivi mensuel', 'Expert GEO dédié']
+                  ).map((f, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontSize: 10, color: '#4285F4' }}>✓</span>
+                      <span style={{ fontSize: 11, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui' }}>{f}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ marginTop: 'auto' }}>
+                  <Link href="/contact" className="btn-interactive" style={{ display: 'inline-block', background: 'transparent', color: '#F7F5F2', padding: '9px 20px', borderRadius: 9, fontWeight: 700, fontSize: 12, textDecoration: 'none', fontFamily: 'system-ui', border: '1.5px solid rgba(247,245,242,0.2)' }}>
+                    {locale === 'en' ? 'Book a call →' : 'Prendre rendez-vous →'}
+                  </Link>
                 </div>
               </div>
             </RevealSection>
@@ -911,6 +868,7 @@ export default function Home() {
 
         @media (max-width: 640px) { .stats-marquee { animation-duration: 30s; } }
 
+        .hp-journey-grid { grid-template-columns: repeat(3, 1fr); }
         .hp-dimensions-grid { grid-template-columns: 1fr 1fr; }
         .hp-stats-grid { grid-template-columns: repeat(3, 1fr); }
         .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
@@ -922,6 +880,7 @@ export default function Home() {
           .testimonials-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 640px) {
+          .hp-journey-grid { grid-template-columns: 1fr !important; }
           .hp-dimensions-grid { grid-template-columns: 1fr !important; }
           .hp-stats-grid { grid-template-columns: 1fr !important; }
           section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 64px !important; padding-bottom: 64px !important; }
