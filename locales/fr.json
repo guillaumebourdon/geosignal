@@ -333,12 +333,12 @@
           "badge": "UTILISÉ POUR CHAQUE CLIENT"
         },
         {
-          "photo": "/testimonials/nicolas-bohin.jpg",
-          "name": "Nicolas Bohin",
-          "role": "CEO · Iconic Brand",
-          "quote": "L'outil est top, il y a beaucoup de matière et de pistes intéressantes dans les recommandations. Ce qui m'a le plus surpris c'est <strong>les concurrents cités par ChatGPT à ma place</strong> — ça remet les choses en perspective.",
+          "photo": "/faycal-madiou.jpg",
+          "name": "Fayçal Madiou",
+          "role": "CEO · Flash Games",
+          "quote": "L'audit One-Page m'a donné <strong>des pistes d'optimisation concrètes</strong> pour mon site, et le rapport Présence IA m'a ouvert les yeux sur ma stratégie. Vraiment complet et actionnable.",
           "footerType": "badge",
-          "badge": "AUDIT ONE-PAGE"
+          "badge": "ONE-PAGE + PRÉSENCE IA"
         }
       ]
     },
