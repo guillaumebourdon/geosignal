@@ -368,7 +368,7 @@ export default function Home() {
       </section>
 
       {/* ── BANDEAU STATS DÉFILANTES ── */}
-      <div style={{ background: '#D97757', overflow: 'hidden' }}>
+      <div style={{ background: '#fff', borderTop: '1px solid #E5E2DC', borderBottom: '1px solid #E5E2DC', overflow: 'hidden' }}>
         <div className="stats-marquee-wrap">
           <div className="stats-marquee">
             <div className="stats-marquee-inner">
@@ -383,8 +383,8 @@ export default function Home() {
                     { value: '4,4x', label: locale === 'en' ? 'conversion from AI traffic' : 'de conversion via trafic IA' },
                   ].map((stat, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 28px', flexShrink: 0 }}>
-                      <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#fff', fontWeight: 700 }}>{stat.value}</span>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 11, color: 'rgba(255,255,255,0.75)' }}>{stat.label}</span>
+                      <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#D97757', fontWeight: 700 }}>{stat.value}</span>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#6B6762' }}>{stat.label}</span>
                     </div>
                   ))}
                 </div>
@@ -395,34 +395,31 @@ export default function Home() {
       </div>
 
 
-      {/* ══ SECTION 3 — L'URGENCE (stats + avant/après + coût de l'inaction) ══ */}
-      <section style={{ background: '#1A1916', padding: '96px 48px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '15%', right: '8%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '10%', left: '5%', width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 960, margin: '0 auto', position: 'relative' }}>
+      {/* ══ SECTION 3 — POURQUOI OPTIMISER POUR LES IA ══ */}
+      <section style={{ background: '#1A1916', padding: '80px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <RevealSection>
             <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'WHILE YOU\'RE READING THIS' : 'PENDANT QUE VOUS LISEZ CECI'}
+              {locale === 'en' ? 'WHY IT MATTERS' : 'POURQUOI C\'EST IMPORTANT'}
             </div>
-            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.1 }}>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,40px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
               {locale === 'en'
-                ? <>AI is sending your customers <em style={{ color: '#D97757' }}>to your competitors</em></>
-                : <>L&apos;IA envoie vos clients <em style={{ color: '#D97757' }}>chez vos concurrents</em></>}
+                ? <>Your customers already use AI <em style={{ color: '#D97757' }}>to make decisions</em></>
+                : <>Vos clients utilisent déjà l&apos;IA <em style={{ color: '#D97757' }}>pour prendre leurs décisions</em></>}
             </h2>
-            <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
+            <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
               {locale === 'en'
-                ? '28.1 million French users ask AI every month before buying. If you\'re not cited, you don\'t exist.'
-                : '28,1 millions de Français utilisent l\'IA chaque mois pour prendre des décisions d\'achat. Si vous n\'êtes pas cité, vous n\'existez pas.'}
+                ? 'Detekia analyzes what prevents your site from being cited — and tells you exactly how to fix it.'
+                : 'Detekia analyse ce qui empêche votre site d\'être cité — et vous dit exactement comment y remédier.'}
             </p>
           </RevealSection>
 
-          {/* Block A — 3 stats choc */}
           <RevealSection delay={0.1}>
-            <div className="hp-stats-shock" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 40 }}>
+            <div className="hp-stats-shock" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
               {[
                 { num: '28,1M', label: locale === 'en' ? 'French users ask AI every month' : 'de Français interrogent les IA chaque mois', src: 'Médiamétrie, 2025', color: '#D97757' },
-                { num: '57%', label: locale === 'en' ? 'compare products via AI before buying' : 'comparent des produits via l\'IA avant d\'acheter', src: 'SEMrush, 2025', color: '#D97757' },
-                { num: '4,4x', label: locale === 'en' ? 'higher conversion from AI traffic' : 'plus de conversion depuis le trafic IA', src: 'SEMrush, 2025', color: '#10A37F' },
+                { num: '57%', label: locale === 'en' ? 'compare products via AI before buying' : 'comparent via l\'IA avant d\'acheter', src: 'SEMrush, 2025', color: '#D97757' },
+                { num: '4,4x', label: locale === 'en' ? 'higher conversion from AI traffic' : 'plus de conversion via trafic IA', src: 'SEMrush, 2025', color: '#10A37F' },
               ].map((s, i) => (
                 <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 12, padding: '24px 20px', textAlign: 'center' }}>
                   <div style={{ fontFamily: 'Georgia, serif', fontSize: 42, color: s.color, fontWeight: 700, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
@@ -430,70 +427,6 @@ export default function Home() {
                   <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.2)', marginTop: 6 }}>{s.src}</div>
                 </div>
               ))}
-            </div>
-          </RevealSection>
-
-          {/* Block B — Avant/Après (SANS vs AVEC Detekia) */}
-          <RevealSection delay={0.2}>
-            <div className="hp-before-after" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 32 }}>
-              {/* SANS */}
-              <div style={{ background: 'rgba(247,245,242,0.03)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 12, padding: '24px' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#EF4444', letterSpacing: 2, marginBottom: 14 }}>
-                  {locale === 'en' ? 'WITHOUT OPTIMIZATION' : 'SANS OPTIMISATION'}
-                </div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.6)', lineHeight: 1.8 }}>
-                  {[
-                    { rank: '1.', name: locale === 'en' ? 'Competitor A' : 'Concurrent A', you: false },
-                    { rank: '2.', name: locale === 'en' ? 'Competitor B' : 'Concurrent B', you: false },
-                    { rank: '3.', name: locale === 'en' ? 'Competitor C' : 'Concurrent C', you: false },
-                  ].map((r, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                      <span style={{ color: '#10A37F', fontWeight: 700, fontSize: 12 }}>{r.rank}</span>
-                      <span>{r.name}</span>
-                    </div>
-                  ))}
-                </div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#EF4444', marginTop: 12, fontWeight: 600 }}>
-                  {locale === 'en' ? 'Your business? Absent.' : 'Votre entreprise ? Absente.'}
-                </div>
-              </div>
-              {/* AVEC */}
-              <div style={{ background: 'rgba(16,163,127,0.04)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 12, padding: '24px' }}>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, marginBottom: 14 }}>
-                  {locale === 'en' ? 'WITH DETEKIA' : 'AVEC DETEKIA'}
-                </div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.6)', lineHeight: 1.8 }}>
-                  {[
-                    { rank: '1.', name: locale === 'en' ? 'Your business' : 'Votre entreprise', you: true },
-                    { rank: '2.', name: locale === 'en' ? 'Competitor A' : 'Concurrent A', you: false },
-                    { rank: '3.', name: locale === 'en' ? 'Competitor B' : 'Concurrent B', you: false },
-                  ].map((r, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                      <span style={{ color: '#10A37F', fontWeight: 700, fontSize: 12 }}>{r.rank}</span>
-                      <span style={{ color: r.you ? '#10A37F' : 'rgba(247,245,242,0.6)', fontWeight: r.you ? 700 : 400 }}>{r.name}</span>
-                    </div>
-                  ))}
-                </div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#10A37F', marginTop: 12, fontWeight: 600 }}>
-                  {locale === 'en' ? 'Cited first. Qualified traffic.' : 'Cité en premier. Trafic qualifié.'}
-                </div>
-              </div>
-            </div>
-          </RevealSection>
-
-          {/* Block C — Coût de l'inaction */}
-          <RevealSection delay={0.3}>
-            <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: 8, padding: '18px 24px', marginBottom: 32 }}>
-              <p style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.6)', lineHeight: 1.7, margin: 0, fontStyle: 'italic' }}>
-                {locale === 'en'
-                  ? 'Every day without GEO optimization = customers discovering your competitors instead of you. The difference between being recommended and being ignored.'
-                  : 'Chaque jour sans optimisation GEO = des clients qui découvrent vos concurrents au lieu de vous. La différence entre être recommandé et être ignoré.'}
-              </p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <Link href="/#analyser" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 700, fontSize: 15, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                {locale === 'en' ? 'Test my AI visibility for free →' : 'Tester ma visibilité IA gratuitement →'}
-              </Link>
             </div>
           </RevealSection>
         </div>
@@ -530,7 +463,7 @@ export default function Home() {
                 href: '/#analyser',
               },
               {
-                price: '29 €', priceColor: '#D97757', highlight: true,
+                price: '29 €', priceColor: '#D97757', highlight: false,
                 title: locale === 'en' ? '1-page audit' : 'Audit 1 page',
                 desc: locale === 'en' ? 'Full diagnosis of one strategic page with code-level recommendations and a real ChatGPT citation test.' : 'Diagnostic complet d\'une page stratégique avec recommandations au niveau du code et test de citation ChatGPT réel.',
                 bullets: locale === 'en'
@@ -579,71 +512,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ SECTION 5 — APERÇU DU RAPPORT ══ */}
+      {/* ══ SECTION 5 — CE QUE CONTIENT LE RAPPORT ══ */}
       <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <RevealSection>
             <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'WHAT YOU GET' : 'CE QUE VOUS OBTENEZ'}
+              {locale === 'en' ? 'INSIDE THE REPORT' : 'DANS LE RAPPORT'}
             </div>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-              {locale === 'en' ? <>A diagnosis you can <em style={{ color: '#D97757' }}>act on today</em></> : <>Un diagnostic sur lequel <em style={{ color: '#D97757' }}>agir dès aujourd&apos;hui</em></>}
+              {locale === 'en' ? <>What you get <em style={{ color: '#D97757' }}>for €29</em></> : <>Ce que vous obtenez <em style={{ color: '#D97757' }}>pour 29 €</em></>}
             </h2>
-            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
+            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 48px' }}>
               {locale === 'en'
-                ? 'Every paid report includes your score, the exact blockers, prioritized recommendations with code examples, before/after previews, and a real ChatGPT citation test.'
-                : 'Chaque rapport payant inclut votre score, les blocages exacts, des recommandations priorisées avec exemples de code, des aperçus avant/après, et un test de citation ChatGPT réel.'}
+                ? 'Not a summary — a complete diagnosis with exact fixes, real AI tests, and estimated impact per action.'
+                : 'Pas un résumé — un diagnostic complet avec les corrections exactes, des tests IA réels, et l\'impact estimé de chaque action.'}
             </p>
           </RevealSection>
 
-          {/* Aperçu annoté du rapport */}
-          <RevealSection delay={0.15}>
-            <div style={{ background: '#1A1916', borderRadius: 20, overflow: 'hidden', boxShadow: '0 24px 80px rgba(26,25,22,0.25)' }}>
-              {/* Browser chrome */}
-              <div style={{ background: '#232220', padding: '10px 18px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div style={{ display: 'flex', gap: 5 }}>
-                  {['#E05252','#C9861A','#10A37F'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
-                </div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.25)', marginLeft: 8 }}>detekia.fr/r/...</div>
-              </div>
-              {/* Report content preview */}
-              <div style={{ padding: '32px 36px' }}>
-                {/* Score row */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
-                  <div>
-                    <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.25)', letterSpacing: 2, marginBottom: 6 }}>SCORE GEO</div>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                      <span style={{ fontFamily: 'Georgia, serif', fontSize: 56, color: '#F7F5F2', letterSpacing: -3 }}>38</span>
-                      <span style={{ fontFamily: 'monospace', fontSize: 14, color: 'rgba(247,245,242,0.3)' }}>/100</span>
-                    </div>
+          {/* 4 feature cards — what the report contains */}
+          <div className="hp-report-features" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            {[
+              { icon: '🎯', color: '#D97757',
+                title: locale === 'en' ? 'Blockers identified with precision' : 'Blocages identifiés avec précision',
+                desc: locale === 'en' ? 'Each weakness is documented with the exact location in your HTML. You know what\'s wrong, where, and why it matters for AI visibility.' : 'Chaque faiblesse est documentée avec l\'emplacement exact dans votre HTML. Vous savez ce qui ne va pas, où, et pourquoi ça compte pour la visibilité IA.' },
+              { icon: '💻', color: '#10A37F',
+                title: locale === 'en' ? 'Code examples to copy-paste' : 'Exemples de code à copier-coller',
+                desc: locale === 'en' ? 'Every recommendation comes with the exact code to add or modify. No guessing — you or your dev can implement it directly.' : 'Chaque recommandation vient avec le code exact à ajouter ou modifier. Pas de devinette — vous ou votre dev pouvez implémenter directement.' },
+              { icon: '🔍', color: '#4285F4',
+                title: locale === 'en' ? 'Real ChatGPT citation test' : 'Test de citation ChatGPT réel',
+                desc: locale === 'en' ? 'We test 10 real queries on ChatGPT to check if your site is cited. You see which competitors appear instead — and on which queries.' : 'On teste 10 requêtes réelles sur ChatGPT pour vérifier si votre site est cité. Vous voyez quels concurrents apparaissent à votre place — et sur quelles requêtes.' },
+              { icon: '📈', color: '#C9861A',
+                title: locale === 'en' ? 'Projected score after fixes' : 'Score projeté après corrections',
+                desc: locale === 'en' ? 'For each recommendation: the estimated impact on your score. So you know what to prioritize.' : 'Pour chaque recommandation : l\'impact estimé sur votre score. Pour savoir quoi prioriser.' },
+            ].map((feat, i) => (
+              <RevealSection key={i} delay={i * 0.1}>
+                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '28px 24px', height: '100%' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                    <span style={{ fontSize: 22 }}>{feat.icon}</span>
+                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', lineHeight: 1.2 }}>{feat.title}</div>
                   </div>
-                  <div style={{ background: '#D97757', borderRadius: 20, padding: '5px 16px', fontFamily: 'monospace', fontSize: 10, color: '#fff', fontWeight: 700, letterSpacing: 1 }}>
-                    {locale === 'en' ? 'WEAK' : 'FAIBLE'}
-                  </div>
+                  <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, margin: 0 }}>{feat.desc}</p>
                 </div>
+              </RevealSection>
+            ))}
+          </div>
 
-                {/* Annotated features */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                  {[
-                    { label: locale === 'en' ? 'Critical blocker identified' : 'Blocage critique identifié', color: '#D97757', detail: locale === 'en' ? 'Missing FAQ Schema — AI engines can\'t extract your Q&A content' : 'Schema FAQ manquant — les IA ne peuvent pas extraire vos Q&R' },
-                    { label: locale === 'en' ? 'Recommendation with code' : 'Recommandation avec code', color: '#10A37F', detail: locale === 'en' ? 'Add FAQPage JSON-LD → estimated impact: +12 points' : 'Ajouter FAQPage JSON-LD → impact estimé : +12 points' },
-                    { label: locale === 'en' ? 'ChatGPT citation test' : 'Test citation ChatGPT', color: '#4285F4', detail: locale === 'en' ? '2/10 queries cite your site — 3 competitors identified' : '2/10 requêtes citent votre site — 3 concurrents identifiés' },
-                    { label: locale === 'en' ? 'Projected score' : 'Score projeté', color: '#C9861A', detail: locale === 'en' ? 'If all recommendations applied: 38 → 71 (+33 points)' : 'Si toutes les recommandations appliquées : 38 → 71 (+33 points)' },
-                  ].map((feat, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '12px 16px', background: 'rgba(247,245,242,0.04)', borderRadius: 10, borderLeft: `3px solid ${feat.color}` }}>
-                      <div style={{ width: 6, height: 6, borderRadius: '50%', background: feat.color, marginTop: 5, flexShrink: 0 }} />
-                      <div>
-                        <div style={{ fontFamily: 'system-ui', fontSize: 12, color: feat.color, fontWeight: 600, marginBottom: 2 }}>{feat.label}</div>
-                        <div style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.5)', lineHeight: 1.5 }}>{feat.detail}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Link to full example */}
-            <div style={{ textAlign: 'center', marginTop: 28 }}>
+          <RevealSection delay={0.5}>
+            <div style={{ textAlign: 'center', marginTop: 32 }}>
               <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 2 }}>
                 {locale === 'en' ? 'See a full sample report →' : 'Voir un exemple de rapport complet →'}
               </a>
@@ -833,8 +748,8 @@ export default function Home() {
         @media (max-width: 640px) { .stats-marquee { animation-duration: 30s; } }
 
         .hp-stats-shock { grid-template-columns: repeat(3, 1fr); }
-        .hp-before-after { grid-template-columns: 1fr 1fr; }
         .hp-offers-grid { grid-template-columns: repeat(3, 1fr); }
+        .hp-report-features { grid-template-columns: 1fr 1fr; }
         .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
 
         @media (max-width: 900px) {
@@ -843,8 +758,8 @@ export default function Home() {
         }
         @media (max-width: 640px) {
           .hp-stats-shock { grid-template-columns: 1fr !important; }
-          .hp-before-after { grid-template-columns: 1fr !important; }
           .hp-offers-grid { grid-template-columns: 1fr !important; }
+          .hp-report-features { grid-template-columns: 1fr !important; }
           section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 64px !important; padding-bottom: 64px !important; }
           .hero-section { padding: 24px 20px 40px !important; }
         }
