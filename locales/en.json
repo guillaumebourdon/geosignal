@@ -161,7 +161,7 @@
       "levelDesc": "4 critical issues<br/>detected on your website",
       "criticalTag": "CRITICAL · CRAWLABILITY",
       "criticalTitle": "ChatGPT can't access your website.",
-      "criticalDesc": "Your robots.txt file blocks AI bots. 73% of websites have this problem without knowing it. Result: no AI can read or cite your content.",
+      "criticalDesc": "Your robots.txt file blocks AI bots. This is a common issue. Result: no AI can read or cite your content.",
       "fixText": "<strong>Fix needed:</strong> Allow GPTBot, ClaudeBot and PerplexityBot in your robots.txt. Just 2 lines to change.",
       "impactPoints": "+12 estimated visibility points",
       "lockedCount": "+14 locked recommendations",

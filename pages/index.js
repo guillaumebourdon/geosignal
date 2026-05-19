@@ -513,8 +513,8 @@ export default function Home() {
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 'auto', position: 'relative' }}>
                   {(locale === 'en'
-                    ? ['Your actual HTML analyzed page by page', '8 weighted criteria, peer-reviewed methodology', 'Reproducible score out of 100', 'Recommendations ranked by impact with code']
-                    : ['Votre HTML réel analysé page par page', '8 critères pondérés, méthodologie académique', 'Score sur 100 reproductible et daté', 'Recommandations classées par impact avec code']
+                    ? ['Your actual HTML analyzed page by page', '8 weighted criteria, documented methodology', 'Reproducible score out of 100', 'Recommendations ranked by impact with code']
+                    : ['Votre HTML réel analysé page par page', '8 critères pondérés, méthodologie documentée', 'Score sur 100 reproductible et daté', 'Recommandations classées par impact avec code']
                   ).map((p, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
                       <span style={{ width: 16, height: 16, borderRadius: '50%', background: 'rgba(217,119,87,0.18)', border: '1px solid rgba(217,119,87,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>

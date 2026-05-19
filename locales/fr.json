@@ -161,7 +161,7 @@
       "levelDesc": "4 blocages critiques<br/>détectés sur votre site",
       "criticalTag": "CRITIQUE · CRAWLABILITÉ",
       "criticalTitle": "ChatGPT ne peut pas accéder à votre site.",
-      "criticalDesc": "Votre fichier robots.txt bloque les bots IA. 73 % des sites ont ce problème sans le savoir. Résultat : aucune IA ne peut lire ni citer votre contenu.",
+      "criticalDesc": "Votre fichier robots.txt bloque les bots IA. C'est un problème fréquent. Résultat : aucune IA ne peut lire ni citer votre contenu.",
       "fixText": "<strong>À corriger :</strong> Autorisez GPTBot, ClaudeBot et PerplexityBot dans votre robots.txt. 2 lignes à modifier.",
       "impactPoints": "+12 points de visibilité estimés",
       "lockedCount": "+14 recommandations verrouillées",
