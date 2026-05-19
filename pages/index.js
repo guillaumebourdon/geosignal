@@ -368,7 +368,7 @@ export default function Home() {
       </section>
 
       {/* ── BANDEAU STATS DÉFILANTES ── */}
-      <div style={{ background: '#1A1916', overflow: 'hidden' }}>
+      <div style={{ background: '#D97757', overflow: 'hidden' }}>
         <div className="stats-marquee-wrap">
           <div className="stats-marquee">
             <div className="stats-marquee-inner">
@@ -383,8 +383,8 @@ export default function Home() {
                     { value: '4,4x', label: locale === 'en' ? 'conversion from AI traffic' : 'de conversion via trafic IA' },
                   ].map((stat, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 28px', flexShrink: 0 }}>
-                      <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#D97757', fontWeight: 700 }}>{stat.value}</span>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 11, color: 'rgba(247,245,242,0.4)' }}>{stat.label}</span>
+                      <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#fff', fontWeight: 700 }}>{stat.value}</span>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 11, color: 'rgba(255,255,255,0.75)' }}>{stat.label}</span>
                     </div>
                   ))}
                 </div>
@@ -395,72 +395,105 @@ export default function Home() {
       </div>
 
 
-      {/* ══ SECTION 3 — LE PROBLÈME (mockup ChatGPT, fond dark) ══ */}
+      {/* ══ SECTION 3 — L'URGENCE (stats + avant/après + coût de l'inaction) ══ */}
       <section style={{ background: '#1A1916', padding: '96px 48px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '20%', right: '10%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 800, margin: '0 auto', position: 'relative' }}>
+        <div style={{ position: 'absolute', top: '15%', right: '8%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '10%', left: '5%', width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ maxWidth: 960, margin: '0 auto', position: 'relative' }}>
           <RevealSection>
             <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'THE INVISIBLE THREAT' : 'LA MENACE INVISIBLE'}
+              {locale === 'en' ? 'WHILE YOU\'RE READING THIS' : 'PENDANT QUE VOUS LISEZ CECI'}
             </div>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.1 }}>
               {locale === 'en'
-                ? <>Every day, AI recommends your competitors <em style={{ color: '#D97757' }}>instead of you</em></>
-                : <>Chaque jour, les IA recommandent vos concurrents <em style={{ color: '#D97757' }}>à votre place</em></>}
+                ? <>AI is sending your customers <em style={{ color: '#D97757' }}>to your competitors</em></>
+                : <>L&apos;IA envoie vos clients <em style={{ color: '#D97757' }}>chez vos concurrents</em></>}
             </h2>
-            <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
+            <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
               {locale === 'en'
-                ? '28 million French users ask AI for advice every month. Unlike SEO, you can\'t see when you\'re absent — the leads just silently go elsewhere.'
-                : '28 millions de Français consultent les IA chaque mois. Contrairement au SEO, vous ne voyez pas quand vous êtes absent — les prospects partent en silence.'}
+                ? '28.1 million French users ask AI every month before buying. If you\'re not cited, you don\'t exist.'
+                : '28,1 millions de Français utilisent l\'IA chaque mois pour prendre des décisions d\'achat. Si vous n\'êtes pas cité, vous n\'existez pas.'}
             </p>
           </RevealSection>
 
-          {/* Mockup réponse ChatGPT — dark version */}
-          <RevealSection delay={0.15}>
-            <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 32px', maxWidth: 640, margin: '0 auto' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-                <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#10A37F', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ color: '#fff', fontSize: 14, fontWeight: 700 }}>G</span>
+          {/* Block A — 3 stats choc */}
+          <RevealSection delay={0.1}>
+            <div className="hp-stats-shock" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 40 }}>
+              {[
+                { num: '28,1M', label: locale === 'en' ? 'French users ask AI every month' : 'de Français interrogent les IA chaque mois', src: 'Médiamétrie, 2025', color: '#D97757' },
+                { num: '57%', label: locale === 'en' ? 'compare products via AI before buying' : 'comparent des produits via l\'IA avant d\'acheter', src: 'SEMrush, 2025', color: '#D97757' },
+                { num: '4,4x', label: locale === 'en' ? 'higher conversion from AI traffic' : 'plus de conversion depuis le trafic IA', src: 'SEMrush, 2025', color: '#10A37F' },
+              ].map((s, i) => (
+                <div key={i} style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 12, padding: '24px 20px', textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 42, color: s.color, fontWeight: 700, letterSpacing: -2, lineHeight: 1 }}>{s.num}</div>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.5)', marginTop: 8, lineHeight: 1.5 }}>{s.label}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.2)', marginTop: 6 }}>{s.src}</div>
                 </div>
-                <div>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#F7F5F2' }}>ChatGPT</div>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
-                    {locale === 'en' ? 'Response to: "Best project management tool for startups?"' : 'Réponse à : « Quel est le meilleur outil de gestion de projet pour startups ? »'}
-                  </div>
+              ))}
+            </div>
+          </RevealSection>
+
+          {/* Block B — Avant/Après (SANS vs AVEC Detekia) */}
+          <RevealSection delay={0.2}>
+            <div className="hp-before-after" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 32 }}>
+              {/* SANS */}
+              <div style={{ background: 'rgba(247,245,242,0.03)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 12, padding: '24px' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#EF4444', letterSpacing: 2, marginBottom: 14 }}>
+                  {locale === 'en' ? 'WITHOUT OPTIMIZATION' : 'SANS OPTIMISATION'}
                 </div>
-              </div>
-              <div style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.7)', lineHeight: 1.8 }}>
-                <p style={{ margin: '0 0 12px' }}>
-                  {locale === 'en'
-                    ? 'Here are the top project management tools recommended for startups in 2026:'
-                    : 'Voici les meilleurs outils de gestion de projet recommandés pour les startups en 2026 :'}
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.6)', lineHeight: 1.8 }}>
                   {[
-                    { name: 'Notion', desc: locale === 'en' ? 'All-in-one workspace with great flexibility' : 'Espace de travail tout-en-un très flexible' },
-                    { name: 'Linear', desc: locale === 'en' ? 'Fast issue tracking for dev teams' : 'Suivi des tâches rapide pour les équipes dev' },
-                    { name: 'Monday.com', desc: locale === 'en' ? 'Visual project management for non-technical teams' : 'Gestion de projet visuelle pour les équipes non-techniques' },
-                  ].map((tool, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 700, color: '#10A37F', flexShrink: 0 }}>{i + 1}.</span>
-                      <span><strong style={{ color: '#F7F5F2' }}>{tool.name}</strong> — {tool.desc}</span>
+                    { rank: '1.', name: locale === 'en' ? 'Competitor A' : 'Concurrent A', you: false },
+                    { rank: '2.', name: locale === 'en' ? 'Competitor B' : 'Concurrent B', you: false },
+                    { rank: '3.', name: locale === 'en' ? 'Competitor C' : 'Concurrent C', you: false },
+                  ].map((r, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                      <span style={{ color: '#10A37F', fontWeight: 700, fontSize: 12 }}>{r.rank}</span>
+                      <span>{r.name}</span>
                     </div>
                   ))}
                 </div>
-              </div>
-              <div style={{ marginTop: 20, padding: '14px 18px', background: 'rgba(217,119,87,0.08)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ fontSize: 16 }}>⚠️</span>
-                  <span style={{ fontFamily: 'system-ui', fontSize: 13, color: '#D97757', fontWeight: 600 }}>
-                    {locale === 'en' ? 'Your site? Not mentioned. Not even considered.' : 'Votre site ? Pas mentionné. Pas même considéré.'}
-                  </span>
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#EF4444', marginTop: 12, fontWeight: 600 }}>
+                  {locale === 'en' ? 'Your business? Absent.' : 'Votre entreprise ? Absente.'}
                 </div>
-                <p style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.4)', marginTop: 6, marginBottom: 0, lineHeight: 1.5 }}>
-                  {locale === 'en'
-                    ? 'This happens on thousands of queries in your market. Detekia tells you exactly why — and what to fix.'
-                    : 'Ça se produit sur des milliers de requêtes dans votre marché. Detekia vous dit exactement pourquoi — et quoi corriger.'}
-                </p>
               </div>
+              {/* AVEC */}
+              <div style={{ background: 'rgba(16,163,127,0.04)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 12, padding: '24px' }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, marginBottom: 14 }}>
+                  {locale === 'en' ? 'WITH DETEKIA' : 'AVEC DETEKIA'}
+                </div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.6)', lineHeight: 1.8 }}>
+                  {[
+                    { rank: '1.', name: locale === 'en' ? 'Your business' : 'Votre entreprise', you: true },
+                    { rank: '2.', name: locale === 'en' ? 'Competitor A' : 'Concurrent A', you: false },
+                    { rank: '3.', name: locale === 'en' ? 'Competitor B' : 'Concurrent B', you: false },
+                  ].map((r, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                      <span style={{ color: '#10A37F', fontWeight: 700, fontSize: 12 }}>{r.rank}</span>
+                      <span style={{ color: r.you ? '#10A37F' : 'rgba(247,245,242,0.6)', fontWeight: r.you ? 700 : 400 }}>{r.name}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#10A37F', marginTop: 12, fontWeight: 600 }}>
+                  {locale === 'en' ? 'Cited first. Qualified traffic.' : 'Cité en premier. Trafic qualifié.'}
+                </div>
+              </div>
+            </div>
+          </RevealSection>
+
+          {/* Block C — Coût de l'inaction */}
+          <RevealSection delay={0.3}>
+            <div style={{ background: 'rgba(217,119,87,0.06)', borderLeft: '3px solid #D97757', borderRadius: 8, padding: '18px 24px', marginBottom: 32 }}>
+              <p style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.6)', lineHeight: 1.7, margin: 0, fontStyle: 'italic' }}>
+                {locale === 'en'
+                  ? 'Every day without GEO optimization = customers discovering your competitors instead of you. The difference between being recommended and being ignored.'
+                  : 'Chaque jour sans optimisation GEO = des clients qui découvrent vos concurrents au lieu de vous. La différence entre être recommandé et être ignoré.'}
+              </p>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <Link href="/#analyser" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontWeight: 700, fontSize: 15, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                {locale === 'en' ? 'Test my AI visibility for free →' : 'Tester ma visibilité IA gratuitement →'}
+              </Link>
             </div>
           </RevealSection>
         </div>
@@ -478,8 +511,8 @@ export default function Home() {
             </h2>
             <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
               {locale === 'en'
-                ? 'Each audit is independent. Start with the free score, or go straight to the full report — it\'s up to you.'
-                : 'Chaque audit est indépendant. Commencez par le score gratuit, ou passez directement au rapport complet — c\'est vous qui décidez.'}
+                ? 'Every day counts. Each audit is independent — start with the free score or go straight to the full report.'
+                : 'Chaque jour compte. Chaque audit est indépendant — commencez par le score gratuit ou passez directement au rapport complet.'}
             </p>
           </RevealSection>
 
@@ -799,6 +832,8 @@ export default function Home() {
 
         @media (max-width: 640px) { .stats-marquee { animation-duration: 30s; } }
 
+        .hp-stats-shock { grid-template-columns: repeat(3, 1fr); }
+        .hp-before-after { grid-template-columns: 1fr 1fr; }
         .hp-offers-grid { grid-template-columns: repeat(3, 1fr); }
         .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
 
@@ -807,6 +842,8 @@ export default function Home() {
           .testimonials-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 640px) {
+          .hp-stats-shock { grid-template-columns: 1fr !important; }
+          .hp-before-after { grid-template-columns: 1fr !important; }
           .hp-offers-grid { grid-template-columns: 1fr !important; }
           section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 64px !important; padding-bottom: 64px !important; }
           .hero-section { padding: 24px 20px 40px !important; }
