@@ -617,8 +617,8 @@ export default function Home() {
                 { label: locale === 'en' ? 'ChatGPT queries tested' : 'Requêtes ChatGPT testées', vals: ['–', '✓ (10)', '✓ (30)'] },
                 { label: locale === 'en' ? 'Detailed recommendations' : 'Recommandations détaillées', vals: ['–', '✓', '✓'] },
                 { label: locale === 'en' ? 'Competitor comparison' : 'Comparaison concurrents', vals: ['–', '✓', '✓'] },
-                { label: locale === 'en' ? 'AI-powered insights' : 'Recommandations IA', vals: ['–', '–', '✓'] },
-                { label: locale === 'en' ? 'PDF export' : 'Export PDF', vals: ['–', '✓', '✓'] },
+                { label: locale === 'en' ? 'Cross-page patterns' : 'Patterns transverses', vals: ['–', '–', '✓'] },
+                { label: locale === 'en' ? 'Per-page summary' : 'Bilan page par page', vals: ['–', '–', '✓'] },
               ].map((row, ri) => (
                 <div key={ri} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.04)', background: ri % 2 === 1 ? 'rgba(247,245,242,0.02)' : 'transparent' }}>
                   <div style={{ padding: '13px 20px', fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.5)', whiteSpace: 'nowrap' }}>{row.label}</div>
