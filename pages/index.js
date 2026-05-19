@@ -395,42 +395,41 @@ export default function Home() {
       </div>
 
 
-      {/* ══ SECTION 3 — LE PROBLÈME (mockup ChatGPT) ══ */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+      {/* ══ SECTION 3 — LE PROBLÈME (mockup ChatGPT, fond dark) ══ */}
+      <section style={{ background: '#1A1916', padding: '96px 48px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '20%', right: '10%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ maxWidth: 800, margin: '0 auto', position: 'relative' }}>
           <RevealSection>
-            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'THE PROBLEM' : 'LE PROBLÈME'}
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+              {locale === 'en' ? 'THE INVISIBLE THREAT' : 'LA MENACE INVISIBLE'}
             </div>
-            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.1 }}>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 16, lineHeight: 1.1 }}>
               {locale === 'en'
-                ? <>When a client asks ChatGPT, <em style={{ color: '#D97757' }}>your competitors answer</em></>
-                : <>Quand un client pose une question à ChatGPT, <em style={{ color: '#D97757' }}>ce sont vos concurrents qui répondent</em></>}
+                ? <>Every day, AI recommends your competitors <em style={{ color: '#D97757' }}>instead of you</em></>
+                : <>Chaque jour, les IA recommandent vos concurrents <em style={{ color: '#D97757' }}>à votre place</em></>}
             </h2>
-            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
+            <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
               {locale === 'en'
-                ? '28 million French users ask AI for advice every month. If your site isn\'t cited, your competitors capture those prospects — without you even knowing.'
-                : '28 millions de Français demandent conseil aux IA chaque mois. Si votre site n\'est pas cité, vos concurrents captent ces prospects — sans que vous le sachiez.'}
+                ? '28 million French users ask AI for advice every month. Unlike SEO, you can\'t see when you\'re absent — the leads just silently go elsewhere.'
+                : '28 millions de Français consultent les IA chaque mois. Contrairement au SEO, vous ne voyez pas quand vous êtes absent — les prospects partent en silence.'}
             </p>
           </RevealSection>
 
-          {/* Mockup réponse ChatGPT */}
+          {/* Mockup réponse ChatGPT — dark version */}
           <RevealSection delay={0.15}>
-            <div style={{ background: '#F7F5F2', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 32px', maxWidth: 640, margin: '0 auto' }}>
-              {/* ChatGPT header */}
+            <div style={{ background: 'rgba(247,245,242,0.04)', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 32px', maxWidth: 640, margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
                 <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#10A37F', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ color: '#fff', fontSize: 14, fontWeight: 700 }}>G</span>
                 </div>
                 <div>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#1A1916' }}>ChatGPT</div>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 10, color: '#B0ABA5' }}>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#F7F5F2' }}>ChatGPT</div>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 10, color: 'rgba(247,245,242,0.35)' }}>
                     {locale === 'en' ? 'Response to: "Best project management tool for startups?"' : 'Réponse à : « Quel est le meilleur outil de gestion de projet pour startups ? »'}
                   </div>
                 </div>
               </div>
-              {/* Response body */}
-              <div style={{ fontFamily: 'system-ui', fontSize: 14, color: '#3A3835', lineHeight: 1.8 }}>
+              <div style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.7)', lineHeight: 1.8 }}>
                 <p style={{ margin: '0 0 12px' }}>
                   {locale === 'en'
                     ? 'Here are the top project management tools recommended for startups in 2026:'
@@ -438,29 +437,28 @@ export default function Home() {
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {[
-                    { name: 'Notion', desc: locale === 'en' ? 'All-in-one workspace with great flexibility' : 'Espace de travail tout-en-un très flexible', cited: true },
-                    { name: 'Linear', desc: locale === 'en' ? 'Fast issue tracking for dev teams' : 'Suivi des tâches rapide pour les équipes dev', cited: true },
-                    { name: 'Monday.com', desc: locale === 'en' ? 'Visual project management for non-technical teams' : 'Gestion de projet visuelle pour les équipes non-techniques', cited: true },
+                    { name: 'Notion', desc: locale === 'en' ? 'All-in-one workspace with great flexibility' : 'Espace de travail tout-en-un très flexible' },
+                    { name: 'Linear', desc: locale === 'en' ? 'Fast issue tracking for dev teams' : 'Suivi des tâches rapide pour les équipes dev' },
+                    { name: 'Monday.com', desc: locale === 'en' ? 'Visual project management for non-technical teams' : 'Gestion de projet visuelle pour les équipes non-techniques' },
                   ].map((tool, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
                       <span style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 700, color: '#10A37F', flexShrink: 0 }}>{i + 1}.</span>
-                      <span><strong style={{ color: '#1A1916' }}>{tool.name}</strong> — {tool.desc}</span>
+                      <span><strong style={{ color: '#F7F5F2' }}>{tool.name}</strong> — {tool.desc}</span>
                     </div>
                   ))}
                 </div>
               </div>
-              {/* "Votre site" absent */}
-              <div style={{ marginTop: 20, padding: '14px 18px', background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10 }}>
+              <div style={{ marginTop: 20, padding: '14px 18px', background: 'rgba(217,119,87,0.08)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ fontSize: 16 }}>⚠️</span>
                   <span style={{ fontFamily: 'system-ui', fontSize: 13, color: '#D97757', fontWeight: 600 }}>
                     {locale === 'en' ? 'Your site? Not mentioned. Not even considered.' : 'Votre site ? Pas mentionné. Pas même considéré.'}
                   </span>
                 </div>
-                <p style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', marginTop: 6, marginBottom: 0, lineHeight: 1.5 }}>
+                <p style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.4)', marginTop: 6, marginBottom: 0, lineHeight: 1.5 }}>
                   {locale === 'en'
-                    ? 'This happens every day, on thousands of queries in your market. Detekia tells you why — and what to fix.'
-                    : 'Ça se produit chaque jour, sur des milliers de requêtes dans votre marché. Detekia vous dit pourquoi — et quoi corriger.'}
+                    ? 'This happens on thousands of queries in your market. Detekia tells you exactly why — and what to fix.'
+                    : 'Ça se produit sur des milliers de requêtes dans votre marché. Detekia vous dit exactement pourquoi — et quoi corriger.'}
                 </p>
               </div>
             </div>
@@ -468,81 +466,77 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ SECTION 4 — LE PARCOURS DETEKIA (escalier 3 niveaux) ══ */}
-      <section style={{ background: '#1A1916', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+      {/* ══ SECTION 4 — NOS OFFRES (3 cartes indépendantes, fond blanc) ══ */}
+      <section style={{ background: '#fff', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <RevealSection>
-            <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'YOUR PATH' : 'VOTRE PARCOURS'}
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+              {locale === 'en' ? 'OUR AUDITS' : 'NOS AUDITS'}
             </div>
-            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-              {locale === 'en' ? <>From invisible to <em style={{ color: '#D97757' }}>cited by AI</em></> : <>De l&apos;invisibilité à la <em style={{ color: '#D97757' }}>citation IA</em></>}
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+              {locale === 'en' ? <>Choose the level of depth <em style={{ color: '#D97757' }}>that suits you</em></> : <>Choisissez le niveau de profondeur <em style={{ color: '#D97757' }}>qui vous convient</em></>}
             </h2>
-            <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 56px' }}>
+            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
               {locale === 'en'
-                ? 'Start for free. Go deeper when you need to. Each level builds on the previous one.'
-                : 'Commencez gratuitement. Allez plus loin quand vous en avez besoin. Chaque niveau enrichit le précédent.'}
+                ? 'Each audit is independent. Start with the free score, or go straight to the full report — it\'s up to you.'
+                : 'Chaque audit est indépendant. Commencez par le score gratuit, ou passez directement au rapport complet — c\'est vous qui décidez.'}
             </p>
           </RevealSection>
 
-          {/* Escalier visuel — 3 marches */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="hp-offers-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {[
               {
-                step: '1', price: locale === 'en' ? 'Free' : 'Gratuit', color: '#10A37F',
+                price: locale === 'en' ? 'Free' : 'Gratuit', priceColor: '#10A37F', highlight: false,
                 title: locale === 'en' ? 'Free scoring' : 'Scoring gratuit',
-                promise: locale === 'en' ? 'Understand where you stand' : 'Comprendre où vous en êtes',
+                desc: locale === 'en' ? 'Find out if your site is visible to AI — in 60 seconds, no signup.' : 'Découvrez si votre site est visible pour les IA — en 60 secondes, sans inscription.',
                 bullets: locale === 'en'
-                  ? ['Score out of 100 on 8 criteria', 'Strengths and weaknesses identified', 'Instant result, no signup']
-                  : ['Score sur 100 sur 8 critères', 'Forces et faiblesses identifiées', 'Résultat instantané, sans inscription'],
+                  ? ['Score out of 100 on 8 criteria', 'Strengths and weaknesses identified', 'One recommendation preview', 'Instant result']
+                  : ['Score sur 100 sur 8 critères', 'Forces et faiblesses identifiées', 'Aperçu d\'une recommandation', 'Résultat instantané'],
+                ideal: locale === 'en' ? 'Ideal for: a first diagnostic' : 'Idéal pour : un premier diagnostic',
                 cta: locale === 'en' ? 'Get my free score →' : 'Obtenir mon score gratuit →',
                 href: '/#analyser',
-                width: '70%',
               },
               {
-                step: '2', price: '29 €', color: '#D97757',
+                price: '29 €', priceColor: '#D97757', highlight: true,
                 title: locale === 'en' ? '1-page audit' : 'Audit 1 page',
-                promise: locale === 'en' ? 'Dig deep into one strategic page' : 'Creuser une page stratégique',
+                desc: locale === 'en' ? 'Full diagnosis of one strategic page with code-level recommendations and a real ChatGPT citation test.' : 'Diagnostic complet d\'une page stratégique avec recommandations au niveau du code et test de citation ChatGPT réel.',
                 bullets: locale === 'en'
-                  ? ['Detailed recommendations with code examples', 'Real ChatGPT citation test (10 queries)', 'Comparison with 3 competitors', 'Permanent web report + PDF']
-                  : ['Recommandations détaillées avec exemples de code', 'Test de citation ChatGPT réel (10 requêtes)', 'Comparaison avec 3 concurrents', 'Rapport web permanent + PDF'],
-                cta: locale === 'en' ? 'Get my 1-page audit — €29 →' : 'Obtenir mon audit 1 page — 29 € →',
+                  ? ['Detailed recommendations with code', 'Real ChatGPT citation test (10 queries)', 'Comparison with 3 competitors', 'Web report + PDF · One-time payment']
+                  : ['Recommandations détaillées avec code', 'Test de citation ChatGPT réel (10 requêtes)', 'Comparaison avec 3 concurrents', 'Rapport web + PDF · Paiement unique'],
+                ideal: locale === 'en' ? 'Ideal for: optimizing your homepage or a key landing page' : 'Idéal pour : optimiser votre homepage ou une landing page clé',
+                cta: locale === 'en' ? 'Get the 1-page audit — €29 →' : 'Obtenir l\'audit 1 page — 29 € →',
                 href: '/pricing',
-                width: '85%',
               },
               {
-                step: '3', price: '99 €', color: '#D97757',
+                price: '99 €', priceColor: '#D97757', highlight: false,
                 title: locale === 'en' ? 'Full audit' : 'Audit complet',
-                promise: locale === 'en' ? 'Cover all 10 key pages of your site' : 'Traiter les 10 pages clés de votre site',
+                desc: locale === 'en' ? 'Analyze your 10 key pages, detect cross-page patterns, and get a site-wide action plan with AI-powered recommendations.' : 'Analysez vos 10 pages clés, détectez les patterns transverses, et obtenez un plan d\'action site entier avec recommandations IA.',
                 bullets: locale === 'en'
-                  ? ['Everything in the 1-page audit, ×10', '30 real ChatGPT queries tested', 'AI-powered recommendations', 'Projected score after fixes', 'One-time payment']
-                  : ['Tout l\'audit 1 page, ×10', '30 requêtes ChatGPT réelles testées', 'Recommandations enrichies par IA', 'Score projeté après corrections', 'Paiement unique'],
+                  ? ['10 pages analyzed in depth', '30 real ChatGPT queries tested', 'AI-powered recommendations', 'Projected score after fixes · PDF']
+                  : ['10 pages analysées en profondeur', '30 requêtes ChatGPT réelles testées', 'Recommandations enrichies par IA', 'Score projeté après corrections · PDF'],
+                ideal: locale === 'en' ? 'Ideal for: a complete site-level GEO strategy' : 'Idéal pour : une stratégie GEO complète au niveau du site',
                 cta: locale === 'en' ? 'Get the full audit — €99 →' : 'Obtenir l\'audit complet — 99 € →',
                 href: '/pricing',
-                width: '100%',
               },
-            ].map((level, i) => (
-              <RevealSection key={i} delay={i * 0.12}>
-                <div className="hp-stair-step" style={{ background: 'rgba(247,245,242,0.06)', border: '1px solid rgba(247,245,242,0.1)', borderLeft: `4px solid ${level.color}`, borderRadius: 14, padding: '28px 32px', maxWidth: level.width, marginLeft: 'auto', display: 'flex', gap: 24, alignItems: 'flex-start', transition: 'border-color 0.3s' }}>
-                  {/* Step number + price */}
-                  <div style={{ flexShrink: 0, textAlign: 'center', minWidth: 56 }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 32, color: level.color, fontWeight: 700, lineHeight: 1 }}>{level.step}</div>
-                    <div style={{ fontFamily: 'monospace', fontSize: 12, color: level.color, marginTop: 4, fontWeight: 700 }}>{level.price}</div>
+            ].map((offer, i) => (
+              <RevealSection key={i} delay={i * 0.1}>
+                <div style={{ background: offer.highlight ? 'rgba(217,119,87,0.03)' : '#FAFAF9', border: offer.highlight ? '2px solid #D97757' : '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column', boxShadow: offer.highlight ? '0 4px 24px rgba(217,119,87,0.08)' : 'none' }}>
+                  {/* Price */}
+                  <div style={{ fontFamily: 'monospace', fontSize: 28, color: offer.priceColor, fontWeight: 700, marginBottom: 4, letterSpacing: -1 }}>{offer.price}</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 8, lineHeight: 1.2 }}>{offer.title}</div>
+                  <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>{offer.desc}</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
+                    {offer.bullets.map((b, j) => (
+                      <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontSize: 10, color: offer.priceColor }}>✓</span>
+                        <span style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui' }}>{b}</span>
+                      </div>
+                    ))}
                   </div>
-                  {/* Content */}
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#F7F5F2', marginBottom: 4, lineHeight: 1.2 }}>{level.title}</div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.5)', marginBottom: 12, fontStyle: 'italic' }}>{level.promise}</div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 14 }}>
-                      {level.bullets.map((b, j) => (
-                        <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                          <span style={{ fontSize: 10, color: level.color }}>✓</span>
-                          <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui' }}>{b}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <Link href={level.href} className="btn-interactive" style={{ display: 'inline-block', background: level.color, color: '#fff', padding: '10px 22px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                      {level.cta}
+                  <div style={{ fontFamily: 'system-ui', fontSize: 11, color: '#B0ABA5', fontStyle: 'italic', marginBottom: 16 }}>{offer.ideal}</div>
+                  <div style={{ marginTop: 'auto' }}>
+                    <Link href={offer.href} className="btn-interactive" style={{ display: 'inline-block', background: offer.highlight ? '#D97757' : '#1A1916', color: '#fff', padding: '11px 24px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                      {offer.cta}
                     </Link>
                   </div>
                 </div>
@@ -805,6 +799,7 @@ export default function Home() {
 
         @media (max-width: 640px) { .stats-marquee { animation-duration: 30s; } }
 
+        .hp-offers-grid { grid-template-columns: repeat(3, 1fr); }
         .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
 
         @media (max-width: 900px) {
@@ -812,7 +807,7 @@ export default function Home() {
           .testimonials-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 640px) {
-          .hp-stair-step { max-width: 100% !important; flex-direction: column !important; gap: 12px !important; }
+          .hp-offers-grid { grid-template-columns: 1fr !important; }
           section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 64px !important; padding-bottom: 64px !important; }
           .hero-section { padding: 24px 20px 40px !important; }
         }
