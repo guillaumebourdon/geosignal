@@ -336,9 +336,9 @@
           "photo": "/faycal-madiou.jpg",
           "name": "Fayçal Madiou",
           "role": "CEO · Flash Games",
-          "quote": "L'audit One-Page m'a donné <strong>des pistes d'optimisation concrètes</strong> pour mon site, et le rapport Présence IA m'a ouvert les yeux sur ma stratégie. Vraiment complet et actionnable.",
+          "quote": "L'audit One-Page m'a donné <strong>des pistes d'optimisation concrètes</strong> pour mon site. Le rapport est complet et vraiment actionnable — je savais exactement quoi corriger en priorité.",
           "footerType": "badge",
-          "badge": "ONE-PAGE + PRÉSENCE IA"
+          "badge": "AUDIT ONE-PAGE"
         }
       ]
     },
@@ -349,55 +349,27 @@
       "items": [
         {
           "q": "Est-ce différent de demander directement à ChatGPT ?",
-          "a": "Oui, fondamentalement. Demander à ChatGPT 'mon site est-il bien optimisé ?' donne un avis générique basé sur ce qu'il sait de votre URL — souvent approximatif et non reproductible. Detekia analyse le DOM réel de votre page : structure HTML, schema.org, méta-données, liens, contenu. Le résultat est un score quantifié sur 100, 8 critères mesurés objectivement, et des recommandations priorisées par impact. C'est la différence entre une opinion et un diagnostic."
+          "a": "Oui, fondamentalement. Demander à ChatGPT « mon site est-il bien optimisé ? » donne un avis générique, non reproductible. Detekia analyse le code source réel de votre page : structure HTML, schema.org, méta-données, contenu. Le résultat est un score quantifié sur 100, 8 critères mesurés objectivement, et des recommandations priorisées par impact."
         },
         {
           "q": "C'est quoi le GEO et en quoi c'est différent du SEO ?",
-          "a": "Le GEO (Generative Engine Optimization) est l'art d'optimiser votre site pour apparaître dans les réponses des intelligences artificielles — ChatGPT, Claude, Gemini, Perplexity. Contrairement au SEO qui vise à ranker sur Google, le GEO vise à être cité et recommandé directement dans les réponses des IA. Les critères sont différents : les IA valorisent la clarté, la citabilité, la crédibilité et les données structurées."
-        },
-        {
-          "q": "Comment fonctionne l'analyse Detekia ?",
-          "a": "Entrez l'URL de votre site, Detekia scrape votre contenu et l'analyse selon 8 critères GEO : extractibilité, vérifiabilité, autorité E-E-A-T, crawlabilité IA, données structurées, neutralité éditoriale, présence externe et fraîcheur. Notre IA génère ensuite des recommandations expertes personnalisées pour votre site. La méthodologie complète est disponible sur la page Méthodologie."
-        },
-        {
-          "q": "Pourquoi l'analyse est-elle vraiment gratuite ?",
-          "a": "L'analyse de base — score sur 100, 8 critères détaillés, une recommandation en aperçu — est totalement gratuite et sans inscription. Aucune carte bancaire requise. Pour aller plus loin : l'audit 1 page (29 €) donne un diagnostic complet, et l'audit complet (99 €) analyse 10 pages stratégiques de votre site."
+          "a": "Le GEO (Generative Engine Optimization) optimise votre site pour apparaître dans les réponses de ChatGPT, Claude, Gemini et Perplexity. Le SEO vise Google, le GEO vise les IA. Les critères sont différents : les IA valorisent la clarté, la crédibilité, les données structurées et la facilité d'extraction du contenu."
         },
         {
           "q": "Qu'est-ce qu'un bon score GEO ?",
-          "a": "Sur Detekia, un score supérieur à 70/100 est considéré comme bon. Entre 45 et 70, votre site a des bases solides mais nécessite des optimisations ciblées. En dessous de 45, des actions prioritaires s'imposent. La majorité des sites analysés obtiennent un score entre 15 et 45 — même les grandes marques obtiennent souvent des scores faibles car leurs sites sont optimisés pour vendre, pas pour être cités par les IA."
+          "a": "Un score supérieur à 70/100 est bon. Entre 45 et 70, des optimisations ciblées sont nécessaires. En dessous de 45, des actions prioritaires s'imposent. La majorité des sites obtiennent un score entre 15 et 45 — même les grandes marques, car leurs sites sont optimisés pour vendre, pas pour être cités par les IA."
         },
         {
-          "q": "Les données de mon site sont-elles conservées ?",
-          "a": "Non. Detekia analyse votre site en temps réel et ne conserve aucune donnée de votre site au-delà de 24h. Les résultats d'analyse sont mis en cache 24h pour accélérer les analyses successives du même site, mais aucune donnée personnelle n'est stockée."
-        },
-        {
-          "q": "Detekia fonctionne-t-il pour tous les types de sites ?",
-          "a": "Oui — e-commerce, blogs, SaaS, sites vitrine, portfolios, sites institutionnels. Les critères GEO sont universels. Certains types de sites ont toutefois un avantage naturel : les blogs avec du contenu éditorial riche, les sites avec une forte présence presse, et les plateformes qui publient des données originales. Mais tous les sites peuvent progresser significativement avec les bonnes optimisations."
-        },
-        {
-          "q": "Que se passe-t-il si mon score ne s'améliore pas ?",
-          "a": "Les recommandations du rapport sont concrètes et priorisées par impact. Si vous les appliquez et que votre score n'évolue pas, contactez-nous à hello@detekia.fr — on analyse le cas avec vous gratuitement."
-        },
-        {
-          "q": "Pourquoi Detekia coûte-t-il 30x moins cher que les outils GEO du marché ?",
-          "a": "Plusieurs raisons : nous proposons un paiement unique au lieu d'un abonnement, notre infrastructure est largement automatisée par IA, nous sommes une équipe française à coûts maîtrisés, et nous n'avons pas de levée de fonds à rentabiliser. Vous bénéficiez d'un outil de niveau professionnel sans payer pour un dashboard SaaS dont vous n'utiliseriez pas 90% des fonctionnalités."
-        },
-        {
-          "q": "Combien de temps pour voir un impact sur ma visibilité IA après les corrections ?",
-          "a": "La fenêtre habituelle est de 4 à 12 semaines. Les IA réindexent les sites à des rythmes variables (ChatGPT et Claude ré-évaluent à chaque requête, Gemini et Perplexity ont des cycles plus longs). Les corrections techniques (robots.txt, balises) prennent effet rapidement, les corrections éditoriales (autorité, présence externe) demandent plus de temps. Le rapport Pro inclut une projection de score post-corrections pour vous donner un ordre de grandeur."
-        },
-        {
-          "q": "Qu'est-ce que la Présence IA exactement, et en quoi c'est différent de l'audit ?",
-          "a": "L'audit Detekia analyse votre site (le code, la structure, le contenu) pour identifier ce qui bloque votre citabilité. La Présence IA, elle, interroge réellement ChatGPT, Claude, Gemini et Perplexity sur les requêtes stratégiques de votre marché pour mesurer si — et comment — vous êtes cité. C'est complémentaire : l'audit corrige les causes, la Présence IA mesure les effets. Disponible en rapport one-shot ou avec un monitoring mensuel."
-        },
-        {
-          "q": "Qui est derrière Detekia ?",
-          "a": "Detekia est développé par Beeleven, une agence spécialisée en stratégie digitale et IA basée à Paris. L'outil est conçu par des experts en SEO, GEO et intelligence artificielle qui travaillent quotidiennement avec les moteurs génératifs."
+          "q": "Pourquoi l'analyse est-elle vraiment gratuite ?",
+          "a": "Le scoring — score sur 100 + 8 critères + une recommandation en aperçu — est totalement gratuit et sans inscription. Aucune carte bancaire. Pour aller plus loin : l'audit 1 page (29 €) donne un diagnostic complet avec code, et l'audit complet (99 €) analyse les 10 pages clés de votre site."
         },
         {
           "q": "Quelle différence entre l'audit 1 page et l'audit complet ?",
-          "a": "L'audit 1 page (29 €) analyse une URL en profondeur : score, 8 critères, recommandations avec code, résultat en 1 minute. L'audit complet (99 €) analyse les 10 pages les plus stratégiques de votre site, détecte les patterns transverses et produit un plan d'action priorisé au niveau du site entier."
+          "a": "L'audit 1 page (29 €) analyse une URL en profondeur : score, 8 critères, recommandations avec code, test de citation ChatGPT réel. L'audit complet (99 €) analyse les 10 pages les plus stratégiques de votre site, 30 requêtes ChatGPT testées, recommandations IA enrichies, et un plan d'action site entier."
+        },
+        {
+          "q": "Qui est derrière Detekia ?",
+          "a": "Detekia est conçu par une équipe française spécialisée en SEO, GEO et intelligence artificielle, basée à Paris. Méthodologie ouverte, basée sur la recherche académique (Princeton, 2024), et publiée sur detekia.fr/methodologie."
         }
       ]
     },
@@ -417,8 +389,7 @@
         "links": [
           { "label": "Scoring gratuit", "href": "/" },
           { "label": "Audit 1 page — 29 €", "href": "/one-page" },
-          { "label": "Audit complet — 99 €", "href": "/pro" },
-          { "label": "Présence IA", "href": "/presence-ia" }
+          { "label": "Audit complet — 99 €", "href": "/pro" }
         ]
       },
       "resources": {

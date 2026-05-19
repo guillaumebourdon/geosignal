@@ -336,9 +336,9 @@
           "photo": "/faycal-madiou.jpg",
           "name": "Fayçal Madiou",
           "role": "CEO · Flash Games",
-          "quote": "The One-Page audit gave me <strong>concrete optimization leads</strong> for my site, and the AI Presence report opened my eyes on strategy. Truly comprehensive and actionable.",
+          "quote": "The One-Page audit gave me <strong>concrete optimization leads</strong> for my site. The report is comprehensive and truly actionable — I knew exactly what to fix first.",
           "footerType": "badge",
-          "badge": "ONE-PAGE + AI PRESENCE"
+          "badge": "1-PAGE AUDIT"
         }
       ]
     },
@@ -349,55 +349,27 @@
       "items": [
         {
           "q": "Is this different from asking ChatGPT directly?",
-          "a": "Yes, fundamentally. Asking ChatGPT 'is my website well optimized?' gives a generic opinion based on what it knows about your URL — often approximate and non-reproducible. Detekia analyzes the actual DOM of your page: HTML structure, schema.org, metadata, links, content. The result is a quantified score out of 100, 8 objectively measured criteria, and recommendations prioritized by impact. It's the difference between an opinion and a diagnosis."
+          "a": "Yes, fundamentally. Asking ChatGPT 'is my site well optimized?' gives a generic, non-reproducible opinion. Detekia analyzes your actual source code: HTML structure, schema.org, metadata, content. The result is a quantified score out of 100, 8 objectively measured criteria, and recommendations prioritized by impact."
         },
         {
           "q": "What is GEO and how is it different from SEO?",
-          "a": "GEO (Generative Engine Optimization) is the practice of optimizing your website to appear in AI-generated responses — ChatGPT, Claude, Gemini, Perplexity. Unlike SEO which aims to rank on Google, GEO aims to be cited and recommended directly in AI answers. The criteria are different: AI models value clarity, citability, credibility and structured data."
-        },
-        {
-          "q": "How does the Detekia analysis work?",
-          "a": "Enter your website URL, and Detekia scrapes your content and analyzes it against 8 GEO criteria: extractability, verifiability, E-E-A-T authority, AI crawlability, structured data, editorial neutrality, external presence and freshness. Our AI then generates personalized expert recommendations for your website. The full methodology is available on our Methodology page."
-        },
-        {
-          "q": "Why is the analysis really free?",
-          "a": "The basic analysis — score out of 100, 8 detailed criteria, one recommendation preview — is completely free with no signup. No credit card needed. To go further: the 1-page audit (€29) gives a full diagnosis, and the complete audit (€99) analyzes 10 strategic pages of your site."
+          "a": "GEO (Generative Engine Optimization) optimizes your site to appear in ChatGPT, Claude, Gemini and Perplexity responses. SEO targets Google, GEO targets AI. The criteria are different: AI models value clarity, credibility, structured data and content extractability."
         },
         {
           "q": "What's a good GEO Score?",
-          "a": "On Detekia, a score above 70/100 is considered good. Between 45 and 70, your website has solid foundations but needs targeted optimizations. Below 45, priority actions are needed. Most analyzed websites score between 15 and 45 — even major brands often score low because their websites are optimized to sell, not to be cited by AI."
+          "a": "A score above 70/100 is good. Between 45 and 70, targeted optimizations are needed. Below 45, priority actions are required. Most sites score between 15 and 45 — even major brands, because their sites are optimized to sell, not to be cited by AI."
         },
         {
-          "q": "Is my website data stored?",
-          "a": "No. Detekia analyzes your website in real time and doesn't store any of your website data beyond 24 hours. Analysis results are cached for 24 hours to speed up successive analyses of the same website, but no personal data is stored."
-        },
-        {
-          "q": "Does Detekia work for all types of websites?",
-          "a": "Yes — e-commerce, blogs, SaaS, business websites, portfolios, institutional sites. GEO criteria are universal. Some types of websites do have a natural advantage: blogs with rich editorial content, websites with strong press coverage, and platforms that publish original data. But all websites can improve significantly with the right optimizations."
-        },
-        {
-          "q": "What if my score doesn't improve?",
-          "a": "The report's recommendations are concrete and prioritized by impact. If you implement them and your score doesn't change, contact us at hello@detekia.fr — we'll analyze your case with you for free."
-        },
-        {
-          "q": "Why is Detekia 30x cheaper than other GEO tools?",
-          "a": "Several reasons: we offer one-time payment instead of a subscription, our infrastructure is largely AI-automated, we're a lean French team with controlled costs, and we don't have venture capital to recoup. You get a professional-grade tool without paying for a SaaS dashboard you'd only use 10% of."
-        },
-        {
-          "q": "How long before I see an impact on my AI visibility after making fixes?",
-          "a": "The typical window is 4 to 12 weeks. AI engines re-index sites at different rates (ChatGPT and Claude re-evaluate with each query, Gemini and Perplexity have longer cycles). Technical fixes (robots.txt, meta tags) take effect quickly, while editorial improvements (authority, external presence) take more time. The Pro report includes a projected post-fix score to give you a rough estimate."
-        },
-        {
-          "q": "What exactly is AI Presence, and how is it different from the audit?",
-          "a": "The Detekia audit analyzes your site (code, structure, content) to identify what blocks your citability. AI Presence actually queries ChatGPT, Claude, Gemini and Perplexity on your market's strategic queries to measure whether — and how — you're cited. They're complementary: the audit fixes the causes, AI Presence measures the effects. Available as a one-shot report or with monthly monitoring."
-        },
-        {
-          "q": "Who's behind Detekia?",
-          "a": "Detekia is developed by Beeleven, a digital strategy and AI agency based in Paris. The tool is built by SEO, GEO and artificial intelligence experts who work daily with generative engines."
+          "q": "Why is the analysis really free?",
+          "a": "The scoring — score out of 100 + 8 criteria + one recommendation preview — is completely free with no signup. No credit card. To go further: the 1-page audit (€29) gives a full diagnosis with code, and the complete audit (€99) analyzes your 10 key pages."
         },
         {
           "q": "What's the difference between the 1-page and complete audit?",
-          "a": "The 1-page audit (€29) analyzes one URL in depth: score, 8 criteria, recommendations with code, results in 1 minute. The complete audit (€99) analyzes the 10 key pages of your site, detects cross-page patterns and produces a prioritized action plan for the entire site."
+          "a": "The 1-page audit (€29) analyzes one URL in depth: score, 8 criteria, recommendations with code, real ChatGPT citation test. The complete audit (€99) covers your 10 key pages, tests 30 ChatGPT queries, adds AI-powered recommendations, and produces a site-wide action plan."
+        },
+        {
+          "q": "Who's behind Detekia?",
+          "a": "Detekia is built by a French team specialized in SEO, GEO and AI, based in Paris. Open methodology, based on academic research (Princeton, 2024), published at detekia.fr/methodologie."
         }
       ]
     },
@@ -417,8 +389,7 @@
         "links": [
           { "label": "Free scoring", "href": "/" },
           { "label": "1-Page audit — €29", "href": "/one-page" },
-          { "label": "Complete audit — €99", "href": "/pro" },
-          { "label": "AI Presence", "href": "/presence-ia" }
+          { "label": "Complete audit — €99", "href": "/pro" }
         ]
       },
       "resources": {
