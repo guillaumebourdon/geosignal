@@ -564,7 +564,7 @@ export default function Home() {
                 {locale === 'en' ? 'See our open methodology →' : 'Voir notre méthodologie ouverte →'}
               </Link>
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginTop: 8 }}>
-                {locale === 'en' ? 'Princeton/Georgia Tech 2024 · Aggarwal et al. 2025 · Made in France' : 'Princeton/Georgia Tech 2024 · Aggarwal et al. 2025 · Made in France'}
+                {locale === 'en' ? 'Aggarwal et al. (Princeton/Georgia Tech, 2024) · SEMrush GEO Study, 2026' : 'Aggarwal et al. (Princeton/Georgia Tech, 2024) · Étude SEMrush GEO, 2026'}
               </div>
             </div>
           </RevealSection>
@@ -624,9 +624,9 @@ export default function Home() {
                 href: '/pricing', exampleLink: locale === 'en' ? '/example-report.html' : '/exemple-rapport.html',
               },
             ].map((offer, i) => (
-              <RevealSection key={i} delay={i * 0.1}>
+              <RevealSection key={i} delay={i * 0.1} style={{ height: '100%' }}>
                 {/* Card + sub-link are siblings inside the RevealSection wrapper */}
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                   <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', display: 'flex', flexDirection: 'column', flex: 1 }}>
                     {/* Idéal pour — en haut, visible */}
                     <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', fontWeight: 600, marginBottom: 14, padding: '6px 12px', background: 'rgba(217,119,87,0.06)', borderRadius: 8, alignSelf: 'flex-start' }}>
