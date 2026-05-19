@@ -409,8 +409,8 @@ export default function Home() {
             </h2>
             <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 40px' }}>
               {locale === 'en'
-                ? 'Detekia analyzes what prevents your site from being cited — and tells you exactly how to fix it.'
-                : 'Detekia analyse ce qui empêche votre site d\'être cité — et vous dit exactement comment y remédier.'}
+                ? 'Detekia analyzes what prevents your site from being cited, and tells you exactly how to fix it.'
+                : 'Detekia analyse ce qui empêche votre site d\'être cité, et vous dit exactement comment y remédier.'}
             </p>
           </RevealSection>
 
@@ -509,7 +509,7 @@ export default function Home() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {(locale === 'en'
-                    ? ['Your exact AI visibility score', 'The blockers keeping you invisible', 'What to fix first — with priorities', 'Estimated impact of each correction']
+                    ? ['Your exact AI visibility score', 'The blockers keeping you invisible', 'What to fix first, by priority', 'Estimated impact of each correction']
                     : ['Votre score exact de visibilité IA', 'Les blocages qui vous rendent invisible', 'Ce qu\'il faut corriger en priorité', 'L\'impact estimé de chaque correction']
                   ).map((p, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
@@ -527,7 +527,7 @@ export default function Home() {
                 {locale === 'en' ? 'See our open methodology →' : 'Voir notre méthodologie ouverte →'}
               </Link>
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginTop: 8 }}>
-                {locale === 'en' ? 'Based on academic research (Princeton, 2024) · Made in France' : 'Basée sur la recherche académique (Princeton, 2024) · Made in France'}
+                {locale === 'en' ? 'Princeton/Georgia Tech 2024 · Aggarwal et al. 2025 · Made in France' : 'Princeton/Georgia Tech 2024 · Aggarwal et al. 2025 · Made in France'}
               </div>
             </div>
           </RevealSection>
@@ -546,8 +546,8 @@ export default function Home() {
             </h2>
             <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
               {locale === 'en'
-                ? 'Every day counts. Each audit is independent — start with the free score or go straight to the full report.'
-                : 'Chaque jour compte. Chaque audit est indépendant — commencez par le score gratuit ou passez directement au rapport complet.'}
+                ? 'Every day counts. Each audit is independent. Start with the free score or go straight to the full report.'
+                : 'Chaque jour compte. Chaque audit est indépendant. Commencez par le score gratuit ou passez directement au rapport complet.'}
             </p>
           </RevealSection>
 
@@ -556,35 +556,35 @@ export default function Home() {
               {
                 price: locale === 'en' ? 'Free' : 'Gratuit', priceColor: '#10A37F',
                 title: locale === 'en' ? 'Free scoring' : 'Scoring gratuit',
-                desc: locale === 'en' ? 'Your AI visibility score in 60 seconds — no signup, no commitment.' : 'Votre score de visibilité IA en 60 secondes — sans inscription, sans engagement.',
+                desc: locale === 'en' ? 'Your AI visibility score in 60 seconds. No signup, no commitment.' : 'Votre score de visibilité IA en 60 secondes. Sans inscription, sans engagement.',
                 bullets: locale === 'en'
                   ? ['Score out of 100 on 8 criteria', 'Strengths and weaknesses identified', 'One recommendation preview', 'Instant result']
                   : ['Score sur 100 sur 8 critères', 'Forces et faiblesses identifiées', 'Aperçu d\'une recommandation', 'Résultat instantané'],
                 ideal: locale === 'en' ? 'You want to know where you stand' : 'Vous voulez savoir où vous en êtes',
                 cta: locale === 'en' ? 'Get my free score →' : 'Obtenir mon score gratuit →',
-                href: '/#analyser',
+                href: '/#analyser', exampleLink: null,
               },
               {
                 price: '29 €', priceColor: '#D97757',
                 title: locale === 'en' ? '1-page audit' : 'Audit 1 page',
-                desc: locale === 'en' ? 'Complete diagnosis of one page — every blocker explained, every fix documented with code.' : 'Diagnostic complet d\'une page — chaque blocage expliqué, chaque correction documentée avec le code.',
+                desc: locale === 'en' ? 'Complete diagnosis of one page. Every blocker explained, every fix documented with code.' : 'Diagnostic complet d\'une page. Chaque blocage expliqué, chaque correction documentée avec le code.',
                 bullets: locale === 'en'
-                  ? ['Detailed recommendations with code examples', 'Real ChatGPT citation test (10 queries)', 'Comparison with 3 competitors', 'Web report + PDF · One-time payment']
-                  : ['Recommandations détaillées avec exemples de code', 'Test de citation ChatGPT réel (10 requêtes)', 'Comparaison avec 3 concurrents', 'Rapport web + PDF · Paiement unique'],
+                  ? ['Detailed recommendations with code examples', '10 real ChatGPT queries tested', 'Comparison with 3 competitors', 'Web report + PDF · One-time payment']
+                  : ['Recommandations détaillées avec exemples de code', '10 requêtes ChatGPT réelles testées', 'Comparaison avec 3 concurrents', 'Rapport web + PDF · Paiement unique'],
                 ideal: locale === 'en' ? 'You want to optimize a homepage, a product page, or a landing page' : 'Vous voulez optimiser une homepage, une fiche produit, ou une landing page',
-                cta: locale === 'en' ? 'Get the 1-page audit — €29 →' : 'Obtenir l\'audit 1 page — 29 € →',
-                href: '/pricing',
+                cta: locale === 'en' ? 'Get the 1-page audit · €29 →' : 'Obtenir l\'audit 1 page · 29 € →',
+                href: '/pricing', exampleLink: locale === 'en' ? '/example-report.html' : '/exemple-rapport.html',
               },
               {
                 price: '99 €', priceColor: '#D97757',
                 title: locale === 'en' ? 'Full audit' : 'Audit complet',
-                desc: locale === 'en' ? 'Your 10 key pages analyzed together — cross-page patterns detected, site-wide action plan.' : 'Vos 10 pages clés analysées ensemble — patterns transverses détectés, plan d\'action global.',
+                desc: locale === 'en' ? 'Your 10 key pages analyzed together. Cross-page patterns detected, site-wide action plan.' : 'Vos 10 pages clés analysées ensemble. Patterns transverses détectés, plan d\'action global.',
                 bullets: locale === 'en'
                   ? ['10 pages analyzed in depth', '30 real ChatGPT queries tested', 'AI-powered recommendations', 'Projected score after fixes · PDF']
                   : ['10 pages analysées en profondeur', '30 requêtes ChatGPT réelles testées', 'Recommandations enrichies par IA', 'Score projeté après corrections · PDF'],
                 ideal: locale === 'en' ? 'You want a GEO strategy for your entire site' : 'Vous voulez une stratégie GEO pour l\'ensemble de votre site',
-                cta: locale === 'en' ? 'Get the full audit — €99 →' : 'Obtenir l\'audit complet — 99 € →',
-                href: '/pricing',
+                cta: locale === 'en' ? 'Get the full audit · €99 →' : 'Obtenir l\'audit complet · 99 € →',
+                href: '/pricing', exampleLink: locale === 'en' ? '/example-report.html' : '/exemple-rapport.html',
               },
             ].map((offer, i) => (
               <RevealSection key={i} delay={i * 0.1}>
@@ -609,18 +609,18 @@ export default function Home() {
                     <Link href={offer.href} className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '11px 24px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
                       {offer.cta}
                     </Link>
+                    {offer.exampleLink && (
+                      <div style={{ marginTop: 10 }}>
+                        <a href={offer.exampleLink} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>
+                          {locale === 'en' ? 'See a sample report →' : 'Voir un exemple de rapport →'}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </RevealSection>
             ))}
           </div>
-          <RevealSection delay={0.4}>
-            <div style={{ textAlign: 'center', marginTop: 28 }}>
-              <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 2 }}>
-                {locale === 'en' ? 'See a sample report →' : 'Voir un exemple de rapport →'}
-              </a>
-            </div>
-          </RevealSection>
         </div>
       </section>
 
@@ -666,7 +666,7 @@ export default function Home() {
                   ) : (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{ fontSize: 14 }}>⚡</span>
-                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#10A37F', letterSpacing: 1, textTransform: 'uppercase', fontWeight: 700 }}>{ti.badge}</span>
+                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 1, textTransform: 'uppercase', fontWeight: 700 }}>{ti.badge}</span>
                     </div>
                   )}
                 </div>
@@ -710,12 +710,12 @@ export default function Home() {
 
       {/* ── FAQ ─────────────────────────────────────────────── */}
       <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.faq.label')}</div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 52, lineHeight: 1.1 }}>
             {t('homepage.faq.titleStart')}<em style={{ color: '#D97757' }}>{t('homepage.faq.titleEm')}</em>
           </h2>
-          <div>
+          <div className="faq-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0 32px' }}>
             {faqItems.map((faq, i) => <FAQItem key={i} question={faq.q} answer={faq.a} />)}
           </div>
         </div>
@@ -741,10 +741,27 @@ export default function Home() {
             {t('homepage.finalCta.subtitle')}
           </p>
 
-          <Link href="/#analyser" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 10, fontWeight: 700, fontSize: 16, textDecoration: 'none', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.4)', letterSpacing: -0.2 }}>
-            {t('homepage.finalCta.cta')}
-          </Link>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.3)', letterSpacing: 1, marginTop: 16 }}>
+          {/* URL input — same as hero */}
+          <div style={{ maxWidth: 500, margin: '0 auto 24px' }}>
+            <div style={{ display: 'flex', background: 'rgba(247,245,242,0.08)', border: '1px solid rgba(247,245,242,0.15)', borderRadius: 12, overflow: 'hidden' }}>
+              <input
+                value={url}
+                onChange={e => setUrl(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && analyze()}
+                aria-label="URL"
+                placeholder={t('homepage.hero.inputPlaceholder')}
+                style={{ flex: 1, border: 'none', outline: 'none', padding: '15px 20px', fontSize: 15, fontFamily: 'system-ui', color: '#F7F5F2', background: 'transparent', minWidth: 0 }}
+              />
+              <button
+                onClick={analyze}
+                className="btn-interactive"
+                style={{ background: '#D97757', color: '#fff', border: 'none', padding: '15px 32px', borderRadius: '0 12px 12px 0', fontWeight: 700, fontSize: 14, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                {locale === 'en' ? 'Get my score →' : 'Mon score →'}
+              </button>
+            </div>
+          </div>
+
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.3)', letterSpacing: 1 }}>
             {t('homepage.finalCta.trustBadge')}
           </div>
 
@@ -756,10 +773,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-
-          <p style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.18)', letterSpacing: 1, marginTop: 24 }}>
-            {t('homepage.finalCta.priceNote')}
-          </p>
         </div>
       </section>
 
@@ -812,6 +825,7 @@ export default function Home() {
         }
         @media (max-width: 640px) {
           .hp-stats-shock { grid-template-columns: 1fr !important; }
+          .faq-grid { grid-template-columns: 1fr !important; }
           .hp-compare-grid { grid-template-columns: 1fr !important; }
           .hp-offers-grid { grid-template-columns: 1fr !important; }
           section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 64px !important; padding-bottom: 64px !important; }
