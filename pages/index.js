@@ -375,12 +375,15 @@ export default function Home() {
               {[...Array(2)].map((_, setIdx) => (
                 <div key={setIdx} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                   {[
-                    ...(auditCount ? [{ value: `${auditCount.toLocaleString('fr-FR')}+`, label: locale === 'en' ? 'audits performed' : 'audits réalisés' }] : []),
-                    { value: locale === 'en' ? 'Open methodology' : 'Méthodologie ouverte', label: 'peer-reviewed' },
-                    { value: locale === 'en' ? 'One-time payment' : 'Paiement unique', label: locale === 'en' ? 'no subscription' : 'sans abonnement' },
-                    { value: '< 60s', label: locale === 'en' ? 'instant analysis' : 'analyse instantanée' },
-                    { value: 'Made in France', label: 'Paris' },
-                    { value: locale === 'en' ? 'Score out of 100' : 'Score sur 100', label: locale === 'en' ? '8 weighted criteria' : '8 critères pondérés' },
+                    { value: '87%', label: locale === 'en' ? 'of sites are never cited by AI' : 'des sites ne sont jamais cités par les IA' },
+                    ...(auditCount ? [{ value: `${auditCount.toLocaleString('fr-FR')}+`, label: locale === 'en' ? 'sites already analyzed' : 'sites déjà analysés' }] : []),
+                    { value: locale === 'en' ? 'Real citation test' : 'Test de citation réel', label: locale === 'en' ? 'we actually query ChatGPT' : 'on interroge vraiment ChatGPT' },
+                    { value: locale === 'en' ? 'Recommendations with code' : 'Recommandations avec code', label: locale === 'en' ? 'copy-paste' : 'copier-coller' },
+                    { value: '< 60s', label: locale === 'en' ? 'no signup' : 'sans inscription' },
+                    { value: locale === 'en' ? '8 weighted criteria' : '8 critères pondérés', label: locale === 'en' ? 'open methodology' : 'méthodologie ouverte' },
+                    { value: locale === 'en' ? 'Permanent report' : 'Rapport permanent', label: locale === 'en' ? 'lifetime access' : 'accessible à vie' },
+                    { value: locale === 'en' ? 'Projected score' : 'Score projeté', label: locale === 'en' ? 'after fixes' : 'après corrections' },
+                    { value: locale === 'en' ? '3 competitors identified' : '3 concurrents identifiés', label: locale === 'en' ? 'cited instead of you' : 'cités à votre place' },
                   ].map((stat, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 28px', flexShrink: 0 }}>
                       <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#D97757', fontWeight: 700 }}>{stat.value}</span>
