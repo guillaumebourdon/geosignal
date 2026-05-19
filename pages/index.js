@@ -432,8 +432,110 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ SECTION 4 — NOS OFFRES (3 cartes indépendantes, fond blanc) ══ */}
+      {/* ══ SECTION 4 — POURQUOI DETEKIA (3 colonnes) ══ */}
       <section style={{ background: '#fff', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <RevealSection>
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+              {locale === 'en' ? 'WHY DETEKIA' : 'POURQUOI DETEKIA'}
+            </div>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+              {locale === 'en' ? <>Optimize your AI visibility <em style={{ color: '#D97757' }}>with real data</em></> : <>Optimisez votre visibilité IA <em style={{ color: '#D97757' }}>avec de vraies données</em></>}
+            </h2>
+            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
+              {locale === 'en'
+                ? 'Asking ChatGPT "is my site well optimized?" gives you a guess. Detekia reads your actual source code and measures 8 criteria objectively.'
+                : 'Demander à ChatGPT « mon site est-il bien optimisé ? » donne un avis vague. Detekia lit votre vrai code source et mesure 8 critères objectivement.'}
+            </p>
+          </RevealSection>
+          <div className="hp-compare-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+            {/* Carte 1 — Le problème */}
+            <RevealSection delay={0.1}>
+              <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 24px', height: '100%' }}>
+                <div style={{ fontSize: 28, marginBottom: 10 }}>💬</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>
+                  {locale === 'en' ? 'ASKING CHATGPT' : 'DEMANDER À CHATGPT'}
+                </div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#1A1916', marginBottom: 14, lineHeight: 1.25 }}>
+                  {locale === 'en' ? 'A vague opinion' : 'Un avis approximatif'}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {(locale === 'en'
+                    ? ['Generic answer, different every time', 'No access to your source code', 'No score or measurable criteria', 'Vague suggestions']
+                    : ['Réponse générique, différente à chaque fois', 'Aucun accès à votre code source', 'Pas de score ni de critère mesurable', 'Suggestions vagues']
+                  ).map((p, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                      <span style={{ color: '#B0ABA5', fontSize: 11, flexShrink: 0, marginTop: 2 }}>✗</span>
+                      <span style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5 }}>{p}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </RevealSection>
+
+            {/* Carte 2 — Detekia (mise en avant) */}
+            <RevealSection delay={0.2}>
+              <div style={{ background: '#fff', border: '2px solid #D97757', borderRadius: 16, padding: '32px 24px', height: '100%', boxShadow: '0 4px 24px rgba(217,119,87,0.1)' }}>
+                <div style={{ fontSize: 28, marginBottom: 10 }}>⚡</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>
+                  {locale === 'en' ? 'DETEKIA ANALYSIS' : 'ANALYSE DETEKIA'}
+                </div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#1A1916', marginBottom: 14, lineHeight: 1.25 }}>
+                  {locale === 'en' ? 'A technical diagnosis' : 'Un diagnostic technique'}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {(locale === 'en'
+                    ? ['Your actual HTML analyzed page by page', '8 weighted criteria, peer-reviewed methodology', 'Reproducible score out of 100', 'Recommendations ranked by impact with code']
+                    : ['Votre HTML réel analysé page par page', '8 critères pondérés, méthodologie académique', 'Score sur 100 reproductible et daté', 'Recommandations classées par impact avec code']
+                  ).map((p, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                      <span style={{ color: '#D97757', fontSize: 11, flexShrink: 0, marginTop: 2 }}>✓</span>
+                      <span style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>{p}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </RevealSection>
+
+            {/* Carte 3 — Résultat */}
+            <RevealSection delay={0.3}>
+              <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 24px', height: '100%' }}>
+                <div style={{ fontSize: 28, marginBottom: 10 }}>📊</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>
+                  {locale === 'en' ? 'THE RESULT' : 'LE RÉSULTAT'}
+                </div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#1A1916', marginBottom: 14, lineHeight: 1.25 }}>
+                  {locale === 'en' ? 'A clear action plan' : 'Un plan d\'action clair'}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {(locale === 'en'
+                    ? ['Your exact AI visibility score', 'The blockers keeping you invisible', 'What to fix first — with priorities', 'Estimated impact of each correction']
+                    : ['Votre score exact de visibilité IA', 'Les blocages qui vous rendent invisible', 'Ce qu\'il faut corriger en priorité', 'L\'impact estimé de chaque correction']
+                  ).map((p, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                      <span style={{ color: '#10A37F', fontSize: 11, flexShrink: 0, marginTop: 2 }}>→</span>
+                      <span style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>{p}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </RevealSection>
+          </div>
+          <RevealSection delay={0.4}>
+            <div style={{ textAlign: 'center', marginTop: 28 }}>
+              <Link href="/methodologie" style={{ fontSize: 13, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 2 }}>
+                {locale === 'en' ? 'See our open methodology →' : 'Voir notre méthodologie ouverte →'}
+              </Link>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginTop: 8 }}>
+                {locale === 'en' ? 'Based on academic research (Princeton, 2024) · Made in France' : 'Basée sur la recherche académique (Princeton, 2024) · Made in France'}
+              </div>
+            </div>
+          </RevealSection>
+        </div>
+      </section>
+
+      {/* ══ SECTION 5 — NOS OFFRES (3 cartes indépendantes) ══ */}
+      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <RevealSection>
             <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
@@ -452,46 +554,50 @@ export default function Home() {
           <div className="hp-offers-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {[
               {
-                price: locale === 'en' ? 'Free' : 'Gratuit', priceColor: '#10A37F', highlight: false,
+                price: locale === 'en' ? 'Free' : 'Gratuit', priceColor: '#10A37F',
                 title: locale === 'en' ? 'Free scoring' : 'Scoring gratuit',
-                desc: locale === 'en' ? 'Find out if your site is visible to AI — in 60 seconds, no signup.' : 'Découvrez si votre site est visible pour les IA — en 60 secondes, sans inscription.',
+                desc: locale === 'en' ? 'Your AI visibility score in 60 seconds — no signup, no commitment.' : 'Votre score de visibilité IA en 60 secondes — sans inscription, sans engagement.',
                 bullets: locale === 'en'
                   ? ['Score out of 100 on 8 criteria', 'Strengths and weaknesses identified', 'One recommendation preview', 'Instant result']
                   : ['Score sur 100 sur 8 critères', 'Forces et faiblesses identifiées', 'Aperçu d\'une recommandation', 'Résultat instantané'],
-                ideal: locale === 'en' ? 'Ideal for: a first diagnostic' : 'Idéal pour : un premier diagnostic',
+                ideal: locale === 'en' ? 'You want to know where you stand' : 'Vous voulez savoir où vous en êtes',
                 cta: locale === 'en' ? 'Get my free score →' : 'Obtenir mon score gratuit →',
                 href: '/#analyser',
               },
               {
-                price: '29 €', priceColor: '#D97757', highlight: false,
+                price: '29 €', priceColor: '#D97757',
                 title: locale === 'en' ? '1-page audit' : 'Audit 1 page',
-                desc: locale === 'en' ? 'Full diagnosis of one strategic page with code-level recommendations and a real ChatGPT citation test.' : 'Diagnostic complet d\'une page stratégique avec recommandations au niveau du code et test de citation ChatGPT réel.',
+                desc: locale === 'en' ? 'Complete diagnosis of one page — every blocker explained, every fix documented with code.' : 'Diagnostic complet d\'une page — chaque blocage expliqué, chaque correction documentée avec le code.',
                 bullets: locale === 'en'
-                  ? ['Detailed recommendations with code', 'Real ChatGPT citation test (10 queries)', 'Comparison with 3 competitors', 'Web report + PDF · One-time payment']
-                  : ['Recommandations détaillées avec code', 'Test de citation ChatGPT réel (10 requêtes)', 'Comparaison avec 3 concurrents', 'Rapport web + PDF · Paiement unique'],
-                ideal: locale === 'en' ? 'Ideal for: optimizing your homepage or a key landing page' : 'Idéal pour : optimiser votre homepage ou une landing page clé',
+                  ? ['Detailed recommendations with code examples', 'Real ChatGPT citation test (10 queries)', 'Comparison with 3 competitors', 'Web report + PDF · One-time payment']
+                  : ['Recommandations détaillées avec exemples de code', 'Test de citation ChatGPT réel (10 requêtes)', 'Comparaison avec 3 concurrents', 'Rapport web + PDF · Paiement unique'],
+                ideal: locale === 'en' ? 'You want to optimize a homepage, a product page, or a landing page' : 'Vous voulez optimiser une homepage, une fiche produit, ou une landing page',
                 cta: locale === 'en' ? 'Get the 1-page audit — €29 →' : 'Obtenir l\'audit 1 page — 29 € →',
                 href: '/pricing',
               },
               {
-                price: '99 €', priceColor: '#D97757', highlight: false,
+                price: '99 €', priceColor: '#D97757',
                 title: locale === 'en' ? 'Full audit' : 'Audit complet',
-                desc: locale === 'en' ? 'Analyze your 10 key pages, detect cross-page patterns, and get a site-wide action plan with AI-powered recommendations.' : 'Analysez vos 10 pages clés, détectez les patterns transverses, et obtenez un plan d\'action site entier avec recommandations IA.',
+                desc: locale === 'en' ? 'Your 10 key pages analyzed together — cross-page patterns detected, site-wide action plan.' : 'Vos 10 pages clés analysées ensemble — patterns transverses détectés, plan d\'action global.',
                 bullets: locale === 'en'
                   ? ['10 pages analyzed in depth', '30 real ChatGPT queries tested', 'AI-powered recommendations', 'Projected score after fixes · PDF']
                   : ['10 pages analysées en profondeur', '30 requêtes ChatGPT réelles testées', 'Recommandations enrichies par IA', 'Score projeté après corrections · PDF'],
-                ideal: locale === 'en' ? 'Ideal for: a complete site-level GEO strategy' : 'Idéal pour : une stratégie GEO complète au niveau du site',
+                ideal: locale === 'en' ? 'You want a GEO strategy for your entire site' : 'Vous voulez une stratégie GEO pour l\'ensemble de votre site',
                 cta: locale === 'en' ? 'Get the full audit — €99 →' : 'Obtenir l\'audit complet — 99 € →',
                 href: '/pricing',
               },
             ].map((offer, i) => (
               <RevealSection key={i} delay={i * 0.1}>
-                <div style={{ background: offer.highlight ? 'rgba(217,119,87,0.03)' : '#FAFAF9', border: offer.highlight ? '2px solid #D97757' : '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column', boxShadow: offer.highlight ? '0 4px 24px rgba(217,119,87,0.08)' : 'none' }}>
+                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                  {/* Idéal pour — en haut, visible */}
+                  <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', fontWeight: 600, marginBottom: 14, padding: '6px 12px', background: 'rgba(217,119,87,0.06)', borderRadius: 8, alignSelf: 'flex-start' }}>
+                    {offer.ideal}
+                  </div>
                   {/* Price */}
                   <div style={{ fontFamily: 'monospace', fontSize: 28, color: offer.priceColor, fontWeight: 700, marginBottom: 4, letterSpacing: -1 }}>{offer.price}</div>
                   <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 8, lineHeight: 1.2 }}>{offer.title}</div>
                   <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>{offer.desc}</p>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 20 }}>
                     {offer.bullets.map((b, j) => (
                       <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                         <span style={{ fontSize: 10, color: offer.priceColor }}>✓</span>
@@ -499,9 +605,8 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 11, color: '#B0ABA5', fontStyle: 'italic', marginBottom: 16 }}>{offer.ideal}</div>
                   <div style={{ marginTop: 'auto' }}>
-                    <Link href={offer.href} className="btn-interactive" style={{ display: 'inline-block', background: offer.highlight ? '#D97757' : '#1A1916', color: '#fff', padding: '11px 24px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                    <Link href={offer.href} className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '11px 24px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
                       {offer.cta}
                     </Link>
                   </div>
@@ -509,62 +614,11 @@ export default function Home() {
               </RevealSection>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ══ SECTION 5 — CE QUE CONTIENT LE RAPPORT ══ */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <RevealSection>
-            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'INSIDE THE REPORT' : 'DANS LE RAPPORT'}
-            </div>
-            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-              {locale === 'en' ? <>What you get <em style={{ color: '#D97757' }}>for €29</em></> : <>Ce que vous obtenez <em style={{ color: '#D97757' }}>pour 29 €</em></>}
-            </h2>
-            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 48px' }}>
-              {locale === 'en'
-                ? 'Not a summary — a complete diagnosis with exact fixes, real AI tests, and estimated impact per action.'
-                : 'Pas un résumé — un diagnostic complet avec les corrections exactes, des tests IA réels, et l\'impact estimé de chaque action.'}
-            </p>
-          </RevealSection>
-
-          {/* 4 feature cards — what the report contains */}
-          <div className="hp-report-features" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-            {[
-              { icon: '🎯', color: '#D97757',
-                title: locale === 'en' ? 'Blockers identified with precision' : 'Blocages identifiés avec précision',
-                desc: locale === 'en' ? 'Each weakness is documented with the exact location in your HTML. You know what\'s wrong, where, and why it matters for AI visibility.' : 'Chaque faiblesse est documentée avec l\'emplacement exact dans votre HTML. Vous savez ce qui ne va pas, où, et pourquoi ça compte pour la visibilité IA.' },
-              { icon: '💻', color: '#10A37F',
-                title: locale === 'en' ? 'Code examples to copy-paste' : 'Exemples de code à copier-coller',
-                desc: locale === 'en' ? 'Every recommendation comes with the exact code to add or modify. No guessing — you or your dev can implement it directly.' : 'Chaque recommandation vient avec le code exact à ajouter ou modifier. Pas de devinette — vous ou votre dev pouvez implémenter directement.' },
-              { icon: '🔍', color: '#4285F4',
-                title: locale === 'en' ? 'Real ChatGPT citation test' : 'Test de citation ChatGPT réel',
-                desc: locale === 'en' ? 'We test 10 real queries on ChatGPT to check if your site is cited. You see which competitors appear instead — and on which queries.' : 'On teste 10 requêtes réelles sur ChatGPT pour vérifier si votre site est cité. Vous voyez quels concurrents apparaissent à votre place — et sur quelles requêtes.' },
-              { icon: '📈', color: '#C9861A',
-                title: locale === 'en' ? 'Projected score after fixes' : 'Score projeté après corrections',
-                desc: locale === 'en' ? 'For each recommendation: the estimated impact on your score. So you know what to prioritize.' : 'Pour chaque recommandation : l\'impact estimé sur votre score. Pour savoir quoi prioriser.' },
-            ].map((feat, i) => (
-              <RevealSection key={i} delay={i * 0.1}>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '28px 24px', height: '100%' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                    <span style={{ fontSize: 22 }}>{feat.icon}</span>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', lineHeight: 1.2 }}>{feat.title}</div>
-                  </div>
-                  <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, margin: 0 }}>{feat.desc}</p>
-                </div>
-              </RevealSection>
-            ))}
-          </div>
-
-          <RevealSection delay={0.5}>
-            <div style={{ textAlign: 'center', marginTop: 32 }}>
-              <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 2 }}>
-                {locale === 'en' ? 'See a full sample report →' : 'Voir un exemple de rapport complet →'}
+          <RevealSection delay={0.4}>
+            <div style={{ textAlign: 'center', marginTop: 28 }}>
+              <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 2 }}>
+                {locale === 'en' ? 'See a sample report →' : 'Voir un exemple de rapport →'}
               </a>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#B0ABA5', marginTop: 6 }}>
-                {locale === 'en' ? 'Anonymized report from a real audit' : 'Rapport anonymisé issu d\'un audit réel'}
-              </div>
             </div>
           </RevealSection>
         </div>
@@ -758,8 +812,8 @@ export default function Home() {
         }
         @media (max-width: 640px) {
           .hp-stats-shock { grid-template-columns: 1fr !important; }
+          .hp-compare-grid { grid-template-columns: 1fr !important; }
           .hp-offers-grid { grid-template-columns: 1fr !important; }
-          .hp-report-features { grid-template-columns: 1fr !important; }
           section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 64px !important; padding-bottom: 64px !important; }
           .hero-section { padding: 24px 20px 40px !important; }
         }
