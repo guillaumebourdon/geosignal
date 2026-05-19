@@ -595,7 +595,7 @@ export default function Home() {
           <RevealSection delay={0.1}>
             <div className="hp-pricing-table" style={{ background: 'rgba(247,245,242,0.03)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 16, overflow: 'hidden' }}>
               {/* Header row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.06)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.06)' }}>
                 <div style={{ padding: '24px 20px' }} />
                 {[
                   { name: locale === 'en' ? 'Free scoring' : 'Scoring gratuit', price: locale === 'en' ? 'Free' : 'Gratuit', color: '#10A37F', hl: false, sub: locale === 'en' ? 'Know where you stand' : 'Savoir où vous en êtes' },
@@ -612,25 +612,25 @@ export default function Home() {
               {/* Feature rows */}
               {[
                 { label: locale === 'en' ? 'Score out of 100' : 'Score sur 100', vals: ['✓', '✓', '✓'] },
-                { label: locale === 'en' ? 'Criteria analyzed' : 'Critères analysés', vals: ['8', '8', '8'] },
-                { label: locale === 'en' ? 'Pages analyzed' : 'Pages analysées', vals: ['1', '1', '10'] },
-                { label: locale === 'en' ? 'ChatGPT queries tested' : 'Requêtes ChatGPT testées', vals: ['–', '10', '30'] },
+                { label: locale === 'en' ? '8 criteria analyzed' : '8 critères analysés', vals: ['✓', '✓', '✓'] },
+                { label: locale === 'en' ? 'Pages analyzed' : 'Pages analysées', vals: ['–', '✓ (1)', '✓ (10)'] },
+                { label: locale === 'en' ? 'ChatGPT queries tested' : 'Requêtes ChatGPT testées', vals: ['–', '✓ (10)', '✓ (30)'] },
                 { label: locale === 'en' ? 'Detailed recommendations' : 'Recommandations détaillées', vals: ['–', '✓', '✓'] },
-                { label: locale === 'en' ? 'Competitor comparison' : 'Comparaison concurrents', vals: ['–', '3', '3'] },
+                { label: locale === 'en' ? 'Competitor comparison' : 'Comparaison concurrents', vals: ['–', '✓', '✓'] },
                 { label: locale === 'en' ? 'AI-powered insights' : 'Recommandations IA', vals: ['–', '–', '✓'] },
                 { label: locale === 'en' ? 'PDF export' : 'Export PDF', vals: ['–', '✓', '✓'] },
               ].map((row, ri) => (
-                <div key={ri} style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.04)', background: ri % 2 === 1 ? 'rgba(247,245,242,0.02)' : 'transparent' }}>
-                  <div style={{ padding: '13px 20px', fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.5)' }}>{row.label}</div>
+                <div key={ri} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.04)', background: ri % 2 === 1 ? 'rgba(247,245,242,0.02)' : 'transparent' }}>
+                  <div style={{ padding: '13px 20px', fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.5)', whiteSpace: 'nowrap' }}>{row.label}</div>
                   {row.vals.map((v, vi) => (
-                    <div key={vi} style={{ padding: '13px 20px', textAlign: 'center', fontFamily: 'system-ui', fontSize: 13, color: v === '✓' ? '#10A37F' : v === '–' ? 'rgba(247,245,242,0.15)' : 'rgba(247,245,242,0.7)', fontWeight: v === '✓' ? 700 : 400, background: vi === 1 ? 'rgba(217,119,87,0.04)' : 'transparent' }}>
+                    <div key={vi} style={{ padding: '13px 20px', textAlign: 'center', fontFamily: 'system-ui', fontSize: 13, color: v.startsWith('✓') ? '#10A37F' : v === '–' ? 'rgba(247,245,242,0.15)' : 'rgba(247,245,242,0.7)', fontWeight: v.startsWith('✓') ? 700 : 400, background: vi === 1 ? 'rgba(217,119,87,0.04)' : 'transparent' }}>
                       {v}
                     </div>
                   ))}
                 </div>
               ))}
               {/* CTA row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr 1fr', padding: '20px 0', borderTop: '1px solid rgba(247,245,242,0.08)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 1fr 1fr', padding: '20px 0', borderTop: '1px solid rgba(247,245,242,0.08)' }}>
                 <div />
                 <div style={{ textAlign: 'center', padding: '0 20px' }}>
                   <Link href="/#analyser" style={{ display: 'inline-block', border: '1px solid rgba(247,245,242,0.2)', color: '#F7F5F2', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
