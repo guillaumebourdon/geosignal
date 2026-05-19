@@ -368,7 +368,7 @@ export default function Home() {
       </section>
 
       {/* ── BANDEAU STATS DÉFILANTES ── */}
-      <div style={{ background: '#fff', borderTop: '1px solid #E5E2DC', borderBottom: '1px solid #E5E2DC', overflow: 'hidden' }}>
+      <div style={{ background: '#1A1916', overflow: 'hidden' }}>
         <div className="stats-marquee-wrap">
           <div className="stats-marquee">
             <div className="stats-marquee-inner">
@@ -376,15 +376,15 @@ export default function Home() {
                 <div key={setIdx} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                   {[
                     ...(auditCount ? [{ value: `${auditCount.toLocaleString('fr-FR')}+`, label: locale === 'en' ? 'audits performed' : 'audits réalisés' }] : []),
-                    { value: '8', label: locale === 'en' ? 'criteria analyzed' : 'critères analysés' },
-                    { value: '4', label: locale === 'en' ? 'AI engines tested' : 'IA testées' },
-                    { value: '30s', label: locale === 'en' ? 'average analysis' : 'analyse moyenne' },
-                    { value: '28,1M', label: locale === 'en' ? 'French AI users/month' : 'utilisateurs IA/mois en France' },
-                    { value: '4,4x', label: locale === 'en' ? 'conversion from AI traffic' : 'de conversion via trafic IA' },
+                    { value: locale === 'en' ? 'Open methodology' : 'Méthodologie ouverte', label: 'peer-reviewed' },
+                    { value: locale === 'en' ? 'One-time payment' : 'Paiement unique', label: locale === 'en' ? 'no subscription' : 'sans abonnement' },
+                    { value: '< 60s', label: locale === 'en' ? 'instant analysis' : 'analyse instantanée' },
+                    { value: 'Made in France', label: 'Paris' },
+                    { value: locale === 'en' ? 'Score out of 100' : 'Score sur 100', label: locale === 'en' ? '8 weighted criteria' : '8 critères pondérés' },
                   ].map((stat, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 28px', flexShrink: 0 }}>
                       <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#D97757', fontWeight: 700 }}>{stat.value}</span>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#6B6762' }}>{stat.label}</span>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 11, color: 'rgba(247,245,242,0.4)' }}>{stat.label}</span>
                     </div>
                   ))}
                 </div>
@@ -571,139 +571,123 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ SECTION 5 — NOS OFFRES (3 cartes indépendantes) ══ */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+
+      {/* ══ SECTION 5 — NOS OFFRES (pricing table, fond dark) ══ */}
+      <section style={{ background: '#1A1916', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <RevealSection>
-            <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
               {locale === 'en' ? 'OUR AUDITS' : 'NOS AUDITS'}
             </div>
-            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-              {locale === 'en' ? <>Choose the level of depth <em style={{ color: '#D97757' }}>that suits you</em></> : <>Choisissez le niveau de profondeur <em style={{ color: '#D97757' }}>qui vous convient</em></>}
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
+              {locale === 'en' ? <>Choose the depth <em style={{ color: '#D97757' }}>that suits you</em></> : <>Choisissez la profondeur <em style={{ color: '#D97757' }}>qui vous convient</em></>}
             </h2>
-            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
+            <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 48px' }}>
               {locale === 'en'
-                ? 'Every day counts. Each audit is independent. Start with the free score or go straight to the full report.'
-                : 'Chaque jour compte. Chaque audit est indépendant. Commencez par le score gratuit ou passez directement au rapport complet.'}
+                ? 'Each audit is independent. Start with the free score or go straight to the full report.'
+                : 'Chaque audit est indépendant. Commencez par le score gratuit ou passez directement au rapport complet.'}
             </p>
           </RevealSection>
 
-          <div className="hp-offers-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-            {[
-              {
-                price: locale === 'en' ? 'Free' : 'Gratuit', priceColor: '#10A37F',
-                title: locale === 'en' ? 'Free scoring' : 'Scoring gratuit',
-                desc: locale === 'en' ? 'Your AI visibility score in 60 seconds. No signup, no commitment.' : 'Votre score de visibilité IA en 60 secondes. Sans inscription, sans engagement.',
-                bullets: locale === 'en'
-                  ? ['Score out of 100 on 8 criteria', 'Strengths and weaknesses identified', 'One recommendation preview', 'Instant result']
-                  : ['Score sur 100 sur 8 critères', 'Forces et faiblesses identifiées', 'Aperçu d\'une recommandation', 'Résultat instantané'],
-                ideal: locale === 'en' ? 'You want to know where you stand' : 'Vous voulez savoir où vous en êtes',
-                cta: locale === 'en' ? 'Get my free score →' : 'Obtenir mon score gratuit →',
-                href: '/#analyser', exampleLink: null,
-              },
-              {
-                price: '29 €', priceColor: '#D97757',
-                title: locale === 'en' ? '1-page audit' : 'Audit 1 page',
-                desc: locale === 'en' ? 'Complete diagnosis of one page. Every blocker explained, every fix documented with code.' : 'Diagnostic complet d\'une page. Chaque blocage expliqué, chaque correction documentée avec le code.',
-                bullets: locale === 'en'
-                  ? ['Detailed recommendations with code examples', '10 real ChatGPT queries tested', 'Comparison with 3 competitors', 'Web report + PDF · One-time payment']
-                  : ['Recommandations détaillées avec exemples de code', '10 requêtes ChatGPT réelles testées', 'Comparaison avec 3 concurrents', 'Rapport web + PDF · Paiement unique'],
-                ideal: locale === 'en' ? 'You want to optimize a homepage, a product page, or a landing page' : 'Vous voulez optimiser une homepage, une fiche produit, ou une landing page',
-                cta: locale === 'en' ? 'Get the 1-page audit · €29 →' : 'Obtenir l\'audit 1 page · 29 € →',
-                href: '/pricing', exampleLink: locale === 'en' ? '/example-report.html' : '/exemple-rapport.html',
-              },
-              {
-                price: '99 €', priceColor: '#D97757',
-                title: locale === 'en' ? 'Full audit' : 'Audit complet',
-                desc: locale === 'en' ? 'Your 10 key pages analyzed together. Cross-page patterns detected, site-wide action plan.' : 'Vos 10 pages clés analysées ensemble. Patterns transverses détectés, plan d\'action global.',
-                bullets: locale === 'en'
-                  ? ['10 pages analyzed in depth', '30 real ChatGPT queries tested', 'AI-powered recommendations', 'Projected score after fixes · PDF']
-                  : ['10 pages analysées en profondeur', '30 requêtes ChatGPT réelles testées', 'Recommandations enrichies par IA', 'Score projeté après corrections · PDF'],
-                ideal: locale === 'en' ? 'You want a GEO strategy for your entire site' : 'Vous voulez une stratégie GEO pour l\'ensemble de votre site',
-                cta: locale === 'en' ? 'Get the full audit · €99 →' : 'Obtenir l\'audit complet · 99 € →',
-                href: '/pricing', exampleLink: locale === 'en' ? '/example-report.html' : '/exemple-rapport.html',
-              },
-            ].map((offer, i) => (
-              <RevealSection key={i} delay={i * 0.1} style={{ height: '100%' }}>
-                {/* Card + sub-link are siblings inside the RevealSection wrapper */}
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                    {/* Idéal pour — en haut, visible */}
-                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', fontWeight: 600, marginBottom: 14, padding: '6px 12px', background: 'rgba(217,119,87,0.06)', borderRadius: 8, alignSelf: 'flex-start' }}>
-                      {offer.ideal}
-                    </div>
-                    {/* Price */}
-                    <div style={{ fontFamily: 'monospace', fontSize: 28, color: offer.priceColor, fontWeight: 700, marginBottom: 4, letterSpacing: -1 }}>{offer.price}</div>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 8, lineHeight: 1.2 }}>{offer.title}</div>
-                    <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>{offer.desc}</p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 20 }}>
-                      {offer.bullets.map((b, j) => (
-                        <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                          <span style={{ fontSize: 10, color: offer.priceColor }}>✓</span>
-                          <span style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui' }}>{b}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div style={{ marginTop: 'auto' }}>
-                      <Link href={offer.href} className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '11px 24px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                        {offer.cta}
-                      </Link>
-                    </div>
+          <RevealSection delay={0.1}>
+            <div className="hp-pricing-table" style={{ background: 'rgba(247,245,242,0.03)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 16, overflow: 'hidden' }}>
+              {/* Header row */}
+              <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.06)' }}>
+                <div style={{ padding: '24px 20px' }} />
+                {[
+                  { name: locale === 'en' ? 'Free scoring' : 'Scoring gratuit', price: locale === 'en' ? 'Free' : 'Gratuit', color: '#10A37F', hl: false },
+                  { name: locale === 'en' ? '1-page audit' : 'Audit 1 page', price: '29 €', color: '#D97757', hl: true },
+                  { name: locale === 'en' ? 'Full audit' : 'Audit complet', price: '99 €', color: '#D97757', hl: false },
+                ].map((p, i) => (
+                  <div key={i} style={{ padding: '24px 20px', textAlign: 'center', background: p.hl ? 'rgba(217,119,87,0.06)' : 'transparent', borderTop: p.hl ? '3px solid #D97757' : '3px solid transparent' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 28, color: p.color, fontWeight: 700, letterSpacing: -1, lineHeight: 1 }}>{p.price}</div>
+                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 14, color: '#F7F5F2', marginTop: 6 }}>{p.name}</div>
                   </div>
-                  {/* Example report link — outside the card, centered below */}
-                  {offer.exampleLink ? (
-                    <div style={{ textAlign: 'center', marginTop: 14 }}>
-                      <a
-                        href={offer.exampleLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="offer-example-link"
-                        style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', textDecoration: 'none' }}
-                      >
-                        {locale === 'en' ? 'See a sample report →' : 'Voir un exemple de rapport →'}
-                      </a>
+                ))}
+              </div>
+              {/* Feature rows */}
+              {[
+                { label: locale === 'en' ? 'Score out of 100' : 'Score sur 100', vals: ['✓', '✓', '✓'] },
+                { label: locale === 'en' ? 'Criteria analyzed' : 'Critères analysés', vals: ['8', '8', '8'] },
+                { label: locale === 'en' ? 'Pages analyzed' : 'Pages analysées', vals: ['1', '1', '10'] },
+                { label: locale === 'en' ? 'ChatGPT queries tested' : 'Requêtes ChatGPT testées', vals: ['–', '10', '30'] },
+                { label: locale === 'en' ? 'Detailed recommendations' : 'Recommandations détaillées', vals: ['–', '✓', '✓'] },
+                { label: locale === 'en' ? 'Competitor comparison' : 'Comparaison concurrents', vals: ['–', '3', '3'] },
+                { label: locale === 'en' ? 'AI-powered insights' : 'Recommandations IA', vals: ['–', '–', '✓'] },
+                { label: locale === 'en' ? 'PDF export' : 'Export PDF', vals: ['–', '✓', '✓'] },
+              ].map((row, ri) => (
+                <div key={ri} style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.04)', background: ri % 2 === 1 ? 'rgba(247,245,242,0.02)' : 'transparent' }}>
+                  <div style={{ padding: '13px 20px', fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.5)' }}>{row.label}</div>
+                  {row.vals.map((v, vi) => (
+                    <div key={vi} style={{ padding: '13px 20px', textAlign: 'center', fontFamily: 'system-ui', fontSize: 13, color: v === '✓' ? '#10A37F' : v === '–' ? 'rgba(247,245,242,0.15)' : 'rgba(247,245,242,0.7)', fontWeight: v === '✓' ? 700 : 400, background: vi === 1 ? 'rgba(217,119,87,0.04)' : 'transparent' }}>
+                      {v}
                     </div>
-                  ) : (
-                    /* Empty spacer so cards in the same row stay top-aligned */
-                    <div style={{ height: 40 }} />
-                  )}
+                  ))}
                 </div>
-              </RevealSection>
-            ))}
-          </div>
+              ))}
+              {/* CTA row */}
+              <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr 1fr', padding: '20px 0', borderTop: '1px solid rgba(247,245,242,0.08)' }}>
+                <div />
+                <div style={{ textAlign: 'center', padding: '0 20px' }}>
+                  <Link href="/#analyser" style={{ display: 'inline-block', border: '1px solid rgba(247,245,242,0.2)', color: '#F7F5F2', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
+                    {locale === 'en' ? 'Get my score →' : 'Mon score →'}
+                  </Link>
+                </div>
+                <div style={{ textAlign: 'center', padding: '0 20px' }}>
+                  <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 700 }}>
+                    {locale === 'en' ? 'Audit 1 page · €29 →' : 'Audit 1 page · 29 € →'}
+                  </Link>
+                  <div style={{ marginTop: 10 }}>
+                    <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" className="offer-example-link" style={{ fontSize: 11, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none' }}>
+                      {locale === 'en' ? 'See a sample →' : 'Voir un exemple →'}
+                    </a>
+                  </div>
+                </div>
+                <div style={{ textAlign: 'center', padding: '0 20px' }}>
+                  <Link href="/pricing" style={{ display: 'inline-block', background: 'rgba(247,245,242,0.1)', border: '1px solid rgba(247,245,242,0.15)', color: '#F7F5F2', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
+                    {locale === 'en' ? 'Full audit · €99 →' : 'Audit complet · 99 € →'}
+                  </Link>
+                  <div style={{ marginTop: 10 }}>
+                    <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" className="offer-example-link" style={{ fontSize: 11, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none' }}>
+                      {locale === 'en' ? 'See a sample →' : 'Voir un exemple →'}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </RevealSection>
         </div>
       </section>
 
+
       {/* ── RÉSULTATS / TÉMOIGNAGES (temporairement activé pour screenshot) ── */}
-      {<section style={{ background: '#1A1916', padding: '96px 48px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '20%', left: '20%', width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', top: '60%', left: '80%', width: 360, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.testimonials.label')}</div>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
+      {<section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.testimonials.label')}</div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(32px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 14, lineHeight: 1.1 }}>
             {t('homepage.testimonials.title')}
           </h2>
-          <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 48px' }}>
+          <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 520, margin: '0 auto 48px' }}>
             {t('homepage.testimonials.subtitle')}
           </p>
 
           <div className="testimonials-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {t('homepage.testimonials.items').map((ti, idx) => (
-              <div key={idx} className="testimonial-card" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, display: 'flex', flexDirection: 'column', overflow: 'hidden', transition: 'all 0.2s ease' }}>
+              <div key={idx} className="testimonial-card" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, display: 'flex', flexDirection: 'column', overflow: 'hidden', transition: 'all 0.2s ease' }}>
                 <div style={{ padding: '24px 24px 0', display: 'flex', alignItems: 'center', gap: 12 }}>
                   {ti.photo
                     ? <img src={ti.photo} alt={ti.name} width={44} height={44} style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
                     : <div style={{ width: 44, height: 44, borderRadius: '50%', background: testimonialGradients[idx], display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, flexShrink: 0 }}>{ti.initials}</div>
                   }
                   <div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 15, fontWeight: 700, color: '#F7F5F2' }}>{ti.name}</div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.4)', marginTop: 2 }}>{ti.role}</div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 15, fontWeight: 700, color: '#1A1916' }}>{ti.name}</div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', marginTop: 2 }}>{ti.role}</div>
                   </div>
                 </div>
 
-                <p className="testimonial-quote" style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.7)', lineHeight: 1.75, padding: '20px 24px 24px', margin: 0, flex: 1 }} dangerouslySetInnerHTML={{ __html: ti.quote }} />
+                <p className="testimonial-quote" style={{ fontFamily: 'system-ui', fontSize: 14, color: '#3A3835', lineHeight: 1.75, padding: '20px 24px 24px', margin: 0, flex: 1 }} dangerouslySetInnerHTML={{ __html: ti.quote }} />
 
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ borderTop: '1px solid #E5E2DC', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   {ti.footerType === 'score' ? (
                     <>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -756,10 +740,8 @@ export default function Home() {
         </div>
       </section>}
 
-      <SectionDivider />
-
       {/* ── FAQ ─────────────────────────────────────────────── */}
-      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
+      <section style={{ background: '#fff', padding: '96px 48px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('homepage.faq.label')}</div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(36px,4vw,44px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 52, lineHeight: 1.1 }}>
@@ -770,8 +752,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <SectionDivider />
 
       {/* ── CTA FINAL — MOD 6 ────────────────────────────────── */}
       <section style={{ background: '#1A1916', padding: '108px 48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
@@ -875,6 +855,7 @@ export default function Home() {
         }
         @media (max-width: 640px) {
           .hp-stats-shock { grid-template-columns: 1fr !important; }
+          .hp-pricing-table { overflow-x: auto; }
           .faq-grid { grid-template-columns: 1fr !important; }
           .hp-compare-grid { grid-template-columns: 1fr !important; }
           .hp-offers-grid { grid-template-columns: 1fr !important; }
@@ -883,8 +864,8 @@ export default function Home() {
         }
 
         #ai-cursor { animation: ai-blink 1.06s step-end infinite; font-weight: 300; }
-        .testimonial-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.35); transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
-        .testimonial-quote strong { color: #F7F5F2; font-weight: 700; }
+        .testimonial-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.08); transform: translateY(-3px); border-color: #D5D0CA; }
+        .testimonial-quote strong { color: #1A1916; font-weight: 700; }
         .card-interactive:hover { border-color: rgba(217,119,87,0.3); transform: translateY(-2px); }
         .offer-example-link { text-decoration: none !important; }
         .offer-example-link:hover { text-decoration: underline !important; }
