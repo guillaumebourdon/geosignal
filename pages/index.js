@@ -469,8 +469,8 @@ export default function Home() {
                 </div>
                 <p style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8580', lineHeight: 1.6, marginBottom: 24 }}>
                   {locale === 'en'
-                    ? 'ChatGPT has no access to your HTML. It improvises an answer from your domain name.'
-                    : 'ChatGPT n\'a pas accès à votre HTML. Il improvise une réponse à partir de votre nom de domaine.'}
+                    ? 'ChatGPT doesn\'t inspect your HTML like a technical audit tool. It improvises from what it knows about your domain.'
+                    : 'ChatGPT ne consulte pas votre HTML comme un outil d\'audit technique. Il improvise à partir de ce qu\'il connaît de votre domaine.'}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 'auto' }}>
                   {(locale === 'en'
@@ -508,8 +508,8 @@ export default function Home() {
                 </div>
                 <p style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.5)', lineHeight: 1.6, marginBottom: 28, position: 'relative' }}>
                   {locale === 'en'
-                    ? 'Detekia fetches your actual HTML and runs 8 peer-reviewed criteria. Every time. Reproducibly.'
-                    : 'Detekia télécharge votre HTML réel et applique 8 critères académiques. À chaque fois. De façon reproductible.'}
+                    ? 'Detekia fetches your actual HTML and runs 8 weighted, transparent criteria. Every time. Reproducibly.'
+                    : 'Detekia télécharge votre HTML réel et applique 8 critères pondérés et transparents. À chaque fois. De façon reproductible.'}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 'auto', position: 'relative' }}>
                   {(locale === 'en'
@@ -598,13 +598,14 @@ export default function Home() {
               <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.06)' }}>
                 <div style={{ padding: '24px 20px' }} />
                 {[
-                  { name: locale === 'en' ? 'Free scoring' : 'Scoring gratuit', price: locale === 'en' ? 'Free' : 'Gratuit', color: '#10A37F', hl: false },
-                  { name: locale === 'en' ? '1-page audit' : 'Audit 1 page', price: '29 €', color: '#D97757', hl: true },
-                  { name: locale === 'en' ? 'Full audit' : 'Audit complet', price: '99 €', color: '#D97757', hl: false },
+                  { name: locale === 'en' ? 'Free scoring' : 'Scoring gratuit', price: locale === 'en' ? 'Free' : 'Gratuit', color: '#10A37F', hl: false, sub: locale === 'en' ? 'Know where you stand' : 'Savoir où vous en êtes' },
+                  { name: locale === 'en' ? '1-page audit' : 'Audit 1 page', price: '29 €', color: '#D97757', hl: true, sub: locale === 'en' ? 'Fixes for one key page' : 'Corrections pour une page clé' },
+                  { name: locale === 'en' ? 'Full audit' : 'Audit complet', price: '99 €', color: '#D97757', hl: false, sub: locale === 'en' ? 'Strategy for your entire site' : 'Stratégie pour tout votre site' },
                 ].map((p, i) => (
-                  <div key={i} style={{ padding: '24px 20px', textAlign: 'center', background: p.hl ? 'rgba(217,119,87,0.06)' : 'transparent', borderTop: p.hl ? '3px solid #D97757' : '3px solid transparent' }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 28, color: p.color, fontWeight: 700, letterSpacing: -1, lineHeight: 1 }}>{p.price}</div>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 14, color: '#F7F5F2', marginTop: 6 }}>{p.name}</div>
+                  <div key={i} style={{ padding: '28px 20px', textAlign: 'center', background: p.hl ? 'rgba(217,119,87,0.06)' : 'transparent', borderTop: p.hl ? '3px solid #D97757' : '3px solid transparent' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 32, color: p.color, fontWeight: 700, letterSpacing: -1, lineHeight: 1 }}>{p.price}</div>
+                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#F7F5F2', marginTop: 8 }}>{p.name}</div>
+                    <div style={{ fontFamily: 'system-ui', fontSize: 11, color: 'rgba(247,245,242,0.35)', marginTop: 4 }}>{p.sub}</div>
                   </div>
                 ))}
               </div>
