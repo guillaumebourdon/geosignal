@@ -433,7 +433,7 @@ export default function Home() {
       </section>
 
       {/* ══ SECTION 4 — POURQUOI DETEKIA (3 colonnes) ══ */}
-      <section style={{ background: '#fff', padding: '96px 48px' }}>
+      <section style={{ background: '#F7F5F2', padding: '96px 48px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <RevealSection>
             <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
@@ -442,78 +442,114 @@ export default function Home() {
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#1A1916', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
               {locale === 'en' ? <>Optimize your AI visibility <em style={{ color: '#D97757' }}>with real data</em></> : <>Optimisez votre visibilité IA <em style={{ color: '#D97757' }}>avec de vraies données</em></>}
             </h2>
-            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 48px' }}>
+            <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 56px' }}>
               {locale === 'en'
                 ? 'Asking ChatGPT "is my site well optimized?" gives you a guess. Detekia reads your actual source code and measures 8 criteria objectively.'
                 : 'Demander à ChatGPT « mon site est-il bien optimisé ? » donne un avis vague. Detekia lit votre vrai code source et mesure 8 critères objectivement.'}
             </p>
           </RevealSection>
-          <div className="hp-compare-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-            {/* Carte 1 — Le problème */}
+
+          {/* ── 3-column comparison ── */}
+          <div className="hp-compare-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0, alignItems: 'stretch' }}>
+
+            {/* Column 1 — Le problème (recessed, muted) */}
             <RevealSection delay={0.1}>
-              <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 24px', height: '100%' }}>
-                <div style={{ fontSize: 28, marginBottom: 10 }}>💬</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>
+              <div style={{ background: '#EDEBE6', borderRadius: '16px 0 0 16px', padding: '36px 28px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
+                {/* Faint label number */}
+                <div style={{ position: 'absolute', top: 20, right: 24, fontFamily: 'Georgia, serif', fontSize: 72, color: 'rgba(26,25,22,0.05)', lineHeight: 1, userSelect: 'none' }}>01</div>
+
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>
                   {locale === 'en' ? 'ASKING CHATGPT' : 'DEMANDER À CHATGPT'}
                 </div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#1A1916', marginBottom: 14, lineHeight: 1.25 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#3A3835', marginBottom: 8, lineHeight: 1.2, letterSpacing: -0.5 }}>
                   {locale === 'en' ? 'A vague opinion' : 'Un avis approximatif'}
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <p style={{ fontFamily: 'system-ui', fontSize: 12, color: '#8A8580', lineHeight: 1.6, marginBottom: 24 }}>
+                  {locale === 'en'
+                    ? 'ChatGPT has no access to your HTML. It improvises an answer from your domain name.'
+                    : 'ChatGPT n\'a pas accès à votre HTML. Il improvise une réponse à partir de votre nom de domaine.'}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 'auto' }}>
                   {(locale === 'en'
                     ? ['Generic answer, different every time', 'No access to your source code', 'No score or measurable criteria', 'Vague suggestions']
                     : ['Réponse générique, différente à chaque fois', 'Aucun accès à votre code source', 'Pas de score ni de critère mesurable', 'Suggestions vagues']
                   ).map((p, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                      <span style={{ color: '#B0ABA5', fontSize: 11, flexShrink: 0, marginTop: 2 }}>✗</span>
-                      <span style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.5 }}>{p}</span>
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <span style={{ width: 16, height: 16, borderRadius: '50%', border: '1px solid #C2BDB8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                        <span style={{ fontSize: 9, color: '#B0ABA5', lineHeight: 1 }}>✗</span>
+                      </span>
+                      <span style={{ fontSize: 13, color: '#8A8580', fontFamily: 'system-ui', lineHeight: 1.5 }}>{p}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </RevealSection>
 
-            {/* Carte 2 — Detekia (mise en avant) */}
+            {/* Column 2 — Detekia (dark, elevated, the star) */}
             <RevealSection delay={0.2}>
-              <div style={{ background: '#fff', border: '2px solid #D97757', borderRadius: 16, padding: '32px 24px', height: '100%', boxShadow: '0 4px 24px rgba(217,119,87,0.1)' }}>
-                <div style={{ fontSize: 28, marginBottom: 10 }}>⚡</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>
-                  {locale === 'en' ? 'DETEKIA ANALYSIS' : 'ANALYSE DETEKIA'}
+              <div style={{ background: '#1A1916', borderRadius: 16, padding: '36px 28px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden', zIndex: 1, boxShadow: '0 24px 64px rgba(26,25,22,0.28), 0 4px 16px rgba(26,25,22,0.12)', transform: 'scale(1.03)' }}>
+                {/* Subtle terracotta glow */}
+                <div style={{ position: 'absolute', top: -60, right: -60, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', bottom: -40, left: -40, width: 160, height: 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,163,127,0.10) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+                {/* "Recommandé" badge */}
+                <div style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(217,119,87,0.15)', border: '1px solid rgba(217,119,87,0.35)', borderRadius: 20, padding: '4px 12px', marginBottom: 20 }}>
+                  <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#D97757' }} />
+                  <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase' }}>
+                    {locale === 'en' ? 'DETEKIA ANALYSIS' : 'ANALYSE DETEKIA'}
+                  </span>
                 </div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#1A1916', marginBottom: 14, lineHeight: 1.25 }}>
+
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 8, lineHeight: 1.15, letterSpacing: -0.5, position: 'relative' }}>
                   {locale === 'en' ? 'A technical diagnosis' : 'Un diagnostic technique'}
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <p style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.5)', lineHeight: 1.6, marginBottom: 28, position: 'relative' }}>
+                  {locale === 'en'
+                    ? 'Detekia fetches your actual HTML and runs 8 peer-reviewed criteria. Every time. Reproducibly.'
+                    : 'Detekia télécharge votre HTML réel et applique 8 critères académiques. À chaque fois. De façon reproductible.'}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 'auto', position: 'relative' }}>
                   {(locale === 'en'
                     ? ['Your actual HTML analyzed page by page', '8 weighted criteria, peer-reviewed methodology', 'Reproducible score out of 100', 'Recommendations ranked by impact with code']
                     : ['Votre HTML réel analysé page par page', '8 critères pondérés, méthodologie académique', 'Score sur 100 reproductible et daté', 'Recommandations classées par impact avec code']
                   ).map((p, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                      <span style={{ color: '#D97757', fontSize: 11, flexShrink: 0, marginTop: 2 }}>✓</span>
-                      <span style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>{p}</span>
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <span style={{ width: 16, height: 16, borderRadius: '50%', background: 'rgba(217,119,87,0.18)', border: '1px solid rgba(217,119,87,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                        <span style={{ fontSize: 9, color: '#D97757', lineHeight: 1 }}>✓</span>
+                      </span>
+                      <span style={{ fontSize: 13, color: 'rgba(247,245,242,0.8)', fontFamily: 'system-ui', lineHeight: 1.5 }}>{p}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </RevealSection>
 
-            {/* Carte 3 — Résultat */}
+            {/* Column 3 — Le résultat (clean, forward-looking) */}
             <RevealSection delay={0.3}>
-              <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 24px', height: '100%' }}>
-                <div style={{ fontSize: 28, marginBottom: 10 }}>📊</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 }}>
+              <div style={{ background: '#fff', borderRadius: '0 16px 16px 0', padding: '36px 28px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden', borderLeft: '1px solid #E5E2DC' }}>
+                {/* Faint label number */}
+                <div style={{ position: 'absolute', top: 20, right: 24, fontFamily: 'Georgia, serif', fontSize: 72, color: 'rgba(16,163,127,0.06)', lineHeight: 1, userSelect: 'none' }}>03</div>
+
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>
                   {locale === 'en' ? 'THE RESULT' : 'LE RÉSULTAT'}
                 </div>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#1A1916', marginBottom: 14, lineHeight: 1.25 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 8, lineHeight: 1.2, letterSpacing: -0.5 }}>
                   {locale === 'en' ? 'A clear action plan' : 'Un plan d\'action clair'}
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <p style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.6, marginBottom: 24 }}>
+                  {locale === 'en'
+                    ? 'Every recommendation includes the estimated score gain so you know what to fix first.'
+                    : 'Chaque recommandation inclut le gain de score estimé pour savoir quoi corriger en priorité.'}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 'auto' }}>
                   {(locale === 'en'
                     ? ['Your exact AI visibility score', 'The blockers keeping you invisible', 'What to fix first, by priority', 'Estimated impact of each correction']
                     : ['Votre score exact de visibilité IA', 'Les blocages qui vous rendent invisible', 'Ce qu\'il faut corriger en priorité', 'L\'impact estimé de chaque correction']
                   ).map((p, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                      <span style={{ color: '#10A37F', fontSize: 11, flexShrink: 0, marginTop: 2 }}>→</span>
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <span style={{ width: 16, height: 16, borderRadius: '50%', background: 'rgba(16,163,127,0.10)', border: '1px solid rgba(16,163,127,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                        <span style={{ fontSize: 9, color: '#10A37F', lineHeight: 1 }}>→</span>
+                      </span>
                       <span style={{ fontSize: 13, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>{p}</span>
                     </div>
                   ))}
@@ -521,8 +557,9 @@ export default function Home() {
               </div>
             </RevealSection>
           </div>
+
           <RevealSection delay={0.4}>
-            <div style={{ textAlign: 'center', marginTop: 28 }}>
+            <div style={{ textAlign: 'center', marginTop: 36 }}>
               <Link href="/methodologie" style={{ fontSize: 13, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 2 }}>
                 {locale === 'en' ? 'See our open methodology →' : 'Voir notre méthodologie ouverte →'}
               </Link>
@@ -588,35 +625,48 @@ export default function Home() {
               },
             ].map((offer, i) => (
               <RevealSection key={i} delay={i * 0.1}>
-                <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  {/* Idéal pour — en haut, visible */}
-                  <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', fontWeight: 600, marginBottom: 14, padding: '6px 12px', background: 'rgba(217,119,87,0.06)', borderRadius: 8, alignSelf: 'flex-start' }}>
-                    {offer.ideal}
+                {/* Card + sub-link are siblings inside the RevealSection wrapper */}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                    {/* Idéal pour — en haut, visible */}
+                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', fontWeight: 600, marginBottom: 14, padding: '6px 12px', background: 'rgba(217,119,87,0.06)', borderRadius: 8, alignSelf: 'flex-start' }}>
+                      {offer.ideal}
+                    </div>
+                    {/* Price */}
+                    <div style={{ fontFamily: 'monospace', fontSize: 28, color: offer.priceColor, fontWeight: 700, marginBottom: 4, letterSpacing: -1 }}>{offer.price}</div>
+                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 8, lineHeight: 1.2 }}>{offer.title}</div>
+                    <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>{offer.desc}</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 20 }}>
+                      {offer.bullets.map((b, j) => (
+                        <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <span style={{ fontSize: 10, color: offer.priceColor }}>✓</span>
+                          <span style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui' }}>{b}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ marginTop: 'auto' }}>
+                      <Link href={offer.href} className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '11px 24px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                        {offer.cta}
+                      </Link>
+                    </div>
                   </div>
-                  {/* Price */}
-                  <div style={{ fontFamily: 'monospace', fontSize: 28, color: offer.priceColor, fontWeight: 700, marginBottom: 4, letterSpacing: -1 }}>{offer.price}</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 8, lineHeight: 1.2 }}>{offer.title}</div>
-                  <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>{offer.desc}</p>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 20 }}>
-                    {offer.bullets.map((b, j) => (
-                      <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span style={{ fontSize: 10, color: offer.priceColor }}>✓</span>
-                        <span style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui' }}>{b}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{ marginTop: 'auto' }}>
-                    <Link href={offer.href} className="btn-interactive" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '11px 24px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                      {offer.cta}
-                    </Link>
-                    {offer.exampleLink && (
-                      <div style={{ marginTop: 10 }}>
-                        <a href={offer.exampleLink} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>
-                          {locale === 'en' ? 'See a sample report →' : 'Voir un exemple de rapport →'}
-                        </a>
-                      </div>
-                    )}
-                  </div>
+                  {/* Example report link — outside the card, centered below */}
+                  {offer.exampleLink ? (
+                    <div style={{ textAlign: 'center', marginTop: 14 }}>
+                      <a
+                        href={offer.exampleLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="offer-example-link"
+                        style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', textDecoration: 'none' }}
+                      >
+                        {locale === 'en' ? 'See a sample report →' : 'Voir un exemple de rapport →'}
+                      </a>
+                    </div>
+                  ) : (
+                    /* Empty spacer so cards in the same row stay top-aligned */
+                    <div style={{ height: 40 }} />
+                  )}
                 </div>
               </RevealSection>
             ))}
@@ -836,6 +886,8 @@ export default function Home() {
         .testimonial-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.35); transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
         .testimonial-quote strong { color: #F7F5F2; font-weight: 700; }
         .card-interactive:hover { border-color: rgba(217,119,87,0.3); transform: translateY(-2px); }
+        .offer-example-link { text-decoration: none !important; }
+        .offer-example-link:hover { text-decoration: underline !important; }
       `}</style>
     </div>
     <BeelevenContactModal open={showBeeleven} onClose={() => setShowBeeleven(false)} />
