@@ -175,9 +175,9 @@ export default function Success() {
                   <div className="success-icon-pop" style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(217,119,87,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="2" strokeLinecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                   </div>
-                  <div style={{ fontSize: 15, color: '#F7F5F2', fontWeight: 600, fontFamily: 'system-ui', marginBottom: 6 }}>Accompagnement personnalisé</div>
-                  <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Beeleven implémente les recommandations pour vous.</div>
-                  <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#D97757', fontWeight: 600 }}>Discutons-en →</div>
+                  <div style={{ fontSize: 15, color: '#F7F5F2', fontWeight: 600, fontFamily: 'system-ui', marginBottom: 6 }}>Besoin d'aide pour implémenter ?</div>
+                  <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', lineHeight: 1.5, flex: 1 }}>Notre équipe peut implémenter les recommandations de votre rapport pour vous. Service optionnel, sur devis.</div>
+                  <div style={{ marginTop: 14, fontFamily: 'system-ui', fontSize: 13, color: '#D97757', fontWeight: 600 }}>En savoir plus →</div>
                 </button>
 
                 {/* CTA 2: Analyser tout le site — one-page only */}

@@ -572,6 +572,114 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .beeleven-cta-block {
     padding: 24px 20px !important;
   }
+
+  /* ══════════════════════════════════════════════════════════════
+     VAGUE 4 — Homepage grid collapses + touch targets
+     Moved from index.js 640px block to 767px for consistency.
+     ══════════════════════════════════════════════════════════════ */
+
+  /* ── HERO INPUT — stack vertically ──────────────────────────── */
+  .hero-input-wrap {
+    flex-direction: column !important;
+    border-radius: 10px !important;
+  }
+  .hero-input-wrap input {
+    border-radius: 10px 10px 0 0 !important;
+  }
+  .hero-input-wrap button {
+    border-radius: 0 0 10px 10px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* ── REPORT CTA — stack vertically ─────────────────────────── */
+  .report-cta-buttons {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .report-cta-buttons a {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* ── HOMEPAGE GRIDS — collapse for mobile ──────────────────── */
+  .hp-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hp-compare-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hp-compare-grid > div > div {
+    border-radius: 0 !important;
+  }
+  .hp-compare-grid > div:first-child > div {
+    border-radius: 16px 16px 0 0 !important;
+  }
+  .hp-compare-grid > div:last-child > div {
+    border-radius: 0 0 16px 16px !important;
+  }
+  .hp-steps {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .hp-dimensions-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hp-case-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* ── ACCOMPANIMENT BANNER — stack on mobile ────────────────── */
+  .hp-dimensions-grid + div {
+    flex-direction: column !important;
+    gap: 24px !important;
+    padding: 24px 20px !important;
+  }
+
+  /* ── TOUCH TARGETS — 44px minimum per WCAG ─────────────────── */
+  .testimonials-arrow {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  /* Dots: invisible padding for 44px tap area */
+  .testimonials-dot {
+    position: relative !important;
+  }
+  .testimonials-dot::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -18px !important;
+    left: -18px !important;
+    right: -18px !important;
+    bottom: -18px !important;
+  }
+
+  /* Footer links: ensure 44px touch height */
+  .footer-inner a {
+    display: inline-block !important;
+    padding: 6px 0 !important;
+    min-height: 44px !important;
+    line-height: 32px !important;
+  }
+
+  /* ── BODY TEXT ADJUSTMENTS ──────────────────────────────────── */
+  /* Hero subtitle: slightly smaller on mobile */
+  .hero-grid p {
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Dimensions cards: tighter padding */
+  .hp-dimensions-grid > div {
+    padding: 28px 20px !important;
+  }
+  .hp-dimensions-grid > div .card-interactive {
+    padding: 28px 20px !important;
+  }
+
+  /* Compare grid inner padding */
+  .hp-compare-grid > div > div > div {
+    padding: 28px 20px !important;
+  }
 }
 
 /* ── CRITERIA + STATS: 2 cols on tablet, 1 col on small mobile ─── */
@@ -588,6 +696,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     grid-template-columns: 1fr !important;
   }
   .criteria-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* Steps: 1 column on very narrow screens */
+  .hp-steps {
+    grid-template-columns: 1fr !important;
+  }
+  /* Case grid: 1 column on very narrow screens */
+  .hp-case-grid {
     grid-template-columns: 1fr !important;
   }
 }

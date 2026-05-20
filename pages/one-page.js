@@ -341,9 +341,14 @@ export default function OnePage() {
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 17, color: '#1A1916', fontFamily: 'Georgia, serif', marginBottom: 6, fontWeight: 600 }}>{p('crossSell.title')}</div>
             <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 12 }}>{p('crossSell.desc')}</p>
-            <Link href="/pro" className="btn-interactive" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: '#D97757', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none', background: 'rgba(217,119,87,0.06)', padding: '8px 18px', borderRadius: 8, border: '1px solid rgba(217,119,87,0.2)' }}>
-              {p('crossSell.cta')}
-            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+              <Link href="/pro" className="btn-interactive" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: '#D97757', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none', background: 'rgba(217,119,87,0.06)', padding: '8px 18px', borderRadius: 8, border: '1px solid rgba(217,119,87,0.2)' }}>
+                {p('crossSell.cta')}
+              </Link>
+              <Link href="/pricing" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
+                {locale === 'en' ? 'Compare all plans →' : 'Comparer toutes les offres →'}
+              </Link>
+            </div>
           </div>
         </div>
       </section>

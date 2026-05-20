@@ -582,6 +582,11 @@ export default function Results() {
                   <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', lineHeight: 1.5 }}>{checkError}</div>
                 </div>
               )}
+              <div style={{ textAlign: 'center', marginTop: 14 }}>
+                <Link href="/pricing" style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
+                  {locale === 'en' ? 'Compare all plans →' : 'Comparer toutes les offres →'}
+                </Link>
+              </div>
             </div>
           )}
 
