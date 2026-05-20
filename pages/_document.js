@@ -12,7 +12,7 @@ class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
           <meta name="author" content="Detekia" />
-          <meta name="robots" content="index, follow" />
+          <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
           <meta name="google-site-verification" content="YePnIMt60J4133bRkWArTiV7c4-e_vqwYVELQEzD80I" />
 
           {/* Google Analytics 4 — consent-aware */}

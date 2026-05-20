@@ -13,4 +13,10 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Bingbot
+Allow: /
+
+User-agent: MicrosoftPreview
+Allow: /
+
 Sitemap: https://detekia.fr/sitemap.xml

@@ -327,7 +327,7 @@ export default function Home() {
               <span style={{ fontSize: 13, color: '#10A37F', fontFamily: 'system-ui', fontWeight: 600 }}>{t('homepage.hero.badge')}</span>
             </div>
 
-            <h1 style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 10, color: '#1A1916', maxWidth: 540 }}>
+            <h1 aria-label={locale === 'en' ? 'Your competitors are showing up on ChatGPT, Gemini, Claude, Perplexity. You don\'t.' : 'Vos concurrents apparaissent dans ChatGPT, Gemini, Claude, Perplexity. Pas vous.'} style={{ fontSize: 'clamp(38px, 5vw, 62px)', lineHeight: 1.05, letterSpacing: -2, marginBottom: 10, color: '#1A1916', maxWidth: 540 }}>
               {t('homepage.hero.titleLine1')}<br className="mobile-break" /> <span id="ai-engine-name">ChatGPT.</span><span id="ai-cursor" style={{ color: '#D97757' }}>|</span><br /><span style={{ color: '#D97757' }}>{t('homepage.hero.titleLine2')}</span>
             </h1>
 
@@ -388,7 +388,7 @@ export default function Home() {
               {[...Array(3)].map((_, setIdx) => (
                 <div key={setIdx} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                   {[
-                    { value: '87%', label: locale === 'en' ? 'of sites are never cited by AI' : 'des sites ne sont jamais cités par les IA' },
+                    { value: locale === 'en' ? 'Open methodology' : 'Méthodologie ouverte', label: locale === 'en' ? 'transparent and documented' : 'transparente et documentée' },
                     ...(auditCount ? [{ value: `${auditCount.toLocaleString('fr-FR')}+`, label: locale === 'en' ? 'sites already analyzed' : 'sites déjà analysés' }] : []),
                     { value: locale === 'en' ? 'Real citation test' : 'Test de citation réel', label: locale === 'en' ? 'we actually query ChatGPT' : 'on interroge vraiment ChatGPT' },
                     { value: locale === 'en' ? 'Recommendations with code' : 'Recommandations avec code', label: locale === 'en' ? 'copy-paste' : 'copier-coller' },

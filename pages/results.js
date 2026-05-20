@@ -410,7 +410,7 @@ export default function Results() {
     const timeoutId = setTimeout(() => controller.abort(), 90000);
     fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url, locale }), signal: controller.signal })
       .then(r => r.json())
-      .then(data => { clearTimeout(timeoutId); clearTimeout(stepTimeout); setStep(loadingSteps.length); if (data.dailyLimitReached) { router.push('/contact'); return; } if (data.error) setError(data.error); else setResult(data); })
+      .then(data => { clearTimeout(timeoutId); clearTimeout(stepTimeout); setStep(loadingSteps.length); if (data.dailyLimitReached) { setError(locale === 'en' ? 'You\'ve reached the daily free limit. Upgrade to a full audit (from €29) for unlimited detailed analysis.' : 'Vous avez atteint la limite gratuite du jour. Passez à l\'audit complet (dès 29 €) pour une analyse détaillée sans limite.'); return; } if (data.error) setError(data.error); else setResult(data); })
       .catch(e => { clearTimeout(timeoutId); clearTimeout(stepTimeout); setError(e.name === 'AbortError' ? t('results.error.timeout') : e.message); });
     return () => clearTimeout(stepTimeout);
   }, [url]);
@@ -516,6 +516,7 @@ export default function Results() {
             <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#B0ABA5', lineHeight: 1.6, marginBottom: 32 }}>{t('results.error.hint')}</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '14px 32px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 700 }}>{t('results.error.retry')}</Link>
+              <Link href="/pricing" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '14px 32px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 700 }}>{locale === 'en' ? 'See our audits →' : 'Voir nos audits →'}</Link>
               <Link href="/contact" style={{ display: 'inline-block', background: '#F0EDE8', color: '#6B6762', padding: '14px 32px', borderRadius: 10, fontSize: 14, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>{t('results.error.contact')}</Link>
             </div>
           </div>
