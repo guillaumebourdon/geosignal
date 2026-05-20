@@ -235,6 +235,18 @@ export default function Home() {
     sameAs: ['https://www.linkedin.com/company/beeleven'],
   };
 
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Detekia',
+    url: 'https://detekia.fr',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: { '@type': 'EntryPoint', urlTemplate: 'https://detekia.fr/results?url={search_term_string}' },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
   const testimonialGradients = [
     'linear-gradient(135deg, #4285F4, #1C7DC4)',
     'linear-gradient(135deg, #10A37F, #0d8a6a)',
@@ -299,6 +311,7 @@ export default function Home() {
     <Head>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
     </Head>
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
 

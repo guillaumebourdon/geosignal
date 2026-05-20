@@ -90,7 +90,8 @@ export default function Contact() {
               </div>
               <button
                 onClick={handleSubmit}
-                style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', padding: '14px 0', borderRadius: 10, fontWeight: 600, fontSize: 14, cursor: 'pointer', fontFamily: 'system-ui, sans-serif' }}>
+                className="btn-interactive"
+                style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', padding: '14px 0', borderRadius: 10, fontWeight: 600, fontSize: 14, cursor: 'pointer', fontFamily: 'system-ui, sans-serif', width: '100%', transition: 'opacity 0.2s' }}>
                 {t('contact.form.submit')}
               </button>
             </div>

@@ -18,6 +18,18 @@ function InternalLink({ href, children }) {
   );
 }
 
+
+function InlineCTA({ href, children }) {
+  return (
+    <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
+      <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+        Tester mon site gratuitement →
+      </a>
+    </div>
+  );
+}
+
 export default function PourquoiChatGPTNeCitePasVotreSite() {
   return (
     <>
@@ -225,6 +237,7 @@ Disallow: /`}</code></pre>
       <p>Vous ne pouvez pas corriger ce que vous ne mesurez pas. La première étape est de savoir où vous en êtes : quel est votre score GEO, quels critères sont défaillants, et par quoi commencer.</p>
 
       <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères, recommandations priorisées, en moins de 60 secondes. Sans inscription.</p>
+      <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );
 }

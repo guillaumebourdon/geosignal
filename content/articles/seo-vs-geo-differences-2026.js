@@ -18,6 +18,18 @@ function InternalLink({ href, children }) {
   );
 }
 
+
+function InlineCTA({ href, children }) {
+  return (
+    <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
+      <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+        Tester mon site gratuitement →
+      </a>
+    </div>
+  );
+}
+
 export default function SeoVsGeoDifferences2026() {
   return (
     <>
@@ -276,6 +288,7 @@ export default function SeoVsGeoDifferences2026() {
       <p>Le premier pas est de savoir où vous en êtes. Votre SEO est peut-être solide, mais votre GEO pourrait avoir des lacunes critiques — ou l'inverse.</p>
 
       <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères GEO, recommandations concrètes. En moins de 60 secondes, sans inscription.</p>
+      <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );
 }

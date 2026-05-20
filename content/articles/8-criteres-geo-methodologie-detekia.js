@@ -31,6 +31,18 @@ function CritereCard({ numero, nom, poids, couleur, children }) {
   );
 }
 
+
+function InlineCTA({ href, children }) {
+  return (
+    <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
+      <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+        Tester mon site gratuitement →
+      </a>
+    </div>
+  );
+}
+
 export default function HuitCriteresGeoMethodologieDetekia() {
   return (
     <>
@@ -209,6 +221,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
       <p>Non — les deux scores mesurent des choses complémentaires. Un bon score SEO (autorité de domaine, backlinks, positions sur Google) contribue au score GEO (présence externe, vérifiabilité). Mais des pages très bien positionnées sur Google peuvent avoir un mauvais score GEO si le contenu n'est pas extractible par les IA.</p>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : les différences clés et comment les combiner →</ArrowLink>
+      <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );
 }

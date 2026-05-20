@@ -88,7 +88,7 @@ function HeroMockup({ locale }) {
           <div style={{ fontFamily: 'monospace', fontSize: 7, color: 'rgba(247,245,242,0.25)', letterSpacing: 2, textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 5, border: '1px solid rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 4 }}>
             <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#D97757' }} /> {locale === 'en' ? 'COMPLETE AUDIT' : 'AUDIT COMPLET'}
           </div>
-          <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 1 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5', letterSpacing: 1 }}>
             {pagesCount} pages
           </div>
         </div>

@@ -436,7 +436,7 @@
   "methodology": {
     "seo": {
       "title": "Méthodologie. Comment Detekia calcule votre score GEO",
-      "description": "Les 8 critères GEO de Detekia : extractibilité, vérifiabilité, E-E-A-T, crawlabilité IA, données structurées et plus."
+      "description": "Les 8 critères GEO de Detekia expliqués : extractibilité, vérifiabilité, E-E-A-T, crawlabilité IA, données structurées, neutralité et fraîcheur."
     },
     "hero": {
       "badge": "Transparence totale",
@@ -838,7 +838,7 @@
   },
   "about": {
     "seo": {
-      "title": "À propos. Detekia",
+      "title": "À propos de Detekia. Audit de visibilité IA made in France",
       "description": "Detekia est un outil d'audit GEO édité par Beeleven SASU. Méthodologie sourcée, transparence totale, conçu et développé en France."
     },
     "breadcrumbHome": "Accueil",
@@ -937,7 +937,7 @@
   },
   "contact": {
     "seo": {
-      "title": "Contact. Detekia",
+      "title": "Contactez l'équipe Detekia. Questions, devis, partenariats",
       "description": "Contactez l'équipe Detekia. Question sur un rapport, remarque, demande entreprise ou partenariat. on vous répond sous 24h."
     },
     "hero": {

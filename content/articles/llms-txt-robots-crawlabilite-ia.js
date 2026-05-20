@@ -51,6 +51,18 @@ function BotTable() {
   );
 }
 
+
+function InlineCTA({ href, children }) {
+  return (
+    <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
+      <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+        Tester mon site gratuitement →
+      </a>
+    </div>
+  );
+}
+
 export default function LlmsTxtRobotsCrawlabiliteIa() {
   return (
     <>
@@ -263,6 +275,7 @@ Disallow: /`}</code></pre>
       <p>Les informations déjà dans les données d'entraînement des LLM restent — vous ne pouvez pas "effacer" du corpus d'entraînement. En revanche, pour les systèmes de recherche IA en temps réel (Perplexity, SearchGPT), bloquer le bot empêchera les futures citations.</p>
 
       <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Voir tous les critères GEO et leur impact sur votre score →</ArrowLink>
+      <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );
 }

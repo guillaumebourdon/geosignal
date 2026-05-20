@@ -122,17 +122,17 @@ export default function Monitor() {
           <div style={{ background: '#1A1916', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
             <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: '#D97757', letterSpacing: -2 }}>45,9%</div>
             <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', marginTop: 8 }}>{isFr ? 'Taux de mention' : 'Mention rate'}</div>
-            <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'La marque apparaît dans presque 1 réponse sur 2' : 'Brand appears in almost 1 in 2 responses'}</div>
+            <div style={{ fontSize: 12, color: '#B0ABA5', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'La marque apparaît dans presque 1 réponse sur 2' : 'Brand appears in almost 1 in 2 responses'}</div>
           </div>
           <div style={{ background: '#1A1916', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
             <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: '#10A37F', letterSpacing: -2 }}>2,08</div>
             <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', marginTop: 8 }}>{isFr ? 'Position moyenne' : 'Average position'}</div>
-            <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'Citée en 2ème position en moyenne' : 'Cited in 2nd position on average'}</div>
+            <div style={{ fontSize: 12, color: '#B0ABA5', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'Citée en 2ème position en moyenne' : 'Cited in 2nd position on average'}</div>
           </div>
           <div style={{ background: '#1A1916', borderRadius: 16, padding: '32px 28px', textAlign: 'center' }}>
             <div style={{ fontFamily: 'monospace', fontSize: 42, fontWeight: 900, color: '#C9861A', letterSpacing: -2 }}>1 102</div>
             <div style={{ fontSize: 14, color: 'rgba(247,245,242,0.6)', fontFamily: 'system-ui', marginTop: 8 }}>{isFr ? 'Mentions totales' : 'Total mentions'}</div>
-            <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.35)', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'Sur 2 400 réponses analysées' : 'Across 2,400 analyzed responses'}</div>
+            <div style={{ fontSize: 12, color: '#B0ABA5', fontFamily: 'system-ui', marginTop: 4 }}>{isFr ? 'Sur 2 400 réponses analysées' : 'Across 2,400 analyzed responses'}</div>
           </div>
         </div>
 

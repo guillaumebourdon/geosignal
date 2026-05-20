@@ -34,6 +34,18 @@ function ChecklistSection({ title, items }) {
   );
 }
 
+
+function InlineCTA({ href, children }) {
+  return (
+    <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
+      <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+        Tester mon site gratuitement →
+      </a>
+    </div>
+  );
+}
+
 export default function SchemaOrgIaGuidePratique() {
   return (
     <>
@@ -306,6 +318,18 @@ export default function SchemaOrgIaGuidePratique() {
 
       <pre><code>{`import Head from 'next/head';
 
+
+function InlineCTA({ href, children }) {
+  return (
+    <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
+      <p style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', marginBottom: 12 }}>{children}</p>
+      <a href={href} style={{ display: 'inline-block', background: '#D97757', color: '#fff', borderRadius: 8, padding: '11px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
+        Tester mon site gratuitement →
+      </a>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const schema = {
     "@context": "https://schema.org",
@@ -323,6 +347,7 @@ export default function HomePage() {
         />
       </Head>
       {/* ... votre contenu ... */}
+      <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );
 }`}</code></pre>
@@ -419,6 +444,7 @@ export default function HomePage() {
       <p>Vous avez implémenté vos schemas ? Mesurez l'impact immédiatement.</p>
 
       <p>Lancez un audit GEO sur Detekia — votre score de données structurées passera de 0-3 à 7-10 si l'implémentation est correcte. En moins de 60 secondes, sans inscription.</p>
+      <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );
 }
