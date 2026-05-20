@@ -963,7 +963,7 @@
         {
           "icon": "📊",
           "title": "Quote or information request",
-          "desc": "Présence IA, custom support, tailored audit. we'll respond with a quote adapted to your needs."
+          "desc": "Personalized support, tailored audit, brand monitoring. We'll respond with a custom quote."
         },
         {
           "icon": "📅",
@@ -1661,8 +1661,8 @@
     "ctaSub": "Or analyze your website →"
   },
   "beelevenContact": {
-    "modalTitle": "Let's talk about your project",
-    "modalSubtitle": "Beeleven, the agency behind Detekia, can implement the recommendations from your report: in-depth audit, technical optimizations, monthly monitoring.",
+    "modalTitle": "Need help implementing?",
+    "modalSubtitle": "Our team can handle the implementation of your report's recommendations: technical optimizations, editorial strategy, AI visibility tracking. Optional service, custom quote.",
     "firstName": "First name",
     "lastName": "Last name",
     "email": "Email",

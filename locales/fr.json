@@ -965,7 +965,7 @@
         {
           "icon": "📊",
           "title": "Demande de devis ou renseignements",
-          "desc": "Présence IA, accompagnement personnalisé, audit sur mesure. on vous répond avec un chiffrage adapté."
+          "desc": "Accompagnement personnalisé, audit sur mesure, monitoring de marque. On vous répond avec un chiffrage adapté."
         },
         {
           "icon": "📅",
@@ -1663,8 +1663,8 @@
     "ctaSub": "Ou analysez votre site →"
   },
   "beelevenContact": {
-    "modalTitle": "Discutons de votre projet",
-    "modalSubtitle": "Beeleven, l'agence qui a créé Detekia, peut implémenter les recommandations de votre rapport : audit approfondi, optimisations techniques, suivi mensuel.",
+    "modalTitle": "Besoin d'aide pour implémenter ?",
+    "modalSubtitle": "Notre équipe peut prendre en charge l'implémentation des recommandations de votre rapport : optimisations techniques, stratégie éditoriale, suivi de la visibilité IA. Service optionnel, sur devis.",
     "firstName": "Prénom",
     "lastName": "Nom",
     "email": "Email",

@@ -281,8 +281,8 @@ export default function Pricing() {
         <p style={{ fontSize: 15, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>{t('pricing.hero.subtitle')}</p>
       </div>
 
-      {/* PLANS */}
-      <div className="pricing-cards" style={{ maxWidth: 1120, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 48 }}>
+      {/* PLANS — 3 colonnes self-service */}
+      <div className="pricing-cards" style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 48 }}>
         {/* FREE */}
         <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
@@ -348,32 +348,82 @@ export default function Pricing() {
             <Link href="/pro" style={{ fontSize: 12, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.proCard.learnMore')}</Link>
           </div>
         </div>
-        {/* PRÉSENCE IA */}
-        <div className="card-interactive" style={{ background: 'linear-gradient(135deg, #1A1916 0%, #2A2520 100%)', border: '1px solid rgba(201,134,26,0.25)', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{locale === 'en' ? 'AI Presence' : 'Présence IA'}</div>
-          <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', letterSpacing: -0.5 }}>{locale === 'en' ? 'Custom' : 'Sur devis'}</span></div>
-          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{locale === 'en' ? 'Quarterly commitment' : 'Engagement trimestriel'}</div>
-          <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{locale === 'en' ? 'What do AI engines say about your brand?' : 'Que disent les IA de votre marque ?'}</div>
-          <Link href="/presence-ia" style={{ display: 'block', width: '100%', textAlign: 'center', background: 'linear-gradient(135deg, #C9861A, #D97757)', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, textDecoration: 'none', fontFamily: 'system-ui', marginBottom: 24 }}>
-            {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
-          </Link>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
-            {[
-              locale === 'en' ? 'Queries on ChatGPT, Gemini, Claude, Perplexity' : 'Requêtes sur ChatGPT, Gemini, Claude, Perplexity',
-              locale === 'en' ? 'Mention rate, position, sentiment' : 'Taux de mention, position, sentiment',
-              locale === 'en' ? 'Competitor tracking' : 'Suivi concurrentiel',
-              locale === 'en' ? 'Interactive dashboard' : 'Dashboard interactif',
-              locale === 'en' ? 'Monthly reports + recommendations' : 'Rapports mensuels + recommandations',
-              locale === 'en' ? 'Dedicated contact' : 'Interlocuteur dédié',
-            ].map((feat, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 12, color: '#C9861A', flexShrink: 0 }}>✓</span>
-                <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.75)', fontFamily: 'system-ui' }}>{feat}</span>
-              </div>
-            ))}
+      </div>
+
+      {/* AUTRES SERVICES */}
+      <div style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px 48px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>
+            {locale === 'en' ? 'OTHER SERVICES' : 'AUTRES SERVICES'}
           </div>
-          <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
-            <Link href="/contact" style={{ fontSize: 12, color: '#C9861A', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(201,134,26,0.3)', paddingBottom: 1 }}>{locale === 'en' ? 'Contact us →' : 'Nous contacter →'}</Link>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(22px, 3vw, 32px)', color: '#1A1916', letterSpacing: -1, lineHeight: 1.2 }}>
+            {locale === 'en' ? 'Need to go further?' : 'Besoin d\'aller plus loin ?'}
+          </h2>
+        </div>
+        <div className="pricing-services" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          {/* Présence IA */}
+          <div style={{ background: '#F7F5F2', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>
+              {locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}
+            </div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6, lineHeight: 1.2 }}>
+              {locale === 'en' ? 'What do AI engines say about your brand?' : 'Que disent les IA de votre marque ?'}
+            </div>
+            <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+              {locale === 'en'
+                ? 'We query ChatGPT, Gemini, Claude and Perplexity on your strategic queries. You see who is cited, at what position, with what sentiment.'
+                : 'On interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques. Vous voyez qui est cité, à quelle position, avec quel sentiment.'}
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
+              {(locale === 'en'
+                ? ['Mention rate, position, sentiment', 'Competitor tracking', 'One-shot report or monthly monitoring']
+                : ['Taux de mention, position, sentiment', 'Suivi concurrentiel', 'Rapport ponctuel ou monitoring mensuel']
+              ).map((f, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ fontSize: 10, color: '#C9861A' }}>✓</span>
+                  <span style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui' }}>{f}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: 'auto', display: 'flex', gap: 12, alignItems: 'center' }}>
+              <Link href="/presence-ia" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '10px 20px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
+              </Link>
+              <Link href="/contact" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
+                {locale === 'en' ? 'Contact us' : 'Nous contacter'}
+              </Link>
+            </div>
+          </div>
+
+          {/* Accompagnement personnalisé */}
+          <div style={{ background: '#F7F5F2', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>
+              {locale === 'en' ? 'CONSULTING' : 'ACCOMPAGNEMENT'}
+            </div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6, lineHeight: 1.2 }}>
+              {locale === 'en' ? 'We implement the fixes for you' : 'On implémente les corrections pour vous'}
+            </div>
+            <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
+              {locale === 'en'
+                ? 'Our team implements the recommendations from your audit: technical optimizations, editorial strategy, monthly visibility tracking.'
+                : 'Notre équipe implémente les recommandations de votre audit : optimisations techniques, stratégie éditoriale, suivi mensuel de la visibilité.'}
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
+              {(locale === 'en'
+                ? ['Custom implementation plan', 'Technical + editorial optimizations', 'Monthly progress tracking']
+                : ['Plan d\'implémentation sur mesure', 'Optimisations techniques + éditoriales', 'Suivi mensuel des progrès']
+              ).map((f, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ fontSize: 10, color: '#D97757' }}>✓</span>
+                  <span style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui' }}>{f}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: 'auto' }}>
+              <Link href="/contact" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '10px 20px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -537,6 +587,7 @@ export default function Pricing() {
         }
         @media (max-width: 600px) {
           .pricing-cards { grid-template-columns: 1fr !important; }
+          .pricing-services { grid-template-columns: 1fr !important; }
           .pricing-footer-inner { flex-direction: column !important; gap: 24px !important; }
         }
         /* FAQ accordion — native <details> styling */
