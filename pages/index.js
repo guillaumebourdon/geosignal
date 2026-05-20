@@ -819,6 +819,10 @@ export default function Home() {
               <Logo />{t('common.siteName')}
             </div>
             <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>{t('homepage.footer.copyright')}</div>
+            <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui', marginTop: 4 }}>
+              {locale === 'en' ? 'A product by ' : 'Un produit de l\'agence '}
+              <a href="https://beeleven.fr" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>Beeleven</a>
+            </div>
           </div>
           {['products', 'resources', 'legal'].map((section) => (
             <div key={section}>

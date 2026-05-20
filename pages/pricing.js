@@ -395,23 +395,23 @@ export default function Pricing() {
             </div>
           </div>
 
-          {/* Accompagnement personnalisé */}
+          {/* Accompagnement — Agence Beeleven */}
           <div style={{ background: '#F7F5F2', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>
-              {locale === 'en' ? 'CONSULTING' : 'ACCOMPAGNEMENT'}
+              {locale === 'en' ? 'AGENCY' : 'AGENCE'}
             </div>
             <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6, lineHeight: 1.2 }}>
-              {locale === 'en' ? 'We implement the fixes for you' : 'On implémente les corrections pour vous'}
+              {locale === 'en' ? 'Beeleven, the agency behind Detekia' : 'Beeleven, l\'agence derrière Detekia'}
             </div>
             <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
               {locale === 'en'
-                ? 'Our team implements the recommendations from your audit: technical optimizations, editorial strategy, monthly visibility tracking.'
-                : 'Notre équipe implémente les recommandations de votre audit : optimisations techniques, stratégie éditoriale, suivi mensuel de la visibilité.'}
+                ? 'Detekia is a product of Beeleven, a Paris-based digital agency. We support businesses on all aspects of their digital strategy: GEO, SEO, content, technical optimization, and beyond.'
+                : 'Detekia est un produit de l\'agence Beeleven, basée à Paris. Nous accompagnons les entreprises sur tous les aspects de leur stratégie digitale : GEO, SEO, contenu, optimisation technique, et bien plus.'}
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
               {(locale === 'en'
-                ? ['Custom implementation plan', 'Technical + editorial optimizations', 'Monthly progress tracking']
-                : ['Plan d\'implémentation sur mesure', 'Optimisations techniques + éditoriales', 'Suivi mensuel des progrès']
+                ? ['GEO & SEO strategy', 'Content creation & optimization', 'Technical implementation', 'Monthly tracking & reporting']
+                : ['Stratégie GEO & SEO', 'Création et optimisation de contenu', 'Implémentation technique', 'Suivi et reporting mensuel']
               ).map((f, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   <span style={{ fontSize: 10, color: '#D97757' }}>✓</span>
@@ -419,9 +419,12 @@ export default function Pricing() {
                 </div>
               ))}
             </div>
-            <div style={{ marginTop: 'auto' }}>
-              <Link href="/contact" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '10px 20px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                {locale === 'en' ? 'Contact us →' : 'Nous contacter →'}
+            <div style={{ marginTop: 'auto', display: 'flex', gap: 12, alignItems: 'center' }}>
+              <a href="https://beeleven.fr" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '10px 20px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
+                {locale === 'en' ? 'Visit beeleven.fr →' : 'Visiter beeleven.fr →'}
+              </a>
+              <Link href="/contact" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
+                {locale === 'en' ? 'Contact us' : 'Nous contacter'}
               </Link>
             </div>
           </div>
@@ -462,6 +465,10 @@ export default function Pricing() {
               <Logo />{t('common.siteName')}
             </div>
             <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>{t('homepage.footer.copyright')}</div>
+            <div style={{ fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui', marginTop: 4 }}>
+              {locale === 'en' ? 'A product by ' : 'Un produit de l\'agence '}
+              <a href="https://beeleven.fr" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>Beeleven</a>
+            </div>
           </div>
           {['products', 'resources', 'legal'].map((section) => (
             <div key={section}>
