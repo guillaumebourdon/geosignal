@@ -368,11 +368,11 @@ export default function Home() {
       </section>
 
       {/* ── BANDEAU STATS DÉFILANTES ── */}
-      <div style={{ background: '#1A1916', overflow: 'hidden' }}>
+      <div style={{ background: '#fff', borderTop: '1px solid #E5E2DC', borderBottom: '1px solid #E5E2DC', overflow: 'hidden' }}>
         <div className="stats-marquee-wrap">
           <div className="stats-marquee">
             <div className="stats-marquee-inner">
-              {[...Array(2)].map((_, setIdx) => (
+              {[...Array(3)].map((_, setIdx) => (
                 <div key={setIdx} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                   {[
                     { value: '87%', label: locale === 'en' ? 'of sites are never cited by AI' : 'des sites ne sont jamais cités par les IA' },
@@ -387,7 +387,7 @@ export default function Home() {
                   ].map((stat, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 28px', flexShrink: 0 }}>
                       <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#D97757', fontWeight: 700 }}>{stat.value}</span>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 11, color: 'rgba(247,245,242,0.4)' }}>{stat.label}</span>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#6B6762' }}>{stat.label}</span>
                     </div>
                   ))}
                 </div>
@@ -837,7 +837,7 @@ export default function Home() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         input::placeholder { color: #6B6762; }
         @keyframes ai-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
         .stats-marquee-wrap { mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%); }
         .stats-marquee { display: flex; animation: marqueeScroll 40s linear infinite; padding: 13px 0; }
         .stats-marquee:hover { animation-play-state: paused; }
