@@ -49,6 +49,7 @@ export default function Pricing() {
   const [modalLoading, setModalLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('');
   const [showFallback, setShowFallback] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState(null);
@@ -97,6 +98,7 @@ export default function Pricing() {
     setPageSelectorHostname('');
     setPageSelectorUrl('');
     setSelectedPages(null);
+    setTermsAccepted(false);
     setModalUrl('');
     setUrlError('');
     setModalError('');
@@ -516,10 +518,20 @@ export default function Pricing() {
               {modalError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{modalError}</div>}
             </div>
 
+            {/* CGV acceptance */}
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 16, cursor: 'pointer' }}>
+              <input type="checkbox" checked={termsAccepted} onChange={e => setTermsAccepted(e.target.checked)} style={{ marginTop: 3, accentColor: '#D97757' }} />
+              <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#6B6762', lineHeight: 1.5 }}>
+                {locale === 'en'
+                  ? <>I accept the <a href="/cgu" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>terms of service</a> and <a href="/confidentialite" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>privacy policy</a></>
+                  : <>J&apos;accepte les <a href="/cgu" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>conditions générales de vente</a> et la <a href="/confidentialite" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>politique de confidentialité</a></>}
+              </span>
+            </label>
+
             <button
               onClick={handleModalSubmit}
-              disabled={modalLoading || !modalUrl.trim()}
-              style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
+              disabled={modalLoading || !modalUrl.trim() || !termsAccepted}
+              style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() || !termsAccepted ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() || !termsAccepted ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
               {modalLoading ? (loadingText || '...') : (selectedPlan === 'pro' ? t('pricing.modalPro.submitButton') : t('pricing.modal.submitButton'))}
             </button>
             {showFallback && (

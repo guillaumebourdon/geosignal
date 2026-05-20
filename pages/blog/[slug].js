@@ -118,6 +118,16 @@ export default function ArticlePage({ article, related }) {
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
   };
 
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Detekia', item: 'https://detekia.fr' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `https://detekia.fr${locale === 'fr' ? '' : '/en'}/blog` },
+      { '@type': 'ListItem', position: 3, name: article.title },
+    ],
+  };
+
   return (
     <>
       <Head>
@@ -146,6 +156,7 @@ export default function ArticlePage({ article, related }) {
         <meta name="twitter:image" content={`https://detekia.fr/api/og?slug=${article.slug}&locale=${locale}`} />
 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
