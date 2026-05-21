@@ -245,7 +245,7 @@ function scoreExternalPresence($, html, locale = 'fr', directMeta = {}) {
   if (externalLinks.length > 0) { score += 1; details.push(`${e.extLinksPresent} ✓`); }
   if (/presse|m.dia|press|featured|vu dans|as seen/i.test(html)) { score += 2; details.push(`${e.pressMentions} ✓`); }
   // Check social links from Jina content OR direct HTML fetch (exclude tracking pixels)
-  const socialTrackingExclude = ['analytics.twitter', 'platform.twitter', 'ads.twitter', 'adsct', 'connect.facebook', 'staticxx.facebook'];
+  const socialTrackingExclude = ['analytics.twitter', 'platform.twitter', 'ads.twitter', 'adsct', 'connect.facebook', 'staticxx.facebook', '/intent/', '/sharer/', '/widgets/', '/share?', '/share.php'];
   const hasSocial = externalLinks.some(l => (l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube') || l.includes('tiktok.com') || l.includes('snapchat.com') || l.includes('pinterest.com') || l.includes('threads.net')) && !socialTrackingExclude.some(e => l.includes(e)))
     || (directMeta.socialLinks && directMeta.socialLinks.length > 0);
   if (hasSocial) { score += 2; details.push(`${e.socialMedia} ✓`); }
@@ -264,7 +264,7 @@ function scoreFreshness($, html, locale = 'fr') {
   if (recentYearRegex.test(html)) { score += 1; details.push(`${e.recentContent} (${currentYear}) ✓`); }
   else details.push(`${e.possiblyOutdated} ✗`);
   if (html.includes('dateModified')) { score += 2; details.push(`${e.dateModified} ✓`); }
-  if (new RegExp(`©\\s*${currentYear}`).test(html)) { score += 1; details.push(`${e.copyrightCurrent} ✓`); }
+  if (new RegExp(`(©|Copyright)\\s*${currentYear}`, 'i').test(html)) { score += 1; details.push(`${e.copyrightCurrent} ✓`); }
   return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') || e.possiblyOutdated };
 }
 
@@ -333,9 +333,21 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
     });
   }
 
-  // 7. images — HTML tags or direct HTML fetch fallback
-  let totalImages = $('img').length;
-  let imagesWithAlt = $('img[alt]').filter((_, el) => ($(el).attr('alt') || '').trim().length > 0).length;
+  // 7. images — HTML tags or direct HTML fetch fallback (exclude tracking pixels and inline SVG icons)
+  const isRealImage = (el) => {
+    const src = $(el).attr('src') || '';
+    const width = parseInt($(el).attr('width') || '0', 10);
+    const height = parseInt($(el).attr('height') || '0', 10);
+    // Exclude tracking pixels (1x1 or 0x0)
+    if ((width === 1 && height === 1) || (width === 0 && height === 0 && $(el).attr('width'))) return false;
+    // Exclude inline data URIs that are tiny (tracking pixels)
+    if (src.startsWith('data:') && src.length < 200) return false;
+    // Exclude SVG files used as icons (typically very small)
+    if (src.endsWith('.svg') && width > 0 && width <= 24 && height > 0 && height <= 24) return false;
+    return true;
+  };
+  let totalImages = $('img').filter((_, el) => isRealImage(el)).length;
+  let imagesWithAlt = $('img[alt]').filter((_, el) => isRealImage(el) && ($(el).attr('alt') || '').trim().length > 0).length;
   // Markdown image fallback: count ![alt](url) patterns
   if (totalImages === 0) {
     const mdImages = rawContent.match(/!\[([^\]]*)\]\([^)]+\)/g) || [];
@@ -379,9 +391,9 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
       if (data.dateModified)  dates.dateModified  = data.dateModified;
     } catch {}
   });
-  // Copyright: capture full range (e.g. "© 2016 – 2026" or "© 2024")
-  const copyrightRangeMatch = rawContent.match(/©\s*(20[012]\d)\s*[-–—]\s*(20[012]\d)/);
-  const copyrightSingleMatch = rawContent.match(/©\s*(20[012]\d)/);
+  // Copyright: capture full range (e.g. "© 2016 – 2026" or "Copyright 2024")
+  const copyrightRangeMatch = rawContent.match(/(?:©|Copyright)\s*(20[012]\d)\s*[-–—]\s*(20[012]\d)/i);
+  const copyrightSingleMatch = rawContent.match(/(?:©|Copyright)\s*(20[012]\d)/i);
   if (copyrightRangeMatch) { dates.copyright = `${copyrightRangeMatch[1]}–${copyrightRangeMatch[2]}`; }
   else if (copyrightSingleMatch) { dates.copyright = copyrightSingleMatch[1]; }
   const yearMatch = textContent.match(/\b(20[12]\d)\b/);
@@ -814,9 +826,18 @@ export default async function handler(req, res) {
           directMeta.socialLinks.push(href);
         }
       });
-      // 4. Count images
-      directMeta.imageCount = $raw('img').length;
-      directMeta.imagesWithAlt = $raw('img[alt]').filter((_, el) => ($raw(el).attr('alt') || '').trim().length > 0).length;
+      // 4. Count images (exclude tracking pixels and tiny SVG icons)
+      const isRealImg = (el) => {
+        const src = $raw(el).attr('src') || '';
+        const w = parseInt($raw(el).attr('width') || '0', 10);
+        const h = parseInt($raw(el).attr('height') || '0', 10);
+        if ((w === 1 && h === 1) || (w === 0 && h === 0 && $raw(el).attr('width'))) return false;
+        if (src.startsWith('data:') && src.length < 200) return false;
+        if (src.endsWith('.svg') && w > 0 && w <= 24 && h > 0 && h <= 24) return false;
+        return true;
+      };
+      directMeta.imageCount = $raw('img').filter((_, el) => isRealImg(el)).length;
+      directMeta.imagesWithAlt = $raw('img[alt]').filter((_, el) => isRealImg(el) && ($raw(el).attr('alt') || '').trim().length > 0).length;
     }
 
     const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || directMeta.title || jinaTitle(rawContent) || '';
