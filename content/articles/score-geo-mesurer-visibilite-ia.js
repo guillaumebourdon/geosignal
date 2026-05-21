@@ -330,6 +330,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
       <p>La première étape est de connaître votre score actuel. Pas d'estimation, pas d'intuition — une mesure objective sur les 8 critères GEO.</p>
 
       <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères détaillés, recommandations priorisées par impact. En moins de 60 secondes, sans inscription.</p>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

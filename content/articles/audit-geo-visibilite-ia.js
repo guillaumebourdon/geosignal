@@ -332,6 +332,8 @@ export default function AuditGeoVisibiliteIa() {
         <li>Le benchmark concurrentiel — comment vous situez-vous par rapport à vos concurrents ?</li>
       </ul>
 
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
       <ArrowLink href="/">Lancez votre audit GEO automatisé — en moins de 60 secondes, sans inscription →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

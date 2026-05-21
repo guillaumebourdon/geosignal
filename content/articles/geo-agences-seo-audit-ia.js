@@ -269,6 +269,7 @@ export default function GeoAgencesSeoAuditIa() {
 
       <p>Les agences qui construisent leur expertise et leurs process dès maintenant seront les mieux positionnées pour capter ce marché. Le coût d'entrée aujourd'hui est faible — il montera à mesure que la compétition s'intensifie.</p>
 
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
       <ArrowLink href="/">Analysez un site client avec l'audit GEO gratuit Detekia →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

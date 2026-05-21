@@ -239,6 +239,8 @@ Commencez par les points 1 et 2, c'est corrigeable en une journée."`}</code></p
 
       <p>30-45 minutes par semaine suffisent pour une présence efficace : 3-5 commentaires utiles + 1 post mensuel. La qualité prime sur la quantité.</p>
 
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
       <ArrowLink href="/">Mesurez votre visibilité IA actuelle avant de démarrer — audit GEO gratuit en moins de 60 secondes →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

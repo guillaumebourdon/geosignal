@@ -193,6 +193,8 @@ export default function PerplexityCommentApparaitre() {
       </ol>
 
       <p>Perplexity est encore en phase de croissance. Les sites qui se positionnent maintenant capturent des parts de citation qui seront beaucoup plus difficiles à déloger dans 18 mois, une fois les positions consolidées. L'avantage est au premier entrant — à condition d'optimiser sur les critères réellement discriminants du moteur.</p>
+
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
     </>
   );
 }

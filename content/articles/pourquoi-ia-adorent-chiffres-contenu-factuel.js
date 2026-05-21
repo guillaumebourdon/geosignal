@@ -9,6 +9,15 @@ function InternalLink({ href, children }) {
   );
 }
 
+function ArrowLink({ href, children }) {
+  return (
+    <p style={{ margin: '20px 0', padding: '14px 18px', background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 8, fontFamily: 'system-ui', fontSize: 14 }}>
+      <span style={{ color: '#D97757', marginRight: 8 }}>→</span>
+      <InternalLink href={href}>{children}</InternalLink>
+    </p>
+  );
+}
+
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
@@ -110,6 +119,9 @@ export default function PourquoiIaAdorentChiffresContenuFactuel() {
         <li>Verifiez que chaque page ouvre par une capsule factuelle dans les 2 premieres phrases — c'est la que 44 % des citations IA sont extraites</li>
         <li>Mesurez votre point de depart avec un <InternalLink href="/">scoring GEO gratuit</InternalLink> — le critere "Verificabilite & preuves" vous dira exactement ou vous en etes</li>
       </ol>
+
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
     </>
   );
 }

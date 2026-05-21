@@ -193,6 +193,8 @@ export default function ConcurrentsChattgptVisibilite() {
 
       <p>C'est souvent un facteur important, mais rarement le seul. Un blog actif fournit du contenu extractible et frais — deux critères GEO majeurs. Mais les corrections techniques (robots.txt, Schema.org) et la réécriture des pages existantes peuvent avoir un impact comparable sans créer un blog. Commencez par optimiser ce que vous avez avant de créer du nouveau contenu.</p>
 
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
       <ArrowLink href="/">Mesurez l'écart avec vos concurrents — audit GEO gratuit sur Detekia →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

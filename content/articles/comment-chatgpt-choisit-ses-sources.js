@@ -179,6 +179,8 @@ export default function CommentChatgptChoisitSesSources() {
       </ol>
 
       <p>Le GEO n'est pas une mode. C'est un changement structurel dans la manière dont les utilisateurs accèdent à l'information. Les sites qui s'adaptent maintenant auront un avantage considérable sur ceux qui attendront que le phénomène devienne impossible à ignorer.</p>
+
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
     </>
   );
 }

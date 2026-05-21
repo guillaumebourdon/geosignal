@@ -170,6 +170,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Le premier pas est simple : mesurez où vous en êtes. Analysez votre site gratuitement sur Detekia — score GEO sur 100, 8 critères analysés, recommandations concrètes, en moins de 60 secondes.</p>
 
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <InlineCTA href="/">Votre trafic baisse ? Découvrez si les IA en sont la cause.</InlineCTA>
     </>
   );

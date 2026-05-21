@@ -314,6 +314,8 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
       <p>Votre boutique en ligne est-elle citée quand un client demande à ChatGPT une recommandation dans votre secteur ? Faites le test.</p>
 
       <p>Analysez votre site sur Detekia — score sur 100, 8 critères GEO, recommandations priorisées. En moins de 60 secondes, sans inscription.</p>
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

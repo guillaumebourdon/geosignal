@@ -203,6 +203,8 @@ export default function GeminiVisibiliteSiteFrance() {
       </ol>
 
       <p>Les sites qui se positionnent maintenant sur les critères de Gemini captent un avantage durable. Une fois les AI Overviews déployés en France, les positions seront plus difficiles à conquérir qu'à défendre. Le moment d'agir, c'est avant le déploiement — pas après.</p>
+
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
     </>
   );
 }

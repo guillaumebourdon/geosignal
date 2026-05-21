@@ -9,6 +9,15 @@ function InternalLink({ href, children }) {
   );
 }
 
+function ArrowLink({ href, children }) {
+  return (
+    <p style={{ margin: '20px 0', padding: '14px 18px', background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 8, fontFamily: 'system-ui', fontSize: 14 }}>
+      <span style={{ color: '#D97757', marginRight: 8 }}>→</span>
+      <InternalLink href={href}>{children}</InternalLink>
+    </p>
+  );
+}
+
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
@@ -138,6 +147,10 @@ export default function MesurerVisibiliteIaOutilsMethodes2026() {
         <li>Posez 5 requetes a ChatGPT et Perplexity sur votre secteur et notez si vous etes cite, qui l'est a votre place, et avec quel sentiment</li>
         <li>Comparez les deux resultats : si votre score technique est bon mais que vous n'etes pas cite, le probleme est l'autorite ou le contenu. Si votre score est bas, les corrections techniques sont la priorite</li>
       </ol>
+
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
     </>
   );
 }

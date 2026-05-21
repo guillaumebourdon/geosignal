@@ -235,6 +235,7 @@ vos services, votre proposition de valeur.`}</code></pre>
 
       <p>Vérifiez votre <code>robots.txt</code>, créez un fichier <code>llms.txt</code>, désactivez les règles de sécurité trop agressives, et assurez-vous que votre contenu est rendu côté serveur. En 10 minutes, vous passez d'invisible à indexable par toutes les IA.</p>
 
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
       <InlineCTA href="/">Votre site bloque-t-il les bots IA ? Vérifiez gratuitement en moins de 60 secondes.</InlineCTA>
     </>
   );

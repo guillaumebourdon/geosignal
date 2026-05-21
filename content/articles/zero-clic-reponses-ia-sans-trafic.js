@@ -217,6 +217,7 @@ export default function ZeroClicReponsesIaSansTrafic() {
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences et comment les combiner en 2026</ArrowLink>
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
 
       <InlineCTA href="/">Votre site est-il prêt pour l'ère du zéro clic ? Testez gratuitement.</InlineCTA>
 

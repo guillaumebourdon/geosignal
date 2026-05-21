@@ -9,6 +9,15 @@ function InternalLink({ href, children }) {
   );
 }
 
+function ArrowLink({ href, children }) {
+  return (
+    <p style={{ margin: '20px 0', padding: '14px 18px', background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 8, fontFamily: 'system-ui', fontSize: 14 }}>
+      <span style={{ color: '#D97757', marginRight: 8 }}>→</span>
+      <InternalLink href={href}>{children}</InternalLink>
+    </p>
+  );
+}
+
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
@@ -130,6 +139,9 @@ export default function LinkedinGeoProfilVisibiliteIa() {
         <li>Ajoutez un lien <code>sameAs</code> vers votre LinkedIn dans le schema Person de votre page auteur — les IA l'utilisent pour recouper votre identite</li>
         <li>Publiez un premier article LinkedIn de reference sur votre domaine d'expertise, avec au moins 3 sources datees, et un lien vers votre site web. Puis mesurez votre point de depart avec un <InternalLink href="/">scoring GEO gratuit</InternalLink></li>
       </ol>
+
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
     </>
   );
 }

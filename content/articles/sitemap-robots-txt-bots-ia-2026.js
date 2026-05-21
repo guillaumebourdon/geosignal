@@ -9,6 +9,15 @@ function InternalLink({ href, children }) {
   );
 }
 
+function ArrowLink({ href, children }) {
+  return (
+    <p style={{ margin: '20px 0', padding: '14px 18px', background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 8, fontFamily: 'system-ui', fontSize: 14 }}>
+      <span style={{ color: '#D97757', marginRight: 8 }}>→</span>
+      <InternalLink href={href}>{children}</InternalLink>
+    </p>
+  );
+}
+
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
@@ -278,6 +287,8 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
         <li>✓ Le robots.txt est testé après chaque migration ou changement d'infrastructure</li>
         <li>✓ Les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 critères GEO</InternalLink> sont vérifiés, dont la crawlabilité IA</li>
       </ul>
+
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
     </>
   );
 }
