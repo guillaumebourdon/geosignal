@@ -114,13 +114,32 @@ function scoreVerifiability($, text, html, siteHostname, locale = 'fr') {
   let score = 0;
   const details = [];
   score += 2; details.push(e.verifiable);
-  const numbers = text.match(/\d+[.,]?\d*\s*(%|€|\$|k|M|pts?|points?|fois|times|ans?|years?|mois|months?|jours?|days?)/gi) || [];
+  // Data points: only count meaningful numbers with units, deduplicated
+  const rawNumbers = text.match(/\d+[.,]?\d*\s*(%|€|\$|k|M|pts?|points?|fois|times|ans?|years?|mois|months?|jours?|days?|m²|km|kg|DA|£|¥)/gi) || [];
+  const uniqueNumbers = [...new Set(rawNumbers.map(n => n.trim().toLowerCase()))];
+  // Exclude phone-like patterns and very long digit strings
+  const numbers = uniqueNumbers.filter(n => !/^\d{6,}/.test(n));
   if (numbers.length >= 5) { score += 5; details.push(`${numbers.length} ${e.dataPoints} ✓`); }
   else if (numbers.length >= 2) { score += 3; details.push(`${numbers.length} ${e.dataPoints}`); }
   else if (numbers.length >= 1) { score += 1; details.push(`${numbers.length} ${e.dataPoint}`); }
   else details.push(`${e.fewData} ✗`);
+  // External links: deduplicate by domain, exclude site's own domain
   const htmlExtLinks = [];
-  $('a[href]').each((_, el) => { const href = $(el).attr('href') || ''; if (href.startsWith('http')) htmlExtLinks.push(href); });
+  const seenDomains = new Set();
+  try {
+    const siteHost = new URL(siteHostname.startsWith('http') ? siteHostname : `https://${siteHostname}`).hostname.replace(/^www\./, '');
+    $('a[href]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      if (!href.startsWith('http')) return;
+      try {
+        const linkHost = new URL(href).hostname.replace(/^www\./, '');
+        if (linkHost !== siteHost && !seenDomains.has(linkHost)) {
+          seenDomains.add(linkHost);
+          htmlExtLinks.push(href);
+        }
+      } catch {}
+    });
+  } catch {}
   const externalLinks = htmlExtLinks.length > 0 ? htmlExtLinks : mdExternalLinks(html, siteHostname);
   if (externalLinks.length >= 5) { score += 5; details.push(`${externalLinks.length} ${e.extLinks} ✓`); }
   else if (externalLinks.length >= 2) { score += 3; details.push(`${externalLinks.length} ${e.extLinks}`); }
@@ -227,7 +246,7 @@ function scoreExternalPresence($, html, locale = 'fr', directMeta = {}) {
   if (/presse|m.dia|press|featured|vu dans|as seen/i.test(html)) { score += 2; details.push(`${e.pressMentions} ✓`); }
   // Check social links from Jina content OR direct HTML fetch (exclude tracking pixels)
   const socialTrackingExclude = ['analytics.twitter', 'platform.twitter', 'ads.twitter', 'adsct', 'connect.facebook', 'staticxx.facebook'];
-  const hasSocial = externalLinks.some(l => (l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube')) && !socialTrackingExclude.some(e => l.includes(e)))
+  const hasSocial = externalLinks.some(l => (l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube') || l.includes('tiktok.com') || l.includes('snapchat.com') || l.includes('pinterest.com') || l.includes('threads.net')) && !socialTrackingExclude.some(e => l.includes(e)))
     || (directMeta.socialLinks && directMeta.socialLinks.length > 0);
   if (hasSocial) { score += 2; details.push(`${e.socialMedia} ✓`); }
   if (/t.moignage|avis client|review|testimonial/i.test(html)) { score += 1; details.push(`${e.testimonials} ✓`); }
@@ -293,7 +312,7 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
   });
 
   // 6. socialLinks — HTML or markdown fallback, enriched with directMeta
-  const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'];
+  const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com', 'tiktok.com', 'snapchat.com', 'pinterest.com', 'threads.net'];
   const socialExclude = ['analytics.twitter', 'platform.twitter', '/intent/', 'ads.twitter', 'adsct', '/widgets/', 'connect.facebook', 'staticxx.facebook'];
   const socialLinks = [];
   $('a[href]').each((_, el) => {
@@ -330,13 +349,21 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
   }
   const images = { withAlt: imagesWithAlt, total: totalImages };
 
-  // 8. externalLinks count — HTML or markdown fallback
+  // 8. externalLinks count — HTML or markdown fallback, deduplicated by domain
   let externalLinksCount = 0;
   try {
-    const hostname = new URL(normalizedUrl).hostname;
+    const hostname = new URL(normalizedUrl).hostname.replace(/^www\./, '');
+    const seenExtDomains = new Set();
     $('a[href]').each((_, el) => {
       const href = $(el).attr('href') || '';
-      if (href.startsWith('http') && !href.includes(hostname)) externalLinksCount++;
+      if (!href.startsWith('http')) return;
+      try {
+        const linkHost = new URL(href).hostname.replace(/^www\./, '');
+        if (linkHost !== hostname && !seenExtDomains.has(linkHost)) {
+          seenExtDomains.add(linkHost);
+          externalLinksCount++;
+        }
+      } catch {}
     });
     if (externalLinksCount === 0) {
       externalLinksCount = mdExternalLinks(rawContent, hostname).length;
@@ -352,8 +379,11 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
       if (data.dateModified)  dates.dateModified  = data.dateModified;
     } catch {}
   });
-  const copyrightMatch = rawContent.match(/©\s*(20[12]\d)/);
-  if (copyrightMatch) dates.copyright = copyrightMatch[1];
+  // Copyright: capture full range (e.g. "© 2016 – 2026" or "© 2024")
+  const copyrightRangeMatch = rawContent.match(/©\s*(20[012]\d)\s*[-–—]\s*(20[012]\d)/);
+  const copyrightSingleMatch = rawContent.match(/©\s*(20[012]\d)/);
+  if (copyrightRangeMatch) { dates.copyright = `${copyrightRangeMatch[1]}–${copyrightRangeMatch[2]}`; }
+  else if (copyrightSingleMatch) { dates.copyright = copyrightSingleMatch[1]; }
   const yearMatch = textContent.match(/\b(20[12]\d)\b/);
   if (yearMatch) dates.yearFound = yearMatch[1];
 
@@ -776,7 +806,7 @@ export default async function handler(req, res) {
       directMeta.description = $raw('meta[name="description"]').attr('content') || $raw('meta[property="og:description"]').attr('content') || '';
       directMeta.title = $raw('title').text().trim() || '';
       // 3. Extract social links (Jina strips footer)
-      const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com'];
+      const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com', 'tiktok.com', 'snapchat.com', 'pinterest.com', 'threads.net'];
       const socialExclude = ['analytics.twitter', 'platform.twitter', '/intent/', 'ads.twitter', 'adsct', '/widgets/', 'connect.facebook', 'staticxx.facebook'];
       $raw('a[href]').each((_, el) => {
         const href = ($raw(el).attr('href') || '').trim();
