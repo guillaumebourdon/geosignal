@@ -889,7 +889,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   {/* POURQUOI C'EST IMPORTANT */}
                   {why && (
                     <div style={{ marginBottom: 20 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{locale === 'en' ? 'Why it matters' : "Pourquoi c'est important"}</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{locale === 'en' ? 'What it is and why it matters' : "C'est quoi et pourquoi c'est important"}</div>
                       <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.75, margin: 0 }}>{why}</p>
                     </div>
                   )}
@@ -1486,7 +1486,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
                   {why && (
                     <div style={{ marginBottom: 16 }}>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{locale === 'en' ? 'Why it matters' : "Pourquoi c'est important"}</div>
+                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{locale === 'en' ? 'What it is and why it matters' : "C'est quoi et pourquoi c'est important"}</div>
                       <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.75, margin: 0 }}>{why}</p>
                     </div>
                   )}
