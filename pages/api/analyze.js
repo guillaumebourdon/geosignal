@@ -243,6 +243,39 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
   // Also scan direct HTML if available (catches footer links Jina strips)
   if (directMeta._$raw) scanTrustLinks(directMeta._$raw);
 
+  // 12. Detect embedded content (iframes)
+  const iframes = [];
+  $('iframe[src]').each((_, el) => {
+    const src = $(el).attr('src') || '';
+    if (src.includes('youtube.com') || src.includes('youtu.be')) iframes.push('YouTube');
+    if (src.includes('google.com/maps') || src.includes('maps.google')) iframes.push('Google Maps');
+    if (src.includes('facebook.com')) iframes.push('Facebook');
+    if (src.includes('tripadvisor')) iframes.push('TripAdvisor');
+    if (src.includes('trustpilot')) iframes.push('Trustpilot');
+    if (src.includes('instagram.com')) iframes.push('Instagram');
+    if (src.includes('tiktok.com')) iframes.push('TikTok');
+    if (src.includes('spotify.com')) iframes.push('Spotify');
+    if (src.includes('calendly.com')) iframes.push('Calendly');
+    if (src.includes('typeform.com')) iframes.push('Typeform');
+  });
+  // Also scan direct HTML for iframes (Jina strips iframes)
+  if (directMeta._$raw) {
+    directMeta._$raw('iframe[src]').each((_, el) => {
+      const src = (directMeta._$raw(el).attr('src') || '');
+      if (src.includes('youtube.com') || src.includes('youtu.be')) iframes.push('YouTube');
+      if (src.includes('google.com/maps') || src.includes('maps.google')) iframes.push('Google Maps');
+      if (src.includes('facebook.com')) iframes.push('Facebook');
+      if (src.includes('tripadvisor')) iframes.push('TripAdvisor');
+      if (src.includes('trustpilot')) iframes.push('Trustpilot');
+      if (src.includes('instagram.com')) iframes.push('Instagram');
+      if (src.includes('tiktok.com')) iframes.push('TikTok');
+      if (src.includes('spotify.com')) iframes.push('Spotify');
+      if (src.includes('calendly.com')) iframes.push('Calendly');
+      if (src.includes('typeform.com')) iframes.push('Typeform');
+    });
+  }
+  const uniqueIframes = [...new Set(iframes)];
+
   return {
     intro,
     headings,
@@ -257,6 +290,7 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
     externalLinks: externalLinksCount,
     dates,
     internalTrustLinks,
+    embeds: uniqueIframes,
   };
 }
 
@@ -403,6 +437,12 @@ RULES:
    - impact: based on expected visibility gain (high = major, medium = noticeable, low = incremental)
    - effort: based on technical complexity (low = add a tag, medium = restructure content, high = major overhaul)
    - timeframe: ${locale === 'en' ? '"1-2 weeks" for quick fixes, "1 month" for medium work, "2-3 months" for complex projects' : '"1-2 sem" for quick fixes, "1 mois" for medium work, "2-3 mois" for complex projects'}
+
+NEUTRALITY SCORING RULES:
+- 8-10: Factual, sourced, no superlatives, educational tone
+- 5-7: Mostly factual with some promotional language
+- 3-4: Clearly promotional with unproven claims
+- 0-2: Aggressive marketing, clickbait, misleading claims
 
 JSON only, no markdown:
 {"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","impact":"high|medium|low","effort":"low|medium|high","timeframe":"${locale === 'en' ? '1-2 weeks|1 month|2-3 months' : '1-2 sem|1 mois|2-3 mois'}","criterion":"<French criterion name>","title":"<6 words max>","problem":"<3-5 sentences>","solution":"<3-5 sentences>","technicalImplementation":"<2-4 numbered steps>","codeExample":"<code snippet or null>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
@@ -631,9 +671,16 @@ export default async function handler(req, res) {
 
     const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
     if (textContent.length < 500 || wordCount < 100) {
+      // Detect Cloudflare / anti-bot challenge pages
+      const isCloudflare = /cf-browser-verification|cloudflare|challenge-platform|just a moment/i.test(rawContent);
+      const isAntiBot = isCloudflare || /captcha|please verify|bot detection|access denied|403 forbidden/i.test(rawContent);
       return res.status(422).json({ error: locale === 'en'
-        ? 'Unable to analyze this site. Content too short or inaccessible (anti-bot protection, JavaScript-only rendering, or empty page).'
-        : "Impossible d'analyser ce site. Contenu trop court ou inaccessible (protection anti-bot, rendu JavaScript uniquement, ou page vide)."
+        ? isAntiBot
+          ? 'This site is protected by an anti-bot system (Cloudflare or similar) that blocks our analysis. To allow Detekia to scan your site, whitelist the user-agent "DetekiaBot" in your firewall rules, or contact us at hello@detekia.fr for assistance.'
+          : 'Unable to analyze this site. Content too short or inaccessible (anti-bot protection, JavaScript-only rendering, or empty page). If this is your site, whitelist "DetekiaBot" or contact hello@detekia.fr.'
+        : isAntiBot
+          ? "Ce site est protégé par un système anti-bot (Cloudflare ou similaire) qui bloque notre analyse. Pour permettre à Detekia de scanner votre site, autorisez le user-agent « DetekiaBot » dans vos règles de pare-feu, ou contactez-nous à hello@detekia.fr."
+          : "Impossible d'analyser ce site. Contenu trop court ou inaccessible (protection anti-bot, rendu JavaScript uniquement, ou page vide). Si c'est votre site, autorisez « DetekiaBot » ou contactez hello@detekia.fr."
       });
     }
 
@@ -660,7 +707,23 @@ export default async function handler(req, res) {
           directMeta.socialLinks.push(href);
         }
       });
-      // 4. Count images (exclude tracking pixels and tiny SVG icons)
+      // 4. Extract iframes from direct HTML (Jina strips iframes)
+      directMeta.iframes = [];
+      $raw('iframe[src]').each((_, el) => {
+        const src = ($raw(el).attr('src') || '');
+        if (src.includes('youtube.com') || src.includes('youtu.be')) directMeta.iframes.push('YouTube');
+        if (src.includes('google.com/maps') || src.includes('maps.google')) directMeta.iframes.push('Google Maps');
+        if (src.includes('facebook.com')) directMeta.iframes.push('Facebook');
+        if (src.includes('tripadvisor')) directMeta.iframes.push('TripAdvisor');
+        if (src.includes('trustpilot')) directMeta.iframes.push('Trustpilot');
+        if (src.includes('instagram.com')) directMeta.iframes.push('Instagram');
+        if (src.includes('tiktok.com')) directMeta.iframes.push('TikTok');
+        if (src.includes('spotify.com')) directMeta.iframes.push('Spotify');
+        if (src.includes('calendly.com')) directMeta.iframes.push('Calendly');
+        if (src.includes('typeform.com')) directMeta.iframes.push('Typeform');
+      });
+      directMeta.iframes = [...new Set(directMeta.iframes)];
+      // 5. Count images (exclude tracking pixels and tiny SVG icons)
       const isRealImg = (el) => {
         const src = $raw(el).attr('src') || '';
         const w = parseInt($raw(el).attr('width') || '0', 10);
@@ -713,6 +776,24 @@ export default async function handler(req, res) {
     allLinks.forEach(h => { socialDomains.forEach(d => { if (h.includes(d) && !detectedSocials.includes(d)) detectedSocials.push(d); }); });
     if (detectedSocials.length) signalParts.push(`Social media detected: ${detectedSocials.join(', ')}`);
     else signalParts.push('Social media: NONE detected');
+    // Embedded content (iframes) — from Jina $ and direct HTML
+    const allIframes = [];
+    $('iframe[src]').each((_, el) => {
+      const src = $(el).attr('src') || '';
+      if (src.includes('youtube.com') || src.includes('youtu.be')) allIframes.push('YouTube');
+      if (src.includes('google.com/maps') || src.includes('maps.google')) allIframes.push('Google Maps');
+      if (src.includes('facebook.com')) allIframes.push('Facebook');
+      if (src.includes('tripadvisor')) allIframes.push('TripAdvisor');
+      if (src.includes('trustpilot')) allIframes.push('Trustpilot');
+      if (src.includes('instagram.com')) allIframes.push('Instagram');
+      if (src.includes('tiktok.com')) allIframes.push('TikTok');
+      if (src.includes('spotify.com')) allIframes.push('Spotify');
+      if (src.includes('calendly.com')) allIframes.push('Calendly');
+      if (src.includes('typeform.com')) allIframes.push('Typeform');
+    });
+    if (directMeta.iframes) directMeta.iframes.forEach(i => allIframes.push(i));
+    const uniqueDetectedIframes = [...new Set(allIframes)];
+    if (uniqueDetectedIframes.length) signalParts.push(`Embedded content (iframes): ${uniqueDetectedIframes.join(', ')}`);
     // Headings structure
     const h1Count = $('h1').length || (rawContent.match(/^# [^\n]+/gm) || []).length;
     const h2Count = $('h2').length || (rawContent.match(/^## [^\n]+/gm) || []).length;
