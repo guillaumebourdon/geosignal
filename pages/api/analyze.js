@@ -326,6 +326,20 @@ async function runClaudeAnalysis(url, textContent, scores, locale = 'fr', detect
     `- ${c.label} : ${scores[c.key].score}/${c.max} — ${scores[c.key].detail}`
   ).join('\n');
 
+  // Full criteria scores for context (prevents Claude from contradicting scores above threshold)
+  const allCriteria = [
+    { key: 'extractibility', label: 'Extractibilité', max: 25 },
+    { key: 'verifiability', label: 'Vérifiabilité', max: 20 },
+    { key: 'authority', label: 'Autorité E-E-A-T', max: 15 },
+    { key: 'crawlability', label: 'Crawlabilité IA', max: 15 },
+    { key: 'structuredData', label: 'Données structurées', max: 10 },
+    { key: 'externalPresence', label: 'Présence externe', max: 5 },
+    { key: 'freshness', label: 'Fraîcheur', max: 5 },
+  ];
+  const allScoresSummary = allCriteria.map(c =>
+    `${c.label}: ${scores[c.key].score}/${c.max} (${Math.round(scores[c.key].score / c.max * 100)}%) — ${scores[c.key].detail}`
+  ).join('\n');
+
   const langInstruction = locale === 'en'
     ? `OUTPUT LANGUAGE: English (US). ALL text values in the JSON (verdict, recommendations, strengths, topPriority, neutralityDetail) MUST be in American English. Use natural, direct, conversational phrasing.
 CRITICAL: The "criterion" field MUST always use the FRENCH criterion name from this exact list (used as a matching key in the frontend): 'Extractibilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Crawlabilité IA', 'Données structurées', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & maintenance'.`
@@ -350,9 +364,13 @@ Above 50%, acceptable words: moyen, à améliorer, perfectible, insuffisant, mod
 You are a senior GEO consultant. Audit ${url}.
 
 URL: ${url}
-SCORE: ${total}/100
+OVERALL SCORE: ${total}/100
 SITE TYPE DETECTED: ${siteType}
-CRITERIA BELOW THRESHOLD:
+
+ALL CRITERIA SCORES (these are FACTS — your text MUST be consistent with these scores):
+${allScoresSummary}
+
+CRITERIA BELOW 80% THRESHOLD (need recommendations):
 ${criteriaList}
 
 CONTENT (first 300 characters):
@@ -360,6 +378,7 @@ ${textContent.slice(0, 300)}
 
 ${detectedSignals ? `ALREADY DETECTED ON THIS PAGE (do NOT recommend adding elements already present):\n${detectedSignals}\n` : ''}${missingSchemas.length > 0 ? `MISSING SCHEMAS FOR THIS SITE TYPE (${siteType}): ${missingSchemas.join(', ')}\n` : ''}
 RULES:
+0. ANTI-CONTRADICTION RULE (CRITICAL): Your text MUST be consistent with the scores above. If a criterion scores ≥80%, do NOT say it is missing, absent, or not evaluated. If a criterion scores <40%, do NOT say it is well-handled. Use the detail strings as factual evidence in your recommendations.
 1. Generate EXACTLY 8 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
 2. Be SPECIFIC to this site. Reference actual elements found (or missing) in the analyzed content.
 3. Use nuanced phrasing. Prefer "not identified in the analyzed content" over absolute statements. Acknowledge scraping may be partial.
@@ -665,6 +684,20 @@ export default async function handler(req, res) {
     });
     if (detectedSchemas.length) signalParts.push(`JSON-LD schemas: ${detectedSchemas.join(', ')}`);
     else signalParts.push('JSON-LD schemas: NONE');
+    // Social media links detected
+    const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com', 'tiktok.com', 'snapchat.com', 'pinterest.com', 'threads.net'];
+    const detectedSocials = [];
+    const allLinks = [];
+    $('a[href]').each((_, el) => { const h = $(el).attr('href') || ''; if (h.startsWith('http')) allLinks.push(h); });
+    if (directMeta.socialLinks) directMeta.socialLinks.forEach(h => { if (!allLinks.includes(h)) allLinks.push(h); });
+    allLinks.forEach(h => { socialDomains.forEach(d => { if (h.includes(d) && !detectedSocials.includes(d)) detectedSocials.push(d); }); });
+    if (detectedSocials.length) signalParts.push(`Social media detected: ${detectedSocials.join(', ')}`);
+    else signalParts.push('Social media: NONE detected');
+    // Headings structure
+    const h1Count = $('h1').length || (rawContent.match(/^# [^\n]+/gm) || []).length;
+    const h2Count = $('h2').length || (rawContent.match(/^## [^\n]+/gm) || []).length;
+    signalParts.push(`Headings: ${h1Count} H1, ${h2Count} H2`);
+    // robots.txt info not available here (computed in parallel with Claude call)
     const detectedSignals = signalParts.join('\n');
 
     // Detect site type and missing schemas for targeted recommendations
