@@ -606,8 +606,28 @@ export default async function handler(req, res) {
       if (!rawContent) throw jinaResult.reason;
     }
 
-    const $ = cheerio.load(rawContent);
-    const textContent = $('body').text().replace(/\s+/g, ' ').trim();
+    let $ = cheerio.load(rawContent);
+    let textContent = $('body').text().replace(/\s+/g, ' ').trim();
+
+    // If Jina succeeded but content is suspiciously thin, try Browserless as supplement
+    if (scrapeSource !== 'browserless' && textContent.length < 1000 && textContent.length > 100) {
+      try {
+        const { fetchRenderedHtml } = require('../../lib/browserless');
+        const rendered = await fetchRenderedHtml(url);
+        if (rendered) {
+          const $br = cheerio.load(rendered);
+          $br('script, style').remove();
+          const brText = $br('body').text().replace(/\s+/g, ' ').trim();
+          if (brText.length > textContent.length * 1.5) {
+            console.log(`[analyze] Browserless found ${brText.length} chars vs Jina's ${textContent.length} — using Browserless`);
+            rawContent = rendered;
+            $ = cheerio.load(rawContent);
+            textContent = brText;
+            scrapeSource = 'browserless-supplement';
+          }
+        }
+      } catch (e) { console.log(`[analyze] Browserless supplement failed: ${e.message.slice(0, 50)}`); }
+    }
 
     const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
     if (textContent.length < 500 || wordCount < 100) {
