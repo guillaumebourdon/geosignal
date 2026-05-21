@@ -692,6 +692,21 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
         <title>{locale === 'en' ? 'GEO Report' : 'Rapport GEO'} — {url} — {score}/100 | Detekia</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>{`
+          @media print {
+            body { font-size: 11pt !important; line-height: 1.5 !important; }
+            header, footer, nav, button,
+            [role="banner"], [role="navigation"],
+            [class*="cookie"], [class*="modal"], [class*="cta"],
+            [id*="cookie"], [id*="modal"] { display: none !important; }
+            * { background-color: transparent !important; background-image: none !important; box-shadow: none !important; text-shadow: none !important; }
+            body, html { margin: 0 !important; padding: 0 !important; }
+            main, [role="main"] { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            section, [class*="card"], [class*="Card"], article, details { page-break-inside: avoid; break-inside: avoid; }
+            a { color: #000 !important; text-decoration: underline !important; }
+            div[style*="minHeight: 100vh"] { min-height: auto !important; }
+          }
+        `}</style>
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'system-ui,-apple-system,BlinkMacSystemFont,sans-serif' }}>
@@ -1266,6 +1281,21 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
         <title>{locale === 'en' ? 'Full GEO Report' : 'Rapport GEO Complet'} — {url} — {r.scoreAverage}/100 | Detekia</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>{`
+          @media print {
+            body { font-size: 11pt !important; line-height: 1.5 !important; }
+            header, footer, nav, button,
+            [role="banner"], [role="navigation"],
+            [class*="cookie"], [class*="modal"], [class*="cta"],
+            [id*="cookie"], [id*="modal"] { display: none !important; }
+            * { background-color: transparent !important; background-image: none !important; box-shadow: none !important; text-shadow: none !important; }
+            body, html { margin: 0 !important; padding: 0 !important; }
+            main, [role="main"] { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            section, [class*="card"], [class*="Card"], article, details { page-break-inside: avoid; break-inside: avoid; }
+            a { color: #000 !important; text-decoration: underline !important; }
+            div[style*="minHeight: 100vh"] { min-height: auto !important; }
+          }
+        `}</style>
       </Head>
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'system-ui,-apple-system,BlinkMacSystemFont,sans-serif' }}>
