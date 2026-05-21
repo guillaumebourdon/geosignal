@@ -462,7 +462,78 @@ JSON only, no markdown:
   // Extract JSON even if there's surrounding text
   const jsonMatch = raw.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error('No JSON found in Claude response');
-  return JSON.parse(jsonMatch[0]);
+  const parsed = JSON.parse(jsonMatch[0]);
+
+  // ── Post-processor: fix contradictions between Claude text and actual scores ──
+  return postProcessRecommendations(parsed, scores);
+}
+
+/**
+ * Post-processor that checks Claude's output against actual computed scores.
+ * Fixes common contradictions:
+ * - "not evaluated" / "absent" / "non évalué" when score is high
+ * - "well-handled" / "bien géré" when score is low
+ * - Recommendation for a criterion that's already well-scored (≥80%)
+ */
+function postProcessRecommendations(claude, scores) {
+  const criterionToKey = {
+    'Extractibilité & réponse directe': 'extractibility',
+    'Vérifiabilité & preuves': 'verifiability',
+    'Autorité & E-E-A-T': 'authority',
+    'Crawlabilité IA': 'crawlability',
+    'Données structurées': 'structuredData',
+    'Neutralité éditoriale': null, // scored by Claude, not by us
+    'Présence externe': 'externalPresence',
+    'Fraîcheur & maintenance': 'freshness',
+  };
+
+  // Contradiction patterns to detect
+  const absencePatterns = /n['']est pas [eé]valu[eé]|pas d['']information|non [eé]valu[eé]|pas identifi[eé]|aucun signal|not evaluated|not assessed|no data|no information|absent|not found|not detected|introuvable/i;
+  const positivePatterns = /bien g[eé]r[eé]|bien optimis[eé]|excellent|well.handled|well.optimized|already.good|d[eé]j[aà] bon|solide|strong/i;
+
+  if (claude.recommendations && Array.isArray(claude.recommendations)) {
+    claude.recommendations = claude.recommendations.map(reco => {
+      const key = criterionToKey[reco.criterion];
+      if (!key || !scores[key]) return reco; // neutrality or unknown criterion
+
+      const score = scores[key];
+      const pct = score.score / score.max;
+
+      // Check: if score ≥ 80% but text says "absent" or "not evaluated"
+      if (pct >= 0.8 && reco.problem && absencePatterns.test(reco.problem)) {
+        console.log(`[post-process] FIXED contradiction: ${reco.criterion} scores ${Math.round(pct * 100)}% but problem says absent. Rewriting.`);
+        reco.problem = reco.problem
+          .replace(absencePatterns, 'peut encore être amélioré')
+          .replace(/\.\s*$/, '. Ce critère est déjà bien noté, cette recommandation vise un perfectionnement.');
+      }
+
+      // Check: if score < 40% but text says "well-handled"
+      if (pct < 0.4 && reco.problem && positivePatterns.test(reco.problem)) {
+        console.log(`[post-process] FIXED contradiction: ${reco.criterion} scores ${Math.round(pct * 100)}% but problem says well-handled. Rewriting.`);
+        reco.problem = reco.problem
+          .replace(positivePatterns, 'nécessite une attention particulière');
+      }
+
+      return reco;
+    });
+  }
+
+  // Validate neutrality score is within range
+  if (typeof claude.neutralityScore === 'number') {
+    claude.neutralityScore = Math.max(-3, Math.min(10, Math.round(claude.neutralityScore)));
+  }
+
+  // Validate verdict exists and isn't empty
+  if (!claude.verdict || claude.verdict.trim().length < 10) {
+    claude.verdict = 'Analyse complétée. Consultez les recommandations ci-dessous pour améliorer votre visibilité IA.';
+  }
+
+  // Validate strengths exist
+  if (!claude.strengths || !Array.isArray(claude.strengths) || claude.strengths.length === 0) {
+    claude.strengths = ['Le site est en ligne et accessible aux moteurs IA.'];
+  }
+
+  return claude;
 }
 
 async function runCitationTest(url, textContent, metaTitle, metaDescription, locale = 'fr') {
