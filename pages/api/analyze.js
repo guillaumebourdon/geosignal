@@ -71,7 +71,7 @@ function scoreExtractibility($, text, raw, locale = 'fr') {
   else if (introWords > 15) { score += 3; details.push(e.introCorrect); }
   else if (introWords > 5) { score += 1; details.push(e.introShort); }
   else details.push(`${e.introTooShort} ✗`);
-  const htmlListCount = $('ul li, ol li').length;
+  const htmlListCount = $('ul li, ol li').filter((_, el) => !$(el).closest('nav, header, footer, [role="navigation"]').length).length;
   const mdListCount = (raw.match(/^[\-\*\+]\s+\S/gm) || []).length + (raw.match(/^\d+\.\s+\S/gm) || []).length;
   const listCount = Math.max(htmlListCount, mdListCount);
   if (listCount >= 10) { score += 5; details.push(`${listCount} ${e.listItems} ✓`); }
@@ -173,7 +173,7 @@ function scoreAuthority($, html, locale = 'fr', directHtml = '') {
   if (links.some(l => l.includes('about') || l.includes('propos') || l.includes('qui-sommes') || l.includes('a-propos'))) { score += 2; details.push(`${e.aboutPage} ✓`); }
   const hasAuthorPage = links.some(l => l.includes('author') || l.includes('auteur') || l.includes('equipe') || l.includes('team'));
   const hasAuthorSchema = html.includes('"author"') || html.includes('rel="author"');
-  const hasAuthorText = /par\s+[A-Z][a-z]+|by\s+[A-Z][a-z]+|r.dig. par|written by/i.test(html);
+  const hasAuthorText = /par\s+[A-Z][a-z]{2,}|by\s+[A-Z][a-z]+|r.dig. par|written by/.test(html);
   if (hasAuthorPage || hasAuthorSchema || hasAuthorText) { score += 3; details.push(`${e.authorId} ✓`); }
   if (html.includes('"Organization"') || html.includes('"Person"') || (directHtml && (directHtml.includes('"Organization"') || directHtml.includes('"Person"')))) { score += 3; details.push(`${e.schemaOrgPerson} ✓`); }
   return { score: Math.min(score, 15), max: 15, detail: details.slice(0, 3).join(' · ') };
@@ -216,8 +216,8 @@ function scoreStructuredData($, html, locale = 'fr') {
   $('script[type="application/ld+json"]').each((_, el) => {
     try {
       const data = JSON.parse($(el).html());
-      if (data['@type']) schemaTypes.push(data['@type']);
-      if (Array.isArray(data['@graph'])) { data['@graph'].forEach(item => { if (item['@type']) schemaTypes.push(item['@type']); }); }
+      if (data['@type']) { const types = Array.isArray(data['@type']) ? data['@type'] : [data['@type']]; types.forEach(t => { if (t && !schemaTypes.includes(t)) schemaTypes.push(t); }); }
+      if (Array.isArray(data['@graph'])) { data['@graph'].forEach(item => { if (item['@type']) { const types = Array.isArray(item['@type']) ? item['@type'] : [item['@type']]; types.forEach(t => { if (t && !schemaTypes.includes(t)) schemaTypes.push(t); }); } }); }
     } catch {}
   });
   if (schemaTypes.length === 0) {
@@ -225,7 +225,7 @@ function scoreStructuredData($, html, locale = 'fr') {
     rawTypeMatches.forEach(m => { const tt = m.match(/"@type"\s*:\s*"([^"]+)"/)?.[1]; if (tt && !schemaTypes.includes(tt)) schemaTypes.push(tt); });
   }
   const highValueTypes = ['FAQPage', 'QAPage', 'HowTo', 'Article', 'BlogPosting', 'SoftwareApplication', 'WebApplication', 'MobileApplication'];
-  const medValueTypes = ['Organization', 'Corporation', 'LocalBusiness', 'GovernmentOrganization', 'EducationalOrganization', 'Person', 'Product', 'Service', 'WebSite', 'FinancialProduct', 'Event', 'Course', 'Recipe', 'JobPosting', 'VideoObject'];
+  const medValueTypes = ['Organization', 'Corporation', 'LocalBusiness', 'GovernmentOrganization', 'EducationalOrganization', 'Person', 'Product', 'Service', 'WebSite', 'FinancialProduct', 'Event', 'Course', 'Recipe', 'JobPosting', 'VideoObject', 'Restaurant', 'Dentist', 'Physician', 'Attorney', 'LegalService', 'RealEstateAgent', 'Store', 'AutoRepair', 'MedicalBusiness', 'FinancialService', 'InsuranceAgency', 'TravelAgency', 'FoodEstablishment', 'HealthAndBeautyBusiness', 'SportsActivityLocation'];
   const hasHighValue = schemaTypes.some(st => highValueTypes.includes(st));
   const hasMedValue = schemaTypes.some(st => medValueTypes.includes(st));
   if (hasHighValue) { score += 5; details.push(`${e.schemaPrio} ${schemaTypes.filter(st => highValueTypes.includes(st)).join(', ')} ✓`); }
@@ -243,7 +243,7 @@ function scoreExternalPresence($, html, locale = 'fr', directMeta = {}) {
   $('a[href]').each((_, el) => { const href = $(el).attr('href') || ''; if (href.startsWith('http')) htmlExtLinks.push(href.toLowerCase()); });
   const externalLinks = htmlExtLinks.length > 0 ? htmlExtLinks : mdExternalLinks(html, null).map(l => l.toLowerCase());
   if (externalLinks.length > 0) { score += 1; details.push(`${e.extLinksPresent} ✓`); }
-  if (/presse|m.dia|press|featured|vu dans|as seen/i.test(html)) { score += 2; details.push(`${e.pressMentions} ✓`); }
+  if (/\bpresse\b|m[eé]dia|vu dans|as seen in/i.test(html)) { score += 2; details.push(`${e.pressMentions} ✓`); }
   // Check social links from Jina content OR direct HTML fetch (exclude tracking pixels)
   const socialTrackingExclude = ['analytics.twitter', 'platform.twitter', 'ads.twitter', 'adsct', 'connect.facebook', 'staticxx.facebook', '/intent/', '/sharer/', '/widgets/', '/share?', '/share.php'];
   const hasSocial = externalLinks.some(l => (l.includes('linkedin') || l.includes('twitter') || l.includes('x.com') || l.includes('facebook') || l.includes('instagram') || l.includes('youtube') || l.includes('tiktok.com') || l.includes('snapchat.com') || l.includes('pinterest.com') || l.includes('threads.net')) && !socialTrackingExclude.some(e => l.includes(e)))
@@ -264,7 +264,12 @@ function scoreFreshness($, html, locale = 'fr') {
   if (recentYearRegex.test(html)) { score += 1; details.push(`${e.recentContent} (${currentYear}) ✓`); }
   else details.push(`${e.possiblyOutdated} ✗`);
   if (html.includes('dateModified')) { score += 2; details.push(`${e.dateModified} ✓`); }
-  if (new RegExp(`(©|Copyright)\\s*${currentYear}`, 'i').test(html)) { score += 1; details.push(`${e.copyrightCurrent} ✓`); }
+  const copyrightMatch = new RegExp(`(©|Copyright)\\s*${currentYear}`, 'i').test(html);
+  if (copyrightMatch) { score += 1; details.push(`${e.copyrightCurrent} ✓`); }
+  if (!copyrightMatch) {
+    const rangeMatch = new RegExp(`(©|Copyright)\\s*\\d{4}\\s*[-–—]\\s*${currentYear}`, 'i').test(html);
+    if (rangeMatch) { score += 1; details.push(`${e.copyrightCurrent} ✓`); }
+  }
   return { score: Math.min(score, 5), max: 5, detail: details.join(' · ') || e.possiblyOutdated };
 }
 
