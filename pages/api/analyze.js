@@ -477,6 +477,7 @@ JSON only, no markdown:
  */
 function postProcessRecommendations(claude, scores) {
   const criterionToKey = {
+    // Accented (as instructed in prompt)
     'Extractibilité & réponse directe': 'extractibility',
     'Vérifiabilité & preuves': 'verifiability',
     'Autorité & E-E-A-T': 'authority',
@@ -485,11 +486,20 @@ function postProcessRecommendations(claude, scores) {
     'Neutralité éditoriale': null, // scored by Claude, not by us
     'Présence externe': 'externalPresence',
     'Fraîcheur & maintenance': 'freshness',
+    // Non-accented (Claude sometimes strips accents)
+    'Extractibilite & reponse directe': 'extractibility',
+    'Verifiabilite & preuves': 'verifiability',
+    'Autorite & E-E-A-T': 'authority',
+    'Crawlabilite IA': 'crawlability',
+    'Donnees structurees': 'structuredData',
+    'Neutralite editoriale': null,
+    'Presence externe': 'externalPresence',
+    'Fraicheur & maintenance': 'freshness',
   };
 
   // Contradiction patterns to detect
-  const absencePatterns = /n['']est pas [eé]valu[eé]|pas d['']information|non [eé]valu[eé]|pas identifi[eé]|aucun signal|not evaluated|not assessed|no data|no information|absent|not found|not detected|introuvable/i;
-  const positivePatterns = /bien g[eé]r[eé]|bien optimis[eé]|excellent|well.handled|well.optimized|already.good|d[eé]j[aà] bon|solide|strong/i;
+  const absencePatterns = /n[''\u2019](?:est|a) pas [eé]t[eé] (?:d[eé]tect|[eé]valu|identifi|trouv)[eé]|pas d[''\u2019]information|non [eé]valu[eé]|pas identifi[eé]|aucun(?:e)? (?:signal|donn[eé]e|schema|lien)|not evaluated|not assessed|no data|no information|absent|not found|not detected|introuvable|inexistant|manquant|missing|lacking|no evidence|we couldn.t find|we did not detect|n.a pas .t. d.tect/i;
+  const positivePatterns = /bien g[eé]r[eé]|bien optimis[eé]|excellent|well.handled|well.optimized|already.good|d[eé]j[aà] bon|solide|strong|tr[eè]s bon|parfaitement optimis[eé]|aucun probl[eè]me|no issues|perfect|flawless/i;
 
   if (claude.recommendations && Array.isArray(claude.recommendations)) {
     claude.recommendations = claude.recommendations.map(reco => {
@@ -519,8 +529,15 @@ function postProcessRecommendations(claude, scores) {
   }
 
   // Validate neutrality score is within range
-  if (typeof claude.neutralityScore === 'number') {
-    claude.neutralityScore = Math.max(-3, Math.min(10, Math.round(claude.neutralityScore)));
+  if (typeof claude.neutralityScore === 'number' && !isNaN(claude.neutralityScore)) {
+    claude.neutralityScore = Math.max(0, Math.min(10, Math.round(claude.neutralityScore)));
+  } else {
+    claude.neutralityScore = 5; // safe default if missing or NaN
+  }
+
+  // Validate recommendations is an array
+  if (!claude.recommendations || !Array.isArray(claude.recommendations)) {
+    claude.recommendations = [];
   }
 
   // Validate verdict exists and isn't empty
