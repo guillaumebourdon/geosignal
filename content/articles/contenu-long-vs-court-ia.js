@@ -9,6 +9,15 @@ function InternalLink({ href, children }) {
   );
 }
 
+function ArrowLink({ href, children }) {
+  return (
+    <p style={{ margin: '20px 0', padding: '14px 18px', background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 8, fontFamily: 'system-ui', fontSize: 14 }}>
+      <span style={{ color: '#D97757', marginRight: 8 }}>→</span>
+      <InternalLink href={href}>{children}</InternalLink>
+    </p>
+  );
+}
+
 function InlineCTA({ href, children }) {
   return (
     <div style={{ background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 10, padding: '20px 24px', margin: '32px 0', textAlign: 'center' }}>
@@ -104,6 +113,9 @@ export default function ContenuLongVsCourtIa() {
       <p>Pour les questions factuelles simples, 300 à 500 mots suffisent. Pour les articles de fond sur un sujet multidimensionnel, 800 à 1 500 mots sont la zone optimale. Pour les guides stratégiques complexes, 2 500 à 4 000 mots restent pertinents — mais seulement si chaque section est structurée pour l'extraction IA.</p>
 
       <p>Les signaux structurels — paragraphes courts, tableaux, listes, format question-réponse — pèsent plus dans la citabilité IA que 500 mots supplémentaires. La règle de 2026 n'est plus "écrivez long". C'est "écrivez ce qu'il faut, pas plus, pas moins, et structurez-le pour qu'une IA puisse citer n'importe quel paragraphe de manière autonome".</p>
+
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et IA : les 5 schémas JSON-LD prioritaires pour le GEO</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences et comment les combiner en 2026</ArrowLink>
     </>
   );
 }

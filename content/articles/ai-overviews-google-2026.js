@@ -210,6 +210,7 @@ export default function AiOverviewsGoogle2026() {
 
       <p>Être premier en SEO ne garantit pas d'être la source de l'AI Overview. Google AI évalue des critères supplémentaires : extractibilité du contenu, structure, exhaustivité, données structurées. Un concurrent en position 4 avec un contenu mieux structuré peut être préféré.</p>
 
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <ArrowLink href="/">Analysez votre site — score GEO sur 100, 8 critères, en moins de 60 secondes →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

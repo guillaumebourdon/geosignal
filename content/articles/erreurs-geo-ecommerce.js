@@ -273,6 +273,9 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
 
       <h3>Les descriptions factuelles ne vont-elles pas ennuyer mes clients ?</h3>
       <p>Non. L'approche factuelle n'exclut pas le storytelling — elle le complète. Gardez votre univers de marque dans le visuel et l'édition haut de page. Ajoutez les données factuelles dans une section "Caractéristiques" ou "Détails produit" structurée. Les IA lisent les deux, mais ne citent que le factuel.</p>
+
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences et comment les combiner en 2026</ArrowLink>
     </>
   );
 }

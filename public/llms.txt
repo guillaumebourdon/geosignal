@@ -8,36 +8,41 @@
 - [Pricing](https://detekia.fr/pricing) : Rapport one-page 29 EUR, audit Pro multi-pages 99 EUR
 - [Contact](https://detekia.fr/contact) : hello@detekia.fr
 
-## Blog - Guides GEO
-- [GEO Guide Complet 2026](https://detekia.fr/blog/geo-guide-complet-2026) : Introduction complete au Generative Engine Optimization
-- [SEO vs GEO : differences 2026](https://detekia.fr/blog/seo-vs-geo-differences-2026) : Comparaison SEO traditionnel et GEO
-- [Audit GEO en 9 etapes](https://detekia.fr/blog/audit-geo-visibilite-ia) : Guide pratique pour auditer sa visibilite IA
-- [Score GEO : mesurer sa visibilite](https://detekia.fr/blog/score-geo-mesurer-visibilite-ia) : Comment interpreter un score GEO
-- [8 criteres GEO expliques](https://detekia.fr/blog/8-criteres-geo-methodologie-detekia) : Detail de la methodologie Detekia
-- [Visibilite IA pour debutants](https://detekia.fr/blog/visibilite-ia-guide-debutant) : Premiers pas en GEO
-- [Backlinks et GEO : autorite de domaine pour les IA](https://detekia.fr/blog/backlinks-geo-autorite-domaine-ia) : Backlinks, mentions, E-E-A-T et autorite GEO
-- [SaaS B2B : comment ChatGPT recommande vos concurrents](https://detekia.fr/blog/saas-b2b-chatgpt-recommandations) : 7 leviers pour etre cite par ChatGPT en B2B
-- [5 erreurs GEO qui plombent les sites e-commerce](https://detekia.fr/blog/erreurs-geo-ecommerce) : Les erreurs qui rendent votre boutique invisible pour les IA
-- [E-E-A-T et IA : Google et ChatGPT veulent les memes preuves](https://detekia.fr/blog/eeat-ia-experience-expertise) : Checklist E-E-A-T pour la visibilite IA
-- [Ajouter des sources pour etre cite par les IA](https://detekia.fr/blog/sources-contenus-citations-ia) : 5 types de sources, 8 bonnes pratiques, convergence SEO et GEO
+## Blog - Guide (12 articles)
+- [GEO : le guide complet pour etre cite par les IA en 2026](https://detekia.fr/blog/geo-guide-complet-2026) : Definition, 8 criteres, 7 actions concretes et methode pour optimiser votre site pour ChatGPT, Gemini et Perplexity
+- [Pourquoi ChatGPT ne cite pas votre site (et comment y remedier)](https://detekia.fr/blog/pourquoi-chatgpt-ne-cite-pas-votre-site) : Les 6 raisons pour lesquelles les IA ignorent votre site, et un plan d'action en 7 jours
+- [E-commerce : apparaitre dans les recos produits IA](https://detekia.fr/blog/ecommerce-recommandations-ia) : Fiches produits, Schema Product, guides d'achat, avis clients pour que les IA recommandent vos produits
+- [Comment apparaitre dans les AI Overviews de Google en 2026](https://detekia.fr/blog/ai-overviews-google-2026) : Les 6 criteres de selection des AI Overviews et 7 actions concretes
+- [ChatGPT cite vos concurrents ? Comment reagir](https://detekia.fr/blog/concurrents-chatgpt-visibilite) : Analyse concurrentielle GEO et plan de reconquete en 30 jours
+- [Visibilite IA : le guide pour les entreprises qui partent de zero](https://detekia.fr/blog/visibilite-ia-guide-debutant) : Premiers pas en GEO avec un plan d'action en 7 jours
+- [Comment ChatGPT choisit ses sources : le fonctionnement explique](https://detekia.fr/blog/comment-chatgpt-choisit-ses-sources) : Bing, RAG et criteres de selection des sources par ChatGPT
+- [Perplexity : apparaitre dans ses reponses IA](https://detekia.fr/blog/perplexity-comment-apparaitre) : Comment Perplexity choisit ses sources et 5 actions concretes pour y apparaitre
+- [Gemini en France : comment optimiser votre site pour Google AI](https://detekia.fr/blog/gemini-visibilite-site-france) : Optimiser votre site pour etre cite par l'IA de Google en France
+- [Meta descriptions 2026 : ecrire pour Google et les IA](https://detekia.fr/blog/meta-descriptions-seo-geo-2026) : Formule FACTS en 5 criteres, 12 points de checklist et 5 exemples avant/apres
+- [5 erreurs GEO qui plombent les sites e-commerce](https://detekia.fr/blog/erreurs-geo-ecommerce) : Schema Product absent, descriptions marketing, pas de FAQ, pages categories vides, zero autorite
+- [Mesurer votre visibilite IA : outils et methodes en 2026](https://detekia.fr/blog/mesurer-visibilite-ia-outils-methodes-2026) : Test manuel, scoring technique GEO, test de citation IA, monitoring continu
 
-## Blog - Moteurs IA
-- [Comment ChatGPT choisit ses sources](https://detekia.fr/blog/comment-chatgpt-choisit-ses-sources) : Fonctionnement interne de ChatGPT pour la selection de sources
-- [Pourquoi ChatGPT ne cite pas votre site](https://detekia.fr/blog/pourquoi-chatgpt-ne-cite-pas-votre-site) : Diagnostic et solutions
-- [Perplexity : comment apparaitre](https://detekia.fr/blog/perplexity-comment-apparaitre) : Strategies pour Perplexity AI
-- [Gemini et visibilite en France](https://detekia.fr/blog/gemini-visibilite-site-france) : Optimiser pour Google Gemini
-- [Concurrents ChatGPT et visibilite](https://detekia.fr/blog/concurrents-chatgpt-visibilite) : Panorama des moteurs IA
-- [AI Overviews Google 2026](https://detekia.fr/blog/ai-overviews-google-2026) : Impact des AI Overviews sur le trafic
+## Blog - Strategie (15 articles)
+- [Zero clic : quand les IA repondent sans envoyer de trafic](https://detekia.fr/blog/zero-clic-reponses-ia-sans-trafic) : 58,5 % des recherches se terminent sans clic, impacts et 5 strategies pour en faire une opportunite
+- [SEO vs GEO : quelles differences et comment les combiner en 2026](https://detekia.fr/blog/seo-vs-geo-differences-2026) : Comparatif complet SEO vs GEO et strategie en 3 couches pour etre visible partout
+- [Score GEO : comment mesurer la visibilite IA de votre site](https://detekia.fr/blog/score-geo-mesurer-visibilite-ia) : 8 criteres decryptes, seuils d'interpretation et plan de priorisation
+- [GEO pour les agences : integrer l'audit IA au SEO](https://detekia.fr/blog/geo-agences-seo-audit-ia) : Methodologie, tarification, arguments commerciaux et formation d'equipe
+- [Audit GEO : analyser la visibilite IA de votre site](https://detekia.fr/blog/audit-geo-visibilite-ia) : Guide complet en 9 etapes pour auditer votre site sur les criteres de citabilite IA
+- [Reddit et GEO : la source n°1 citee par les IA](https://detekia.fr/blog/reddit-geo-source-ia) : Strategie Reddit complete pour le GEO et mesure de l'impact
+- [Trafic Google en baisse en 2026 ? Les IA en cause](https://detekia.fr/blog/pourquoi-trafic-google-baisse-2026) : AI Overviews et ChatGPT captent vos visiteurs, diagnostic et solutions
+- [Contenu long vs court : quelle longueur pour les IA ?](https://detekia.fr/blog/contenu-long-vs-court-ia) : La completude compte plus que la longueur en GEO
+- [Backlinks et GEO : l'autorite de domaine pour les IA](https://detekia.fr/blog/backlinks-geo-autorite-domaine-ia) : Backlinks, mentions, E-E-A-T et comment renforcer votre autorite GEO
+- [SaaS B2B : comment ChatGPT recommande vos concurrents](https://detekia.fr/blog/saas-b2b-chatgpt-recommandations) : 7 leviers concrets pour etre cite par ChatGPT, Gemini et Perplexity en B2B
+- [E-E-A-T et IA : Google et ChatGPT veulent les memes preuves](https://detekia.fr/blog/eeat-ia-experience-expertise) : Checklist de 10 preuves concretes E-E-A-T pour la visibilite IA
+- [Ajouter des sources dans vos contenus pour etre cite par les IA](https://detekia.fr/blog/sources-contenus-citations-ia) : 5 types de sources, 8 bonnes pratiques, convergence SEO et GEO
+- [Avis clients et temoignages : impact sur la visibilite IA](https://detekia.fr/blog/avis-clients-temoignages-visibilite-ia) : 4 types d'avis qui maximisent la citabilite IA, Schema Review et preuve sociale
+- [LinkedIn et GEO : votre profil influence-t-il votre visibilite IA ?](https://detekia.fr/blog/linkedin-geo-profil-visibilite-ia) : Profil optimise, articles de reference, synergie avec votre site pour le signal E-E-A-T
+- [Pourquoi les IA adorent les chiffres : l'art du contenu factuel](https://detekia.fr/blog/pourquoi-ia-adorent-chiffres-contenu-factuel) : Les contenus avec statistiques sourcees obtiennent 2,4x plus de citations IA
 
-## Blog - Techniques GEO
-- [Schema.org et IA : guide pratique](https://detekia.fr/blog/schema-org-ia-guide-pratique) : Implementer Schema.org pour la visibilite IA
-- [FAQ Schema + FAQPage combo](https://detekia.fr/blog/faq-schema-faqpage-combo-ia) : Optimiser les FAQ pour les IA
-- [Meta descriptions SEO/GEO 2026](https://detekia.fr/blog/meta-descriptions-seo-geo-2026) : Rediger des meta descriptions pour humains et IA
-- [llms.txt et robots.txt pour IA](https://detekia.fr/blog/llms-txt-robots-crawlabilite-ia) : Configurer l'acces des crawlers IA
-- [Reddit comme source GEO](https://detekia.fr/blog/reddit-geo-source-ia) : Strategie Reddit pour la visibilite IA
-- [Sites qui bloquent les bots IA](https://detekia.fr/blog/sites-bloquent-bots-ia) : Analyse et consequences
-- [Contenu long vs court pour IA](https://detekia.fr/blog/contenu-long-vs-court-ia) : Quelle longueur optimale
-- [Pourquoi le trafic Google baisse en 2026](https://detekia.fr/blog/pourquoi-trafic-google-baisse-2026) : Analyse et alternatives
-- [E-commerce et recommandations IA](https://detekia.fr/blog/ecommerce-recommandations-ia) : GEO pour les sites marchands
-- [GEO pour agences SEO](https://detekia.fr/blog/geo-agences-seo-audit-ia) : Integrer le GEO dans les offres d'agence
+## Blog - Technique (6 articles)
+- [Schema.org et IA : guide pratique pour les LLM](https://detekia.fr/blog/schema-org-ia-guide-pratique) : Les 5 schemas JSON-LD prioritaires pour le GEO avec exemples de code
+- [Les 8 criteres GEO qui determinent si une IA vous cite](https://detekia.fr/blog/8-criteres-geo-methodologie-detekia) : Methodologie complete du score GEO Detekia, mesure et ponderation de chaque critere
+- [llms.txt, robots.txt et crawlabilite IA : le guide technique](https://detekia.fr/blog/llms-txt-robots-crawlabilite-ia) : Configuration robots.txt pour les bots IA et fichier llms.txt
+- [Pourquoi 73 % des sites bloquent les bots IA sans le savoir](https://detekia.fr/blog/sites-bloquent-bots-ia) : Verification et correction du blocage de GPTBot, ClaudeBot et PerplexityBot
+- [FAQ et Schema FAQPage : le combo gagnant GEO](https://detekia.fr/blog/faq-schema-faqpage-combo-ia) : Ecrire des FAQ que les IA citent et implementer le Schema FAQPage
 - [Sitemap et robots.txt pour les bots IA en 2026](https://detekia.fr/blog/sitemap-robots-txt-bots-ia-2026) : Configuration robots.txt et sitemap.xml pour GPTBot, ClaudeBot, PerplexityBot

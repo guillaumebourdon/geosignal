@@ -245,6 +245,9 @@ Après : "Agence immobilière Paris 11e : 320 biens vendus en 2025, délai moyen
       <p>En 2026, la meta description est la première phrase que les IA citent de vous. Elle ne sert plus seulement à attirer un clic — elle sert à être sélectionnée comme source par ChatGPT, Perplexity et Gemini. Appliquez la formule FACTS (Factuel, Actionnable, Citable, Target, Spécifique) à chacune de vos pages, et vous optimiserez simultanément votre CTR Google et votre visibilité IA.</p>
 
       <p>Commencez par vos 10 pages les plus visitées. Réécrivez leurs meta descriptions avec la checklist ci-dessus. Mesurez l'impact après 4 semaines. Les résultats vous surprendront.</p>
+
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et IA : les 5 schémas JSON-LD prioritaires pour le GEO</ArrowLink>
+      <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences et comment les combiner en 2026</ArrowLink>
     </>
   );
 }

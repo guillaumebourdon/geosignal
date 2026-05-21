@@ -233,6 +233,8 @@ Solution : automatisation avec VotreOutil. Résultat : -40% tickets en 3 mois."
 
       <h3>Les IA préfèrent-elles les SaaS avec un essai gratuit ?</h3>
       <p>Pas directement, mais un free trial ou un freemium crée plus de contenu utilisateur (avis, discussions, guides) qui alimente les IA. Un SaaS avec 10 000 utilisateurs gratuits qui en parlent sur Reddit sera plus cité qu'un SaaS enterprise-only avec 50 clients silencieux.</p>
+
+      <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
     </>
   );
 }
