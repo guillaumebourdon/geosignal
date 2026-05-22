@@ -70,25 +70,17 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {},
   // 1. intro
   const intro = textContent.slice(0, 300);
 
-  // 2. headings — prioritize direct HTML, then Jina Cheerio, then Markdown regex
+  // 2. headings — same logic as scoring: direct HTML if has headings, else Markdown
   const headings = [];
-  // Try direct HTML first (most reliable for real heading tags)
-  if (directMeta._$raw) {
-    directMeta._$raw('h1, h2, h3').each((_, el) => {
+  if (directMeta._directHtml) {
+    const cheerio = require('cheerio');
+    const $fresh = cheerio.load(directMeta._directHtml);
+    $fresh('h1, h2, h3').each((_, el) => {
       const level = el.tagName.toLowerCase();
-      const text = directMeta._$raw(el).text().trim();
+      const text = $fresh(el).text().trim();
       if (text) headings.push({ level, text });
     });
   }
-  // Fallback: Jina Cheerio
-  if (headings.length === 0) {
-    $('h1, h2, h3').each((_, el) => {
-      const level = el.tagName.toLowerCase();
-      const text = $(el).text().trim();
-      if (text) headings.push({ level, text });
-    });
-  }
-  // Last fallback: Markdown regex
   if (headings.length === 0) {
     mdHeadings(rawContent).forEach(h => headings.push(h));
   }
@@ -849,6 +841,7 @@ export default async function handler(req, res) {
     if (directHtml && typeof directHtml === 'string') {
       const $raw = cheerio.load(directHtml);
       directMeta._$raw = $raw;
+      directMeta._directHtml = directHtml;
       // 1. Inject JSON-LD scripts
       $raw('script[type="application/ld+json"]').each((_, el) => {
         const content = $raw(el).html();
