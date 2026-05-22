@@ -17,6 +17,20 @@ const redis = new Redis({
 const CACHE_DURATION = 24 * 60 * 60;
 
 const { mdHeadings, mdExternalLinks, mdAllLinks, jinaTitle, jinaDescription } = require('../../lib/markdownHelpers');
+
+// Clean title from UI artifacts (SVG titles, loading states, icon names etc.)
+function cleanTitle(raw) {
+  if (!raw) return '';
+  // Cut at common UI noise patterns
+  return raw
+    .replace(/(Close|Loading|Chevron|Basket|Underline|Icon|Arrow|Menu|Toggle|Spinner|Hamburger)\.\.\./gi, '')
+    .replace(/(Close|Loading|Underline){2,}/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+    // If still has noise after pipe/dash, truncate there
+    .replace(/\|[^|]*(?:Close|Loading|Underline|Icon|Chevron|Basket|Menu).*/i, '')
+    .trim();
+}
 const { runRealCitationTest } = require('../../lib/citationTest');
 
 // ─── Evidence detail strings by locale ────────────────────────────────────────
@@ -86,7 +100,7 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {},
   }
 
   // 3. metaTitle & metaDescription — HTML, directMeta, or Jina header fallback
-  const metaTitle = $('title').first().text().trim() || directMeta.title || jinaTitle(rawContent) || '';
+  const metaTitle = cleanTitle($('title').first().text().trim() || directMeta.title || jinaTitle(rawContent) || '');
   const metaDescription = $('meta[name="description"]').attr('content') || directMeta.description || jinaDescription(rawContent) || '';
 
   // 4. wordCount
@@ -556,6 +570,19 @@ function postProcessRecommendations(claude, scores) {
     claude.recommendations = [];
   }
 
+  // Remove recos for criteria already at max score
+  if (claude.recommendations && Array.isArray(claude.recommendations)) {
+    claude.recommendations = claude.recommendations.filter(reco => {
+      const key = criterionToKey[reco.criterion];
+      if (!key || !scores[key]) return true;
+      if (scores[key].score === scores[key].max) {
+        console.log(`[post-process] REMOVED reco for ${reco.criterion} — already at max (${scores[key].score}/${scores[key].max})`);
+        return false;
+      }
+      return true;
+    });
+  }
+
   // Validate verdict exists and isn't empty
   if (!claude.verdict || claude.verdict.trim().length < 10) {
     claude.verdict = 'Analyse complétée. Consultez les recommandations ci-dessous pour améliorer votre visibilité IA.';
@@ -915,7 +942,7 @@ export default async function handler(req, res) {
       directMeta.imagesWithAlt = $raw('img[alt]').filter((_, el) => isRealImg(el) && ($raw(el).attr('alt') || '').trim().length > 0).length;
     }
 
-    const metaTitle = $('title').text().trim() || $('meta[property="og:title"]').attr('content') || directMeta.title || jinaTitle(rawContent) || '';
+    const metaTitle = cleanTitle($('title').text().trim() || $('meta[property="og:title"]').attr('content') || directMeta.title || jinaTitle(rawContent) || '');
     const metaDescription = $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content') || directMeta.description || jinaDescription(rawContent) || '';
 
     let siteHostname = null;
