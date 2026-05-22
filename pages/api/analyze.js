@@ -811,7 +811,29 @@ export default async function handler(req, res) {
     }
 
     const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
-    if (textContent.length < 500 || wordCount < 100) {
+
+    // If content is very thin, try Browserless as last resort before giving up
+    if (wordCount < 400 && scrapeSource !== 'browserless' && scrapeSource !== 'browserless-supplement') {
+      try {
+        const { fetchRenderedHtml } = require('../../lib/browserless');
+        const rendered = await fetchRenderedHtml(url);
+        if (rendered) {
+          const $br = cheerio.load(rendered);
+          $br('script, style, noscript').remove();
+          const brText = $br('body').text().replace(/\s+/g, ' ').trim();
+          if (brText.length > textContent.length) {
+            console.log(`[analyze] Browserless rescue: ${brText.split(/\s+/).length} words vs ${wordCount} — using Browserless`);
+            rawContent = rendered;
+            $ = cheerio.load(rawContent);
+            textContent = brText;
+            scrapeSource = 'browserless-rescue';
+          }
+        }
+      } catch (e) { console.log(`[analyze] Browserless rescue failed: ${e.message.slice(0, 50)}`); }
+    }
+
+    const finalWordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
+    if (textContent.length < 500 || finalWordCount < 100) {
       // Detect Cloudflare / anti-bot challenge pages
       const isCloudflare = /cf-browser-verification|cloudflare|challenge-platform|just a moment/i.test(rawContent);
       const isAntiBot = isCloudflare || /captcha|please verify|bot detection|access denied|403 forbidden/i.test(rawContent);
@@ -992,10 +1014,18 @@ export default async function handler(req, res) {
     // Verdict is already generated in runClaudeAnalysis with the pre-normalization score
 
     // Sanity checks — detect likely scraping gaps
-    const hasSubstantialContent = textContent.length > 1000;
+    const finalWC = textContent.split(/\s+/).filter(w => w.length > 0).length;
     const sanityWarnings = [];
-    if (hasSubstantialContent && scores.citability.score < 5) {
-      sanityWarnings.push("Le score de citabilité est très bas — le contenu est peut-être rendu en JavaScript et partiellement inaccessible au scraper.");
+    if (finalWC < 400) {
+      const degradedMsg = locale === 'en'
+        ? `⚠️ Partial analysis: we could only extract ${finalWC} words from this page. The site may use JavaScript rendering or anti-bot protection that limits our access. Scores may be lower than actual performance.`
+        : `⚠️ Analyse partielle : nous n'avons pu extraire que ${finalWC} mots de cette page. Le site utilise probablement un rendu JavaScript ou une protection anti-bot qui limite notre accès. Les scores peuvent être inférieurs à la réalité.`;
+      sanityWarnings.push(degradedMsg);
+    }
+    if (finalWC > 1000 && scores.citability.score < 5) {
+      sanityWarnings.push(locale === 'en'
+        ? "The citability score is very low — content may be JavaScript-rendered and partially inaccessible to our scraper."
+        : "Le score de citabilité est très bas — le contenu est peut-être rendu en JavaScript et partiellement inaccessible au scraper.");
     }
 
     const responseData = {
