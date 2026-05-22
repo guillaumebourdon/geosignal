@@ -63,20 +63,32 @@ const EV = {
 
 const { scoreExtractibility, scoreVerifiability, scoreAuthority, scoreCrawlability, scoreStructuredData, scoreExternalPresence, scoreFreshness } = require('../../lib/scoring');
 
-async function collectEvidence($, textContent, rawContent, url, directMeta = {}) {
+async function collectEvidence($, textContent, rawContent, url, directMeta = {}, prefetchedRobotsLlms = null) {
   console.log('collectEvidence URL:', url);
   const normalizedUrl = url.startsWith('http') ? url : `https://${url}`;
 
   // 1. intro
   const intro = textContent.slice(0, 300);
 
-  // 2. headings — HTML or markdown fallback
+  // 2. headings — prioritize direct HTML, then Jina Cheerio, then Markdown regex
   const headings = [];
-  $('h1, h2, h3').each((_, el) => {
-    const level = el.tagName.toLowerCase();
-    const text = $(el).text().trim();
-    if (text) headings.push({ level, text });
-  });
+  // Try direct HTML first (most reliable for real heading tags)
+  if (directMeta._$raw) {
+    directMeta._$raw('h1, h2, h3').each((_, el) => {
+      const level = el.tagName.toLowerCase();
+      const text = directMeta._$raw(el).text().trim();
+      if (text) headings.push({ level, text });
+    });
+  }
+  // Fallback: Jina Cheerio
+  if (headings.length === 0) {
+    $('h1, h2, h3').each((_, el) => {
+      const level = el.tagName.toLowerCase();
+      const text = $(el).text().trim();
+      if (text) headings.push({ level, text });
+    });
+  }
+  // Last fallback: Markdown regex
   if (headings.length === 0) {
     mdHeadings(rawContent).forEach(h => headings.push(h));
   }
@@ -194,24 +206,35 @@ async function collectEvidence($, textContent, rawContent, url, directMeta = {})
   const yearMatch = textContent.match(/\b(20[12]\d)\b/);
   if (yearMatch) dates.yearFound = yearMatch[1];
 
-  // 10. robots.txt + llms.txt — parallel fetches with hard 2s deadline
-  const robotsLlmsPromise = Promise.race([
-    (async () => {
-      const origin = new URL(normalizedUrl).origin;
-      const [robotsRes, llmsRes] = await Promise.allSettled([
-        axios.get(`${origin}/robots.txt`, { timeout: 2000 }),
-        axios.get(`${origin}/llms.txt`,   { timeout: 2000 }),
-      ]);
-      return {
-        robotsTxt: robotsRes.status === 'fulfilled' ? String(robotsRes.value.data || '').slice(0, 500) : 'Non accessible',
-        hasLlmsTxt: llmsRes.status === 'fulfilled' && llmsRes.value.status === 200,
-      };
-    })(),
-    new Promise(resolve => setTimeout(() => resolve({ robotsTxt: 'Non accessible (timeout)', hasLlmsTxt: false }), 2000)),
-  ]);
-  const { robotsTxt: rt, hasLlmsTxt: lt } = await robotsLlmsPromise;
-  const robotsTxt = rt;
-  const hasLlmsTxt = lt;
+  // 10. robots.txt + llms.txt — use prefetched results if available
+  let robotsTxt, hasLlmsTxt;
+  if (prefetchedRobotsLlms) {
+    robotsTxt = prefetchedRobotsLlms.robotsTxt;
+    hasLlmsTxt = prefetchedRobotsLlms.hasLlmsTxt;
+  } else {
+    const robotsLlmsPromise = Promise.race([
+      (async () => {
+        const origin = new URL(normalizedUrl).origin;
+        const [robotsRes, llmsRes] = await Promise.allSettled([
+          axios.get(`${origin}/robots.txt`, { timeout: 5000 }),
+          axios.get(`${origin}/llms.txt`,   { timeout: 5000 }),
+        ]);
+        let robotsTxtValue = 'Non accessible';
+        if (robotsRes.status === 'fulfilled') {
+          const data = String(robotsRes.value.data || '').trim();
+          robotsTxtValue = data ? data.slice(0, 500) : 'Fichier vide';
+        } else {
+          const status = robotsRes.reason?.response?.status;
+          robotsTxtValue = status === 404 ? 'Aucun fichier robots.txt (404)' : 'Non accessible';
+        }
+        return { robotsTxt: robotsTxtValue, hasLlmsTxt: llmsRes.status === 'fulfilled' && llmsRes.value.status === 200 };
+      })(),
+      new Promise(resolve => setTimeout(() => resolve({ robotsTxt: 'Non accessible (timeout)', hasLlmsTxt: false }), 5000)),
+    ]);
+    const result = await robotsLlmsPromise;
+    robotsTxt = result.robotsTxt;
+    hasLlmsTxt = result.hasLlmsTxt;
+  }
 
   // 11. Internal trust links (E-E-A-T signals on other pages)
   const trustPathPatterns = /\/(equipe|l-equipe|notre-equipe|team|our-team|about|about-us|a-propos|qui-sommes-nous|who-we-are|professeurs|instructeurs|teachers|instructors|coaches|experts|staff|membres|histoire|our-story|notre-histoire|mentions-legales|legal|imprint|contact)(\/|$|\?|#)/i;
@@ -299,14 +322,14 @@ function detectSiteType(url, textContent, $) {
   const t = textContent.toLowerCase();
   const hostname = (() => { try { return new URL(url).hostname.toLowerCase(); } catch { return ''; } })();
 
-  // E-commerce signals
-  if ($('script[type="application/ld+json"]').text().includes('"Product"') ||
-      /panier|cart|add.to.cart|acheter|buy.now|ajouter.au.panier|prix|price|\bshop\b|boutique|produit|product/i.test(t.slice(0, 2000)) ||
-      /shop\.|store\.|boutique/i.test(hostname)) return 'ecommerce';
-
-  // SaaS signals
-  if (/pricing|tarif|plan.gratuit|free.plan|start.free|essai.gratuit|free.trial|sign.up|s.inscrire|dashboard|api|integrations|saas/i.test(t.slice(0, 3000)) ||
+  // SaaS signals (check BEFORE e-commerce — SaaS sites often mention "prix", "produit" too)
+  if (/pricing|tarif|plan.gratuit|free.plan|start.free|essai.gratuit|free.trial|sign.up|s.inscrire|dashboard|api\b|integrations|saas|logiciel|software|platform/i.test(t.slice(0, 3000)) ||
       /\.app$|\.io$|\.dev$|\.tools$|\.ai$|\.co$/.test(hostname)) return 'saas';
+
+  // E-commerce signals (strong signals only — must have cart/shop patterns, not just "prix")
+  if ($('script[type="application/ld+json"]').text().includes('"Product"') ||
+      /panier|cart|add.to.cart|acheter|buy.now|ajouter.au.panier|\bshop\b|boutique/i.test(t.slice(0, 2000)) ||
+      /shop\.|store\.|boutique/i.test(hostname)) return 'ecommerce';
 
   // Blog / media
   if (/blog\.|magazine\.|journal\.|news\.|media\./i.test(hostname) ||
@@ -412,7 +435,7 @@ ${textContent.slice(0, 300)}
 
 ${detectedSignals ? `ALREADY DETECTED ON THIS PAGE (do NOT recommend adding elements already present):\n${detectedSignals}\n` : ''}${missingSchemas.length > 0 ? `MISSING SCHEMAS FOR THIS SITE TYPE (${siteType}): ${missingSchemas.join(', ')}\n` : ''}
 RULES:
-0. ANTI-CONTRADICTION RULE (CRITICAL): Your text MUST be consistent with the scores above. If a criterion scores ≥80%, do NOT say it is missing, absent, or not evaluated. If a criterion scores <40%, do NOT say it is well-handled. Use the detail strings as factual evidence in your recommendations.
+0. ANTI-CONTRADICTION RULE (CRITICAL): Your text MUST be consistent with the scores AND the detected signals above. If a criterion scores ≥80%, do NOT say it is missing, absent, or not evaluated. If a criterion scores <40%, do NOT say it is well-handled. Use the detail strings as factual evidence in your recommendations. IMPORTANT: When referring to headings (H1, H2, H3), meta title, or social media, use the EXACT counts and values from the "ALREADY DETECTED" section — do NOT invent different numbers or truncate values.
 1. Generate EXACTLY 8 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
 2. Be SPECIFIC to this site. Reference actual elements found (or missing) in the analyzed content.
 3. Use nuanced phrasing. Prefer "not identified in the analyzed content" over absolute statements. Acknowledge scraping may be partial.
@@ -432,7 +455,7 @@ RULES:
    - "problem": 3-5 dense sentences. Describe what was found (or missing), WHY it blocks AI citation (concrete mechanism), and the observable consequence if not fixed.
    - "solution": 3-5 sentences. Clear action description and why it solves the problem.
    - "technicalImplementation": 2-4 numbered steps, actionable enough for a developer or marketing manager to execute without additional research.
-   - "codeExample": Real code snippet (JSON-LD, HTML, meta tag) when relevant. Set to null for editorial-only recommendations.
+   - "codeExample": Real code snippet (JSON-LD, HTML, meta tag) when relevant. Set to null for editorial-only recommendations. IMPORTANT: When code examples contain placeholder values (opening hours, prices, addresses, names), add an HTML comment "<!-- Adaptez avec vos vraies valeurs -->" (or "<!-- Replace with your real values -->" in English) at the top of the snippet so the client knows these are illustrative, not extracted from their site.
 8. IMPACT/EFFORT/TIMEFRAME RULES:
    - impact: based on expected visibility gain (high = major, medium = noticeable, low = incremental)
    - effort: based on technical complexity (low = add a tag, medium = restructure content, high = major overhaul)
@@ -550,6 +573,19 @@ function postProcessRecommendations(claude, scores) {
     claude.strengths = ['Le site est en ligne et accessible aux moteurs IA.'];
   }
 
+  // Add disclaimer to code examples with placeholder values
+  if (claude.recommendations && Array.isArray(claude.recommendations)) {
+    claude.recommendations = claude.recommendations.map(reco => {
+      if (reco.codeExample && reco.codeExample.length > 10) {
+        const hasDisclaimer = /Adaptez|Replace with your real|exemple.*adapter|adapt.*valeurs/i.test(reco.codeExample);
+        if (!hasDisclaimer) {
+          reco.codeExample = '<!-- Adaptez les valeurs ci-dessous avec vos vraies données -->\n' + reco.codeExample;
+        }
+      }
+      return reco;
+    });
+  }
+
   return claude;
 }
 
@@ -651,11 +687,12 @@ async function fetchJina(jinaUrl) {
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const { checkRateLimit, checkDailyLimit } = require('../../lib/rateLimit');
-  if (!(await checkRateLimit('analyze', req, res))) return;
+  const isAdmin = req.body.adminKey === process.env.ADMIN_SECRET;
+  if (!isAdmin && !(await checkRateLimit('analyze', req, res))) return;
 
   // Daily limit: 3 free scans per IP per day
   const plan = req.body.plan || 'free';
-  if (plan === 'free') {
+  if (plan === 'free' && !isAdmin) {
     const dailyOk = await checkDailyLimit(req);
     if (!dailyOk) {
       const locale = req.body.locale === 'en' ? 'en' : 'fr';
@@ -694,11 +731,34 @@ export default async function handler(req, res) {
   try {
     const jinaUrl = `https://r.jina.ai/${url}`;
 
-    // Fetch Jina content + raw HTML in parallel (raw HTML for JSON-LD schema detection)
+    // Fetch Jina content + raw HTML + robots.txt/llms.txt in parallel
+    const origin = new URL(url).origin;
+    const robotsLlmsPromise = Promise.race([
+      (async () => {
+        const [robotsRes, llmsRes] = await Promise.allSettled([
+          axios.get(`${origin}/robots.txt`, { timeout: 5000 }),
+          axios.get(`${origin}/llms.txt`,   { timeout: 5000 }),
+        ]);
+        let robotsTxtValue = 'Non accessible';
+        if (robotsRes.status === 'fulfilled') {
+          const data = String(robotsRes.value.data || '').trim();
+          robotsTxtValue = data ? data.slice(0, 500) : 'Fichier vide';
+        } else {
+          const status = robotsRes.reason?.response?.status;
+          robotsTxtValue = status === 404 ? 'Aucun fichier robots.txt (404)' : 'Non accessible';
+        }
+        return { robotsTxt: robotsTxtValue, hasLlmsTxt: llmsRes.status === 'fulfilled' && llmsRes.value.status === 200 };
+      })(),
+      new Promise(resolve => setTimeout(() => resolve({ robotsTxt: 'Non accessible (timeout)', hasLlmsTxt: false }), 5000)),
+    ]);
+
     const [jinaResult, rawHtmlResult] = await Promise.allSettled([
       fetchJina(jinaUrl),
       axios.get(url, { timeout: 10000, maxRedirects: 5, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DetekiaBot/1.0; +https://detekia.fr)' } }).then(r => r.data).catch(() => null),
     ]);
+
+    // Await robots.txt result (started in parallel with Jina)
+    const { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt } = await robotsLlmsPromise;
 
     let rawContent, scrapeSource;
     if (jinaResult.status === 'fulfilled') {
@@ -772,8 +832,19 @@ export default async function handler(req, res) {
       });
     }
 
-    // Enrich cheerio $ with data from direct HTML fetch (Jina strips scripts, meta, footer links)
+    // Always use the richer text source between Jina and direct HTML
     const directHtml = rawHtmlResult.status === 'fulfilled' ? rawHtmlResult.value : null;
+    if (directHtml && typeof directHtml === 'string' && scrapeSource !== 'browserless' && scrapeSource !== 'browserless-supplement') {
+      const $dh = cheerio.load(directHtml);
+      $dh('script, style, noscript').remove();
+      const directText = $dh('body').text().replace(/\s+/g, ' ').trim();
+      if (directText.length > textContent.length) {
+        console.log(`[analyze] Direct HTML text (${directText.length} chars) richer than Jina (${textContent.length}) — using direct HTML`);
+        textContent = directText;
+      }
+    }
+
+    // Enrich cheerio $ with data from direct HTML fetch (Jina strips scripts, meta, footer links)
     let directMeta = { description: '', title: '', socialLinks: [], imageCount: 0, imagesWithAlt: 0, _$raw: null };
     if (directHtml && typeof directHtml === 'string') {
       const $raw = cheerio.load(directHtml);
@@ -785,7 +856,10 @@ export default async function handler(req, res) {
       });
       // 2. Extract meta description (Jina often strips it)
       directMeta.description = $raw('meta[name="description"]').attr('content') || $raw('meta[property="og:description"]').attr('content') || '';
-      directMeta.title = $raw('title').text().trim() || '';
+      const htmlTitle = $raw('title').text().trim() || '';
+      const ogTitle = $raw('meta[property="og:title"]').attr('content')?.trim() || '';
+      // Use the most complete title (og:title often includes brand + location)
+      directMeta.title = ogTitle.length > htmlTitle.length ? ogTitle : htmlTitle;
       // 3. Extract social links (Jina strips footer)
       const socialDomains = ['linkedin.com', 'twitter.com', 'x.com', 'facebook.com', 'instagram.com', 'youtube.com', 'tiktok.com', 'snapchat.com', 'pinterest.com', 'threads.net'];
       const socialExclude = ['analytics.twitter', 'platform.twitter', '/intent/', 'ads.twitter', 'adsct', '/widgets/', 'connect.facebook', 'staticxx.facebook'];
@@ -832,7 +906,7 @@ export default async function handler(req, res) {
     try { siteHostname = new URL(url).hostname; } catch {}
 
     const scores = {
-      extractibility:   scoreExtractibility($, textContent, rawContent, locale),
+      extractibility:   scoreExtractibility($, textContent, rawContent, locale, directHtml || ''),
       verifiability:    scoreVerifiability($, textContent, rawContent, siteHostname, locale),
       authority:        scoreAuthority($, rawContent, locale, directHtml || ''),
       crawlability:     scoreCrawlability($, rawContent, locale, directHtml || ''),
@@ -882,11 +956,23 @@ export default async function handler(req, res) {
     if (directMeta.iframes) directMeta.iframes.forEach(i => allIframes.push(i));
     const uniqueDetectedIframes = [...new Set(allIframes)];
     if (uniqueDetectedIframes.length) signalParts.push(`Embedded content (iframes): ${uniqueDetectedIframes.join(', ')}`);
-    // Headings structure
-    const h1Count = $('h1').length || (rawContent.match(/^# [^\n]+/gm) || []).length;
-    const h2Count = $('h2').length || (rawContent.match(/^## [^\n]+/gm) || []).length;
-    signalParts.push(`Headings: ${h1Count} H1, ${h2Count} H2`);
-    // robots.txt info not available here (computed in parallel with Claude call)
+    // Headings structure — same logic as scoring: direct HTML if has headings, else Markdown
+    let h1Count = 0, h2Count = 0, h3Count = 0;
+    if (directHtml) {
+      const $d = directMeta._$raw || cheerio.load(directHtml);
+      const dh1 = $d('h1').length, dh2 = $d('h2').length, dh3 = $d('h3').length;
+      if (dh1 + dh2 + dh3 > 0) { h1Count = dh1; h2Count = dh2; h3Count = dh3; }
+    }
+    if (h1Count + h2Count + h3Count === 0) {
+      h1Count = (rawContent.match(/^# (?!#)[^\n]+/gm) || []).length;
+      h2Count = (rawContent.match(/^## (?!#)[^\n]+/gm) || []).length;
+      h3Count = (rawContent.match(/^### (?!#)[^\n]+/gm) || []).length;
+    }
+    signalParts.push(`Headings: ${h1Count} H1, ${h2Count} H2, ${h3Count} H3 (total ${h1Count + h2Count + h3Count} heading elements)`);
+    // robots.txt and llms.txt info (fetched in parallel with Jina at start)
+    signalParts.push(`robots.txt: ${earlyRobotsTxt.substring(0, 100)}`);
+    if (earlyHasLlmsTxt) signalParts.push('llms.txt: present');
+    else signalParts.push('llms.txt: absent');
     const detectedSignals = signalParts.join('\n');
 
     // Detect site type and missing schemas for targeted recommendations
@@ -902,7 +988,7 @@ export default async function handler(req, res) {
     const queryCount = plan === 'pro' ? 30 : plan === 'onepage' ? 10 : 2;
     const [claude, evidence, citationTest] = await Promise.all([
       runClaudeAnalysis(url, textContent, scores, locale, detectedSignals, siteType, missingSchemas),
-      collectEvidence($, textContent, rawContent, url, directMeta),
+      collectEvidence($, textContent, rawContent, url, directMeta, { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt }),
       runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
     // Raw scores: 7 technical criteria (max 95) + neutrality (max 10) = max 105
