@@ -61,7 +61,7 @@ const EV = {
 // ─────────────────────────────────────────────────────────────────────────────
 
 
-const { scoreExtractibility, scoreVerifiability, scoreAuthority, scoreCrawlability, scoreStructuredData, scoreExternalPresence, scoreFreshness } = require('../../lib/scoring');
+const { scoreCitability, scoreVerifiability, scoreAuthority, scoreAccessibility, scoreExternalPresence, scoreFreshness } = require('../../lib/scoring');
 
 async function collectEvidence($, textContent, rawContent, url, directMeta = {}, prefetchedRobotsLlms = null) {
   console.log('collectEvidence URL:', url);
@@ -360,13 +360,12 @@ async function runClaudeAnalysis(url, textContent, scores, locale = 'fr', detect
 
   // All criteria below 80% threshold, sorted by worst score first
   const criteriaBelow = [
-    { key: 'extractibility', label: 'Extractibilité', max: 25 },
-    { key: 'verifiability', label: 'Vérifiabilité', max: 20 },
-    { key: 'authority', label: 'Autorité E-E-A-T', max: 15 },
-    { key: 'crawlability', label: 'Crawlabilité IA', max: 15 },
-    { key: 'structuredData', label: 'Données structurées', max: 10 },
-    { key: 'externalPresence', label: 'Présence externe', max: 5 },
-    { key: 'freshness', label: 'Fraîcheur', max: 5 },
+    { key: 'citability', label: 'Citabilité & réponse directe', max: 25 },
+    { key: 'verifiability', label: 'Vérifiabilité & preuves', max: 20 },
+    { key: 'authority', label: 'Autorité & E-E-A-T', max: 15 },
+    { key: 'accessibility', label: 'Accessibilité IA', max: 10 },
+    { key: 'externalPresence', label: 'Présence externe', max: 10 },
+    { key: 'freshness', label: 'Fraîcheur & signaux temporels', max: 10 },
   ]
     .filter(c => scores[c.key].score / c.max < 0.8)
     .sort((a, b) => (scores[a.key].score / a.max) - (scores[b.key].score / b.max));
@@ -377,13 +376,12 @@ async function runClaudeAnalysis(url, textContent, scores, locale = 'fr', detect
 
   // Full criteria scores for context (prevents Claude from contradicting scores above threshold)
   const allCriteria = [
-    { key: 'extractibility', label: 'Extractibilité', max: 25 },
-    { key: 'verifiability', label: 'Vérifiabilité', max: 20 },
-    { key: 'authority', label: 'Autorité E-E-A-T', max: 15 },
-    { key: 'crawlability', label: 'Crawlabilité IA', max: 15 },
-    { key: 'structuredData', label: 'Données structurées', max: 10 },
-    { key: 'externalPresence', label: 'Présence externe', max: 5 },
-    { key: 'freshness', label: 'Fraîcheur', max: 5 },
+    { key: 'citability', label: 'Citabilité & réponse directe', max: 25 },
+    { key: 'verifiability', label: 'Vérifiabilité & preuves', max: 20 },
+    { key: 'authority', label: 'Autorité & E-E-A-T', max: 15 },
+    { key: 'accessibility', label: 'Accessibilité IA', max: 10 },
+    { key: 'externalPresence', label: 'Présence externe', max: 10 },
+    { key: 'freshness', label: 'Fraîcheur & signaux temporels', max: 10 },
   ];
   const allScoresSummary = allCriteria.map(c =>
     `${c.label}: ${scores[c.key].score}/${c.max} (${Math.round(scores[c.key].score / c.max * 100)}%) — ${scores[c.key].detail}`
@@ -391,9 +389,9 @@ async function runClaudeAnalysis(url, textContent, scores, locale = 'fr', detect
 
   const langInstruction = locale === 'en'
     ? `OUTPUT LANGUAGE: English (US). ALL text values in the JSON (verdict, recommendations, strengths, topPriority, neutralityDetail) MUST be in American English. Use natural, direct, conversational phrasing.
-CRITICAL: The "criterion" field MUST always use the FRENCH criterion name from this exact list (used as a matching key in the frontend): 'Extractibilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Crawlabilité IA', 'Données structurées', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & maintenance'.`
+CRITICAL: The "criterion" field MUST always use the FRENCH criterion name from this exact list (used as a matching key in the frontend): 'Citabilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Accessibilité IA', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & signaux temporels'.`
     : `LANGUE DE SORTIE : Français. Toutes les valeurs texte du JSON doivent être en français professionnel et direct.
-CRITICAL: The "criterion" field MUST always use a name from this exact list: 'Extractibilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Crawlabilité IA', 'Données structurées', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & maintenance'. No other criterion name is allowed.`;
+CRITICAL: The "criterion" field MUST always use a name from this exact list: 'Citabilité & réponse directe', 'Vérifiabilité & preuves', 'Autorité & E-E-A-T', 'Accessibilité IA', 'Neutralité éditoriale', 'Présence externe', 'Fraîcheur & signaux temporels'. No other criterion name is allowed.`;
 
   const today = new Date().toISOString().split('T')[0];
   const prompt = `${langInstruction}
@@ -428,7 +426,7 @@ ${textContent.slice(0, 300)}
 ${detectedSignals ? `ALREADY DETECTED ON THIS PAGE (do NOT recommend adding elements already present):\n${detectedSignals}\n` : ''}${missingSchemas.length > 0 ? `MISSING SCHEMAS FOR THIS SITE TYPE (${siteType}): ${missingSchemas.join(', ')}\n` : ''}
 RULES:
 0. ANTI-CONTRADICTION RULE (CRITICAL): Your text MUST be consistent with the scores AND the detected signals above. If a criterion scores ≥80%, do NOT say it is missing, absent, or not evaluated. If a criterion scores <40%, do NOT say it is well-handled. Use the detail strings as factual evidence in your recommendations. IMPORTANT: When referring to headings (H1, H2, H3), meta title, or social media, use the EXACT counts and values from the "ALREADY DETECTED" section — do NOT invent different numbers or truncate values.
-1. Generate EXACTLY 8 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
+1. Generate EXACTLY 7 recommendations: 1 per criterion below threshold + 1 for Editorial Neutrality.
 2. Be SPECIFIC to this site. Reference actual elements found (or missing) in the analyzed content.
 3. Use nuanced phrasing. Prefer "not identified in the analyzed content" over absolute statements. Acknowledge scraping may be partial.
 4. STRUCTURED DATA RECOMMENDATION RULES (CRITICAL — avoid repetitive schema advice):
@@ -492,24 +490,27 @@ JSON only, no markdown:
  */
 function postProcessRecommendations(claude, scores) {
   const criterionToKey = {
-    // Accented (as instructed in prompt)
-    'Extractibilité & réponse directe': 'extractibility',
+    // V2 criterion names (accented)
+    'Citabilité & réponse directe': 'citability',
     'Vérifiabilité & preuves': 'verifiability',
     'Autorité & E-E-A-T': 'authority',
-    'Crawlabilité IA': 'crawlability',
-    'Données structurées': 'structuredData',
+    'Accessibilité IA': 'accessibility',
     'Neutralité éditoriale': null, // scored by Claude, not by us
     'Présence externe': 'externalPresence',
-    'Fraîcheur & maintenance': 'freshness',
+    'Fraîcheur & signaux temporels': 'freshness',
     // Non-accented (Claude sometimes strips accents)
-    'Extractibilite & reponse directe': 'extractibility',
+    'Citabilite & reponse directe': 'citability',
     'Verifiabilite & preuves': 'verifiability',
     'Autorite & E-E-A-T': 'authority',
-    'Crawlabilite IA': 'crawlability',
-    'Donnees structurees': 'structuredData',
+    'Accessibilite IA': 'accessibility',
     'Neutralite editoriale': null,
     'Presence externe': 'externalPresence',
-    'Fraicheur & maintenance': 'freshness',
+    'Fraicheur & signaux temporels': 'freshness',
+    // Legacy names (for backwards compatibility with cached reports)
+    'Extractibilité & réponse directe': 'citability',
+    'Crawlabilité IA': 'accessibility',
+    'Données structurées': null,
+    'Fraîcheur & maintenance': 'freshness',
   };
 
   // Contradiction patterns to detect
@@ -899,11 +900,10 @@ export default async function handler(req, res) {
     try { siteHostname = new URL(url).hostname; } catch {}
 
     const scores = {
-      extractibility:   scoreExtractibility($, textContent, rawContent, locale, directHtml || ''),
+      citability:       scoreCitability($, textContent, rawContent, locale, directHtml || ''),
       verifiability:    scoreVerifiability($, textContent, rawContent, siteHostname, locale),
       authority:        scoreAuthority($, rawContent, locale, directHtml || ''),
-      crawlability:     scoreCrawlability($, rawContent, locale, directHtml || ''),
-      structuredData:   scoreStructuredData($, rawContent, locale),
+      accessibility:    scoreAccessibility($, rawContent, locale, directHtml || '', earlyRobotsTxt || ''),
       externalPresence: scoreExternalPresence($, rawContent, locale, directMeta),
       freshness:        scoreFreshness($, rawContent, locale),
     };
@@ -984,22 +984,18 @@ export default async function handler(req, res) {
       collectEvidence($, textContent, rawContent, url, directMeta, { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt }),
       runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
     ]);
-    // Raw scores: 7 technical criteria (max 95) + neutrality (max 10) = max 105
-    // Normalize to /100 for client-facing score
-    const RAW_MAX = 105;
+    // Score V2: 6 technical criteria (max 90) + neutrality (max 10) = max 100
+    // Direct /100 — no normalization needed
     const rawTotal = Object.values(scores).reduce((s, c) => s + c.score, 0) + (claude.neutralityScore || 0);
-    const totalScore = Math.max(0, Math.min(100, Math.round((rawTotal / RAW_MAX) * 100)));
+    const totalScore = Math.max(0, Math.min(100, rawTotal));
 
     // Verdict is already generated in runClaudeAnalysis with the pre-normalization score
 
     // Sanity checks — detect likely scraping gaps
     const hasSubstantialContent = textContent.length > 1000;
     const sanityWarnings = [];
-    if (hasSubstantialContent && scores.structuredData.score === 0) {
-      sanityWarnings.push("Les données structurées n'ont peut-être pas été détectées si elles sont chargées en JavaScript côté client.");
-    }
-    if (hasSubstantialContent && scores.extractibility.score < 5) {
-      sanityWarnings.push("Le score d'extractibilité est très bas — le contenu est peut-être rendu en JavaScript et partiellement inaccessible au scraper.");
+    if (hasSubstantialContent && scores.citability.score < 5) {
+      sanityWarnings.push("Le score de citabilité est très bas — le contenu est peut-être rendu en JavaScript et partiellement inaccessible au scraper.");
     }
 
     const responseData = {
@@ -1008,14 +1004,13 @@ export default async function handler(req, res) {
       strengths: claude.strengths || [],
       topPriority: claude.topPriority || '',
       criteria: [
-        { name: 'Extractibilité & réponse directe', score: scores.extractibility.score, max: 25, detail: scores.extractibility.detail },
+        { name: 'Citabilité & réponse directe',      score: scores.citability.score,     max: 25, detail: scores.citability.detail },
         { name: 'Vérifiabilité & preuves',          score: scores.verifiability.score,  max: 20, detail: scores.verifiability.detail },
         { name: 'Autorité & E-E-A-T',               score: scores.authority.score,      max: 15, detail: scores.authority.detail },
-        { name: 'Crawlabilité IA',                  score: scores.crawlability.score,   max: 15, detail: scores.crawlability.detail },
-        { name: 'Données structurées',              score: scores.structuredData.score,  max: 10, detail: scores.structuredData.detail },
+        { name: 'Accessibilité IA',                 score: scores.accessibility.score,  max: 10, detail: scores.accessibility.detail },
         { name: 'Neutralité éditoriale',            score: claude.neutralityScore || 0,  max: 10, detail: claude.neutralityDetail },
-        { name: 'Présence externe',                 score: scores.externalPresence.score, max: 5, detail: scores.externalPresence.detail },
-        { name: 'Fraîcheur & maintenance',          score: scores.freshness.score,       max: 5, detail: scores.freshness.detail },
+        { name: 'Présence externe',                 score: scores.externalPresence.score, max: 10, detail: scores.externalPresence.detail },
+        { name: 'Fraîcheur & signaux temporels',    score: scores.freshness.score,       max: 10, detail: scores.freshness.detail },
       ],
       recommendations: claude.recommendations,
       evidence,
