@@ -152,7 +152,7 @@ export default function OnePage() {
         "@context": "https://schema.org",
         "@type": "Service",
         "name": "Detekia — Audit GEO 1 page",
-        "description": "Audit de visibilité IA sur 1 page — score GEO sur 100, 8 critères analysés, recommandations détaillées, test de citation ChatGPT, rapport HTML + PDF.",
+        "description": "Audit de visibilité IA sur 1 page — score GEO sur 100, 7 critères analysés, recommandations détaillées, test de citation ChatGPT, rapport HTML + PDF.",
         "serviceType": "AI Visibility Audit",
         "provider": {
           "@type": "Organization",

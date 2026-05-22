@@ -88,14 +88,33 @@ export default async function handler(req, res) {
       const distribution = { faible: 0, moyen: 0, bon: 0 };
       scores.forEach(s => { if (s >= 70) distribution.bon++; else if (s >= 45) distribution.moyen++; else distribution.faible++; });
 
+      // V2 criteria names (7 criteria — Donnees structurees merged into Autorite)
       const criteriaNames = [
-        'Extractibilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
-        'Crawlabilite IA', 'Donnees structurees', 'Neutralite editoriale',
-        'Presence externe', 'Fraicheur & maintenance',
+        'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
+        'Accessibilite IA', 'Neutralite editoriale',
+        'Presence externe', 'Fraicheur & signaux temporels',
       ];
+      // Legacy V1 name → V2 name mapping (for cached page results that used old names)
+      const LEGACY_NAME_MAP = {
+        'Extractibilite & reponse directe': 'Citabilite & reponse directe',
+        'Crawlabilite IA': 'Accessibilite IA',
+        'Fraicheur & maintenance': 'Fraicheur & signaux temporels',
+        'Donnees structurees': null, // merged into Autorite
+      };
       const criteriaAverages = {};
       for (const name of criteriaNames) {
-        const vals = validPages.map(p => (p.criteria || []).find(c => c.name === name)).filter(Boolean);
+        // Match by new name, or fall back to any legacy name that maps to this criterion
+        const legacyNames = Object.entries(LEGACY_NAME_MAP).filter(([, v]) => v === name).map(([k]) => k);
+        const vals = validPages.map(p => {
+          const found = (p.criteria || []).find(c => c.name === name);
+          if (found) return found;
+          // Fallback: try legacy names from cached V1 page results
+          for (const ln of legacyNames) {
+            const legacy = (p.criteria || []).find(c => c.name === ln);
+            if (legacy) return legacy;
+          }
+          return null;
+        }).filter(Boolean);
         if (vals.length > 0) {
           criteriaAverages[name] = {
             avgScore: Math.round(vals.reduce((s, c) => s + c.score, 0) / vals.length * 10) / 10,
@@ -160,7 +179,7 @@ export default async function handler(req, res) {
 
         const criteriaMsg = await callHaikuWithRetry({
           model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2,
-          messages: [{ role: 'user', content: `${langInstruction}\n\nFor a site audit of ${rootUrl} (${validPages.length} pages, avg ${scoreAverage}/100), generate per-criterion analysis.\n\nCriteria data:\n${criteriaForPrompt}\n\nJSON array of 8 objects:\n[{"criterion":"exact name","synthesis":"2-3 sentences"}]\n\nRules: synthesis must reference specific numbers.\nIMPORTANT: output raw JSON array only, no markdown fences, no explanation` }],
+          messages: [{ role: 'user', content: `${langInstruction}\n\nFor a site audit of ${rootUrl} (${validPages.length} pages, avg ${scoreAverage}/100), generate per-criterion analysis.\n\nCriteria data:\n${criteriaForPrompt}\n\nJSON array of 7 objects:\n[{"criterion":"exact name","synthesis":"2-3 sentences"}]\n\nRules: synthesis must reference specific numbers.\nIMPORTANT: output raw JSON array only, no markdown fences, no explanation` }],
         });
         criteriaConsolidated = parseHaikuArray(criteriaMsg.content[0].text);
       } catch (e) { console.error('[pro-trigger] Criteria parse failed:', e.message); }

@@ -247,7 +247,7 @@ export default function Pricing() {
         "@context": "https://schema.org",
         "@type": "Service",
         "name": "Detekia — Audit de visibilité IA",
-        "description": "Audit GEO pour sites web — score sur 100, 8 critères pondérés, recommandations priorisées, test de citation IA.",
+        "description": "Audit GEO pour sites web — score sur 100, 7 critères pondérés, recommandations priorisées, test de citation IA.",
         "serviceType": "AI Visibility Audit",
         "provider": { "@type": "Organization", "name": "Detekia", "url": "https://detekia.fr" },
         "areaServed": { "@type": "Country", "name": "France" },

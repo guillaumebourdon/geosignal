@@ -500,7 +500,7 @@ export default function Results() {
             </div>
             <RotatingStats stats={t('results.loading.stats')} finalizingText={t('results.loading.finalizing')} locale={locale} />
             <div style={{ marginTop: 24, textAlign: 'center', fontSize: 11, color: '#C2BDB8', fontFamily: 'system-ui' }}>
-              {locale === 'en' ? 'Methodology based on Princeton/KDD 2024 study · 8 weighted criteria' : 'Méthodologie basée sur l\'étude Princeton/KDD 2024 · 8 critères pondérés'}
+              {locale === 'en' ? 'Methodology based on GEO research (Princeton 2024, ALM Corp 2026) · 7 criteria' : 'Méthodologie basée sur la recherche GEO (Princeton 2024, ALM Corp 2026) · 7 critères'}
             </div>
           </div>
         </div>

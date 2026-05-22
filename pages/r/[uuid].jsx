@@ -79,9 +79,11 @@ function criterionGroup(name, locale) {
 }
 
 const CRITERIA_ORDER = [
-  'Extractibilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
-  'Crawlabilite IA', 'Donnees structurees', 'Neutralite editoriale',
-  'Presence externe', 'Fraicheur & maintenance',
+  'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
+  'Accessibilite IA', 'Neutralite editoriale',
+  'Presence externe', 'Fraicheur & signaux temporels',
+  // Legacy fallbacks for old cached reports
+  'Extractibilite & reponse directe', 'Crawlabilite IA', 'Donnees structurees', 'Fraicheur & maintenance',
 ];
 
 const WHY_FR = {
@@ -182,25 +184,33 @@ function getCtxCards(locale) { return locale === 'en' ? CTX_CARDS_EN : CTX_CARDS
 
 // ── Criteria name translations (FR keys → localized display) ─────────────────
 const CRITERIA_EN = {
-  // Accented versions (from analyze.js one-page criteria names)
-  'Extractibilité & réponse directe': 'Extractability & Direct Answer',
+  // V2 criteria names
+  'Citabilité & réponse directe': 'Citability & Direct Answer',
   'Vérifiabilité & preuves': 'Verifiability & Evidence',
   'Autorité & E-E-A-T': 'Authority & E-E-A-T',
-  'Crawlabilité IA': 'AI Crawlability',
-  'Données structurées': 'Structured Data',
+  'Accessibilité IA': 'AI Accessibility',
   'Neutralité éditoriale': 'Editorial Neutrality',
   'Présence externe': 'External Presence',
-  'Fraîcheur & maintenance': 'Freshness & Maintenance',
-  // Unaccented versions (from Pro report CRITERIA_NAMES / Haiku output)
-  'Extractibilite & reponse directe': 'Extractability & Direct Answer',
+  'Fraîcheur & signaux temporels': 'Freshness & Timeliness',
+  // Unaccented V2
+  'Citabilite & reponse directe': 'Citability & Direct Answer',
   'Verifiabilite & preuves': 'Verifiability & Evidence',
   'Autorite & E-E-A-T': 'Authority & E-E-A-T',
-  'Crawlabilite IA': 'AI Crawlability',
-  'Donnees structurees': 'Structured Data',
+  'Accessibilite IA': 'AI Accessibility',
   'Neutralite editoriale': 'Editorial Neutrality',
   'Presence externe': 'External Presence',
+  'Fraicheur & signaux temporels': 'Freshness & Timeliness',
+  // Legacy V1 names (for old cached reports)
+  'Extractibilité & réponse directe': 'Extractability & Direct Answer',
+  'Crawlabilité IA': 'AI Crawlability',
+  'Données structurées': 'Structured Data',
+  'Fraîcheur & maintenance': 'Freshness & Maintenance',
+  'Extractibilite & reponse directe': 'Extractability & Direct Answer',
+  'Crawlabilite IA': 'AI Crawlability',
+  'Donnees structurees': 'Structured Data',
   'Fraicheur & maintenance': 'Freshness & Maintenance',
-  // Short versions (sometimes used in evidence/detail)
+  // Short versions
+  'Citabilité': 'Citability',
   'Extractibilité': 'Extractability',
   'Vérifiabilité': 'Verifiability',
   'Autorité E-E-A-T': 'Authority & E-E-A-T',
@@ -215,25 +225,23 @@ function tc(name, locale) {
 }
 
 const METHODOLOGY_TABLE_FR = [
-  { name: 'Extractibilité & réponse directe', weight: '25 pts', measured: 'Longueur intro, structure H2/H3, listes, tableaux, calibrage des paragraphes' },
-  { name: 'Vérifiabilité & preuves', weight: '20 pts', measured: 'Données chiffrées, liens externes sourcés, dates, tableaux, citations' },
-  { name: 'Autorité & E-E-A-T', weight: '15 pts', measured: 'Page auteur, biographie, À propos, contact, mentions légales, schema Organization' },
-  { name: 'Crawlabilité IA', weight: '15 pts', measured: 'Longueur contenu, lang, canonical, indexabilité, sitemap, bots IA autorisés' },
-  { name: 'Données structurées', weight: '10 pts', measured: 'HTML sémantique, schémas JSON-LD (FAQPage, Article, HowTo, Organization...)' },
-  { name: 'Neutralité éditoriale', weight: '10 pts', measured: 'Évalué par IA — superlatifs, ton promotionnel, honnêteté' },
-  { name: 'Présence externe', weight: '5 pts', measured: 'Mentions presse, liens réseaux sociaux, témoignages tiers détectés' },
-  { name: 'Fraîcheur & maintenance', weight: '5 pts', measured: 'dateModified schema, années récentes dans le contenu, copyright à jour' },
+  { name: 'Citabilité & réponse directe', weight: '25 pts', measured: 'Answer capsules, front-loading, profondeur de contenu, titres en question, paragraphes modulaires' },
+  { name: 'Vérifiabilité & preuves', weight: '20 pts', measured: 'Données chiffrées sourcées, liens externes, dates, tableaux comparatifs, citations d\'experts' },
+  { name: 'Autorité & E-E-A-T', weight: '15 pts', measured: 'Auteur identifié, pages Contact/Legal/À propos, schema Organization, langage définitif' },
+  { name: 'Accessibilité IA', weight: '10 pts', measured: 'Bots IA de recherche autorisés, indexabilité, contenu suffisant, lang, canonical, sitemap' },
+  { name: 'Neutralité éditoriale', weight: '10 pts', measured: 'Évalué par IA — ton factuel, absence de superlatifs, langage éducatif' },
+  { name: 'Présence externe', weight: '10 pts', measured: 'Réseaux sociaux, mentions presse, témoignages, liens sortants, multi-plateforme' },
+  { name: 'Fraîcheur & signaux temporels', weight: '10 pts', measured: 'Dates de publication, dateModified, copyright à jour, contenu récent' },
 ];
 
 const METHODOLOGY_TABLE_EN = [
-  { name: 'Extractability & Direct Answer', weight: '25 pts', measured: 'Intro length, H2/H3 structure, lists, tables, paragraph calibration' },
-  { name: 'Verifiability & Evidence', weight: '20 pts', measured: 'Data points, sourced external links, dates, tables, citations' },
-  { name: 'Authority & E-E-A-T', weight: '15 pts', measured: 'Author page, bio, About, contact, legal notices, Organization schema' },
-  { name: 'AI Crawlability', weight: '15 pts', measured: 'Content length, lang, canonical, indexability, sitemap, AI bots allowed' },
-  { name: 'Structured Data', weight: '10 pts', measured: 'Semantic HTML, JSON-LD schemas (FAQPage, Article, HowTo, Organization...)' },
-  { name: 'Editorial Neutrality', weight: '10 pts', measured: 'Evaluated by AI — superlatives, promotional tone, honesty' },
-  { name: 'External Presence', weight: '5 pts', measured: 'Press mentions, social media links, third-party testimonials detected' },
-  { name: 'Freshness & Maintenance', weight: '5 pts', measured: 'dateModified schema, recent years in content, copyright up to date' },
+  { name: 'Citability & Direct Answer', weight: '25 pts', measured: 'Answer capsules, front-loading, content depth, question headings, modular paragraphs' },
+  { name: 'Verifiability & Evidence', weight: '20 pts', measured: 'Sourced data points, external links, dates, comparison tables, expert quotations' },
+  { name: 'Authority & E-E-A-T', weight: '15 pts', measured: 'Identified author, Contact/Legal/About pages, Organization schema, definitive language' },
+  { name: 'AI Accessibility', weight: '10 pts', measured: 'AI search bots allowed, indexability, sufficient content, lang, canonical, sitemap' },
+  { name: 'Editorial Neutrality', weight: '10 pts', measured: 'Evaluated by AI — factual tone, no superlatives, educational language' },
+  { name: 'External Presence', weight: '10 pts', measured: 'Social media, press mentions, testimonials, outbound links, multi-platform' },
+  { name: 'Freshness & Timeliness', weight: '10 pts', measured: 'Publication dates, dateModified, current copyright, recent content' },
 ];
 
 function getMethodologyTable(locale) {
@@ -259,7 +267,7 @@ const REPORT_STRINGS = {
     cited: 'Votre site apparaît', notCited: 'Votre site n\'apparaît pas',
     competitorsLabel: 'Cités à votre place :',
     methodology: 'MÉTHODOLOGIE', methodologyTitle: 'Comment ce score est calculé',
-    methodologyDesc: 'Score basé sur 8 critères pondérés, analysés par des règles déterministes + IA.',
+    methodologyDesc: 'Score basé sur 7 critères pondérés, analysés par des règles déterministes + IA.',
     criterion: 'Critère', weight: 'Poids', measured: 'Ce qu\'on mesure',
     downloadPdf: 'Télécharger le rapport PDF',
     poweredBy: 'Rapport généré par',
@@ -280,7 +288,7 @@ const REPORT_STRINGS = {
     evidenceTrustLinks: 'Liens de confiance internes',
     noData: 'Non disponible',
     execSummary: 'Synthèse exécutive', analysisResults: "Résultats de l'analyse",
-    the8Criteria: 'Les 8 critères GEO', context2026: 'Contexte 2026',
+    the8Criteria: 'Les 7 critères GEO', context2026: 'Contexte 2026',
     whyAiMatters: 'Pourquoi la visibilité IA est critique en 2026',
     whyAiDesc: "Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information. Voici les données clés qui expliquent pourquoi votre visibilité IA est devenue un enjeu business direct.",
     whyAiDescShort: "Les moteurs de recherche IA changent radicalement la façon dont les internautes trouvent l'information.",
@@ -308,11 +316,11 @@ const REPORT_STRINGS = {
     transparency: 'Transparence', methodologyH2: 'Méthodologie',
     analysisLimits: "LIMITES DE L'ANALYSE",
     analysisLimitsDesc: "Ce rapport est généré par analyse automatisée du contenu accessible via scraping. Certains éléments rendus en JavaScript côté client, protégés par authentification, ou chargés dynamiquement peuvent ne pas être détectés.",
-    methodologyP1: "Ce rapport est généré par analyse automatisée du DOM de votre page via un service de scraping spécialisé pour les IA et évaluation sur <strong>8 critères pondérés</strong>. Le critère Neutralité éditoriale est évalué par intelligence artificielle. Les 7 autres critères sont évalués par analyse technique du HTML.",
-    methodologyP1Pro: "Analyse réalisée sur {n} pages du site prioritisées par leur importance éditoriale (méthodologie de priorisation par sitemap + fraîcheur + profondeur). Chaque page est évaluée sur 8 critères pondérés. Le test IA Pro porte sur 30 requêtes simulées (vs 10 pour le rapport one-page).",
+    methodologyP1: "Ce rapport est généré par analyse automatisée du DOM de votre page via un service de scraping spécialisé pour les IA et évaluation sur <strong>7 critères pondérés</strong>. Le critère Neutralité éditoriale est évalué par intelligence artificielle. Les 7 autres critères sont évalués par analyse technique du HTML.",
+    methodologyP1Pro: "Analyse réalisée sur {n} pages du site prioritisées par leur importance éditoriale (méthodologie de priorisation par sitemap + fraîcheur + profondeur). Chaque page est évaluée sur 7 critères pondérés. Le test IA Pro porte sur 30 requêtes simulées (vs 10 pour le rapport one-page).",
     methodologyP2: "Le test de visibilité IA est réalisé par simulation de 10 requêtes via l'IA. Les résultats varient selon le moteur IA, la requête et le moment du test.",
     methodologyScoreCalc: "Le score global est calculé à partir des 7 critères techniques (sur 95 points) auxquels s'ajoute un bonus de neutralité éditoriale allant de -3 à +3 points, évalué par IA. Le score affiché n'est donc pas la somme directe des 8 sous-scores.",
-    the8CriteriaWeights: 'Les 8 critères et leur pondération',
+    the8CriteriaWeights: 'Les 7 critères et leur pondération',
     academicSourceLabel: 'SOURCE ACADÉMIQUE',
     reportLimits: 'LIMITES DU RAPPORT',
     reportLimitsDesc: "Les moteurs IA évoluent rapidement. Les résultats reflètent l'état des algorithmes à la date de génération. Le test de visibilité IA est une simulation et non une interrogation directe des moteurs.",
@@ -421,7 +429,7 @@ const REPORT_STRINGS = {
     methodologyP1Pro: 'Analysis performed on {n} pages prioritized by editorial importance (prioritization by sitemap + freshness + depth). Each page is evaluated on 8 weighted criteria. The Pro AI test covers 30 simulated queries (vs 10 for the one-page report).',
     methodologyP2: 'The AI visibility test is performed by simulating 10 queries via AI. Results vary depending on the AI engine, query and timing.',
     methodologyScoreCalc: 'The overall score is calculated from 7 technical criteria (out of 95 points) plus an editorial neutrality bonus ranging from -3 to +3 points, evaluated by AI. The displayed score is therefore not a direct sum of the 8 sub-scores.',
-    the8CriteriaWeights: 'The 8 criteria and their weights',
+    the8CriteriaWeights: 'The 7 criteria and their weights',
     academicSourceLabel: 'ACADEMIC SOURCE',
     reportLimits: 'REPORT LIMITATIONS',
     reportLimitsDesc: 'AI engines evolve rapidly. Results reflect the state of algorithms at the generation date. The AI visibility test is a simulation, not a direct query to AI engines.',
@@ -747,7 +755,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               </div>
             </div>
 
-            {/* 8 criteria table */}
+            {/* 7 criteria table */}
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{rs(locale).the8Criteria}</h2>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 20 }}>
               {criteria.map((c, i) => {
@@ -1036,7 +1044,7 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
               <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>{rs(locale).methodologyP2}</p>
               <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>{rs(locale).methodologyScoreCalc}</p>
 
-              {/* 8 criteria table */}
+              {/* 7 criteria table */}
               <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).the8CriteriaWeights}</div>
               <div style={{ overflowX: 'auto', marginBottom: 16 }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #E5E2DC', borderRadius: 6, overflow: 'hidden', fontSize: 11 }}>
@@ -1168,9 +1176,11 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
   });
 
   const CRITERIA_NAMES = [
-    'Extractibilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
-    'Crawlabilite IA', 'Donnees structurees', 'Neutralite editoriale',
-    'Presence externe', 'Fraicheur & maintenance',
+    'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
+    'Accessibilite IA', 'Neutralite editoriale',
+    'Presence externe', 'Fraicheur & signaux temporels',
+    // Legacy fallbacks
+    'Extractibilite & reponse directe', 'Crawlabilite IA', 'Donnees structurees', 'Fraicheur & maintenance',
   ];
 
   // 3 weakest criteria
@@ -1180,16 +1190,15 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
   }).sort((a, b) => a.pct - b.pct);
   const weakest3 = new Set(critSorted.slice(0, 3).map(c => c.name));
 
-  // Map arbitrary Haiku criterion names to standard 8 criteria
+  // Map arbitrary Claude criterion names to standard 7 criteria
   const CRITERION_KEYWORDS = {
-    'Extractibilite & reponse directe': ['extractib', 'reponse directe', 'contenu detaille', 'contenu complet', 'contenu et clarte', 'contenu et pertinence', 'profondeur', 'contenu technique', 'contenu complementaire', 'contenu actionnable'],
+    'Citabilite & reponse directe': ['citabilit', 'extractib', 'reponse directe', 'contenu detaille', 'contenu complet', 'contenu et clarte', 'profondeur', 'contenu technique', 'answer capsule', 'front-loading'],
     'Verifiabilite & preuves': ['verifiab', 'preuves', 'sources', 'citations', 'donnees chiffrees'],
     'Autorite & E-E-A-T': ['autorit', 'e-e-a-t', 'eeat', 'expertise', 'credibilit'],
-    'Crawlabilite IA': ['crawlab', 'indexab', 'robots', 'seo technique', 'performance technique', 'core web', 'accessibilit', 'performance et ux', 'performance et accessibilite', 'meta description', 'meta et balises', 'optimisation seo', 'canonique', 'optimisation technique'],
-    'Donnees structurees': ['structuree', 'schema', 'json-ld', 'donnees struct'],
-    'Neutralite editoriale': ['neutralit', 'editorial', 'equilibre', 'marketing', 'promotionnel', 'contenu marketing', 'equilibre critique', 'optimisation pour requetes', 'contenu pour gemini', 'engagement et conversion', 'engagement utilisateur', 'optimisation globale'],
+    'Accessibilite IA': ['accessibilit', 'crawlab', 'indexab', 'robots', 'seo technique', 'performance technique', 'meta description', 'canonique', 'optimisation technique'],
+    'Neutralite editoriale': ['neutralit', 'editorial', 'equilibre', 'marketing', 'promotionnel', 'engagement'],
     'Presence externe': ['presence ext', 'backlink', 'mention', 'externe'],
-    'Fraicheur & maintenance': ['fraicheur', 'fraich', 'maintenance', 'mise a jour', 'contenu duplique'],
+    'Fraicheur & signaux temporels': ['fraicheur', 'fraich', 'maintenance', 'mise a jour', 'temporel', 'date'],
   };
 
   function matchCriterionName(recoCriterion) {
@@ -1342,7 +1351,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               </div>
             )}
 
-            {/* 8 criteria table */}
+            {/* 7 criteria table */}
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{rs(locale).the8Criteria}</h2>
             <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 20 }}>
               {CRITERIA_NAMES.map((name, i) => {
@@ -1624,7 +1633,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <span style={{ padding: '3px 10px', borderRadius: 12, fontFamily: 'monospace', fontSize: 9, letterSpacing: 1, background: sc.bg, color: sc.color }}>{sc.label}</span>
                   </div>
 
-                  {/* 8 criteria scores */}
+                  {/* 7 criteria scores */}
                   <div style={{ marginBottom: 16 }}>
                     {(p.criteria || []).map((c, ci) => {
                       const cpct = c.max > 0 ? Math.round((c.score / c.max) * 100) : 0;

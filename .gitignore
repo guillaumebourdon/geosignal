@@ -44,3 +44,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+GEO_Scoring_Framework_Deep_Research.md

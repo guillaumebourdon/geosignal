@@ -117,7 +117,7 @@ export default async function handler(req, res) {
       thanks: `Thanks so much for your trust — your full GEO report for <strong>${url}</strong> is attached.`,
       insideTitle: "Inside your report:",
       inside: [
-        'A detailed score across 8 GEO criteria',
+        'A detailed score across 7 GEO criteria',
         'A real AI visibility test on 10 simulated queries',
         'Precise recommendations ranked by impact priority',
         'A concrete action plan',
@@ -134,7 +134,7 @@ export default async function handler(req, res) {
       thanks: `Merci beaucoup pour ta confiance — ton rapport GEO complet pour <strong>${url}</strong> est en piece jointe.`,
       insideTitle: 'Tu y trouveras :',
       inside: [
-        'Un score detaille sur les 8 criteres GEO',
+        'Un score detaille sur les 7 criteres GEO',
         'Un test reel de visibilite IA sur 10 requetes simulees',
         'Des recommandations precises, classees par priorite d\'impact',
         'Un plan d\'action concret',

@@ -40,7 +40,7 @@ export default function Methodologie() {
           author: { '@type': 'Organization', name: 'Detekia', url: 'https://detekia.fr' },
           publisher: { '@type': 'Organization', name: 'Detekia' },
           datePublished: '2026-03-14',
-          dateModified: '2026-04-27',
+          dateModified: '2026-05-22',
           inLanguage: locale,
         }}
       />
@@ -154,19 +154,19 @@ export default function Methodologie() {
           <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 40, maxWidth: 540, margin: '0 auto 40px' }}>
             {t('methodology.score.subtitle')}
           </p>
-          <div className="methodo-score-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, textAlign: 'center' }}>
-            {t('methodology.score.items').map((item) => (
-              <div key={item.name} className="card-interactive" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '12px 8px' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#D97757', letterSpacing: -1 }}>{item.pts}</div>
-                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', marginBottom: 2 }}>{t('methodology.score.ptsLabel')}</div>
-                <div style={{ fontSize: 11, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.4 }}>{item.name}</div>
+          <div className="methodo-score-grid" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, textAlign: 'center' }}>
+            {t('methodology.score.items').map((item, idx) => (
+              <div key={item.name} className="card-interactive" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '16px 14px', minWidth: 120, flex: '1 1 120px', maxWidth: 160 }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: idx === 0 ? '#D97757' : 'rgba(247,245,242,0.7)', letterSpacing: -1, lineHeight: 1 }}>{item.pts}</div>
+                <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.3)', marginBottom: 4, marginTop: 2 }}>{t('methodology.score.ptsLabel')}</div>
+                <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.55)', fontFamily: 'system-ui', lineHeight: 1.35, fontWeight: 500 }}>{item.name}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* 8 CRITÈRES DÉTAILLÉS */}
+      {/* 7 CRITÈRES DÉTAILLÉS */}
       <div style={{ maxWidth: 780, margin: '0 auto', padding: '0 24px 80px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{t('methodology.criteria.label')}</div>
         <h2 className="methodo-h2" style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', textAlign: 'center', letterSpacing: -1, marginBottom: 48 }}>
@@ -242,23 +242,21 @@ export default function Methodologie() {
           <span style={{ margin: '0 8px', color: '#E5E2DC' }}>—</span>
           Aggarwal et al., Princeton / Georgia Tech, KDD 2024
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          Google E-E-A-T (2024)
+          ALM Corp, 1.2M ChatGPT citations (2026)
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          OpenAI GPTBot
+          AirOps State of AI Search (2026)
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          Anthropic ClaudeBot
+          ConvertMate GEO Benchmark (2026)
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          Schema.org
+          Ahrefs Brand Radar & Schema Study (2026)
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          SE Ranking (2025)
+          Conductor AEO/GEO Benchmarks (2026)
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          Otterly.AI (2026)
+          Yext 17.2M AI Citations (2026)
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          AirOps (2026)
+          BrightEdge AI Search (Mai 2026)
           <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          Seer Interactive (2025)
-          <span style={{ margin: '0 6px', color: '#E5E2DC' }}>·</span>
-          Edelman (2026)
+          Go Fish Digital GEO Case Study (2026)
         </div>
       </div>
 

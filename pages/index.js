@@ -393,7 +393,7 @@ export default function Home() {
                     { value: locale === 'en' ? 'Real citation test' : 'Test de citation réel', label: locale === 'en' ? 'we actually query ChatGPT' : 'on interroge vraiment ChatGPT' },
                     { value: locale === 'en' ? 'Recommendations with code' : 'Recommandations avec code', label: locale === 'en' ? 'copy-paste' : 'copier-coller' },
                     { value: '< 60s', label: locale === 'en' ? 'no signup' : 'sans inscription' },
-                    { value: locale === 'en' ? '8 weighted criteria' : '8 critères pondérés', label: locale === 'en' ? 'open methodology' : 'méthodologie ouverte' },
+                    { value: locale === 'en' ? '7 research-based criteria' : '7 critères basés sur la recherche', label: locale === 'en' ? 'open methodology' : 'méthodologie ouverte' },
                     { value: locale === 'en' ? 'Permanent report' : 'Rapport permanent', label: locale === 'en' ? 'lifetime access' : 'accessible à vie' },
                     { value: locale === 'en' ? 'Projected score' : 'Score projeté', label: locale === 'en' ? 'after fixes' : 'après corrections' },
                     { value: locale === 'en' ? '3 competitors identified' : '3 concurrents identifiés', label: locale === 'en' ? 'cited instead of you' : 'cités à votre place' },
@@ -460,8 +460,8 @@ export default function Home() {
             </h2>
             <p style={{ fontSize: 15, color: '#6B6762', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 600, margin: '0 auto 56px' }}>
               {locale === 'en'
-                ? 'Asking ChatGPT "is my site well optimized?" gives you a guess. Detekia reads your actual source code and measures 8 criteria objectively.'
-                : 'Demander à ChatGPT « mon site est-il bien optimisé ? » donne un avis vague. Detekia lit votre vrai code source et mesure 8 critères objectivement.'}
+                ? 'Asking ChatGPT "is my site well optimized?" gives you a guess. Detekia reads your actual source code and measures 7 research-backed criteria objectively.'
+                : 'Demander à ChatGPT « mon site est-il bien optimisé ? » donne un avis vague. Detekia lit votre vrai code source et mesure 7 critères objectivement.'}
             </p>
           </RevealSection>
 
@@ -522,12 +522,12 @@ export default function Home() {
                 <p style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.5)', lineHeight: 1.6, marginBottom: 28, position: 'relative' }}>
                   {locale === 'en'
                     ? 'Detekia fetches your actual HTML and runs 8 weighted, transparent criteria. Every time. Reproducibly.'
-                    : 'Detekia télécharge votre HTML réel et applique 8 critères pondérés et transparents. À chaque fois. De façon reproductible.'}
+                    : 'Detekia télécharge votre HTML réel et applique 7 critères basés sur la recherche et transparents. À chaque fois. De façon reproductible.'}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 'auto', position: 'relative' }}>
                   {(locale === 'en'
-                    ? ['Your actual HTML analyzed page by page', '8 weighted criteria, documented methodology', 'Reproducible score out of 100', 'Recommendations ranked by impact with code']
-                    : ['Votre HTML réel analysé page par page', '8 critères pondérés, méthodologie documentée', 'Score sur 100 reproductible et daté', 'Recommandations classées par impact avec code']
+                    ? ['Your actual HTML analyzed page by page', '7 research-based criteria, documented methodology', 'Reproducible score out of 100', 'Recommendations ranked by impact with code']
+                    : ['Votre HTML réel analysé page par page', '7 critères basés sur la recherche, méthodologie documentée', 'Score sur 100 reproductible et daté', 'Recommandations classées par impact avec code']
                   ).map((p, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
                       <span style={{ width: 16, height: 16, borderRadius: '50%', background: 'rgba(217,119,87,0.18)', border: '1px solid rgba(217,119,87,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
@@ -625,7 +625,7 @@ export default function Home() {
               {/* Feature rows */}
               {[
                 { label: locale === 'en' ? 'Score out of 100' : 'Score sur 100', vals: ['✓', '✓', '✓'] },
-                { label: locale === 'en' ? '8 criteria analyzed' : '8 critères analysés', vals: ['✓', '✓', '✓'] },
+                { label: locale === 'en' ? '7 criteria analyzed' : '7 critères analysés', vals: ['✓', '✓', '✓'] },
                 { label: locale === 'en' ? 'Pages analyzed' : 'Pages analysées', vals: ['–', '✓ (1)', '✓ (10)'] },
                 { label: locale === 'en' ? 'Detailed recommendations' : 'Recommandations détaillées', vals: ['–', '✓', '✓'] },
                 { label: locale === 'en' ? 'ChatGPT queries tested' : 'Requêtes ChatGPT testées', vals: ['–', '✓ (10)', '✓ (30)'] },

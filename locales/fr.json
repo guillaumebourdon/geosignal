@@ -144,7 +144,7 @@
       "badge": "Analyse 100% gratuite. aucune inscription",
       "titleLine1": "Vos concurrents apparaissent dans",
       "titleLine2": "Pas vous.",
-      "subtitle": "Comprenez pourquoi en quelques secondes. Detekia diagnostique gratuitement la page de votre choix sur 8 critères GEO.",
+      "subtitle": "Comprenez pourquoi en quelques secondes. Detekia diagnostique gratuitement la page de votre choix sur 7 critères GEO.",
       "inputPlaceholder": "https://www.votre-site.fr",
       "cta": "Analyser mon site →",
       "easterEgg": "Sympa d'essayer 😏 Mais on ne se note pas soi-même. ce serait trop facile de se mettre 100/100. Essayez avec un autre site !",
@@ -167,14 +167,39 @@
       "unlock": "Débloquer →"
     },
     "stats": [
-      { "value": "—", "label": "audits réalisés", "dynamic": true },
-      { "value": "4", "label": "moteurs IA couverts" },
-      { "value": "8", "label": "critères GEO analysés" },
-      { "value": "2025-2026", "label": "méthodologie sourcée" },
-      { "value": "30", "label": "requêtes IA (audit complet)" },
-      { "value": "FR + EN", "label": "disponible" },
-      { "value": "10 ans", "label": "rapport accessible en ligne" },
-      { "value": "1 min", "label": "audit one-page" }
+      {
+        "value": "—",
+        "label": "audits réalisés",
+        "dynamic": true
+      },
+      {
+        "value": "4",
+        "label": "moteurs IA couverts"
+      },
+      {
+        "value": "8",
+        "label": "critères GEO analysés"
+      },
+      {
+        "value": "2025-2026",
+        "label": "méthodologie sourcée"
+      },
+      {
+        "value": "30",
+        "label": "requêtes IA (audit complet)"
+      },
+      {
+        "value": "FR + EN",
+        "label": "disponible"
+      },
+      {
+        "value": "10 ans",
+        "label": "rapport accessible en ligne"
+      },
+      {
+        "value": "1 min",
+        "label": "audit one-page"
+      }
     ],
     "comparison": {
       "label": "Pourquoi Detekia",
@@ -199,7 +224,7 @@
           "subtitle": "Diagnostic technique",
           "items": [
             "Analyse du HTML réel de votre site",
-            "8 critères mesurés objectivement",
+            "7 critères mesurés objectivement",
             "Score sur 100, reproductible",
             "Recommandations classées par impact"
           ]
@@ -257,7 +282,7 @@
         {
           "num": "02",
           "title": "On analyse tout",
-          "desc": "Detekia scrape votre site et l'évalue selon 8 critères GEO validés par la recherche."
+          "desc": "Detekia scrape votre site et l'évalue selon 7 critères GEO validés par la recherche."
         },
         {
           "num": "03",
@@ -394,26 +419,56 @@
       "products": {
         "label": "Produits",
         "links": [
-          { "label": "Scoring gratuit", "href": "/" },
-          { "label": "Audit 1 page. 29 €", "href": "/one-page" },
-          { "label": "Audit complet. 99 €", "href": "/pro" }
+          {
+            "label": "Scoring gratuit",
+            "href": "/"
+          },
+          {
+            "label": "Audit 1 page. 29 €",
+            "href": "/one-page"
+          },
+          {
+            "label": "Audit complet. 99 €",
+            "href": "/pro"
+          }
         ]
       },
       "resources": {
         "label": "Ressources",
         "links": [
-          { "label": "Blog", "href": "/blog" },
-          { "label": "Tarifs", "href": "/pricing" },
-          { "label": "Méthodologie", "href": "/methodologie" },
-          { "label": "Contact", "href": "/contact" }
+          {
+            "label": "Blog",
+            "href": "/blog"
+          },
+          {
+            "label": "Tarifs",
+            "href": "/pricing"
+          },
+          {
+            "label": "Méthodologie",
+            "href": "/methodologie"
+          },
+          {
+            "label": "Contact",
+            "href": "/contact"
+          }
         ]
       },
       "legal": {
         "label": "Légal",
         "links": [
-          { "label": "Mentions légales", "href": "/mentions-legales" },
-          { "label": "Confidentialité", "href": "/confidentialite" },
-          { "label": "CGU", "href": "/cgu" }
+          {
+            "label": "Mentions légales",
+            "href": "/mentions-legales"
+          },
+          {
+            "label": "Confidentialité",
+            "href": "/confidentialite"
+          },
+          {
+            "label": "CGU",
+            "href": "/cgu"
+          }
         ]
       }
     },
@@ -424,7 +479,7 @@
       "paidOffer": "Rapport complet",
       "featureList": [
         "Score GEO sur 100",
-        "Analyse des 8 critères GEO",
+        "Analyse des 7 critères GEO",
         "Analyse des données structurées",
         "Évaluation de la citabilité",
         "Vérification de la présence externe",
@@ -435,14 +490,14 @@
   "methodology": {
     "seo": {
       "title": "Méthodologie. Comment Detekia calcule votre score GEO",
-      "description": "Les 8 critères GEO de Detekia expliqués : extractibilité, vérifiabilité, E-E-A-T, crawlabilité IA, données structurées, neutralité et fraîcheur."
+      "description": "Les 7 critères GEO de Detekia expliqués : extractibilité, vérifiabilité, E-E-A-T, crawlabilité IA, données structurées, neutralité et fraîcheur."
     },
     "hero": {
       "badge": "Transparence totale",
       "titleLine1": "Comment Detekia",
       "titleEm": "calcule votre score",
-      "subtitle": "Notre score GEO est calculé à partir de 8 critères mesurables et vérifiables, basés sur les recherches académiques en Generative Engine Optimization et les guidelines publiques des principaux modèles d'IA.",
-      "ctaLink": "→ Testez votre score gratuitement sur les 8 critères"
+      "subtitle": "Notre grille d'analyse est basée sur les études GEO les plus récentes : Princeton/Georgia Tech (KDD 2024), ALM Corp (1,2M réponses ChatGPT), AirOps State of AI Search 2026, Ahrefs Brand Radar 2026. Chaque critère est pondéré selon son impact prouvé sur les citations IA.",
+      "ctaLink": "→ Testez votre score gratuitement sur les 7 critères"
     },
     "process": {
       "label": "Le processus",
@@ -467,13 +522,13 @@
     },
     "score": {
       "label": "Calcul du score",
-      "title": "Score sur 100 = 7 heuristiques + neutralité IA",
-      "subtitle": "Les 7 premiers critères sont calculés par des règles déterministes sur le HTML. Le 8e critère (neutralité éditoriale) est noté par Claude sur 10, puis converti en bonus/malus de -3 à +3 points ajouté au total.",
+      "title": "Un score sur 100, 7 critères",
+      "subtitle": "Chaque critère est pondéré selon son impact prouvé sur les citations IA (Princeton/KDD 2024, ALM Corp 2026, AirOps 2026).",
       "ptsLabel": "pts",
       "items": [
         {
           "pts": "25",
-          "name": "Extractibilité"
+          "name": "Citabilité"
         },
         {
           "pts": "20",
@@ -484,106 +539,93 @@
           "name": "Autorité E-E-A-T"
         },
         {
-          "pts": "15",
-          "name": "Crawlabilité"
-        },
-        {
           "pts": "10",
-          "name": "Données structurées"
+          "name": "Accessibilité IA"
         },
         {
           "pts": "10",
           "name": "Neutralité éditoriale"
         },
         {
-          "pts": "5",
+          "pts": "10",
           "name": "Présence externe"
         },
         {
-          "pts": "5",
+          "pts": "10",
           "name": "Fraîcheur"
         }
       ]
     },
     "criteria": {
       "label": "Détail des critères",
-      "titleStart": "Les 8 critères ",
-      "titleEm": "expliqués",
+      "titleStart": "Les ",
+      "titleEm": "7 critères en détail",
       "whatLabel": "Ce qu'on mesure",
       "goodLabel": "✓ Bon signal",
       "badLabel": "✗ Mauvais signal",
       "items": [
         {
-          "icon": "🎯",
-          "color": "#4285F4",
-          "name": "Extractibilité & réponse directe",
+          "icon": "💬",
+          "name": "Citabilité & réponse directe",
           "weight": "25 pts",
-          "what": "Les IA cherchent des réponses \"prêtes à citer\" dans votre contenu. Un bon site répond à la question dès les premières lignes, avec des listes, des tableaux, des titres clairs.",
-          "good": "Intro qui répond directement en 1-2 phrases, listes à puces, tableaux de données, structure H2/H3 logique, paragraphes courts (50-300 caractères).",
-          "bad": "Introduction généraliste sans réponse directe, blocs de texte denses, absence de listes ou tableaux, structure plate sans hiérarchie."
+          "color": "#D97757",
+          "what": "Mesure la capacité des IA à extraire des passages auto-suffisants de votre contenu. Détecte les answer capsules (20-50 mots répondant directement à une question sous un H2), le front-loading (infos clés dans les 30 premiers %), la profondeur de contenu, les titres en format question et les paragraphes modulaires.",
+          "good": "Answer capsules sous chaque H2, titres en format question, introduction substantielle, paragraphes de 40-60 mots extractibles.",
+          "bad": "Pas d'answer capsule, titres vagues (\"Nos solutions\"), contenu enfoui en bas de page, paragraphes trop longs ou trop courts."
         },
         {
-          "icon": "🔬",
-          "color": "#10A37F",
+          "icon": "📊",
           "name": "Vérifiabilité & preuves",
           "weight": "20 pts",
-          "what": "Les IA citent en priorité les contenus qui prouvent ce qu'ils avancent : chiffres sourcés, dates précises, liens vers des sources primaires, citations.",
-          "good": "Chiffres avec sources, dates explicites, liens externes vers études ou organismes de référence, tableaux comparatifs, citations d'experts.",
-          "bad": "Affirmations sans sources (\"il est prouvé que...\"), absence de chiffres ou chiffres sans source, aucun lien externe, pas de date de publication."
+          "color": "#D97757",
+          "what": "Évalue si votre contenu contient des faits vérifiables qu'une IA peut citer en confiance : données chiffrées sourcées, liens vers des sources externes, dates visibles, citations d'experts, tableaux comparatifs.",
+          "good": "5+ données chiffrées avec sources, 5+ liens externes vers des références reconnues, dates de publication visibles, citations d'experts.",
+          "bad": "Affirmations non sourcées, pas de lien externe, pas de date visible, contenu purement qualitatif."
         },
         {
-          "icon": "🏆",
-          "color": "#D97757",
-          "name": "Autorité E-E-A-T",
+          "icon": "🏛️",
+          "name": "Autorité & E-E-A-T",
           "weight": "15 pts",
-          "what": "E-E-A-T (Expérience, Expertise, Autorité, Confiance) est le cadre que les IA utilisent pour évaluer la crédibilité d'un site et de ses auteurs.",
-          "good": "Page auteur avec biographie et photo, schéma \"author\" en JSON-LD, page À propos détaillée, page Contact, mentions légales complètes, schema Organization.",
-          "bad": "Contenu anonyme sans auteur identifié, absence de page À propos ou Contact, pas de mentions légales, aucun schema.org sur les entités."
+          "color": "#10A37F",
+          "what": "Mesure la crédibilité de votre site aux yeux des IA. Vérifie l'identification de l'auteur, les pages structurantes (Contact, Legal, À propos), le schema Organization/Person, et l'utilisation d'un langage définitif.",
+          "good": "Auteur identifié avec bio, pages Contact/Legal/À propos, schema Organization, langage définitif (\"X est\" plutôt que \"X pourrait être\").",
+          "bad": "Pas d'auteur identifié, pas de page À propos, pas de schema, langage hésitant avec beaucoup de conditionnel."
         },
         {
           "icon": "🤖",
-          "color": "#4285F4",
-          "name": "Crawlabilité IA",
-          "weight": "15 pts",
-          "what": "Les robots des IA (GPTBot, ClaudeBot, OAI-SearchBot) doivent pouvoir lire votre site. Un site bloqué ou peu accessible ne peut pas être indexé.",
-          "good": "Balise lang définie, canonical correct, contenu non bloqué par JavaScript, mention des bots IA dans robots.txt ou headers, sitemap.xml.",
-          "bad": "Meta robots noindex, contenu chargé uniquement en JS sans SSR, balise lang absente, redirection infinie, pas de canonical."
-        },
-        {
-          "icon": "🧩",
-          "color": "#4285F4",
-          "name": "Données structurées",
+          "name": "Accessibilité IA",
           "weight": "10 pts",
-          "what": "Le Schema.org est le langage que les IA lisent en priorité pour comprendre ce qu'est votre site, qui l'a écrit, et de quoi il parle.",
-          "good": "Schema FAQPage, Article, HowTo, Organization, Person en JSON-LD. Les schemas prioritaires (FAQPage, HowTo) sont particulièrement valorisés.",
-          "bad": "Aucun schema.org, schemas incorrects ou incomplets, absence de schema sur les entités clés (Organisation, Auteur)."
+          "color": "#4285F4",
+          "what": "Vérifie si les bots de RECHERCHE IA (OAI-SearchBot, ChatGPT-User, PerplexityBot, Claude-Web) peuvent accéder à votre contenu. Distinction critique : bloquer les bots d'entraînement (GPTBot) ne vous rend pas invisible, mais bloquer les bots de recherche oui.",
+          "good": "Bots de recherche IA autorisés, contenu rendu côté serveur, sitemap à jour, lang et canonical définis.",
+          "bad": "Bots IA bloqués dans robots.txt, contenu rendu uniquement en JavaScript, pas de sitemap."
         },
         {
           "icon": "⚖️",
-          "color": "#10A37F",
           "name": "Neutralité éditoriale",
           "weight": "10 pts",
-          "what": "Les IA évitent de citer des contenus trop promotionnels ou biaisés. Un texte factuel et nuancé sera beaucoup plus souvent repris comme source.",
-          "good": "Ton informatif et factuel, nuances présentes, claims sourcés, vocabulaire précis sans superlatifs excessifs.",
-          "bad": "Superlatifs non sourcés (\"le meilleur\", \"révolutionnaire\"), claims sans preuve, ton exclusivement publicitaire, absence de nuance."
+          "color": "#C9861A",
+          "what": "Évalué par IA. Mesure si votre contenu est factuel et informatif plutôt que promotionnel. Les IA déprioritisent les pages avec des superlatifs non prouvés.",
+          "good": "Ton factuel et éducatif, données sourcées, comparaisons objectives, section \"limites\" honnête.",
+          "bad": "Superlatifs (\"le meilleur\", \"n°1\"), affirmations non prouvées, ton agressivement commercial."
         },
         {
           "icon": "🌐",
+          "name": "Présence & signaux externes",
+          "weight": "10 pts",
           "color": "#10A37F",
-          "name": "Présence externe",
-          "weight": "5 pts",
-          "what": "Les IA croisent plusieurs sources pour évaluer votre crédibilité. Être mentionné dans la presse ou cité sur d'autres sites renforce votre autorité perçue.",
-          "good": "Mentions presse avec liens, présence active sur LinkedIn/Twitter, témoignages et avis référencés, citations dans des articles tiers.",
-          "bad": "Aucun lien entrant identifiable, absence de réseaux sociaux, aucune mention presse ou tierce."
+          "what": "Mesure votre visibilité en dehors de votre site. 85% des mentions IA proviennent de pages tierces. Détecte les réseaux sociaux, mentions presse, témoignages, liens sortants et présence multi-plateforme.",
+          "good": "Présence sur 3+ réseaux sociaux, mentions presse (\"vu dans\"), témoignages clients, liens vers des sources externes.",
+          "bad": "Aucun réseau social, pas de mention presse, pas de témoignage, site isolé sans lien sortant."
         },
         {
-          "icon": "📅",
-          "color": "#C9861A",
-          "name": "Fraîcheur & maintenance",
-          "weight": "5 pts",
-          "what": "Pour les sujets qui évoluent, les IA préfèrent les contenus récents. Une date de mise à jour visible et un copyright récent signalent que le site est actif.",
-          "good": "dateModified en JSON-LD, date de mise à jour visible, copyright de l'année en cours, contenu récent dans les balises meta.",
-          "bad": "Aucune date visible, copyright daté d'il y a 3+ ans, schéma dateModified absent, articles sans date de publication."
+          "icon": "🕐",
+          "name": "Fraîcheur & signaux temporels",
+          "weight": "10 pts",
+          "color": "#4285F4",
+          "what": "Mesure si votre contenu est perçu comme actuel. Les pages non mises à jour trimestriellement perdent 3x plus de citations IA. Vérifie les dates de publication, dateModified, copyright et contenu récent.",
+          "good": "Date de publication visible, dateModified en schema, copyright à jour, contenu de l'année en cours.",
+          "bad": "Aucune date visible, pas de dateModified, copyright ancien, contenu qui semble daté."
         }
       ]
     },
@@ -621,19 +663,74 @@
     "compare": {
       "label": "3 NIVEAUX D'AUDIT",
       "title": "La même méthodologie, 3 niveaux de profondeur",
-      "subtitle": "Les 8 critères et le scoring sont identiques pour les 3 audits. Ce qui change, c'est la profondeur d'analyse.",
-      "headers": ["", "Gratuit", "1 page. 29 €", "Complet. 99 €"],
+      "subtitle": "Les 7 critères et le scoring sont identiques pour les 3 audits. Ce qui change, c'est la profondeur d'analyse.",
+      "headers": [
+        "",
+        "Gratuit",
+        "1 page. 29 €",
+        "Complet. 99 €"
+      ],
       "rows": [
-        ["8 critères GEO analysés", true, true, true],
-        ["Pages analysées", "1", "1", "10"],
-        ["Test de visibilité IA", "Partiel", "10 requêtes", "30 requêtes"],
-        ["Recommandations", "Aperçu", "Détaillées + code", "Détaillées + code"],
-        ["Patterns transverses", false, false, true],
-        ["Plan d'action priorisé", false, false, true],
-        ["Bilan page par page", false, false, true],
-        ["PDF téléchargeable", false, true, true],
-        ["Rapport accessible", "24h", "10 ans", "10 ans"],
-        ["Délai", "30 sec", "1 min", "5-10 min"]
+        [
+          "7 critères GEO analysés",
+          true,
+          true,
+          true
+        ],
+        [
+          "Pages analysées",
+          "1",
+          "1",
+          "10"
+        ],
+        [
+          "Test de visibilité IA",
+          "Partiel",
+          "10 requêtes",
+          "30 requêtes"
+        ],
+        [
+          "Recommandations",
+          "Aperçu",
+          "Détaillées + code",
+          "Détaillées + code"
+        ],
+        [
+          "Patterns transverses",
+          false,
+          false,
+          true
+        ],
+        [
+          "Plan d'action priorisé",
+          false,
+          false,
+          true
+        ],
+        [
+          "Bilan page par page",
+          false,
+          false,
+          true
+        ],
+        [
+          "PDF téléchargeable",
+          false,
+          true,
+          true
+        ],
+        [
+          "Rapport accessible",
+          "24h",
+          "10 ans",
+          "10 ans"
+        ],
+        [
+          "Délai",
+          "30 sec",
+          "1 min",
+          "5-10 min"
+        ]
       ],
       "cta": "Voir nos offres détaillées →"
     },
@@ -673,7 +770,7 @@
       ]
     },
     "scoring": {
-      "normalizationNote": "Le score brut des 7 critères hors neutralité totalise 95 points. Le critère Neutralité éditoriale, évalué par IA, apporte un ajustement de -3 à +3 points. Le score final est plafonné à 100.",
+      "normalizationNote": "Le score est calculé sur 100 points : 6 critères techniques (90 pts max) + Neutralité éditoriale évaluée par IA (10 pts). Le score direct est affiché sans normalisation.",
       "casesNote": "Chaque rapport inclut des cas réels documentés (études SEO Vendor, Ahrefs, Stackmatix, etc.) et s'appuie sur la recherche académique de référence : \"Generative Engine Optimization\". Aggarwal et al., Princeton / Georgia Tech, KDD 2024."
     }
   },
@@ -699,7 +796,7 @@
         },
         {
           "included": true,
-          "text": "Aperçu des 8 critères"
+          "text": "Aperçu des 7 critères"
         },
         {
           "included": true,
@@ -730,7 +827,7 @@
           "text": "Score /100 détaillé"
         },
         {
-          "text": "8 critères analysés en profondeur"
+          "text": "7 critères analysés en profondeur"
         },
         {
           "text": "8 recommandations avec exemples de code"
@@ -773,7 +870,7 @@
         },
         {
           "q": "Quelle est la méthodologie ?",
-          "a": "8 critères pondérés basés sur l'étude Princeton/KDD 2024 \"Generative Engine Optimization\". Chaque critère est mesuré par des heuristiques déterministes + évaluation IA. Détails sur detekia.fr/methodologie."
+          "a": "7 critères pondérés basés sur l'étude Princeton/KDD 2024 \"Generative Engine Optimization\". Chaque critère est mesuré par des heuristiques déterministes + évaluation IA. Détails sur detekia.fr/methodologie."
         }
       ]
     },
@@ -789,7 +886,7 @@
           "text": "Score moyen /100 sur 10 pages clés"
         },
         {
-          "text": "8 critères × 10 pages clés analysées"
+          "text": "7 critères × 10 pages clés analysées"
         },
         {
           "text": "Recommandations consolidées avec pages concernées"
@@ -850,7 +947,7 @@
     "why": {
       "title": "Pourquoi Detekia",
       "p1": "Les moteurs IA changent la façon dont les gens trouvent des entreprises. Pourtant, la plupart des sites ne sont pas conçus pour être cités par ces moteurs. Nous avons voulu créer un outil sérieux, avec un moteur d'analyse solide, une méthodologie sourcée. et surtout accessible à tous, sans abonnement ni engagement.",
-      "p2": "Detekia n'est pas un outil SEO de plus. C'est un outil conçu spécifiquement pour le GEO (Generative Engine Optimization) : 8 critères mesurés, un score sur 100, des recommandations concrètes avec exemples de code."
+      "p2": "Detekia n'est pas un outil SEO de plus. C'est un outil conçu spécifiquement pour le GEO (Generative Engine Optimization) : 7 critères mesurés, un score sur 100, des recommandations concrètes avec exemples de code."
     },
     "beeleven": {
       "title": "Beeleven. la structure",
@@ -861,7 +958,7 @@
       "items": [
         {
           "title": "Transparence",
-          "desc": "Notre méthodologie est publique. Les 8 critères, les sources académiques, les pondérations : tout est documenté sur notre page méthodologie."
+          "desc": "Notre méthodologie est publique. Les 7 critères, les sources académiques, les pondérations : tout est documenté sur notre page méthodologie."
         },
         {
           "title": "Qualité méthodologique",
@@ -890,7 +987,7 @@
     },
     "cta": {
       "title": "Découvrez notre méthodologie",
-      "subtitle": "8 critères, sources académiques, scoring transparent.",
+      "subtitle": "7 critères, sources académiques, scoring transparent.",
       "button": "Voir la méthodologie →"
     },
     "schema": {
@@ -1075,7 +1172,7 @@
       {
         "title": "Service gratuit. Analyse GEO",
         "paragraphs": [
-          "Detekia propose un service d'analyse GEO gratuit accessible sans inscription et sans création de compte. Ce service comprend un score global sur 100, l'évaluation de 8 critères GEO, et un aperçu d'une recommandation.",
+          "Detekia propose un service d'analyse GEO gratuit accessible sans inscription et sans création de compte. Ce service comprend un score global sur 100, l'évaluation de 7 critères GEO, et un aperçu d'une recommandation.",
           "L'utilisateur saisit l'URL d'un site web qu'il souhaite analyser. Detekia scrape le contenu accessible publiquement de cette URL et l'évalue selon sa méthodologie propriétaire. L'analyse est effectuée en temps réel. Les résultats sont mis en cache pendant 24 heures.",
           "Le service gratuit est fourni \"en l'état\", sans garantie de disponibilité ni d'exactitude des résultats. Detekia se réserve le droit de modifier, suspendre ou interrompre le service gratuit à tout moment."
         ]
@@ -1083,7 +1180,7 @@
       {
         "title": "Service payant. Rapport GEO complet",
         "paragraphs": [
-          "Le rapport GEO complet est vendu au prix de <strong>29 € TTC</strong> (toutes taxes comprises) par analyse. Ce rapport comprend l'ensemble des recommandations détaillées, structurées en sections (diagnostic, actions, exemples concrets, impact estimé), pour chacun des 8 critères GEO.",
+          "Le rapport GEO complet est vendu au prix de <strong>29 € TTC</strong> (toutes taxes comprises) par analyse. Ce rapport comprend l'ensemble des recommandations détaillées, structurées en sections (diagnostic, actions, exemples concrets, impact estimé), pour chacun des 7 critères GEO.",
           "Le rapport est accessible immédiatement après le paiement sur la page de résultats et est envoyé par email à l'adresse associée au paiement Stripe."
         ]
       },
@@ -1336,9 +1433,9 @@
       "newAnalysis": "+ Nouvelle analyse"
     },
     "criteriaInfo": {
-      "Extractibilité & réponse directe": {
+      "Citabilité & réponse directe": {
         "emoji": "🎯",
-        "title": "Extractibilité & réponse directe",
+        "title": "Citabilité & réponse directe",
         "desc": "Les IA cherchent des réponses \"prêtes à citer\" dans votre contenu. Si votre texte répond clairement dès les premières lignes, avec des listes et des tableaux, les IA peuvent l'extraire et le réutiliser facilement.",
         "impact": "Critère n°1. 25 points",
         "color": "#4285F4"
@@ -1357,14 +1454,14 @@
         "impact": "15 points",
         "color": "#10A37F"
       },
-      "Crawlabilité IA": {
+      "Accessibilité IA": {
         "emoji": "🤖",
-        "title": "Crawlabilité IA",
+        "title": "Accessibilité IA",
         "desc": "Les IA comme ChatGPT utilisent des robots (GPTBot, OAI-SearchBot) pour lire votre site. Si votre contenu est caché derrière du JavaScript ou bloqué dans robots.txt, ces robots ne peuvent pas l'indexer.",
         "impact": "15 points",
         "color": "#4285F4"
       },
-      "Données structurées": {
+      "Données structurées (intégré dans Autorité)": {
         "emoji": "🧩",
         "title": "Données structurées (Schema.org)",
         "desc": "Le Schema.org est un langage que les IA lisent en priorité. Il leur dit explicitement ce qu'est votre site, qui l'a écrit, et de quoi il parle.",
@@ -1385,9 +1482,9 @@
         "impact": "5 points",
         "color": "#10A37F"
       },
-      "Fraîcheur & maintenance": {
+      "Fraîcheur & signaux temporels": {
         "emoji": "📅",
-        "title": "Fraîcheur & maintenance",
+        "title": "Fraîcheur & signaux temporels",
         "desc": "Pour les sujets qui évoluent, les IA préfèrent les contenus récents. Une date de mise à jour visible et un copyright récent signalent que votre site est actif.",
         "impact": "5 points",
         "color": "#C9861A"
@@ -1440,7 +1537,7 @@
         },
         {
           "icon": "🧩",
-          "text": "Données structurées",
+          "text": "Données structurées (intégré dans Autorité)",
           "sub": "Analyse des schemas et balises..."
         },
         {
@@ -1468,9 +1565,9 @@
         "color": "#4285F4",
         "colorLight": "rgba(66,133,244,0.08)",
         "criteria": [
-          "Extractibilité & réponse directe",
-          "Crawlabilité IA",
-          "Données structurées"
+          "Citabilité & réponse directe",
+          "Accessibilité IA",
+          "Données structurées (intégré dans Autorité)"
         ]
       },
       {
@@ -1493,7 +1590,7 @@
         "color": "#C9861A",
         "colorLight": "rgba(201,134,26,0.08)",
         "criteria": [
-          "Fraîcheur & maintenance"
+          "Fraîcheur & signaux temporels"
         ]
       }
     ],
@@ -1722,7 +1819,7 @@
           "desc": "Votre site reçoit un score moyen de visibilité IA sur 100, calculé à partir des scores individuels de chaque page. Chaque critère est noté séparément pour identifier précisément les axes d'amélioration."
         },
         {
-          "title": "8 critères GEO sur chaque page",
+          "title": "7 critères GEO sur chaque page",
           "desc": "Données structurées, profondeur du contenu, signaux d'autorité, fraîcheur, citations, SEO technique… Chaque critère est évalué individuellement sur chaque page analysée."
         },
         {
@@ -1774,7 +1871,7 @@
         {
           "num": "02",
           "title": "Analyse approfondie",
-          "desc": "Chaque page est évaluée sur 8 critères GEO. Les patterns transverses sont détectés."
+          "desc": "Chaque page est évaluée sur 7 critères GEO. Les patterns transverses sont détectés."
         },
         {
           "num": "03",
@@ -1785,7 +1882,7 @@
     },
     "methodology": {
       "label": "MÉTHODOLOGIE",
-      "text": "Basé sur l'étude \"Generative Engine Optimization\". Aggarwal et al., Princeton / Georgia Tech, KDD 2024. 8 critères pondérés, scoring déterministe, évaluation IA calibrée."
+      "text": "Basé sur l'étude \"Generative Engine Optimization\". Aggarwal et al., Princeton / Georgia Tech, KDD 2024. 7 critères pondérés, scoring déterministe, évaluation IA calibrée."
     },
     "faq": {
       "label": "QUESTIONS FRÉQUENTES",
@@ -1825,12 +1922,12 @@
   "onepage": {
     "seo": {
       "title": "Audit GEO 1 page. 29 € | Detekia",
-      "description": "Analysez la visibilité IA de votre page en profondeur. Score sur 100, 8 critères, 8 recommandations avec exemples de code. Rapport en 1 minute."
+      "description": "Analysez la visibilité IA de votre page en profondeur. Score sur 100, 7 critères, 8 recommandations avec exemples de code. Rapport en 1 minute."
     },
     "hero": {
       "badge": "AUDIT 1 PAGE",
       "title": "Votre page, analysée par l'IA",
-      "subtitle": "Score sur 100, 8 critères détaillés, recommandations concrètes avec exemples de code. Résultat en 1 minute.",
+      "subtitle": "Score sur 100, 7 critères détaillés, recommandations concrètes avec exemples de code. Résultat en 1 minute.",
       "cta": "Analyser ma page. 29 € →",
       "exampleLink": "Voir un exemple de rapport"
     },
@@ -1862,10 +1959,10 @@
       "features": [
         {
           "title": "Score de visibilité sur 100",
-          "desc": "Votre page reçoit un score global calculé à partir de 8 critères pondérés. Vous voyez immédiatement où vous en êtes. et ce qui reste à faire."
+          "desc": "Votre page reçoit un score global calculé à partir de 7 critères pondérés. Vous voyez immédiatement où vous en êtes. et ce qui reste à faire."
         },
         {
-          "title": "8 critères GEO analysés en profondeur",
+          "title": "7 critères GEO analysés en profondeur",
           "desc": "Données structurées, profondeur du contenu, signaux d'autorité, fraîcheur… Chaque critère est évalué individuellement avec une note et un diagnostic précis."
         },
         {
@@ -1905,7 +2002,7 @@
         {
           "num": "02",
           "title": "L'IA analyse tout",
-          "desc": "8 critères GEO évalués, test de visibilité IA simulé sur 10 requêtes."
+          "desc": "7 critères GEO évalués, test de visibilité IA simulé sur 10 requêtes."
         },
         {
           "num": "03",

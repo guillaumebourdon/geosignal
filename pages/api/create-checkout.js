@@ -13,8 +13,8 @@ export const maxDuration = 30;
 // Product names & descriptions by locale
 const PRODUCT_STRINGS = {
   rapport: {
-    fr: { name: 'Detekia — Audit GEO 1 page', description: 'Audit de visibilité IA sur 1 page — score GEO, 8 critères analysés, recommandations détaillées, rapport HTML + PDF' },
-    en: { name: 'Detekia — Single-page GEO audit', description: 'AI visibility audit on a single page — GEO score, 8 criteria analyzed, detailed recommendations, HTML + PDF report' },
+    fr: { name: 'Detekia — Audit GEO 1 page', description: 'Audit de visibilité IA sur 1 page — score GEO, 7 critères analysés, recommandations détaillées, rapport HTML + PDF' },
+    en: { name: 'Detekia — Single-page GEO audit', description: 'AI visibility audit on a single page — GEO score, 7 criteria analyzed, detailed recommendations, HTML + PDF report' },
   },
   pro: {
     fr: { name: 'Detekia — Audit GEO complet (10 pages clés)', description: 'Audit GEO sur les 10 pages clés de votre site — score global, patterns transverses, plan d\'action priorisé, bilan page par page, rapport HTML + PDF' },

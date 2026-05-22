@@ -18,9 +18,9 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout
 const JOB_PREFIX = 'detekia:pro:v1:job';
 const CONSOLIDATED_TTL = 7 * 24 * 60 * 60;
 const CRITERIA_NAMES = [
-  'Extractibilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
-  'Crawlabilite IA', 'Donnees structurees', 'Neutralite editoriale',
-  'Presence externe', 'Fraicheur & maintenance',
+  'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
+  'Accessibilite IA', 'Neutralite editoriale',
+  'Presence externe', 'Fraicheur & signaux temporels',
 ];
 
 const { callWithRetry } = require('../../lib/anthropicRetry');
