@@ -67,10 +67,23 @@ async function readJobData(siteJobId) {
 // ── Step 2: Compute aggregates ──────────────────────────────────────────────
 
 function computeAggregates(pages) {
+  const { calculateProScore, classifyPage, pageImportanceWeight } = require('../../lib/pageClassifier');
   const validPages = pages.filter(p => !p.error && typeof p.score === 'number');
   const errorPages = pages.filter(p => p.error);
+
+  // Classify pages and compute importance weights if not already done
+  validPages.forEach(p => {
+    if (!p.pageType) {
+      const headings = p.evidence?.headings || [];
+      const wc = p.evidence?.wordCount || 0;
+      p.pageType = classifyPage(p.url, '', headings);
+      p.importanceWeight = pageImportanceWeight(p.url, wc);
+    }
+  });
+
+  // Pro weighted score (replaces simple average)
+  const scoreAverage = calculateProScore(validPages);
   const scores = validPages.map(p => p.score);
-  const scoreAverage = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
   const sorted = [...scores].sort((a, b) => a - b);
   const scoreMedian = sorted.length > 0 ? sorted[Math.floor(sorted.length / 2)] : 0;
   const distribution = { faible: 0, moyen: 0, bon: 0 };

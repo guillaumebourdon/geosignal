@@ -79,10 +79,18 @@ export default async function handler(req, res) {
         return typeof raw === 'string' ? JSON.parse(raw) : raw;
       });
 
+      const { calculateProScore, classifyPage, pageImportanceWeight } = require('../../lib/pageClassifier');
       const validPages = pages.filter(p => !p.error && typeof p.score === 'number');
       const errorPages = pages.filter(p => p.error);
+      // Classify pages if not already done by proPageAnalyzer
+      validPages.forEach(p => {
+        if (!p.pageType) {
+          p.pageType = classifyPage(p.url, '', p.evidence?.headings || []);
+          p.importanceWeight = pageImportanceWeight(p.url, p.evidence?.wordCount || 0);
+        }
+      });
       const scores = validPages.map(p => p.score);
-      const scoreAverage = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+      const scoreAverage = calculateProScore(validPages);
       const sorted = [...scores].sort((a, b) => a - b);
       const scoreMedian = sorted.length > 0 ? sorted[Math.floor(sorted.length / 2)] : 0;
       const distribution = { faible: 0, moyen: 0, bon: 0 };
