@@ -3,7 +3,7 @@ import { verifyQstashSignature, triggerConsolidation } from '../../lib/proQueue'
 import { analyzePage } from '../../lib/proPageAnalyzer';
 
 export const config = {
-  maxDuration: 120,
+  maxDuration: 300,
   api: { bodyParser: false },
 };
 
