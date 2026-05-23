@@ -1,6 +1,9 @@
 import { Redis } from '@upstash/redis';
+import { Resend } from 'resend';
 import { verifyQstashSignature, triggerConsolidation } from '../../lib/proQueue';
 import { analyzePage } from '../../lib/proPageAnalyzer';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const config = {
   maxDuration: 300,
@@ -67,10 +70,31 @@ export default async function handler(req, res) {
       result = await analyzePage(url, { locale: locale || 'fr' });
     }
 
-    // If still failing after retry, return 500 for QStash retry
+    // If still failing after retry, alert and return 500 for QStash retry
     if (result.error) {
       const retryStr = String(result.error);
       const isRetryable = retryStr.includes('429') || retryStr.includes('rate_limit') || retryStr.includes('timeout') || retryStr.includes('ETIMEDOUT');
+
+      // Send alert email
+      try {
+        await resend.emails.send({
+          from: 'Detekia <hello@detekia.fr>',
+          to: 'guillaume@beeleven.fr',
+          subject: `⚠️ Pro audit — page en échec : ${url}`,
+          html: `<div style="font-family:system-ui;padding:24px;">
+            <h2 style="color:#D97757;">Page en échec après retry</h2>
+            <p><strong>Site job :</strong> ${siteJobId}</p>
+            <p><strong>Page :</strong> ${url}</p>
+            <p><strong>Erreur :</strong> ${retryStr.substring(0, 300)}</p>
+            <p><strong>Retryable :</strong> ${isRetryable ? 'Oui (QStash va retenter)' : 'Non (erreur définitive)'}</p>
+            <p><strong>Index :</strong> ${index}/${total}</p>
+            <p style="color:#6B6762;font-size:13px;margin-top:20px;">Ce message est envoyé automatiquement quand une page échoue dans un audit Pro payé.</p>
+          </div>`,
+        });
+      } catch (emailErr) {
+        console.error('[pro-worker] Alert email failed:', emailErr.message);
+      }
+
       if (isRetryable) {
         console.warn(`[pro-worker] Still failing after retry for ${url}: ${retryStr.substring(0, 100)}. Returning 500 for QStash retry.`);
         return res.status(500).json({ error: 'retryable', url, detail: retryStr.substring(0, 200) });
