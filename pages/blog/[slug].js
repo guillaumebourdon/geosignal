@@ -73,6 +73,10 @@ const CONTENT_MAP = {
   'linkedin-geo-profil-visibilite-ia': require('../../content/articles/linkedin-geo-profil-visibilite-ia').default,
   'pourquoi-ia-adorent-chiffres-contenu-factuel': require('../../content/articles/pourquoi-ia-adorent-chiffres-contenu-factuel').default,
   'mesurer-visibilite-ia-outils-methodes-2026': require('../../content/articles/mesurer-visibilite-ia-outils-methodes-2026').default,
+  'zero-clic-reponses-ia-sans-trafic': require('../../content/articles/zero-clic-reponses-ia-sans-trafic').default,
+  'contenu-ia-genere-vs-humain': require('../../content/articles/contenu-ia-genere-vs-humain').default,
+  'maillage-interne-ia-structure': require('../../content/articles/maillage-interne-ia-structure').default,
+  'avocat-medecin-ia-ymyl': require('../../content/articles/avocat-medecin-ia-ymyl').default,
 };
 
 const CATEGORY_COLORS = {
