@@ -47,9 +47,9 @@ export default function SeoVsGeoDifferences2026() {
 
       <p>Le <strong>GEO (Generative Engine Optimization)</strong> optimise votre contenu pour être cité, repris et recommandé dans les réponses synthétiques générées par les IA : ChatGPT, Gemini, Perplexity, Claude, Google AI Overviews.</p>
 
-      <p>Les leviers principaux du GEO : extractibilité du contenu, données structurées, crawlabilité par les bots IA, vérifiabilité des informations, neutralité éditoriale, présence sur des sources tierces. Ces leviers sont détaillés dans les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 critères de la méthodologie Detekia</InternalLink>.</p>
+      <p>Les leviers principaux du GEO : citabilité du contenu, données structurées, accessibilité IA par les bots IA, vérifiabilité des informations, neutralité éditoriale, présence sur des sources tierces. Ces leviers sont détaillés dans les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères de la méthodologie Detekia</InternalLink>.</p>
 
-      <ArrowLink href="/blog/geo-guide-complet-2026">Pour une définition complète du GEO et ses 8 critères, consultez notre guide complet GEO 2026.</ArrowLink>
+      <ArrowLink href="/blog/geo-guide-complet-2026">Pour une définition complète du GEO et ses 7 critères, consultez notre guide complet GEO 2026.</ArrowLink>
 
       <h2>Ce qui change fondamentalement</h2>
 
@@ -103,7 +103,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <p>Voici les critères spécifiques au GEO que le SEO classique ne couvre pas — ou pas suffisamment.</p>
 
-      <h3>L'extractibilité</h3>
+      <h3>L'citabilité</h3>
 
       <p>Le SEO vous demande d'écrire un bon contenu. Le GEO vous demande d'écrire un contenu dont chaque paragraphe peut être extrait et cité indépendamment.</p>
 
@@ -118,13 +118,13 @@ export default function SeoVsGeoDifferences2026() {
 
       <p>Un bon contenu SEO peut être narratif et progressif. Un bon contenu GEO doit être <strong>modulaire et directement citable</strong>.</p>
 
-      <h3>La crawlabilité IA spécifique</h3>
+      <h3>L'accessibilité IA spécifique</h3>
 
       <p>Le SEO s'assure que Googlebot accède à votre site. Le GEO doit s'assurer que GPTBot, ClaudeBot, PerplexityBot et Google-Extended y accèdent aussi.</p>
 
       <p>Ces bots ont des user-agents différents et sont parfois bloqués par défaut dans les configurations <code>robots.txt</code>. Le fichier <code>llms.txt</code> est un standard émergent spécifiquement conçu pour guider les crawlers IA.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Configuration détaillée dans llms.txt, robots.txt et crawlabilité IA.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Configuration détaillée dans llms.txt, robots.txt et accessibilité IA.</ArrowLink>
 
       <h3>Les données structurées orientées IA</h3>
 
@@ -245,7 +245,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <h3>Erreur 3 : "Le GEO, c'est juste ajouter des FAQ et du Schema.org"</h3>
 
-      <p>C'est une partie, mais pas l'ensemble. Le GEO couvre aussi l'extractibilité du contenu, la neutralité éditoriale, la vérifiabilité, la présence externe et la fraîcheur. Réduire le GEO à des optimisations techniques revient à réduire le SEO aux balises meta.</p>
+      <p>C'est une partie, mais pas l'ensemble. Le GEO couvre aussi l'citabilité du contenu, la neutralité éditoriale, la vérifiabilité, la présence externe et la fraîcheur. Réduire le GEO à des optimisations techniques revient à réduire le SEO aux balises meta.</p>
 
       <h3>Erreur 4 : "Il faut optimiser différemment pour chaque IA"</h3>
 
@@ -256,8 +256,8 @@ export default function SeoVsGeoDifferences2026() {
       <p>Vous avez un site bien référencé et vous voulez ajouter la couche GEO ? Voici les 5 actions les plus impactantes, classées par facilité d'implémentation :</p>
 
       <ol>
-        <li><strong>Vérifier la crawlabilité IA (15 min).</strong> Ouvrez votre <code>robots.txt</code>. Assurez-vous que GPTBot, ClaudeBot et PerplexityBot ne sont pas bloqués. Créez un fichier <code>llms.txt</code> basique.</li>
-        <li><strong>Auditer l'extractibilité de vos pages clés (1h).</strong> Prenez vos 5 pages les plus visitées. Pour chacune : le premier paragraphe contient-il une réponse directe ? Les sous-titres sont-ils des questions naturelles ? Les paragraphes sont-ils autonomes ?</li>
+        <li><strong>Vérifier l'accessibilité IA (15 min).</strong> Ouvrez votre <code>robots.txt</code>. Assurez-vous que GPTBot, ClaudeBot et PerplexityBot ne sont pas bloqués. Créez un fichier <code>llms.txt</code> basique.</li>
+        <li><strong>Auditer l'citabilité de vos pages clés (1h).</strong> Prenez vos 5 pages les plus visitées. Pour chacune : le premier paragraphe contient-il une réponse directe ? Les sous-titres sont-ils des questions naturelles ? Les paragraphes sont-ils autonomes ?</li>
         <li><strong>Enrichir les données structurées (2h).</strong> Ajoutez <code>Organization</code> sur la homepage, <code>Article</code> sur vos contenus éditoriaux, <code>FAQPage</code> sur vos pages FAQ. Testez avec le Rich Results Test de Google.</li>
         <li><strong>Sourcer vos affirmations (2h).</strong> Parcourez vos pages clés. Chaque affirmation importante doit être accompagnée d'un chiffre, d'une source ou d'un exemple. Remplacez le vague par le précis.</li>
         <li><strong>Mesurer votre score GEO (5 min).</strong> Lancez un audit sur Detekia pour avoir une baseline. Refaites-le après vos optimisations pour mesurer la progression.</li>
@@ -275,7 +275,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <h3>Mon agence SEO peut-elle faire du GEO ?</h3>
 
-      <p>Si votre agence comprend les principes d'extractibilité, de données structurées avancées et de crawlabilité IA, oui. Sinon, le GEO nécessite des compétences spécifiques qui vont au-delà du SEO traditionnel. Posez-leur la question : "Savez-vous ce qu'est un fichier <code>llms.txt</code> ?"</p>
+      <p>Si votre agence comprend les principes d'citabilité, de données structurées avancées et d'accessibilité IA, oui. Sinon, le GEO nécessite des compétences spécifiques qui vont au-delà du SEO traditionnel. Posez-leur la question : "Savez-vous ce qu'est un fichier <code>llms.txt</code> ?"</p>
 
       <ArrowLink href="/blog/geo-agences-seo-audit-ia">Pour les agences souhaitant intégrer le GEO, consultez GEO pour les agences : intégrer l'audit IA dans vos prestations SEO.</ArrowLink>
 
@@ -287,7 +287,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <p>Le premier pas est de savoir où vous en êtes. Votre SEO est peut-être solide, mais votre GEO pourrait avoir des lacunes critiques — ou l'inverse.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères GEO, recommandations concrètes. En moins de 60 secondes, sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 7 critères GEO, recommandations concrètes. En moins de 60 secondes, sans inscription.</p>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

@@ -68,9 +68,9 @@ export default function LlmsTxtRobotsCrawlabiliteIa() {
     <>
       <p>Avant de se demander si les IA comprennent votre contenu, il y a une question plus fondamentale : est-ce qu'elles peuvent y accéder ? Un nombre surprenant de <InternalLink href="/blog/sites-bloquent-bots-ia">sites bien optimisés pour Google bloquent involontairement les robots des IA</InternalLink> dans leur fichier robots.txt. D'autres laissent les bots accéder au site mais leur servent du JavaScript non rendu, illisible pour les crawlers.</p>
 
-      <p>Ce guide technique couvre tout ce qu'il faut savoir sur la crawlabilité IA : les user-agents à connaître, la configuration robots.txt correcte, le nouveau standard llms.txt, et les vérifications à faire pour s'assurer que votre site est réellement indexable par les LLM.</p>
+      <p>Ce guide technique couvre tout ce qu'il faut savoir sur l'accessibilité IA : les user-agents à connaître, la configuration robots.txt correcte, le nouveau standard llms.txt, et les vérifications à faire pour s'assurer que votre site est réellement indexable par les LLM.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">La crawlabilité IA est l'un des 8 critères du score GEO — voir la méthodologie complète →</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">L'accessibilité IA est l'un des 7 critères du score GEO — voir la méthodologie complète →</ArrowLink>
 
       <h2>Les robots des IA : qui sont-ils ?</h2>
 
@@ -178,7 +178,7 @@ Disallow: /`}</code></pre>
 ## Contenu principal
 
 - [Guide GEO complet](https://votresite.fr/blog/geo-guide-complet): Le guide de référence pour optimiser sa visibilité IA en 2026
-- [Audit GEO gratuit](https://votresite.fr/): Outil d'analyse automatique du score GEO, 8 critères mesurés
+- [Audit GEO gratuit](https://votresite.fr/): Outil d'analyse automatique du score GEO, 7 critères mesurés
 - [Méthodologie](https://votresite.fr/methodologie): Explication détaillée de chaque critère du score GEO
 
 ## À propos
@@ -215,7 +215,7 @@ Disallow: /`}</code></pre>
 
       <p>La recommandation pragmatique : créer un llms.txt maintenant. Le coût est minimal (20 minutes), le bénéfice potentiel est réel à mesure que l'adoption progresse, et ça ne nuit pas à votre SEO.</p>
 
-      <h2>Les autres obstacles à la crawlabilité IA</h2>
+      <h2>Les autres obstacles à l'accessibilité IA</h2>
 
       <h3>Le JavaScript côté client</h3>
 
@@ -245,7 +245,7 @@ Disallow: /`}</code></pre>
 
       <p>Si vos pages importantes font l'objet de redirections en chaîne ou de canonicals qui pointent vers une autre URL, les bots peuvent ne pas suivre jusqu'au contenu final. Simplifiez les structures d'URL et limitez les redirections à une seule étape.</p>
 
-      <h2>Checklist de crawlabilité IA</h2>
+      <h2>Checklist d'accessibilité IA</h2>
 
       <ul>
         <li>✓ robots.txt testé — GPTBot, ClaudeBot, PerplexityBot et Google-Extended autorisés</li>
@@ -258,7 +258,7 @@ Disallow: /`}</code></pre>
         <li>✓ Temps de réponse inférieur à 3 secondes</li>
       </ul>
 
-      <ArrowLink href="/">Vérifiez la crawlabilité IA de votre site avec l'audit GEO →</ArrowLink>
+      <ArrowLink href="/">Vérifiez l'accessibilité IA de votre site avec l'audit GEO →</ArrowLink>
 
       <h2>Questions fréquentes</h2>
 

@@ -148,7 +148,7 @@ export default function ZeroClicReponsesIaSansTrafic() {
 
       <p>L'objectif n'est plus d'être "bien positionné" sur Google. C'est d'être <strong>la source que l'IA choisit de nommer explicitement</strong> dans sa réponse.</p>
 
-      <InlineCTA href="/">Découvrez votre score de citabilité IA sur 8 critères</InlineCTA>
+      <InlineCTA href="/">Découvrez votre score de citabilité IA sur 7 critères</InlineCTA>
 
       <h3>2. Miser sur les données propriétaires</h3>
 

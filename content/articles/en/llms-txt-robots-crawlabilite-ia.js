@@ -47,9 +47,9 @@ export default function LlmsTxtRobotsCrawlabiliteIa() {
     <>
       <p>Before asking whether AI engines understand your content, there's a more fundamental question: can they even access it? A surprising number of well-optimized sites inadvertently block AI bots in their robots.txt file. Others let bots in but serve them unrendered JavaScript — gibberish to crawlers.</p>
 
-      <p>This technical guide covers everything you need to know about AI crawlability: the user-agents to know, the correct robots.txt configuration, the new llms.txt standard, and the checks to run to make sure your site is actually indexable by LLMs.</p>
+      <p>This technical guide covers everything you need to know about AI Accessibility: the user-agents to know, the correct robots.txt configuration, the new llms.txt standard, and the checks to run to make sure your site is actually indexable by LLMs.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">AI Crawlability is one of the 8 GEO score criteria — see the full methodology →</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">AI Accessibility is one of the 8 GEO score criteria — see the full methodology →</ArrowLink>
 
       <h2>AI bots: who are they?</h2>
 
@@ -155,7 +155,7 @@ Disallow: /`}</code></pre>
 ## Main Content
 
 - [Complete GEO Guide](https://your-website.com/blog/geo-guide-complete): The definitive guide to optimizing AI visibility in 2026
-- [Free GEO Audit](https://your-website.com/): Automated GEO score analysis tool, 8 criteria measured
+- [Free GEO Audit](https://your-website.com/): Automated GEO score analysis tool, 7 criteria measured
 - [Methodology](https://your-website.com/methodology): Detailed explanation of each GEO score criterion
 
 ## About
@@ -222,7 +222,7 @@ Disallow: /`}</code></pre>
 
       <p>If your important pages have redirect chains or canonical tags pointing to a different URL, bots may not follow through to the final content. Simplify your URL structure and limit redirects to a single hop.</p>
 
-      <h2>AI crawlability checklist</h2>
+      <h2>AI Accessibility checklist</h2>
 
       <ul>
         <li>✓ robots.txt tested — GPTBot, ClaudeBot, PerplexityBot, and Google-Extended allowed</li>
@@ -235,7 +235,7 @@ Disallow: /`}</code></pre>
         <li>✓ Response time under 3 seconds</li>
       </ul>
 
-      <ArrowLink href="/">Check your site's AI crawlability with the GEO audit →</ArrowLink>
+      <ArrowLink href="/">Check your site's AI Accessibility with the GEO audit →</ArrowLink>
 
       <h2>Frequently asked questions</h2>
 

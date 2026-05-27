@@ -84,7 +84,7 @@ export default function VisibiliteIaGuideDebutant() {
         Visez 5 à 10 liens externes par page principale vers des sources reconnues : études universitaires, rapports d'analystes, articles de presse.
       </p>
 
-      <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">Comment fonctionne le score GEO Detekia : les 8 critères décryptés</ArrowLink>
+      <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">Comment fonctionne le score GEO Detekia : les 7 critères décryptés</ArrowLink>
 
       <h3>3. Une identité claire (E-E-A-T)</h3>
       <p>
@@ -177,7 +177,7 @@ export default function VisibiliteIaGuideDebutant() {
         <strong>1. Le test manuel :</strong> Posez régulièrement à ChatGPT, Gemini et Perplexity les requêtes stratégiques de votre secteur. Notez si votre site est cité, et suivez l'évolution mois après mois.
       </p>
       <p>
-        <strong>2. Le score Detekia :</strong> Analysez votre site avec Detekia pour obtenir un score objectif sur 100, basé sur 8 critères mesurables. Refaites l'analyse après chaque série d'optimisations pour suivre vos progrès.
+        <strong>2. Le score Detekia :</strong> Analysez votre site avec Detekia pour obtenir un score objectif sur 100, basé sur 7 critères mesurables. Refaites l'analyse après chaque série d'optimisations pour suivre vos progrès.
       </p>
       <p>
         <strong>3. Le trafic référé :</strong> Dans Google Analytics, surveillez le trafic provenant de sources IA (chatgpt.com, perplexity.ai, etc.). C'est encore faible pour la plupart des sites, mais c'est un indicateur en forte croissance.

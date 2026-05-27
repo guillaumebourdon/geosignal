@@ -65,7 +65,7 @@ export default function ConcurrentsChattgptVisibilite() {
 
       <p>Look for significant gaps:</p>
       <ul>
-        <li>Their extractability is at 20/25 and yours is at 8/25? That is probably the deciding factor.</li>
+        <li>Their citability is at 20/25 and yours is at 8/25? That is probably the deciding factor.</li>
         <li>Their structured data score is at 9/10 and yours is at 0/10? You have an obvious quick win.</li>
         <li>Their neutrality is at 9/10 and yours is at 3/10? Your tone is too commercial.</li>
       </ul>
@@ -107,7 +107,7 @@ export default function ConcurrentsChattgptVisibilite() {
       <p><strong>Day 5: Baseline audit</strong><br />
       Run a Detekia audit on your site and on your competitor's. Document the scores. This is your baseline for measuring progress.</p>
 
-      <h3>Week 2 — Extractability (impact: 4-8 weeks)</h3>
+      <h3>Week 2 — Citability (impact: 4-8 weeks)</h3>
 
       <p><strong>Days 6-8: Rewrite introductions</strong><br />
       Take your 10 most important pages. For each one, rewrite the first 100 words so they contain a direct answer to the page's implicit question.</p>
@@ -148,7 +148,7 @@ export default function ConcurrentsChattgptVisibilite() {
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO: what are the differences in 2026 →</ArrowLink>
 
-      <p><strong>Trap 3 — Trying to do everything at once.</strong> The 30-day plan is sequenced for a reason: technical fixes (week 1) take effect in 2-4 weeks, extractability (week 2) in 4-8 weeks, credibility and external presence (weeks 3-4) in 8-12 weeks. Follow this sequence to see measurable progress at each stage.</p>
+      <p><strong>Trap 3 — Trying to do everything at once.</strong> The 30-day plan is sequenced for a reason: technical fixes (week 1) take effect in 2-4 weeks, citability (week 2) in 4-8 weeks, credibility and external presence (weeks 3-4) in 8-12 weeks. Follow this sequence to see measurable progress at each stage.</p>
 
       <p><strong>Trap 4 — Measuring too early.</strong> Do not redo the citation test after 3 days expecting changes. Technical fixes take 2-4 weeks to be picked up by AI crawlers. Content improvements take 4-8 weeks. Measure at day 30, not before.</p>
 

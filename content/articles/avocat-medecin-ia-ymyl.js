@@ -121,7 +121,7 @@ export default function AvocatMedecinIaYmyl() {
       <ul>
         <li><strong>Identification de l'auteur.</strong> Le LLM cherche un auteur nommé avec des credentials vérifiables. "Dr. Martin Dupont, cardiologue, CHU de Lyon" est un signal fort. "L'équipe" ou l'absence d'auteur est un signal faible.</li>
         <li><strong>Cohérence avec le consensus.</strong> Le LLM vérifie si l'information est cohérente avec ce qu'il connait du consensus médical, juridique ou financier. Un contenu qui contredit le consensus sans justification sera écarté.</li>
-        <li><strong>Structure et extractibilité.</strong> Les contenus avec des schemas JSON-LD (Person, MedicalEntity, LegalService), des FAQ structurées et des paragraphes courts sont plus faciles à extraire et à citer.</li>
+        <li><strong>Structure et citabilité.</strong> Les contenus avec des schemas JSON-LD (Person, MedicalEntity, LegalService), des FAQ structurées et des paragraphes courts sont plus faciles à extraire et à citer.</li>
       </ul>
 
       <h3>Étape 3 : la formulation avec disclaimers</h3>
@@ -284,12 +284,12 @@ export default function AvocatMedecinIaYmyl() {
 
       <p>Les cabinets d'avocats, les praticiens de santé et les experts-comptables n'ont pas le temps de devenir des spécialistes du GEO. C'est précisément le role de Detekia.</p>
 
-      <p>Notre <InternalLink href="/">audit GEO gratuit</InternalLink> analyse votre site sur les 8 critères de citabilité IA et identifie les lacunes spécifiques aux sites YMYL :</p>
+      <p>Notre <InternalLink href="/">audit GEO gratuit</InternalLink> analyse votre site sur les 7 critères de citabilité IA et identifie les lacunes spécifiques aux sites YMYL :</p>
 
       <ul>
         <li><strong>Détection des schemas manquants :</strong> Person, Physician, LegalService, FAQPage</li>
         <li><strong>Analyse de la page auteur :</strong> credentials visibles, diplomes, affiliations ordinales</li>
-        <li><strong>Vérification de la crawlabilité IA :</strong> GPTBot, ClaudeBot, PerplexityBot ont-ils accès à vos contenus ?</li>
+        <li><strong>Vérification de l'accessibilité IA :</strong> GPTBot, ClaudeBot, PerplexityBot ont-ils accès à vos contenus ?</li>
         <li><strong>Évaluation de la fraicheur :</strong> dates de publication et modification, signaux d'actualisation</li>
         <li><strong>Score de citabilité par thématique :</strong> sur quelles requêtes votre site a-t-il une chance d'etre cité ?</li>
       </ul>

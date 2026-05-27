@@ -109,9 +109,9 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <h3>Action 1 — Diagnostiquer votre visibilité IA</h3>
 
-      <p>Avant d'agir, mesurez. Analysez votre site sur les 8 critères qui déterminent si une IA vous cite : extractibilité du contenu, vérifiabilité des données, autorité, crawlabilité par les bots IA, données structurées, neutralité éditoriale, présence externe, et fraîcheur.</p>
+      <p>Avant d'agir, mesurez. Analysez votre site sur les 7 critères qui déterminent si une IA vous cite : citabilité du contenu, vérifiabilité des données, autorité, accessibilité IA par les bots IA, données structurées, neutralité éditoriale, présence externe, et fraîcheur.</p>
 
-      <p>Detekia analyse automatiquement ces 8 critères et vous donne un score sur 100 en moins de 60 secondes. C'est gratuit et sans inscription.</p>
+      <p>Detekia analyse automatiquement ces 7 critères et vous donne un score sur 100 en moins de 60 secondes. C'est gratuit et sans inscription.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">Score GEO : comment mesurer la visibilité IA de votre site</ArrowLink>
 
@@ -121,7 +121,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Créez également un fichier <code>llms.txt</code> à la racine de votre site. C'est l'équivalent du <code>robots.txt</code> pour les IA : il leur indique quelles pages sont les plus importantes et comment interpréter votre contenu.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Guide complet : llms.txt, robots.txt et crawlabilité IA</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Guide complet : llms.txt, robots.txt et accessibilité IA</ArrowLink>
 
       <h3>Action 3 — Restructurer vos contenus pour l'extraction</h3>
 
@@ -168,7 +168,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Les sites qui s'adaptent maintenant en optimisant leur contenu pour être cité par les IA (et pas seulement pour être classé par Google) prendront une avance décisive. Ceux qui attendent verront leur trafic continuer à baisser, mois après mois.</p>
 
-      <p>Le premier pas est simple : mesurez où vous en êtes. Analysez votre site gratuitement sur Detekia — score GEO sur 100, 8 critères analysés, recommandations concrètes, en moins de 60 secondes.</p>
+      <p>Le premier pas est simple : mesurez où vous en êtes. Analysez votre site gratuitement sur Detekia — score GEO sur 100, 7 critères analysés, recommandations concrètes, en moins de 60 secondes.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <InlineCTA href="/">Votre trafic baisse ? Découvrez si les IA en sont la cause.</InlineCTA>

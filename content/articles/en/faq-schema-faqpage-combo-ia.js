@@ -23,7 +23,7 @@ function InlineCTA({ href, children }) {
 export default function FaqSchemaFaqpageComboAi() {
   return (
     <>
-      <p>Across the websites we analyze, two criteria consistently show up as the easiest to improve: content extractability (25 out of 100 points) and structured data (10 points). Combined, they account for 35% of the GEO score. And the fastest way to boost both is often the same: a well-crafted FAQ page paired with FAQPage Schema markup.</p>
+      <p>Across the websites we analyze, two criteria consistently show up as the easiest to improve: content citability (25 out of 100 points) and structured data (10 points). Combined, they account for 35% of the GEO score. And the fastest way to boost both is often the same: a well-crafted FAQ page paired with FAQPage Schema markup.</p>
 
       <p>The problem: most website FAQs are graveyards of corporate questions nobody actually asks. "Why choose us?" is not something people type into ChatGPT. And a poorly implemented FAQPage Schema with 8-word answers or invisible content adds zero value.</p>
 
@@ -38,7 +38,7 @@ export default function FaqSchemaFaqpageComboAi() {
       <p>In terms of the Detekia GEO score, the combo directly impacts two criteria:</p>
 
       <ul>
-        <li><strong>Extractability and direct answer (25 points)</strong>: the FAQ provides standalone, structured passages with clear subject-verb-object sentences. This is the ideal format for AI citation.</li>
+        <li><strong>Citability and direct answer (25 points)</strong>: the FAQ provides standalone, structured passages with clear subject-verb-object sentences. This is the ideal format for AI citation.</li>
         <li><strong>Structured data (10 points)</strong>: FAQPage Schema explicitly tells the AI "this is a question and here is its answer." No more guessing the structure.</li>
       </ul>
 
@@ -217,7 +217,7 @@ export default function FaqSchemaFaqpageComboAi() {
 
       <p>The pattern is the same in all three cases: replace vague, promotional phrasing with concrete facts, numbers and specific details. AI engines cite information, not slogans.</p>
 
-      <InlineCTA href="/">Measure the impact of your FAQ on your GEO score — extractability and structured data analyzed in under 60 seconds.</InlineCTA>
+      <InlineCTA href="/">Measure the impact of your FAQ on your GEO score — citability and structured data analyzed in under 60 seconds.</InlineCTA>
 
       <h2>Implementation checklist in 7 steps</h2>
 
@@ -227,7 +227,7 @@ export default function FaqSchemaFaqpageComboAi() {
         <li><strong>Create or improve your visible FAQ page</strong>. Content must be clearly displayed for humans, not hidden in a JavaScript accordion that crawlers cannot access.</li>
         <li><strong>Add FAQPage Schema</strong> as JSON-LD in the page head. Verify that the Schema text matches the visible content word for word.</li>
         <li><strong>Test via Rich Results Test</strong> (search.google.com/test/rich-results). Fix any markup errors. Verify all questions are detected.</li>
-        <li><strong>Run a Detekia audit</strong> to measure the impact on extractability (25 points) and structured data (10 points). Compare your score before and after.</li>
+        <li><strong>Run a Detekia audit</strong> to measure the impact on citability (25 points) and structured data (10 points). Compare your score before and after.</li>
         <li><strong>Update quarterly</strong>. Your users' questions evolve. Prices, timelines and numbers change too. An outdated FAQ loses credibility with AI engines.</li>
       </ol>
 
@@ -255,7 +255,7 @@ export default function FaqSchemaFaqpageComboAi() {
 
       <h2>Key takeaways</h2>
 
-      <p>The FAQ + FAQPage Schema combo is the most accessible and fastest GEO lever to implement. It directly impacts 35 out of 100 points on the Detekia score (extractability + structured data). But the key is not technical — it is editorial. Real questions, factual standalone answers, and clean markup. The Schema is the container; the quality of your answers is the content.</p>
+      <p>The FAQ + FAQPage Schema combo is the most accessible and fastest GEO lever to implement. It directly impacts 35 out of 100 points on the Detekia score (citability + structured data). But the key is not technical — it is editorial. Real questions, factual standalone answers, and clean markup. The Schema is the container; the quality of your answers is the content.</p>
 
       <p>Start with your 5 most common questions. Rewrite them following the criteria in this article. Add the Schema. Measure the impact. You will see the difference within days.</p>
     </>

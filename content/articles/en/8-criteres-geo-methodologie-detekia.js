@@ -31,21 +31,21 @@ export default function HuitCriteresGeoMethodologieDetekia() {
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">How to interpret your overall GEO score →</ArrowLink>
 
-      <h2>Overview of the 8 criteria</h2>
+      <h2>Overview of the 7 criteria</h2>
 
-      <p>The 8 criteria are organized into three layers:</p>
+      <p>The 7 criteria are organized into three layers:</p>
 
       <ul>
-        <li><strong>Technical layer</strong> (what AI can read): Extractability, AI Crawlability</li>
+        <li><strong>Technical layer</strong> (what AI can read): Citability, AI Accessibility</li>
         <li><strong>Semantic layer</strong> (what AI understands): Structured Data, Freshness</li>
         <li><strong>Trust layer</strong> (what AI values): Verifiability, E-E-A-T Authority, Editorial Neutrality, External Presence</li>
       </ul>
 
       <p>Each criterion is scored from 0 to 100. The overall score is a weighted average. The weights reflect the empirical impact of each criterion on the probability of being cited.</p>
 
-      <h2>The 8 criteria in detail</h2>
+      <h2>The 7 criteria in detail</h2>
 
-      <CritereCard numero={1} nom="Extractability" poids="Weight: 20%" couleur="#10A37F">
+      <CritereCard numero={1} nom="Citability" poids="Weight: 20%" couleur="#10A37F">
         <p><strong>What it is:</strong> The ability of AI engines to easily extract factual information from your content.</p>
         <p><strong>How it's measured:</strong> Analysis of content structure — presence of clear headings (H1, H2, H3), bullet lists, numerical data, and explicit definitions. We measure information density and organizational clarity.</p>
         <p><strong>Why it matters:</strong> LLMs work by pattern extraction. Dense, poorly structured text will be paraphrased loosely or ignored entirely. Content with clearly presented facts will be cited verbatim.</p>
@@ -84,7 +84,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={4} nom="AI Crawlability" poids="Weight: 15%" couleur="#1C7DC4">
+      <CritereCard numero={4} nom="AI Accessibility" poids="Weight: 15%" couleur="#1C7DC4">
         <p><strong>What it is:</strong> The ability of AI bots to access and read your site.</p>
         <p><strong>How it's measured:</strong> Analysis of robots.txt for AI user-agents (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended), presence of an llms.txt file, page load speed, accessibility of key pages.</p>
         <p><strong>Why it matters:</strong> A site that blocks AI bots in its robots.txt will simply be ignored. A slow site or one with JavaScript-only content will be partially read. This is an absolute prerequisite.</p>
@@ -155,13 +155,13 @@ export default function HuitCriteresGeoMethodologieDetekia() {
 
       <h2>How the criteria add up</h2>
 
-      <p>The overall score is a weighted average. But there's an important subtlety: the technical criteria (Extractability, Crawlability) act as <strong>prerequisites</strong>. A site blocking AI bots in its robots.txt will get a Crawlability score of 0, which mechanically caps its overall score — no matter how good the content is.</p>
+      <p>The overall score is a weighted average. But there's an important subtlety: the technical criteria (Citability, Crawlability) act as <strong>prerequisites</strong>. A site blocking AI bots in its robots.txt will get a Crawlability score of 0, which mechanically caps its overall score — no matter how good the content is.</p>
 
       <p>Recommended optimization order:</p>
 
       <ol>
         <li><strong>Unblock AI bots</strong> (Crawlability) — absolute prerequisite</li>
-        <li><strong>Structure your content</strong> (Extractability) — highest immediate impact</li>
+        <li><strong>Structure your content</strong> (Citability) — highest immediate impact</li>
         <li><strong>Add priority schemas</strong> (Structured Data) — technical quick win</li>
         <li><strong>Strengthen authority</strong> (E-E-A-T) — medium-term investment</li>
         <li><strong>Source your claims</strong> (Verifiability) — continuous improvement</li>

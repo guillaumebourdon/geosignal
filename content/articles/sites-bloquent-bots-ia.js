@@ -77,7 +77,7 @@ export default function SitesBloquentBotsIA() {
 
       <h3>Étape 3 : Faites un audit automatisé</h3>
 
-      <p>Detekia vérifie automatiquement la crawlabilité de votre site par les bots IA. Le critère "Crawlabilité IA" de notre score GEO détecte les blocages <code>robots.txt</code>, l'absence de fichier <code>llms.txt</code>, les problèmes d'indexation et la présence ou non des bots IA dans votre configuration.</p>
+      <p>Detekia vérifie automatiquement l'accessibilité IA de votre site par les bots IA. Le critère "Accessibilité IA" de notre score GEO détecte les blocages <code>robots.txt</code>, l'absence de fichier <code>llms.txt</code>, les problèmes d'indexation et la présence ou non des bots IA dans votre configuration.</p>
 
       <InlineCTA href="/">Vérifiez si les bots IA peuvent accéder à votre site — gratuit, moins de 60 secondes.</InlineCTA>
 
@@ -161,7 +161,7 @@ vos services, votre proposition de valeur.`}</code></pre>
 
       <p>Ce fichier aide les IA à comprendre la structure de votre site et à identifier les pages les plus importantes. C'est l'équivalent du plan de site pour les moteurs IA.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Guide complet : llms.txt, robots.txt et crawlabilité IA</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Guide complet : llms.txt, robots.txt et accessibilité IA</ArrowLink>
 
       <h3>3. Vérifier les plugins et règles de sécurité</h3>
 
@@ -205,13 +205,13 @@ vos services, votre proposition de valeur.`}</code></pre>
 
       <p>Le blocage total ne protège plus votre contenu — les IA peuvent trouver vos informations via d'autres sources (caches, agrégateurs, mentions tierces). En revanche, il vous garantit de ne jamais être cité comme source, ce qui est la pire situation.</p>
 
-      <h2>Vérifiez votre crawlabilité maintenant</h2>
+      <h2>Vérifiez votre accessibilité IA maintenant</h2>
 
-      <p>La crawlabilité IA est l'un des 8 critères du score GEO Detekia. C'est aussi le critère le plus simple à corriger : une modification de 2 lignes dans votre <code>robots.txt</code> peut suffire à débloquer votre visibilité IA.</p>
+      <p>L'accessibilité IA est l'un des 7 critères du score GEO Detekia. C'est aussi le critère le plus simple à corriger : une modification de 2 lignes dans votre <code>robots.txt</code> peut suffire à débloquer votre visibilité IA.</p>
 
       <p>Detekia analyse automatiquement votre fichier <code>robots.txt</code>, détecte la présence ou l'absence d'un <code>llms.txt</code>, et vérifie si votre contenu est accessible aux crawlers IA. Le diagnostic est gratuit et prend moins de 60 secondes.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 8 critères GEO qui déterminent si une IA vous cite — méthodologie Detekia</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 7 critères GEO qui déterminent si une IA vous cite — méthodologie Detekia</ArrowLink>
 
       <h2>Questions fréquentes</h2>
 
@@ -225,7 +225,7 @@ vos services, votre proposition de valeur.`}</code></pre>
 
       <h3>Combien de temps avant que les IA commencent à me citer ?</h3>
 
-      <p>Après avoir débloqué l'accès, les bots IA recrawlent votre site en quelques jours à quelques semaines. Les premiers résultats en termes de citations apparaissent généralement en 4 à 8 semaines, selon la qualité de votre contenu et la compétitivité de votre secteur. La crawlabilité est une condition nécessaire, pas suffisante — il faut aussi que votre contenu soit extractible, sourcé et structuré.</p>
+      <p>Après avoir débloqué l'accès, les bots IA recrawlent votre site en quelques jours à quelques semaines. Les premiers résultats en termes de citations apparaissent généralement en 4 à 8 semaines, selon la qualité de votre contenu et la compétitivité de votre secteur. L'accessibilité IA est une condition nécessaire, pas suffisante — il faut aussi que votre contenu soit extractible, sourcé et structuré.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
 

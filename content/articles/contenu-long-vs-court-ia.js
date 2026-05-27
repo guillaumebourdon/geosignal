@@ -78,7 +78,7 @@ export default function ContenuLongVsCourtIa() {
 
       <p>Cette discipline change radicalement la manière de briefer un rédacteur. On ne dit plus "fais-moi 2 500 mots sur le schema JSON-LD". On dit "réponds complètement à la question : comment implémenter un schema FAQPage sur un site WordPress, en couvrant la validation et les erreurs courantes". La longueur finale sort naturellement du scope.</p>
 
-      <InlineCTA href="/">Mesurez l'impact de la structure de votre contenu sur votre score GEO — extractibilité et données structurées analysées en moins de 60 secondes.</InlineCTA>
+      <InlineCTA href="/">Mesurez l'impact de la structure de votre contenu sur votre score GEO — citabilité et données structurées analysées en moins de 60 secondes.</InlineCTA>
 
       <h2>Les signaux structurels qui comptent plus que le nombre de mots</h2>
 

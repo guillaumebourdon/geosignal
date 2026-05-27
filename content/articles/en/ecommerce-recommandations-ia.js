@@ -237,7 +237,7 @@ For smaller apartments, a more compact model may be sufficient."`}</code></pre>
 
       <p><strong>Fix:</strong> allow GPTBot, ClaudeBot, and PerplexityBot in your <code>robots.txt</code>. The scraping risk is low compared to the cost of invisibility.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">How to configure llms.txt, robots.txt, and AI crawlability.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">How to configure llms.txt, robots.txt, and AI Accessibility.</ArrowLink>
 
       <h3>Mistake 4: No customer reviews or unstructured reviews</h3>
 

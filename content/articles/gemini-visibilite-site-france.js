@@ -106,7 +106,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <ul>
         <li><strong>Vitesse de chargement</strong> — les Core Web Vitals restent un signal de qualité pour Google, y compris pour les AI Overviews</li>
-        <li><strong>Crawlabilité</strong> — vérifiez que <code>Googlebot</code> n'est pas bloqué dans votre <code>robots.txt</code> (Gemini utilise le même crawler)</li>
+        <li><strong>Accessibilité IA</strong> — vérifiez que <code>Googlebot</code> n'est pas bloqué dans votre <code>robots.txt</code> (Gemini utilise le même crawler)</li>
         <li><strong>Pas de blocage des bots IA</strong> — certains sites bloquent <code>Google-Extended</code> (le user-agent dédié à l'IA de Google) sans le savoir</li>
         <li><strong>Rendu JavaScript</strong> — si votre contenu est rendu côté client, assurez-vous qu'il est accessible au crawl</li>
       </ul>
@@ -184,7 +184,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <h3>Audit automatisé avec Detekia</h3>
 
-      <p>Le test manuel est utile mais non reproductible. <InternalLink href="/">Detekia</InternalLink> analyse votre site sur les 8 critères GEO (extractibilité, données structurées, E-E-A-T, crawlabilité, etc.) et identifie les optimisations prioritaires pour chaque moteur IA, y compris Gemini via les AI Overviews.</p>
+      <p>Le test manuel est utile mais non reproductible. <InternalLink href="/">Detekia</InternalLink> analyse votre site sur les 7 critères GEO (citabilité, données structurées, E-E-A-T, accessibilité IA, etc.) et identifie les optimisations prioritaires pour chaque moteur IA, y compris Gemini via les AI Overviews.</p>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences et comment les combiner en 2026</ArrowLink>
 

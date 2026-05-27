@@ -85,7 +85,7 @@ export default function SitemapRobotsTxtBotsIa2026() {
 
       <BotTable />
 
-      <p>The strategic recommendation: <strong>always allow citation crawlers</strong> (OAI-SearchBot, PerplexityBot). For training crawlers, the decision depends on your strategy — some sites choose to block training while remaining citable. For a deeper dive, see our <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">technical guide on AI crawlability</InternalLink>.</p>
+      <p>The strategic recommendation: <strong>always allow citation crawlers</strong> (OAI-SearchBot, PerplexityBot). For training crawlers, the decision depends on your strategy — some sites choose to block training while remaining citable. For a deeper dive, see our <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">technical guide on AI Accessibility</InternalLink>.</p>
 
       <h2>robots.txt: strategic configuration for AI bots</h2>
 
@@ -212,7 +212,7 @@ Sitemap: https://your-site.com/sitemap.xml`}</CodeBlock>
 
       <p><strong>Best practices</strong>: keep it concise (under 500 words), structure in Markdown sections, and update when your offering evolves. The file goes at the root: <code>your-site.com/llms.txt</code>.</p>
 
-      <p>For a complete guide on llms.txt and AI crawlability, see our dedicated article: <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt and AI crawlability</InternalLink>.</p>
+      <p>For a complete guide on llms.txt and AI Accessibility, see our dedicated article: <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt and AI Accessibility</InternalLink>.</p>
 
       <h2>5 traps to avoid</h2>
 
@@ -276,7 +276,7 @@ Sitemap: https://your-site.com/sitemap.xml`}</CodeBlock>
         <li>✓ An llms.txt file is present at the root with a structured site summary</li>
         <li>✓ No excessive <code>Crawl-delay</code> (or absent)</li>
         <li>✓ robots.txt is tested after every migration or infrastructure change</li>
-        <li>✓ The <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 GEO criteria</InternalLink> are verified, including AI crawlability</li>
+        <li>✓ The <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 GEO criteria</InternalLink> are verified, including AI Accessibility</li>
       </ul>
     </>
   );

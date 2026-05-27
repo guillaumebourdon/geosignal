@@ -87,11 +87,11 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p>This is the approach Detekia uses: an automated audit that evaluates your site on 8 weighted criteria and assigns a score out of 100.</p>
 
-      <h2>The 8 criteria of the Detekia GEO Score</h2>
+      <h2>The 7 criteria of the Detekia GEO Score</h2>
 
       <p>Each criterion is measured by analyzing the actual DOM of your page — not by estimation or approximation.</p>
 
-      <h3>1. Extractability & direct answer (25 points)</h3>
+      <h3>1. Citability & direct answer (25 points)</h3>
 
       <p>This criterion measures whether your content contains answers ready to be extracted by an AI. The analysis checks:</p>
 
@@ -116,7 +116,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p><strong>Typical score observed:</strong> 6 to 10 out of 15 for SMBs. Freelancers without an About page fall to 2-4. Companies with identified authors and a complete institutional page reach 12-15.</p>
 
-      <h3>4. AI crawlability (15 points)</h3>
+      <h3>4. AI Accessibility (15 points)</h3>
 
       <p>This criterion verifies whether AI bots can access your content:</p>
 
@@ -129,7 +129,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p><strong>Typical score observed:</strong> highly variable. Sites blocking AI bots (often unknowingly) score 0 to 3. Those not blocking but without an <code>llms.txt</code> score 8-10. Fully optimized sites reach 13-15.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">To fix crawlability issues, read llms.txt, robots.txt, and AI crawlability.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">To fix crawlability issues, read llms.txt, robots.txt, and AI Accessibility.</ArrowLink>
 
       <h3>5. Structured data (10 points)</h3>
 
@@ -151,7 +151,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p><strong>Typical score observed:</strong> 1 to 3 for SMBs and startups. Companies with an active PR strategy reach 4-5.</p>
 
-      <h3>8. Freshness & maintenance (5 points)</h3>
+      <h3>8. Freshness & timeliness (5 points)</h3>
 
       <p>This criterion checks how current your content is: visible last-modified date, update frequency, absence of obsolete content (expired dates, old stats).</p>
 
@@ -183,17 +183,17 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h3>The most commonly failing criterion</h3>
 
-      <p>Extractability is the criterion most frequently under-optimized. Most sites have content, but that content is not structured to be extracted and cited by an AI. It is also the heaviest criterion (25 points) — meaning it offers the biggest potential gains.</p>
+      <p>Citability is the criterion most frequently under-optimized. Most sites have content, but that content is not structured to be extracted and cited by an AI. It is also the heaviest criterion (25 points) — meaning it offers the biggest potential gains.</p>
 
       <h2>How to read the thematic groups</h2>
 
-      <p>Detekia organizes the 8 criteria into 3 thematic groups that make reading and prioritization easier:</p>
+      <p>Detekia organizes the 7 criteria into 3 thematic groups that make reading and prioritization easier:</p>
 
       <GroupCard
         color="#4285F4"
         label="AI Readability"
         points={50}
-        criteria="Extractability + Crawlability + Structured data"
+        criteria="Citability + Crawlability + Structured data"
         description="This group measures whether AI engines can access your content and understand it. This is the technical baseline. If this group is weak, AI cannot cite you — even if your content is excellent."
         priority="High — fixes are often quick (robots.txt, Schema.org, intro restructuring)"
       />
@@ -211,7 +211,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
         color="#C9861A"
         label="Freshness"
         points={5}
-        criteria="Freshness & maintenance"
+        criteria="Freshness & timeliness"
         description="This group measures whether your content is current and maintained. It is a weak but constant signal: AI engines favor recent content."
         priority="Ongoing — not a one-time project but a regular discipline"
       />
@@ -224,7 +224,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <ul>
         <li><strong>Unblock AI crawlers</strong> — if your <code>robots.txt</code> blocks GPTBot or ClaudeBot, you go from 0 to potentially 12-15 points in crawlability just by removing a few lines. Effort: 15 minutes. Impact: up to +15 points.</li>
-        <li><strong>Rewrite introductions on your key pages</strong> — add a direct answer in the first 100 words of your 5 main pages. Effort: 1-2 hours. Impact: up to +10 points in extractability.</li>
+        <li><strong>Rewrite introductions on your key pages</strong> — add a direct answer in the first 100 words of your 5 main pages. Effort: 1-2 hours. Impact: up to +10 points in citability.</li>
         <li><strong>Add Schema Organization</strong> — a single JSON-LD block on your homepage. Effort: 30 minutes. Impact: +2-3 points in structured data.</li>
       </ul>
 
@@ -268,7 +268,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p>After a technical optimization (<code>robots.txt</code>, Schema.org), check the manual test 2-4 weeks later. You should see an improvement in your presence in AI answers.</p>
 
-      <p>After a content optimization (extractability, verifiability), allow 4-8 weeks before seeing an impact on citations.</p>
+      <p>After a content optimization (citability, verifiability), allow 4-8 weeks before seeing an impact on citations.</p>
 
       <p>After external presence work (Reddit, press), allow 8-12 weeks. This is the slowest lever but also the most durable.</p>
 

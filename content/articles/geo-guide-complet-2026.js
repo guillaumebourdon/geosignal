@@ -76,7 +76,7 @@ export default function GeoGuideComplet2026() {
             <li><strong>L'autorité</strong> : le site est-il reconnu comme expert sur le sujet ? Y a-t-il des mentions tierces, des backlinks, une présence médiatique ?</li>
             <li><strong>La structure</strong> : le contenu est-il organisé de manière lisible, avec des réponses directes, des sous-titres clairs, des données structurées (Schema.org) ?</li>
             <li><strong>La fraîcheur</strong> : le contenu est-il récent ou régulièrement mis à jour ?</li>
-            <li><strong>L'extractibilité</strong> : l'IA peut-elle facilement extraire une phrase, un paragraphe, un chiffre pour l'intégrer dans sa réponse ?</li>
+            <li><strong>L'citabilité</strong> : l'IA peut-elle facilement extraire une phrase, un paragraphe, un chiffre pour l'intégrer dans sa réponse ?</li>
           </ul>
         </li>
         <li><strong>Synthèse.</strong> L'IA reformule et combine les informations des sources sélectionnées pour générer une réponse cohérente, en citant parfois les sources.</li>
@@ -84,11 +84,11 @@ export default function GeoGuideComplet2026() {
 
       <p>La conséquence directe : si votre contenu est vague, mal structuré, non sourcé ou difficile à crawler, l'IA l'ignorera — même si votre site est premier sur Google.</p>
 
-      <h2>Les 8 critères qui déterminent si une IA vous cite</h2>
+      <h2>Les 7 critères qui déterminent si une IA vous cite</h2>
 
-      <p>Chez Detekia, nous avons formalisé ces signaux en 8 critères mesurables, pondérés selon leur impact réel sur la citabilité IA. C'est ce framework qui alimente notre score GEO sur 100.</p>
+      <p>Chez Detekia, nous avons formalisé ces signaux en 7 critères mesurables, pondérés selon leur impact réel sur la citabilité IA. C'est ce framework qui alimente notre score GEO sur 100.</p>
 
-      <h3>1. Extractibilité & réponse directe — 25 points</h3>
+      <h3>1. Citabilité & réponse directe — 25 points</h3>
 
       <p>C'est le critère le plus lourd, et pour cause : les IA cherchent des réponses prêtes à citer. Si votre page commence par du jargon ou une introduction floue, l'IA passera à la source suivante.</p>
 
@@ -102,47 +102,39 @@ export default function GeoGuideComplet2026() {
 
       <h3>3. Autorité & E-E-A-T — 15 points</h3>
 
-      <p>Google a formalisé le concept E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) pour évaluer la qualité d'un contenu. Les moteurs IA reprennent cette logique. Un site avec des auteurs identifiés, une page À propos complète, des mentions presse et des backlinks de qualité sera davantage cité.</p>
+      <p>Google a formalisé le concept E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) pour évaluer la qualité d'un contenu. Les moteurs IA reprennent cette logique. Un site avec des auteurs identifiés, une page À propos complète, des mentions presse et des backlinks de qualité sera davantage cité. Ce critère intègre également les signaux de données structurées (Schema.org) qui renforcent la compréhension de votre identité par les IA.</p>
 
-      <p><strong>Ce que ça implique :</strong> signez vos contenus, affichez votre expertise, créez votre page À propos, obtenez des mentions sur des sites tiers.</p>
+      <p><strong>Ce que ça implique :</strong> signez vos contenus, affichez votre expertise, créez votre page À propos, implémentez les schemas <code>Organization</code>, <code>Article</code> et <code>FAQPage</code>, et obtenez des mentions sur des sites tiers.</p>
 
-      <h3>4. Crawlabilité IA — 15 points</h3>
+      <h3>4. Accessibilité IA — 10 points</h3>
 
       <p>Les bots IA (GPTBot, PerplexityBot, ClaudeBot, Google-Extended) doivent pouvoir accéder à votre site. Si votre <code>robots.txt</code> les bloque — ce qui est souvent le cas par défaut — ils ne peuvent tout simplement pas lire votre contenu.</p>
 
       <p><strong>Ce que ça implique :</strong> vérifiez votre <code>robots.txt</code>, configurez un fichier <code>llms.txt</code>, et assurez-vous que votre contenu est accessible sans JavaScript obligatoire.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Détails techniques dans notre article llms.txt, robots.txt et crawlabilité IA.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Détails techniques dans notre article llms.txt, robots.txt et accessibilité IA.</ArrowLink>
 
-      <h3>5. Données structurées — 10 points</h3>
-
-      <p>Le balisage Schema.org (JSON-LD) aide les IA à comprendre sans ambiguïté ce que contient votre page : qui est l'auteur, quel type d'organisation vous êtes, quelles questions vous répondez. Sans données structurées, l'IA doit deviner — et elle préfère les sites qui lui facilitent le travail.</p>
-
-      <p><strong>Ce que ça implique :</strong> implémentez au minimum <code>Organization</code>, <code>Article</code> et <code>FAQPage</code> sur votre site.</p>
-
-      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Guide complet dans Schema.org et IA : le guide pratique pour être compris par les LLM.</ArrowLink>
-
-      <h3>6. Neutralité éditoriale — 10 points</h3>
+      <h3>5. Neutralité éditoriale — 10 points</h3>
 
       <p>Les IA évitent de citer des contenus perçus comme trop promotionnels, exagérés ou biaisés. Un ton factuel, des comparaisons équilibrées et l'absence de superlatifs vides renforcent votre crédibilité auprès des LLM.</p>
 
       <p><strong>Ce que ça implique :</strong> adoptez un ton expert et factuel. Remplacez "nous sommes les meilleurs" par des preuves concrètes de votre expertise.</p>
 
-      <h3>7. Présence externe — 5 points</h3>
+      <h3>6. Présence externe — 10 points</h3>
 
       <p>Les IA croisent les sources. Si votre marque est mentionnée sur des sites tiers (presse, forums, Reddit, annuaires professionnels), elle gagne en crédibilité. C'est l'équivalent GEO du netlinking SEO.</p>
 
       <p><strong>Ce que ça implique :</strong> développez votre présence sur Reddit, les forums spécialisés, la presse sectorielle. Chaque mention renforce votre "LLM Share of Voice".</p>
 
-      <h3>8. Fraîcheur & maintenance — 5 points</h3>
+      <h3>7. Fraîcheur & signaux temporels — 10 points</h3>
 
       <p>Un contenu mis à jour régulièrement signale aux IA qu'il est fiable et actuel. Les pages avec des dates obsolètes ou des informations périmées sont moins souvent citées.</p>
 
       <p><strong>Ce que ça implique :</strong> mettez à jour vos contenus clés au moins une fois par trimestre. Affichez clairement la date de dernière modification.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Pour comprendre en détail comment chaque critère est mesuré et pondéré, consultez Les 8 critères GEO qui déterminent si une IA vous cite.</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Pour comprendre en détail comment chaque critère est mesuré et pondéré, consultez Les 7 critères GEO qui déterminent si une IA vous cite.</ArrowLink>
 
-      <InlineCTA href="/">Vous voulez connaître votre score sur ces 8 critères ?</InlineCTA>
+      <InlineCTA href="/">Vous voulez connaître votre score sur ces 7 critères ?</InlineCTA>
 
       <h2>7 actions concrètes pour optimiser votre site</h2>
 
@@ -195,7 +187,7 @@ Disallow: /`}</code></pre>
 
       <p>…vous bloquez activement ChatGPT. Supprimez ces restrictions (sauf raison stratégique documentée) et créez un fichier <code>llms.txt</code> à la racine de votre site pour guider les crawlers IA.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Configuration complète dans llms.txt, robots.txt et crawlabilité IA.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Configuration complète dans llms.txt, robots.txt et accessibilité IA.</ArrowLink>
 
       <h3>Action 5 — Créer du contenu FAQ avec des questions naturelles</h3>
 
@@ -259,11 +251,11 @@ Disallow: /`}</code></pre>
 
       <ol>
         <li><strong>Le test manuel.</strong> Posez à ChatGPT, Gemini et Perplexity les questions que vos clients se posent. Votre site apparaît-il dans les réponses ? Vos concurrents sont-ils cités à votre place ? C'est le diagnostic de base.</li>
-        <li><strong>L'audit technique.</strong> Analysez votre site sur les critères qui déterminent la citabilité : structure HTML, données structurées, crawlabilité, contenu extractible. C'est ce que fait Detekia automatiquement.</li>
+        <li><strong>L'audit technique.</strong> Analysez votre site sur les critères qui déterminent la citabilité : structure HTML, données structurées, accessibilité IA, contenu extractible. C'est ce que fait Detekia automatiquement.</li>
         <li><strong>Le suivi dans le temps.</strong> Mesurez l'évolution de votre score après chaque optimisation. Un contenu amélioré peut se retrouver dans les réponses IA en quelques semaines pour les aspects techniques, et en 8 à 12 semaines pour les citations à proprement parler.</li>
       </ol>
 
-      <p>Detekia analyse votre site en moins de 60 secondes sur les 8 critères GEO, vous attribue un score sur 100 et vous donne des recommandations priorisées par impact. Le diagnostic est gratuit, sans inscription.</p>
+      <p>Detekia analyse votre site en moins de 60 secondes sur les 7 critères GEO, vous attribue un score sur 100 et vous donne des recommandations priorisées par impact. Le diagnostic est gratuit, sans inscription.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">Pour comprendre comment interpréter votre score et prioriser vos actions, consultez Score GEO : comment mesurer la visibilité IA de votre site.</ArrowLink>
 
@@ -291,7 +283,7 @@ Disallow: /`}</code></pre>
 
       <p>La bonne nouvelle : les actions à mener sont concrètes, mesurables et accessibles. Structurez votre contenu pour qu'il soit extractible, ajoutez des preuves vérifiables, ouvrez l'accès aux bots IA, et suivez votre score dans le temps.</p>
 
-      <p>Commencez par mesurer votre situation actuelle. Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères, recommandations priorisées, en moins de 60 secondes.</p>
+      <p>Commencez par mesurer votre situation actuelle. Analysez votre site gratuitement sur Detekia — score sur 100, 7 critères, recommandations priorisées, en moins de 60 secondes.</p>
     </>
   );
 }

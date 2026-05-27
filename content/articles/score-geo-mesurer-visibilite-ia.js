@@ -106,13 +106,13 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p>L'audit technique analyse votre site sur les critères objectifs qui déterminent la citabilité IA. Contrairement au test manuel, il mesure le <em>potentiel</em> de citation — les conditions techniques et éditoriales qui maximisent vos chances d'être sélectionné comme source.</p>
 
-      <p>C'est cette approche que Detekia utilise : un audit automatisé qui évalue votre site sur 8 critères pondérés et vous attribue un score sur 100.</p>
+      <p>C'est cette approche que Detekia utilise : un audit automatisé qui évalue votre site sur 7 critères pondérés et vous attribue un score sur 100.</p>
 
-      <h2>Les 8 critères du score GEO Detekia</h2>
+      <h2>Les 7 critères du score GEO Detekia</h2>
 
-      <p>Chaque critère est mesuré par analyse du DOM réel de votre page — pas par estimation ou approximation. Pour une explication détaillée de chaque critère, consultez <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">les 8 critères de la méthodologie Detekia</InternalLink>.</p>
+      <p>Chaque critère est mesuré par analyse du DOM réel de votre page — pas par estimation ou approximation. Pour une explication détaillée de chaque critère, consultez <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">les 7 critères de la méthodologie Detekia</InternalLink>.</p>
 
-      <h3>1. Extractibilité & réponse directe (25 points)</h3>
+      <h3>1. Citabilité & réponse directe (25 points)</h3>
 
       <p>Ce critère mesure si votre contenu contient des réponses prêtes à être extraites par une IA. L'analyse vérifie :</p>
 
@@ -133,11 +133,11 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h3>3. Autorité & E-E-A-T (15 points)</h3>
 
-      <p>Ce critère évalue les signaux d'expertise et de crédibilité : page À propos complète avec informations vérifiables, auteurs identifiés sur les contenus, mentions légales complètes, signaux de confiance (certifications, références clients, logos partenaires).</p>
+      <p>Ce critère évalue les signaux d'expertise et de crédibilité : page À propos complète avec informations vérifiables, auteurs identifiés sur les contenus, mentions légales complètes, signaux de confiance (certifications, références clients, logos partenaires). Il intègre également les signaux de données structurées (balisage Schema.org : <code>Organization</code>, <code>Article</code>, <code>FAQPage</code>), qui renforcent la compréhension de votre identité et de votre expertise par les IA.</p>
 
       <p><strong>Score typique observé :</strong> 6 à 10 sur 15 pour les PME. Les freelances sans page À propos tombent à 2-4. Les entreprises avec des auteurs identifiés et une page institutionnelle complète atteignent 12-15.</p>
 
-      <h3>4. Crawlabilité IA (15 points)</h3>
+      <h3>4. Accessibilité IA (10 points)</h3>
 
       <p>Ce critère vérifie si les bots IA peuvent accéder à votre contenu :</p>
 
@@ -150,29 +150,21 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p><strong>Score typique observé :</strong> très variable. Les sites qui bloquent les bots IA (souvent sans le savoir) obtiennent 0 à 3. Ceux qui ne les bloquent pas mais n'ont pas de <code>llms.txt</code> obtiennent 8-10. Les sites pleinement optimisés atteignent 13-15.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Pour corriger les problèmes de crawlabilité, consultez llms.txt, robots.txt et crawlabilité IA.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Pour corriger les problèmes d'accessibilité IA, consultez llms.txt, robots.txt et accessibilité IA.</ArrowLink>
 
-      <h3>5. Données structurées (10 points)</h3>
-
-      <p>Ce critère analyse la présence et la qualité du balisage Schema.org : <code>Organization</code> sur la homepage, <code>Article</code> ou <code>BlogPosting</code> sur les contenus éditoriaux, <code>FAQPage</code> sur les pages de questions-réponses, validité du balisage (absence d'erreurs).</p>
-
-      <p><strong>Score typique observé :</strong> 0 à 3 pour les sites sans données structurées (environ 23 % du web). 5-7 pour ceux avec un balisage basique. 8-10 pour les sites avec un balisage complet et valide.</p>
-
-      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Guide d'implémentation dans Schema.org et IA : le guide pratique.</ArrowLink>
-
-      <h3>6. Neutralité éditoriale (10 points)</h3>
+      <h3>5. Neutralité éditoriale (10 points)</h3>
 
       <p>Ce critère évalue le ton de votre contenu — analysé par IA : absence de superlatifs non sourcés ("le meilleur", "le leader", "inégalé"), ton factuel et informatif plutôt que promotionnel, présence de comparaisons équilibrées, absence de manipulation émotionnelle.</p>
 
       <p><strong>Score typique observé :</strong> 4 à 7 pour la majorité des sites. Les sites avec un ton très commercial tombent à 2-3. Les sites éditoriaux et techniques atteignent 8-10.</p>
 
-      <h3>7. Présence externe (5 points)</h3>
+      <h3>6. Présence externe (10 points)</h3>
 
       <p>Ce critère évalue votre visibilité en dehors de votre propre site : mentions sur des sites tiers (presse, forums, annuaires), profils actifs sur des plateformes reconnues (LinkedIn, Reddit), citations dans des contenus d'autres éditeurs.</p>
 
       <p><strong>Score typique observé :</strong> 1 à 3 pour les PME et startups. Les entreprises avec une stratégie de relations presse active atteignent 4-5.</p>
 
-      <h3>8. Fraîcheur & maintenance (5 points)</h3>
+      <h3>7. Fraîcheur & signaux temporels (10 points)</h3>
 
       <p>Ce critère vérifie l'actualité de votre contenu : date de dernière modification visible, fréquence de mise à jour, absence de contenus obsolètes (dates périmées, stats anciennes).</p>
 
@@ -204,17 +196,17 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h3>Le critère le plus souvent défaillant</h3>
 
-      <p>L'Extractibilité est le critère le plus fréquemment sous-optimisé. La plupart des sites ont du contenu, mais ce contenu n'est pas structuré pour être extrait et cité par une IA. C'est aussi le critère qui pèse le plus lourd (25 points) — donc celui où les gains sont les plus importants.</p>
+      <p>L'Citabilité est le critère le plus fréquemment sous-optimisé. La plupart des sites ont du contenu, mais ce contenu n'est pas structuré pour être extrait et cité par une IA. C'est aussi le critère qui pèse le plus lourd (25 points) — donc celui où les gains sont les plus importants.</p>
 
       <h2>Comment lire les groupes thématiques</h2>
 
-      <p>Detekia organise les 8 critères en 3 groupes thématiques qui facilitent la lecture et la priorisation :</p>
+      <p>Detekia organise les 7 critères en 3 groupes thématiques qui facilitent la lecture et la priorisation :</p>
 
       <GroupCard
         color="#4285F4"
         label="Lisibilité IA"
         points={50}
-        criteria="Extractibilité + Crawlabilité + Données structurées"
+        criteria="Citabilité + Accessibilité IA + Données structurées"
         description="Ce groupe mesure si les IA peuvent accéder à votre contenu et le comprendre. C'est la base technique. Si ce groupe est faible, les IA ne peuvent pas vous citer — même si votre contenu est excellent."
         priority="Haute — corrections souvent rapides (robots.txt, Schema.org, restructuration des introductions)"
       />
@@ -232,7 +224,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
         color="#C9861A"
         label="Fraîcheur"
         points={5}
-        criteria="Fraîcheur & maintenance"
+        criteria="Fraîcheur & signaux temporels"
         description="Ce groupe mesure si votre contenu est actuel et maintenu. C'est un signal faible mais constant : les IA privilégient les contenus récents."
         priority="Continue — pas un chantier ponctuel mais une discipline régulière"
       />
@@ -244,8 +236,8 @@ export default function ScoreGeoMesurerVisibiliteIa() {
       <h3>Actions à impact immédiat (cette semaine)</h3>
 
       <ul>
-        <li><strong>Débloquer les crawlers IA</strong> — si votre <code>robots.txt</code> bloque GPTBot ou ClaudeBot, vous passez de 0 à potentiellement 12-15 points en crawlabilité juste en supprimant quelques lignes. Effort : 15 minutes. Impact : jusqu'à +15 points.</li>
-        <li><strong>Réécrire les introductions de vos pages clés</strong> — ajoutez une réponse directe dans les 100 premiers mots de vos 5 pages principales. Effort : 1-2 heures. Impact : jusqu'à +10 points en extractibilité.</li>
+        <li><strong>Débloquer les crawlers IA</strong> — si votre <code>robots.txt</code> bloque GPTBot ou ClaudeBot, vous passez de 0 à potentiellement 12-15 points en accessibilité IA juste en supprimant quelques lignes. Effort : 15 minutes. Impact : jusqu'à +15 points.</li>
+        <li><strong>Réécrire les introductions de vos pages clés</strong> — ajoutez une réponse directe dans les 100 premiers mots de vos 5 pages principales. Effort : 1-2 heures. Impact : jusqu'à +10 points en citabilité.</li>
         <li><strong>Ajouter Schema Organization</strong> — un seul bloc JSON-LD sur votre homepage. Effort : 30 minutes. Impact : +2-3 points en données structurées.</li>
       </ul>
 
@@ -289,7 +281,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p>Après une optimisation technique (<code>robots.txt</code>, Schema.org), observez le test manuel 2-4 semaines plus tard. Vous devriez constater une amélioration de votre présence dans les réponses IA.</p>
 
-      <p>Après une optimisation de contenu (extractibilité, vérifiabilité), comptez 4-8 semaines avant de voir un impact sur les citations.</p>
+      <p>Après une optimisation de contenu (citabilité, vérifiabilité), comptez 4-8 semaines avant de voir un impact sur les citations.</p>
 
       <p>Après un travail de présence externe (Reddit, presse), comptez 8-12 semaines. C'est le levier le plus lent mais aussi le plus durable.</p>
 
@@ -327,9 +319,9 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h2>Lancez votre audit</h2>
 
-      <p>La première étape est de connaître votre score actuel. Pas d'estimation, pas d'intuition — une mesure objective sur les 8 critères GEO.</p>
+      <p>La première étape est de connaître votre score actuel. Pas d'estimation, pas d'intuition — une mesure objective sur les 7 critères GEO.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères détaillés, recommandations priorisées par impact. En moins de 60 secondes, sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 7 critères détaillés, recommandations priorisées par impact. En moins de 60 secondes, sans inscription.</p>
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

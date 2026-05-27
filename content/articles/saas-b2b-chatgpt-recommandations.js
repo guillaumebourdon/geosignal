@@ -139,7 +139,7 @@ Solution : automatisation avec VotreOutil. Résultat : -40% tickets en 3 mois."
         <li>Un verdict nuancé : "Si votre priorité est X, choisissez A. Si c'est Y, nous sommes mieux adaptés."</li>
       </ul>
 
-      <p>Ce positionnement honnête renforce votre <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">neutralité éditoriale</InternalLink> — un des 8 critères GEO que les IA évaluent.</p>
+      <p>Ce positionnement honnête renforce votre <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">neutralité éditoriale</InternalLink> — un des 7 critères GEO que les IA évaluent.</p>
 
       <h3>4. Rendre votre documentation indexable</h3>
 
@@ -203,9 +203,9 @@ Solution : automatisation avec VotreOutil. Résultat : -40% tickets en 3 mois."
 
       <p>Posez à ChatGPT les requêtes que vos prospects taperaient : "Quel outil de [votre catégorie] pour [votre cible] ?" Notez : apparaissez-vous ? Quels concurrents sont cités ? Quels sont les critères mentionnés par l'IA pour justifier ses choix ?</p>
 
-      <h3>L'audit des 8 critères GEO</h3>
+      <h3>L'audit des 7 critères GEO</h3>
 
-      <p>Chaque page de votre site peut être évaluée sur les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 critères GEO</InternalLink> qui déterminent la citabilité IA : extractibilité, vérifiabilité, autorité, crawlabilité, données structurées, neutralité, présence externe, fraîcheur.</p>
+      <p>Chaque page de votre site peut être évaluée sur les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères GEO</InternalLink> qui déterminent la citabilité IA : citabilité, vérifiabilité, autorité, accessibilité IA, données structurées, neutralité, présence externe, fraîcheur.</p>
 
       <ArrowLink href="/blog/audit-geo-visibilite-ia">Audit GEO : comment évaluer votre visibilité IA →</ArrowLink>
 

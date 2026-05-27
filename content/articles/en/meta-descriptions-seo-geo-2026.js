@@ -89,7 +89,7 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <p>This is where 2026 changes the game. AI engines don't evaluate a meta description the way Google does. They look for extractable, verifiable, and self-contained information. Here are the 5 GEO criteria for an optimal meta description.</p>
 
-      <h3>1. Extractability: clear subject-verb-object structure</h3>
+      <h3>1. Citability: clear subject-verb-object structure</h3>
 
       <p>AI extracts complete passages. A grammatically well-structured meta description will be quoted verbatim. A string of sentence fragments won't.</p>
 
@@ -197,7 +197,7 @@ After: "Real estate agency in Brooklyn: 320 homes sold in 2025, average 45-day c
         <li><strong>Primary keyword in the first 60 characters</strong> — strong SEO signal</li>
         <li><strong>At least 1 hard number</strong> (percentage, volume, rating, date) — GEO verifiability criterion</li>
         <li><strong>At least 1 named entity</strong> (brand, location, product, technology) — entity-richness</li>
-        <li><strong>Complete subject-verb-object sentence</strong> — AI extractability</li>
+        <li><strong>Complete subject-verb-object sentence</strong> — AI citability</li>
         <li><strong>Understandable without context</strong> — contextual independence</li>
         <li><strong>No unproven superlatives</strong> ("the best", "leader") — editorial neutrality</li>
         <li><strong>Unique to this page</strong> — no duplication</li>
@@ -221,7 +221,7 @@ After: "Real estate agency in Brooklyn: 320 homes sold in 2025, average 45-day c
 
       <ul>
         <li><strong>Manual test</strong>: ask ChatGPT or Perplexity a question related to your page. Is your site cited? Does the excerpt used come from your meta description?</li>
-        <li><strong>Automated audit</strong>: Detekia measures your content's extractability across 8 GEO criteria. The extractability score (25 points out of 100) includes evaluation of your metadata.</li>
+        <li><strong>Automated audit</strong>: Detekia measures your content's citability across 8 GEO criteria. The citability score (25 points out of 100) includes evaluation of your metadata.</li>
       </ul>
 
       <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">The 8 GEO criteria that determine whether AI cites you</ArrowLink>
@@ -234,7 +234,7 @@ After: "Real estate agency in Brooklyn: 320 homes sold in 2025, average 45-day c
 
       <h3>Should I write different meta descriptions for SEO and GEO?</h3>
 
-      <p>No. The goal is to write ONE meta description that performs on both fronts. The FACTS formula combines SEO criteria (CTR, keyword, length) and GEO criteria (extractability, factuality, entity-richness) in a single 130-155 character text.</p>
+      <p>No. The goal is to write ONE meta description that performs on both fronts. The FACTS formula combines SEO criteria (CTR, keyword, length) and GEO criteria (citability, factuality, entity-richness) in a single 130-155 character text.</p>
 
       <h3>Do meta descriptions directly impact Google rankings?</h3>
 

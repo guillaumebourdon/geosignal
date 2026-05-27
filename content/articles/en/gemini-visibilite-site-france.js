@@ -182,7 +182,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <h3>Automated audit with Detekia</h3>
 
-      <p>Manual testing is useful but not reproducible. <InternalLink href="/">Detekia</InternalLink> analyzes your site across 8 GEO criteria (extractability, structured data, E-E-A-T, crawlability, etc.) and identifies priority optimizations for each AI engine, including Gemini via AI Overviews.</p>
+      <p>Manual testing is useful but not reproducible. <InternalLink href="/">Detekia</InternalLink> analyzes your site across 8 GEO criteria (citability, structured data, E-E-A-T, crawlability, etc.) and identifies priority optimizations for each AI engine, including Gemini via AI Overviews.</p>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO: key differences and how to combine them in 2026</ArrowLink>
 

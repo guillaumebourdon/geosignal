@@ -1,15 +1,15 @@
 # Detekia
-> Detekia est un outil d'audit GEO (Generative Engine Optimization) qui evalue la visibilite d'un site web face aux IA generatives (ChatGPT, Claude, Gemini, Perplexity) sur 8 criteres ponderes. Developpe par Beeleven SASU, Paris.
+> Detekia est un outil d'audit GEO (Generative Engine Optimization) qui evalue la visibilite d'un site web face aux IA generatives (ChatGPT, Claude, Gemini, Perplexity) sur 7 criteres ponderes. Developpe par Beeleven SASU, Paris.
 
 ## Pages principales
 - [Accueil](https://detekia.fr/) : Analyseur GEO gratuit, score sur 100
-- [Methodologie](https://detekia.fr/methodologie) : Les 8 criteres GEO et leur ponderation (source: Aggarwal et al., KDD 2024)
+- [Methodologie](https://detekia.fr/methodologie) : Les 7 criteres GEO et leur ponderation (source: Aggarwal et al., KDD 2024)
 - [A propos](https://detekia.fr/a-propos) : Equipe, mission, fondateur Guillaume Bourdon
 - [Pricing](https://detekia.fr/pricing) : Rapport one-page 29 EUR, audit Pro multi-pages 99 EUR
 - [Contact](https://detekia.fr/contact) : hello@detekia.fr
 
 ## Blog - Guide (12 articles)
-- [GEO : le guide complet pour etre cite par les IA en 2026](https://detekia.fr/blog/geo-guide-complet-2026) : Definition, 8 criteres, 7 actions concretes et methode pour optimiser votre site pour ChatGPT, Gemini et Perplexity
+- [GEO : le guide complet pour etre cite par les IA en 2026](https://detekia.fr/blog/geo-guide-complet-2026) : Definition, 7 criteres, 7 actions concretes et methode pour optimiser votre site pour ChatGPT, Gemini et Perplexity
 - [Pourquoi ChatGPT ne cite pas votre site (et comment y remedier)](https://detekia.fr/blog/pourquoi-chatgpt-ne-cite-pas-votre-site) : Les 6 raisons pour lesquelles les IA ignorent votre site, et un plan d'action en 7 jours
 - [E-commerce : apparaitre dans les recos produits IA](https://detekia.fr/blog/ecommerce-recommandations-ia) : Fiches produits, Schema Product, guides d'achat, avis clients pour que les IA recommandent vos produits
 - [Comment apparaitre dans les AI Overviews de Google en 2026](https://detekia.fr/blog/ai-overviews-google-2026) : Les 6 criteres de selection des AI Overviews et 7 actions concretes
@@ -25,7 +25,7 @@
 ## Blog - Strategie (15 articles)
 - [Zero clic : quand les IA repondent sans envoyer de trafic](https://detekia.fr/blog/zero-clic-reponses-ia-sans-trafic) : 58,5 % des recherches se terminent sans clic, impacts et 5 strategies pour en faire une opportunite
 - [SEO vs GEO : quelles differences et comment les combiner en 2026](https://detekia.fr/blog/seo-vs-geo-differences-2026) : Comparatif complet SEO vs GEO et strategie en 3 couches pour etre visible partout
-- [Score GEO : comment mesurer la visibilite IA de votre site](https://detekia.fr/blog/score-geo-mesurer-visibilite-ia) : 8 criteres decryptes, seuils d'interpretation et plan de priorisation
+- [Score GEO : comment mesurer la visibilite IA de votre site](https://detekia.fr/blog/score-geo-mesurer-visibilite-ia) : 7 criteres decryptes, seuils d'interpretation et plan de priorisation
 - [GEO pour les agences : integrer l'audit IA au SEO](https://detekia.fr/blog/geo-agences-seo-audit-ia) : Methodologie, tarification, arguments commerciaux et formation d'equipe
 - [Audit GEO : analyser la visibilite IA de votre site](https://detekia.fr/blog/audit-geo-visibilite-ia) : Guide complet en 9 etapes pour auditer votre site sur les criteres de citabilite IA
 - [Reddit et GEO : la source n°1 citee par les IA](https://detekia.fr/blog/reddit-geo-source-ia) : Strategie Reddit complete pour le GEO et mesure de l'impact
@@ -41,7 +41,7 @@
 
 ## Blog - Technique (6 articles)
 - [Schema.org et IA : guide pratique pour les LLM](https://detekia.fr/blog/schema-org-ia-guide-pratique) : Les 5 schemas JSON-LD prioritaires pour le GEO avec exemples de code
-- [Les 8 criteres GEO qui determinent si une IA vous cite](https://detekia.fr/blog/8-criteres-geo-methodologie-detekia) : Methodologie complete du score GEO Detekia, mesure et ponderation de chaque critere
+- [Les 7 criteres GEO qui determinent si une IA vous cite](https://detekia.fr/blog/8-criteres-geo-methodologie-detekia) : Methodologie complete du score GEO Detekia, mesure et ponderation de chaque critere
 - [llms.txt, robots.txt et crawlabilite IA : le guide technique](https://detekia.fr/blog/llms-txt-robots-crawlabilite-ia) : Configuration robots.txt pour les bots IA et fichier llms.txt
 - [Pourquoi 73 % des sites bloquent les bots IA sans le savoir](https://detekia.fr/blog/sites-bloquent-bots-ia) : Verification et correction du blocage de GPTBot, ClaudeBot et PerplexityBot
 - [FAQ et Schema FAQPage : le combo gagnant GEO](https://detekia.fr/blog/faq-schema-faqpage-combo-ia) : Ecrire des FAQ que les IA citent et implementer le Schema FAQPage

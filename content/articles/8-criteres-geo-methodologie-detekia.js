@@ -46,27 +46,27 @@ function InlineCTA({ href, children }) {
 export default function HuitCriteresGeoMethodologieDetekia() {
   return (
     <>
-      <p>Le score GEO Detekia n'est pas une boîte noire. Derrière chaque <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">note de 0 à 100</InternalLink> se cachent 8 critères précis, mesurés automatiquement à partir de l'analyse de votre site. Comprendre comment chaque critère est évalué, pourquoi il compte, et comment l'améliorer — c'est l'objet de cet article.</p>
+      <p>Le score GEO Detekia n'est pas une boîte noire. Derrière chaque <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">note de 0 à 100</InternalLink> se cachent 7 critères précis, mesurés automatiquement à partir de l'analyse de votre site. Comprendre comment chaque critère est évalué, pourquoi il compte, et comment l'améliorer — c'est l'objet de cet article.</p>
 
       <p>Cette méthodologie est le fruit de plusieurs mois de recherche sur ce qui détermine réellement la citabilité d'un site par les LLM. Elle s'appuie sur les travaux académiques en <InternalLink href="/blog/geo-guide-complet-2026">GEO</InternalLink> (notamment Aggarwal et al., 2023), les guidelines de Google pour l'E-E-A-T, et les observations empiriques faites sur des centaines d'audits.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">Comment interpréter votre score GEO global →</ArrowLink>
 
-      <h2>Vue d'ensemble des 8 critères</h2>
+      <h2>Vue d'ensemble des 7 critères</h2>
 
-      <p>Les 8 critères sont regroupés en trois couches :</p>
+      <p>Les 7 critères sont regroupés en trois couches :</p>
 
       <ul>
-        <li><strong>Couche technique</strong> (ce que les IA peuvent lire) : Extractibilité, Crawlabilité IA</li>
+        <li><strong>Couche technique</strong> (ce que les IA peuvent lire) : Citabilité, Accessibilité IA</li>
         <li><strong>Couche sémantique</strong> (ce que les IA comprennent) : Données structurées, Fraîcheur</li>
         <li><strong>Couche de confiance</strong> (ce que les IA valorisent) : Vérifiabilité, Autorité E-E-A-T, Neutralité éditoriale, Présence externe</li>
       </ul>
 
       <p>Chaque critère est noté de 0 à 100. Le score global est une moyenne pondérée. Les pondérations reflètent l'impact empirique de chaque critère sur la probabilité d'être cité.</p>
 
-      <h2>Les 8 critères en détail</h2>
+      <h2>Les 7 critères en détail</h2>
 
-      <CritereCard numero={1} nom="Extractibilité" poids="Pondération : 20%" couleur="#10A37F">
+      <CritereCard numero={1} nom="Citabilité" poids="Pondération : 20%" couleur="#10A37F">
         <p><strong>Ce que c'est :</strong> La capacité des IA à extraire facilement des informations factuelles de votre contenu.</p>
         <p><strong>Comment c'est mesuré :</strong> Analyse de la structure du contenu — présence de titres clairs (H1, H2, H3), de listes à puces, de données chiffrées, de définitions explicites. On mesure la densité informationnelle et la clarté de l'organisation.</p>
         <p><strong>Pourquoi ça compte :</strong> Les LLM fonctionnent par extraction de patterns. Un texte dense et mal structuré sera paraphrasé de façon approximative ou ignoré. Un contenu avec des faits clairement présentés sera cité littéralement.</p>
@@ -105,7 +105,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={4} nom="Crawlabilité IA" poids="Pondération : 15%" couleur="#1C7DC4">
+      <CritereCard numero={4} nom="Accessibilité IA" poids="Pondération : 15%" couleur="#1C7DC4">
         <p><strong>Ce que c'est :</strong> La capacité des robots des IA à accéder et lire votre site.</p>
         <p><strong>Comment c'est mesuré :</strong> Analyse du robots.txt pour les user-agents IA (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Googlebot-Extended), présence éventuelle d'un llms.txt, vitesse de chargement, accessibilité des pages importantes.</p>
         <p><strong>Pourquoi ça compte :</strong> Un site qui bloque les bots IA dans son robots.txt sera simplement ignoré. Un site lent ou avec du contenu en JavaScript non rendu sera partiellement lu. C'est un prérequis absolu.</p>
@@ -176,13 +176,13 @@ export default function HuitCriteresGeoMethodologieDetekia() {
 
       <h2>Comment les critères s'additionnent</h2>
 
-      <p>Le score global est une moyenne pondérée. Mais il y a une subtilité importante : les critères techniques (Extractibilité, Crawlabilité) agissent comme des <strong>prérequis</strong>. Un site bloquant les bots IA dans son robots.txt aura un score Crawlabilité de 0, ce qui plafonne mécaniquement son score global — peu importe la qualité de son contenu.</p>
+      <p>Le score global est une moyenne pondérée. Mais il y a une subtilité importante : les critères techniques (Citabilité, Accessibilité IA) agissent comme des <strong>prérequis</strong>. Un site bloquant les bots IA dans son robots.txt aura un score Accessibilité IA de 0, ce qui plafonne mécaniquement son score global — peu importe la qualité de son contenu.</p>
 
       <p>L'ordre d'optimisation recommandé :</p>
 
       <ol>
-        <li><strong>Débloquer les bots IA</strong> (Crawlabilité) — prérequis absolu</li>
-        <li><strong>Structurer le contenu</strong> (Extractibilité) — impact immédiat le plus fort</li>
+        <li><strong>Débloquer les bots IA</strong> (Accessibilité IA) — prérequis absolu</li>
+        <li><strong>Structurer le contenu</strong> (Citabilité) — impact immédiat le plus fort</li>
         <li><strong>Ajouter les schemas prioritaires</strong> (Données structurées) — quick win technique</li>
         <li><strong>Renforcer l'autorité</strong> (E-E-A-T) — investissement moyen terme</li>
         <li><strong>Sourcer les affirmations</strong> (Vérifiabilité) — amélioration continue</li>

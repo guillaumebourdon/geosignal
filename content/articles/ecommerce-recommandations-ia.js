@@ -76,7 +76,7 @@ Réservoir de 400 ml. Niveau sonore : 65 dB."`}</code></pre>
 ✅ "Conçu pour les grandes surfaces (jusqu'à 200 m²).
 Pour les petits appartements, un modèle plus compact peut suffire."`}</code></pre>
 
-      <p>Ce positionnement honnête renforce la neutralité éditoriale — un des 8 critères GEO.</p>
+      <p>Ce positionnement honnête renforce la neutralité éditoriale — un des 7 critères GEO.</p>
 
       <h3>Des réponses aux questions d'achat</h3>
 
@@ -258,7 +258,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <p><strong>Solution :</strong> autorisez GPTBot, ClaudeBot et PerplexityBot dans votre <code>robots.txt</code>. Le risque de scraping est faible comparé au coût de l'invisibilité.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Configuration dans llms.txt, robots.txt et crawlabilité IA.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Configuration dans llms.txt, robots.txt et accessibilité IA.</ArrowLink>
 
       <h3>Erreur 4 : pas d'avis clients ou des avis non structurés</h3>
 
@@ -313,7 +313,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <p>Votre boutique en ligne est-elle citée quand un client demande à ChatGPT une recommandation dans votre secteur ? Faites le test.</p>
 
-      <p>Analysez votre site sur Detekia — score sur 100, 8 critères GEO, recommandations priorisées. En moins de 60 secondes, sans inscription.</p>
+      <p>Analysez votre site sur Detekia — score sur 100, 7 critères GEO, recommandations priorisées. En moins de 60 secondes, sans inscription.</p>
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>

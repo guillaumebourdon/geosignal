@@ -82,7 +82,7 @@ Disallow: /`}</code></pre>
 
       <p>Go further by creating an <code>llms.txt</code> file at the root of your site. This file, specifically designed for AI crawlers, tells them which pages are most important and how your site is structured.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Full technical guide in llms.txt, robots.txt, and AI crawlability.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Full technical guide in llms.txt, robots.txt, and AI Accessibility.</ArrowLink>
 
       <h2>Reason #3: no structured data</h2>
 
@@ -171,7 +171,7 @@ Disallow: /`}</code></pre>
 
       <p>You might think: "Why not just ask ChatGPT if my site is well optimized?"</p>
 
-      <p>The answer is simple: ChatGPT does not see your site the way a technical audit does. When you ask it the question, it gives you a generic opinion based on what it knows (or thinks it knows) about your URL. It does not scan the actual DOM, does not check your <code>robots.txt</code>, does not count your Schema.org tags, and does not measure the extractability of your content.</p>
+      <p>The answer is simple: ChatGPT does not see your site the way a technical audit does. When you ask it the question, it gives you a generic opinion based on what it knows (or thinks it knows) about your URL. It does not scan the actual DOM, does not check your <code>robots.txt</code>, does not count your Schema.org tags, and does not measure the citability of your content.</p>
 
       <p>An automated GEO audit does the opposite: it analyzes your page's actual source code, objectively measures each citation-worthiness criterion, and gives you a quantified score with recommendations prioritized by impact.</p>
 
@@ -184,7 +184,7 @@ Disallow: /`}</code></pre>
       <ol>
         <li><strong>Day 1 — Diagnostic.</strong> Run the 3-question test (recommendation, expertise, direct name) on ChatGPT, Gemini, and Perplexity. Run a GEO audit on Detekia. Record your baseline score.</li>
         <li><strong>Day 2 — Crawlability.</strong> Check your <code>robots.txt</code>. Remove AI bot blocks. Create your <code>llms.txt</code> file.</li>
-        <li><strong>Day 3 — Extractability.</strong> Rewrite the first 100 words of your 5 most important pages. Add a direct answer at the top of each page.</li>
+        <li><strong>Day 3 — Citability.</strong> Rewrite the first 100 words of your 5 most important pages. Add a direct answer at the top of each page.</li>
         <li><strong>Day 4 — Structured data.</strong> Implement <code>Organization</code> on the homepage, <code>FAQPage</code> on your FAQ page, <code>Article</code> on your editorial content.</li>
         <li><strong>Day 5 — Evidence.</strong> Review your key pages. Replace every vague claim with a number, a source, or a concrete example.</li>
         <li><strong>Day 6 — Freshness.</strong> Update your 3 most important pieces of content. Add visible update dates.</li>
@@ -201,11 +201,11 @@ Disallow: /`}</code></pre>
 
       <h3>My site ranks #1 on Google but is absent from ChatGPT. Why?</h3>
 
-      <p>Ranking well in SEO is a necessary foundation, but not sufficient. AI engines add extra criteria: content extractability, structured data, AI bot crawlability, neutral tone. Your site can be optimized for Google without being optimized for generative engines.</p>
+      <p>Ranking well in SEO is a necessary foundation, but not sufficient. AI engines add extra criteria: content citability, structured data, AI bot crawlability, neutral tone. Your site can be optimized for Google without being optimized for generative engines.</p>
 
       <h3>How long before AI cites me?</h3>
 
-      <p>Technical fixes (<code>robots.txt</code>, Schema.org) take effect in 2 to 4 weeks. Content improvements (extractability, evidence) are reflected in 4 to 8 weeks. Building external authority (mentions, Reddit) takes 2 to 3 months. The sooner you start, the sooner you will be visible.</p>
+      <p>Technical fixes (<code>robots.txt</code>, Schema.org) take effect in 2 to 4 weeks. Content improvements (citability, evidence) are reflected in 4 to 8 weeks. Building external authority (mentions, Reddit) takes 2 to 3 months. The sooner you start, the sooner you will be visible.</p>
 
       <h3>Does this work for all industries?</h3>
 
@@ -215,7 +215,7 @@ Disallow: /`}</code></pre>
 
       <p>You cannot fix what you do not measure. The first step is knowing where you stand: what your GEO Score is, which criteria are failing, and where to begin.</p>
 
-      <p>Analyze your site for free on Detekia — score out of 100, 8 criteria, recommendations prioritized by impact, in under 60 seconds. No signup required.</p>
+      <p>Analyze your site for free on Detekia — score out of 100, 7 criteria, recommendations prioritized by impact, in under 60 seconds. No signup required.</p>
     </>
   );
 }

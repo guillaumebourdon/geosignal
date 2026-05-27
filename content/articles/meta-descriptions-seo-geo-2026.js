@@ -89,13 +89,13 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <p>C'est ici que 2026 change la donne. Les moteurs IA n'évaluent pas une meta description comme Google. Ils cherchent des informations extractibles, vérifiables et autonomes. Voici les 5 critères GEO d'une meta description optimale.</p>
 
-      <h3>1. Extractibilité : structure sujet-verbe-complément claire</h3>
+      <h3>1. Citabilité : structure sujet-verbe-complément claire</h3>
 
       <p>Les IA extraient des passages complets. Une meta description bien structurée grammaticalement sera reprise telle quelle. Une succession de fragments ne le sera pas.</p>
 
       <pre><code>{`❌ "Votre partenaire digital. Solutions innovantes. Depuis 2005."
 
-✅ "Detekia analyse votre site sur 8 critères GEO et génère un score de citabilité IA sur 100 en moins de 60 secondes."`}</code></pre>
+✅ "Detekia analyse votre site sur 7 critères GEO et génère un score de citabilité IA sur 100 en moins de 60 secondes."`}</code></pre>
 
       <p>La deuxième version est une phrase complète que l'IA peut intégrer directement dans sa réponse.</p>
 
@@ -105,7 +105,7 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <pre><code>{`❌ "Le meilleur outil du marché pour votre visibilité en ligne."
 
-✅ "Analysez votre site sur 8 critères GEO validés par Princeton/KDD 2024. Score sur 100 en moins de 60 secondes, gratuit."`}</code></pre>
+✅ "Analysez votre site sur 7 critères GEO validés par Princeton/KDD 2024. Score sur 100 en moins de 60 secondes, gratuit."`}</code></pre>
 
       <h3>3. Entity-richness : nommer les entités</h3>
 
@@ -113,7 +113,7 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <pre><code>{`❌ "Découvrez nos solutions pour améliorer votre présence en ligne."
 
-✅ "Detekia mesure la visibilité de votre site dans ChatGPT, Gemini et Perplexity via 8 critères GEO (Princeton/KDD 2024)."`}</code></pre>
+✅ "Detekia mesure la visibilité de votre site dans ChatGPT, Gemini et Perplexity via 7 critères GEO (Princeton/KDD 2024)."`}</code></pre>
 
       <h3>4. Citation-worthiness : peut-elle servir de réponse autonome ?</h3>
 
@@ -197,7 +197,7 @@ Après : "Agence immobilière Paris 11e : 320 biens vendus en 2025, délai moyen
         <li><strong>Mot-clé principal dans les 60 premiers caractères</strong> — signal SEO fort</li>
         <li><strong>Au moins 1 donnée chiffrée</strong> (pourcentage, volume, note, date) — critère de vérifiabilité GEO</li>
         <li><strong>Au moins 1 entité nommée</strong> (marque, lieu, produit, technologie) — entity-richness</li>
-        <li><strong>Phrase complète sujet-verbe-complément</strong> — extractibilité IA</li>
+        <li><strong>Phrase complète sujet-verbe-complément</strong> — citabilité IA</li>
         <li><strong>Compréhensible sans contexte</strong> — indépendance contextuelle</li>
         <li><strong>Pas de superlatifs non prouvés</strong> ("le meilleur", "leader") — neutralité éditoriale</li>
         <li><strong>Unique pour cette page</strong> — pas de duplication</li>
@@ -221,10 +221,10 @@ Après : "Agence immobilière Paris 11e : 320 biens vendus en 2025, délai moyen
 
       <ul>
         <li><strong>Test manuel</strong> : posez à ChatGPT ou Perplexity une question liée à votre page. Votre site est-il cité ? L'extrait utilisé provient-il de votre meta description ?</li>
-        <li><strong>Audit automatisé</strong> : Detekia mesure l'extractibilité de votre contenu sur 8 critères GEO. Le score d'extractibilité (25 points sur 100) inclut l'évaluation de vos méta-données.</li>
+        <li><strong>Audit automatisé</strong> : Detekia mesure l'citabilité de votre contenu sur 7 critères GEO. Le score d'citabilité (25 points sur 100) inclut l'évaluation de vos méta-données.</li>
       </ul>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 8 critères GEO qui déterminent si une IA vous cite</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 7 critères GEO qui déterminent si une IA vous cite</ArrowLink>
 
       <h2>Questions fréquentes</h2>
 
@@ -234,7 +234,7 @@ Après : "Agence immobilière Paris 11e : 320 biens vendus en 2025, délai moyen
 
       <h3>Faut-il écrire des meta descriptions différentes pour le SEO et le GEO ?</h3>
 
-      <p>Non. L'objectif est d'écrire UNE meta description qui performe sur les deux fronts. La formule FACTS combine les critères SEO (CTR, mot-clé, longueur) et GEO (extractibilité, factualité, entity-richness) dans un seul texte de 130-155 caractères.</p>
+      <p>Non. L'objectif est d'écrire UNE meta description qui performe sur les deux fronts. La formule FACTS combine les critères SEO (CTR, mot-clé, longueur) et GEO (citabilité, factualité, entity-richness) dans un seul texte de 130-155 caractères.</p>
 
       <h3>Les meta descriptions impactent-elles directement le classement Google ?</h3>
 

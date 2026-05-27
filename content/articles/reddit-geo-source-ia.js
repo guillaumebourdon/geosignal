@@ -62,7 +62,7 @@ export default function RedditGeoSourceIa() {
       <p>La présence sur Reddit agit sur plusieurs critères du score GEO Detekia :</p>
 
       <ul>
-        <li><strong>Présence externe (5 points)</strong> — des mentions actives sur des subreddits pertinents renforcent directement ce critère, en complément de vos <InternalLink href="/blog/backlinks-geo-autorite-domaine-ia">backlinks et signaux d'autorité de domaine</InternalLink>. C'est le plus évident.</li>
+        <li><strong>Présence externe (10 points)</strong> — des mentions actives sur des subreddits pertinents renforcent directement ce critère, en complément de vos <InternalLink href="/blog/backlinks-geo-autorite-domaine-ia">backlinks et signaux d'autorité de domaine</InternalLink>. C'est le plus évident.</li>
         <li><strong><InternalLink href="/blog/eeat-ia-experience-expertise">Autorité E-E-A-T</InternalLink> (15 points)</strong> — quand votre marque est mentionnée positivement dans des discussions Reddit, les IA la perçoivent comme une entité reconnue par des pairs. C'est l'équivalent GEO du bouche-à-oreille.</li>
         <li><strong>Vérifiabilité (20 points)</strong> — les discussions Reddit contenant des retours d'expérience sur votre produit/service créent des données vérifiables que les IA peuvent croiser avec votre propre site.</li>
       </ul>

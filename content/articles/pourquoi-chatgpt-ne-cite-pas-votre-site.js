@@ -103,7 +103,7 @@ Disallow: /`}</code></pre>
 
       <p>Allez plus loin en créant un fichier <code>llms.txt</code> à la racine de votre site. Ce fichier, spécifiquement conçu pour les crawlers IA, leur indique quelles pages sont les plus importantes et comment votre site est structuré.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Guide technique complet dans llms.txt, robots.txt et crawlabilité IA.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Guide technique complet dans llms.txt, robots.txt et accessibilité IA.</ArrowLink>
 
       <h2>Raison n°3 : aucune donnée structurée</h2>
 
@@ -192,7 +192,7 @@ Disallow: /`}</code></pre>
 
       <p>Vous pourriez vous dire : "Pourquoi ne pas simplement demander à ChatGPT si mon site est bien optimisé ?"</p>
 
-      <p>La réponse est simple : ChatGPT ne voit pas votre site de la même manière qu'un audit technique. Quand vous lui posez la question, il vous donne un avis générique basé sur ce qu'il sait (ou croit savoir) de votre URL. Il ne scanne pas le DOM réel, ne vérifie pas votre <code>robots.txt</code>, ne compte pas vos balises Schema.org, ne mesure pas l'extractibilité de vos contenus.</p>
+      <p>La réponse est simple : ChatGPT ne voit pas votre site de la même manière qu'un audit technique. Quand vous lui posez la question, il vous donne un avis générique basé sur ce qu'il sait (ou croit savoir) de votre URL. Il ne scanne pas le DOM réel, ne vérifie pas votre <code>robots.txt</code>, ne compte pas vos balises Schema.org, ne mesure pas l'citabilité de vos contenus.</p>
 
       <p>Un audit GEO automatisé fait l'inverse : il analyse le code source réel de votre page, mesure objectivement chaque critère de citabilité, et vous donne un score quantifié avec des recommandations priorisées par impact.</p>
 
@@ -204,8 +204,8 @@ Disallow: /`}</code></pre>
 
       <ol>
         <li><strong>Jour 1 — Diagnostic.</strong> Faites le test des 3 questions (recommandation, expertise, nom direct) sur ChatGPT, Gemini et Perplexity. Lancez un audit GEO sur Detekia. Notez votre score de référence.</li>
-        <li><strong>Jour 2 — Crawlabilité.</strong> Vérifiez votre <code>robots.txt</code>. Supprimez les blocages des bots IA. Créez votre fichier <code>llms.txt</code>.</li>
-        <li><strong>Jour 3 — Extractibilité.</strong> Réécrivez les 100 premiers mots de vos 5 pages les plus importantes. Ajoutez une réponse directe en tête de chaque page.</li>
+        <li><strong>Jour 2 — Accessibilité IA.</strong> Vérifiez votre <code>robots.txt</code>. Supprimez les blocages des bots IA. Créez votre fichier <code>llms.txt</code>.</li>
+        <li><strong>Jour 3 — Citabilité.</strong> Réécrivez les 100 premiers mots de vos 5 pages les plus importantes. Ajoutez une réponse directe en tête de chaque page.</li>
         <li><strong>Jour 4 — Données structurées.</strong> Implémentez <code>Organization</code> sur la homepage, <code>FAQPage</code> sur votre page FAQ, <code>Article</code> sur vos contenus éditoriaux.</li>
         <li><strong>Jour 5 — Preuves.</strong> Passez en revue vos pages clés. Remplacez chaque affirmation vague par un chiffre, une source ou un exemple concret.</li>
         <li><strong>Jour 6 — Fraîcheur.</strong> Mettez à jour vos 3 contenus les plus importants. Ajoutez des dates de mise à jour visibles.</li>
@@ -222,11 +222,11 @@ Disallow: /`}</code></pre>
 
       <h3>Mon site est premier sur Google mais absent de ChatGPT. Pourquoi ?</h3>
 
-      <p>Être bien classé en SEO est une fondation nécessaire, mais pas suffisante. Les IA ajoutent des critères supplémentaires : extractibilité du contenu, données structurées, crawlabilité par les bots IA, neutralité du ton. Votre site peut être optimisé pour Google sans l'être pour les moteurs génératifs.</p>
+      <p>Être bien classé en SEO est une fondation nécessaire, mais pas suffisante. Les IA ajoutent des critères supplémentaires : citabilité du contenu, données structurées, accessibilité IA par les bots IA, neutralité du ton. Votre site peut être optimisé pour Google sans l'être pour les moteurs génératifs.</p>
 
       <h3>Combien de temps avant que les IA me citent ?</h3>
 
-      <p>Les corrections techniques (<code>robots.txt</code>, Schema.org) prennent effet en 2 à 4 semaines. Les améliorations de contenu (extractibilité, preuves) se reflètent en 4 à 8 semaines. La construction d'autorité externe (mentions, Reddit) prend 2 à 3 mois. Le plus tôt vous commencez, le plus tôt vous serez visible.</p>
+      <p>Les corrections techniques (<code>robots.txt</code>, Schema.org) prennent effet en 2 à 4 semaines. Les améliorations de contenu (citabilité, preuves) se reflètent en 4 à 8 semaines. La construction d'autorité externe (mentions, Reddit) prend 2 à 3 mois. Le plus tôt vous commencez, le plus tôt vous serez visible.</p>
 
       <h3>Est-ce que ça marche pour tous les secteurs ?</h3>
 
@@ -236,7 +236,7 @@ Disallow: /`}</code></pre>
 
       <p>Vous ne pouvez pas corriger ce que vous ne mesurez pas. La première étape est de savoir où vous en êtes : quel est votre score GEO, quels critères sont défaillants, et par quoi commencer.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 8 critères, recommandations priorisées, en moins de 60 secondes. Sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 7 critères, recommandations priorisées, en moins de 60 secondes. Sans inscription.</p>
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

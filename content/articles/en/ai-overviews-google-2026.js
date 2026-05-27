@@ -30,7 +30,7 @@ export default function AiOverviewsGoogle2026() {
 
       <p>In practice, this means that for AI Overviews, traditional SEO is the prerequisite. You need to be in Google's top 10 for a query before you can hope to be cited in that query's AI Overview.</p>
 
-      <p>It's the GEO layer that then makes the difference: among the 10 organic results, which one gets selected as the AI Overview source? That's where your content's extractability, structure, and verifiability come into play.</p>
+      <p>It's the GEO layer that then makes the difference: among the 10 organic results, which one gets selected as the AI Overview source? That's where your content's citability, structure, and verifiability come into play.</p>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO: what's different in 2026 →</ArrowLink>
 
@@ -169,7 +169,7 @@ export default function AiOverviewsGoogle2026() {
 
       <p><strong>Third-party tools</strong> — tools like Semrush and Ahrefs are starting to track AI Overview presence in their keyword reports. Check whether your current SEO tools offer this feature.</p>
 
-      <p><strong>GEO audit</strong> — the selection criteria for AI Overviews overlap significantly with the 8 criteria of the Detekia GEO score, particularly extractability, structured data, and verifiability.</p>
+      <p><strong>GEO audit</strong> — the selection criteria for AI Overviews overlap significantly with the 7 criteria of the Detekia GEO score, particularly citability, structured data, and verifiability.</p>
 
       <h2>Frequently asked questions</h2>
 
@@ -187,9 +187,9 @@ export default function AiOverviewsGoogle2026() {
 
       <h3>My site ranks #1 on Google but isn't cited in the AI Overview. Why?</h3>
 
-      <p>Ranking first in SEO doesn't guarantee being the AI Overview source. Google AI evaluates additional criteria: content extractability, structure, comprehensiveness, structured data. A competitor in position 4 with better-structured content can be preferred.</p>
+      <p>Ranking first in SEO doesn't guarantee being the AI Overview source. Google AI evaluates additional criteria: content citability, structure, comprehensiveness, structured data. A competitor in position 4 with better-structured content can be preferred.</p>
 
-      <ArrowLink href="/">Analyze your site — GEO score out of 100, 8 criteria, in under 60 seconds →</ArrowLink>
+      <ArrowLink href="/">Analyze your site — GEO score out of 100, 7 criteria, in under 60 seconds →</ArrowLink>
     </>
   );
 }

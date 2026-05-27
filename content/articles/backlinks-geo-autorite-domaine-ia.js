@@ -83,7 +83,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <p>Le cadre E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) de Google influence directement la citabilité IA. Ce n'est pas un hasard : les IA s'appuient sur les mêmes signaux pour juger si une source mérite d'être citée.</p>
 
-      <p>L'étude de référence de Princeton sur le GEO (Aggarwal et al., KDD 2024) a montré que l'ajout de <strong>marqueurs d'autorité</strong> dans un contenu — citations académiques, données chiffrées, credentials de l'auteur — augmente les citations IA de 30 à 40 %. Ce signal reste l'un des plus puissants de la <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">méthodologie GEO à 8 critères</InternalLink>.</p>
+      <p>L'étude de référence de Princeton sur le GEO (Aggarwal et al., KDD 2024) a montré que l'ajout de <strong>marqueurs d'autorité</strong> dans un contenu — citations académiques, données chiffrées, credentials de l'auteur — augmente les citations IA de 30 à 40 %. Ce signal reste l'un des plus puissants de la <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">méthodologie GEO à 7 critères</InternalLink>.</p>
 
       <p>Concrètement, les IA cherchent à répondre à cette question implicite : "cette source est-elle légitime pour répondre à cette requête ?" Les signaux qu'elles utilisent pour y répondre recoupent largement les composantes E-E-A-T :</p>
 

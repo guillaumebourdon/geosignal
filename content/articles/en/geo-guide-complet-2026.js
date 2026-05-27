@@ -76,7 +76,7 @@ export default function GeoGuideComplet2026() {
             <li><strong>Authority</strong>: is the site recognized as an expert on the topic? Are there third-party mentions, backlinks, media presence?</li>
             <li><strong>Structure</strong>: is the content organized in a readable way, with direct answers, clear subheadings, structured data (Schema.org)?</li>
             <li><strong>Freshness</strong>: is the content recent or regularly updated?</li>
-            <li><strong>Extractability</strong>: can the AI easily extract a sentence, paragraph, or data point to integrate into its answer?</li>
+            <li><strong>Citability</strong>: can the AI easily extract a sentence, paragraph, or data point to integrate into its answer?</li>
           </ul>
         </li>
         <li><strong>Synthesis.</strong> The AI rephrases and combines information from selected sources to generate a coherent answer, sometimes citing the sources.</li>
@@ -84,11 +84,11 @@ export default function GeoGuideComplet2026() {
 
       <p>The direct consequence: if your content is vague, poorly structured, unsourced, or difficult to crawl, the AI will ignore it — even if your site ranks first on Google.</p>
 
-      <h2>The 8 criteria that determine if AI cites you</h2>
+      <h2>The 7 criteria that determine if AI cites you</h2>
 
       <p>At Detekia, we formalized these signals into 8 measurable criteria, weighted by their real impact on AI citation-worthiness. This framework powers our GEO Score out of 100.</p>
 
-      <h3>1. Extractability & direct answer — 25 points</h3>
+      <h3>1. Citability & direct answer — 25 points</h3>
 
       <p>This is the heaviest criterion, and for good reason: AI engines look for answers that are ready to cite. If your page starts with jargon or a vague introduction, the AI will move on to the next source.</p>
 
@@ -106,13 +106,13 @@ export default function GeoGuideComplet2026() {
 
       <p><strong>What this means:</strong> sign your content, display your expertise, create your About page, earn mentions on third-party sites.</p>
 
-      <h3>4. AI crawlability — 15 points</h3>
+      <h3>4. AI Accessibility — 15 points</h3>
 
       <p>AI bots (GPTBot, PerplexityBot, ClaudeBot, Google-Extended) must be able to access your site. If your <code>robots.txt</code> blocks them — which is often the default — they simply cannot read your content.</p>
 
       <p><strong>What this means:</strong> check your <code>robots.txt</code>, set up an <code>llms.txt</code> file, and ensure your content is accessible without mandatory JavaScript.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Technical details in our article llms.txt, robots.txt, and AI crawlability.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Technical details in our article llms.txt, robots.txt, and AI Accessibility.</ArrowLink>
 
       <h3>5. Structured data — 10 points</h3>
 
@@ -134,7 +134,7 @@ export default function GeoGuideComplet2026() {
 
       <p><strong>What this means:</strong> build your presence on Reddit, specialized forums, and industry publications. Each mention strengthens your "LLM Share of Voice."</p>
 
-      <h3>8. Freshness & maintenance — 5 points</h3>
+      <h3>8. Freshness & timeliness — 5 points</h3>
 
       <p>Regularly updated content signals to AI engines that it is reliable and current. Pages with outdated dates or stale information are cited less often.</p>
 
@@ -142,7 +142,7 @@ export default function GeoGuideComplet2026() {
 
       <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">To understand in detail how each criterion is measured and weighted, read The 8 GEO criteria that determine if AI cites you.</ArrowLink>
 
-      <InlineCTA href="/">Want to know your score on these 8 criteria?</InlineCTA>
+      <InlineCTA href="/">Want to know your score on these 7 criteria?</InlineCTA>
 
       <h2>7 concrete actions to optimize your site</h2>
 
@@ -195,7 +195,7 @@ Disallow: /`}</code></pre>
 
       <p>...you are actively blocking ChatGPT. Remove these restrictions (unless you have a documented strategic reason) and create an <code>llms.txt</code> file at the root of your site to guide AI crawlers.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Full configuration in llms.txt, robots.txt, and AI crawlability.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Full configuration in llms.txt, robots.txt, and AI Accessibility.</ArrowLink>
 
       <h3>Action 5 — Create FAQ content with natural-language questions</h3>
 
@@ -291,7 +291,7 @@ Disallow: /`}</code></pre>
 
       <p>The good news: the actions you need to take are concrete, measurable, and accessible. Structure your content to be extractable, add verifiable evidence, open access to AI bots, and track your score over time.</p>
 
-      <p>Start by measuring where you stand. Analyze your site for free on Detekia — score out of 100, 8 criteria, recommendations prioritized by impact, in under 60 seconds.</p>
+      <p>Start by measuring where you stand. Analyze your site for free on Detekia — score out of 100, 7 criteria, recommendations prioritized by impact, in under 60 seconds.</p>
     </>
   );
 }

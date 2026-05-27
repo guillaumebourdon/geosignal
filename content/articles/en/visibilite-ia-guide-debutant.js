@@ -70,7 +70,7 @@ export default function VisibiliteIaGuideDebutant() {
 
       <p>Aim for 5 to 10 external links per main page pointing to recognized sources: academic studies, analyst reports, press articles.</p>
 
-      <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">How the Detekia GEO Score works: the 8 criteria explained</ArrowLink>
+      <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">How the Detekia GEO Score works: the 7 criteria explained</ArrowLink>
 
       <h3>3. A clear identity (E-E-A-T)</h3>
 

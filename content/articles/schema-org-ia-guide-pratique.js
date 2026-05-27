@@ -61,19 +61,18 @@ export default function SchemaOrgIaGuidePratique() {
 
       <p>Les données structurées répondent exactement à ces questions, dans un format que les machines lisent sans interprétation.</p>
 
-      <p>Concrètement, Schema.org impacte 3 des <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 critères du score GEO Detekia</InternalLink> :</p>
+      <p>Concrètement, Schema.org impacte 2 des <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères du score GEO Detekia</InternalLink> :</p>
 
       <ul>
-        <li><strong>Données structurées (10 points)</strong> — impact direct et mesurable</li>
-        <li><strong>Autorité & E-E-A-T (15 points)</strong> — le schema <code>Organization</code> et les informations d'auteur renforcent les signaux de crédibilité</li>
-        <li><strong>Extractibilité (25 points)</strong> — le schema <code>FAQPage</code> <InternalLink href="/blog/faq-schema-faqpage-combo-ia">structure vos contenus dans un format nativement extractible</InternalLink> par les IA</li>
+        <li><strong>Autorité & E-E-A-T (15 points)</strong> — les signaux de données structurées (schemas <code>Organization</code>, <code>Article</code>, <code>FAQPage</code>) sont désormais évalués dans ce critère, aux côtés des informations d'auteur et des signaux de crédibilité</li>
+        <li><strong>Citabilité (25 points)</strong> — le schema <code>FAQPage</code> <InternalLink href="/blog/faq-schema-faqpage-combo-ia">structure vos contenus dans un format nativement extractible</InternalLink> par les IA</li>
       </ul>
 
-      <p>Soit un impact potentiel sur <strong>50 points sur 100</strong> de votre score GEO.</p>
+      <p>Soit un impact potentiel sur <strong>40 points sur 100</strong> de votre score GEO.</p>
 
       <h2>Les 5 schemas prioritaires pour le GEO</h2>
 
-      <p>Vous n'avez pas besoin d'implémenter les 806 types de Schema.org. Pour le GEO, 5 schemas couvrent 90 % de l'impact. Voici lesquels, dans l'ordre de priorité. Pour comprendre le poids de chaque critère dans le score GEO, consultez <Link href="/blog/8-criteres-geo-methodologie-detekia" style={{ color: '#D97757', textDecoration: 'none' }}>les 8 critères GEO détaillés</Link>.</p>
+      <p>Vous n'avez pas besoin d'implémenter les 806 types de Schema.org. Pour le GEO, 5 schemas couvrent 90 % de l'impact. Voici lesquels, dans l'ordre de priorité. Pour comprendre le poids de chaque critère dans le score GEO, consultez <Link href="/blog/8-criteres-geo-methodologie-detekia" style={{ color: '#D97757', textDecoration: 'none' }}>les 7 critères GEO détaillés</Link>.</p>
 
       <h3>1. Organization — votre identité</h3>
 
@@ -130,7 +129,7 @@ export default function SchemaOrgIaGuidePratique() {
       "name": "Comment améliorer la visibilité de mon site dans ChatGPT ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pour être cité par ChatGPT, optimisez l'extractibilité de votre contenu (réponses directes dans les 100 premiers mots), ajoutez des données structurées Schema.org, vérifiez que votre robots.txt n'exclut pas GPTBot, et sourcez vos affirmations avec des données vérifiables."
+        "text": "Pour être cité par ChatGPT, optimisez l'citabilité de votre contenu (réponses directes dans les 100 premiers mots), ajoutez des données structurées Schema.org, vérifiez que votre robots.txt n'exclut pas GPTBot, et sourcez vos affirmations avec des données vérifiables."
       }
     },
     {
@@ -163,7 +162,7 @@ export default function SchemaOrgIaGuidePratique() {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "GEO : le guide complet pour être cité par les IA en 2026",
-  "description": "Définition du GEO, 8 critères de citabilité, 7 actions concrètes pour optimiser votre site.",
+  "description": "Définition du GEO, 7 critères de citabilité, 7 actions concrètes pour optimiser votre site.",
   "author": {
     "@type": "Person",
     "name": "Guillaume Bourdon",
@@ -219,7 +218,7 @@ export default function SchemaOrgIaGuidePratique() {
 
       <h3>5. BreadcrumbList — votre architecture</h3>
 
-      <p>Le fil d'Ariane balisé aide les IA à comprendre la hiérarchie de votre site : quelle page est parente de quelle autre, comment le contenu s'organise. C'est un signal de structure qui renforce la crawlabilité.</p>
+      <p>Le fil d'Ariane balisé aide les IA à comprendre la hiérarchie de votre site : quelle page est parente de quelle autre, comment le contenu s'organise. C'est un signal de structure qui renforce l'accessibilité IA.</p>
 
       <p><strong>Où l'implémenter :</strong> sur toutes les pages internes.</p>
 
@@ -276,7 +275,7 @@ export default function SchemaOrgIaGuidePratique() {
         <li><code>HowTo</code> — étapes d'utilisation de votre outil. Format très extractible par les IA.</li>
       </ul>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Avant d'implémenter les schemas, vérifiez que votre site est bien crawlable par les bots IA : llms.txt, robots.txt et crawlabilité IA.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Avant d'implémenter les schemas, vérifiez que votre site est bien crawlable par les bots IA : llms.txt, robots.txt et accessibilité IA.</ArrowLink>
 
       <h2>Implémentation technique</h2>
 
@@ -425,7 +424,7 @@ export default function HomePage() {
 
       <h3>Les données structurées suffisent-elles pour être cité par les IA ?</h3>
 
-      <p>Non. Elles représentent un des 8 critères du score GEO (10 points directs + impact indirect sur l'autorité et l'extractibilité). Mais sans contenu de qualité, sans crawlabilité et sans présence externe, le balisage seul ne suffit pas. C'est un accélérateur, pas un substitut.</p>
+      <p>Non. Elles représentent un des 7 critères du score GEO (10 points directs + impact indirect sur l'autorité et l'citabilité). Mais sans contenu de qualité, sans accessibilité IA et sans présence externe, le balisage seul ne suffit pas. C'est un accélérateur, pas un substitut.</p>
 
       <h3>Combien de temps avant de voir l'impact ?</h3>
 

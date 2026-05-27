@@ -77,7 +77,7 @@ export default function SitesBloquentBotsIA() {
 
       <h3>Step 3: Run an automated audit</h3>
 
-      <p>Detekia automatically checks your site's crawlability by AI bots. The "AI Crawlability" criterion in our GEO score detects <code>robots.txt</code> blocks, the absence of an <code>llms.txt</code> file, indexation issues, and whether AI bots are present in your configuration.</p>
+      <p>Detekia automatically checks your site's crawlability by AI bots. The "AI Accessibility" criterion in our GEO score detects <code>robots.txt</code> blocks, the absence of an <code>llms.txt</code> file, indexation issues, and whether AI bots are present in your configuration.</p>
 
       <InlineCTA href="/">Check if AI bots can access your website — free, under 60 seconds.</InlineCTA>
 
@@ -161,7 +161,7 @@ your services, and your value proposition.`}</code></pre>
 
       <p>This file helps AI engines understand your site's structure and identify the most important pages. It is the equivalent of a sitemap for AI engines.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Complete guide: llms.txt, robots.txt, and AI crawlability</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Complete guide: llms.txt, robots.txt, and AI Accessibility</ArrowLink>
 
       <h3>3. Check security plugins and rules</h3>
 
@@ -207,7 +207,7 @@ your services, and your value proposition.`}</code></pre>
 
       <h2>Check your crawlability now</h2>
 
-      <p>AI crawlability is one of the 8 criteria in the Detekia GEO score. It is also the simplest criterion to fix: a 2-line change in your <code>robots.txt</code> may be all it takes to unlock your AI visibility.</p>
+      <p>AI Accessibility is one of the 7 criteria in the Detekia GEO score. It is also the simplest criterion to fix: a 2-line change in your <code>robots.txt</code> may be all it takes to unlock your AI visibility.</p>
 
       <p>Detekia automatically analyzes your <code>robots.txt</code> file, detects the presence or absence of an <code>llms.txt</code>, and verifies whether your content is accessible to AI crawlers. The diagnostic is free and takes under 60 seconds.</p>
 

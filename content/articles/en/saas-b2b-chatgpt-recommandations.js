@@ -205,7 +205,7 @@ Solution: automation with YourTool. Result: -40% tickets in 3 months."
 
       <h3>The 8-criteria GEO audit</h3>
 
-      <p>Every page on your site can be evaluated against the <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 GEO criteria</InternalLink> that determine AI citability: extractability, verifiability, authority, crawlability, structured data, neutrality, external presence, freshness.</p>
+      <p>Every page on your site can be evaluated against the <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 GEO criteria</InternalLink> that determine AI citability: citability, verifiability, authority, crawlability, structured data, neutrality, external presence, freshness.</p>
 
       <ArrowLink href="/blog/audit-geo-visibilite-ia">GEO audit: how to evaluate your AI visibility →</ArrowLink>
 

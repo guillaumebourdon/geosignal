@@ -160,7 +160,7 @@ export default function CommentChatgptChoisitSesSources() {
 
       <h3>Automated analysis with Detekia</h3>
 
-      <p>Manual testing provides qualitative insight, but it's not reproducible and only covers a sample of queries. <InternalLink href="/">Detekia</InternalLink> automates the diagnosis by analyzing your site across the 8 GEO criteria: content extractability, information verifiability, E-E-A-T authority, AI crawlability, structured data, editorial neutrality, external presence, and freshness.</p>
+      <p>Manual testing provides qualitative insight, but it's not reproducible and only covers a sample of queries. <InternalLink href="/">Detekia</InternalLink> automates the diagnosis by analyzing your site across the 8 GEO criteria: content citability, information verifiability, E-E-A-T authority, AI Accessibility, structured data, editorial neutrality, external presence, and freshness.</p>
 
       <p>The score out of 100 gives you an objective, time-comparable measure. Prioritized recommendations tell you exactly what to fix first to maximize your impact.</p>
 

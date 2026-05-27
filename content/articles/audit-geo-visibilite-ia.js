@@ -43,8 +43,8 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>Ce qu'un audit GEO mesure :</p>
       <ul>
-        <li>Votre contenu peut-il être extrait et cité par une IA ? (extractibilité)</li>
-        <li>Les bots IA peuvent-ils accéder à votre site ? (crawlabilité)</li>
+        <li>Votre contenu peut-il être extrait et cité par une IA ? (citabilité)</li>
+        <li>Les bots IA peuvent-ils accéder à votre site ? (accessibilité IA)</li>
         <li>Votre site est-il compris par les machines ? (données structurées)</li>
         <li>Votre contenu est-il perçu comme fiable ? (vérifiabilité, autorité, neutralité)</li>
         <li>Existez-vous en dehors de votre propre site ? (présence externe)</li>
@@ -61,7 +61,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>L'audit GEO mesure votre potentiel de citation — les conditions techniques et éditoriales qui maximisent vos chances d'être sélectionné comme source par les IA.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 8 critères GEO qui déterminent si une IA vous cite →</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 7 critères GEO qui déterminent si une IA vous cite →</ArrowLink>
 
       <h2>Étape 1 — Le test de citation (15 minutes)</h2>
 
@@ -103,13 +103,13 @@ export default function AuditGeoVisibiliteIa() {
 
       <h3>Ce que les résultats vous disent</h3>
 
-      <p>Si vous n'apparaissez nulle part mais que vos concurrents sont cités, le problème est probablement technique (crawlabilité, données structurées) ou éditorial (extractibilité, contenu).</p>
+      <p>Si vous n'apparaissez nulle part mais que vos concurrents sont cités, le problème est probablement technique (accessibilité IA, données structurées) ou éditorial (citabilité, contenu).</p>
 
       <p>Si personne n'apparaît dans votre secteur, c'est une opportunité : le premier à s'optimiser raflera les citations.</p>
 
       <p>Si vous apparaissez sur certaines requêtes mais pas d'autres, comparez les pages correspondantes : celle qui est citée a probablement quelque chose que les autres n'ont pas (meilleure structure, plus de données, FAQ...).</p>
 
-      <h2>Étape 2 — L'audit de crawlabilité (10 minutes)</h2>
+      <h2>Étape 2 — L'audit d'accessibilité IA (10 minutes)</h2>
 
       <p>C'est le critère binaire : si les bots IA ne peuvent pas accéder à votre site, rien d'autre ne compte.</p>
 
@@ -133,7 +133,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p><strong>Résultat attendu :</strong> le fichier existe et liste vos pages principales.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt et crawlabilité IA : le guide technique →</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt et accessibilité IA : le guide technique →</ArrowLink>
 
       <h3>Vérifier l'accessibilité sans JavaScript</h3>
 
@@ -147,7 +147,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p><strong>Résultat attendu :</strong> sitemap accessible et à jour.</p>
 
-      <h2>Étape 3 — L'audit d'extractibilité (30 minutes)</h2>
+      <h2>Étape 3 — L'audit d'citabilité (30 minutes)</h2>
 
       <p>C'est le critère le plus lourd du <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">score GEO</InternalLink> (25 points sur 100) et le plus souvent défaillant.</p>
 
@@ -313,7 +313,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <h3>Comment prioriser</h3>
 
-      <p>Prioriser d'abord les critères <strong>bloquants</strong> — crawlabilité et extractibilité. Si les bots ne peuvent pas accéder à votre site ou si votre contenu n'est pas extractible, rien d'autre ne sert.</p>
+      <p>Prioriser d'abord les critères <strong>bloquants</strong> — accessibilité IA et citabilité. Si les bots ne peuvent pas accéder à votre site ou si votre contenu n'est pas extractible, rien d'autre ne sert.</p>
 
       <p>Ensuite les critères à <strong>fort impact</strong> — vérifiabilité et données structurées. Ce sont les leviers qui font passer un site de "invisible" à "citable".</p>
 
@@ -323,7 +323,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>L'audit manuel que nous venons de décrire prend environ 2 heures. C'est un excellent exercice pour comprendre les enjeux, mais ce n'est pas tenable pour un suivi régulier.</p>
 
-      <p>Detekia automatise les 8 critères en moins de 60 secondes, avec les <InternalLink href="/blog/mesurer-visibilite-ia-outils-methodes-2026">outils et méthodes de mesure</InternalLink> les plus récents : il scrape le DOM réel de votre page, analyse chaque critère, et vous donne un score sur 100 avec des recommandations priorisées par impact.</p>
+      <p>Detekia automatise les 7 critères en moins de 60 secondes, avec les <InternalLink href="/blog/mesurer-visibilite-ia-outils-methodes-2026">outils et méthodes de mesure</InternalLink> les plus récents : il scrape le DOM réel de votre page, analyse chaque critère, et vous donne un score sur 100 avec des recommandations priorisées par impact.</p>
 
       <p>L'audit automatisé est particulièrement utile pour :</p>
       <ul>

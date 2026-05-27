@@ -22,7 +22,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>What a GEO audit measures:</p>
       <ul>
-        <li>Can your content be extracted and cited by an AI? (extractability)</li>
+        <li>Can your content be extracted and cited by an AI? (citability)</li>
         <li>Can AI bots access your website? (crawlability)</li>
         <li>Is your site understood by machines? (structured data)</li>
         <li>Is your content perceived as trustworthy? (verifiability, authority, neutrality)</li>
@@ -82,7 +82,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <h3>What the results tell you</h3>
 
-      <p>If you appear nowhere but your competitors are cited, the problem is likely technical (crawlability, structured data) or editorial (extractability, content quality).</p>
+      <p>If you appear nowhere but your competitors are cited, the problem is likely technical (crawlability, structured data) or editorial (citability, content quality).</p>
 
       <p>If nobody appears in your sector, that is an opportunity: the first to optimize will capture the citations.</p>
 
@@ -112,7 +112,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p><strong>Expected result:</strong> the file exists and lists your main pages.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt, and AI crawlability: the technical guide →</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt, and AI Accessibility: the technical guide →</ArrowLink>
 
       <h3>Check JavaScript accessibility</h3>
 
@@ -126,7 +126,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p><strong>Expected result:</strong> sitemap accessible and up to date.</p>
 
-      <h2>Step 3 — The extractability audit (30 minutes)</h2>
+      <h2>Step 3 — The citability audit (30 minutes)</h2>
 
       <p>This is the heaviest criterion in the GEO score (25 points out of 100) and the one that fails most often.</p>
 
@@ -292,7 +292,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <h3>How to prioritize</h3>
 
-      <p>Prioritize <strong>blocking</strong> criteria first — crawlability and extractability. If bots cannot access your site or if your content is not extractable, nothing else matters.</p>
+      <p>Prioritize <strong>blocking</strong> criteria first — crawlability and citability. If bots cannot access your site or if your content is not extractable, nothing else matters.</p>
 
       <p>Next, focus on <strong>high-impact</strong> criteria — verifiability and structured data. These are the levers that take a site from "invisible" to "citable".</p>
 
@@ -302,7 +302,7 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>The manual audit we just described takes about 2 hours. It is an excellent exercise for understanding the stakes, but it is not sustainable for regular monitoring.</p>
 
-      <p>Detekia automates all 8 criteria in under 60 seconds: it scrapes the actual DOM of your page, analyzes each criterion, and gives you a score out of 100 with recommendations prioritized by impact.</p>
+      <p>Detekia automates all 7 criteria in under 60 seconds: it scrapes the actual DOM of your page, analyzes each criterion, and gives you a score out of 100 with recommendations prioritized by impact.</p>
 
       <p>The automated audit is especially useful for:</p>
       <ul>

@@ -94,7 +94,7 @@ export default function SitemapRobotsTxtBotsIa2026() {
 
       <BotTable />
 
-      <p>La recommandation stratégique : <strong>autorisez systématiquement les crawlers de citation</strong> (OAI-SearchBot, PerplexityBot). Pour les crawlers d'entraînement, la décision dépend de votre stratégie — certains sites choisissent de bloquer l'entraînement tout en restant citables. Pour approfondir ce sujet, consultez notre <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">guide technique sur la crawlabilité IA</InternalLink>.</p>
+      <p>La recommandation stratégique : <strong>autorisez systématiquement les crawlers de citation</strong> (OAI-SearchBot, PerplexityBot). Pour les crawlers d'entraînement, la décision dépend de votre stratégie — certains sites choisissent de bloquer l'entraînement tout en restant citables. Pour approfondir ce sujet, consultez notre <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">guide technique sur l'accessibilité IA</InternalLink>.</p>
 
       <h2>robots.txt : configuration stratégique pour les bots IA</h2>
 
@@ -165,7 +165,7 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
       <p>Le piège le plus fréquent : un <code>User-agent: * / Disallow: /</code> sans exceptions. Ça bloque <strong>tous</strong> les bots IA d'un coup. On voit souvent ça sur des sites migrés depuis WordPress avec un plugin SEO mal configuré, ou sur des sites en staging dont le robots.txt a été oublié en prod.</p>
 
       <InlineCTA href="/">
-        Votre robots.txt bloque-t-il des bots IA ? L'audit GEO Detekia vérifie la crawlabilité de votre site.
+        Votre robots.txt bloque-t-il des bots IA ? L'audit GEO Detekia vérifie l'accessibilité IA de votre site.
       </InlineCTA>
 
       <h2>Sitemap.xml : les signaux qui aident les IA</h2>
@@ -209,7 +209,7 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
 
 ## Pages principales
 - [Accueil](https://detekia.fr): Audit GEO gratuit
-- [Méthodologie](https://detekia.fr/methodologie): 8 critères GEO
+- [Méthodologie](https://detekia.fr/methodologie): 7 critères GEO
 - [Tarifs](https://detekia.fr/pricing): Audit 1 page et complet
 - [Blog](https://detekia.fr/blog): Guides GEO et SEO
 
@@ -221,7 +221,7 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
 
       <p><strong>Bonnes pratiques</strong> : restez concis (moins de 500 mots), structurez en sections Markdown, et mettez à jour quand votre offre évolue. Le fichier se place à la racine : <code>votre-site.fr/llms.txt</code>.</p>
 
-      <p>Pour un guide complet sur le llms.txt et la crawlabilité IA, consultez notre article dédié : <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt et crawlabilité IA</InternalLink>.</p>
+      <p>Pour un guide complet sur le llms.txt et l'accessibilité IA, consultez notre article dédié : <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt et accessibilité IA</InternalLink>.</p>
 
       <h2>5 pièges à éviter</h2>
 
@@ -272,7 +272,7 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
       <p>Pour la configuration "citation uniquement" (bloquer l'entraînement), remplacez <code>Allow: /</code> par <code>Disallow: /</code> sur GPTBot, ClaudeBot, Google-Extended, CCBot et Bytespider.</p>
 
       <InlineCTA href="/">
-        Vérifiez que votre configuration est correcte : l'audit GEO Detekia analyse la crawlabilité de votre site par les bots IA.
+        Vérifiez que votre configuration est correcte : l'audit GEO Detekia analyse l'accessibilité IA de votre site par les bots IA.
       </InlineCTA>
 
       <h2>Checklist finale</h2>
@@ -285,7 +285,7 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
         <li>✓ Un fichier llms.txt est présent à la racine avec un résumé structuré du site</li>
         <li>✓ Pas de <code>Crawl-delay</code> excessif (ou absent)</li>
         <li>✓ Le robots.txt est testé après chaque migration ou changement d'infrastructure</li>
-        <li>✓ Les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">8 critères GEO</InternalLink> sont vérifiés, dont la crawlabilité IA</li>
+        <li>✓ Les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères GEO</InternalLink> sont vérifiés, dont l'accessibilité IA</li>
       </ul>
 
       <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>

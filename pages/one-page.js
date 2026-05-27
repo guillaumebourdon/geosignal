@@ -58,7 +58,7 @@ function HeroMockup({ locale }) {
   }, []);
 
   const criteria = [
-    { label: locale === 'en' ? 'Structured data' : 'Données structurées', pct: 85, color: '#10A37F' },
+    { label: locale === 'en' ? 'AI Accessibility' : 'Accessibilité IA', pct: 85, color: '#10A37F' },
     { label: locale === 'en' ? 'Technical SEO' : 'SEO technique', pct: 68, color: '#D97757' },
     { label: locale === 'en' ? 'Content depth' : 'Profondeur contenu', pct: 42, color: '#D97757' },
     { label: locale === 'en' ? 'Freshness' : 'Fraîcheur', pct: 91, color: '#10A37F' },
@@ -95,7 +95,7 @@ function HeroMockup({ locale }) {
       </div>
       <div style={{ padding: '16px 20px 12px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>
-          {locale === 'en' ? '8 CRITERIA ANALYZED' : '8 CRITÈRES ANALYSÉS'}
+          {locale === 'en' ? '7 CRITERIA ANALYZED' : '7 CRITÈRES ANALYSÉS'}
         </div>
         {criteria.map((c, i) => (
           <div key={i} style={{ marginBottom: 8 }}>

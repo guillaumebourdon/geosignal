@@ -45,7 +45,7 @@ export default function SchemaOrgIaGuidePratique() {
       <ul>
         <li><strong>Structured data (10 points)</strong> — direct, measurable impact</li>
         <li><strong>Authority & E-E-A-T (15 points)</strong> — the <code>Organization</code> schema and author information strengthen credibility signals</li>
-        <li><strong>Extractability (25 points)</strong> — the <code>FAQPage</code> schema structures your content in a format natively extractable by AI engines</li>
+        <li><strong>Citability (25 points)</strong> — the <code>FAQPage</code> schema structures your content in a format natively extractable by AI engines</li>
       </ul>
 
       <p>That is a potential impact on <strong>50 out of 100 points</strong> of your GEO Score.</p>
@@ -110,7 +110,7 @@ export default function SchemaOrgIaGuidePratique() {
       "name": "How can I improve my site's visibility in ChatGPT?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "To be cited by ChatGPT, optimize your content's extractability (direct answers in the first 100 words), add Schema.org structured data, verify your robots.txt does not block GPTBot, and source your claims with verifiable data."
+        "text": "To be cited by ChatGPT, optimize your content's citability (direct answers in the first 100 words), add Schema.org structured data, verify your robots.txt does not block GPTBot, and source your claims with verifiable data."
       }
     },
     {
@@ -256,7 +256,7 @@ export default function SchemaOrgIaGuidePratique() {
         <li><code>HowTo</code> — steps for using your tool. A format that is highly extractable by AI engines.</li>
       </ul>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Before implementing schemas, make sure your site is crawlable by AI bots: llms.txt, robots.txt and AI crawlability.</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Before implementing schemas, make sure your site is crawlable by AI bots: llms.txt, robots.txt and AI Accessibility.</ArrowLink>
 
       <h2>Technical implementation</h2>
 
@@ -392,7 +392,7 @@ export default function HomePage() {
 
       <h3>Is structured data enough to be cited by AI?</h3>
 
-      <p>No. It represents one of the 8 GEO Score criteria (10 direct points + indirect impact on authority and extractability). But without quality content, without crawlability, and without external presence, markup alone is not enough. It is an accelerator, not a substitute.</p>
+      <p>No. It represents one of the 8 GEO Score criteria (10 direct points + indirect impact on authority and citability). But without quality content, without crawlability, and without external presence, markup alone is not enough. It is an accelerator, not a substitute.</p>
 
       <h3>How long before seeing the impact?</h3>
 

@@ -109,9 +109,9 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <h3>Action 1 — Diagnose your AI visibility</h3>
 
-      <p>Before you act, measure. Analyze your site across the 8 criteria that determine whether AI cites you: content extractability, data verifiability, authority, AI bot crawlability, structured data, editorial neutrality, external presence, and freshness.</p>
+      <p>Before you act, measure. Analyze your site across the 7 criteria that determine whether AI cites you: content citability, data verifiability, authority, AI bot crawlability, structured data, editorial neutrality, external presence, and freshness.</p>
 
-      <p>Detekia automatically analyzes these 8 criteria and gives you a score out of 100 in under 60 seconds. It is free and requires no signup.</p>
+      <p>Detekia automatically analyzes these 7 criteria and gives you a score out of 100 in under 60 seconds. It is free and requires no signup.</p>
 
       <ArrowLink href="/blog/score-geo-mesurer-visibilite-ia">GEO score: how to measure your website's AI visibility</ArrowLink>
 
@@ -121,7 +121,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Also create an <code>llms.txt</code> file at your site's root. It is the equivalent of <code>robots.txt</code> for AI engines: it tells them which pages are most important and how to interpret your content.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Complete guide: llms.txt, robots.txt, and AI crawlability</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Complete guide: llms.txt, robots.txt, and AI Accessibility</ArrowLink>
 
       <h3>Action 3 — Restructure your content for extraction</h3>
 
@@ -168,7 +168,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Websites that adapt now by optimizing their content to be cited by AI (not just ranked by Google) will gain a decisive advantage. Those that wait will see their traffic continue to decline, month after month.</p>
 
-      <p>The first step is simple: measure where you stand. Analyze your site for free on Detekia — GEO score out of 100, 8 criteria analyzed, actionable recommendations, in under 60 seconds.</p>
+      <p>The first step is simple: measure where you stand. Analyze your site for free on Detekia — GEO score out of 100, 7 criteria analyzed, actionable recommendations, in under 60 seconds.</p>
 
       <InlineCTA href="/">Traffic dropping? Find out if AI is the cause.</InlineCTA>
     </>

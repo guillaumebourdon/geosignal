@@ -55,7 +55,7 @@ export default function MesurerVisibiliteIaOutilsMethodes2026() {
 
       <p>Before measuring whether you're cited, you need to measure whether your site is <strong>citable</strong>. That's the difference between potential and results. A site can have excellent content but be invisible to AI because it blocks bots in its robots.txt, has no structured data, or writes in an overly promotional style.</p>
 
-      <p>Technical GEO scoring analyzes your pages' source code and measures the signals that RAG systems evaluate when deciding whether to cite your content. The Princeton study (Aggarwal et al., KDD 2024) identified the most impactful criteria: content extractability, source verifiability, E-E-A-T authority, AI crawlability, structured data, editorial neutrality, external presence, and freshness.</p>
+      <p>Technical GEO scoring analyzes your pages' source code and measures the signals that RAG systems evaluate when deciding whether to cite your content. The Princeton study (Aggarwal et al., KDD 2024) identified the most impactful criteria: content citability, source verifiability, E-E-A-T authority, AI Accessibility, structured data, editorial neutrality, external presence, and freshness.</p>
 
       <p>The advantage of this approach is that it's <strong>reproducible and deterministic</strong>. The same site, analyzed twice, gets the same score. It's a technical diagnosis, not an opinion. And results are directly actionable: each weak criterion maps to specific fixes. For detailed criteria breakdown, check our article on <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">the 8 GEO criteria</InternalLink>.</p>
 

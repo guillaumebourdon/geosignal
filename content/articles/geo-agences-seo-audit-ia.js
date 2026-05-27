@@ -61,7 +61,7 @@ export default function GeoAgencesSeoAuditIa() {
       <p>L'audit GEO n'est pas une discipline radicalement nouvelle — c'est une extension naturelle du SEO. 70 % des critères GEO sont déjà dans le périmètre d'une bonne agence SEO :</p>
 
       <ul>
-        <li>La technique (crawlabilité, vitesse, SSR) est déjà dans votre scope</li>
+        <li>La technique (accessibilité IA, vitesse, SSR) est déjà dans votre scope</li>
         <li>Le contenu (structure, E-E-A-T, données fraîches) est déjà dans votre scope</li>
         <li>Les données structurées (Schema.org) sont déjà dans votre scope</li>
         <li>La présence externe (netlinking, mentions) est déjà dans votre scope</li>
@@ -77,11 +77,11 @@ export default function GeoAgencesSeoAuditIa() {
 
       <h3>Phase 1 : Diagnostic (1-2 heures)</h3>
 
-      <p>Évaluez l'état actuel du site sur les 8 critères GEO, en vous basant sur le <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">score GEO</InternalLink> :</p>
+      <p>Évaluez l'état actuel du site sur les 7 critères GEO, en vous basant sur le <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">score GEO</InternalLink> :</p>
 
       <ul>
-        <li>Crawlabilité IA : robots.txt, llms.txt, rendu côté serveur</li>
-        <li>Extractibilité : structure des titres, densité des faits, listes</li>
+        <li>Accessibilité IA : robots.txt, llms.txt, rendu côté serveur</li>
+        <li>Citabilité : structure des titres, densité des faits, listes</li>
         <li>Données structurées : schemas JSON-LD présents et valides</li>
         <li>Neutralité éditoriale : ton, superlatifs, honnêteté sur les limites</li>
         <li>Vérifiabilité : sources citées, dates, auteurs identifiés</li>
@@ -133,7 +133,7 @@ export default function GeoAgencesSeoAuditIa() {
         prix="800 – 1 500 €"
         description="Pour les clients qui veulent comprendre leur situation actuelle avant de s'engager davantage."
         inclus={[
-          "Score GEO sur les 8 critères avec benchmark sectoriel",
+          "Score GEO sur les 7 critères avec benchmark sectoriel",
           "Tests de citabilité dans ChatGPT, Perplexity, Gemini",
           "Rapport PDF détaillé avec recommandations et exemples de code",
           "Plan d'action priorisé (quick wins + moyen terme)",
@@ -160,7 +160,7 @@ export default function GeoAgencesSeoAuditIa() {
         description="Pour les clients existants — extension naturelle de votre prestation habituelle."
         inclus={[
           "Section GEO dans le rapport d'audit SEO",
-          "Évaluation des 8 critères GEO",
+          "Évaluation des 7 critères GEO",
           "Recommandations GEO dans le plan d'action",
           "Tests de citabilité de base",
         ]}
@@ -194,7 +194,7 @@ export default function GeoAgencesSeoAuditIa() {
 
       <ul>
         <li><strong>Compréhension des LLM</strong> : comment fonctionnent ChatGPT, Perplexity, Gemini, leurs sources</li>
-        <li><strong>Évaluation de l'extractibilité</strong> : lire un contenu et identifier ce qui est extractible ou non</li>
+        <li><strong>Évaluation de l'citabilité</strong> : lire un contenu et identifier ce qui est extractible ou non</li>
         <li><strong>Schema.org avancé</strong> : FAQPage, Article, Organization, Product — implémentation et validation</li>
         <li><strong>Analyse robots.txt</strong> : identifier les blocages de bots IA</li>
         <li><strong>Rédaction GEO</strong> : restructurer un contenu pour le rendre plus citable</li>
@@ -203,13 +203,13 @@ export default function GeoAgencesSeoAuditIa() {
       <h3>Les ressources pour se former</h3>
 
       <ul>
-        <li>Les articles de notre blog — notamment le guide complet GEO et la méthodologie des 8 critères</li>
+        <li>Les articles de notre blog — notamment le guide complet GEO et la méthodologie des 7 critères</li>
         <li>L'étude académique originale : "Generative Engine Optimization" (Aggarwal et al., 2023)</li>
         <li>Les guidelines Google pour l'E-E-A-T (Search Quality Evaluator Guidelines)</li>
         <li>La documentation officielle des bots : openai.com/gptbot, anthropic.com/robots</li>
       </ul>
 
-      <ArrowLink href="/blog/geo-guide-complet-2026">Le guide complet GEO : les 8 critères, 7 actions concrètes →</ArrowLink>
+      <ArrowLink href="/blog/geo-guide-complet-2026">Le guide complet GEO : les 7 critères, 7 actions concrètes →</ArrowLink>
 
       <h2>Intégrer le GEO dans votre workflow existant</h2>
 
@@ -217,7 +217,7 @@ export default function GeoAgencesSeoAuditIa() {
 
       <h3>Dans l'audit technique SEO</h3>
 
-      <p>Ajoutez une section "Crawlabilité IA" à votre checklist d'audit technique :</p>
+      <p>Ajoutez une section "Accessibilité IA" à votre checklist d'audit technique :</p>
 
       <ul>
         <li>Vérification robots.txt pour GPTBot, ClaudeBot, PerplexityBot, Google-Extended</li>
@@ -231,7 +231,7 @@ export default function GeoAgencesSeoAuditIa() {
       <p>Pour chaque page analysée, ajoutez une évaluation GEO :</p>
 
       <ul>
-        <li>Score d'extractibilité : structure claire, données chiffrées, listes</li>
+        <li>Score d'citabilité : structure claire, données chiffrées, listes</li>
         <li>Score de vérifiabilité : sources citées, auteur identifié, date visible</li>
         <li>Score de neutralité : superlatifs, comparaisons honnêtes, limites mentionnées</li>
       </ul>

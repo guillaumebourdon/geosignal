@@ -144,13 +144,13 @@ export default function ContenuIaGenereVsHumain() {
 
       <p>Le score GEO de Detekia ne detecte pas si un contenu a ete ecrit par un humain ou par une IA. Il mesure les signaux objectifs que les moteurs IA utilisent pour decider de citer un contenu ou non. Et c'est exactement ce qui compte.</p>
 
-      <p>Parmi les 8 criteres du score GEO, plusieurs sont directement impactes par la question humain vs IA :</p>
+      <p>Parmi les 7 criteres du score GEO, plusieurs sont directement impactes par la question humain vs IA :</p>
 
       <ul>
         <li><strong>Verificabilite et preuves</strong> : le contenu inclut-il des statistiques sourcees, des donnees datees, des references a des etudes tierces ? C'est le critere ou le contenu IA brut est le plus faible</li>
         <li><strong>Autorite et credibilite</strong> : l'auteur est-il identifie ? Le site a-t-il des signaux d'expertise (backlinks, mentions, historique) ?</li>
         <li><strong>Completude thematique</strong> : le contenu couvre-t-il le sujet en profondeur ou reste-t-il en surface ?</li>
-        <li><strong>Structure et extractibilite</strong> : les fragments cles sont-ils places dans les 30 premiers pourcents ? Les H2 sont-ils formules en questions ?</li>
+        <li><strong>Structure et citabilite</strong> : les fragments cles sont-ils places dans les 30 premiers pourcents ? Les H2 sont-ils formules en questions ?</li>
       </ul>
 
       <p>Que vous ecriviez a la main, que vous utilisiez l'IA comme assistant, ou que vous combiniez les deux approches, le score GEO vous donne une mesure objective de la citabilite de vos contenus. Les contenus qui obtiennent un score superieur a 70/100 sont cites par les moteurs IA, independamment de leur methode de production. Ceux qui restent sous 40/100 sont ignores, meme s'ils ont ete ecrits par un expert reconnu mais sans optimisation GEO.</p>

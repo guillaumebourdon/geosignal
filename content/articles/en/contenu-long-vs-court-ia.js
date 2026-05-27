@@ -69,7 +69,7 @@ export default function LongFormVsShortFormAi() {
 
       <p>This discipline radically changes how you brief a writer. You no longer say "give me 2,500 words on JSON-LD schema." You say "fully answer the question: how to implement a FAQPage schema on a WordPress site, covering validation and common errors." The final length emerges naturally from the scope.</p>
 
-      <InlineCTA href="/">Measure the impact of your content structure on your GEO score — extractability and structured data analyzed in under 60 seconds.</InlineCTA>
+      <InlineCTA href="/">Measure the impact of your content structure on your GEO score — citability and structured data analyzed in under 60 seconds.</InlineCTA>
 
       <h2>Structural signals that matter more than word count</h2>
 

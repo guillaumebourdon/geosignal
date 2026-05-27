@@ -58,13 +58,13 @@ export default function MaillageInterneIaStructure() {
 
       <p><strong>Un budget de crawl plus limite.</strong> Les crawlers IA explorent generalement moins de pages que Googlebot lors d'une session de crawl. Cela signifie que la hierarchie de vos liens internes est encore plus determinante : les pages accessibles en un ou deux clics depuis la page d'accueil seront crawlees en priorite. Les pages profondes risquent d'etre ignorees.</p>
 
-      <p><strong>Une sensibilite aux ancres textuelles.</strong> Les LLM traitent le texte d'ancre comme un signal semantique fort. Quand votre lien interne dit "les 8 criteres GEO de la methodologie Detekia", le crawler comprend immediatement le sujet de la page cible. En revanche, un lien "en savoir plus" ne fournit aucune information utile.</p>
+      <p><strong>Une sensibilite aux ancres textuelles.</strong> Les LLM traitent le texte d'ancre comme un signal semantique fort. Quand votre lien interne dit "les 7 criteres GEO de la methodologie Detekia", le crawler comprend immediatement le sujet de la page cible. En revanche, un lien "en savoir plus" ne fournit aucune information utile.</p>
 
       <p><strong>Une exploration contextuelle.</strong> Les crawlers IA ne se contentent pas de suivre les liens. Ils analysent le contexte dans lequel le lien apparait. Un lien place au coeur d'un paragraphe pertinent, entoure de contenu thematiquement lie, a plus de poids qu'un lien isole dans un footer ou une sidebar.</p>
 
       <p><strong>Le respect du robots.txt et du fichier llms.txt.</strong> Avant meme de suivre vos liens internes, les bots IA consultent votre robots.txt et, de plus en plus, votre fichier llms.txt. Si certaines sections sont bloquees, le maillage interne vers ces sections sera inutile.</p>
 
-      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt et crawlabilite IA : le guide technique</ArrowLink>
+      <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">llms.txt, robots.txt et accessibilité IA : le guide technique</ArrowLink>
 
       <h2>Les bonnes pratiques du maillage interne pour les IA</h2>
 
@@ -78,7 +78,7 @@ export default function MaillageInterneIaStructure() {
         <li><strong>Mauvais :</strong> "Pour en savoir plus, <em>cliquez ici</em>."</li>
         <li><strong>Bon :</strong> "Consultez notre <em>guide pratique Schema.org pour les IA</em>."</li>
         <li><strong>Mauvais :</strong> "Lisez <em>cet article</em> sur le sujet."</li>
-        <li><strong>Bon :</strong> "Les <em>8 criteres GEO qui determinent si une IA vous cite</em> detaillent cette methodologie."</li>
+        <li><strong>Bon :</strong> "Les <em>7 criteres GEO qui determinent si une IA vous cite</em> detaillent cette methodologie."</li>
       </ul>
 
       <p>Les ancres descriptives aident les crawlers IA a construire une carte semantique de votre site. Plus cette carte est riche et precise, mieux les IA comprennent votre expertise.</p>
@@ -115,7 +115,7 @@ export default function MaillageInterneIaStructure() {
 
       <p><strong>Une page pilier</strong> couvre un sujet large en profondeur (par exemple : "GEO : le guide complet pour etre cite par les IA en 2026"). C'est votre page de reference sur le sujet. Elle est longue, complete et repond aux questions principales.</p>
 
-      <p><strong>Des pages satellites</strong> traitent chacune un aspect specifique du sujet pilier (par exemple : "Schema.org pour les IA", "llms.txt et crawlabilite", "les 8 criteres GEO"). Chaque satellite approfondit un angle precis.</p>
+      <p><strong>Des pages satellites</strong> traitent chacune un aspect specifique du sujet pilier (par exemple : "Schema.org pour les IA", "llms.txt et accessibilité IA", "les 7 criteres GEO"). Chaque satellite approfondit un angle precis.</p>
 
       <p><strong>Le maillage entre les deux</strong> est la cle. Chaque page satellite fait un lien vers la page pilier, et la page pilier fait un lien vers chaque satellite. Les satellites se lient aussi entre eux quand c'est pertinent.</p>
 
@@ -156,13 +156,13 @@ export default function MaillageInterneIaStructure() {
 
       <p>Beaucoup de sites ont une page de service ou une page produit strategique vers laquelle aucun article de blog ne pointe. Vos contenus editoriaux sont un levier puissant pour renforcer l'autorite de vos pages commerciales. Chaque article pertinent devrait contenir au moins un lien vers la page strategique associee.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 8 criteres GEO qui determinent si une IA vous cite</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 7 criteres GEO qui determinent si une IA vous cite</ArrowLink>
 
       <h2>Comment auditer son maillage interne avec Detekia</h2>
 
       <p>L'audit GEO de Detekia inclut une analyse de la structure de liens internes de votre site. Voici ce que l'outil verifie automatiquement.</p>
 
-      <p><strong>Profondeur de navigation.</strong> L'audit mesure le nombre de clics necessaires pour atteindre chaque page depuis la page d'accueil. Les pages a plus de 3 niveaux de profondeur sont signalees comme a risque pour la crawlabilite IA.</p>
+      <p><strong>Profondeur de navigation.</strong> L'audit mesure le nombre de clics necessaires pour atteindre chaque page depuis la page d'accueil. Les pages a plus de 3 niveaux de profondeur sont signalees comme a risque pour l'accessibilité IA.</p>
 
       <p><strong>Pages orphelines.</strong> Detekia identifie les pages qui ne recoivent aucun lien interne. Ces pages sont les premieres a corriger, car elles sont pratiquement invisibles pour les crawlers IA.</p>
 
@@ -170,9 +170,9 @@ export default function MaillageInterneIaStructure() {
 
       <p><strong>Structure de clusters.</strong> L'audit detecte si vos contenus suivent un modele pilier/satellite ou s'ils sont organises de facon desordonnee. Il identifie les opportunites de regroupement thematique et les liens manquants entre contenus complementaires.</p>
 
-      <p><strong>Liens casses.</strong> Chaque lien interne est verifie. Les 404 et les redirections en chaine sont signalees avec leur impact sur la crawlabilite.</p>
+      <p><strong>Liens casses.</strong> Chaque lien interne est verifie. Les 404 et les redirections en chaine sont signalees avec leur impact sur l'accessibilité IA.</p>
 
-      <p>Ces verifications s'integrent dans le <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">score GEO global a 8 criteres</InternalLink> de Detekia. Le maillage interne influence directement les criteres de crawlabilite et de structure technique.</p>
+      <p>Ces verifications s'integrent dans le <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">score GEO global a 7 criteres</InternalLink> de Detekia. Le maillage interne influence directement les criteres d'accessibilité IA et de structure technique.</p>
 
       <InlineCTA href="/">
         Auditez gratuitement le maillage interne de votre site avec Detekia.

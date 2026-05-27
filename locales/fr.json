@@ -158,7 +158,7 @@
       "scoreMax": "/100",
       "level": "FAIBLE",
       "levelDesc": "4 blocages critiques<br/>détectés sur votre site",
-      "criticalTag": "CRITIQUE · CRAWLABILITÉ",
+      "criticalTag": "CRITIQUE · ACCESSIBILITÉ IA",
       "criticalTitle": "ChatGPT ne peut pas accéder à votre site.",
       "criticalDesc": "Votre fichier robots.txt bloque les bots IA. C'est un problème fréquent. Résultat : aucune IA ne peut lire ni citer votre contenu.",
       "fixText": "<strong>À corriger :</strong> Autorisez GPTBot, ClaudeBot et PerplexityBot dans votre robots.txt. 2 lignes à modifier.",
@@ -177,7 +177,7 @@
         "label": "moteurs IA couverts"
       },
       {
-        "value": "8",
+        "value": "7",
         "label": "critères GEO analysés"
       },
       {
@@ -490,7 +490,7 @@
   "methodology": {
     "seo": {
       "title": "Méthodologie. Comment Detekia calcule votre score GEO",
-      "description": "Les 7 critères GEO de Detekia expliqués : extractibilité, vérifiabilité, E-E-A-T, crawlabilité IA, données structurées, neutralité et fraîcheur."
+      "description": "Les 7 critères GEO de Detekia expliqués : citabilité, vérifiabilité, E-E-A-T, accessibilité IA, neutralité, présence externe et fraîcheur."
     },
     "hero": {
       "badge": "Transparence totale",
@@ -1458,14 +1458,14 @@
         "emoji": "🤖",
         "title": "Accessibilité IA",
         "desc": "Les IA comme ChatGPT utilisent des robots (GPTBot, OAI-SearchBot) pour lire votre site. Si votre contenu est caché derrière du JavaScript ou bloqué dans robots.txt, ces robots ne peuvent pas l'indexer.",
-        "impact": "15 points",
+        "impact": "10 points",
         "color": "#4285F4"
       },
       "Données structurées (intégré dans Autorité)": {
         "emoji": "🧩",
-        "title": "Données structurées (Schema.org)",
+        "title": "Données structurées (intégré dans Autorité)",
         "desc": "Le Schema.org est un langage que les IA lisent en priorité. Il leur dit explicitement ce qu'est votre site, qui l'a écrit, et de quoi il parle.",
-        "impact": "10 points",
+        "impact": "Intégré dans Autorité (15 pts)",
         "color": "#4285F4"
       },
       "Neutralité éditoriale": {
@@ -1479,14 +1479,14 @@
         "emoji": "🌐",
         "title": "Présence externe",
         "desc": "Les IA croisent plusieurs sources pour évaluer votre crédibilité. Être mentionné dans la presse ou sur les réseaux sociaux renforce votre autorité perçue.",
-        "impact": "5 points",
+        "impact": "10 points",
         "color": "#10A37F"
       },
       "Fraîcheur & signaux temporels": {
         "emoji": "📅",
         "title": "Fraîcheur & signaux temporels",
         "desc": "Pour les sujets qui évoluent, les IA préfèrent les contenus récents. Une date de mise à jour visible et un copyright récent signalent que votre site est actif.",
-        "impact": "5 points",
+        "impact": "10 points",
         "color": "#C9861A"
       }
     },
@@ -1640,7 +1640,7 @@
       "label": "APERÇU DU PLAN D'ACTION",
       "title": "Aperçu d'une recommandation",
       "subtitle": "Voici un aperçu de l'une des {count} recommandations personnalisées pour votre site. Les autres sont détaillées dans le rapport complet.",
-      "previewFadeText": "Aucun schema JSON-LD identifié dans le contenu analysé, limitant la compréhension structurée par les moteurs de recherche et les IA génératives. Pour corriger ce point critique sur votre site, il est recommandé d'implémenter en priorité les schémas Article, FAQPage et Organization, en veillant à valider la syntaxe via l'outil officiel de test des données structurées avant la mise en production. Cette action technique permet généralement d'améliorer le score d'extractibilité IA de 15 à 25 points en moins de deux semaines, à condition que le contenu éditorial soit également structuré selon une hiérarchie H2/H3 cohérente.",
+      "previewFadeText": "Aucun schema JSON-LD identifié dans le contenu analysé, limitant la compréhension structurée par les moteurs de recherche et les IA génératives. Pour corriger ce point critique sur votre site, il est recommandé d'implémenter en priorité les schémas Article, FAQPage et Organization, en veillant à valider la syntaxe via l'outil officiel de test des données structurées avant la mise en production. Cette action technique permet généralement d'améliorer le score de citabilité IA de 15 à 25 points en moins de deux semaines, à condition que le contenu éditorial soit également structuré selon une hiérarchie H2/H3 cohérente.",
       "previewLocked": "🔒 Recommandation complète masquée",
       "previewSubtext": "Méthode, exemples et impact détaillé dans le rapport complet.",
       "previewUnlock": "Débloquer →",

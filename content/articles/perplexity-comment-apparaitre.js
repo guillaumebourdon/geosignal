@@ -174,7 +174,7 @@ export default function PerplexityCommentApparaitre() {
 
       <h3>Le diagnostic automatisé avec Detekia</h3>
 
-      <p>Le test manuel est utile mais limité : il est subjectif, non reproductible et ne couvre qu'un échantillon. <InternalLink href="/">Detekia</InternalLink> automatise l'analyse en évaluant votre site sur les 8 critères GEO : extractibilité, vérifiabilité, autorité E-E-A-T, crawlabilité, données structurées, neutralité éditoriale, présence externe et fraîcheur.</p>
+      <p>Le test manuel est utile mais limité : il est subjectif, non reproductible et ne couvre qu'un échantillon. <InternalLink href="/">Detekia</InternalLink> automatise l'analyse en évaluant votre site sur les 7 critères GEO : citabilité, vérifiabilité, autorité E-E-A-T, accessibilité IA, données structurées, neutralité éditoriale, présence externe et fraîcheur.</p>
 
       <p>Le rapport inclut un diagnostic spécifique Perplexity : les bots bloqués, les schemas manquants, les pages mal structurées pour l'extraction, et les opportunités d'amélioration priorisées par impact.</p>
 

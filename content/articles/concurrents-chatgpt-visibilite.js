@@ -86,7 +86,7 @@ export default function ConcurrentsChattgptVisibilite() {
 
       <p>Cherchez les écarts significatifs :</p>
       <ul>
-        <li>Leur extractibilité est à 20/25 et la vôtre à 8/25 ? C'est probablement le facteur déterminant.</li>
+        <li>Leur citabilité est à 20/25 et la vôtre à 8/25 ? C'est probablement le facteur déterminant.</li>
         <li>Leur score données structurées est à 9/10 et le vôtre à 0/10 ? Vous avez un quick win évident.</li>
         <li>Leur neutralité est à 9/10 et la vôtre à 3/10 ? Votre ton est trop commercial.</li>
       </ul>
@@ -119,7 +119,7 @@ export default function ConcurrentsChattgptVisibilite() {
 
       <h3>Semaine 1 — Les corrections techniques (impact : 2-4 semaines)</h3>
 
-      <p><strong>Jour 1-2 : Crawlabilité</strong><br />
+      <p><strong>Jour 1-2 : Accessibilité IA</strong><br />
       Vérifiez et corrigez votre robots.txt. Créez un fichier llms.txt. Vérifiez votre sitemap. Ces corrections sont les plus rapides et leur impact est le plus immédiat.</p>
 
       <p><strong>Jour 3-4 : Données structurées</strong><br />
@@ -128,7 +128,7 @@ export default function ConcurrentsChattgptVisibilite() {
       <p><strong>Jour 5 : Audit de référence</strong><br />
       Lancez un audit Detekia sur votre site et sur celui de votre concurrent. Documentez les scores. C'est votre baseline pour mesurer la progression.</p>
 
-      <h3>Semaine 2 — L'extractibilité (impact : 4-8 semaines)</h3>
+      <h3>Semaine 2 — L'citabilité (impact : 4-8 semaines)</h3>
 
       <p><strong>Jour 6-8 : Réécrire les introductions</strong><br />
       Prenez vos 10 pages les plus importantes. Pour chacune, réécrivez les 100 premiers mots pour qu'ils contiennent une réponse directe à la question implicite de la page.</p>
@@ -169,7 +169,7 @@ export default function ConcurrentsChattgptVisibilite() {
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 →</ArrowLink>
 
-      <p><strong>Piège 3 — Vouloir tout faire en même temps.</strong> Le plan en 30 jours est séquencé pour une raison : les corrections techniques (semaine 1) prennent effet en 2-4 semaines, l'extractibilité (semaine 2) en 4-8 semaines, la crédibilité et la présence externe (semaines 3-4) en 8-12 semaines. Respectez cette séquence pour voir des progrès mesurables à chaque étape.</p>
+      <p><strong>Piège 3 — Vouloir tout faire en même temps.</strong> Le plan en 30 jours est séquencé pour une raison : les corrections techniques (semaine 1) prennent effet en 2-4 semaines, l'citabilité (semaine 2) en 4-8 semaines, la crédibilité et la présence externe (semaines 3-4) en 8-12 semaines. Respectez cette séquence pour voir des progrès mesurables à chaque étape.</p>
 
       <p><strong>Piège 4 — Mesurer trop tôt.</strong> Ne refaites pas le test de citation après 3 jours en espérant des changements. Les corrections techniques mettent 2-4 semaines à être prises en compte par les crawlers IA. Les améliorations de contenu, 4-8 semaines. Mesurez à J+30, pas avant.</p>
 

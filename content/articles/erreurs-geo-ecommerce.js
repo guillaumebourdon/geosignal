@@ -111,7 +111,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
 
       <p>Chaque donnée factuelle est un "hook" pour l'IA. Quand un utilisateur demande "sac à dos cuir léger pour laptop 16 pouces fabriqué en France", l'IA peut matcher chaque critère avec votre fiche.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 8 critères GEO qui déterminent votre visibilité IA →</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 7 critères GEO qui déterminent votre visibilité IA →</ArrowLink>
 
       <h2>Erreur n°3 — Pas de FAQ produit ni Schema FAQPage</h2>
 

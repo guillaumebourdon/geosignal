@@ -32,7 +32,7 @@ function InlineCTA({ href, children }) {
 export default function FaqSchemaFaqpageComboIa() {
   return (
     <>
-      <p>Sur les sites que nous analysons, deux critères reviennent systématiquement comme les plus faciles à améliorer : l'extractibilité du contenu (25 points sur 100) et les données structurées (10 points). Ensemble, ils représentent 35 % du score GEO. Et le levier le plus rapide pour les booster est souvent le même : une bonne page FAQ couplée à un Schema FAQPage.</p>
+      <p>Sur les sites que nous analysons, deux critères reviennent systématiquement comme les plus faciles à améliorer : l'citabilité du contenu (25 points sur 100) et les données structurées (10 points). Ensemble, ils représentent 35 % du score GEO. Et le levier le plus rapide pour les booster est souvent le même : une bonne page FAQ couplée à un Schema FAQPage.</p>
 
       <p>Le problème : la plupart des FAQ de sites web sont des cimetières de questions corporate que personne ne pose. "Pourquoi nous choisir ?" n'est pas une question que les gens tapent dans ChatGPT. Et un Schema FAQPage mal implémenté — avec des réponses de 8 mots ou du contenu invisible — n'apporte rien.</p>
 
@@ -47,11 +47,11 @@ export default function FaqSchemaFaqpageComboIa() {
       <p>Côté <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">score GEO Detekia</InternalLink>, le combo impacte deux critères directement :</p>
 
       <ul>
-        <li><strong>Extractibilité et réponse directe (25 points)</strong> : la FAQ fournit des passages autonomes, structurés, avec des phrases sujet-verbe-complément. C'est le format idéal pour la citation IA.</li>
-        <li><strong>Données structurées (10 points)</strong> : le Schema FAQPage dit explicitement à l'IA "ceci est une question et voici sa réponse". Plus besoin de deviner la structure.</li>
+        <li><strong>Citabilité et réponse directe (25 points)</strong> : la FAQ fournit des passages autonomes, structurés, avec des phrases sujet-verbe-complément. C'est le format idéal pour la citation IA.</li>
+        <li><strong>Autorité & E-E-A-T (15 points)</strong> : les signaux de données structurées, dont le Schema FAQPage, sont désormais évalués dans ce critère. Le balisage dit explicitement à l'IA "ceci est une question et voici sa réponse".</li>
       </ul>
 
-      <p>35 points potentiels sur 100 — c'est souvent la différence entre un score de 25 et un score de 55.</p>
+      <p>40 points potentiels sur 100 — c'est souvent la différence entre un score de 25 et un score de 55.</p>
 
       <ArrowLink href="/blog/schema-org-ia-guide-pratique">Pour une vue complète des schemas JSON-LD à implémenter : Schema.org et IA — le guide pratique</ArrowLink>
 
@@ -226,7 +226,7 @@ export default function FaqSchemaFaqpageComboIa() {
 
       <p>Le pattern est le même dans les trois cas : remplacer les formulations vagues et promotionnelles par des faits concrets, des chiffres et des détails spécifiques. Les IA citent des informations, pas des slogans.</p>
 
-      <InlineCTA href="/">Mesurez l'impact de votre FAQ sur votre score GEO — extractibilité et données structurées analysées en moins de 60 secondes.</InlineCTA>
+      <InlineCTA href="/">Mesurez l'impact de votre FAQ sur votre score GEO — citabilité et données structurées analysées en moins de 60 secondes.</InlineCTA>
 
       <h2>Checklist d'implémentation en 7 étapes</h2>
 
@@ -236,11 +236,11 @@ export default function FaqSchemaFaqpageComboIa() {
         <li><strong>Créez ou améliorez votre page FAQ visible</strong>. Le contenu doit être affiché clairement pour les humains, pas caché dans un accordéon JavaScript inaccessible.</li>
         <li><strong>Ajoutez le Schema FAQPage</strong> en JSON-LD dans le head de la page. Vérifiez que le texte du Schema correspond mot pour mot au contenu visible.</li>
         <li><strong>Testez via Rich Results Test</strong> (search.google.com/test/rich-results). Corrigez les erreurs de balisage. Vérifiez que toutes les questions sont détectées.</li>
-        <li><strong>Lancez un audit Detekia</strong> pour mesurer l'impact sur les critères extractibilité (25 points) et données structurées (10 points). Comparez votre score avant et après.</li>
+        <li><strong>Lancez un audit Detekia</strong> pour mesurer l'impact sur les critères citabilité (25 points) et données structurées (10 points). Comparez votre score avant et après.</li>
         <li><strong>Mettez à jour trimestriellement</strong>. Les questions de vos utilisateurs évoluent. Les prix, délais et chiffres aussi. Une FAQ périmée perd en crédibilité auprès des IA.</li>
       </ol>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Comprendre les 8 critères GEO et leur pondération dans le score Detekia</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Comprendre les 7 critères GEO et leur pondération dans le score Detekia</ArrowLink>
 
       <h2>Questions fréquentes</h2>
 
@@ -264,7 +264,7 @@ export default function FaqSchemaFaqpageComboIa() {
 
       <h2>Ce qu'il faut retenir</h2>
 
-      <p>Le combo FAQ + Schema FAQPage est le levier GEO le plus accessible et le plus rapide à implémenter. Il impacte directement 35 points sur 100 du score Detekia (extractibilité + données structurées). Mais la clé n'est pas technique — elle est éditoriale. Des questions réelles, des réponses factuelles et autonomes, et un balisage propre. Le Schema est le contenant ; la qualité des réponses est le contenu.</p>
+      <p>Le combo FAQ + Schema FAQPage est le levier GEO le plus accessible et le plus rapide à implémenter. Il impacte directement 35 points sur 100 du score Detekia (citabilité + données structurées). Mais la clé n'est pas technique — elle est éditoriale. Des questions réelles, des réponses factuelles et autonomes, et un balisage propre. Le Schema est le contenant ; la qualité des réponses est le contenu.</p>
 
       <p>Commencez par vos 5 questions les plus fréquentes. Réécrivez-les selon les critères de cet article. Ajoutez le Schema. Mesurez l'impact. Vous verrez la différence en quelques jours.</p>
     </>

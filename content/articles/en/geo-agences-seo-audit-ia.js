@@ -59,8 +59,8 @@ export default function GeoAgencesSeoAuditIa() {
       <p>Evaluate the site's current state across the 8 GEO criteria:</p>
 
       <ul>
-        <li>AI Crawlability: robots.txt, llms.txt, server-side rendering</li>
-        <li>Extractability: heading structure, fact density, lists</li>
+        <li>AI Accessibility: robots.txt, llms.txt, server-side rendering</li>
+        <li>Citability: heading structure, fact density, lists</li>
         <li>Structured Data: JSON-LD schemas present and valid</li>
         <li>Editorial Neutrality: tone, superlatives, honest acknowledgment of limitations</li>
         <li>Verifiability: cited sources, dates, identified authors</li>
@@ -112,7 +112,7 @@ export default function GeoAgencesSeoAuditIa() {
         prix="$1,000 – $2,000"
         description="For clients who want to understand their current situation before committing further."
         inclus={[
-          "GEO score across 8 criteria with industry benchmark",
+          "GEO score across 7 criteria with industry benchmark",
           "Citability tests in ChatGPT, Perplexity, Gemini",
           "Detailed PDF report with recommendations and code examples",
           "Prioritized action plan (quick wins + medium term)",
@@ -173,7 +173,7 @@ export default function GeoAgencesSeoAuditIa() {
 
       <ul>
         <li><strong>LLM comprehension</strong>: how ChatGPT, Perplexity, and Gemini work, their sources</li>
-        <li><strong>Extractability evaluation</strong>: reading content and identifying what's extractable vs. not</li>
+        <li><strong>Citability evaluation</strong>: reading content and identifying what's extractable vs. not</li>
         <li><strong>Advanced Schema.org</strong>: FAQPage, Article, Organization, Product — implementation and validation</li>
         <li><strong>robots.txt analysis</strong>: identifying AI bot blocks</li>
         <li><strong>GEO writing</strong>: restructuring content to make it more citable</li>
@@ -189,7 +189,7 @@ export default function GeoAgencesSeoAuditIa() {
         <li>Industry sources: Search Engine Land, Moz Blog, Search Engine Journal</li>
       </ul>
 
-      <ArrowLink href="/blog/geo-guide-complet-2026">The complete GEO guide: 8 criteria, 7 concrete actions →</ArrowLink>
+      <ArrowLink href="/blog/geo-guide-complet-2026">The complete GEO guide: 7 criteria, 7 concrete actions →</ArrowLink>
 
       <h2>Integrate GEO into your existing workflow</h2>
 
@@ -197,7 +197,7 @@ export default function GeoAgencesSeoAuditIa() {
 
       <h3>In your technical SEO audit</h3>
 
-      <p>Add an "AI Crawlability" section to your technical audit checklist:</p>
+      <p>Add an "AI Accessibility" section to your technical audit checklist:</p>
 
       <ul>
         <li>robots.txt check for GPTBot, ClaudeBot, PerplexityBot, Google-Extended</li>
@@ -211,7 +211,7 @@ export default function GeoAgencesSeoAuditIa() {
       <p>For each page analyzed, add a GEO evaluation:</p>
 
       <ul>
-        <li>Extractability score: clear structure, numerical data, lists</li>
+        <li>Citability score: clear structure, numerical data, lists</li>
         <li>Verifiability score: cited sources, identified author, visible date</li>
         <li>Neutrality score: superlatives, honest comparisons, mentioned limitations</li>
       </ul>

@@ -174,7 +174,7 @@ export default function PerplexityCommentApparaitre() {
 
       <h3>Automated diagnostic with Detekia</h3>
 
-      <p>Manual testing is useful but limited: it's subjective, not reproducible, and only covers a sample. <InternalLink href="/">Detekia</InternalLink> automates the analysis by evaluating your site across 8 GEO criteria: extractability, verifiability, E-E-A-T authority, crawlability, structured data, editorial neutrality, external presence, and freshness.</p>
+      <p>Manual testing is useful but limited: it's subjective, not reproducible, and only covers a sample. <InternalLink href="/">Detekia</InternalLink> automates the analysis by evaluating your site across 8 GEO criteria: citability, verifiability, E-E-A-T authority, crawlability, structured data, editorial neutrality, external presence, and freshness.</p>
 
       <p>The report includes a Perplexity-specific diagnostic: blocked bots, missing schemas, pages poorly structured for extraction, and improvement opportunities prioritized by impact.</p>
 
