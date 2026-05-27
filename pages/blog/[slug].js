@@ -77,6 +77,7 @@ const CONTENT_MAP = {
   'contenu-ia-genere-vs-humain': require('../../content/articles/contenu-ia-genere-vs-humain').default,
   'maillage-interne-ia-structure': require('../../content/articles/maillage-interne-ia-structure').default,
   'avocat-medecin-ia-ymyl': require('../../content/articles/avocat-medecin-ia-ymyl').default,
+  'wikipedia-source-numero-1-ia': require('../../content/articles/wikipedia-source-numero-1-ia').default,
 };
 
 const CATEGORY_COLORS = {
