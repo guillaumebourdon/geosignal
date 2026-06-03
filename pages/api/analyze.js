@@ -6,7 +6,7 @@ import * as cheerio from 'cheerio';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const config = { maxDuration: 120 };
+export const config = { maxDuration: 300 };
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: 120000 });
 const redis = new Redis({

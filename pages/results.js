@@ -407,7 +407,7 @@ export default function Results() {
     }
     const stepTimeout = setTimeout(advanceStep, stepDelays[0]);
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 90000);
+    const timeoutId = setTimeout(() => controller.abort(), 150000);
     const adminKey = new URLSearchParams(window.location.search).get('admin') || undefined;
     fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url, locale, ...(adminKey && { adminKey }) }), signal: controller.signal })
       .then(r => r.json())
