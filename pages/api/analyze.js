@@ -748,7 +748,78 @@ export default async function handler(req, res) {
     }
   }
 
+  // Paid tier: check if scraping intermediates are cached (from a recent free scan)
+  // This avoids re-scraping the same site when upgrading from free to paid (saves 30-60s)
+  const scrapeCacheKey = `detekia:scrape:${url.toLowerCase()}:${locale}`;
+  let scrapeCache = null;
+  if (plan !== 'free') {
+    try {
+      const cached = await redis.get(scrapeCacheKey);
+      if (cached) {
+        scrapeCache = typeof cached === 'string' ? JSON.parse(cached) : cached;
+        console.log(`[analyze] Scrape cache hit for paid tier: ${url}`);
+      }
+    } catch {}
+  }
+
   try {
+    // Fast path: reuse scraping intermediates from a recent free scan
+    if (scrapeCache && plan !== 'free') {
+      console.log(`[analyze] Fast path: reusing scrape cache for ${url} (plan=${plan})`);
+      const { scores, detectedSignals, siteType, missingSchemas, metaTitle, metaDescription, hostname, brand, intro,
+              earlyRobotsTxt, earlyHasLlmsTxt, scrapeSource, textContent, rawContent, directHtml } = scrapeCache;
+
+      const $ = cheerio.load(rawContent);
+      $('script, style, noscript').remove();
+      const directMeta = { metaTitle, metaDescription, _$raw: directHtml ? cheerio.load(directHtml) : null };
+
+      const queryCount = plan === 'pro' ? 30 : 10;
+      const [fullClaude, ev, ct] = await Promise.all([
+        runClaudeAnalysis(url, textContent, scores, locale, detectedSignals, siteType, missingSchemas),
+        collectEvidence($, textContent, rawContent, url, directMeta, { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt }),
+        runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
+      ]);
+
+      const rawTotal = Object.values(scores).reduce((s, c) => s + c.score, 0);
+      const totalScore = Math.max(0, Math.min(100, rawTotal));
+
+      const responseData = {
+        score: totalScore,
+        verdict: fullClaude.verdict,
+        strengths: fullClaude.strengths || [],
+        topPriority: fullClaude.topPriority || '',
+        criteria: [
+          { name: 'Citabilité & réponse directe',      score: scores.citability.score,     max: 25, detail: scores.citability.detail },
+          { name: 'Vérifiabilité & preuves',          score: scores.verifiability.score,  max: 20, detail: scores.verifiability.detail },
+          { name: 'Autorité & E-E-A-T',               score: scores.authority.score,      max: 15, detail: scores.authority.detail },
+          { name: 'Accessibilité IA',                 score: scores.accessibility.score,  max: 10, detail: scores.accessibility.detail },
+          { name: 'Neutralité éditoriale',            score: scores.neutrality.score,      max: 10, detail: scores.neutrality.detail },
+          { name: 'Présence externe',                 score: scores.externalPresence.score, max: 10, detail: scores.externalPresence.detail },
+          { name: 'Fraîcheur & signaux temporels',    score: scores.freshness.score,       max: 10, detail: scores.freshness.detail },
+        ],
+        recommendations: fullClaude.recommendations,
+        evidence: ev,
+        citationTest: ct || null,
+        scrapeSource: scrapeSource || 'cache',
+      };
+
+      await resend.emails.send({
+        from: 'Detekia <hello@detekia.fr>',
+        to: 'guillaume@beeleven.fr',
+        subject: `🔍 Rapport payé (fast) — ${url} — Score ${totalScore}/100`,
+        html: `<div style="font-family:system-ui;max-width:500px;">
+          <p><strong>URL :</strong> ${url}</p>
+          <p><strong>Score :</strong> ${totalScore}/100</p>
+          <p><strong>Plan :</strong> ${plan}</p>
+          <p><strong>Recos :</strong> ${(fullClaude.recommendations || []).length}</p>
+          <p><strong>Citations :</strong> ${ct?.tests?.length || 0} queries</p>
+          <p style="color:#10A37F"><strong>Fast path :</strong> scraping réutilisé du scan gratuit</p>
+        </div>`,
+      }).catch(() => {});
+
+      return res.status(200).json(responseData);
+    }
+
     const jinaUrl = `https://r.jina.ai/${url}`;
 
     // Fetch Jina content + raw HTML + robots.txt/llms.txt in parallel
@@ -1091,11 +1162,24 @@ export default async function handler(req, res) {
 
     res.status(200).json(responseData);
 
-    // Only cache free tier results — paid reports have more citation queries
+    // Cache free tier results for quick repeat scans
     if (plan === 'free') {
       redis.set(cacheKey, responseData, { ex: CACHE_DURATION })
         .catch(e => console.error('Cache write error:', e.message));
     }
+
+    // Cache scraping intermediates (scores, signals, meta) for paid tier upgrade
+    // When a client goes from free scan to paid report, skip re-scraping (saves 30-60s)
+    const scrapeCacheKey = `detekia:scrape:${url.toLowerCase()}:${locale}`;
+    redis.set(scrapeCacheKey, {
+      scores, detectedSignals, siteType, missingSchemas,
+      metaTitle, metaDescription, hostname, brand, intro: textContent.slice(0, 300),
+      earlyRobotsTxt, earlyHasLlmsTxt, scrapeSource,
+      textContent: textContent.slice(0, 50000),
+      rawContent: rawContent.slice(0, 100000),
+      directHtml: (directHtml || '').slice(0, 100000),
+    }, { ex: 600 }) // 10 min TTL
+      .catch(e => console.error('Scrape cache write error:', e.message));
 
   } catch (err) {
     console.error('Analysis error:', err.message);
