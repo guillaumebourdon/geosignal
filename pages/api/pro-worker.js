@@ -1,7 +1,10 @@
 import { Redis } from '@upstash/redis';
 import { Resend } from 'resend';
-import { verifyQstashSignature, triggerConsolidation } from '../../lib/proQueue';
+import { Client } from '@upstash/qstash';
+import { verifyQstashSignature, triggerConsolidation, getBackupUrl } from '../../lib/proQueue';
 import { analyzePage } from '../../lib/proPageAnalyzer';
+
+const qstashClient = new Client({ token: process.env.QSTASH_TOKEN });
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -98,6 +101,35 @@ export default async function handler(req, res) {
       if (isRetryable) {
         console.warn(`[pro-worker] Still failing after retry for ${url}: ${retryStr.substring(0, 100)}. Returning 500 for QStash retry.`);
         return res.status(500).json({ error: 'retryable', url, detail: retryStr.substring(0, 200) });
+      }
+
+      // Non-retryable failure — try backup substitution (auto-detection only)
+      try {
+        const metaRaw = await redis.get(`${JOB_PREFIX}:${siteJobId}:meta`);
+        const meta = typeof metaRaw === 'string' ? JSON.parse(metaRaw) : metaRaw;
+        const source = meta?.source || 'auto_detection';
+
+        if (source !== 'customer_selection') {
+          const backup = await getBackupUrl(siteJobId);
+          if (backup) {
+            const proto = req.headers['x-forwarded-proto'] || 'https';
+            const host = req.headers['host'] || 'localhost:3000';
+            const workerEndpoint = `${proto}://${host}/api/pro-worker`;
+
+            await qstashClient.publishJSON({
+              url: workerEndpoint,
+              body: { siteJobId, rootUrl, url: backup.url, index, total, locale, isBackup: true },
+              retries: 2,
+              delay: 10,
+            });
+
+            console.log(`[pro-worker] Substituted failed ${url} with backup ${backup.url} at index ${index}`);
+            // Do NOT store error result, do NOT increment counter — the replacement worker will handle both
+            return res.status(200).json({ success: true, substituted: true, original: url, backup: backup.url });
+          }
+        }
+      } catch (subErr) {
+        console.error(`[pro-worker] Backup substitution error for ${url}:`, subErr.message);
       }
     }
   }

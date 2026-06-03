@@ -2064,6 +2064,15 @@
     "errorDuplicate": "Cette page est déjà dans la liste.",
     "errorInvalidUrl": "URL invalide.",
     "errorLoading": "Impossible de détecter les pages. Veuillez réessayer.",
-    "loading": "Détection des pages clés..."
+    "loading": "Détection des pages clés...",
+    "validating": "Vérification...",
+    "scrapable": "Page accessible",
+    "notScrapable": "Page potentiellement inaccessible",
+    "warningUnscrapable": "Certaines pages sont potentiellement inaccessibles et pourraient ne pas être analysées. Souhaitez-vous continuer ?",
+    "reasonAntibot": "Protection anti-bot détectée",
+    "reasonTimeout": "Page inaccessible (timeout)",
+    "reasonNoContent": "Contenu insuffisant",
+    "reasonError": "Erreur lors de la vérification",
+    "revalidating": "Validation des pages..."
   }
 }

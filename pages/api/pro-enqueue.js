@@ -47,6 +47,7 @@ export default async function handler(req, res) {
         rootUrl: url,
         locale,
         customerEmail,
+        source: result.source,
         queuedAt: new Date().toISOString(),
         urls: result.urls,
       }, { ex: JOB_TTL });

@@ -1,9 +1,11 @@
 /**
  * POST /api/suggest-pages
  * Returns the 10 auto-detected pages for a given site URL.
+ * Validates each page for scrapability and replaces failures with backup candidates.
  * Used by the page selector step in the Pro checkout flow.
  */
 import { checkRateLimit } from '../../lib/rateLimit';
+import { checkPageScrapability } from '../../lib/scrapabilityCheck';
 
 export const config = { maxDuration: 30 };
 
@@ -26,12 +28,63 @@ export default async function handler(req, res) {
 
   try {
     const { getTopPrioritizedUrls } = require('../../lib/sitemapPrioritizer');
-    const pages = await getTopPrioritizedUrls(url, { maxUrls: 10 });
+    // Fetch 20 candidates: 10 primary + 10 potential replacements
+    const allCandidates = await getTopPrioritizedUrls(url, { maxUrls: 20 });
 
-    const result = pages.map(p => ({
-      url: p.url,
-      type: p.reasons?.slotType || 'other',
-    }));
+    const primary = allCandidates.slice(0, 10);
+    const replacements = allCandidates.slice(10);
+
+    // Validate primary pages in parallel
+    const checks = await Promise.allSettled(
+      primary.map(p => checkPageScrapability(p.url, 8000))
+    );
+
+    const result = [];
+    let replacementIndex = 0;
+
+    for (let i = 0; i < primary.length; i++) {
+      const check = checks[i];
+      const scrapable = check.status === 'fulfilled' && check.value.scrapable;
+      const reason = check.status === 'fulfilled' ? check.value.reason : 'error';
+
+      if (scrapable) {
+        result.push({
+          url: primary[i].url,
+          type: primary[i].reasons?.slotType || 'other',
+          scrapable: true,
+          reason: 'ok',
+        });
+      } else {
+        // Try to find a scrapable replacement
+        let replaced = false;
+        while (replacementIndex < replacements.length) {
+          const candidate = replacements[replacementIndex];
+          replacementIndex++;
+          const repCheck = await checkPageScrapability(candidate.url, 8000);
+          if (repCheck.scrapable) {
+            console.log(`[suggest-pages] Replaced unscrapable ${primary[i].url} (${reason}) with ${candidate.url}`);
+            result.push({
+              url: candidate.url,
+              type: candidate.reasons?.slotType || 'other',
+              scrapable: true,
+              reason: 'ok',
+            });
+            replaced = true;
+            break;
+          }
+        }
+        // No replacement found — include the original with its status
+        if (!replaced) {
+          console.warn(`[suggest-pages] No replacement for unscrapable ${primary[i].url} (${reason})`);
+          result.push({
+            url: primary[i].url,
+            type: primary[i].reasons?.slotType || 'other',
+            scrapable: false,
+            reason,
+          });
+        }
+      }
+    }
 
     return res.status(200).json({ pages: result, hostname });
   } catch (e) {

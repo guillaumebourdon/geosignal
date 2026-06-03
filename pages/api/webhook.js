@@ -110,7 +110,7 @@ export default async function handler(req, res) {
           await redis.set(`detekia:pro:v1:job:${result.siteJobId}:total`, result.queuedCount, { ex: JOB_TTL });
           await redis.set(`detekia:pro:v1:job:${result.siteJobId}:meta`, {
             rootUrl: session.metadata.url, locale: session.metadata.locale || 'fr',
-            customerEmail: email, queuedAt: new Date().toISOString(), urls: result.urls,
+            customerEmail: email, source: result.source, queuedAt: new Date().toISOString(), urls: result.urls,
             stripeSessionId: session.id, // Corrélation ID pour traçabilité
           }, { ex: JOB_TTL });
           console.log(`🚀 Pro audit triggered for ${session.metadata.url} — job ${result.siteJobId}, pages: ${result.queuedCount}`);

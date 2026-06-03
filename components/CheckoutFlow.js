@@ -176,8 +176,45 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
     await proceedToCheckout(url);
   }
 
-  function handlePageSelectorConfirm(pages) {
-    proceedToCheckout(pageSelectorUrl, pages);
+  async function handlePageSelectorConfirm(pages) {
+    // Re-validate all pages before proceeding to Stripe
+    setShowPageSelector(false);
+    setModalLoading(true);
+    setLoadingText(t('pageSelector.revalidating'));
+
+    try {
+      const urls = pages.map(p => p.url);
+      const res = await fetch('/api/validate-pages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const failed = (data.results || []).filter(r => !r.scrapable);
+        if (failed.length > 0) {
+          // Update page statuses and return to selector
+          const statusMap = {};
+          for (const r of data.results) statusMap[r.url] = { scrapable: r.scrapable, reason: r.reason };
+          const updatedPages = pages.map(p => ({
+            ...p,
+            scrapable: statusMap[p.url]?.scrapable !== false,
+            reason: statusMap[p.url]?.reason || 'ok',
+          }));
+          setSuggestedPages(updatedPages);
+          setShowPageSelector(true);
+          setModalLoading(false);
+          setLoadingText('');
+          return;
+        }
+      }
+    } catch {
+      // Validation failed — proceed anyway (better than blocking checkout entirely)
+      console.warn('[CheckoutFlow] Re-validation failed, proceeding to checkout');
+    }
+
+    setLoadingText('');
+    await proceedToCheckout(pageSelectorUrl, pages);
   }
 
   function handlePageSelectorBack() {

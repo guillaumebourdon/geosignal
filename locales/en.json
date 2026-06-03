@@ -2062,6 +2062,15 @@
     "errorDuplicate": "This page is already in the list.",
     "errorInvalidUrl": "Invalid URL.",
     "errorLoading": "Could not detect pages. Please try again.",
-    "loading": "Detecting key pages..."
+    "loading": "Detecting key pages...",
+    "validating": "Checking...",
+    "scrapable": "Page accessible",
+    "notScrapable": "Page may not be accessible",
+    "warningUnscrapable": "Some pages may not be accessible and could fail during analysis. Do you want to continue?",
+    "reasonAntibot": "Anti-bot protection detected",
+    "reasonTimeout": "Page unreachable (timeout)",
+    "reasonNoContent": "Insufficient content",
+    "reasonError": "Verification error",
+    "revalidating": "Validating pages..."
   }
 }
