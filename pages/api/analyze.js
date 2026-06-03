@@ -570,30 +570,17 @@ function postProcessRecommendations(claude, scores) {
     claude.recommendations = [];
   }
 
-  // Remove recos for criteria already strong (≥85%) or at max score
-  // Keeps recos focused on real weaknesses instead of marginal "bonus" improvements
+  // Remove recos for criteria already at max score only
   if (claude.recommendations && Array.isArray(claude.recommendations)) {
-    const strongRecos = [];
-    const weakRecos = [];
-    claude.recommendations.forEach(reco => {
+    claude.recommendations = claude.recommendations.filter(reco => {
       const key = criterionToKey[reco.criterion];
-      if (!key || !scores[key]) { weakRecos.push(reco); return; }
-      const pct = scores[key].score / scores[key].max;
-      if (pct >= 0.85) {
-        strongRecos.push(reco);
-      } else {
-        weakRecos.push(reco);
+      if (!key || !scores[key]) return true;
+      if (scores[key].score === scores[key].max) {
+        console.log(`[post-process] REMOVED reco for ${reco.criterion} — already at max (${scores[key].score}/${scores[key].max})`);
+        return false;
       }
+      return true;
     });
-    // Keep at least 5 recos: fill with strong-criterion recos only if needed
-    if (weakRecos.length >= 5) {
-      claude.recommendations = weakRecos;
-      if (strongRecos.length > 0) {
-        console.log(`[post-process] REMOVED ${strongRecos.length} reco(s) on strong criteria (≥85%): ${strongRecos.map(r => r.criterion).join(', ')}`);
-      }
-    } else {
-      claude.recommendations = [...weakRecos, ...strongRecos.slice(0, 5 - weakRecos.length)];
-    }
   }
 
   // Validate verdict exists and isn't empty
