@@ -772,75 +772,34 @@ export default async function handler(req, res) {
       new Promise(resolve => setTimeout(() => resolve({ robotsTxt: 'Non accessible (timeout)', hasLlmsTxt: false }), 5000)),
     ]);
 
-    const [jinaResult, rawHtmlResult] = await Promise.allSettled([
-      fetchJina(jinaUrl),
-      axios.get(url, { timeout: 10000, maxRedirects: 5, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DetekiaBot/1.0; +https://detekia.fr)' } }).then(r => r.data).catch(() => null),
-    ]);
-
-    // Await robots.txt result (started in parallel with Jina)
+    // Await robots.txt result (started in parallel)
     const { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt } = await robotsLlmsPromise;
 
+    // ── SCRAPING: Direct HTML (primary) → Browserless (SPA fallback) ──────
+    // No Jina — direct HTTP is 100% consistent (same URL = same content = same score)
     let rawContent, scrapeSource;
-    if (jinaResult.status === 'fulfilled') {
-      rawContent = jinaResult.value.data;
-      scrapeSource = jinaResult.value.source;
-    } else {
-      // Jina failed — try to use direct HTML as fallback content
-      const directFallback = rawHtmlResult.status === 'fulfilled' ? rawHtmlResult.value : null;
-      if (directFallback && typeof directFallback === 'string') {
-        const $fb = cheerio.load(directFallback);
-        $fb('script, style').remove();
-        const fbText = $fb('body').text().replace(/\s+/g, ' ').trim();
-        if (fbText.length > 500) {
-          console.log(`[analyze] Jina failed, using direct HTML fallback (${fbText.length} chars)`);
-          rawContent = directFallback;
-          scrapeSource = 'direct-fallback';
+    let directHtmlData = null;
+
+    // Step 1: Direct HTTP fetch (fast, consistent, works for 80%+ of sites)
+    try {
+      const { data } = await axios.get(url, { timeout: 15000, maxRedirects: 5, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DetekiaBot/1.0; +https://detekia.fr)' } });
+      if (typeof data === 'string' && data.length > 500) {
+        directHtmlData = data;
+        const $test = cheerio.load(data);
+        $test('script, style, noscript').remove();
+        const textTest = $test('body').text().replace(/\s+/g, ' ').trim();
+        if (textTest.length > 500) {
+          rawContent = data;
+          scrapeSource = 'direct';
+          console.log(`[analyze] Direct HTML: ${textTest.length} chars for ${url}`);
         }
       }
-      // Last resort: Browserless headless Chrome
-      if (!rawContent) {
-        const { fetchRenderedHtml } = require('../../lib/browserless');
-        const rendered = await fetchRenderedHtml(url);
-        if (rendered) {
-          const $br = cheerio.load(rendered);
-          $br('script, style').remove();
-          if ($br('body').text().replace(/\s+/g, ' ').trim().length > 500) {
-            console.log(`[analyze] Using Browserless fallback for ${url}`);
-            rawContent = rendered;
-            scrapeSource = 'browserless';
-          }
-        }
-      }
-      if (!rawContent) throw jinaResult.reason;
+    } catch (e) {
+      console.log(`[analyze] Direct fetch failed for ${url}: ${e.message.slice(0, 50)}`);
     }
 
-    let $ = cheerio.load(rawContent);
-    let textContent = $('body').text().replace(/\s+/g, ' ').trim();
-
-    // If Jina succeeded but content is suspiciously thin, try Browserless as supplement
-    if (scrapeSource !== 'browserless' && textContent.length < 1000 && textContent.length > 100) {
-      try {
-        const { fetchRenderedHtml } = require('../../lib/browserless');
-        const rendered = await fetchRenderedHtml(url);
-        if (rendered) {
-          const $br = cheerio.load(rendered);
-          $br('script, style').remove();
-          const brText = $br('body').text().replace(/\s+/g, ' ').trim();
-          if (brText.length > textContent.length * 1.5) {
-            console.log(`[analyze] Browserless found ${brText.length} chars vs Jina's ${textContent.length} — using Browserless`);
-            rawContent = rendered;
-            $ = cheerio.load(rawContent);
-            textContent = brText;
-            scrapeSource = 'browserless-supplement';
-          }
-        }
-      } catch (e) { console.log(`[analyze] Browserless supplement failed: ${e.message.slice(0, 50)}`); }
-    }
-
-    const wordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
-
-    // If content is very thin, try Browserless as last resort before giving up
-    if (wordCount < 400 && scrapeSource !== 'browserless' && scrapeSource !== 'browserless-supplement') {
+    // Step 2: Browserless (headless Chrome) for SPAs and thin content
+    if (!rawContent || (rawContent && cheerio.load(rawContent)('body').text().replace(/\s+/g, ' ').trim().split(/\s+/).length < 200)) {
       try {
         const { fetchRenderedHtml } = require('../../lib/browserless');
         const rendered = await fetchRenderedHtml(url);
@@ -848,16 +807,23 @@ export default async function handler(req, res) {
           const $br = cheerio.load(rendered);
           $br('script, style, noscript').remove();
           const brText = $br('body').text().replace(/\s+/g, ' ').trim();
-          if (brText.length > textContent.length) {
-            console.log(`[analyze] Browserless rescue: ${brText.split(/\s+/).length} words vs ${wordCount} — using Browserless`);
+          const currentText = rawContent ? cheerio.load(rawContent)('body').text().replace(/\s+/g, ' ').trim() : '';
+          if (brText.length > currentText.length && brText.length > 500) {
+            console.log(`[analyze] Browserless: ${brText.length} chars (direct was ${currentText.length}) for ${url}`);
             rawContent = rendered;
-            $ = cheerio.load(rawContent);
-            textContent = brText;
-            scrapeSource = 'browserless-rescue';
+            scrapeSource = 'browserless';
           }
         }
-      } catch (e) { console.log(`[analyze] Browserless rescue failed: ${e.message.slice(0, 50)}`); }
+      } catch (e) { console.log(`[analyze] Browserless failed: ${e.message.slice(0, 50)}`); }
     }
+
+    if (!rawContent) {
+      throw new Error('Unable to fetch content from ' + url);
+    }
+
+    let $ = cheerio.load(rawContent);
+    $('script, style, noscript').remove();
+    let textContent = $('body').text().replace(/\s+/g, ' ').trim();
 
     const finalWordCount = textContent.split(/\s+/).filter(w => w.length > 0).length;
     if (textContent.length < 500 || finalWordCount < 100) {
@@ -874,19 +840,8 @@ export default async function handler(req, res) {
       });
     }
 
-    // Always use the richer text source between Jina and direct HTML
-    const directHtml = rawHtmlResult.status === 'fulfilled' ? rawHtmlResult.value : null;
-    if (directHtml && typeof directHtml === 'string' && scrapeSource !== 'browserless' && scrapeSource !== 'browserless-supplement') {
-      const $dh = cheerio.load(directHtml);
-      $dh('script, style, noscript').remove();
-      const directText = $dh('body').text().replace(/\s+/g, ' ').trim();
-      if (directText.length > textContent.length) {
-        console.log(`[analyze] Direct HTML text (${directText.length} chars) richer than Jina (${textContent.length}) — using direct HTML`);
-        textContent = directText;
-      }
-    }
-
-    // Enrich cheerio $ with data from direct HTML fetch (Jina strips scripts, meta, footer links)
+    // Use direct HTML for structured data enrichment (JSON-LD, meta, social links)
+    const directHtml = directHtmlData || (scrapeSource === 'direct' ? rawContent : null);
     let directMeta = { description: '', title: '', socialLinks: [], imageCount: 0, imagesWithAlt: 0, _$raw: null };
     if (directHtml && typeof directHtml === 'string') {
       const $raw = cheerio.load(directHtml);
