@@ -570,17 +570,30 @@ function postProcessRecommendations(claude, scores) {
     claude.recommendations = [];
   }
 
-  // Remove recos for criteria already at max score
+  // Remove recos for criteria already strong (≥85%) or at max score
+  // Keeps recos focused on real weaknesses instead of marginal "bonus" improvements
   if (claude.recommendations && Array.isArray(claude.recommendations)) {
-    claude.recommendations = claude.recommendations.filter(reco => {
+    const strongRecos = [];
+    const weakRecos = [];
+    claude.recommendations.forEach(reco => {
       const key = criterionToKey[reco.criterion];
-      if (!key || !scores[key]) return true;
-      if (scores[key].score === scores[key].max) {
-        console.log(`[post-process] REMOVED reco for ${reco.criterion} — already at max (${scores[key].score}/${scores[key].max})`);
-        return false;
+      if (!key || !scores[key]) { weakRecos.push(reco); return; }
+      const pct = scores[key].score / scores[key].max;
+      if (pct >= 0.85) {
+        strongRecos.push(reco);
+      } else {
+        weakRecos.push(reco);
       }
-      return true;
     });
+    // Keep at least 5 recos: fill with strong-criterion recos only if needed
+    if (weakRecos.length >= 5) {
+      claude.recommendations = weakRecos;
+      if (strongRecos.length > 0) {
+        console.log(`[post-process] REMOVED ${strongRecos.length} reco(s) on strong criteria (≥85%): ${strongRecos.map(r => r.criterion).join(', ')}`);
+      }
+    } else {
+      claude.recommendations = [...weakRecos, ...strongRecos.slice(0, 5 - weakRecos.length)];
+    }
   }
 
   // Validate verdict exists and isn't empty
@@ -1039,6 +1052,14 @@ export default async function handler(req, res) {
       h3Count = (rawContent.match(/^### (?!#)[^\n]+/gm) || []).length;
     }
     signalParts.push(`Headings: ${h1Count} H1, ${h2Count} H2, ${h3Count} H3 (total ${h1Count + h2Count + h3Count} heading elements)`);
+    // Factual counts for Claude (prevents contradictions with scoring data)
+    // Extract counts from scoring detail strings to give Claude exact numbers
+    const verifDetail = scores.verifiability.detail || '';
+    const extLinkMatch = verifDetail.match(/(\d+)\s*(?:liens? externe|external links?)/i);
+    const dataPointMatch = verifDetail.match(/(\d+)\s*(?:donn[ée]es? chiffr[ée]|data points?)/i);
+    signalParts.push(`External links: ${extLinkMatch ? extLinkMatch[1] : '0'} unique external domains linked`);
+    signalParts.push(`Data points (stats/numbers): ${dataPointMatch ? dataPointMatch[1] : '0'} detected`);
+    signalParts.push(`Word count: ${textContent.split(/\s+/).filter(w => w.length > 0).length} words`);
     // robots.txt and llms.txt info (fetched in parallel with Jina at start)
     signalParts.push(`robots.txt: ${earlyRobotsTxt.substring(0, 100)}`);
     if (earlyHasLlmsTxt) signalParts.push('llms.txt: present');

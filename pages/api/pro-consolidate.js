@@ -287,14 +287,22 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
       'certaines', 'plusieurs', 'notamment', 'activit', 'randonn', 'flexibilit', 'natation',
       'nouveau prestataire', 'ancien prestataire', 'parties prenantes', 'ressources humaines',
       'calcul automatique', 'titres restaurant', 'appels api', 'petit', 'habituellement',
-      'pension', 'demi', 'destinations', 'stations', 'clubs', 'villages', 'cours']);
+      'pension', 'demi', 'destinations', 'stations', 'clubs', 'villages', 'cours',
+      // Common FR words mistaken for brands (sentence starters)
+      'voici', 'cela', 'prendre', 'types', 'selon', 'comme', 'aussi', 'ainsi',
+      'cette', 'entre', 'faire', 'avant', 'apres', 'depuis', 'parmi', 'leurs',
+      'notre', 'votre', 'moins', 'toute', 'toutes', 'chaque', 'autre', 'autres',
+      'grâce', 'grace', 'outre', 'alors', 'reste', 'suite', 'point', 'partie',
+      'niveau', 'place', 'forme', 'monde', 'genre', 'type', 'aide', 'guide',
+      'notez', 'sachez', 'voyez', 'lisez', 'allez', 'venez', 'faites', 'dites',
+      'mieux', 'prise', 'mise', 'bien', 'tout', 'rien', 'plus']);
     const hostname = (() => { try { return new URL(rootUrl).hostname.replace(/^www\./, ''); } catch { return ''; } })();
     const queries = citationTest.queries || citationTest.tests || [];
     for (const q of queries) {
       const field = q.competitorsCited || q.competitors_cited || [];
       const cleaned = field.filter(c => {
         const lower = (c || '').toLowerCase().trim();
-        if (!lower || lower.length < 3) return false;
+        if (!lower || lower.length < 5) return false;
         if (fakeWords.has(lower)) return false;
         if (fakeCompetitorPattern.test(c)) return false;
         if (hostname && lower.includes(hostname)) return false;
