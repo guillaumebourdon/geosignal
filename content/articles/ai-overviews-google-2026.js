@@ -33,15 +33,15 @@ function InlineCTA({ href, children }) {
 export default function AiOverviewsGoogle2026() {
   return (
     <>
-      <p>Quand vous tapez une question sur Google, une réponse rédigée par l'IA apparaît désormais au-dessus des résultats classiques. C'est l'AI Overview — et il capte une part massive des clics. Sur les requêtes qui déclenchent un AI Overview, le taux de clic organique a chuté de 61 %. Si votre site n'est pas la source citée dans cette réponse, vous perdez du trafic même en étant bien positionné.</p>
+      <p>Quand vous tapez une question sur Google, une réponse rédigée par l'IA apparaît désormais au-dessus des résultats classiques. C'est l'AI Overview. Et il capte une part massive des clics. Sur les requêtes qui déclenchent un AI Overview, le taux de clic organique a chuté de 61 %. Si votre site n'est pas la source citée dans cette réponse, vous perdez du trafic même en étant bien positionné.</p>
 
-      <p>La bonne nouvelle : les AI Overviews ne sortent pas de nulle part. Google les génère à partir de pages web existantes — et 99 % des sources citées proviennent du top 10 des résultats organiques. Autrement dit, si vous êtes déjà bien référencé, vous avez un avantage. Mais le SEO seul ne suffit pas : Google AI sélectionne les sources selon des critères spécifiques que cet article détaille.</p>
+      <p>Les AI Overviews ne sortent pas de nulle part. Google les génère à partir de pages web existantes. Et 99 % des sources citées proviennent du top 10 des résultats organiques. Autrement dit, si vous êtes déjà bien référencé, vous avez un avantage. Mais le SEO seul ne suffit pas : Google AI sélectionne les sources selon des critères spécifiques que cet article détaille.</p>
 
       <h2>Qu'est-ce qu'un AI Overview exactement</h2>
 
-      <p>L'AI Overview (anciennement appelé SGE — Search Generative Experience) est un bloc de texte généré par l'IA de Google qui apparaît en haut de certaines pages de résultats. Il synthétise les informations de plusieurs sources pour répondre directement à la question de l'utilisateur.</p>
+      <p>L'AI Overview (anciennement appelé SGE, Search Generative Experience) est un bloc de texte généré par l'IA de Google qui apparaît en haut de certaines pages de résultats. Il synthétise les informations de plusieurs sources pour répondre directement à la question de l'utilisateur.</p>
 
-      <p>Contrairement aux featured snippets qui extraient un passage d'une seule page, l'AI Overview combine et reformule les informations de 3 à 5 sources. Il cite ces sources avec des liens, mais l'utilisateur obtient sa réponse sans cliquer — c'est ce qui explique la chute du CTR organique.</p>
+      <p>Contrairement aux featured snippets qui extraient un passage d'une seule page, l'AI Overview combine et reformule les informations de 3 à 5 sources. Il cite ces sources avec des liens, mais l'utilisateur obtient sa réponse sans cliquer. C'est ce qui explique la chute du CTR organique.</p>
 
       <p>Les AI Overviews apparaissent principalement sur les requêtes informationnelles et comparatives : "comment choisir un CRM", "différence entre SAS et SARL", "meilleur hébergeur web 2026". Ils n'apparaissent pas (ou rarement) sur les requêtes transactionnelles directes ("acheter iPhone 16") ou de navigation ("Facebook login").</p>
 
@@ -69,7 +69,7 @@ export default function AiOverviewsGoogle2026() {
 
       <p>Les AI Overviews favorisent les pages qui contiennent une réponse claire et directe à la question posée, idéalement dans les premiers paragraphes.</p>
 
-      <p>Si l'utilisateur cherche "comment améliorer son score GEO", Google AI cherchera une page qui commence par répondre à cette question — pas une page qui parle longuement de l'historique du GEO avant d'arriver à la réponse.</p>
+      <p>Si l'utilisateur cherche "comment améliorer son score GEO", Google AI cherchera une page qui commence par répondre à cette question, pas une page qui parle longuement de l'historique du GEO avant d'arriver à la réponse.</p>
 
       <p>Le format idéal : une phrase de réponse directe, suivie d'une explication structurée avec des étapes ou des points clés.</p>
 
@@ -103,7 +103,7 @@ export default function AiOverviewsGoogle2026() {
 
       <p>Google utilise ses signaux E-E-A-T habituels (Experience, Expertise, Authoritativeness, Trustworthiness) pour évaluer la fiabilité des sources potentielles de l'AI Overview. Un site avec une forte autorité de domaine, des auteurs identifiés et des backlinks de qualité sera préféré.</p>
 
-      <p>C'est ici que les sites établis ont un avantage sur les sites récents. Mais un contenu exceptionnellement bien structuré et exhaustif sur un site plus modeste peut quand même être sélectionné — surtout sur des requêtes de niche.</p>
+      <p>C'est ici que les sites établis ont un avantage sur les sites récents. Mais un contenu exceptionnellement bien structuré et exhaustif sur un site plus modeste peut quand même être sélectionné, surtout sur des requêtes de niche.</p>
 
       <h3>6. Fraîcheur du contenu</h3>
 
@@ -136,7 +136,7 @@ export default function AiOverviewsGoogle2026() {
 
       <h3>Action 4 — Couvrir le sujet de manière exhaustive</h3>
 
-      <p>Les AI Overviews combinent des informations de plusieurs sources. Si votre page couvre le sujet de manière exhaustive — toutes les facettes, toutes les questions courantes — Google AI peut la citer comme source principale plutôt que de devoir combiner 4-5 sources partielles.</p>
+      <p>Les AI Overviews combinent des informations de plusieurs sources. Si votre page couvre le sujet de manière exhaustive. Toutes les facettes, toutes les questions courantes, Google AI peut la citer comme source principale plutôt que de devoir combiner 4-5 sources partielles.</p>
 
       <p>Visez des articles de 2000+ mots qui traitent le sujet en profondeur, avec des sous-sections pour chaque aspect.</p>
 
@@ -150,13 +150,13 @@ export default function AiOverviewsGoogle2026() {
 
       <p>Au-delà du schema Article, deux schemas sont particulièrement efficaces pour les AI Overviews :</p>
       <ul>
-        <li><strong>HowTo</strong> — pour les contenus tutoriels étape par étape. Google AI peut extraire directement les étapes et les afficher de manière structurée.</li>
-        <li><strong>FAQPage</strong> — pour les sections de questions-réponses. Le format Q&A correspond naturellement à ce que les AI Overviews cherchent à produire.</li>
+        <li><strong>HowTo</strong> : pour les contenus tutoriels étape par étape. Google AI peut extraire directement les étapes et les afficher de manière structurée.</li>
+        <li><strong>FAQPage</strong> : pour les sections de questions-réponses. Le format Q&A correspond naturellement à ce que les AI Overviews cherchent à produire.</li>
       </ul>
 
       <h3>Action 7 — Mettre à jour régulièrement</h3>
 
-      <p>Les AI Overviews changent fréquemment — Google recalcule régulièrement quelles sources citer. Un contenu mis à jour avec des données fraîches a plus de chances d'être sélectionné qu'un contenu statique.</p>
+      <p>Les AI Overviews changent fréquemment, Google recalcule régulièrement quelles sources citer. Un contenu mis à jour avec des données fraîches a plus de chances d'être sélectionné qu'un contenu statique.</p>
 
       <p>Mettez à jour vos articles piliers au moins une fois par trimestre. Ajoutez des données récentes, supprimez les informations obsolètes, et mettez à jour la date de modification dans votre schema Article.</p>
 
@@ -166,15 +166,15 @@ export default function AiOverviewsGoogle2026() {
 
       <h3>Requêtes "comment" et "pourquoi"</h3>
 
-      <p>"Comment choisir un...", "Pourquoi mon site...", "Comment fonctionne..." — ces requêtes génèrent un AI Overview dans la majorité des cas. Elles appellent une réponse explicative que l'IA peut synthétiser.</p>
+      <p>"Comment choisir un...", "Pourquoi mon site...", "Comment fonctionne...", ces requêtes génèrent un AI Overview dans la majorité des cas. Elles appellent une réponse explicative que l'IA peut synthétiser.</p>
 
       <h3>Requêtes comparatives</h3>
 
-      <p>"X vs Y", "Différence entre A et B", "Meilleur X pour Y" — les comparaisons sont un terrain privilégié pour les AI Overviews car elles nécessitent une synthèse de plusieurs critères.</p>
+      <p>"X vs Y", "Différence entre A et B", "Meilleur X pour Y", les comparaisons sont un terrain privilégié pour les AI Overviews car elles nécessitent une synthèse de plusieurs critères.</p>
 
       <h3>Requêtes de définition</h3>
 
-      <p>"Qu'est-ce que le GEO", "Définition de [concept]" — l'IA de Google excelle à synthétiser des définitions à partir de plusieurs sources.</p>
+      <p>"Qu'est-ce que le GEO", "Définition de [concept]", l'IA de Google excelle à synthétiser des définitions à partir de plusieurs sources.</p>
 
       <h3>Requêtes peu propices</h3>
 
@@ -184,13 +184,13 @@ export default function AiOverviewsGoogle2026() {
 
       <p>Google Search Console ne fournit pas encore de données spécifiques sur les AI Overviews. Mais plusieurs approches permettent de suivre votre visibilité.</p>
 
-      <p><strong>Test manuel régulier</strong> — identifiez vos 10-15 requêtes cibles. Vérifiez mensuellement si un AI Overview apparaît et si votre site y est cité. Utilisez une fenêtre de navigation privée pour éviter la personnalisation des résultats.</p>
+      <p><strong>Test manuel régulier</strong>, identifiez vos 10-15 requêtes cibles. Vérifiez mensuellement si un AI Overview apparaît et si votre site y est cité. Utilisez une fenêtre de navigation privée pour éviter la personnalisation des résultats.</p>
 
-      <p><strong>Suivi du CTR dans Search Console</strong> — si vous constatez une baisse soudaine du CTR sur une requête où vous êtes bien positionné, c'est probablement qu'un AI Overview est apparu et capte les clics. Si vous êtes cité dans l'Overview, le CTR peut remonter partiellement.</p>
+      <p><strong>Suivi du CTR dans Search Console</strong>. Si vous constatez une baisse soudaine du CTR sur une requête où vous êtes bien positionné, c'est probablement qu'un AI Overview est apparu et capte les clics. Si vous êtes cité dans l'Overview, le CTR peut remonter partiellement.</p>
 
-      <p><strong>Outils tiers</strong> — des outils comme Semrush et Ahrefs commencent à tracker la présence des AI Overviews dans leurs rapports de mots-clés. Vérifiez si vos outils SEO actuels offrent cette fonctionnalité.</p>
+      <p><strong>Outils tiers</strong>, des outils comme Semrush et Ahrefs commencent à tracker la présence des AI Overviews dans leurs rapports de mots-clés. Vérifiez si vos outils SEO actuels offrent cette fonctionnalité.</p>
 
-      <p><strong>Audit GEO</strong> — les critères de sélection des AI Overviews recoupent largement les 7 critères du score GEO Detekia, notamment l'citabilité, les données structurées et la vérifiabilité.</p>
+      <p><strong>Audit GEO</strong>, les critères de sélection des AI Overviews recoupent largement les 7 critères du score GEO Detekia, notamment l'citabilité, les données structurées et la vérifiabilité.</p>
 
       <h2>Questions fréquentes</h2>
 
@@ -211,7 +211,7 @@ export default function AiOverviewsGoogle2026() {
       <p>Être premier en SEO ne garantit pas d'être la source de l'AI Overview. Google AI évalue des critères supplémentaires : citabilité du contenu, structure, exhaustivité, données structurées. Un concurrent en position 4 avec un contenu mieux structuré peut être préféré.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
-      <ArrowLink href="/">Analysez votre site — score GEO sur 100, 7 critères, en moins de 60 secondes →</ArrowLink>
+      <ArrowLink href="/">Analysez votre site, score GEO sur 100, 7 critères, en moins de 60 secondes →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

@@ -32,9 +32,9 @@ function InlineCTA({ href, children }) {
 export default function FaqSchemaFaqpageComboIa() {
   return (
     <>
-      <p>Sur les sites que nous analysons, deux critères reviennent systématiquement comme les plus faciles à améliorer : l'citabilité du contenu (25 points sur 100) et les données structurées (10 points). Ensemble, ils représentent 35 % du score GEO. Et le levier le plus rapide pour les booster est souvent le même : une bonne page FAQ couplée à un Schema FAQPage.</p>
+      <p>Sur les sites que nous analysons, deux critères reviennent systématiquement comme les plus faciles à améliorer : l'citabilité du contenu (25 points sur 100) et les données structurées (10 points). Ensemble, ils représentent 35 % du score GEO. Et le moyen le plus rapide pour les booster est souvent le même : une bonne page FAQ couplée à un Schema FAQPage.</p>
 
-      <p>Le problème : la plupart des FAQ de sites web sont des cimetières de questions corporate que personne ne pose. "Pourquoi nous choisir ?" n'est pas une question que les gens tapent dans ChatGPT. Et un Schema FAQPage mal implémenté — avec des réponses de 8 mots ou du contenu invisible — n'apporte rien.</p>
+      <p>Le problème : la plupart des FAQ de sites web sont des cimetières de questions corporate que personne ne pose. "Pourquoi nous choisir ?" n'est pas une question que les gens tapent dans ChatGPT. Et un Schema FAQPage mal implémenté, avec des réponses de 8 mots ou du contenu invisible, n'apporte rien.</p>
 
       <p>Ce guide vous montre comment construire des FAQ que les IA extraient et citent, et comment le Schema FAQPage transforme ce contenu en signal technique lisible par tous les moteurs IA.</p>
 
@@ -51,9 +51,9 @@ export default function FaqSchemaFaqpageComboIa() {
         <li><strong>Autorité & E-E-A-T (15 points)</strong> : les signaux de données structurées, dont le Schema FAQPage, sont désormais évalués dans ce critère. Le balisage dit explicitement à l'IA "ceci est une question et voici sa réponse".</li>
       </ul>
 
-      <p>40 points potentiels sur 100 — c'est souvent la différence entre un score de 25 et un score de 55.</p>
+      <p>40 points potentiels sur 100. C'est souvent la différence entre un score de 25 et un score de 55.</p>
 
-      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Pour une vue complète des schemas JSON-LD à implémenter : Schema.org et IA — le guide pratique</ArrowLink>
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Pour une vue complète des schemas JSON-LD à implémenter : Schema.org et IA, le guide pratique</ArrowLink>
 
       <h2>Ce qu'est une FAQ optimisée pour les IA (pas celle qu'on trouve partout)</h2>
 
@@ -82,7 +82,7 @@ export default function FaqSchemaFaqpageComboIa() {
       <ol>
         <li><strong>Autonome</strong> : compréhensible sans lire le reste de la page. Si on copiait la réponse dans un message, elle aurait du sens seule.</li>
         <li><strong>50 à 150 mots</strong> : assez pour être complète, assez courte pour être citée en entier. Les réponses de 8 mots sont inutiles ; celles de 400 mots ne seront jamais extraites en bloc.</li>
-        <li><strong>L'essentiel en premier</strong> : la première phrase donne la réponse. Les détails viennent après.</li>
+        <li><strong>L'important en premier</strong> : la première phrase donne la réponse. Les détails viennent après.</li>
         <li><strong>Factuelle</strong> : au moins un chiffre, une durée, un prix, ou un fait vérifiable. "Nos cours durent 60 minutes et accueillent 15 participants maximum" plutôt que "Nos cours sont adaptés à tous les niveaux".</li>
         <li><strong>Pas de blabla marketing</strong> : bannir "nous sommes les meilleurs", "notre expertise reconnue", "faites confiance à notre équipe passionnée".</li>
       </ol>
@@ -95,7 +95,7 @@ export default function FaqSchemaFaqpageComboIa() {
         <li><strong>Google Search Console</strong> : onglet "Performances" → filtre par requêtes contenant "comment", "quel", "est-ce que", "combien". Ce sont les questions réelles que les gens posent déjà quand ils trouvent votre site.</li>
         <li><strong>People Also Ask (PAA)</strong> : tapez votre mot-clé principal dans Google et regardez les questions "Autres questions posées". Google les affiche parce que les gens les posent. Les IA les posent aussi.</li>
         <li><strong>AnswerThePublic</strong> : entrez votre sujet et récupérez les questions les plus fréquentes, organisées par type (comment, pourquoi, quand, combien).</li>
-        <li><strong>Questions réelles de vos clients</strong> : emails du support, messages sur le chat en ligne, questions posées en appel commercial. Ce sont les questions les plus authentiques — et souvent les plus spécifiques.</li>
+        <li><strong>Questions réelles de vos clients</strong> : emails du support, messages sur le chat en ligne, questions posées en appel commercial. Ce sont les questions les plus authentiques : et souvent les plus spécifiques.</li>
         <li><strong>Demandez directement à ChatGPT</strong> : "Quelles sont les 10 questions les plus fréquentes sur [votre sujet] ?" Le résultat vous donne une vision de ce que l'IA considère comme les questions clés de votre domaine.</li>
       </ol>
 
@@ -226,13 +226,13 @@ export default function FaqSchemaFaqpageComboIa() {
 
       <p>Le pattern est le même dans les trois cas : remplacer les formulations vagues et promotionnelles par des faits concrets, des chiffres et des détails spécifiques. Les IA citent des informations, pas des slogans.</p>
 
-      <InlineCTA href="/">Mesurez l'impact de votre FAQ sur votre score GEO — citabilité et données structurées analysées en moins de 60 secondes.</InlineCTA>
+      <InlineCTA href="/">Mesurez l'impact de votre FAQ sur votre score GEO, citabilité et données structurées analysées en moins de 60 secondes.</InlineCTA>
 
       <h2>Checklist d'implémentation en 7 étapes</h2>
 
       <ol>
         <li><strong>Identifiez 5 à 10 vraies questions</strong> de votre audience via Search Console, PAA, support client et ChatGPT. Éliminez les questions corporate que personne ne pose.</li>
-        <li><strong>Rédigez les réponses</strong> selon les 5 critères : autonomes, 50-150 mots, essentiel en premier, factuelles, sans marketing.</li>
+        <li><strong>Rédigez les réponses</strong> selon les 5 critères : autonomes, 50-150 mots, important en premier, factuelles, sans marketing.</li>
         <li><strong>Créez ou améliorez votre page FAQ visible</strong>. Le contenu doit être affiché clairement pour les humains, pas caché dans un accordéon JavaScript inaccessible.</li>
         <li><strong>Ajoutez le Schema FAQPage</strong> en JSON-LD dans le head de la page. Vérifiez que le texte du Schema correspond mot pour mot au contenu visible.</li>
         <li><strong>Testez via Rich Results Test</strong> (search.google.com/test/rich-results). Corrigez les erreurs de balisage. Vérifiez que toutes les questions sont détectées.</li>
@@ -258,13 +258,13 @@ export default function FaqSchemaFaqpageComboIa() {
 
       <h3>Page FAQ dédiée ou FAQ intégrée dans chaque page produit/service ?</h3>
 
-      <p>Les deux. Une page FAQ centrale regroupe les questions transversales (livraison, paiement, politique de retour). Des FAQ spécifiques sur les pages produits ou services répondent aux questions liées à cette offre précise, comme dans le cas du <InternalLink href="/blog/ecommerce-recommandations-ia">e-commerce</InternalLink>. Chaque page a son propre Schema FAQPage. Les IA traitent chaque page indépendamment — plus vos FAQ sont contextualisées, plus elles ont de chances d'être citées pour la bonne requête.</p>
+      <p>Les deux. Une page FAQ centrale regroupe les questions transversales (livraison, paiement, politique de retour). Des FAQ spécifiques sur les pages produits ou services répondent aux questions liées à cette offre précise, comme dans le cas du <InternalLink href="/blog/ecommerce-recommandations-ia">e-commerce</InternalLink>. Chaque page a son propre Schema FAQPage. Les IA traitent chaque page indépendamment, plus vos FAQ sont contextualisées, plus elles ont de chances d'être citées pour la bonne requête.</p>
 
       <ArrowLink href="/blog/audit-geo-visibilite-ia">Audit GEO : comment analyser la visibilité IA de votre site étape par étape</ArrowLink>
 
       <h2>Ce qu'il faut retenir</h2>
 
-      <p>Le combo FAQ + Schema FAQPage est le levier GEO le plus accessible et le plus rapide à implémenter. Il impacte directement 35 points sur 100 du score Detekia (citabilité + données structurées). Mais la clé n'est pas technique — elle est éditoriale. Des questions réelles, des réponses factuelles et autonomes, et un balisage propre. Le Schema est le contenant ; la qualité des réponses est le contenu.</p>
+      <p>Le combo FAQ + Schema FAQPage est le moyen GEO le plus accessible et le plus rapide à implémenter. Il impacte directement 35 points sur 100 du score Detekia (citabilité + données structurées). Mais la clé n'est pas technique. Elle est éditoriale. Des questions réelles, des réponses factuelles et autonomes, et un balisage propre. Le Schema est le contenant ; la qualité des réponses est le contenu.</p>
 
       <p>Commencez par vos 5 questions les plus fréquentes. Réécrivez-les selon les critères de cet article. Ajoutez le Schema. Mesurez l'impact. Vous verrez la différence en quelques jours.</p>
     </>

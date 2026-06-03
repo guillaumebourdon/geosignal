@@ -45,7 +45,7 @@ export default function WikipediaSourceIA() {
 
       <h3>1. Des answer capsules parfaits</h3>
 
-      <p>Chaque article Wikipedia commence par un paragraphe d'introduction de 30 a 60 mots qui repond directement a la question "qu'est-ce que X ?". C'est exactement ce que les IA extraient en priorite. L'etude ALM Corp montre que <strong>44,2 % des citations proviennent des 30 premiers % du texte</strong> d'une page. Wikipedia met l'essentiel en premier, systematiquement.</p>
+      <p>Chaque article Wikipedia commence par un paragraphe d'introduction de 30 a 60 mots qui repond directement a la question "qu'est-ce que X ?". C'est exactement ce que les IA extraient en priorite. L'etude ALM Corp montre que <strong>44,2 % des citations proviennent des 30 premiers % du texte</strong> d'une page. Wikipedia met l'important en premier, systematiquement.</p>
 
       <h3>2. Un ton parfaitement neutre</h3>
 
@@ -124,7 +124,7 @@ export default function WikipediaSourceIA() {
 
       <p>Le GEO n'est pas une discipline artificielle inventee pour vendre des outils. C'est la formalisation de ce que Wikipedia fait naturellement depuis 25 ans. Les moteurs IA ont ete entraines sur Wikipedia, et ils cherchent des contenus qui ressemblent a Wikipedia. Comprendre ca, c'est comprendre l'essence du GEO. Si le sujet vous interesse, notre <InternalLink href="/blog/seo-vs-geo-differences-2026">comparatif SEO vs GEO</InternalLink> explique en detail ce qui a change.</p>
 
-      <p>La bonne nouvelle : vous n'avez pas besoin d'etre Wikipedia. Vous avez juste besoin d'ecrire sur votre domaine d'expertise avec la meme rigueur que Wikipedia applique a ses articles. Faits sources, structure claire, ton neutre, contenu profond. Les IA feront le reste.</p>
+      <p>Vous n'avez pas besoin d'etre Wikipedia. Vous avez juste besoin d'ecrire sur votre domaine d'expertise avec la meme rigueur que Wikipedia applique a ses articles. Faits sources, structure claire, ton neutre, contenu profond. Les IA feront le reste.</p>
     </>
   );
 }

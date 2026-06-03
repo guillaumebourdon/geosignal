@@ -48,7 +48,7 @@ function InlineCTA({ href, children }) {
 export default function GeoAgencesSeoAuditIa() {
   return (
     <>
-      <p>Le <InternalLink href="/blog/geo-guide-complet-2026">GEO (Generative Engine Optimization)</InternalLink> est en train de devenir ce que le SEO était en 2008 : une nouvelle discipline que vos clients commencent à entendre parler, sans savoir exactement ce que c'est — et qui cherchent quelqu'un pour les guider.</p>
+      <p>Le <InternalLink href="/blog/geo-guide-complet-2026">GEO (Generative Engine Optimization)</InternalLink> est en train de devenir ce que le SEO était en 2008 : une nouvelle discipline que vos clients commencent à entendre parler, sans savoir exactement ce que c'est. Et qui cherchent quelqu'un pour les guider.</p>
 
       <p>Pour les agences SEO, c'est une opportunité rare : être présent sur un marché avant qu'il soit saturé. Les agences qui intègrent l'audit GEO dans leurs prestations dès maintenant prendront 2 à 3 ans d'avance sur les concurrents qui attendront que ça devienne "mainstream".</p>
 
@@ -58,7 +58,7 @@ export default function GeoAgencesSeoAuditIa() {
 
       <h2>Pourquoi les agences SEO sont les mieux placées</h2>
 
-      <p>L'audit GEO n'est pas une discipline radicalement nouvelle — c'est une extension naturelle du SEO. 70 % des critères GEO sont déjà dans le périmètre d'une bonne agence SEO :</p>
+      <p>L'audit GEO n'est pas une discipline radicalement nouvelle. C'est une extension naturelle du SEO. 70 % des critères GEO sont déjà dans le périmètre d'une bonne agence SEO :</p>
 
       <ul>
         <li>La technique (accessibilité IA, vitesse, SSR) est déjà dans votre scope</li>
@@ -67,9 +67,9 @@ export default function GeoAgencesSeoAuditIa() {
         <li>La présence externe (netlinking, mentions) est déjà dans votre scope</li>
       </ul>
 
-      <p>Ce qui change avec le GEO, c'est l'angle : au lieu d'optimiser pour Google, vous optimisez pour les LLM. Pour comprendre les différences fondamentales, consultez notre article <InternalLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO</InternalLink>. Les techniques se recoupent largement, mais l'évaluation et le reporting sont nouveaux.</p>
+      <p>Ce qui change avec le GEO, c'est l'angle : au lieu d'optimiser pour Google, vous optimisez pour les LLM. Pour comprendre les différences centrales, consultez notre article <InternalLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO</InternalLink>. Les techniques se recoupent largement, mais l'évaluation et le reporting sont nouveaux.</p>
 
-      <p><strong>Avantage concurrentiel :</strong> Vos clients existants vous font déjà confiance pour leur visibilité en ligne. Proposer l'audit GEO, c'est étendre cette confiance à un nouveau canal — sans devoir repartir de zéro sur la relation commerciale.</p>
+      <p><strong>Avantage concurrentiel :</strong> Vos clients existants vous font déjà confiance pour leur visibilité en ligne. Proposer l'audit GEO, c'est étendre cette confiance à un nouveau canal, sans devoir repartir de zéro sur la relation commerciale.</p>
 
       <h2>Comment structurer l'audit GEO</h2>
 
@@ -157,7 +157,7 @@ export default function GeoAgencesSeoAuditIa() {
       <OffreCard
         titre="Intégration GEO dans l'audit SEO existant"
         prix="+30-50% sur le tarif audit SEO"
-        description="Pour les clients existants — extension naturelle de votre prestation habituelle."
+        description="Pour les clients existants, extension naturelle de votre prestation habituelle."
         inclus={[
           "Section GEO dans le rapport d'audit SEO",
           "Évaluation des 7 critères GEO",
@@ -180,11 +180,11 @@ export default function GeoAgencesSeoAuditIa() {
 
       <h3>L'argument du taux de conversion</h3>
 
-      <p>"Un visiteur qui arrive sur votre site après une recommandation IA a déjà décidé de s'intéresser à vous — il convertit 4 fois mieux qu'un visiteur SEO classique. C'est du trafic pré-qualifié."</p>
+      <p>"Un visiteur qui arrive sur votre site après une recommandation IA a déjà décidé de s'intéresser à vous. Il convertit 4 fois mieux qu'un visiteur SEO classique. C'est du trafic pré-qualifié."</p>
 
       <h3>L'argument de la fenêtre d'opportunité</h3>
 
-      <p>"Le GEO en 2026, c'est le SEO en 2012. Vos concurrents ne sont pas encore optimisés — c'est le moment d'avoir 2 ans d'avance avant que tout le monde s'y mette."</p>
+      <p>"Le GEO en 2026, c'est le SEO en 2012. Vos concurrents ne sont pas encore optimisés. C'est le moment d'avoir 2 ans d'avance avant que tout le monde s'y mette."</p>
 
       <h2>Comment former votre équipe</h2>
 
@@ -195,7 +195,7 @@ export default function GeoAgencesSeoAuditIa() {
       <ul>
         <li><strong>Compréhension des LLM</strong> : comment fonctionnent ChatGPT, Perplexity, Gemini, leurs sources</li>
         <li><strong>Évaluation de l'citabilité</strong> : lire un contenu et identifier ce qui est extractible ou non</li>
-        <li><strong>Schema.org avancé</strong> : FAQPage, Article, Organization, Product — implémentation et validation</li>
+        <li><strong>Schema.org avancé</strong> : FAQPage, Article, Organization, Product : implémentation et validation</li>
         <li><strong>Analyse robots.txt</strong> : identifier les blocages de bots IA</li>
         <li><strong>Rédaction GEO</strong> : restructurer un contenu pour le rendre plus citable</li>
       </ul>
@@ -203,7 +203,7 @@ export default function GeoAgencesSeoAuditIa() {
       <h3>Les ressources pour se former</h3>
 
       <ul>
-        <li>Les articles de notre blog — notamment le guide complet GEO et la méthodologie des 7 critères</li>
+        <li>Les articles de notre blog : notamment le guide complet GEO et la méthodologie des 7 critères</li>
         <li>L'étude académique originale : "Generative Engine Optimization" (Aggarwal et al., 2023)</li>
         <li>Les guidelines Google pour l'E-E-A-T (Search Quality Evaluator Guidelines)</li>
         <li>La documentation officielle des bots : openai.com/gptbot, anthropic.com/robots</li>
@@ -250,7 +250,7 @@ export default function GeoAgencesSeoAuditIa() {
 
       <p><strong>Sur-promettre sur les résultats :</strong> Le GEO est moins déterministe que le SEO. On ne peut pas garantir un classement dans une IA comme on garantit une position sur Google. Parlez de "citabilité accrue" et de "probabilité plus élevée d'être cité", pas de "garantie de citation".</p>
 
-      <p><strong>Confondre GEO et SEO d'IA :</strong> Le GEO ne concerne pas les positions dans les réponses d'IA — il concerne la probabilité d'être cité du tout. C'est un travail de fond, pas un levier d'optimisation immédiate.</p>
+      <p><strong>Confondre GEO et SEO d'IA :</strong> Le GEO ne concerne pas les positions dans les réponses d'IA. Il concerne la probabilité d'être cité du tout. C'est un travail de fond, pas un moyen d'optimisation immédiate.</p>
 
       <p><strong>Négliger le contenu de fond :</strong> L'optimisation technique ne suffit pas. Un contenu sans valeur informative ne sera pas cité même avec des schemas parfaits. La qualité éditoriale reste le fondement.</p>
 
@@ -262,12 +262,12 @@ export default function GeoAgencesSeoAuditIa() {
 
       <ul>
         <li>40-50 % des requêtes d'information passeront par des interfaces IA (vs moteurs classiques)</li>
-        <li>Les IA intégreront des publicités et des liens sponsorisés — créant un marché "GEO payant" en parallèle du GEO organique</li>
+        <li>Les IA intégreront des publicités et des liens sponsorisés : créant un marché "GEO payant" en parallèle du GEO organique</li>
         <li>Les outils d'audit GEO seront aussi banals que Semrush ou Screaming Frog</li>
         <li>Les formations SEO intègreront systématiquement une section GEO</li>
       </ul>
 
-      <p>Les agences qui construisent leur expertise et leurs process dès maintenant seront les mieux positionnées pour capter ce marché. Le coût d'entrée aujourd'hui est faible — il montera à mesure que la compétition s'intensifie.</p>
+      <p>Les agences qui construisent leur expertise et leurs process dès maintenant seront les mieux positionnées pour capter ce marché. Le coût d'entrée aujourd'hui est faible. Il montera à mesure que la compétition s'intensifie.</p>
 
       <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
       <ArrowLink href="/">Analysez un site client avec l'audit GEO gratuit Detekia →</ArrowLink>

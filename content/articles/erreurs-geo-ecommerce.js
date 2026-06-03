@@ -34,7 +34,7 @@ export default function ErreursGeoEcommerce() {
     <>
       <p>Quand un consommateur demande à ChatGPT "recommande-moi un sac à dos premium pour voyager", l'IA cite 3 à 5 marques par leur nom. Si votre boutique n'apparaît pas dans cette liste, vous perdez une vente auprès d'un acheteur qui ne visitera jamais Google.</p>
 
-      <p>Le problème : la majorité des e-commerçants commettent les mêmes erreurs techniques qui les rendent invisibles pour les moteurs IA. Ces erreurs sont différentes des erreurs SEO classiques — un site parfaitement optimisé pour Google peut être totalement absent des réponses de ChatGPT, Gemini et Perplexity.</p>
+      <p>Le problème : la majorité des e-commerçants commettent les mêmes erreurs techniques qui les rendent invisibles pour les moteurs IA. Ces erreurs sont différentes des erreurs SEO classiques, un site parfaitement optimisé pour Google peut être totalement absent des réponses de ChatGPT, Gemini et Perplexity.</p>
 
       <p>Voici les 5 erreurs les plus courantes, avec pour chacune le diagnostic, la conséquence mesurable, et la solution technique à implémenter.</p>
 
@@ -88,7 +88,7 @@ export default function ErreursGeoEcommerce() {
 
       <h3>Le diagnostic</h3>
 
-      <p>Relisez vos 5 fiches produit les plus visitées. Si elles contiennent "le meilleur", "incontournable", "révolutionnaire", "unique en son genre" — vous avez un problème de neutralité éditoriale.</p>
+      <p>Relisez vos 5 fiches produit les plus visitées. Si elles contiennent "le meilleur", "majeur", "révolutionnaire", "unique en son genre". Vous avez un problème de neutralité éditoriale.</p>
 
       <h3>La conséquence</h3>
 
@@ -123,7 +123,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
 
       <h3>La conséquence</h3>
 
-      <p>Quand un prospect demande "est-ce que ce type de sac passe en bagage cabine" ou "quelle taille choisir pour un MacBook 16 pouces", l'IA cherche des pages qui répondent directement à ces sous-questions. Sans FAQ, votre page n'est jamais la réponse directe — elle est au mieux une source secondaire.</p>
+      <p>Quand un prospect demande "est-ce que ce type de sac passe en bagage cabine" ou "quelle taille choisir pour un MacBook 16 pouces", l'IA cherche des pages qui répondent directement à ces sous-questions. Sans FAQ, votre page n'est jamais la réponse directe. Elle est au mieux une source secondaire.</p>
 
       <h3>La solution</h3>
 
@@ -178,7 +178,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
 
       <h3>La conséquence</h3>
 
-      <p>Les requêtes IA de type "meilleurs sacs à dos pour voyager en 2026" ou "quelle marque de sac à dos recommander" ciblent des pages qui expliquent, comparent et guident. Une grille de 48 produits sans contexte ne sera jamais citée pour ce type de requête — les IA préfèrent les guides d'achat et les pages éditoriales.</p>
+      <p>Les requêtes IA de type "meilleurs sacs à dos pour voyager en 2026" ou "quelle marque de sac à dos recommander" ciblent des pages qui expliquent, comparent et guident. Une grille de 48 produits sans contexte ne sera jamais citée pour ce type de requête, les IA préfèrent les guides d'achat et les pages éditoriales.</p>
 
       <h3>La solution</h3>
 
@@ -187,7 +187,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
       <ul>
         <li><strong>Introduction (2-3 phrases) :</strong> qu'est-ce que cette catégorie, pour qui, quels sont les critères de choix</li>
         <li><strong>Guide de choix (3-5 critères) :</strong> quels paramètres regarder (matière, contenance, usage, budget)</li>
-        <li><strong>Profils d'acheteur (2-3) :</strong> "Si vous cherchez X, regardez Y" — aide l'IA à matcher le bon produit au bon profil</li>
+        <li><strong>Profils d'acheteur (2-3) :</strong> "Si vous cherchez X, regardez Y" : aide l'IA à matcher le bon produit au bon profil</li>
         <li><strong>FAQ catégorie (2-3 questions) :</strong> questions transversales à tous les produits de la catégorie</li>
       </ul>
 
@@ -195,7 +195,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
 
       <h2>Erreur n°5 — Zéro signal d'autorité (E-E-A-T absent)</h2>
 
-      <p><strong>Les IA recommandent en priorité les marques dont elles peuvent vérifier l'expertise et la légitimité.</strong> C'est le principe <InternalLink href="/blog/eeat-ia-experience-expertise">E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness)</InternalLink> appliqué par Google et repris par les LLM. Sans ces signaux, votre marque est un inconnu non vérifiable — et les IA ne recommandent pas les inconnus.</p>
+      <p><strong>Les IA recommandent en priorité les marques dont elles peuvent vérifier l'expertise et la légitimité.</strong> C'est le principe <InternalLink href="/blog/eeat-ia-experience-expertise">E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness)</InternalLink> appliqué par Google et repris par les LLM. Sans ces signaux, votre marque est un inconnu non vérifiable. Et les IA ne recommandent pas les inconnus.</p>
 
       <h3>Le diagnostic</h3>
 
@@ -213,7 +213,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
 
       <h3>La conséquence</h3>
 
-      <p>Quand ChatGPT doit choisir entre recommander une marque avec une page About détaillée, des mentions dans la presse, et un Schema Organization complet — et une marque dont il ne sait rien — il choisit toujours la première. 90 % des citations IA proviennent de contenus "earned" et "owned" vérifiables (source : <a href="https://www.edelman.com/" target="_blank" rel="noopener noreferrer">Edelman, 2026</a>).</p>
+      <p>Quand ChatGPT doit choisir entre recommander une marque avec une page About détaillée, des mentions dans la presse, et un Schema Organization complet. Et une marque dont il ne sait rien. Il choisit toujours la première. 90 % des citations IA proviennent de contenus "earned" et "owned" vérifiables (source : <a href="https://www.edelman.com/" target="_blank" rel="noopener noreferrer">Edelman, 2026</a>).</p>
 
       <h3>La solution</h3>
 
@@ -253,7 +253,7 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
 
       <p>Chaque jour où ces 5 erreurs ne sont pas corrigées, vos concurrents qui les ont déjà corrigées captent les recommandations IA à votre place. Le trafic IA croît de <strong>527 % par an</strong> (source : <a href="https://previsible.io/blog/ai-referral-traffic" target="_blank" rel="noopener noreferrer">Previsible, 2025</a>) et un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique (source : <a href="https://www.semrush.com/" target="_blank" rel="noopener noreferrer">Semrush, 2025</a>).</p>
 
-      <p>La bonne nouvelle : ces 5 erreurs sont toutes corrigeables en moins de 2 semaines. Les schemas Product et FAQPage se déploient en quelques heures. La réécriture factuelle des fiches produit demande du temps mais l'impact est immédiat dès que les IA ré-indexent votre contenu.</p>
+      <p>Ces 5 erreurs sont toutes corrigeables en moins de 2 semaines. Les schemas Product et FAQPage se déploient en quelques heures. La réécriture factuelle des fiches produit demande du temps mais l'impact est immédiat dès que les IA ré-indexent votre contenu.</p>
 
       <ArrowLink href="/blog/ecommerce-recommandations-ia">Guide complet : optimiser votre e-commerce pour les recommandations IA →</ArrowLink>
 
@@ -269,10 +269,10 @@ main d'œuvre. 142 avis clients, note moyenne 4.7/5."`}</code></pre>
       <p>Priorisez : (1) Schema Product sur vos 10-20 produits phares, (2) réécriture factuelle de ces mêmes fiches, (3) FAQ + Schema FAQPage. Ces 3 actions couvrent 80 % de l'impact. L'autorité E-E-A-T et les pages catégorie viennent ensuite.</p>
 
       <h3>Mon CMS gère-t-il automatiquement les schemas Product ?</h3>
-      <p>Shopify, WooCommerce et PrestaShop ont des plugins/apps qui génèrent des schemas basiques. Mais "basique" ne suffit pas — vérifiez que <code>material</code>, <code>brand</code>, <code>aggregateRating</code> et <code>offers</code> sont bien renseignés. La plupart des plugins ne remplissent que <code>name</code> et <code>price</code>.</p>
+      <p>Shopify, WooCommerce et PrestaShop ont des plugins/apps qui génèrent des schemas basiques. Mais "basique" ne suffit pas, vérifiez que <code>material</code>, <code>brand</code>, <code>aggregateRating</code> et <code>offers</code> sont bien renseignés. La plupart des plugins ne remplissent que <code>name</code> et <code>price</code>.</p>
 
       <h3>Les descriptions factuelles ne vont-elles pas ennuyer mes clients ?</h3>
-      <p>Non. L'approche factuelle n'exclut pas le storytelling — elle le complète. Gardez votre univers de marque dans le visuel et l'édition haut de page. Ajoutez les données factuelles dans une section "Caractéristiques" ou "Détails produit" structurée. Les IA lisent les deux, mais ne citent que le factuel.</p>
+      <p>Non. L'approche factuelle n'exclut pas le storytelling. Elle le complète. Gardez votre univers de marque dans le visuel et l'édition haut de page. Ajoutez les données factuelles dans une section "Caractéristiques" ou "Détails produit" structurée. Les IA lisent les deux, mais ne citent que le factuel.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences et comment les combiner en 2026</ArrowLink>

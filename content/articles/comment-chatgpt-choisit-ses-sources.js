@@ -34,7 +34,7 @@ export default function CommentChatgptChoisitSesSources() {
     <>
       <p>Quand vous posez une question à ChatGPT, il ne tape pas votre requête dans Google. Il ne parcourt pas non plus un index de pages web en temps réel. Il utilise un processus appelé <strong>RAG</strong> (Retrieval-Augmented Generation) : un mécanisme qui sélectionne des sources pertinentes, les injecte dans son contexte, puis génère une réponse synthétique basée sur ces sources.</p>
 
-      <p>Comprendre ce mécanisme est la clé pour être cité. Si vous ne savez pas comment ChatGPT sélectionne ses sources, vous optimisez à l'aveugle. Cet article décortique le fonctionnement complet : les bots, le moteur de recherche utilisé, les critères de sélection, ce qui est ignoré, et les leviers concrets pour apparaître dans ses réponses.</p>
+      <p>Comprendre ce mécanisme est la clé pour être cité. Si vous ne savez pas comment ChatGPT sélectionne ses sources, vous optimisez à l'aveugle. Cet article décortique le fonctionnement complet : les bots, le moteur de recherche utilisé, les critères de sélection, ce qui est ignoré, et les moyens concrets pour apparaître dans ses réponses.</p>
 
       <h2>Le fonctionnement de ChatGPT Search : trois bots, trois rôles</h2>
 
@@ -90,7 +90,7 @@ export default function CommentChatgptChoisitSesSources() {
 
       <h3>Les sources vérifiables</h3>
 
-      <p>Les contenus qui citent leurs propres sources (études, données chiffrées, références académiques) sont favorisés. L'étude de Princeton et Georgia Tech (KDD 2024) sur les moteurs génératifs a montré que l'ajout de <strong>citations et de statistiques augmente la visibilité de 30 à 40 %</strong> dans les réponses IA. ChatGPT peut vérifier la cohérence des affirmations en croisant les sources — un contenu auto-référencé sans preuve externe sera moins bien classé.</p>
+      <p>Les contenus qui citent leurs propres sources (études, données chiffrées, références académiques) sont favorisés. L'étude de Princeton et Georgia Tech (KDD 2024) sur les moteurs génératifs a montré que l'ajout de <strong>citations et de statistiques augmente la visibilité de 30 à 40 %</strong> dans les réponses IA. ChatGPT peut vérifier la cohérence des affirmations en croisant les sources, un contenu auto-référencé sans preuve externe sera moins bien classé.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">Le guide complet du GEO en 2026 : stratégie, critères et plan d'action</ArrowLink>
 
@@ -100,7 +100,7 @@ export default function CommentChatgptChoisitSesSources() {
 
       <h3>Le keyword stuffing</h3>
 
-      <p>Contrairement aux moteurs de recherche traditionnels, ChatGPT ne classe pas les pages par densité de mots-clés. Il comprend le <strong>sens sémantique</strong> du contenu. Répéter 47 fois "meilleur outil GEO" dans votre page ne vous fera pas citer davantage — et pourrait même être interprété comme un signal de faible qualité éditoriale.</p>
+      <p>Contrairement aux moteurs de recherche traditionnels, ChatGPT ne classe pas les pages par densité de mots-clés. Il comprend le <strong>sens sémantique</strong> du contenu. Répéter 47 fois "meilleur outil GEO" dans votre page ne vous fera pas citer davantage. Et pourrait même être interprété comme un signal de faible qualité éditoriale.</p>
 
       <h3>Le contenu promotionnel</h3>
 
@@ -110,11 +110,11 @@ export default function CommentChatgptChoisitSesSources() {
 
       <p>Contrairement à une idée reçue qui circule depuis fin 2024, le fichier <code>llms.txt</code> (un fichier placé à la racine du site pour "guider" les LLM) <strong>n'a pas d'impact prouvé</strong> sur la citation par ChatGPT. L'étude SE Ranking (2025) n'a trouvé aucune corrélation significative entre la présence d'un <code>llms.txt</code> et la fréquence de citation. ChatGPT ne le lit pas de manière systématique et ne l'utilise pas comme signal de classement.</p>
 
-      <p>Cela ne signifie pas qu'il faut le supprimer si vous l'avez déjà — il peut servir pour d'autres IA. Mais investir du temps à l'optimiser au détriment d'autres critères est une erreur de priorité.</p>
+      <p>Cela ne signifie pas qu'il faut le supprimer si vous l'avez déjà. Il peut servir pour d'autres IA. Mais investir du temps à l'optimiser au détriment d'autres critères est une erreur de priorité.</p>
 
       <h2>Les plateformes qui boostent votre visibilité</h2>
 
-      <p>L'un des résultats les plus frappants des études récentes concerne le rôle des <strong>plateformes tierces</strong> dans la citation par ChatGPT. Votre site n'est pas évalué isolément — ChatGPT croise votre présence sur l'ensemble du web.</p>
+      <p>L'un des résultats les plus frappants des études récentes concerne le rôle des <strong>plateformes tierces</strong> dans la citation par ChatGPT. Votre site n'est pas évalué isolément, ChatGPT croise votre présence sur l'ensemble du web.</p>
 
       <h3>Reddit et Quora : des sources privilégiées</h3>
 
@@ -128,18 +128,18 @@ export default function CommentChatgptChoisitSesSources() {
 
       <p>Les données sont claires : les domaines présents sur <strong>plusieurs plateformes d'avis</strong> (G2, Trustpilot, Capterra, Google Reviews) obtiennent en moyenne <strong>4.6 à 6.3 citations</strong> dans les réponses ChatGPT, contre seulement <strong>1.8 pour les domaines absents</strong> de ces plateformes (source : SE Ranking 2025).</p>
 
-      <p>L'explication est double. D'abord, les avis constituent des contenus tiers vérifiables — exactement ce que ChatGPT recherche pour étayer ses recommandations. Ensuite, la présence sur ces plateformes renforce l'autorité perçue du domaine dans l'index Bing.</p>
+      <p>L'explication est double. D'abord, les avis constituent des contenus tiers vérifiables, exactement ce que ChatGPT recherche pour étayer ses recommandations. Ensuite, la présence sur ces plateformes renforce l'autorité perçue du domaine dans l'index Bing.</p>
 
       <p>Les actions concrètes :</p>
 
       <ul>
         <li>Créez et maintenez des profils sur <strong>G2, Trustpilot et Capterra</strong> (pour le B2B) ou <strong>Google Reviews et TripAdvisor</strong> (pour le B2C)</li>
-        <li>Sollicitez activement des avis clients — un minimum de <strong>10 avis récents</strong> semble nécessaire pour avoir un impact</li>
-        <li>Répondez aux avis (positifs et négatifs) — l'activité du profil est un signal supplémentaire</li>
+        <li>Sollicitez activement des avis clients : un minimum de <strong>10 avis récents</strong> semble nécessaire pour avoir un impact</li>
+        <li>Répondez aux avis (positifs et négatifs) : l'activité du profil est un signal supplémentaire</li>
         <li>Intégrez les avis sur votre site avec le schema <code>AggregateRating</code> pour que ChatGPT puisse les lire directement</li>
       </ul>
 
-      <InlineCTA href="/">Detekia mesure votre présence externe et vos données structurées — testez votre site gratuitement.</InlineCTA>
+      <InlineCTA href="/">Detekia mesure votre présence externe et vos données structurées, testez votre site gratuitement.</InlineCTA>
 
       <h2>Comment vérifier si ChatGPT vous connaît</h2>
 
@@ -151,7 +151,7 @@ export default function CommentChatgptChoisitSesSources() {
 
       <ul>
         <li>"Quel est le meilleur [votre catégorie] en France ?"</li>
-        <li>"[Votre marque] avis" — ChatGPT vous connaît-il ?</li>
+        <li>"[Votre marque] avis" : ChatGPT vous connaît-il ?</li>
         <li>"Comparatif [votre secteur] 2026"</li>
         <li>Une question technique pointue dans votre domaine d'expertise</li>
       </ul>
@@ -173,9 +173,9 @@ export default function CommentChatgptChoisitSesSources() {
       <p>Les trois actions les plus efficaces, par ordre de priorité :</p>
 
       <ol>
-        <li><strong>Vérifiez que vos bots IA ne sont pas bloqués</strong> — c'est le prérequis absolu</li>
-        <li><strong>Produisez du contenu long, factuel et sourcé</strong> — visez plus de 2 000 mots avec des données vérifiables</li>
-        <li><strong>Développez votre présence externe</strong> — Reddit, plateformes d'avis, mentions presse</li>
+        <li><strong>Vérifiez que vos bots IA ne sont pas bloqués</strong> : c'est le prérequis absolu</li>
+        <li><strong>Produisez du contenu long, factuel et sourcé</strong> : visez plus de 2 000 mots avec des données vérifiables</li>
+        <li><strong>Développez votre présence externe</strong> : Reddit, plateformes d'avis, mentions presse</li>
       </ol>
 
       <p>Le GEO n'est pas une mode. C'est un changement structurel dans la manière dont les utilisateurs accèdent à l'information. Les sites qui s'adaptent maintenant auront un avantage considérable sur ceux qui attendront que le phénomène devienne impossible à ignorer.</p>

@@ -32,7 +32,7 @@ function InlineCTA({ href, children }) {
 export default function PourquoiTraficGoogleBaisse2026() {
   return (
     <>
-      <p>Votre trafic organique Google baisse depuis plusieurs mois et vous ne comprenez pas pourquoi. Votre SEO n'a pas changé, vos positions sont stables, et pourtant les clics diminuent. La raison est structurelle : en 2026, Google n'envoie plus autant de visiteurs qu'avant, parce qu'il répond lui-même aux questions de vos visiteurs — directement dans les résultats, grâce à l'IA.</p>
+      <p>Votre trafic organique Google baisse depuis plusieurs mois et vous ne comprenez pas pourquoi. Votre SEO n'a pas changé, vos positions sont stables, et pourtant les clics diminuent. La raison est structurelle : en 2026, Google n'envoie plus autant de visiteurs qu'avant, parce qu'il répond lui-même aux questions de vos visiteurs, directement dans les résultats, grâce à l'IA.</p>
 
       <p>Ce phénomène touche tous les secteurs. Et il va s'accélérer. Voici ce qui se passe, pourquoi ça vous concerne, et surtout comment réagir.</p>
 
@@ -83,7 +83,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <h3>4. Vos concurrents sont cités par les IA et pas vous</h3>
 
-      <p>Posez à ChatGPT et Perplexity les questions que vos clients vous posent habituellement. Si vos concurrents apparaissent dans les réponses et pas vous, vous avez un problème de visibilité IA — pas un problème SEO.</p>
+      <p>Posez à ChatGPT et Perplexity les questions que vos clients vous posent habituellement. Si vos concurrents apparaissent dans les réponses et pas vous, vous avez un problème de visibilité IA, pas un problème SEO.</p>
 
       <h3>5. Votre trafic "direct" augmente légèrement</h3>
 
@@ -95,13 +95,13 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Si vous avez un bon SEO, vous avez une longueur d'avance. Mais le SEO seul ne garantit plus la visibilité en 2026. Voici pourquoi :</p>
 
-      <p><strong>Le SEO optimise pour les liens. Le GEO optimise pour les citations.</strong> Être premier dans une liste de 10 liens bleus n'a plus la même valeur quand l'utilisateur lit un résumé IA avant de voir cette liste — ou ne la voit jamais.</p>
+      <p><strong>Le SEO optimise pour les liens. Le GEO optimise pour les citations.</strong> Être premier dans une liste de 10 liens bleus n'a plus la même valeur quand l'utilisateur lit un résumé IA avant de voir cette liste, ou ne la voit jamais.</p>
 
-      <p><strong>80 % des URLs citées par ChatGPT ne sont pas dans le top 100 de Google</strong> (Ahrefs, 2025). Ce chiffre montre que les critères de sélection des IA sont différents de ceux de Google. Un site peut être invisible sur Google et très bien cité par les IA — et inversement.</p>
+      <p><strong>80 % des URLs citées par ChatGPT ne sont pas dans le top 100 de Google</strong> (Ahrefs, 2025). Ce chiffre montre que les critères de sélection des IA sont différents de ceux de Google. Un site peut être invisible sur Google et très bien cité par les IA. Et inversement.</p>
 
-      <p>La bonne nouvelle : <strong>99 % des sources citées dans les AI Overviews de Google</strong> proviennent quand même du top 10 des résultats organiques. Le SEO reste la fondation. Mais il faut ajouter une couche d'optimisation spécifique pour que votre contenu soit non seulement trouvé, mais aussi <strong>cité</strong>.</p>
+      <p><strong>99 % des sources citées dans les AI Overviews de Google</strong> proviennent quand même du top 10 des résultats organiques. Le SEO reste la fondation. Mais il faut ajouter une couche d'optimisation spécifique pour que votre contenu soit non seulement trouvé, mais aussi <strong>cité</strong>.</p>
 
-      <p>Cette couche, c'est le GEO — Generative Engine Optimization.</p>
+      <p>Cette couche, c'est le GEO, Generative Engine Optimization.</p>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences et comment les combiner en 2026</ArrowLink>
 
@@ -144,7 +144,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Les IA croisent les sources. Reddit est la plateforme la plus citée par les LLM en 2026. Si votre marque est mentionnée sur Reddit, dans la presse spécialisée, ou sur des forums pertinents, votre crédibilité augmente auprès des IA.</p>
 
-      <p>Identifiez 5 subreddits liés à votre secteur et commencez à y répondre avec expertise. Pas de promotion directe — de la valeur pure.</p>
+      <p>Identifiez 5 subreddits liés à votre secteur et commencez à y répondre avec expertise. Pas de promotion directe, de la valeur pure.</p>
 
       <ArrowLink href="/blog/reddit-geo-source-ia">Reddit et GEO : pourquoi Reddit est la source n°1 citée par les IA</ArrowLink>
 
@@ -152,23 +152,23 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <p>Posez à ChatGPT, Gemini et Perplexity les 10 questions que vos clients posent le plus souvent. Notez qui est cité, dans quel contexte, et quels arguments sont mis en avant. C'est votre benchmark de départ.</p>
 
-      <p>Si vos concurrents sont cités et pas vous, c'est une bonne nouvelle : le gap est identifié, et il est comblable.</p>
+      <p>Si vos concurrents sont cités et pas vous, le gap est identifié et il est comblable.</p>
 
       <ArrowLink href="/blog/concurrents-chatgpt-visibilite">ChatGPT cite vos concurrents ? Voici comment reprendre votre place</ArrowLink>
 
       <h2>Le cas des e-commerçants : un impact double</h2>
 
-      <p>Si vous gérez une boutique en ligne, l'impact est encore plus direct. Les IA ne font pas que répondre à des questions — elles recommandent des produits. Quand quelqu'un demande à ChatGPT "meilleur aspirateur robot 2026", l'IA propose une sélection. Si vos fiches produits ne sont pas optimisées (Schema Product, avis clients, données structurées), vous n'apparaissez pas dans cette sélection.</p>
+      <p>Si vous gérez une boutique en ligne, l'impact est encore plus direct. Les IA ne font pas que répondre à des questions. Elles recommandent des produits. Quand quelqu'un demande à ChatGPT "meilleur aspirateur robot 2026", l'IA propose une sélection. Si vos fiches produits ne sont pas optimisées (Schema Product, avis clients, données structurées), vous n'apparaissez pas dans cette sélection.</p>
 
       <ArrowLink href="/blog/ecommerce-recommandations-ia">E-commerce : comment apparaître dans les recommandations produits des IA</ArrowLink>
 
       <h2>Ce qu'il faut retenir</h2>
 
-      <p>La baisse de trafic Google en 2026 n'est pas un bug — c'est un changement structurel du fonctionnement de la recherche. Les AI Overviews, ChatGPT, Perplexity et les autres captent une part croissante des recherches et répondent directement aux utilisateurs.</p>
+      <p>La baisse de trafic Google en 2026 n'est pas un bug. C'est un changement structurel du fonctionnement de la recherche. Les AI Overviews, ChatGPT, Perplexity et les autres captent une part croissante des recherches et répondent directement aux utilisateurs.</p>
 
       <p>Les sites qui s'adaptent maintenant en optimisant leur contenu pour être cité par les IA (et pas seulement pour être classé par Google) prendront une avance décisive. Ceux qui attendent verront leur trafic continuer à baisser, mois après mois.</p>
 
-      <p>Le premier pas est simple : mesurez où vous en êtes. Analysez votre site gratuitement sur Detekia — score GEO sur 100, 7 critères analysés, recommandations concrètes, en moins de 60 secondes.</p>
+      <p>Le premier pas est simple : mesurez où vous en êtes. Analysez votre site gratuitement sur Detekia, score GEO sur 100, 7 critères analysés, recommandations concrètes, en moins de 60 secondes.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <InlineCTA href="/">Votre trafic baisse ? Découvrez si les IA en sont la cause.</InlineCTA>

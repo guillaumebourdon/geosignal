@@ -36,7 +36,7 @@ export default function SaasB2bChatgptRecommandations() {
 
       <p>Et ChatGPT ne répond pas avec 10 liens bleus. Il recommande 3 à 5 produits par leur nom, avec les forces de chacun, les cas d'usage adaptés, et parfois une estimation de prix. C'est un acte de prescription directe, pas de la recherche documentaire.</p>
 
-      <p>Le problème : <strong>90 % des SaaS B2B ne sont pas optimisés pour être cités dans ces réponses</strong>. Leur site est construit pour Google, pas pour les LLM. Résultat : ils sont invisibles dans le canal d'acquisition qui croît le plus vite — le trafic référé par les IA a augmenté de <strong>527 %</strong> entre janvier et mai 2025 (source : <a href="https://previsible.io/blog/ai-referral-traffic" target="_blank" rel="noopener noreferrer">Previsible, 2025</a>).</p>
+      <p>Le problème : <strong>90 % des SaaS B2B ne sont pas optimisés pour être cités dans ces réponses</strong>. Leur site est construit pour Google, pas pour les LLM. Résultat : ils sont invisibles dans le canal d'acquisition qui croît le plus vite, le trafic référé par les IA a augmenté de <strong>527 %</strong> entre janvier et mai 2025 (source : <a href="https://previsible.io/blog/ai-referral-traffic" target="_blank" rel="noopener noreferrer">Previsible, 2025</a>).</p>
 
       <p>Ce guide explique comment positionner votre SaaS B2B pour être recommandé par ChatGPT, Gemini et Perplexity à vos prospects.</p>
 
@@ -48,7 +48,7 @@ export default function SaasB2bChatgptRecommandations() {
 
       <p><strong>La confiance est élevée.</strong> 60 % des utilisateurs de ChatGPT déclarent faire confiance aux recommandations de produits de l'IA (source : <a href="https://www.pewresearch.org/" target="_blank" rel="noopener noreferrer">Pew Research, 2026</a>). En B2B, où les décisions sont rationnelles et documentées, une recommandation structurée avec les forces et limites de chaque outil a plus de poids qu'un slogan marketing.</p>
 
-      <p><strong>Les visiteurs IA convertissent mieux.</strong> Un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique (source : <a href="https://www.semrush.com/" target="_blank" rel="noopener noreferrer">Semrush, 2025</a>). Logique : il arrive sur votre site déjà convaincu que votre produit correspond à son besoin. Il ne compare plus — il évalue.</p>
+      <p><strong>Les visiteurs IA convertissent mieux.</strong> Un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique (source : <a href="https://www.semrush.com/" target="_blank" rel="noopener noreferrer">Semrush, 2025</a>). Logique : il arrive sur votre site déjà convaincu que votre produit correspond à son besoin. Il ne compare plus. Il évalue.</p>
 
       <h2>Comment ChatGPT choisit les SaaS B2B qu'il recommande</h2>
 
@@ -66,7 +66,7 @@ export default function SaasB2bChatgptRecommandations() {
 
       <h3>Le pricing transparent</h3>
 
-      <p>Le "Contactez-nous pour un devis" est un anti-pattern GEO. Quand un utilisateur demande "quel outil d'emailing pour 10 000 contacts à moins de 100 €/mois", l'IA ne peut pas recommander un SaaS dont le prix est caché. Afficher un pricing clair permet d'être cité dans les requêtes à filtre budgétaire — qui représentent une part croissante des requêtes B2B.</p>
+      <p>Le "Contactez-nous pour un devis" est un anti-pattern GEO. Quand un utilisateur demande "quel outil d'emailing pour 10 000 contacts à moins de 100 €/mois", l'IA ne peut pas recommander un SaaS dont le prix est caché. Afficher un pricing clair permet d'être cité dans les requêtes à filtre budgétaire, qui représentent une part croissante des requêtes B2B.</p>
 
       <h3>Les cas clients structurés</h3>
 
@@ -86,13 +86,13 @@ export default function SaasB2bChatgptRecommandations() {
 
       <h3>Le biais d'écosystème</h3>
 
-      <p>Les LLM connaissent mieux les SaaS intégrés dans des écosystèmes établis (Salesforce, HubSpot, AWS, Shopify). Un outil standalone sans intégrations connues sera moins cité, car les IA ont moins de contexte croisé à son sujet. Documenter vos intégrations est un levier direct de visibilité.</p>
+      <p>Les LLM connaissent mieux les SaaS intégrés dans des écosystèmes établis (Salesforce, HubSpot, AWS, Shopify). Un outil standalone sans intégrations connues sera moins cité, car les IA ont moins de contexte croisé à son sujet. Documenter vos intégrations est un moyen direct de visibilité.</p>
 
       <h3>Le biais de notoriété</h3>
 
       <p>Les LLM sur-représentent les leaders de marché. Si vous êtes un nouvel entrant ou un acteur de niche, vous devez compenser par la qualité du contenu éducatif et la spécificité de votre positionnement. "Le meilleur CRM" vous oppose à Salesforce. "Le CRM conçu pour les cabinets d'architecture" vous donne une niche que les IA peuvent citer.</p>
 
-      <h2>7 leviers concrets pour être recommandé</h2>
+      <h2>7 moyens concrets pour être recommandé</h2>
 
       <p>Voici les actions concrètes pour augmenter la probabilité que votre SaaS soit cité par les IA dans les requêtes de vos prospects.</p>
 
@@ -139,7 +139,7 @@ Solution : automatisation avec VotreOutil. Résultat : -40% tickets en 3 mois."
         <li>Un verdict nuancé : "Si votre priorité est X, choisissez A. Si c'est Y, nous sommes mieux adaptés."</li>
       </ul>
 
-      <p>Ce positionnement honnête renforce votre <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">neutralité éditoriale</InternalLink> — un des 7 critères GEO que les IA évaluent.</p>
+      <p>Ce positionnement honnête renforce votre <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">neutralité éditoriale</InternalLink>, un des 7 critères GEO que les IA évaluent.</p>
 
       <h3>4. Rendre votre documentation indexable</h3>
 
@@ -166,13 +166,13 @@ Solution : automatisation avec VotreOutil. Résultat : -40% tickets en 3 mois."
 
       <p>Reddit est la source n°1 pour Perplexity (6,6 % des citations) et n°2 pour ChatGPT (source : <a href="https://www.profound.com/" target="_blank" rel="noopener noreferrer">Profound, 2025</a>). Les discussions authentiques sur r/SaaS, r/startups, Hacker News, IndieHackers alimentent directement les réponses IA.</p>
 
-      <p>Ne faites pas de promotion déguisée — contribuez réellement. Répondez aux questions techniques, partagez des retours d'expérience, participez aux comparatifs communautaires. Les IA distinguent le contenu promotionnel du contenu contributif.</p>
+      <p>Ne faites pas de promotion déguisée, contribuez réellement. Répondez aux questions techniques, partagez des retours d'expérience, participez aux comparatifs communautaires. Les IA distinguent le contenu promotionnel du contenu contributif.</p>
 
       <ArrowLink href="/blog/reddit-geo-source-ia">Reddit et GEO : pourquoi Reddit est la source n°1 des IA →</ArrowLink>
 
       <h3>7. Implémenter le Schema.org adapté aux SaaS</h3>
 
-      <p>Le balisage Schema.org aide les IA à comprendre ce que vous êtes et ce que vous faites. Pour un SaaS B2B, les schemas essentiels :</p>
+      <p>Le balisage Schema.org aide les IA à comprendre ce que vous êtes et ce que vous faites. Pour un SaaS B2B, les schemas importants :</p>
 
       <ul>
         <li><code>SoftwareApplication</code> avec <code>applicationCategory</code>, <code>operatingSystem</code>, <code>offers</code></li>
@@ -221,7 +221,7 @@ Solution : automatisation avec VotreOutil. Résultat : -40% tickets en 3 mois."
       <p>Il n'y a pas de délai garanti. Les LLM mettent à jour leurs données d'entraînement de façon irrégulière, mais ChatGPT avec navigation web et Perplexity indexent du contenu en temps quasi-réel. Les premiers résultats visibles (apparition dans les réponses) se constatent généralement entre 2 et 8 semaines après l'optimisation.</p>
 
       <h3>Le SEO classique est-il encore utile si on fait du GEO ?</h3>
-      <p>Oui. Le SEO et le GEO sont complémentaires. 80 % des URLs citées par ChatGPT ne sont pas dans le top 100 de Google (source : <a href="https://ahrefs.com/" target="_blank" rel="noopener noreferrer">Ahrefs, 2025</a>). Cela signifie que le GEO ouvre un canal distinct, mais le SEO reste pertinent pour le trafic organique classique. La bonne nouvelle : les optimisations GEO (contenu structuré, données vérifiables, fraîcheur) améliorent aussi le SEO.</p>
+      <p>Oui. Le SEO et le GEO sont complémentaires. 80 % des URLs citées par ChatGPT ne sont pas dans le top 100 de Google (source : <a href="https://ahrefs.com/" target="_blank" rel="noopener noreferrer">Ahrefs, 2025</a>). Cela signifie que le GEO ouvre un canal distinct, mais le SEO reste pertinent pour le trafic organique classique. les optimisations GEO (contenu structuré, données vérifiables, fraîcheur) améliorent aussi le SEO.</p>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 →</ArrowLink>
 

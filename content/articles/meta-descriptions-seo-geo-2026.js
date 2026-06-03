@@ -52,13 +52,13 @@ export default function MetaDescriptionsSeoGeo2026() {
 
       <p>Sur les requêtes qui déclenchent un AI Overview dans Google, le <strong>taux de clic organique a chuté de 61 %</strong> (Seer Interactive, 2025). Les internautes lisent le résumé IA et passent à autre chose. Si votre meta description n'est pas assez informative pour être intégrée dans ce résumé, vous perdez à la fois le clic et la visibilité.</p>
 
-      <p>En parallèle, <strong>80 % des URLs citées par ChatGPT ne sont pas dans le top 100 Google</strong> (Ahrefs, 2025). Cela signifie que même un site modeste en SEO classique peut être cité par les IA — à condition que son contenu (et sa meta description) soit structuré pour être extrait.</p>
+      <p>En parallèle, <strong>80 % des URLs citées par ChatGPT ne sont pas dans le top 100 Google</strong> (Ahrefs, 2025). Cela signifie que même un site modeste en SEO classique peut être cité par les IA, à condition que son contenu (et sa meta description) soit structuré pour être extrait.</p>
 
       <ArrowLink href="/blog/pourquoi-trafic-google-baisse-2026">Pourquoi votre trafic Google baisse en 2026 (et ce que les IA ont à voir là-dedans)</ArrowLink>
 
       <h2>Les règles SEO qui restent vraies</h2>
 
-      <p>Avant d'ajouter la couche GEO, rappelons les fondamentaux SEO de la meta description. Ils ne sont pas obsolètes — ils sont nécessaires mais plus suffisants.</p>
+      <p>Avant d'ajouter la couche GEO, rappelons les fondamentaux SEO de la meta description. Ils ne sont pas obsolètes. Ils sont nécessaires mais plus suffisants.</p>
 
       <h3>Longueur optimale</h3>
 
@@ -134,22 +134,22 @@ export default function MetaDescriptionsSeoGeo2026() {
         <li><strong>A</strong>ctionnable : l'utilisateur sait ce qu'il va obtenir (guide, outil, comparatif...)</li>
         <li><strong>C</strong>itable : la phrase peut être extraite et utilisée comme réponse autonome</li>
         <li><strong>T</strong>arget : le mot-clé principal est dans les 60 premiers caractères</li>
-        <li><strong>S</strong>pécifique : noms d'entités, chiffres, dates — pas de généralités</li>
+        <li><strong>S</strong>pécifique : noms d'entités, chiffres, dates : pas de généralités</li>
       </ul>
 
-      <p><strong>Exemple appliqué — boutique de café en ligne :</strong></p>
+      <p><strong>Exemple appliqué, boutique de café en ligne :</strong></p>
 
       <pre><code>{`Avant (SEO only) : "Découvrez notre sélection de cafés de spécialité. Livraison rapide, prix imbattables. Commandez maintenant !"
 
 Après (FACTS) : "Café de spécialité : 12 origines mono-plantation notées 85+ SCA, torréfiés à Bordeaux. Livraison 48h, 4.8/5 sur 1 200 avis Trustpilot."`}</code></pre>
 
-      <p><strong>Exemple appliqué — SaaS B2B :</strong></p>
+      <p><strong>Exemple appliqué, SaaS B2B :</strong></p>
 
       <pre><code>{`Avant : "La solution CRM la plus complète pour votre entreprise. Essai gratuit."
 
 Après : "CRM pour PME : gestion contacts, pipeline et factures en 1 outil. 4 500 entreprises, intégration Stripe et Gmail. Essai 14 jours gratuit."`}</code></pre>
 
-      <p><strong>Exemple appliqué — agence immobilière :</strong></p>
+      <p><strong>Exemple appliqué, agence immobilière :</strong></p>
 
       <pre><code>{`Avant : "Votre projet immobilier commence ici. Experts passionnés à votre service."
 
@@ -193,17 +193,17 @@ Après : "Agence immobilière Paris 11e : 320 biens vendus en 2025, délai moyen
       <p>Avant de publier ou mettre à jour une meta description en 2026, passez-la au crible de cette checklist :</p>
 
       <ol>
-        <li><strong>Longueur entre 130 et 155 caractères</strong> — couvre desktop et mobile</li>
-        <li><strong>Mot-clé principal dans les 60 premiers caractères</strong> — signal SEO fort</li>
-        <li><strong>Au moins 1 donnée chiffrée</strong> (pourcentage, volume, note, date) — critère de vérifiabilité GEO</li>
-        <li><strong>Au moins 1 entité nommée</strong> (marque, lieu, produit, technologie) — entity-richness</li>
-        <li><strong>Phrase complète sujet-verbe-complément</strong> — citabilité IA</li>
-        <li><strong>Compréhensible sans contexte</strong> — indépendance contextuelle</li>
-        <li><strong>Pas de superlatifs non prouvés</strong> ("le meilleur", "leader") — neutralité éditoriale</li>
-        <li><strong>Unique pour cette page</strong> — pas de duplication</li>
-        <li><strong>Pas de guillemets doubles</strong> — ils tronquent dans le HTML</li>
-        <li><strong>Cohérente avec le contenu réel de la page</strong> — sinon Google la remplace</li>
-        <li><strong>Contient une promesse ou un bénéfice clair</strong> — CTR SEO</li>
+        <li><strong>Longueur entre 130 et 155 caractères</strong> : couvre desktop et mobile</li>
+        <li><strong>Mot-clé principal dans les 60 premiers caractères</strong> : signal SEO fort</li>
+        <li><strong>Au moins 1 donnée chiffrée</strong> (pourcentage, volume, note, date) : critère de vérifiabilité GEO</li>
+        <li><strong>Au moins 1 entité nommée</strong> (marque, lieu, produit, technologie) : entity-richness</li>
+        <li><strong>Phrase complète sujet-verbe-complément</strong> : citabilité IA</li>
+        <li><strong>Compréhensible sans contexte</strong> : indépendance contextuelle</li>
+        <li><strong>Pas de superlatifs non prouvés</strong> ("le meilleur", "leader") : neutralité éditoriale</li>
+        <li><strong>Unique pour cette page</strong> : pas de duplication</li>
+        <li><strong>Pas de guillemets doubles</strong> : ils tronquent dans le HTML</li>
+        <li><strong>Cohérente avec le contenu réel de la page</strong> : sinon Google la remplace</li>
+        <li><strong>Contient une promesse ou un bénéfice clair</strong> : CTR SEO</li>
         <li><strong>Passe le "test de citation"</strong> : collée comme réponse à une question, elle a du sens</li>
       </ol>
 
@@ -238,11 +238,11 @@ Après : "Agence immobilière Paris 11e : 320 biens vendus en 2025, délai moyen
 
       <h3>Les meta descriptions impactent-elles directement le classement Google ?</h3>
 
-      <p>Non directement — la meta description n'est pas un facteur de classement pour Google. Mais un CTR élevé est un signal indirect de qualité. Et côté GEO, une meta description bien structurée impacte directement la probabilité d'être cité dans les réponses IA.</p>
+      <p>Non directement, la meta description n'est pas un facteur de classement pour Google. Mais un CTR élevé est un signal indirect de qualité. Et côté GEO, une meta description bien structurée impacte directement la probabilité d'être cité dans les réponses IA.</p>
 
       <h2>Ce qu'il faut retenir</h2>
 
-      <p>En 2026, la meta description est la première phrase que les IA citent de vous. Elle ne sert plus seulement à attirer un clic — elle sert à être sélectionnée comme source par ChatGPT, Perplexity et Gemini. Appliquez la formule FACTS (Factuel, Actionnable, Citable, Target, Spécifique) à chacune de vos pages, et vous optimiserez simultanément votre CTR Google et votre visibilité IA.</p>
+      <p>En 2026, la meta description est la première phrase que les IA citent de vous. Elle ne sert plus seulement à attirer un clic. Elle sert à être sélectionnée comme source par ChatGPT, Perplexity et Gemini. Appliquez la formule FACTS (Factuel, Actionnable, Citable, Target, Spécifique) à chacune de vos pages, et vous optimiserez simultanément votre CTR Google et votre visibilité IA.</p>
 
       <p>Commencez par vos 10 pages les plus visitées. Réécrivez leurs meta descriptions avec la checklist ci-dessus. Mesurez l'impact après 4 semaines. Les résultats vous surprendront.</p>
 

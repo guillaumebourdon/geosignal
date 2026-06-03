@@ -32,7 +32,7 @@ function InlineCTA({ href, children }) {
 export default function SitesBloquentBotsIA() {
   return (
     <>
-      <p><strong>73 % des sites web bloquent les bots IA</strong> — GPTBot, ClaudeBot, PerplexityBot — sans que leurs propriétaires le sachent (Otterly.AI, 2026). Concrètement, cela signifie que ChatGPT, Claude et Perplexity ne peuvent tout simplement pas lire le contenu de ces sites. Et un contenu illisible est un contenu qui ne sera jamais cité.</p>
+      <p><strong>73 % des sites web bloquent les bots IA</strong>, GPTBot, ClaudeBot, PerplexityBot, sans que leurs propriétaires le sachent (Otterly.AI, 2026). Concrètement, cela signifie que ChatGPT, Claude et Perplexity ne peuvent tout simplement pas lire le contenu de ces sites. Et un contenu illisible est un contenu qui ne sera jamais cité.</p>
 
       <p>Le plus souvent, le blocage n'est pas intentionnel. Il vient d'un fichier <code>robots.txt</code> mal configuré, d'un CMS qui bloque les bots par défaut, ou d'un site entièrement rendu en JavaScript côté client. Le résultat est le même : vous êtes invisible pour les moteurs IA, même si votre contenu est excellent.</p>
 
@@ -61,12 +61,12 @@ export default function SitesBloquentBotsIA() {
       <p>Tapez <code>votre-site.fr/robots.txt</code> dans votre navigateur. Cherchez les mentions de ces user-agents :</p>
 
       <ul>
-        <li><code>GPTBot</code> — le crawler de ChatGPT/OpenAI</li>
-        <li><code>OAI-SearchBot</code> — le crawler de recherche d'OpenAI</li>
-        <li><code>ClaudeBot</code> — le crawler d'Anthropic (Claude)</li>
-        <li><code>PerplexityBot</code> — le crawler de Perplexity</li>
-        <li><code>Google-Extended</code> — le crawler IA de Google (distinct de Googlebot)</li>
-        <li><code>Bytespider</code> — le crawler de ByteDance (utilisé par des modèles chinois)</li>
+        <li><code>GPTBot</code> : le crawler de ChatGPT/OpenAI</li>
+        <li><code>OAI-SearchBot</code> : le crawler de recherche d'OpenAI</li>
+        <li><code>ClaudeBot</code> : le crawler d'Anthropic (Claude)</li>
+        <li><code>PerplexityBot</code> : le crawler de Perplexity</li>
+        <li><code>Google-Extended</code> : le crawler IA de Google (distinct de Googlebot)</li>
+        <li><code>Bytespider</code> : le crawler de ByteDance (utilisé par des modèles chinois)</li>
       </ul>
 
       <p>Si vous voyez <code>Disallow: /</code> en face de l'un de ces agents, votre site leur est inaccessible.</p>
@@ -79,19 +79,19 @@ export default function SitesBloquentBotsIA() {
 
       <p>Detekia vérifie automatiquement l'accessibilité IA de votre site par les bots IA. Le critère "Accessibilité IA" de notre score GEO détecte les blocages <code>robots.txt</code>, l'absence de fichier <code>llms.txt</code>, les problèmes d'indexation et la présence ou non des bots IA dans votre configuration.</p>
 
-      <InlineCTA href="/">Vérifiez si les bots IA peuvent accéder à votre site — gratuit, moins de 60 secondes.</InlineCTA>
+      <InlineCTA href="/">Vérifiez si les bots IA peuvent accéder à votre site, gratuit, moins de 60 secondes.</InlineCTA>
 
       <h2>Les 6 bots IA que vous devez connaître</h2>
 
       <p>Tous les moteurs IA n'utilisent pas le même crawler. Voici les principaux et leur impact :</p>
 
       <ul>
-        <li><strong>GPTBot (OpenAI)</strong> — alimente ChatGPT et ses réponses avec recherche web. C'est le plus important : ChatGPT traite 2,5 milliards de requêtes par jour. Le bloquer vous rend invisible pour 810 millions d'utilisateurs quotidiens.</li>
-        <li><strong>OAI-SearchBot (OpenAI)</strong> — le crawler spécifique à la fonctionnalité de recherche web de ChatGPT. Distinct de GPTBot, il est parfois bloqué séparément.</li>
-        <li><strong>ClaudeBot (Anthropic)</strong> — le crawler de Claude. Claude est utilisé par des millions de professionnels et son API alimente de nombreuses applications B2B.</li>
-        <li><strong>PerplexityBot</strong> — le crawler de Perplexity, le moteur de recherche IA qui cite systématiquement ses sources avec des liens. Être indexé par Perplexity génère du trafic direct.</li>
-        <li><strong>Google-Extended</strong> — contrôle l'utilisation de votre contenu par Gemini et les AI Overviews de Google. Attention : bloquer Google-Extended ne bloque PAS Googlebot (votre référencement classique reste intact).</li>
-        <li><strong>Applebot-Extended</strong> — utilisé par Apple Intelligence et Siri. Pertinent si votre audience est sur l'écosystème Apple.</li>
+        <li><strong>GPTBot (OpenAI)</strong> : alimente ChatGPT et ses réponses avec recherche web. C'est le plus important : ChatGPT traite 2,5 milliards de requêtes par jour. Le bloquer vous rend invisible pour 810 millions d'utilisateurs quotidiens.</li>
+        <li><strong>OAI-SearchBot (OpenAI)</strong> : le crawler spécifique à la fonctionnalité de recherche web de ChatGPT. Distinct de GPTBot, il est parfois bloqué séparément.</li>
+        <li><strong>ClaudeBot (Anthropic)</strong> : le crawler de Claude. Claude est utilisé par des millions de professionnels et son API alimente de nombreuses applications B2B.</li>
+        <li><strong>PerplexityBot</strong> : le crawler de Perplexity, le moteur de recherche IA qui cite systématiquement ses sources avec des liens. Être indexé par Perplexity génère du trafic direct.</li>
+        <li><strong>Google-Extended</strong> : contrôle l'utilisation de votre contenu par Gemini et les AI Overviews de Google. Attention : bloquer Google-Extended ne bloque PAS Googlebot (votre référencement classique reste intact).</li>
+        <li><strong>Applebot-Extended</strong> : utilisé par Apple Intelligence et Siri. Pertinent si votre audience est sur l'écosystème Apple.</li>
       </ul>
 
       <h2>Ce que vous perdez en bloquant les bots IA</h2>
@@ -100,7 +100,7 @@ export default function SitesBloquentBotsIA() {
 
       <p><strong>Zéro citation dans les réponses IA.</strong> Quand un prospect demande à ChatGPT "quel est le meilleur outil pour [votre domaine]", votre site ne peut pas être cité si GPTBot ne peut pas le lire. Vos concurrents qui autorisent l'accès seront recommandés à votre place.</p>
 
-      <p><strong>Absence des AI Overviews de Google.</strong> Google utilise Google-Extended pour alimenter ses résumés IA. Si vous le bloquez, vous pouvez toujours apparaître dans les résultats classiques, mais jamais dans le résumé IA en haut de page — celui que <strong>83 % des utilisateurs lisent avant de cliquer</strong>.</p>
+      <p><strong>Absence des AI Overviews de Google.</strong> Google utilise Google-Extended pour alimenter ses résumés IA. Si vous le bloquez, vous pouvez toujours apparaître dans les résultats classiques, mais jamais dans le résumé IA en haut de page, celui que <strong>83 % des utilisateurs lisent avant de cliquer</strong>.</p>
 
       <p><strong>Perte de trafic référé par les IA.</strong> Le trafic référé par les moteurs IA a augmenté de <strong>527 %</strong> en 2025 (Previsible). Les visiteurs provenant d'une recommandation IA convertissent <strong>4,4 fois mieux</strong> que les visiteurs organiques classiques (Semrush, 2025). C'est du trafic qualifié que vous laissez à vos concurrents.</p>
 
@@ -178,7 +178,7 @@ vos services, votre proposition de valeur.`}</code></pre>
       <ul>
         <li>Allez dans Security → WAF → Custom Rules.</li>
         <li>Vérifiez qu'aucune règle ne bloque les user-agents GPTBot, ClaudeBot, PerplexityBot.</li>
-        <li>Dans Security → Bots, assurez-vous que le "Bot Fight Mode" n'est pas trop agressif — il peut bloquer les crawlers IA légitimes.</li>
+        <li>Dans Security → Bots, assurez-vous que le "Bot Fight Mode" n'est pas trop agressif : il peut bloquer les crawlers IA légitimes.</li>
       </ul>
 
       <h3>4. Résoudre les problèmes de rendu JavaScript</h3>
@@ -203,7 +203,7 @@ vos services, votre proposition de valeur.`}</code></pre>
         <li><strong>Révisez votre décision trimestriellement.</strong> L'écosystème IA évolue vite. De nouveaux bots apparaissent, d'autres deviennent dominants.</li>
       </ul>
 
-      <p>Le blocage total ne protège plus votre contenu — les IA peuvent trouver vos informations via d'autres sources (caches, agrégateurs, mentions tierces). En revanche, il vous garantit de ne jamais être cité comme source, ce qui est la pire situation.</p>
+      <p>Le blocage total ne protège plus votre contenu, les IA peuvent trouver vos informations via d'autres sources (caches, agrégateurs, mentions tierces). En revanche, il vous garantit de ne jamais être cité comme source, ce qui est la pire situation.</p>
 
       <h2>Vérifiez votre accessibilité IA maintenant</h2>
 
@@ -211,21 +211,21 @@ vos services, votre proposition de valeur.`}</code></pre>
 
       <p>Detekia analyse automatiquement votre fichier <code>robots.txt</code>, détecte la présence ou l'absence d'un <code>llms.txt</code>, et vérifie si votre contenu est accessible aux crawlers IA. Le diagnostic est gratuit et prend moins de 60 secondes.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 7 critères GEO qui déterminent si une IA vous cite — méthodologie Detekia</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 7 critères GEO qui déterminent si une IA vous cite, méthodologie Detekia</ArrowLink>
 
       <h2>Questions fréquentes</h2>
 
       <h3>Débloquer les bots IA pose-t-il un risque de sécurité ?</h3>
 
-      <p>Non. Les bots IA lisent le contenu public de votre site, exactement comme Googlebot le fait depuis 20 ans. Ils n'accèdent pas à vos bases de données, à votre espace admin ou à des données protégées — à condition que votre <code>robots.txt</code> interdise l'accès aux répertoires sensibles (<code>/admin/</code>, <code>/api/</code>, etc.).</p>
+      <p>Non. Les bots IA lisent le contenu public de votre site, exactement comme Googlebot le fait depuis 20 ans. Ils n'accèdent pas à vos bases de données, à votre espace admin ou à des données protégées, à condition que votre <code>robots.txt</code> interdise l'accès aux répertoires sensibles (<code>/admin/</code>, <code>/api/</code>, etc.).</p>
 
       <h3>Mon contenu sera-t-il utilisé pour entraîner les IA ?</h3>
 
-      <p>C'est une question distincte. GPTBot est utilisé à la fois pour la recherche web en temps réel (RAG) et potentiellement pour l'entraînement. Si vous voulez autoriser la recherche web mais pas l'entraînement, vous pouvez autoriser <code>OAI-SearchBot</code> tout en bloquant <code>GPTBot</code>. Pour Google, <code>Google-Extended</code> contrôle uniquement l'utilisation IA — le bloquer n'affecte pas votre SEO classique.</p>
+      <p>C'est une question distincte. GPTBot est utilisé à la fois pour la recherche web en temps réel (RAG) et potentiellement pour l'entraînement. Si vous voulez autoriser la recherche web mais pas l'entraînement, vous pouvez autoriser <code>OAI-SearchBot</code> tout en bloquant <code>GPTBot</code>. Pour Google, <code>Google-Extended</code> contrôle uniquement l'utilisation IA, le bloquer n'affecte pas votre SEO classique.</p>
 
       <h3>Combien de temps avant que les IA commencent à me citer ?</h3>
 
-      <p>Après avoir débloqué l'accès, les bots IA recrawlent votre site en quelques jours à quelques semaines. Les premiers résultats en termes de citations apparaissent généralement en 4 à 8 semaines, selon la qualité de votre contenu et la compétitivité de votre secteur. L'accessibilité IA est une condition nécessaire, pas suffisante — il faut aussi que votre contenu soit extractible, sourcé et structuré.</p>
+      <p>Après avoir débloqué l'accès, les bots IA recrawlent votre site en quelques jours à quelques semaines. Les premiers résultats en termes de citations apparaissent généralement en 4 à 8 semaines, selon la qualité de votre contenu et la compétitivité de votre secteur. L'accessibilité IA est une condition nécessaire, pas suffisante. Il faut aussi que votre contenu soit extractible, sourcé et structuré.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
 

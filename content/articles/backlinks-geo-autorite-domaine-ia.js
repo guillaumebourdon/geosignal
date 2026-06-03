@@ -34,7 +34,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
     <>
       <p>Chaque professionnel du SEO connaît l'importance des backlinks. Depuis vingt ans, les liens entrants sont le signal d'autorité n°1 de Google. Mais une question émerge avec la montée des moteurs IA : <strong>est-ce que ChatGPT, Perplexity et Gemini prennent aussi en compte l'autorité de domaine pour décider quels sites citer ?</strong></p>
 
-      <p>La réponse est oui — mais pas exactement de la même manière que Google. Et c'est précisément cette nuance qui crée une opportunité pour les sites qui la comprennent.</p>
+      <p>La réponse est oui. Mais pas exactement de la même manière que Google. Et c'est précisément cette nuance qui crée une opportunité pour les sites qui la comprennent.</p>
 
       <h2>Les IA ne lisent pas le PageRank, mais elles lisent la crédibilité</h2>
 
@@ -42,7 +42,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <p>Une analyse d'Otterly.AI publiée début 2026, portant sur plus de 50 000 réponses de ChatGPT et Perplexity, révèle que <strong>78 % des sources citées ont un Domain Rating (DR) supérieur à 60</strong>. Les sites sous DR 30 représentent moins de 5 % des citations. Ce n'est pas un hasard.</p>
 
-      <p>L'explication est double. D'abord, les données d'entraînement des LLM surreprésentent les sites populaires et massivement liés — ils apparaissent plus souvent dans les corpus de Common Crawl et de partenariats data. Ensuite, les systèmes RAG (Retrieval-Augmented Generation) utilisés par ChatGPT via Bing et Perplexity via son propre index héritent mécaniquement des signaux d'autorité des moteurs de recherche sous-jacents.</p>
+      <p>L'explication est double. D'abord, les données d'entraînement des LLM surreprésentent les sites populaires et massivement liés. Ils apparaissent plus souvent dans les corpus de Common Crawl et de partenariats data. Ensuite, les systèmes RAG (Retrieval-Augmented Generation) utilisés par ChatGPT via Bing et Perplexity via son propre index héritent mécaniquement des signaux d'autorité des moteurs de recherche sous-jacents.</p>
 
       <p>Autrement dit : même si les IA ne "voient" pas vos backlinks directement, elles en subissent l'influence à travers leurs sources d'information.</p>
 
@@ -50,7 +50,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <p>Le GEO (Generative Engine Optimization) ne se limite pas aux backlinks. Les IA évaluent la crédibilité d'une source à travers un faisceau de signaux plus riche que le simple nombre de liens entrants. Seer Interactive, dans son rapport 2025 sur les AI Overviews de Google, identifie cinq dimensions clés.</p>
 
-      <p><strong>1. Les citations croisées entre sources de confiance.</strong> Quand votre site est mentionné par des publications reconnues (presse, institutions, études), les IA captent ce signal dans leurs corpus. Ce n'est pas un lien <code>href</code> qui compte ici, mais la <em>mention</em> elle-même — même sans lien cliquable. Edelman, dans son Trust Barometer 2026, confirme que les IA utilisent les mentions textuelles pour évaluer la notoriété d'une source.</p>
+      <p><strong>1. Les citations croisées entre sources de confiance.</strong> Quand votre site est mentionné par des publications reconnues (presse, institutions, études), les IA captent ce signal dans leurs corpus. Ce n'est pas un lien <code>href</code> qui compte ici, mais la <em>mention</em> elle-même, même sans lien cliquable. Edelman, dans son Trust Barometer 2026, confirme que les IA utilisent les mentions textuelles pour évaluer la notoriété d'une source.</p>
 
       <p><strong>2. La présence dans des bases de données de référence.</strong> Wikipedia, Wikidata, Google Knowledge Graph, Crunchbase. Les IA s'appuient sur ces bases structurées pour valider qu'une entité existe et est notable. Un site associé à une fiche Wikidata bien renseignée bénéficie d'un avantage mesurable dans les réponses IA.</p>
 
@@ -58,7 +58,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <p><strong>4. La fréquence de citation dans les forums et communautés.</strong> Reddit, Quora, Stack Overflow, Hacker News. Growth Memo a documenté en 2026 que Perplexity accorde un poids important aux sources fréquemment recommandées dans les discussions communautaires. Un site régulièrement mentionné comme référence dans les subreddits de sa niche a un avantage réel.</p>
 
-      <p><strong>5. Les backlinks classiques — toujours pertinents.</strong> Les liens entrants de qualité restent un signal fort, non pas parce que les IA les comptent directement, mais parce qu'ils alimentent les scores d'autorité des moteurs de recherche dont les IA dépendent pour le retrieval (Bing pour ChatGPT, Google pour Gemini, index propriétaire pour Perplexity).</p>
+      <p><strong>5. Les backlinks classiques, toujours pertinents.</strong> Les liens entrants de qualité restent un signal fort, non pas parce que les IA les comptent directement, mais parce qu'ils alimentent les scores d'autorité des moteurs de recherche dont les IA dépendent pour le retrieval (Bing pour ChatGPT, Google pour Gemini, index propriétaire pour Perplexity).</p>
 
       <InlineCTA href="/">
         Votre site a-t-il les signaux d'autorité que les IA recherchent ? Testez votre score GEO.
@@ -72,7 +72,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <ul>
         <li><strong>Les mentions sans lien comptent.</strong> Si un article de presse mentionne votre marque sans lien, Google l'ignore en SEO. Mais le LLM qui a ingéré cet article dans son corpus d'entraînement a enregistré l'association. C'est un signal d'autorité GEO que le SEO ne capte pas.</li>
-        <li><strong>La diversité des sources prime sur le volume.</strong> 50 backlinks d'un seul site pèsent plus en SEO que 5 mentions dans 5 publications différentes. En GEO, c'est l'inverse : les IA valorisent la triangulation — être mentionné par des sources variées et indépendantes.</li>
+        <li><strong>La diversité des sources prime sur le volume.</strong> 50 backlinks d'un seul site pèsent plus en SEO que 5 mentions dans 5 publications différentes. En GEO, c'est l'inverse : les IA valorisent la triangulation : être mentionné par des sources variées et indépendantes.</li>
         <li><strong>Le contexte sémantique du lien compte davantage.</strong> Un backlink depuis une page hors-sujet avait encore une valeur SEO résiduelle. Pour les IA, un lien depuis un contenu thématiquement proche de votre domaine d'expertise pèse beaucoup plus lourd qu'un lien générique.</li>
         <li><strong>Les plateformes communautaires sont des signaux forts.</strong> Un lien depuis Reddit ou Quora a peu de valeur SEO directe (nofollow). Mais pour les IA, ces plateformes sont des sources de premier ordre pour évaluer la crédibilité perçue d'une ressource.</li>
       </ul>
@@ -83,7 +83,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <p>Le cadre E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) de Google influence directement la citabilité IA. Ce n'est pas un hasard : les IA s'appuient sur les mêmes signaux pour juger si une source mérite d'être citée.</p>
 
-      <p>L'étude de référence de Princeton sur le GEO (Aggarwal et al., KDD 2024) a montré que l'ajout de <strong>marqueurs d'autorité</strong> dans un contenu — citations académiques, données chiffrées, credentials de l'auteur — augmente les citations IA de 30 à 40 %. Ce signal reste l'un des plus puissants de la <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">méthodologie GEO à 7 critères</InternalLink>.</p>
+      <p>L'étude de référence de Princeton sur le GEO (Aggarwal et al., KDD 2024) a montré que l'ajout de <strong>marqueurs d'autorité</strong> dans un contenu, citations académiques, données chiffrées, credentials de l'auteur, augmente les citations IA de 30 à 40 %. Ce signal reste l'un des plus puissants de la <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">méthodologie GEO à 7 critères</InternalLink>.</p>
 
       <p>Concrètement, les IA cherchent à répondre à cette question implicite : "cette source est-elle légitime pour répondre à cette requête ?" Les signaux qu'elles utilisent pour y répondre recoupent largement les composantes E-E-A-T :</p>
 
@@ -106,7 +106,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <h3>2. Créez une présence sur les bases de référence</h3>
 
-      <p>Si votre entreprise n'a pas de fiche Wikidata, créez-en une avec les propriétés essentielles (type d'entité, site officiel, fondateur, date de création). Mettez à jour votre fiche Google Business et Crunchbase si applicable. Ces entrées servent de point de vérification pour les IA.</p>
+      <p>Si votre entreprise n'a pas de fiche Wikidata, créez-en une avec les propriétés importantes (type d'entité, site officiel, fondateur, date de création). Mettez à jour votre fiche Google Business et Crunchbase si applicable. Ces entrées servent de point de vérification pour les IA.</p>
 
       <h3>3. Visez les mentions, pas seulement les liens</h3>
 
@@ -114,7 +114,7 @@ export default function BacklinksGeoAutoritéDomaineIa() {
 
       <h3>4. Investissez les communautés de votre niche</h3>
 
-      <p>Participez aux discussions Reddit, Quora ou Stack Overflow de votre secteur avec des réponses utiles et sourcées. Ne faites pas de l'autopromotion — apportez de la valeur. Les IA apprennent que votre site est une référence dans votre domaine à travers ces recommandations organiques.</p>
+      <p>Participez aux discussions Reddit, Quora ou Stack Overflow de votre secteur avec des réponses utiles et sourcées. Ne faites pas de l'autopromotion, apportez de la valeur. Les IA apprennent que votre site est une référence dans votre domaine à travers ces recommandations organiques.</p>
 
       <h3>5. Renforcez les backlinks contextuels de qualité</h3>
 

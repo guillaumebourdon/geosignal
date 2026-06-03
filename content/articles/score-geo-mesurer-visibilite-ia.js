@@ -51,13 +51,13 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p>Pourtant, la visibilité IA se mesure. Pas avec les mêmes outils ni les mêmes métriques qu'en SEO, mais avec une approche structurée qui vous donne un diagnostic clair et des priorités d'action.</p>
 
-      <p>Cet article vous explique ce qu'est un score GEO, comment il se calcule — en complément du <InternalLink href="/blog/geo-guide-complet-2026">guide complet GEO 2026</InternalLink>, comment interpréter vos résultats, et surtout par quoi commencer pour améliorer votre visibilité dans les réponses des IA.</p>
+      <p>Cet article vous explique ce qu'est un score GEO, comment il se calcule, en complément du <InternalLink href="/blog/geo-guide-complet-2026">guide complet GEO 2026</InternalLink>, comment interpréter vos résultats, et surtout par quoi commencer pour améliorer votre visibilité dans les réponses des IA.</p>
 
       <h2>Pourquoi mesurer sa visibilité IA est difficile</h2>
 
       <p>En SEO, l'écosystème de mesure est mature. Google Search Console vous indique quelles requêtes mènent à votre site, quelles pages sont indexées, quel est votre CTR. Des outils comme Ahrefs, Semrush ou Sistrix suivent vos positions au quotidien.</p>
 
-      <p>En GEO, rien de tout cela n'existe — pour trois raisons fondamentales.</p>
+      <p>En GEO, rien de tout cela n'existe, pour trois raisons centrales.</p>
 
       <p><strong>Les réponses IA sont dynamiques.</strong> Contrairement aux SERP de Google qui sont relativement stables, les réponses de ChatGPT ou Perplexity changent à chaque requête. Poser la même question deux fois peut donner des réponses différentes, citant des sources différentes. Il n'y a pas de "position 1" fixe.</p>
 
@@ -73,7 +73,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h3>Comment procéder</h3>
 
-      <p><strong>Étape 1 — Définir vos requêtes cibles</strong></p>
+      <p><strong>Étape 1, Définir vos requêtes cibles</strong></p>
 
       <p>Listez 10 à 15 questions que vos clients posent réellement. Pensez en trois catégories :</p>
 
@@ -83,7 +83,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
         <li><strong>Requêtes de marque</strong> : "Que fait [votre entreprise] ?", "Avis sur [votre produit]"</li>
       </ul>
 
-      <p><strong>Étape 2 — Interroger 3 moteurs IA</strong></p>
+      <p><strong>Étape 2, Interroger 3 moteurs IA</strong></p>
 
       <p>Posez chaque question sur ChatGPT, Gemini et Perplexity. Pour chaque réponse, notez :</p>
 
@@ -94,7 +94,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
         <li>La réponse reprend-elle du contenu de votre site ?</li>
       </ul>
 
-      <p><strong>Étape 3 — Analyser les résultats</strong></p>
+      <p><strong>Étape 3, Analyser les résultats</strong></p>
 
       <p>Comptez votre taux de présence : sur vos 10-15 requêtes × 3 moteurs, dans quel pourcentage des réponses apparaissez-vous ? En dessous de 20 %, vous avez un problème de visibilité IA significatif.</p>
 
@@ -104,13 +104,13 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h2>Approche 2 : l'audit technique</h2>
 
-      <p>L'audit technique analyse votre site sur les critères objectifs qui déterminent la citabilité IA. Contrairement au test manuel, il mesure le <em>potentiel</em> de citation — les conditions techniques et éditoriales qui maximisent vos chances d'être sélectionné comme source.</p>
+      <p>L'audit technique analyse votre site sur les critères objectifs qui déterminent la citabilité IA. Contrairement au test manuel, il mesure le <em>potentiel</em> de citation, les conditions techniques et éditoriales qui maximisent vos chances d'être sélectionné comme source.</p>
 
       <p>C'est cette approche que Detekia utilise : un audit automatisé qui évalue votre site sur 7 critères pondérés et vous attribue un score sur 100.</p>
 
       <h2>Les 7 critères du score GEO Detekia</h2>
 
-      <p>Chaque critère est mesuré par analyse du DOM réel de votre page — pas par estimation ou approximation. Pour une explication détaillée de chaque critère, consultez <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">les 7 critères de la méthodologie Detekia</InternalLink>.</p>
+      <p>Chaque critère est mesuré par analyse du DOM réel de votre page, pas par estimation ou approximation. Pour une explication détaillée de chaque critère, consultez <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">les 7 critères de la méthodologie Detekia</InternalLink>.</p>
 
       <h3>1. Citabilité & réponse directe (25 points)</h3>
 
@@ -154,7 +154,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h3>5. Neutralité éditoriale (10 points)</h3>
 
-      <p>Ce critère évalue le ton de votre contenu — analysé par IA : absence de superlatifs non sourcés ("le meilleur", "le leader", "inégalé"), ton factuel et informatif plutôt que promotionnel, présence de comparaisons équilibrées, absence de manipulation émotionnelle.</p>
+      <p>Ce critère évalue le ton de votre contenu, analysé par IA : absence de superlatifs non sourcés ("le meilleur", "le leader", "inégalé"), ton factuel et informatif plutôt que promotionnel, présence de comparaisons équilibrées, absence de manipulation émotionnelle.</p>
 
       <p><strong>Score typique observé :</strong> 4 à 7 pour la majorité des sites. Les sites avec un ton très commercial tombent à 2-3. Les sites éditoriaux et techniques atteignent 8-10.</p>
 
@@ -178,7 +178,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
         {[
           { range: '75 – 100', label: 'Excellent', color: '#10A37F', text: 'Votre site est bien positionné pour être cité par les IA. Concentrez-vous sur les critères qui ne sont pas au maximum et sur le suivi dans le temps.' },
           { range: '45 – 74', label: 'Moyen', color: '#C9861A', text: 'Vous avez des fondations, mais des lacunes significatives empêchent votre site d\'être cité régulièrement. Identifiez les 2-3 critères les plus faibles et corrigez-les en priorité.' },
-          { range: '0 – 44', label: 'Faible', color: '#D97757', text: 'Votre site a peu de chances d\'être cité par les IA dans son état actuel. Des corrections structurelles sont nécessaires. La bonne nouvelle : les marges de progression sont importantes et les premiers gains seront rapides.' },
+          { range: '0 – 44', label: 'Faible', color: '#D97757', text: 'Votre site a peu de chances d\'être cité par les IA dans son état actuel. Des corrections structurelles sont nécessaires. les marges de progression sont importantes et les premiers gains seront rapides.' },
         ].map(({ range, label, color, text }) => (
           <div key={range} style={{ border: `1px solid ${color}30`, borderLeft: `3px solid ${color}`, borderRadius: 10, padding: '16px 20px', background: `${color}06` }}>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 6 }}>
@@ -192,11 +192,11 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h3>Le score moyen observé</h3>
 
-      <p>Sur l'ensemble des sites analysés par Detekia, le score moyen se situe autour de <strong>38/100</strong>. La majorité des sites ne sont pas du tout optimisés pour les moteurs génératifs. C'est une mauvaise nouvelle pour eux, mais une bonne nouvelle pour vous : en optimisant maintenant, vous prenez une longueur d'avance considérable sur vos concurrents.</p>
+      <p>Sur l'ensemble des sites analysés par Detekia, le score moyen se situe autour de <strong>38/100</strong>. La majorité des sites ne sont pas du tout optimisés pour les moteurs génératifs. En optimisant maintenant, vous prenez une longueur d'avance sur vos concurrents.</p>
 
       <h3>Le critère le plus souvent défaillant</h3>
 
-      <p>L'Citabilité est le critère le plus fréquemment sous-optimisé. La plupart des sites ont du contenu, mais ce contenu n'est pas structuré pour être extrait et cité par une IA. C'est aussi le critère qui pèse le plus lourd (25 points) — donc celui où les gains sont les plus importants.</p>
+      <p>L'Citabilité est le critère le plus fréquemment sous-optimisé. La plupart des sites ont du contenu, mais ce contenu n'est pas structuré pour être extrait et cité par une IA. C'est aussi le critère qui pèse le plus lourd (25 points). Donc celui où les gains sont les plus importants.</p>
 
       <h2>Comment lire les groupes thématiques</h2>
 
@@ -207,8 +207,8 @@ export default function ScoreGeoMesurerVisibiliteIa() {
         label="Lisibilité IA"
         points={50}
         criteria="Citabilité + Accessibilité IA + Données structurées"
-        description="Ce groupe mesure si les IA peuvent accéder à votre contenu et le comprendre. C'est la base technique. Si ce groupe est faible, les IA ne peuvent pas vous citer — même si votre contenu est excellent."
-        priority="Haute — corrections souvent rapides (robots.txt, Schema.org, restructuration des introductions)"
+        description="Ce groupe mesure si les IA peuvent accéder à votre contenu et le comprendre. C'est la base technique. Si ce groupe est faible, les IA ne peuvent pas vous citer, même si votre contenu est excellent."
+        priority="Haute, corrections souvent rapides (robots.txt, Schema.org, restructuration des introductions)"
       />
 
       <GroupCard
@@ -217,7 +217,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
         points={45}
         criteria="Vérifiabilité + Autorité + Neutralité + Présence externe"
         description="Ce groupe mesure si les IA font confiance à votre contenu. Même si elles peuvent le lire, elles ne le citeront pas s'il n'est pas perçu comme crédible."
-        priority="Moyenne — demande plus de travail (sourcer les affirmations, développer la présence externe, ajuster le ton)"
+        priority="Moyenne, demande plus de travail (sourcer les affirmations, développer la présence externe, ajuster le ton)"
       />
 
       <GroupCard
@@ -226,7 +226,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
         points={5}
         criteria="Fraîcheur & signaux temporels"
         description="Ce groupe mesure si votre contenu est actuel et maintenu. C'est un signal faible mais constant : les IA privilégient les contenus récents."
-        priority="Continue — pas un chantier ponctuel mais une discipline régulière"
+        priority="Continue, pas un chantier ponctuel mais une discipline régulière"
       />
 
       <h2>Prioriser vos actions par impact</h2>
@@ -236,24 +236,24 @@ export default function ScoreGeoMesurerVisibiliteIa() {
       <h3>Actions à impact immédiat (cette semaine)</h3>
 
       <ul>
-        <li><strong>Débloquer les crawlers IA</strong> — si votre <code>robots.txt</code> bloque GPTBot ou ClaudeBot, vous passez de 0 à potentiellement 12-15 points en accessibilité IA juste en supprimant quelques lignes. Effort : 15 minutes. Impact : jusqu'à +15 points.</li>
-        <li><strong>Réécrire les introductions de vos pages clés</strong> — ajoutez une réponse directe dans les 100 premiers mots de vos 5 pages principales. Effort : 1-2 heures. Impact : jusqu'à +10 points en citabilité.</li>
-        <li><strong>Ajouter Schema Organization</strong> — un seul bloc JSON-LD sur votre homepage. Effort : 30 minutes. Impact : +2-3 points en données structurées.</li>
+        <li><strong>Débloquer les crawlers IA</strong> : si votre <code>robots.txt</code> bloque GPTBot ou ClaudeBot, vous passez de 0 à potentiellement 12-15 points en accessibilité IA juste en supprimant quelques lignes. Effort : 15 minutes. Impact : jusqu'à +15 points.</li>
+        <li><strong>Réécrire les introductions de vos pages clés</strong> : ajoutez une réponse directe dans les 100 premiers mots de vos 5 pages principales. Effort : 1-2 heures. Impact : jusqu'à +10 points en citabilité.</li>
+        <li><strong>Ajouter Schema Organization</strong> : un seul bloc JSON-LD sur votre homepage. Effort : 30 minutes. Impact : +2-3 points en données structurées.</li>
       </ul>
 
       <h3>Actions à impact moyen terme (ce mois)</h3>
 
       <ul>
-        <li><strong>Sourcer vos affirmations</strong> — passez en revue vos pages clés et remplacez chaque affirmation vague par une preuve. Effort : une demi-journée. Impact : jusqu'à +8 points en vérifiabilité.</li>
-        <li><strong>Compléter vos données structurées</strong> — ajoutez <code>Article</code> sur vos contenus éditoriaux et <code>FAQPage</code> sur vos pages FAQ. Effort : 2-3 heures. Impact : +4-6 points en données structurées.</li>
-        <li><strong>Créer ou compléter votre page À propos</strong> — photo, bio, parcours, expertise, coordonnées. Effort : 2 heures. Impact : +3-5 points en autorité.</li>
+        <li><strong>Sourcer vos affirmations</strong> : passez en revue vos pages clés et remplacez chaque affirmation vague par une preuve. Effort : une demi-journée. Impact : jusqu'à +8 points en vérifiabilité.</li>
+        <li><strong>Compléter vos données structurées</strong> : ajoutez <code>Article</code> sur vos contenus éditoriaux et <code>FAQPage</code> sur vos pages FAQ. Effort : 2-3 heures. Impact : +4-6 points en données structurées.</li>
+        <li><strong>Créer ou compléter votre page À propos</strong> : photo, bio, parcours, expertise, coordonnées. Effort : 2 heures. Impact : +3-5 points en autorité.</li>
       </ul>
 
       <h3>Actions à impact long terme (ce trimestre)</h3>
 
       <ul>
-        <li><strong>Développer votre présence externe</strong> — Reddit, presse sectorielle, articles invités. Effort : continu. Impact : +2-4 points en présence externe, plus des effets indirects sur l'autorité.</li>
-        <li><strong>Ajuster le ton éditorial</strong> — réécrire les contenus trop commerciaux dans un ton factuel et expert. Effort : variable. Impact : +3-5 points en neutralité.</li>
+        <li><strong>Développer votre présence externe</strong> : Reddit, presse sectorielle, articles invités. Effort : continu. Impact : +2-4 points en présence externe, plus des effets indirects sur l'autorité.</li>
+        <li><strong>Ajuster le ton éditorial</strong> : réécrire les contenus trop commerciaux dans un ton factuel et expert. Effort : variable. Impact : +3-5 points en neutralité.</li>
       </ul>
 
       <h2>Suivre l'évolution dans le temps</h2>
@@ -263,10 +263,10 @@ export default function ScoreGeoMesurerVisibiliteIa() {
       <h3>Ce qu'il faut suivre</h3>
 
       <ul>
-        <li>Le score global — augmente-t-il après chaque vague d'optimisation ?</li>
-        <li>Les scores par critère — quel critère progresse, lequel stagne ?</li>
-        <li>Le score par rapport aux concurrents — analysez les sites de vos concurrents sur Detekia pour vous situer</li>
-        <li>Les résultats du test manuel — refaites le test des 3 questions (recommandation, expertise, marque) chaque mois</li>
+        <li>Le score global : augmente-t-il après chaque vague d'optimisation ?</li>
+        <li>Les scores par critère : quel critère progresse, lequel stagne ?</li>
+        <li>Le score par rapport aux concurrents : analysez les sites de vos concurrents sur Detekia pour vous situer</li>
+        <li>Les résultats du test manuel : refaites le test des 3 questions (recommandation, expertise, marque) chaque mois</li>
       </ul>
 
       <h3>Fréquence recommandée</h3>
@@ -283,7 +283,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <p>Après une optimisation de contenu (citabilité, vérifiabilité), comptez 4-8 semaines avant de voir un impact sur les citations.</p>
 
-      <p>Après un travail de présence externe (Reddit, presse), comptez 8-12 semaines. C'est le levier le plus lent mais aussi le plus durable.</p>
+      <p>Après un travail de présence externe (Reddit, presse), comptez 8-12 semaines. C'est le moyen le plus lent mais aussi le plus durable.</p>
 
       <h2>Ce que le score ne mesure pas</h2>
 
@@ -299,7 +299,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h3>Un bon score GEO garantit-il d'être cité par les IA ?</h3>
 
-      <p>Non. Le score mesure le potentiel de citation — les conditions que votre site remplit pour être sélectionné comme source. Les IA restent imprévisibles dans leur sélection. Mais un site à 80/100 a statistiquement beaucoup plus de chances d'être cité qu'un site à 30/100.</p>
+      <p>Non. Le score mesure le potentiel de citation, les conditions que votre site remplit pour être sélectionné comme source. Les IA restent imprévisibles dans leur sélection. Mais un site à 80/100 a statistiquement beaucoup plus de chances d'être cité qu'un site à 30/100.</p>
 
       <h3>Quel score faut-il viser ?</h3>
 
@@ -311,7 +311,7 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h3>Puis-je comparer mon score à celui de mes concurrents ?</h3>
 
-      <p>Oui. Lancez un audit Detekia sur les sites de vos 3-5 principaux concurrents. Comparez les scores globaux et les scores par critère. Cela vous indiquera exactement où vous avez un retard — et où vous avez une avance.</p>
+      <p>Oui. Lancez un audit Detekia sur les sites de vos 3-5 principaux concurrents. Comparez les scores globaux et les scores par critère. Cela vous indiquera exactement où vous avez un retard. Et où vous avez une avance.</p>
 
       <h3>Comment passer de 30 à 60/100 ?</h3>
 
@@ -319,9 +319,9 @@ export default function ScoreGeoMesurerVisibiliteIa() {
 
       <h2>Lancez votre audit</h2>
 
-      <p>La première étape est de connaître votre score actuel. Pas d'estimation, pas d'intuition — une mesure objective sur les 7 critères GEO.</p>
+      <p>La première étape est de connaître votre score actuel. Pas d'estimation, pas d'intuition, une mesure objective sur les 7 critères GEO.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 7 critères détaillés, recommandations priorisées par impact. En moins de 60 secondes, sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia, score sur 100, 7 critères détaillés, recommandations priorisées par impact. En moins de 60 secondes, sans inscription.</p>
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

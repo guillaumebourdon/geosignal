@@ -33,7 +33,7 @@ function InlineCTA({ href, children }) {
 export default function AuditGeoVisibiliteIa() {
   return (
     <>
-      <p>Vous voulez savoir si ChatGPT, Gemini ou Perplexity citent votre site — et si non, pourquoi. Un audit GEO répond à ces deux questions. Il évalue votre site sur les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">critères que les moteurs IA utilisent</InternalLink> pour sélectionner leurs sources, identifie les blocages, et vous donne un plan d'action priorisé.</p>
+      <p>Vous voulez savoir si ChatGPT, Gemini ou Perplexity citent votre site, et si non, pourquoi. Un audit GEO répond à ces deux questions. Il évalue votre site sur les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">critères que les moteurs IA utilisent</InternalLink> pour sélectionner leurs sources, identifie les blocages, et vous donne un plan d'action priorisé.</p>
 
       <p>Cet article vous guide à travers un audit GEO complet, étape par étape, que vous pouvez réaliser vous-même ou accélérer avec un outil automatisé.</p>
 
@@ -59,7 +59,7 @@ export default function AuditGeoVisibiliteIa() {
         <li>Le nombre exact de fois où les IA vous citent (aucun outil ne peut le mesurer avec certitude)</li>
       </ul>
 
-      <p>L'audit GEO mesure votre potentiel de citation — les conditions techniques et éditoriales qui maximisent vos chances d'être sélectionné comme source par les IA.</p>
+      <p>L'audit GEO mesure votre potentiel de citation, c'est-à-dire les conditions techniques et éditoriales qui maximisent vos chances d'être sélectionné comme source par les IA.</p>
 
       <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Les 7 critères GEO qui déterminent si une IA vous cite →</ArrowLink>
 
@@ -92,9 +92,9 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>Pour chaque réponse, notez dans un tableau :</p>
       <ul>
-        <li><strong>Cité ?</strong> — votre site ou votre marque apparaît dans la réponse (oui/non)</li>
-        <li><strong>Concurrents cités</strong> — quels noms apparaissent à votre place</li>
-        <li><strong>Type de source citée</strong> — site officiel, article de blog, forum, annuaire ?</li>
+        <li><strong>Cité ?</strong> : votre site ou votre marque apparaît dans la réponse (oui/non)</li>
+        <li><strong>Concurrents cités</strong> : quels noms apparaissent à votre place</li>
+        <li><strong>Type de source citée</strong> : site officiel, article de blog, forum, annuaire ?</li>
       </ul>
 
       <p>Calculez votre taux de présence : nombre de citations / (5 questions × 3 moteurs) = X %.</p>
@@ -117,10 +117,10 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>Allez sur <code>votresite.fr/robots.txt</code> et cherchez les directives pour ces user-agents :</p>
       <ul>
-        <li><code>GPTBot</code> — ChatGPT</li>
-        <li><code>ClaudeBot</code> — Claude</li>
-        <li><code>PerplexityBot</code> — Perplexity</li>
-        <li><code>Google-Extended</code> — Gemini / AI Overviews</li>
+        <li><code>GPTBot</code> : ChatGPT</li>
+        <li><code>ClaudeBot</code> : Claude</li>
+        <li><code>PerplexityBot</code> : Perplexity</li>
+        <li><code>Google-Extended</code> : Gemini / AI Overviews</li>
       </ul>
 
       <p>Si vous voyez <code>Disallow: /</code> pour l'un de ces bots, vous le bloquez activement.</p>
@@ -155,15 +155,15 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>Prenez vos 5 pages les plus importantes (homepage, page service/produit principale, article de blog clé, FAQ, page À propos). Pour chaque page, évaluez :</p>
 
-      <p><strong>Les 100 premiers mots</strong> — contiennent-ils une réponse directe à la question que se pose le visiteur ? Ou commencent-ils par du texte commercial vague ("Bienvenue chez...", "Leader de l'innovation...") ?</p>
+      <p><strong>Les 100 premiers mots</strong> : contiennent-ils une réponse directe à la question que se pose le visiteur ? Ou commencent-ils par du texte commercial vague ("Bienvenue chez...", "Leader de l'innovation...") ?</p>
 
       <p>Testez avec cette méthode : copiez les 100 premiers mots de votre page et collez-les dans ChatGPT en demandant "Sur la base de ce texte, que fait cette entreprise et que propose-t-elle ?". Si ChatGPT ne peut pas répondre clairement, votre intro n'est pas extractible.</p>
 
-      <p><strong>Les sous-titres H2/H3</strong> — sont-ils descriptifs ou vagues ? "Comment fonctionne notre service" est bon. "En savoir plus" est mauvais. "Nos avantages" est médiocre.</p>
+      <p><strong>Les sous-titres H2/H3</strong> : sont-ils descriptifs ou vagues ? "Comment fonctionne notre service" est bon. "En savoir plus" est mauvais. "Nos avantages" est médiocre.</p>
 
-      <p><strong>L'autonomie des paragraphes</strong> — prenez un paragraphe au hasard dans la page. Est-il compréhensible hors contexte ? Les IA extraient souvent un seul paragraphe pour répondre à une question. Si ce paragraphe nécessite le contexte du paragraphe précédent, il perd sa valeur.</p>
+      <p><strong>L'autonomie des paragraphes</strong> : prenez un paragraphe au hasard dans la page. Est-il compréhensible hors contexte ? Les IA extraient souvent un seul paragraphe pour répondre à une question. Si ce paragraphe nécessite le contexte du paragraphe précédent, il perd sa valeur.</p>
 
-      <p><strong>La structure</strong> — y a-t-il des listes, des tableaux, des étapes numérotées ? L'information structurée est plus facilement extractible que le texte continu.</p>
+      <p><strong>La structure</strong> : y a-t-il des listes, des tableaux, des étapes numérotées ? L'information structurée est plus facilement extractible que le texte continu.</p>
 
       <h3>Notation rapide</h3>
 
@@ -186,12 +186,12 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>Répétez pour votre page FAQ et votre article de blog principal.</p>
 
-      <h3>Checklist des schemas essentiels</h3>
+      <h3>Checklist des schemas importants</h3>
 
       <p>Vérifiez la présence de ces schemas :</p>
       <ul>
-        <li><code>Organization</code> sur la homepage — nom, logo, URL, adresse, contact, sameAs (liens vers LinkedIn, etc.)</li>
-        <li><code>Article</code> sur les contenus éditoriaux — titre, auteur (avec nom et URL LinkedIn), dates, description</li>
+        <li><code>Organization</code> sur la homepage : nom, logo, URL, adresse, contact, sameAs (liens vers LinkedIn, etc.)</li>
+        <li><code>Article</code> sur les contenus éditoriaux : titre, auteur (avec nom et URL LinkedIn), dates, description</li>
         <li><code>FAQPage</code> sur les pages contenant des Q&R</li>
         <li><code>BreadcrumbList</code> sur les pages internes</li>
         <li><code>WebSite</code> avec SearchAction sur la homepage</li>
@@ -207,10 +207,10 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>Parcourez vos 5 pages principales et comptez, pour chaque page :</p>
       <ul>
-        <li><strong>Données chiffrées</strong> — statistiques, pourcentages, montants, durées (objectif : 1 donnée pour 200 mots)</li>
-        <li><strong>Sources nommées</strong> — "selon Gartner", "d'après une étude McKinsey" (pas "selon les experts" ni "des études montrent")</li>
-        <li><strong>Dates de référence</strong> — "en 2026", "depuis mars 2025" (pas "récemment" ni "depuis quelque temps")</li>
-        <li><strong>Exemples concrets</strong> — cas clients, scénarios d'usage, résultats mesurés</li>
+        <li><strong>Données chiffrées</strong> : statistiques, pourcentages, montants, durées (objectif : 1 donnée pour 200 mots)</li>
+        <li><strong>Sources nommées</strong> : "selon Gartner", "d'après une étude McKinsey" (pas "selon les experts" ni "des études montrent")</li>
+        <li><strong>Dates de référence</strong> : "en 2026", "depuis mars 2025" (pas "récemment" ni "depuis quelque temps")</li>
+        <li><strong>Exemples concrets</strong> : cas clients, scénarios d'usage, résultats mesurés</li>
       </ul>
 
       <h3>Identifier les affirmations non sourcées</h3>
@@ -279,9 +279,9 @@ export default function AuditGeoVisibiliteIa() {
       <p>Cherchez aussi :</p>
       <ul>
         <li>Votre nom sur Reddit (via Google : <code>site:reddit.com "votre entreprise"</code>)</li>
-        <li>Votre profil LinkedIn entreprise — est-il actif ?</li>
-        <li>Votre Google Business Profile — existe-t-il et est-il vérifié ?</li>
-        <li>Des mentions presse — des articles qui parlent de vous ?</li>
+        <li>Votre profil LinkedIn entreprise : est-il actif ?</li>
+        <li>Votre Google Business Profile : existe-t-il et est-il vérifié ?</li>
+        <li>Des mentions presse : des articles qui parlent de vous ?</li>
       </ul>
 
       <h3>Évaluer la diversité</h3>
@@ -313,11 +313,11 @@ export default function AuditGeoVisibiliteIa() {
 
       <h3>Comment prioriser</h3>
 
-      <p>Prioriser d'abord les critères <strong>bloquants</strong> — accessibilité IA et citabilité. Si les bots ne peuvent pas accéder à votre site ou si votre contenu n'est pas extractible, rien d'autre ne sert.</p>
+      <p>Prioriser d'abord les critères <strong>bloquants</strong> : accessibilité IA et citabilité. Si les bots ne peuvent pas accéder à votre site ou si votre contenu n'est pas extractible, rien d'autre ne sert.</p>
 
-      <p>Ensuite les critères à <strong>fort impact</strong> — vérifiabilité et données structurées. Ce sont les leviers qui font passer un site de "invisible" à "citable".</p>
+      <p>Ensuite les critères à <strong>fort impact</strong> : vérifiabilité et données structurées. Ce sont les actions qui font passer un site de "invisible" à "citable".</p>
 
-      <p>Enfin les critères de <strong>renforcement</strong> — autorité, neutralité, présence externe, fraîcheur. Ils améliorent un site déjà citable.</p>
+      <p>Enfin les critères de <strong>renforcement</strong> : autorité, neutralité, présence externe, fraîcheur. Ils améliorent un site déjà citable.</p>
 
       <h2>Automatiser votre audit</h2>
 
@@ -327,14 +327,14 @@ export default function AuditGeoVisibiliteIa() {
 
       <p>L'audit automatisé est particulièrement utile pour :</p>
       <ul>
-        <li>Le diagnostic initial — où en êtes-vous exactement ?</li>
-        <li>Le suivi après optimisation — vos corrections ont-elles amélioré le score ?</li>
-        <li>Le benchmark concurrentiel — comment vous situez-vous par rapport à vos concurrents ?</li>
+        <li>Le diagnostic initial : où en êtes-vous exactement ?</li>
+        <li>Le suivi après optimisation : vos corrections ont-elles amélioré le score ?</li>
+        <li>Le benchmark concurrentiel : comment vous situez-vous par rapport à vos concurrents ?</li>
       </ul>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
-      <ArrowLink href="/">Lancez votre audit GEO automatisé — en moins de 60 secondes, sans inscription →</ArrowLink>
+      <ArrowLink href="/">Lancez votre audit GEO automatisé, en moins de 60 secondes, sans inscription →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

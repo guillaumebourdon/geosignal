@@ -69,7 +69,7 @@ export default function MultimodalGeoImagesVideosIA() {
 
       <InlineCTA />
 
-      <h2>YouTube : le levier multimodal le plus puissant</h2>
+      <h2>YouTube : le moyen multimodal le plus puissant</h2>
 
       <p>YouTube est desormais la premiere source de citations dans les AI Overviews de Google (<strong>29,5 %</strong>, BrightEdge mai 2026). C'est aussi une source majeure pour Perplexity, qui integre des videos directement dans ses reponses.</p>
 
@@ -105,7 +105,7 @@ export default function MultimodalGeoImagesVideosIA() {
 
       <h3>Le piege du "tout image"</h3>
 
-      <p>Certains sites, notamment en <InternalLink href="/blog/ecommerce-recommandations-ia">e-commerce</InternalLink> et en restauration, mettent l'essentiel de leur contenu dans des images (menus en image, fiches produits en image, tarifs en image). <strong>Les IA ne peuvent pas lire le texte dans une image.</strong> Si votre menu, vos prix ou vos specifications sont uniquement dans des visuels, ils n'existent pas pour ChatGPT, Perplexity ou Gemini.</p>
+      <p>Certains sites, notamment en <InternalLink href="/blog/ecommerce-recommandations-ia">e-commerce</InternalLink> et en restauration, mettent l'important de leur contenu dans des images (menus en image, fiches produits en image, tarifs en image). <strong>Les IA ne peuvent pas lire le texte dans une image.</strong> Si votre menu, vos prix ou vos specifications sont uniquement dans des visuels, ils n'existent pas pour ChatGPT, Perplexity ou Gemini.</p>
 
       <p>La regle : chaque information importante doit exister en texte sur la page. Les images illustrent et enrichissent, elles ne remplacent pas le texte.</p>
 
@@ -135,7 +135,7 @@ export default function MultimodalGeoImagesVideosIA() {
       <h2>Plan d'action multimodal en 4 semaines</h2>
 
       <h3>Semaine 1 : audit de vos images existantes</h3>
-      <p>Passez en revue toutes les images de vos pages principales. Verifiez que chaque image a un alt descriptif (pas juste le nom du fichier), que le contexte textuel autour est suffisant, et que les images ne contiennent pas d'informations textuelles essentielles sans equivalent HTML.</p>
+      <p>Passez en revue toutes les images de vos pages principales. Verifiez que chaque image a un alt descriptif (pas juste le nom du fichier), que le contexte textuel autour est suffisant, et que les images ne contiennent pas d'informations textuelles importantes sans equivalent HTML.</p>
 
       <h3>Semaine 2 : optimiser vos videos YouTube</h3>
       <p>Ajoutez des chapitres a vos videos existantes, corrigez les transcriptions automatiques, reformulez les titres en format question, et enrichissez les descriptions avec des answer capsules.</p>

@@ -35,7 +35,7 @@ export default function RedditGeoSourceIa() {
     <>
       <p>Quand ChatGPT ou Perplexity cherchent une source crédible pour répondre à une question, ils citent Reddit plus que n'importe quelle autre plateforme. Ce n'est pas un hasard : Reddit concentre des discussions authentiques, des avis d'utilisateurs réels et des réponses d'experts dans des communautés spécialisées.</p>
 
-      <p>Pour votre stratégie GEO, c'est un levier sous-exploité. Être présent et actif sur Reddit peut booster votre visibilité dans les réponses IA plus rapidement que n'importe quel autre canal — y compris votre propre blog.</p>
+      <p>Pour votre stratégie GEO, c'est un moyen sous-exploité. Être présent et actif sur Reddit peut booster votre visibilité dans les réponses IA plus rapidement que n'importe quel autre canal, y compris votre propre blog.</p>
 
       <h2>Pourquoi les IA adorent Reddit</h2>
 
@@ -62,9 +62,9 @@ export default function RedditGeoSourceIa() {
       <p>La présence sur Reddit agit sur plusieurs critères du score GEO Detekia :</p>
 
       <ul>
-        <li><strong>Présence externe (10 points)</strong> — des mentions actives sur des subreddits pertinents renforcent directement ce critère, en complément de vos <InternalLink href="/blog/backlinks-geo-autorite-domaine-ia">backlinks et signaux d'autorité de domaine</InternalLink>. C'est le plus évident.</li>
-        <li><strong><InternalLink href="/blog/eeat-ia-experience-expertise">Autorité E-E-A-T</InternalLink> (15 points)</strong> — quand votre marque est mentionnée positivement dans des discussions Reddit, les IA la perçoivent comme une entité reconnue par des pairs. C'est l'équivalent GEO du bouche-à-oreille.</li>
-        <li><strong>Vérifiabilité (20 points)</strong> — les discussions Reddit contenant des retours d'expérience sur votre produit/service créent des données vérifiables que les IA peuvent croiser avec votre propre site.</li>
+        <li><strong>Présence externe (10 points)</strong> : des mentions actives sur des subreddits pertinents renforcent directement ce critère, en complément de vos <InternalLink href="/blog/backlinks-geo-autorite-domaine-ia">backlinks et signaux d'autorité de domaine</InternalLink>. C'est le plus évident.</li>
+        <li><strong><InternalLink href="/blog/eeat-ia-experience-expertise">Autorité E-E-A-T</InternalLink> (15 points)</strong> : quand votre marque est mentionnée positivement dans des discussions Reddit, les IA la perçoivent comme une entité reconnue par des pairs. C'est l'équivalent GEO du bouche-à-oreille.</li>
+        <li><strong>Vérifiabilité (20 points)</strong> : les discussions Reddit contenant des retours d'expérience sur votre produit/service créent des données vérifiables que les IA peuvent croiser avec votre propre site.</li>
       </ul>
 
       <p>Au total, Reddit peut influencer jusqu'à 40 points sur 100 de votre score GEO, directement ou indirectement.</p>
@@ -130,15 +130,15 @@ export default function RedditGeoSourceIa() {
 
 Réponse : "J'ai analysé pas mal de sites avec ce problème. Dans 80 % des cas,
 c'est une combinaison de 3 facteurs :
-1) le robots.txt bloque GPTBot sans que le propriétaire le sache — vérifiez
+1) le robots.txt bloque GPTBot sans que le propriétaire le sache, vérifiez
 votre robots.txt immédiatement.
-2) Pas de données structurées Schema.org — les IA ont besoin de comprendre
+2) Pas de données structurées Schema.org, les IA ont besoin de comprendre
 qui vous êtes (Organization) et de quoi vous parlez (Article, FAQPage).
-3) Le contenu n'est pas extractible — si votre page commence par 'Bienvenue
+3) Le contenu n'est pas extractible. Si votre page commence par 'Bienvenue
 chez...' au lieu de répondre à une question, l'IA passe à la source suivante.
 Commencez par les points 1 et 2, c'est corrigeable en une journée."`}</code></pre>
 
-      <p>Cette réponse est utile, factuelle, non promotionnelle — et elle sera reprise par les IA quand quelqu'un posera une question similaire.</p>
+      <p>Cette réponse est utile, factuelle, non promotionnelle. Et elle sera reprise par les IA quand quelqu'un posera une question similaire.</p>
 
       <h3>Étape 4 — Mentionner votre marque naturellement (quand c'est pertinent)</h3>
 
@@ -173,28 +173,28 @@ Commencez par les points 1 et 2, c'est corrigeable en une journée."`}</code></p
         <li>Réponse aux commentaires sur vos posts dans les 24h</li>
       </ul>
 
-      <p>Ce rythme représente environ 30-45 minutes par semaine. C'est un investissement modeste pour un levier aussi puissant.</p>
+      <p>Ce rythme représente environ 30-45 minutes par semaine. C'est un investissement modeste pour un moyen aussi puissant.</p>
 
       <h2>Les erreurs qui tuent votre stratégie Reddit</h2>
 
-      <p><strong>Erreur 1 — L'auto-promotion frontale.</strong> Reddit a une culture anti-marketing très forte. Un post qui ressemble à de la pub sera downvoté, supprimé et votre compte potentiellement banni. La règle officielle : pas plus de 10 % de vos contributions ne doivent être auto-promotionnelles.</p>
+      <p><strong>Erreur 1, L'auto-promotion frontale.</strong> Reddit a une culture anti-marketing très forte. Un post qui ressemble à de la pub sera downvoté, supprimé et votre compte potentiellement banni. La règle officielle : pas plus de 10 % de vos contributions ne doivent être auto-promotionnelles.</p>
 
-      <p><strong>Erreur 2 — Poster sans historique.</strong> Si votre premier post sur un subreddit est une promotion de votre produit, il sera immédiatement flaggé. Construisez d'abord un historique de contributions utiles (au moins 2-3 semaines) avant de mentionner votre produit.</p>
+      <p><strong>Erreur 2, Poster sans historique.</strong> Si votre premier post sur un subreddit est une promotion de votre produit, il sera immédiatement flaggé. Construisez d'abord un historique de contributions utiles (au moins 2-3 semaines) avant de mentionner votre produit.</p>
 
-      <p><strong>Erreur 3 — Ignorer les règles du subreddit.</strong> Chaque subreddit a ses propres règles. Lisez-les avant de poster. Certains interdisent les liens, d'autres exigent un format spécifique, d'autres ont des jours dédiés à l'auto-promotion.</p>
+      <p><strong>Erreur 3, Ignorer les règles du subreddit.</strong> Chaque subreddit a ses propres règles. Lisez-les avant de poster. Certains interdisent les liens, d'autres exigent un format spécifique, d'autres ont des jours dédiés à l'auto-promotion.</p>
 
-      <p><strong>Erreur 4 — Être générique.</strong> Les réponses vagues ("C'est compliqué, ça dépend de beaucoup de facteurs") n'apportent rien et ne seront pas reprises par les IA. Soyez spécifique, donnez des chiffres, des étapes concrètes, des exemples.</p>
+      <p><strong>Erreur 4, Être générique.</strong> Les réponses vagues ("C'est compliqué, ça dépend de beaucoup de facteurs") n'apportent rien et ne seront pas reprises par les IA. Soyez spécifique, donnez des chiffres, des étapes concrètes, des exemples.</p>
 
-      <p><strong>Erreur 5 — Abandonner trop vite.</strong> Les résultats sur Reddit prennent du temps. Les premiers posts n'auront peut-être que 3 upvotes. C'est normal. La crédibilité se construit sur des mois, pas des jours. Les IA citent les discussions Reddit qui ont accumulé de l'engagement sur la durée.</p>
+      <p><strong>Erreur 5, Abandonner trop vite.</strong> Les résultats sur Reddit prennent du temps. Les premiers posts n'auront peut-être que 3 upvotes. C'est normal. La crédibilité se construit sur des mois, pas des jours. Les IA citent les discussions Reddit qui ont accumulé de l'engagement sur la durée.</p>
 
       <h2>Subreddits francophones pertinents</h2>
 
       <p>Si vous ciblez le marché français, plusieurs subreddits francophones sont actifs :</p>
       <ul>
-        <li>r/vosfinances — finances personnelles, investissement</li>
-        <li>r/france — actualité française (format très strict, à utiliser avec précaution)</li>
-        <li>r/EntrepreneurFR — entrepreneuriat en France (petit mais qualitatif)</li>
-        <li>r/developpeurs — développement web/logiciel</li>
+        <li>r/vosfinances : finances personnelles, investissement</li>
+        <li>r/france : actualité française (format très strict, à utiliser avec précaution)</li>
+        <li>r/EntrepreneurFR : entrepreneuriat en France (petit mais qualitatif)</li>
+        <li>r/developpeurs : développement web/logiciel</li>
       </ul>
 
       <p>Le marché francophone sur Reddit est plus petit que l'anglophone, mais la concurrence est aussi plus faible. Être actif sur r/EntrepreneurFR avec du contenu GEO de qualité peut vous positionner rapidement comme la référence francophone sur le sujet.</p>
@@ -241,7 +241,7 @@ Commencez par les points 1 et 2, c'est corrigeable en une journée."`}</code></p
 
       <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
-      <ArrowLink href="/">Mesurez votre visibilité IA actuelle avant de démarrer — audit GEO gratuit en moins de 60 secondes →</ArrowLink>
+      <ArrowLink href="/">Mesurez votre visibilité IA actuelle avant de démarrer, audit GEO gratuit en moins de 60 secondes →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

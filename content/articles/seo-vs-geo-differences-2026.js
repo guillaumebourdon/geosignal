@@ -33,21 +33,21 @@ function InlineCTA({ href, children }) {
 export default function SeoVsGeoDifferences2026() {
   return (
     <>
-      <p>Le SEO vous rend visible dans une liste de liens. Le <InternalLink href="/blog/geo-guide-complet-2026">GEO</InternalLink> vous rend citable dans une réponse. En 2026, les deux sont indispensables — mais ils ne fonctionnent pas de la même manière.</p>
+      <p>Le SEO vous rend visible dans une liste de liens. Le <InternalLink href="/blog/geo-guide-complet-2026">GEO</InternalLink> vous rend citable dans une réponse. En 2026, les deux sont indispensables. Mais ils ne fonctionnent pas de la même manière.</p>
 
       <p>Si vous investissez déjà dans le SEO, vous avez une longueur d'avance : <strong>99 % des sources citées dans les AI Overviews de Google proviennent du top 10 des résultats organiques</strong>. Le SEO reste la fondation. Mais il ne suffit plus. Les moteurs génératifs ajoutent une couche de critères que le SEO classique ne couvre pas.</p>
 
-      <p>Cet article détaille ce qui distingue les deux disciplines, ce qu'elles partagent, et comment construire une stratégie qui combine les deux pour maximiser votre visibilité — sur Google comme dans les réponses de ChatGPT, Gemini et Perplexity.</p>
+      <p>Cet article détaille ce qui distingue les deux disciplines, ce qu'elles partagent, et comment construire une stratégie qui combine les deux pour maximiser votre visibilité, sur Google comme dans les réponses de ChatGPT, Gemini et Perplexity.</p>
 
       <h2>SEO et GEO : définitions claires</h2>
 
       <p>Le <strong>SEO (Search Engine Optimization)</strong> optimise votre site pour apparaître le plus haut possible dans les résultats de recherche classiques (les SERP de Google, Bing). L'objectif : générer des clics vers votre site depuis une liste de liens bleus.</p>
 
-      <p>Les leviers principaux du SEO : mots-clés, backlinks, autorité de domaine, vitesse de chargement, expérience utilisateur, architecture technique.</p>
+      <p>Les moyens principaux du SEO : mots-clés, backlinks, autorité de domaine, vitesse de chargement, expérience utilisateur, architecture technique.</p>
 
       <p>Le <strong>GEO (Generative Engine Optimization)</strong> optimise votre contenu pour être cité, repris et recommandé dans les réponses synthétiques générées par les IA : ChatGPT, Gemini, Perplexity, Claude, Google AI Overviews.</p>
 
-      <p>Les leviers principaux du GEO : citabilité du contenu, données structurées, accessibilité IA par les bots IA, vérifiabilité des informations, neutralité éditoriale, présence sur des sources tierces. Ces leviers sont détaillés dans les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères de la méthodologie Detekia</InternalLink>.</p>
+      <p>Les moyens principaux du GEO : citabilité du contenu, données structurées, accessibilité IA par les bots IA, vérifiabilité des informations, neutralité éditoriale, présence sur des sources tierces. Ces moyens sont détaillés dans les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères de la méthodologie Detekia</InternalLink>.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">Pour une définition complète du GEO et ses 7 critères, consultez notre guide complet GEO 2026.</ArrowLink>
 
@@ -65,13 +65,13 @@ export default function SeoVsGeoDifferences2026() {
 
       <p>En SEO, Google affiche un lien + un extrait (title tag + meta description). Vous contrôlez ce qui apparaît grâce à vos balises.</p>
 
-      <p>En GEO, l'IA génère une réponse rédigée qui peut citer votre contenu, le reformuler, ou simplement mentionner votre marque. Vous ne contrôlez pas la formulation — vous ne pouvez qu'influencer la probabilité d'être sélectionné comme source.</p>
+      <p>En GEO, l'IA génère une réponse rédigée qui peut citer votre contenu, le reformuler, ou simplement mentionner votre marque. Vous ne contrôlez pas la formulation. Vous ne pouvez qu'influencer la probabilité d'être sélectionné comme source.</p>
 
       <h3>La compétition</h3>
 
       <p>En SEO, vous êtes en concurrence avec 10 résultats sur la première page. Être 11e signifie être quasi invisible.</p>
 
-      <p>En GEO, la compétition est différente. L'IA peut citer 1 à 5 sources dans une réponse. Mais elle peut aussi n'en citer aucune et reformuler librement. Votre objectif n'est pas d'être "premier" — c'est d'être la source que l'IA juge la plus fiable et la plus extractible.</p>
+      <p>En GEO, la compétition est différente. L'IA peut citer 1 à 5 sources dans une réponse. Mais elle peut aussi n'en citer aucune et reformuler librement. Votre objectif n'est pas d'être "premier". C'est d'être la source que l'IA juge la plus fiable et la plus extractible.</p>
 
       <h3>La mesure</h3>
 
@@ -85,7 +85,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <h3>La qualité du contenu</h3>
 
-      <p>Un contenu expert, bien rédigé, qui répond précisément à l'intention de recherche — c'est le socle des deux disciplines. Les IA, comme Google, favorisent les contenus qui apportent une réelle valeur informative.</p>
+      <p>Un contenu expert, bien rédigé, qui répond précisément à l'intention de recherche. C'est le socle des deux disciplines. Les IA, comme Google, favorisent les contenus qui apportent une réelle valeur informative.</p>
 
       <h3>L'E-E-A-T</h3>
 
@@ -101,7 +101,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <h2>Ce que le GEO ajoute au SEO</h2>
 
-      <p>Voici les critères spécifiques au GEO que le SEO classique ne couvre pas — ou pas suffisamment.</p>
+      <p>Voici les critères spécifiques au GEO que le SEO classique ne couvre pas, ou pas suffisamment.</p>
 
       <h3>L'citabilité</h3>
 
@@ -133,9 +133,9 @@ export default function SeoVsGeoDifferences2026() {
       <p>Les schemas les plus impactants pour le GEO :</p>
 
       <ul>
-        <li><code>FAQPage</code> — format natif des conversations IA, très souvent extrait</li>
-        <li><code>Organization</code> avec <code>sameAs</code> — aide les IA à relier votre site à vos profils LinkedIn, Wikipedia, etc.</li>
-        <li><code>Article</code> avec author complet — renforce la crédibilité de l'auteur</li>
+        <li><code>FAQPage</code> : format natif des conversations IA, très souvent extrait</li>
+        <li><code>Organization</code> avec <code>sameAs</code> : aide les IA à relier votre site à vos profils LinkedIn, Wikipedia, etc.</li>
+        <li><code>Article</code> avec author complet : renforce la crédibilité de l'auteur</li>
       </ul>
 
       <ArrowLink href="/blog/schema-org-ia-guide-pratique">Guide complet dans Schema.org et IA : le guide pratique.</ArrowLink>
@@ -156,7 +156,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <p>Sans SEO solide, le GEO ne fonctionne pas. Les moteurs IA s'appuient encore massivement sur les pages bien classées dans Google pour sélectionner leurs sources.</p>
 
-      <p>Actions SEO fondamentales :</p>
+      <p>Actions SEO centrales :</p>
 
       <ul>
         <li>Architecture de site propre, URLs logiques, maillage interne cohérent</li>
@@ -271,7 +271,7 @@ export default function SeoVsGeoDifferences2026() {
 
       <h3>Le GEO coûte-t-il cher à mettre en place ?</h3>
 
-      <p>La plupart des actions GEO ne nécessitent pas de budget supplémentaire — elles consistent à optimiser ce que vous avez déjà. La vérification du <code>robots.txt</code>, l'ajout de données structurées, la réécriture des introductions : ce sont des optimisations techniques et éditoriales, pas des achats media.</p>
+      <p>La plupart des actions GEO ne nécessitent pas de budget supplémentaire. Elles consistent à optimiser ce que vous avez déjà. La vérification du <code>robots.txt</code>, l'ajout de données structurées, la réécriture des introductions : ce sont des optimisations techniques et éditoriales, pas des achats media.</p>
 
       <h3>Mon agence SEO peut-elle faire du GEO ?</h3>
 
@@ -281,13 +281,13 @@ export default function SeoVsGeoDifferences2026() {
 
       <h3>Quel est le ROI du GEO ?</h3>
 
-      <p>Le ROI dépend de votre secteur et de votre maturité. Mais un chiffre résume l'opportunité : un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique. Le GEO ne génère pas forcément plus de trafic — surtout dans un contexte où le <InternalLink href="/blog/pourquoi-trafic-google-baisse-2026">trafic Google est en baisse</InternalLink> — il génère un trafic de meilleure qualité.</p>
+      <p>Le ROI dépend de votre secteur et de votre maturité. Mais un chiffre résume l'opportunité : un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique. Le GEO ne génère pas forcément plus de trafic, surtout dans un contexte où le <InternalLink href="/blog/pourquoi-trafic-google-baisse-2026">trafic Google est en baisse</InternalLink>. Il génère un trafic de meilleure qualité.</p>
 
       <h2>Mesurez votre situation</h2>
 
-      <p>Le premier pas est de savoir où vous en êtes. Votre SEO est peut-être solide, mais votre GEO pourrait avoir des lacunes critiques — ou l'inverse.</p>
+      <p>Le premier pas est de savoir où vous en êtes. Votre SEO est peut-être solide, mais votre GEO pourrait avoir des lacunes critiques, ou l'inverse.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 7 critères GEO, recommandations concrètes. En moins de 60 secondes, sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia, score sur 100, 7 critères GEO, recommandations concrètes. En moins de 60 secondes, sans inscription.</p>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

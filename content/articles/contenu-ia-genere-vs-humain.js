@@ -74,7 +74,7 @@ export default function ContenuIaGenereVsHumain() {
 
       <h3>L'homogeneite qui tue la citabilite</h3>
 
-      <p>Le probleme fondamental du contenu 100 % IA n'est pas qu'il soit "mauvais". C'est qu'il est generique. Les LLM produisent des textes qui sont une synthese statistique du web existant. Quand 500 sites utilisent ChatGPT pour ecrire un article sur "comment ameliorer son SEO en 2026", les 500 articles disent essentiellement la meme chose avec des formulations legerement differentes. Pour les moteurs IA, citer l'un ou l'autre est indifferent, aucun n'apporte de valeur unique.</p>
+      <p>Le probleme central du contenu 100 % IA n'est pas qu'il soit "mauvais". C'est qu'il est generique. Les LLM produisent des textes qui sont une synthese statistique du web existant. Quand 500 sites utilisent ChatGPT pour ecrire un article sur "comment ameliorer son SEO en 2026", les 500 articles disent essentiellement la meme chose avec des formulations legerement differentes. Pour les moteurs IA, citer l'un ou l'autre est indifferent, aucun n'apporte de valeur unique.</p>
 
       <p>L'etude Ahrefs (2025) a analyse 100 000 articles generes par IA et constate que <strong>94 % d'entre eux ne contenaient aucune donnee originale</strong>, aucun cas client reel, aucune statistique proprietaire. Ils reformulaient des informations deja disponibles. Pour un systeme RAG qui cherche des fragments a forte valeur informationnelle, ces contenus sont interchangeables.</p>
 

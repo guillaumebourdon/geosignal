@@ -34,19 +34,19 @@ export default function GeoGuideComplet2026() {
     <>
       <p>Les sessions de recherche référées par l'IA ont bondi de <strong>527 %</strong> au premier semestre 2025. Gartner prévoit une baisse de <strong>25 % du volume de recherche traditionnelle</strong> d'ici fin 2026. Et pendant ce temps, quand un prospect demande à ChatGPT, Gemini ou Perplexity quel prestataire choisir dans votre secteur, votre site n'apparaît nulle part.</p>
 
-      <p>Le problème n'est pas votre SEO — il est peut-être excellent. Le problème, c'est que les moteurs de recherche ne fonctionnent plus comme avant. Une part croissante des recherches ne génère plus de liste de liens : elle génère une réponse. Et si votre site n'est pas conçu pour être cité dans cette réponse, vous devenez invisible pour une audience qui ne cliquera jamais sur Google.</p>
+      <p>Le problème n'est pas votre SEO. Il est peut-être excellent. Le problème, c'est que les moteurs de recherche ne fonctionnent plus comme avant. Une part croissante des recherches ne génère plus de liste de liens : elle génère une réponse. Et si votre site n'est pas conçu pour être cité dans cette réponse, vous devenez invisible pour une audience qui ne cliquera jamais sur Google.</p>
 
-      <p>C'est exactement ce que le GEO — Generative Engine Optimization — permet de corriger. Ce guide vous explique ce que c'est, pourquoi c'est urgent, et surtout comment agir concrètement pour que les IA parlent de vous.</p>
+      <p>C'est exactement ce que le GEO, Generative Engine Optimization, permet de corriger. Ce guide vous explique ce que c'est, pourquoi c'est urgent, et surtout comment agir concrètement pour que les IA parlent de vous.</p>
 
       <h2>Qu'est-ce que le GEO (Generative Engine Optimization) ?</h2>
 
       <p>Le GEO désigne l'ensemble des techniques qui permettent d'optimiser un site web pour qu'il soit cité, repris et recommandé par les moteurs de recherche alimentés par l'intelligence artificielle : ChatGPT, Google Gemini, Perplexity, Claude, et les AI Overviews de Google.</p>
 
-      <p>La différence fondamentale avec le SEO est simple :</p>
+      <p>La différence centrale avec le SEO est simple :</p>
 
       <ul>
         <li>Le <strong>SEO</strong> cherche à positionner votre page dans une liste de liens. L'utilisateur doit cliquer pour accéder à votre contenu.</li>
-        <li>Le <strong>GEO</strong> cherche à intégrer votre contenu directement dans la réponse synthétique générée par l'IA. L'utilisateur lit votre information sans même visiter votre site — mais il voit votre nom, votre marque, votre expertise.</li>
+        <li>Le <strong>GEO</strong> cherche à intégrer votre contenu directement dans la réponse synthétique générée par l'IA. L'utilisateur lit votre information sans même visiter votre site : mais il voit votre nom, votre marque, votre expertise.</li>
       </ul>
 
       <p>Vous avez peut-être croisé d'autres termes : AEO (Answer Engine Optimization), LLMO (Large Language Model Optimization), AIO (AI Optimization), GSO (Generative Search Optimization). Ils décrivent tous la même réalité. Le terme GEO, issu de travaux de recherche menés par Princeton et Georgia Tech, est celui qui s'impose en 2026.</p>
@@ -70,7 +70,7 @@ export default function GeoGuideComplet2026() {
       <p>Pour optimiser votre site, il faut comprendre comment ces moteurs sélectionnent leurs sources. En simplifié, voici ce qui se passe quand un utilisateur pose une question à ChatGPT ou Perplexity :</p>
 
       <ol>
-        <li><strong>Recherche.</strong> Le moteur IA interroge le web en temps réel (ou s'appuie sur ses données d'entraînement) pour trouver des contenus pertinents. C'est ce qu'on appelle le RAG — Retrieval-Augmented Generation.</li>
+        <li><strong>Recherche.</strong> Le moteur IA interroge le web en temps réel (ou s'appuie sur ses données d'entraînement) pour trouver des contenus pertinents. C'est ce qu'on appelle le RAG : Retrieval-Augmented Generation.</li>
         <li><strong>Sélection.</strong> Parmi les dizaines de pages trouvées, l'IA sélectionne les sources les plus fiables, les plus claires et les plus pertinentes. Elle privilégie quatre signaux principaux :
           <ul>
             <li><strong>L'autorité</strong> : le site est-il reconnu comme expert sur le sujet ? Y a-t-il des mentions tierces, des backlinks, une présence médiatique ?</li>
@@ -82,7 +82,7 @@ export default function GeoGuideComplet2026() {
         <li><strong>Synthèse.</strong> L'IA reformule et combine les informations des sources sélectionnées pour générer une réponse cohérente, en citant parfois les sources.</li>
       </ol>
 
-      <p>La conséquence directe : si votre contenu est vague, mal structuré, non sourcé ou difficile à crawler, l'IA l'ignorera — même si votre site est premier sur Google.</p>
+      <p>La conséquence directe : si votre contenu est vague, mal structuré, non sourcé ou difficile à crawler, l'IA l'ignorera, même si votre site est premier sur Google.</p>
 
       <h2>Les 7 critères qui déterminent si une IA vous cite</h2>
 
@@ -92,7 +92,7 @@ export default function GeoGuideComplet2026() {
 
       <p>C'est le critère le plus lourd, et pour cause : les IA cherchent des réponses prêtes à citer. Si votre page commence par du jargon ou une introduction floue, l'IA passera à la source suivante.</p>
 
-      <p><strong>Ce que ça implique :</strong> chaque page doit contenir une réponse claire et directe dans les 100 premiers mots. Pensez "définition Wikipédia" : sujet + verbe + information essentielle.</p>
+      <p><strong>Ce que ça implique :</strong> chaque page doit contenir une réponse claire et directe dans les 100 premiers mots. Pensez "définition Wikipédia" : sujet + verbe + information importante.</p>
 
       <h3>2. Vérifiabilité & preuves — 20 points</h3>
 
@@ -108,7 +108,7 @@ export default function GeoGuideComplet2026() {
 
       <h3>4. Accessibilité IA — 10 points</h3>
 
-      <p>Les bots IA (GPTBot, PerplexityBot, ClaudeBot, Google-Extended) doivent pouvoir accéder à votre site. Si votre <code>robots.txt</code> les bloque — ce qui est souvent le cas par défaut — ils ne peuvent tout simplement pas lire votre contenu.</p>
+      <p>Les bots IA (GPTBot, PerplexityBot, ClaudeBot, Google-Extended) doivent pouvoir accéder à votre site. Si votre <code>robots.txt</code> les bloque. Ce qui est souvent le cas par défaut. Ils ne peuvent tout simplement pas lire votre contenu.</p>
 
       <p><strong>Ce que ça implique :</strong> vérifiez votre <code>robots.txt</code>, configurez un fichier <code>llms.txt</code>, et assurez-vous que votre contenu est accessible sans JavaScript obligatoire.</p>
 
@@ -146,7 +146,7 @@ export default function GeoGuideComplet2026() {
 
       <p>Exemple :</p>
 
-      <pre><code>{`❌ "Dans le monde du marketing digital, il est aujourd'hui essentiel de comprendre les nouvelles tendances..."
+      <pre><code>{`❌ "Dans le monde du marketing digital, il est aujourd'hui important de comprendre les nouvelles tendances..."
 
 ✅ "Le GEO (Generative Engine Optimization) est l'ensemble des techniques qui permettent à un site web d'être cité par les IA comme ChatGPT, Gemini et Perplexity."`}</code></pre>
 
@@ -227,7 +227,7 @@ Disallow: /`}</code></pre>
 
       <h2>SEO et GEO : complémentaires, pas concurrents</h2>
 
-      <p>Si vous faites déjà du SEO, vous avez une longueur d'avance. Le GEO ne remplace pas le SEO — il s'empile dessus.</p>
+      <p>Si vous faites déjà du SEO, vous avez une longueur d'avance. Le GEO ne remplace pas le SEO. Il s'empile dessus.</p>
 
       <p>Un chiffre le confirme : <strong>99 % des sources citées dans les AI Overviews de Google proviennent du top 10 des résultats organiques</strong>. Autrement dit, un bon SEO reste la condition nécessaire pour être cité par les IA.</p>
 
@@ -279,11 +279,11 @@ Disallow: /`}</code></pre>
 
       <h2>Ce qu'il faut retenir</h2>
 
-      <p>Le GEO n'est pas une tendance passagère — c'est la nouvelle réalité du référencement. Les moteurs IA captent une part croissante des recherches, et les sites qui ne sont pas optimisés pour être cités deviennent progressivement invisibles.</p>
+      <p>Le GEO n'est pas une tendance passagère. C'est la nouvelle réalité du référencement. Les moteurs IA captent une part croissante des recherches, et les sites qui ne sont pas optimisés pour être cités deviennent progressivement invisibles.</p>
 
-      <p>La bonne nouvelle : les actions à mener sont concrètes, mesurables et accessibles. Structurez votre contenu pour qu'il soit extractible, ajoutez des preuves vérifiables, ouvrez l'accès aux bots IA, et suivez votre score dans le temps.</p>
+      <p>Les actions à mener sont concrètes, mesurables et accessibles. Structurez votre contenu pour qu'il soit extractible, ajoutez des preuves vérifiables, ouvrez l'accès aux bots IA, et suivez votre score dans le temps.</p>
 
-      <p>Commencez par mesurer votre situation actuelle. Analysez votre site gratuitement sur Detekia — score sur 100, 7 critères, recommandations priorisées, en moins de 60 secondes.</p>
+      <p>Commencez par mesurer votre situation actuelle. Analysez votre site gratuitement sur Detekia, score sur 100, 7 critères, recommandations priorisées, en moins de 60 secondes.</p>
     </>
   );
 }

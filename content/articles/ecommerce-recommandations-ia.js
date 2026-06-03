@@ -33,11 +33,11 @@ function InlineCTA({ href, children }) {
 export default function EcommerceRecommandationsIa() {
   return (
     <>
-      <p>"Quel est le meilleur matelas pour le mal de dos ?", "Quelle crème solaire bio pour enfant ?", "Quel logiciel de comptabilité pour une micro-entreprise ?" — ces questions, des millions de consommateurs les posent désormais à ChatGPT, Gemini et Perplexity au lieu de Google.</p>
+      <p>"Quel est le meilleur matelas pour le mal de dos ?", "Quelle crème solaire bio pour enfant ?", "Quel logiciel de comptabilité pour une micro-entreprise ?", ces questions, des millions de consommateurs les posent désormais à ChatGPT, Gemini et Perplexity au lieu de Google.</p>
 
       <p>Et les réponses sont des recommandations directes : 3 à 5 produits cités par nom, avec des arguments pour chacun. Si votre boutique en ligne n'apparaît pas dans ces réponses, vous perdez des ventes auprès d'acheteurs qui ne visiteront jamais Google.</p>
 
-      <p>Le pire : un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique. Il a déjà fait son choix dans la conversation. Il ne compare plus — il achète. Chaque recommandation IA que vous manquez est une vente perdue au profit d'un concurrent.</p>
+      <p>Le pire : un visiteur référé par une IA convertit <strong>4,4 fois mieux</strong> qu'un visiteur organique classique. Il a déjà fait son choix dans la conversation. Il ne compare plus. Il achète. Chaque recommandation IA que vous manquez est une vente perdue au profit d'un concurrent.</p>
 
       <p>Ce guide vous montre comment optimiser votre site e-commerce pour que les IA recommandent vos produits.</p>
 
@@ -76,7 +76,7 @@ Réservoir de 400 ml. Niveau sonore : 65 dB."`}</code></pre>
 ✅ "Conçu pour les grandes surfaces (jusqu'à 200 m²).
 Pour les petits appartements, un modèle plus compact peut suffire."`}</code></pre>
 
-      <p>Ce positionnement honnête renforce la neutralité éditoriale — un des 7 critères GEO.</p>
+      <p>Ce positionnement honnête renforce la neutralité éditoriale, un des 7 critères GEO.</p>
 
       <h3>Des réponses aux questions d'achat</h3>
 
@@ -98,10 +98,10 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
       <p>Reprenez vos 20 produits les plus vendus. Pour chacun, assurez-vous que la description contient :</p>
 
       <ul>
-        <li><strong>Un paragraphe d'ouverture extractible</strong> — une phrase qui résume le produit, son usage principal et sa caractéristique distinctive, dans les 100 premiers mots</li>
-        <li><strong>Des spécifications précises</strong> — dimensions, poids, matériaux, capacités, compatibilités, certifications</li>
-        <li><strong>Un positionnement clair</strong> — pour qui ce produit est-il idéal ? Dans quel contexte ?</li>
-        <li><strong>Des données de performance</strong> — résultats de tests, durée de vie, garantie</li>
+        <li><strong>Un paragraphe d'ouverture extractible</strong> : une phrase qui résume le produit, son usage principal et sa caractéristique distinctive, dans les 100 premiers mots</li>
+        <li><strong>Des spécifications précises</strong> : dimensions, poids, matériaux, capacités, compatibilités, certifications</li>
+        <li><strong>Un positionnement clair</strong> : pour qui ce produit est-il idéal ? Dans quel contexte ?</li>
+        <li><strong>Des données de performance</strong> : résultats de tests, durée de vie, garantie</li>
       </ul>
 
       <p>Exemple de paragraphe d'ouverture optimisé GEO :</p>
@@ -114,7 +114,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <h3>Étape 2 — Ajouter des FAQ produit</h3>
 
-      <p>Chaque fiche produit devrait contenir 3 à 5 questions-réponses spécifiques au produit. Ce sont les questions que les acheteurs posent réellement — pas des questions génériques.</p>
+      <p>Chaque fiche produit devrait contenir 3 à 5 questions-réponses spécifiques au produit. Ce sont les questions que les acheteurs posent réellement, pas des questions génériques.</p>
 
       <p><strong>Pour un matelas :</strong></p>
       <ul>
@@ -130,7 +130,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
         <li>"Y a-t-il un engagement minimum ?" → conditions claires</li>
       </ul>
 
-      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Balisez ces FAQ en Schema FAQPage — consultez notre guide Schema.org.</ArrowLink>
+      <ArrowLink href="/blog/schema-org-ia-guide-pratique">Balisez ces FAQ en Schema FAQPage, consultez notre guide Schema.org.</ArrowLink>
 
       <h3>Étape 3 — Implémenter les données structurées Product</h3>
 
@@ -183,9 +183,9 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
       <p>Créez une page de catégorie qui contient :</p>
 
       <ul>
-        <li><strong>Un guide d'achat en introduction</strong> — "Comment choisir son [type de produit] : les 5 critères essentiels"</li>
+        <li><strong>Un guide d'achat en introduction</strong> : "Comment choisir son [type de produit] : les 5 critères importants"</li>
         <li><strong>Un comparatif de vos produits par critères objectifs</strong> (tableau)</li>
-        <li><strong>Des recommandations par profil</strong> — "Si vous cherchez [X], optez pour [produit A]. Si votre priorité est [Y], [produit B] sera plus adapté."</li>
+        <li><strong>Des recommandations par profil</strong> : "Si vous cherchez [X], optez pour [produit A]. Si votre priorité est [Y], [produit B] sera plus adapté."</li>
       </ul>
 
       <p>Ce contenu est exactement ce que les IA recherchent quand un utilisateur demande "quel [produit] choisir".</p>
@@ -216,10 +216,10 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <h3>Guides d'achat thématiques</h3>
 
-      <p>"Comment choisir son [catégorie de produit] en 2026 : guide complet" — ces articles ciblent les requêtes informationnelles pré-achat, exactement celles que les utilisateurs posent aux IA. Structure recommandée :</p>
+      <p>"Comment choisir son [catégorie de produit] en 2026 : guide complet", ces articles ciblent les requêtes informationnelles pré-achat, exactement celles que les utilisateurs posent aux IA. Structure recommandée :</p>
 
       <ol>
-        <li>Introduction avec les critères de choix essentiels</li>
+        <li>Introduction avec les critères de choix importants</li>
         <li>Explication de chaque critère avec des seuils concrets</li>
         <li>Tableau comparatif de vos produits sur ces critères</li>
         <li>Recommandation par profil d'acheteur</li>
@@ -230,11 +230,11 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <p>Quand un utilisateur demande à ChatGPT "alternative à [marque connue]", l'IA cherche des pages qui se positionnent explicitement comme alternatives. Créez des pages qui comparent objectivement votre offre à celle de vos concurrents connus.</p>
 
-      <p><strong>Attention :</strong> restez factuel. Les IA ignorent les comparaisons biaisées. Mentionnez les points forts de vos concurrents aussi — et expliquez dans quels cas votre produit est le meilleur choix.</p>
+      <p><strong>Attention :</strong> restez factuel. Les IA ignorent les comparaisons biaisées. Mentionnez les points forts de vos concurrents aussi. Et expliquez dans quels cas votre produit est le meilleur choix.</p>
 
       <h3>Pages de cas d'usage</h3>
 
-      <p>"[Votre produit] pour [usage spécifique]" — ces pages ciblent les requêtes de type "[produit] pour [besoin]" qui sont très fréquentes dans les conversations IA.</p>
+      <p>"[Votre produit] pour [usage spécifique]", ces pages ciblent les requêtes de type "[produit] pour [besoin]" qui sont très fréquentes dans les conversations IA.</p>
 
       <p>Exemples : "Nos sacs à dos pour le voyage en avion (bagage cabine)", "Nos chaussures de running pour pronateurs", "Notre CRM pour les agences immobilières".</p>
 
@@ -242,7 +242,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <h3>Erreur 1 : des fiches produits 100 % visuelles</h3>
 
-      <p>De belles photos ne suffisent pas pour le GEO. Les IA ne "voient" pas vos images — elles lisent votre texte. Une fiche avec 10 photos et 2 lignes de description est invisible pour les LLM.</p>
+      <p>De belles photos ne suffisent pas pour le GEO. Les IA ne "voient" pas vos images. Elles lisent votre texte. Une fiche avec 10 photos et 2 lignes de description est invisible pour les LLM.</p>
 
       <p><strong>Solution :</strong> chaque fiche doit contenir au minimum 200 mots de description textuelle factuelle, en plus des visuels.</p>
 
@@ -250,7 +250,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <p>Les descriptions produits génériques ("Ce t-shirt en coton est confortable et élégant") n'apportent aucune information distinctive. Les IA les ignorent car elles ne contiennent rien d'extractible ou de vérifiable.</p>
 
-      <p><strong>Solution :</strong> chaque description doit contenir des informations uniques que l'IA ne trouvera pas ailleurs — vos propres tests, vos comparaisons, vos recommandations d'usage.</p>
+      <p><strong>Solution :</strong> chaque description doit contenir des informations uniques que l'IA ne trouvera pas ailleurs. Vos propres tests, vos comparaisons, vos recommandations d'usage.</p>
 
       <h3>Erreur 3 : bloquer les bots IA sur les pages produits</h3>
 
@@ -268,7 +268,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <h3>Erreur 5 : ignorer les requêtes comparatives</h3>
 
-      <p>"[Produit A] vs [Produit B]", "meilleur [catégorie] rapport qualité-prix", "alternative à [marque]" — ces requêtes représentent une part importante des conversations IA liées à l'achat. Si vous n'avez pas de contenu qui y répond, vous n'apparaîtrez pas dans ces réponses.</p>
+      <p>"[Produit A] vs [Produit B]", "meilleur [catégorie] rapport qualité-prix", "alternative à [marque]", ces requêtes représentent une part importante des conversations IA liées à l'achat. Si vous n'avez pas de contenu qui y répond, vous n'apparaîtrez pas dans ces réponses.</p>
 
       <p><strong>Solution :</strong> créez des comparatifs honnêtes et des guides d'achat par critère.</p>
 
@@ -313,7 +313,7 @@ Pour les petits appartements, un modèle plus compact peut suffire."`}</code></p
 
       <p>Votre boutique en ligne est-elle citée quand un client demande à ChatGPT une recommandation dans votre secteur ? Faites le test.</p>
 
-      <p>Analysez votre site sur Detekia — score sur 100, 7 critères GEO, recommandations priorisées. En moins de 60 secondes, sans inscription.</p>
+      <p>Analysez votre site sur Detekia, score sur 100, 7 critères GEO, recommandations priorisées. En moins de 60 secondes, sans inscription.</p>
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>

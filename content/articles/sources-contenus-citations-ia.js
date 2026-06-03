@@ -32,21 +32,21 @@ function InlineCTA({ href, children }) {
 export default function SourcesContenusCitationsIa() {
   return (
     <>
-      <p>Quand ChatGPT, Perplexity ou Gemini formulent une reponse, ils ne devinent pas. Ils selectionnent des fragments de contenu web, les comparent entre eux et ne citent que ceux qu'ils peuvent verifier. Le mecanisme sous-jacent — le RAG (Retrieval-Augmented Generation) — fonctionne comme un reflexe de triangulation : si un contenu affirme quelque chose sans source, le modele ne peut pas le recouper. Il le delaisse au profit d'un contenu qui cite ses sources.</p>
+      <p>Quand ChatGPT, Perplexity ou Gemini formulent une reponse, ils ne devinent pas. Ils selectionnent des fragments de contenu web, les comparent entre eux et ne citent que ceux qu'ils peuvent verifier. Le mecanisme sous-jacent, le RAG (Retrieval-Augmented Generation), fonctionne comme un reflexe de triangulation : si un contenu affirme quelque chose sans source, le modele ne peut pas le recouper. Il le delaisse au profit d'un contenu qui cite ses sources.</p>
 
       <p>Ce comportement est mesurable. L'etude de reference de Princeton (Aggarwal et al., KDD 2024) a demontre que l'ajout de <strong>citations et de statistiques dans un contenu augmente sa citabilite IA de 30 a 40 %</strong>. Les donnees AirOps 2026 confirment que les contenus avec sources externes verifiables obtiennent 2,4x plus de citations que les contenus sans reference.</p>
 
-      <p>La consequence pour les editeurs de contenu est directe : en 2026, ajouter des sources n'est plus un exercice academique. C'est un levier de visibilite concret, tant pour le SEO Google que pour le GEO.</p>
+      <p>La consequence pour les editeurs de contenu est directe : en 2026, ajouter des sources n'est plus un exercice academique. C'est un moyen de visibilite concret, tant pour le SEO Google que pour le GEO.</p>
 
       <h2>Pourquoi les sources comptent plus que jamais en 2026</h2>
 
       <p>Deux forces convergent pour faire des sources un critere de premier plan.</p>
 
-      <p><strong>Cote Google : le cadre E-E-A-T.</strong> Les Search Quality Rater Guidelines de Google insistent sur la Trustworthiness — la fiabilite factuelle d'un contenu. Un article qui cite ses sources, qui attribue ses chiffres et qui date ses donnees envoie les signaux que Google cherche. L'Edelman Trust Barometer 2026 montre que 64 % des internautes declarent faire davantage confiance aux contenus qui citent leurs sources. Google suit cette tendance en valorisant les pages transparentes sur l'origine de leurs informations. Pour approfondir ce cadre, consultez notre article sur <InternalLink href="/blog/eeat-ia-experience-expertise">E-E-A-T et IA</InternalLink>.</p>
+      <p><strong>Cote Google : le cadre E-E-A-T.</strong> Les Search Quality Rater Guidelines de Google insistent sur la Trustworthiness, la fiabilite factuelle d'un contenu. Un article qui cite ses sources, qui attribue ses chiffres et qui date ses donnees envoie les signaux que Google cherche. L'Edelman Trust Barometer 2026 montre que 64 % des internautes declarent faire davantage confiance aux contenus qui citent leurs sources. Google suit cette tendance en valorisant les pages transparentes sur l'origine de leurs informations. Pour approfondir ce cadre, consultez notre article sur <InternalLink href="/blog/eeat-ia-experience-expertise">E-E-A-T et IA</InternalLink>.</p>
 
-      <p><strong>Cote IA : le RAG et la verificabilite.</strong> Les systemes RAG de ChatGPT, Perplexity et Gemini fonctionnent en trois etapes : recherche, selection, generation. A l'etape de selection, le modele evalue la fiabilite de chaque fragment recupere. Un contenu qui cite une etude avec auteur, date et institution fournit au modele un ancrage verifiable. Un contenu qui affirme "les experts disent que..." sans preciser lesquels est un signal faible — le RAG ne peut pas le recouper et le delaisse.</p>
+      <p><strong>Cote IA : le RAG et la verificabilite.</strong> Les systemes RAG de ChatGPT, Perplexity et Gemini fonctionnent en trois etapes : recherche, selection, generation. A l'etape de selection, le modele evalue la fiabilite de chaque fragment recupere. Un contenu qui cite une etude avec auteur, date et institution fournit au modele un ancrage verifiable. Un contenu qui affirme "les experts disent que..." sans preciser lesquels est un signal faible, le RAG ne peut pas le recouper et le delaisse.</p>
 
-      <p>Le resultat : les sources sont devenues le point de convergence entre SEO et GEO. Un seul effort — sourcer correctement vos contenus — ameliore votre positionnement sur les deux canaux.</p>
+      <p>Le resultat : les sources sont devenues le point de convergence entre SEO et GEO. Un seul effort, sourcer correctement vos contenus, ameliore votre positionnement sur les deux canaux.</p>
 
       <h2>Les 5 types de sources qui maximisent la citabilite</h2>
 
@@ -66,7 +66,7 @@ export default function SourcesContenusCitationsIa() {
 
       <h3>3. Sources institutionnelles et rapports sectoriels</h3>
 
-      <p>Les rapports publies par des institutions reconnues (Edelman, Gartner, McKinsey) ou des plateformes specialisees (Seer Interactive, Growth Memo) beneficient d'une autorite de domaine elevee. Les IA leur accordent un poids disproportionne parce que les moteurs de recherche sous-jacents (Bing, Google) les classent deja en haut des resultats. Growth Memo a documente que les 30 premiers pourcents du texte d'une page fournissent 44,2 % des citations IA — un constat qui s'applique particulierement aux contenus qui ouvrent avec des sources institutionnelles.</p>
+      <p>Les rapports publies par des institutions reconnues (Edelman, Gartner, McKinsey) ou des plateformes specialisees (Seer Interactive, Growth Memo) beneficient d'une autorite de domaine elevee. Les IA leur accordent un poids disproportionne parce que les moteurs de recherche sous-jacents (Bing, Google) les classent deja en haut des resultats. Growth Memo a documente que les 30 premiers pourcents du texte d'une page fournissent 44,2 % des citations IA, un constat qui s'applique particulierement aux contenus qui ouvrent avec des sources institutionnelles.</p>
 
       <h3>4. Experts nommes et credentials verifiables</h3>
 
@@ -74,7 +74,7 @@ export default function SourcesContenusCitationsIa() {
 
       <h3>5. Cas clients et donnees proprietaires</h3>
 
-      <p>Les cas concrets avec resultats chiffres constituent une preuve d'Experience au sens E-E-A-T. Un contenu qui ecrit "notre audit de 200 sites montre que ceux avec schema FAQPage obtiennent 2,4x plus de citations IA (AirOps, 2026)" combine donnee proprietaire et source externe — le signal le plus fort pour les IA. Seer Interactive a observe que les pages contenant des cas d'etude avec metriques specifiques apparaissent 3 fois plus souvent dans les reponses de Perplexity.</p>
+      <p>Les cas concrets avec resultats chiffres constituent une preuve d'Experience au sens E-E-A-T. Un contenu qui ecrit "notre audit de 200 sites montre que ceux avec schema FAQPage obtiennent 2,4x plus de citations IA (AirOps, 2026)" combine donnee proprietaire et source externe, le signal le plus fort pour les IA. Seer Interactive a observe que les pages contenant des cas d'etude avec metriques specifiques apparaissent 3 fois plus souvent dans les reponses de Perplexity.</p>
 
       <h2>Comment integrer les sources : 8 bonnes pratiques</h2>
 
@@ -88,7 +88,7 @@ export default function SourcesContenusCitationsIa() {
 
       <h3>3. Liez vers la source primaire</h3>
 
-      <p>Un lien externe vers la publication originale permet au RAG de verifier l'information. Les donnees Otterly.AI 2026 confirment que les contenus avec liens sortants vers des sources fiables sont mieux cites que ceux qui mentionnent une source sans y lier. C'est aussi un signal SEO positif — Google valorise les liens sortants pertinents.</p>
+      <p>Un lien externe vers la publication originale permet au RAG de verifier l'information. Les donnees Otterly.AI 2026 confirment que les contenus avec liens sortants vers des sources fiables sont mieux cites que ceux qui mentionnent une source sans y lier. C'est aussi un signal SEO positif, Google valorise les liens sortants pertinents.</p>
 
       <h3>4. Nommez les auteurs et les institutions</h3>
 
@@ -129,7 +129,7 @@ export default function SourcesContenusCitationsIa() {
         <li>Auteur : "L'equipe marketing"</li>
       </ul>
 
-      <p>Resultat : Google classe la page en bas de page 2. ChatGPT et Perplexity ne la citent jamais — aucun fragment verifiable pour le RAG.</p>
+      <p>Resultat : Google classe la page en bas de page 2. ChatGPT et Perplexity ne la citent jamais. Aucun fragment verifiable pour le RAG.</p>
 
       <h3>Apres (sources integrees)</h3>
 
@@ -146,7 +146,7 @@ export default function SourcesContenusCitationsIa() {
 
       <h2>Conclusion : sourcer, c'est scorer</h2>
 
-      <p>En 2026, les sources ne sont plus un detail redactionnel. Elles sont un levier de visibilite. Chaque citation attribuee, chaque chiffre date, chaque lien vers une publication de reference envoie un signal que les IA peuvent verifier — et donc utiliser pour vous citer.</p>
+      <p>En 2026, les sources ne sont plus un detail redactionnel. Elles sont un moyen de visibilite. Chaque citation attribuee, chaque chiffre date, chaque lien vers une publication de reference envoie un signal que les IA peuvent verifier. Et donc utiliser pour vous citer.</p>
 
       <p>La convergence SEO-GEO rend cet investissement doublement rentable. Google valorise les contenus sources via E-E-A-T. Les IA les citent via le RAG. Un seul effort, deux canaux de visibilite.</p>
 
@@ -155,7 +155,7 @@ export default function SourcesContenusCitationsIa() {
       <ol>
         <li>Reprenez vos 5 articles les plus visites et ajoutez au moins 3 sources externes attribuees et datees dans chacun</li>
         <li>Verifiez que chaque H2 ouvre par un fragment extractible de 40 a 60 mots contenant une source</li>
-        <li>Mesurez votre point de depart avec un <InternalLink href="/">scoring GEO gratuit</InternalLink> — vous saurez exactement quels signaux de sourcing manquent</li>
+        <li>Mesurez votre point de depart avec un <InternalLink href="/">scoring GEO gratuit</InternalLink> : vous saurez exactement quels signaux de sourcing manquent</li>
       </ol>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : quelles différences en 2026 ?</ArrowLink>

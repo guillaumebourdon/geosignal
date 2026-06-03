@@ -49,7 +49,7 @@ function InlineCTA({ href, children }) {
 export default function SchemaOrgIaGuidePratique() {
   return (
     <>
-      <p>Les données structurées Schema.org ne servent plus uniquement à obtenir des rich snippets sur Google. En 2026, elles sont devenues un levier direct de visibilité auprès des IA génératives. Quand ChatGPT, Gemini ou Perplexity analysent votre site, le balisage JSON-LD leur permet de comprendre sans ambiguïté qui vous êtes, ce que vous proposez, et pourquoi votre contenu est fiable.</p>
+      <p>Les données structurées Schema.org ne servent plus uniquement à obtenir des rich snippets sur Google. En 2026, elles sont devenues un facteur direct de visibilité auprès des IA génératives. Quand ChatGPT, Gemini ou Perplexity analysent votre site, le balisage JSON-LD leur permet de comprendre sans ambiguïté qui vous êtes, ce que vous proposez, et pourquoi votre contenu est fiable.</p>
 
       <p>Un site sans données structurées oblige l'IA à deviner. Un site avec un balisage complet lui donne des certitudes. Et les IA citent en priorité les sources qu'elles comprennent.</p>
 
@@ -64,8 +64,8 @@ export default function SchemaOrgIaGuidePratique() {
       <p>Concrètement, Schema.org impacte 2 des <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères du score GEO Detekia</InternalLink> :</p>
 
       <ul>
-        <li><strong>Autorité & E-E-A-T (15 points)</strong> — les signaux de données structurées (schemas <code>Organization</code>, <code>Article</code>, <code>FAQPage</code>) sont désormais évalués dans ce critère, aux côtés des informations d'auteur et des signaux de crédibilité</li>
-        <li><strong>Citabilité (25 points)</strong> — le schema <code>FAQPage</code> <InternalLink href="/blog/faq-schema-faqpage-combo-ia">structure vos contenus dans un format nativement extractible</InternalLink> par les IA</li>
+        <li><strong>Autorité & E-E-A-T (15 points)</strong> : les signaux de données structurées (schemas <code>Organization</code>, <code>Article</code>, <code>FAQPage</code>) sont désormais évalués dans ce critère, aux côtés des informations d'auteur et des signaux de crédibilité</li>
+        <li><strong>Citabilité (25 points)</strong> : le schema <code>FAQPage</code> <InternalLink href="/blog/faq-schema-faqpage-combo-ia">structure vos contenus dans un format nativement extractible</InternalLink> par les IA</li>
       </ul>
 
       <p>Soit un impact potentiel sur <strong>40 points sur 100</strong> de votre score GEO.</p>
@@ -76,7 +76,7 @@ export default function SchemaOrgIaGuidePratique() {
 
       <h3>1. Organization — votre identité</h3>
 
-      <p>C'est le schema le plus fondamental. Il dit aux IA : "Voici qui nous sommes." Sans lui, les moteurs IA n'ont aucune certitude sur votre identité d'entreprise.</p>
+      <p>C'est le schema de base. Il dit aux IA : "Voici qui nous sommes." Sans lui, les moteurs IA n'ont aucune certitude sur votre identité d'entreprise.</p>
 
       <p><strong>Où l'implémenter :</strong> sur votre page d'accueil, dans le <code>&lt;head&gt;</code> ou avant la fermeture du <code>&lt;/body&gt;</code>.</p>
 
@@ -109,8 +109,8 @@ export default function SchemaOrgIaGuidePratique() {
       <p><strong>Points clés pour le GEO :</strong></p>
 
       <ul>
-        <li>La propriété <code>sameAs</code> est cruciale : elle permet aux IA de relier votre site à vos profils LinkedIn, Twitter, Wikipedia, Crunchbase. Plus ces liens sont cohérents, plus votre identité d'entité est forte.</li>
-        <li>La <code>description</code> doit être factuelle et concise — c'est souvent ce que l'IA extraira en premier pour vous présenter.</li>
+        <li>La propriété <code>sameAs</code> est importante : elle permet aux IA de relier votre site à vos profils LinkedIn, Twitter, Wikipedia, Crunchbase. Plus ces liens sont cohérents, plus votre identité d'entité est forte.</li>
+        <li>La <code>description</code> doit être factuelle et concise. C'est souvent ce que l'IA extraira en premier pour vous présenter.</li>
         <li>Le <code>logo</code> en URL absolue permet aux IA de vérifier visuellement votre identité.</li>
       </ul>
 
@@ -118,7 +118,7 @@ export default function SchemaOrgIaGuidePratique() {
 
       <p>C'est le schema le plus impactant pour le GEO. Les moteurs IA fonctionnent par questions-réponses : un utilisateur pose une question, l'IA cherche la meilleure réponse. Le schema <code>FAQPage</code> structure votre contenu exactement dans ce format.</p>
 
-      <p><strong>Où l'implémenter :</strong> sur toute page contenant des questions-réponses — page FAQ dédiée, bas de page produit, sections d'aide.</p>
+      <p><strong>Où l'implémenter :</strong> sur toute page contenant des questions-réponses : page FAQ dédiée, bas de page produit, sections d'aide.</p>
 
       <pre><code>{`{
   "@context": "https://schema.org",
@@ -149,12 +149,12 @@ export default function SchemaOrgIaGuidePratique() {
         <li>Chaque réponse doit être <strong>autonome</strong> : compréhensible sans contexte supplémentaire. Les IA extraient souvent la réponse seule, sans la question.</li>
         <li>Les questions doivent être formulées en langage naturel, comme un utilisateur les poserait à ChatGPT. Pas de jargon, pas de formulation corporate.</li>
         <li>Limitez-vous à 5-10 questions par page. Au-delà, la densité informationnelle diminue et Google peut ignorer le balisage.</li>
-        <li>Chaque réponse doit contenir des faits vérifiables (chiffres, durées, étapes) — pas de réponses vagues.</li>
+        <li>Chaque réponse doit contenir des faits vérifiables (chiffres, durées, étapes) : pas de réponses vagues.</li>
       </ul>
 
       <h3>3. Article / BlogPosting — vos contenus éditoriaux</h3>
 
-      <p>Ce schema identifie vos articles comme des contenus éditoriaux structurés, avec un auteur, une date, et un contexte éditorial. Pour les IA, c'est un signal fort de crédibilité — surtout quand l'auteur est identifiable et expert.</p>
+      <p>Ce schema identifie vos articles comme des contenus éditoriaux structurés, avec un auteur, une date, et un contexte éditorial. Pour les IA, c'est un signal fort de crédibilité, surtout quand l'auteur est identifiable et expert.</p>
 
       <p><strong>Où l'implémenter :</strong> sur chaque article de blog, guide, étude de cas ou page de contenu éditorial.</p>
 
@@ -190,8 +190,8 @@ export default function SchemaOrgIaGuidePratique() {
       <p><strong>Points clés pour le GEO :</strong></p>
 
       <ul>
-        <li>L'objet <code>author</code> avec un <code>url</code> vers LinkedIn ou une page bio est essentiel. Les IA croisent les informations d'auteur pour évaluer l'expertise (E-E-A-T).</li>
-        <li><code>dateModified</code> est aussi important que <code>datePublished</code>. Les IA vérifient la fraîcheur du contenu — une date de modification récente est un signal positif.</li>
+        <li>L'objet <code>author</code> avec un <code>url</code> vers LinkedIn ou une page bio est important. Les IA croisent les informations d'auteur pour évaluer l'expertise (E-E-A-T).</li>
+        <li><code>dateModified</code> est aussi important que <code>datePublished</code>. Les IA vérifient la fraîcheur du contenu. Une date de modification récente est un signal positif.</li>
         <li>La <code>description</code> doit résumer le contenu de manière factuelle et extractible.</li>
       </ul>
 
@@ -254,9 +254,9 @@ export default function SchemaOrgIaGuidePratique() {
       <h3>E-commerce</h3>
 
       <ul>
-        <li><code>Product</code> — nom, prix, disponibilité, avis. Les IA les utilisent pour les <InternalLink href="/blog/ecommerce-recommandations-ia">comparaisons produits</InternalLink>.</li>
-        <li><code>AggregateRating</code> — note moyenne et nombre d'avis. Signal de confiance fort.</li>
-        <li><code>Offer</code> — prix, devise, conditions. Permet aux IA de citer des prix précis.</li>
+        <li><code>Product</code> : nom, prix, disponibilité, avis. Les IA les utilisent pour les <InternalLink href="/blog/ecommerce-recommandations-ia">comparaisons produits</InternalLink>.</li>
+        <li><code>AggregateRating</code> : note moyenne et nombre d'avis. Signal de confiance fort.</li>
+        <li><code>Offer</code> : prix, devise, conditions. Permet aux IA de citer des prix précis.</li>
       </ul>
 
       <ArrowLink href="/blog/ecommerce-recommandations-ia">Pour une approche complète, consultez E-commerce : comment apparaître dans les recommandations produits des IA.</ArrowLink>
@@ -264,15 +264,15 @@ export default function SchemaOrgIaGuidePratique() {
       <h3>Services et professions libérales</h3>
 
       <ul>
-        <li><code>LocalBusiness</code> — adresse, horaires, zone géographique. Essentiel pour les requêtes locales ("meilleur [profession] à [ville]").</li>
-        <li><code>Service</code> — description de vos prestations avec prix et zone de couverture.</li>
+        <li><code>LocalBusiness</code> : adresse, horaires, zone géographique. Important pour les requêtes locales ("meilleur [profession] à [ville]").</li>
+        <li><code>Service</code> : description de vos prestations avec prix et zone de couverture.</li>
       </ul>
 
       <h3>SaaS et tech</h3>
 
       <ul>
-        <li><code>SoftwareApplication</code> — nom, système d'exploitation, catégorie, prix. Les IA citent ces infos dans les comparatifs logiciels.</li>
-        <li><code>HowTo</code> — étapes d'utilisation de votre outil. Format très extractible par les IA.</li>
+        <li><code>SoftwareApplication</code> : nom, système d'exploitation, catégorie, prix. Les IA citent ces infos dans les comparatifs logiciels.</li>
+        <li><code>HowTo</code> : étapes d'utilisation de votre outil. Format très extractible par les IA.</li>
       </ul>
 
       <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Avant d'implémenter les schemas, vérifiez que votre site est bien crawlable par les bots IA : llms.txt, robots.txt et accessibilité IA.</ArrowLink>
@@ -356,8 +356,8 @@ export default function HomePage() {
       <p>Deux options :</p>
 
       <ul>
-        <li><strong>Plugin</strong> — Yoast SEO et Rank Math ajoutent automatiquement certains schemas (Organization, Article, BreadcrumbList). Vérifiez les réglages et complétez manuellement si nécessaire (<code>FAQPage</code> n'est pas toujours automatique).</li>
-        <li><strong>Manuel</strong> — collez le bloc JSON-LD dans l'éditeur HTML de votre page, ou utilisez un plugin comme "Insert Headers and Footers" pour l'ajouter globalement.</li>
+        <li><strong>Plugin</strong> : Yoast SEO et Rank Math ajoutent automatiquement certains schemas (Organization, Article, BreadcrumbList). Vérifiez les réglages et complétez manuellement si nécessaire (<code>FAQPage</code> n'est pas toujours automatique).</li>
+        <li><strong>Manuel</strong> : collez le bloc JSON-LD dans l'éditeur HTML de votre page, ou utilisez un plugin comme "Insert Headers and Footers" pour l'ajouter globalement.</li>
       </ul>
 
       <h2>Tester et valider</h2>
@@ -367,19 +367,19 @@ export default function HomePage() {
       <h3>Outils de test</h3>
 
       <ul>
-        <li><strong>Rich Results Test de Google</strong> (<code>search.google.com/test/rich-results</code>) — vérifie si votre balisage est valide et éligible aux résultats enrichis. C'est l'outil de référence.</li>
-        <li><strong>Schema Markup Validator</strong> (<code>validator.schema.org</code>) — valide la syntaxe de votre balisage contre le vocabulaire Schema.org complet. Plus strict que le test Google.</li>
-        <li><strong>Votre score Detekia</strong> — lancez un audit avant et après l'implémentation pour mesurer l'impact sur votre score de données structurées.</li>
+        <li><strong>Rich Results Test de Google</strong> (<code>search.google.com/test/rich-results</code>) : vérifie si votre balisage est valide et éligible aux résultats enrichis. C'est l'outil de référence.</li>
+        <li><strong>Schema Markup Validator</strong> (<code>validator.schema.org</code>) : valide la syntaxe de votre balisage contre le vocabulaire Schema.org complet. Plus strict que le test Google.</li>
+        <li><strong>Votre score Detekia</strong> : lancez un audit avant et après l'implémentation pour mesurer l'impact sur votre score de données structurées.</li>
       </ul>
 
       <h3>Erreurs fréquentes à éviter</h3>
 
       <ul>
-        <li><strong>Balisage invisible</strong> — le contenu décrit dans le schema doit être visible sur la page. Un schema <code>FAQPage</code> dont les questions ne sont pas affichées visuellement viole les directives de Google et peut être ignoré.</li>
-        <li><strong>Informations incohérentes</strong> — le nom d'entreprise dans le schema <code>Organization</code> doit correspondre exactement à celui affiché sur votre site, votre Google Business Profile et vos réseaux sociaux. Toute incohérence affaiblit la confiance des IA.</li>
-        <li><strong>Dates manquantes ou fausses</strong> — <code>datePublished</code> et <code>dateModified</code> doivent refléter la réalité. Ne mettez pas la date du jour comme <code>dateModified</code> si vous n'avez pas réellement modifié le contenu.</li>
-        <li><strong>Schema trop minimal</strong> — un schema <code>Organization</code> avec uniquement le nom ne sert presque à rien. Remplissez toutes les propriétés pertinentes : logo, adresse, contact, <code>sameAs</code>.</li>
-        <li><strong>Oublier de tester après déploiement</strong> — un changement de template, une mise à jour de plugin ou une migration peut casser votre balisage silencieusement.</li>
+        <li><strong>Balisage invisible</strong> : le contenu décrit dans le schema doit être visible sur la page. Un schema <code>FAQPage</code> dont les questions ne sont pas affichées visuellement viole les directives de Google et peut être ignoré.</li>
+        <li><strong>Informations incohérentes</strong> : le nom d'entreprise dans le schema <code>Organization</code> doit correspondre exactement à celui affiché sur votre site, votre Google Business Profile et vos réseaux sociaux. Toute incohérence affaiblit la confiance des IA.</li>
+        <li><strong>Dates manquantes ou fausses</strong> : <code>datePublished</code> et <code>dateModified</code> doivent refléter la réalité. Ne mettez pas la date du jour comme <code>dateModified</code> si vous n'avez pas réellement modifié le contenu.</li>
+        <li><strong>Schema trop minimal</strong> : un schema <code>Organization</code> avec uniquement le nom ne sert presque à rien. Remplissez toutes les propriétés pertinentes : logo, adresse, contact, <code>sameAs</code>.</li>
+        <li><strong>Oublier de tester après déploiement</strong> : un changement de template, une mise à jour de plugin ou une migration peut casser votre balisage silencieusement.</li>
       </ul>
 
       <h2>Checklist d'implémentation</h2>
@@ -442,7 +442,7 @@ export default function HomePage() {
 
       <p>Vous avez implémenté vos schemas ? Mesurez l'impact immédiatement.</p>
 
-      <p>Lancez un audit GEO sur Detekia — votre score de données structurées passera de 0-3 à 7-10 si l'implémentation est correcte. En moins de 60 secondes, sans inscription.</p>
+      <p>Lancez un audit GEO sur Detekia. Votre score de données structurées passera de 0-3 à 7-10 si l'implémentation est correcte. En moins de 60 secondes, sans inscription.</p>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

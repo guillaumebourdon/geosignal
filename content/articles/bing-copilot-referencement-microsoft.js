@@ -49,7 +49,7 @@ export default function BingCopilotReferencementMicrosoft() {
 
       <p>Ce n'est plus un moteur de recherche marginal. C'est un canal de distribution IA massif.</p>
 
-      <h2>Pourquoi Bing est crucial pour la visibilité IA</h2>
+      <h2>Pourquoi Bing est important pour la visibilité IA</h2>
 
       <h3>ChatGPT s'appuie sur Bing pour le web</h3>
 
@@ -181,7 +181,7 @@ export default function BingCopilotReferencementMicrosoft() {
         <li>ChatGPT utilise Bing pour ses recherches web en temps réel. Ignorer Bing, c'est ignorer ChatGPT.</li>
         <li>Copilot est intégré dans Windows, Edge et Microsoft 365 et touche plus d'un milliard d'utilisateurs potentiels.</li>
         <li>L'index Bing est différent de l'index Google : être premier sur Google ne garantit rien sur Bing.</li>
-        <li>IndexNow, les données structurées et les signaux sociaux (LinkedIn) sont les leviers clés pour Bing.</li>
+        <li>IndexNow, les données structurées et les signaux sociaux (LinkedIn) sont les moyens clés pour Bing.</li>
         <li>Bing Webmaster Tools est indispensable pour piloter votre visibilité dans l'écosystème Microsoft.</li>
         <li>Le premier réflexe : <InternalLink href="/">testez votre score de visibilité IA</InternalLink> pour identifier les blocages techniques que Bing et ChatGPT détectent.</li>
       </ul>

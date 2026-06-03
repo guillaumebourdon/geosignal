@@ -106,13 +106,13 @@ export default function AvocatMedecinIaYmyl() {
 
       <h2>Comment les IA évaluent la crédibilité des contenus YMYL</h2>
 
-      <p>Comprendre le mécanisme de sélection des IA sur les sujets YMYL permet d'identifier précisément les leviers d'action. Voici comment fonctionne la chaine de confiance.</p>
+      <p>Comprendre le mécanisme de sélection des IA sur les sujets YMYL permet d'identifier précisément les moyens d'action. Voici comment fonctionne la chaine de confiance.</p>
 
       <h3>Étape 1 : le filtrage par le moteur de recherche sous-jacent</h3>
 
       <p>ChatGPT s'appuie sur Bing, Gemini sur Google, Perplexity sur un index hybride. Ces moteurs appliquent déjà un filtre YMYL : pour une requête "symptomes AVC", Bing ne remontera pas un article de blog sans auteur identifié. Il privilégiera les sources médicales reconnues (HAS, Vidal, sites hospitaliers, sites de praticiens).</p>
 
-      <p>Si votre site ne passe pas ce premier filtre, il n'atteindra jamais le LLM. C'est pourquoi les fondamentaux SEO restent essentiels en GEO.</p>
+      <p>Si votre site ne passe pas ce premier filtre, il n'atteindra jamais le LLM. C'est pourquoi les fondamentaux SEO restent importants en GEO.</p>
 
       <h3>Étape 2 : la sélection par le LLM</h3>
 
@@ -296,7 +296,7 @@ export default function AvocatMedecinIaYmyl() {
 
       <p>En 30 secondes, vous obtenez un diagnostic clair avec des recommandations priorisées. Les professionnels YMYL partent souvent d'un score bas (faute de contenus et de données structurées) mais progressent rapidement : leurs credentials sont déjà là, il suffit de les rendre visibles pour les IA.</p>
 
-      <h2>Conclusion : la crédibilité est votre meilleur levier GEO</h2>
+      <h2>Conclusion : la crédibilité est votre meilleur moyen GEO</h2>
 
       <p>Les professions réglementées ont un avantage structurel dans la course à la visibilité IA. Diplomes, inscriptions ordinales, publications, expérience terrain : tout ce qui fait votre légitimité professionnelle est exactement ce que les IA recherchent pour citer une source YMYL.</p>
 

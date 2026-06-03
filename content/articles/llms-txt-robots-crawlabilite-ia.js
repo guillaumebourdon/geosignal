@@ -66,11 +66,11 @@ function InlineCTA({ href, children }) {
 export default function LlmsTxtRobotsCrawlabiliteIa() {
   return (
     <>
-      <p>Avant de se demander si les IA comprennent votre contenu, il y a une question plus fondamentale : est-ce qu'elles peuvent y accéder ? Un nombre surprenant de <InternalLink href="/blog/sites-bloquent-bots-ia">sites bien optimisés pour Google bloquent involontairement les robots des IA</InternalLink> dans leur fichier robots.txt. D'autres laissent les bots accéder au site mais leur servent du JavaScript non rendu, illisible pour les crawlers.</p>
+      <p>Avant de se demander si les IA comprennent votre contenu, il y a une question plus centrale : est-ce qu'elles peuvent y accéder ? Un nombre surprenant de <InternalLink href="/blog/sites-bloquent-bots-ia">sites bien optimisés pour Google bloquent involontairement les robots des IA</InternalLink> dans leur fichier robots.txt. D'autres laissent les bots accéder au site mais leur servent du JavaScript non rendu, illisible pour les crawlers.</p>
 
       <p>Ce guide technique couvre tout ce qu'il faut savoir sur l'accessibilité IA : les user-agents à connaître, la configuration robots.txt correcte, le nouveau standard llms.txt, et les vérifications à faire pour s'assurer que votre site est réellement indexable par les LLM.</p>
 
-      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">L'accessibilité IA est l'un des 7 critères du score GEO — voir la méthodologie complète →</ArrowLink>
+      <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">L'accessibilité IA est l'un des 7 critères du score GEO, voir la méthodologie complète →</ArrowLink>
 
       <h2>Les robots des IA : qui sont-ils ?</h2>
 
@@ -78,13 +78,13 @@ export default function LlmsTxtRobotsCrawlabiliteIa() {
 
       <BotTable />
 
-      <p>Le point critique : si votre robots.txt contient une directive <code>Disallow: /</code> pour <code>User-agent: *</code> (tous les robots), elle bloque aussi tous les bots IA. C'est souvent une erreur de configuration héritée — faite pour bloquer les scrapers — qui s'applique involontairement aux LLM.</p>
+      <p>Le point critique : si votre robots.txt contient une directive <code>Disallow: /</code> pour <code>User-agent: *</code> (tous les robots), elle bloque aussi tous les bots IA. C'est souvent une erreur de configuration héritée, faite pour bloquer les scrapers, qui s'applique involontairement aux LLM.</p>
 
       <h2>Configurer robots.txt correctement</h2>
 
       <p>Un robots.txt GEO-compatible doit explicitement autoriser les principaux bots IA. Voici la configuration recommandée :</p>
 
-      <pre><code>{`# robots.txt — configuration GEO-compatible
+      <pre><code>{`# robots.txt, configuration GEO-compatible
 
 # Moteurs de recherche classiques
 User-agent: Googlebot
@@ -168,7 +168,7 @@ Disallow: /`}</code></pre>
 
       <h3>Qu'est-ce que llms.txt contient ?</h3>
 
-      <p>Le format proposé est simple — du Markdown structuré avec des sections définies :</p>
+      <p>Le format proposé est simple, du Markdown structuré avec des sections définies :</p>
 
       <pre><code>{`# Nom du site
 
@@ -203,8 +203,8 @@ Disallow: /`}</code></pre>
       <p>Le standard propose deux variantes :</p>
 
       <ul>
-        <li><strong>llms.txt</strong> — résumé court, index vers les pages importantes. Idéal pour les LLM qui scannent rapidement.</li>
-        <li><strong>llms-full.txt</strong> — version complète avec le contenu intégral des pages clés. Destiné aux LLM qui veulent indexer le contenu en profondeur.</li>
+        <li><strong>llms.txt</strong> : résumé court, index vers les pages importantes. Idéal pour les LLM qui scannent rapidement.</li>
+        <li><strong>llms-full.txt</strong> : version complète avec le contenu intégral des pages clés. Destiné aux LLM qui veulent indexer le contenu en profondeur.</li>
       </ul>
 
       <p>Commencez par <code>llms.txt</code>. La version full est optionnelle et surtout utile pour les sites à contenu riche (documentation, bases de connaissances).</p>
@@ -219,7 +219,7 @@ Disallow: /`}</code></pre>
 
       <h3>Le JavaScript côté client</h3>
 
-      <p>C'est le problème le plus sous-estimé. Si votre contenu est rendu en JavaScript côté client (React, Vue, Angular sans SSR), les bots IA basiques ne verront pas ce contenu — ils reçoivent le HTML initial, sans attendre l'exécution du JS. Pour maximiser la lisibilité, pensez aussi à implémenter vos <InternalLink href="/blog/schema-org-ia-guide-pratique">données structurées Schema.org</InternalLink>.</p>
+      <p>C'est le problème le plus sous-estimé. Si votre contenu est rendu en JavaScript côté client (React, Vue, Angular sans SSR), les bots IA basiques ne verront pas ce contenu. Ils reçoivent le HTML initial, sans attendre l'exécution du JS. Pour maximiser la lisibilité, pensez aussi à implémenter vos <InternalLink href="/blog/schema-org-ia-guide-pratique">données structurées Schema.org</InternalLink>.</p>
 
       <pre><code>{`<!-- ❌ Contenu invisible pour les bots basiques -->
 <div id="app"></div>
@@ -248,7 +248,7 @@ Disallow: /`}</code></pre>
       <h2>Checklist d'accessibilité IA</h2>
 
       <ul>
-        <li>✓ robots.txt testé — GPTBot, ClaudeBot, PerplexityBot et Google-Extended autorisés</li>
+        <li>✓ robots.txt testé : GPTBot, ClaudeBot, PerplexityBot et Google-Extended autorisés</li>
         <li>✓ Sitemap XML présent et référencé dans robots.txt</li>
         <li>✓ llms.txt créé à la racine du site</li>
         <li>✓ Contenu principal rendu côté serveur (SSR ou SSG)</li>
@@ -264,7 +264,7 @@ Disallow: /`}</code></pre>
 
       <h3>Bloquer les bots IA nuit-il à mon SEO classique ?</h3>
 
-      <p>Non, à condition de ne bloquer que les bots IA et de laisser Googlebot accéder normalement. Les deux systèmes de crawl sont indépendants. <code>Google-Extended</code> est distinct de <code>Googlebot</code> — vous pouvez bloquer l'un sans affecter l'autre.</p>
+      <p>Non, à condition de ne bloquer que les bots IA et de laisser Googlebot accéder normalement. Les deux systèmes de crawl sont indépendants. <code>Google-Extended</code> est distinct de <code>Googlebot</code>. Vous pouvez bloquer l'un sans affecter l'autre.</p>
 
       <h3>Dois-je autoriser Common Crawl ?</h3>
 
@@ -272,7 +272,7 @@ Disallow: /`}</code></pre>
 
       <h3>Que se passe-t-il si je bloque les bots IA après avoir été indexé ?</h3>
 
-      <p>Les informations déjà dans les données d'entraînement des LLM restent — vous ne pouvez pas "effacer" du corpus d'entraînement. En revanche, pour les systèmes de recherche IA en temps réel (Perplexity, SearchGPT), bloquer le bot empêchera les futures citations.</p>
+      <p>Les informations déjà dans les données d'entraînement des LLM restent. Vous ne pouvez pas "effacer" du corpus d'entraînement. En revanche, pour les systèmes de recherche IA en temps réel (Perplexity, SearchGPT), bloquer le bot empêchera les futures citations.</p>
 
       <ArrowLink href="/blog/8-criteres-geo-methodologie-detekia">Voir tous les critères GEO et leur impact sur votre score →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>

@@ -34,15 +34,15 @@ export default function GeminiVisibiliteSiteFrance() {
     <>
       <p>Gemini n'est plus un chatbot expérimental. C'est le moteur IA qui alimente les AI Overviews dans Google Search, les résumés dans Gmail, les suggestions dans Chrome et Android. Avec <strong>91 % de parts de marché en France</strong> (StatCounter, mars 2026), Google est le point d'entrée de la quasi-totalité du trafic web français. Quand Google change, tout le monde est impacté.</p>
 
-      <p>Le changement est déjà mesurable : aux États-Unis, les AI Overviews apparaissent sur environ <strong>30 % des requêtes informationnelles</strong> (BrightEdge, 2026). L'AI Mode — une version encore plus agressive qui remplace complètement les résultats classiques par une réponse conversationnelle — est déjà disponible dans plusieurs pays. La France arrive. La question n'est plus "si" mais "quand" votre trafic organique sera affecté.</p>
+      <p>Le changement est déjà mesurable : aux États-Unis, les AI Overviews apparaissent sur environ <strong>30 % des requêtes informationnelles</strong> (BrightEdge, 2026). L'AI Mode, une version encore plus agressive qui remplace complètement les résultats classiques par une réponse conversationnelle, est déjà disponible dans plusieurs pays. La France arrive. La question n'est plus "si" mais "quand" votre trafic organique sera affecté.</p>
 
       <h2>Gemini, c'est quoi exactement ?</h2>
 
       <p>Gemini est le modèle d'IA central de Google, lancé fin 2023 sous le nom Bard puis renommé en février 2024. C'est un modèle multimodal capable de traiter du texte, des images, de la vidéo et du code. Mais son rôle le plus stratégique pour les entreprises, c'est son intégration directe dans Google Search via les AI Overviews.</p>
 
-      <p>Concrètement, quand un utilisateur fait une recherche informationnelle sur Google, Gemini génère un résumé en haut de la page de résultats. Ce résumé cite des sources — et c'est là que se joue votre visibilité. Si vous n'êtes pas dans ce résumé, vous êtes repoussé sous le pli, voire invisible.</p>
+      <p>Concrètement, quand un utilisateur fait une recherche informationnelle sur Google, Gemini génère un résumé en haut de la page de résultats. Ce résumé cite des sources. Et c'est là que se joue votre visibilité. Si vous n'êtes pas dans ce résumé, vous êtes repoussé sous le pli, voire invisible.</p>
 
-      <p><strong>La différence fondamentale avec ChatGPT et Perplexity</strong> : Gemini puise directement dans l'index Google. Il ne s'appuie pas sur Bing (comme ChatGPT) ni sur un index propriétaire (comme Perplexity). Il utilise le même corpus que le moteur de recherche classique, mais le filtre et le synthétise via l'IA. Cela signifie que votre travail SEO existant n'est pas perdu — il constitue la base sur laquelle Gemini s'appuie.</p>
+      <p><strong>La différence centrale avec ChatGPT et Perplexity</strong> : Gemini puise directement dans l'index Google. Il ne s'appuie pas sur Bing (comme ChatGPT) ni sur un index propriétaire (comme Perplexity). Il utilise le même corpus que le moteur de recherche classique, mais le filtre et le synthétise via l'IA. Cela signifie que votre travail SEO existant n'est pas perdu. Il constitue la base sur laquelle Gemini s'appuie.</p>
 
       <InternalLink href="/blog/comment-chatgpt-choisit-ses-sources">Comment ChatGPT choisit ses sources : le fonctionnement expliqué</InternalLink>
 
@@ -58,7 +58,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <h2>6 actions concrètes pour optimiser votre site pour Gemini</h2>
 
-      <p>Gemini s'appuie sur l'index Google existant mais applique ses propres critères de sélection pour choisir quelles sources citer. Voici les six leviers les plus efficaces, classés par impact.</p>
+      <p>Gemini s'appuie sur l'index Google existant mais applique ses propres critères de sélection pour choisir quelles sources citer. Voici les six moyens les plus efficaces, classés par impact.</p>
 
       <h3>1. Structurer le contenu en réponses directes</h3>
 
@@ -71,10 +71,10 @@ export default function GeminiVisibiliteSiteFrance() {
       <p>Google évalue l'Expérience, l'Expertise, l'Autorité et la Fiabilité de chaque page avant de la citer dans un AI Overview. Les actions concrètes :</p>
 
       <ul>
-        <li><strong>Pages auteurs</strong> — chaque article doit être signé par un auteur avec une page bio détaillant ses qualifications</li>
-        <li><strong>Expertise démontrée</strong> — inclure des analyses originales, pas seulement des reformulations de ce qui existe déjà</li>
-        <li><strong>Sources citées</strong> — chaque affirmation factuelle doit renvoyer à une source vérifiable (étude, rapport, données officielles)</li>
-        <li><strong>Signaux de confiance</strong> — mentions presse, partenariats, certifications visibles sur le site</li>
+        <li><strong>Pages auteurs</strong> : chaque article doit être signé par un auteur avec une page bio détaillant ses qualifications</li>
+        <li><strong>Expertise démontrée</strong> : inclure des analyses originales, pas seulement des reformulations de ce qui existe déjà</li>
+        <li><strong>Sources citées</strong> : chaque affirmation factuelle doit renvoyer à une source vérifiable (étude, rapport, données officielles)</li>
+        <li><strong>Signaux de confiance</strong> : mentions presse, partenariats, certifications visibles sur le site</li>
       </ul>
 
       <h3>3. Implémenter les données structurées</h3>
@@ -83,7 +83,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <ul>
         <li><code>Article</code> avec <code>author</code>, <code>datePublished</code>, <code>dateModified</code></li>
-        <li><code>FAQPage</code> pour les pages questions-réponses — directement extractibles par Gemini</li>
+        <li><code>FAQPage</code> pour les pages questions-réponses : directement extractibles par Gemini</li>
         <li><code>HowTo</code> pour les tutoriels étape par étape</li>
         <li><code>Organization</code> pour établir l'identité de votre entreprise</li>
       </ul>
@@ -94,7 +94,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <h3>4. Organiser le contenu en clusters thématiques</h3>
 
-      <p>Gemini évalue l'autorité thématique d'un site, pas seulement la pertinence d'une page isolée. Un site qui couvre un sujet en profondeur — avec une page pilier et des articles satellites liés entre eux — est favorisé face à un site qui publie un article isolé sur le même sujet.</p>
+      <p>Gemini évalue l'autorité thématique d'un site, pas seulement la pertinence d'une page isolée. Un site qui couvre un sujet en profondeur, avec une page pilier et des articles satellites liés entre eux, est favorisé face à un site qui publie un article isolé sur le même sujet.</p>
 
       <p>La structure recommandée : une page principale qui couvre le sujet large (ex : "GEO : le guide complet"), des articles spécifiques sur chaque sous-thème (ex : "Schema.org pour l'IA", "Données structurées et visibilité"), et des liens internes entre toutes ces pages. Ce maillage interne signale à Gemini que votre site fait autorité sur l'ensemble du sujet.</p>
 
@@ -105,17 +105,17 @@ export default function GeminiVisibiliteSiteFrance() {
       <p>Les prérequis techniques sont non négociables. Si Gemini ne peut pas crawler et comprendre votre site, aucune optimisation de contenu ne servira :</p>
 
       <ul>
-        <li><strong>Vitesse de chargement</strong> — les Core Web Vitals restent un signal de qualité pour Google, y compris pour les AI Overviews</li>
-        <li><strong>Accessibilité IA</strong> — vérifiez que <code>Googlebot</code> n'est pas bloqué dans votre <code>robots.txt</code> (Gemini utilise le même crawler)</li>
-        <li><strong>Pas de blocage des bots IA</strong> — certains sites bloquent <code>Google-Extended</code> (le user-agent dédié à l'IA de Google) sans le savoir</li>
-        <li><strong>Rendu JavaScript</strong> — si votre contenu est rendu côté client, assurez-vous qu'il est accessible au crawl</li>
+        <li><strong>Vitesse de chargement</strong> : les Core Web Vitals restent un signal de qualité pour Google, y compris pour les AI Overviews</li>
+        <li><strong>Accessibilité IA</strong> : vérifiez que <code>Googlebot</code> n'est pas bloqué dans votre <code>robots.txt</code> (Gemini utilise le même crawler)</li>
+        <li><strong>Pas de blocage des bots IA</strong> : certains sites bloquent <code>Google-Extended</code> (le user-agent dédié à l'IA de Google) sans le savoir</li>
+        <li><strong>Rendu JavaScript</strong> : si votre contenu est rendu côté client, assurez-vous qu'il est accessible au crawl</li>
       </ul>
 
       <h3>6. Ajouter des données chiffrées et des sources vérifiables</h3>
 
       <p>Gemini, comme tous les modèles IA, privilégie les contenus qui contiennent des données vérifiables. Un article avec des pourcentages, des dates, des volumes et des sources identifiées est cité plus souvent qu'un article générique sans données. Chaque section clé de votre contenu devrait inclure au moins un chiffre sourcé.</p>
 
-      <InlineCTA href="/">Testez votre visibilité IA gratuitement — Score sur 100 en 2 minutes</InlineCTA>
+      <InlineCTA href="/">Testez votre visibilité IA gratuitement, Score sur 100 en 2 minutes</InlineCTA>
 
       <h2>Gemini vs ChatGPT vs Perplexity : quelles différences pour votre visibilité ?</h2>
 
@@ -157,7 +157,7 @@ export default function GeminiVisibiliteSiteFrance() {
               <td style={{ padding: '10px 16px' }}>Chercheurs, veilleurs, utilisateurs avancés</td>
             </tr>
             <tr>
-              <td style={{ padding: '10px 16px', fontWeight: 600 }}>Levier principal</td>
+              <td style={{ padding: '10px 16px', fontWeight: 600 }}>Moyen principal</td>
               <td style={{ padding: '10px 16px' }}>SEO + E-E-A-T + données structurées</td>
               <td style={{ padding: '10px 16px' }}>Indexation Bing + autorité de domaine</td>
               <td style={{ padding: '10px 16px' }}>Contenu frais, sourcé + Reddit</td>
@@ -180,7 +180,7 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <h3>Vérifier les AI Overviews</h3>
 
-      <p>Faites des recherches Google sur vos requêtes stratégiques. Si des AI Overviews apparaissent (résumé en haut de page avec l'icône IA), vérifiez les sources citées. Si les AI Overviews ne sont pas encore visibles en France sur vos requêtes, utilisez un VPN américain pour tester la version US — c'est un aperçu de ce qui arrive.</p>
+      <p>Faites des recherches Google sur vos requêtes stratégiques. Si des AI Overviews apparaissent (résumé en haut de page avec l'icône IA), vérifiez les sources citées. Si les AI Overviews ne sont pas encore visibles en France sur vos requêtes, utilisez un VPN américain pour tester la version US. C'est un aperçu de ce qui arrive.</p>
 
       <h3>Audit automatisé avec Detekia</h3>
 
@@ -192,17 +192,17 @@ export default function GeminiVisibiliteSiteFrance() {
 
       <h2>Ce qu'il faut retenir</h2>
 
-      <p>Gemini n'est pas un moteur IA parmi d'autres. C'est Google lui-même qui change de paradigme. Avec 91 % du marché de la recherche en France, l'impact sur le trafic organique sera massif — bien plus que ChatGPT ou Perplexity réunis.</p>
+      <p>Gemini n'est pas un moteur IA parmi d'autres. C'est Google lui-même qui change de paradigme. Avec 91 % du marché de la recherche en France, l'impact sur le trafic organique sera massif, bien plus que ChatGPT ou Perplexity réunis.</p>
 
       <p>Les trois actions prioritaires si vous démarrez :</p>
 
       <ol>
-        <li><strong>Vérifiez que <code>Google-Extended</code> n'est pas bloqué</strong> dans votre <code>robots.txt</code> — c'est le prérequis absolu pour être cité par Gemini</li>
-        <li><strong>Restructurez vos pages clés en pyramide inversée</strong> — réponse directe dans les 100 premiers mots, données chiffrées, sources citées</li>
-        <li><strong>Implémentez les schemas <code>Article</code> et <code>FAQPage</code></strong> avec auteur, dates et organisation — Gemini les utilise pour valider l'E-E-A-T</li>
+        <li><strong>Vérifiez que <code>Google-Extended</code> n'est pas bloqué</strong> dans votre <code>robots.txt</code> : c'est le prérequis absolu pour être cité par Gemini</li>
+        <li><strong>Restructurez vos pages clés en pyramide inversée</strong> : réponse directe dans les 100 premiers mots, données chiffrées, sources citées</li>
+        <li><strong>Implémentez les schemas <code>Article</code> et <code>FAQPage</code></strong> avec auteur, dates et organisation : Gemini les utilise pour valider l'E-E-A-T</li>
       </ol>
 
-      <p>Les sites qui se positionnent maintenant sur les critères de Gemini captent un avantage durable. Une fois les AI Overviews déployés en France, les positions seront plus difficiles à conquérir qu'à défendre. Le moment d'agir, c'est avant le déploiement — pas après.</p>
+      <p>Les sites qui se positionnent maintenant sur les critères de Gemini captent un avantage durable. Une fois les AI Overviews déployés en France, les positions seront plus difficiles à conquérir qu'à défendre. Le moment d'agir, c'est avant le déploiement, pas après.</p>
 
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
     </>

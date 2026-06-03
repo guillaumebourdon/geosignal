@@ -77,11 +77,11 @@ function BotTable() {
 export default function SitemapRobotsTxtBotsIa2026() {
   return (
     <>
-      <p>Votre robots.txt bloque probablement des bots IA sans que vous le sachiez. Selon une étude Originality.ai de 2025, <strong>73 % des sites bloquent au moins un crawler IA</strong> — souvent par défaut, via une règle <code>Disallow</code> trop large héritée d'une migration ou d'un template WordPress.</p>
+      <p>Votre robots.txt bloque probablement des bots IA sans que vous le sachiez. Selon une étude Originality.ai de 2025, <strong>73 % des sites bloquent au moins un crawler IA</strong>, souvent par défaut, via une règle <code>Disallow</code> trop large héritée d'une migration ou d'un template WordPress.</p>
 
       <p>En 2026, le paysage a changé. Sept bots IA majeurs crawlent le web en permanence, et la distinction entre ceux qui entraînent des modèles et ceux qui alimentent les citations en temps réel est devenue stratégique. Si vous bloquez le mauvais bot, vous disparaissez des réponses IA. Si vous les autorisez tous sans réfléchir, vous offrez vos données d'entraînement sans contrepartie.</p>
 
-      <p>Cet article vous donne la configuration de référence — robots.txt, sitemap.xml et llms.txt — pour 2026.</p>
+      <p>Cet article vous donne la configuration de référence, robots.txt, sitemap.xml et llms.txt, pour 2026.</p>
 
       <h2>Les bots IA en 2026 : qui crawle quoi</h2>
 
@@ -94,15 +94,15 @@ export default function SitemapRobotsTxtBotsIa2026() {
 
       <BotTable />
 
-      <p>La recommandation stratégique : <strong>autorisez systématiquement les crawlers de citation</strong> (OAI-SearchBot, PerplexityBot). Pour les crawlers d'entraînement, la décision dépend de votre stratégie — certains sites choisissent de bloquer l'entraînement tout en restant citables. Pour approfondir ce sujet, consultez notre <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">guide technique sur l'accessibilité IA</InternalLink>.</p>
+      <p>La recommandation stratégique : <strong>autorisez systématiquement les crawlers de citation</strong> (OAI-SearchBot, PerplexityBot). Pour les crawlers d'entraînement, la décision dépend de votre stratégie, certains sites choisissent de bloquer l'entraînement tout en restant citables. Pour approfondir ce sujet, consultez notre <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">guide technique sur l'accessibilité IA</InternalLink>.</p>
 
       <h2>robots.txt : configuration stratégique pour les bots IA</h2>
 
-      <p>Le robots.txt est votre premier levier de contrôle. Voici trois configurations selon votre stratégie.</p>
+      <p>Le robots.txt est votre premier moyen de contrôle. Voici trois configurations selon votre stratégie.</p>
 
       <h3>Configuration "tout autoriser" (recommandée pour le GEO)</h3>
 
-      <p>Si votre objectif est de maximiser votre visibilité IA — citations, recommandations, apparition dans les réponses — autorisez tous les bots :</p>
+      <p>Si votre objectif est de maximiser votre visibilité IA, citations, recommandations, apparition dans les réponses, autorisez tous les bots :</p>
 
       <CodeBlock title="robots.txt — Visibilité maximale">{`User-agent: *
 Allow: /
@@ -133,14 +133,14 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
       <CodeBlock title="robots.txt — Citations uniquement">{`User-agent: *
 Allow: /
 
-# Crawlers de citation — AUTORISER
+# Crawlers de citation, AUTORISER
 User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: PerplexityBot
 Allow: /
 
-# Crawlers d'entraînement — BLOQUER
+# Crawlers d'entraînement, BLOQUER
 User-agent: GPTBot
 Disallow: /
 
@@ -229,7 +229,7 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
         <li><strong>Bloquer GPTBot en pensant bloquer uniquement l'entraînement.</strong> Depuis début 2026, OpenAI utilise <code>OAI-SearchBot</code> pour les citations en temps réel, séparé de <code>GPTBot</code>. Si vous ne bloquez que GPTBot, vos citations ChatGPT sont préservées. Mais si votre règle bloque les deux, vous disparaissez.</li>
         <li><strong>Oublier la directive <code>Sitemap:</code> dans le robots.txt.</strong> C'est le moyen le plus simple pour les bots de découvrir votre sitemap. Sans cette ligne, certains crawlers IA ne le trouvent pas automatiquement.</li>
         <li><strong>Le <code>lastmod</code> automatique à chaque déploiement.</strong> Si toutes vos pages ont la date d'aujourd'hui en <code>lastmod</code>, les bots finissent par ignorer ce signal. Ne mettez à jour que les pages dont le contenu a réellement changé.</li>
-        <li><strong>Le <code>Crawl-delay</code> trop agressif.</strong> Certains sites ajoutent <code>Crawl-delay: 10</code> pour limiter la charge serveur. Les bots IA comme PerplexityBot respectent cette directive — un délai de 10 secondes entre chaque page signifie que crawler 100 pages prend 17 minutes. Sur un site de contenu, c'est un frein à l'indexation IA.</li>
+        <li><strong>Le <code>Crawl-delay</code> trop agressif.</strong> Certains sites ajoutent <code>Crawl-delay: 10</code> pour limiter la charge serveur. Les bots IA comme PerplexityBot respectent cette directive : un délai de 10 secondes entre chaque page signifie que crawler 100 pages prend 17 minutes. Sur un site de contenu, c'est un frein à l'indexation IA.</li>
         <li><strong>Ne pas tester après une migration.</strong> Les migrations de CMS, les changements de CDN et les mises à jour de reverse proxy peuvent écraser silencieusement votre robots.txt. Testez systématiquement après chaque changement d'infrastructure avec un <code>curl https://votre-site.fr/robots.txt</code>.</li>
       </ol>
 
@@ -243,14 +243,14 @@ Sitemap: https://votre-site.fr/sitemap.xml`}</CodeBlock>
 User-agent: *
 Allow: /
 
-# Bots IA — Citation temps réel
+# Bots IA, Citation temps réel
 User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: PerplexityBot
 Allow: /
 
-# Bots IA — Entraînement (autoriser pour visibilité max)
+# Bots IA, Entraînement (autoriser pour visibilité max)
 User-agent: GPTBot
 Allow: /
 

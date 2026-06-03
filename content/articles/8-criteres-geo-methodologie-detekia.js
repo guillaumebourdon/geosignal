@@ -46,7 +46,7 @@ function InlineCTA({ href, children }) {
 export default function HuitCriteresGeoMethodologieDetekia() {
   return (
     <>
-      <p>Le score GEO Detekia n'est pas une boîte noire. Derrière chaque <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">note de 0 à 100</InternalLink> se cachent 7 critères précis, mesurés automatiquement à partir de l'analyse de votre site. Comprendre comment chaque critère est évalué, pourquoi il compte, et comment l'améliorer — c'est l'objet de cet article.</p>
+      <p>Le score GEO Detekia n'est pas une boîte noire. Derrière chaque <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">note de 0 à 100</InternalLink> se cachent 7 critères précis, mesurés automatiquement à partir de l'analyse de votre site. Comprendre comment chaque critère est évalué, pourquoi il compte, et comment l'améliorer. C'est l'objet de cet article.</p>
 
       <p>Cette méthodologie est le fruit de plusieurs mois de recherche sur ce qui détermine réellement la citabilité d'un site par les LLM. Elle s'appuie sur les travaux académiques en <InternalLink href="/blog/geo-guide-complet-2026">GEO</InternalLink> (notamment Aggarwal et al., 2023), les guidelines de Google pour l'E-E-A-T, et les observations empiriques faites sur des centaines d'audits.</p>
 
@@ -68,7 +68,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
 
       <CritereCard numero={1} nom="Citabilité" poids="Pondération : 20%" couleur="#10A37F">
         <p><strong>Ce que c'est :</strong> La capacité des IA à extraire facilement des informations factuelles de votre contenu.</p>
-        <p><strong>Comment c'est mesuré :</strong> Analyse de la structure du contenu — présence de titres clairs (H1, H2, H3), de listes à puces, de données chiffrées, de définitions explicites. On mesure la densité informationnelle et la clarté de l'organisation.</p>
+        <p><strong>Comment c'est mesuré :</strong> Analyse de la structure du contenu, présence de titres clairs (H1, H2, H3), de listes à puces, de données chiffrées, de définitions explicites. On mesure la densité informationnelle et la clarté de l'organisation.</p>
         <p><strong>Pourquoi ça compte :</strong> Les LLM fonctionnent par extraction de patterns. Un texte dense et mal structuré sera paraphrasé de façon approximative ou ignoré. Un contenu avec des faits clairement présentés sera cité littéralement.</p>
         <p><strong>Comment améliorer :</strong></p>
         <ul>
@@ -93,7 +93,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
       </CritereCard>
 
       <CritereCard numero={3} nom="Autorité E-E-A-T" poids="Pondération : 20%" couleur="#D97757">
-        <p><strong>Ce que c'est :</strong> L'Expérience, l'Expertise, l'Autorité et la Fiabilité (Trust) du site et de ses auteurs — le cadre de Google repris par les LLM.</p>
+        <p><strong>Ce que c'est :</strong> L'Expérience, l'Expertise, l'Autorité et la Fiabilité (Trust) du site et de ses auteurs, le cadre de Google repris par les LLM.</p>
         <p><strong>Comment c'est mesuré :</strong> Présence d'une page "À propos" détaillée, biographies d'auteurs avec credentials, mentions de partenaires/clients/certifications, page de contact accessible, politique de confidentialité, liens entrants de qualité.</p>
         <p><strong>Pourquoi ça compte :</strong> Les IA citent des sources fiables. Un site sans auteur identifié, sans page "À propos", sans signaux de légitimité sera systématiquement sous-pondéré face à un concurrent qui en a.</p>
         <p><strong>Comment améliorer :</strong></p>
@@ -137,7 +137,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
 
       <CritereCard numero={6} nom="Neutralité éditoriale" poids="Pondération : 10%" couleur="#E67E22">
         <p><strong>Ce que c'est :</strong> La capacité de votre contenu à informer objectivement, sans sur-promotion commerciale.</p>
-        <p><strong>Comment c'est mesuré :</strong> Analyse du langage — densité de superlatifs ("meilleur", "révolutionnaire", "incroyable"), présence d'arguments pour/contre, mentions honnêtes des limites du produit/service, ton informatif vs persuasif.</p>
+        <p><strong>Comment c'est mesuré :</strong> Analyse du langage, densité de superlatifs ("meilleur", "révolutionnaire", "incroyable"), présence d'arguments pour/contre, mentions honnêtes des limites du produit/service, ton informatif vs persuasif.</p>
         <p><strong>Pourquoi ça compte :</strong> Les IA évitent de citer du contenu perçu comme du marketing. Elles privilégient les sources qui ressemblent à des encyclopédies ou des guides experts. Un article qui présente des nuances et reconnaît des limites est plus crédible qu'un article uniquement positif.</p>
         <p><strong>Comment améliorer :</strong></p>
         <ul>
@@ -176,19 +176,19 @@ export default function HuitCriteresGeoMethodologieDetekia() {
 
       <h2>Comment les critères s'additionnent</h2>
 
-      <p>Le score global est une moyenne pondérée. Mais il y a une subtilité importante : les critères techniques (Citabilité, Accessibilité IA) agissent comme des <strong>prérequis</strong>. Un site bloquant les bots IA dans son robots.txt aura un score Accessibilité IA de 0, ce qui plafonne mécaniquement son score global — peu importe la qualité de son contenu.</p>
+      <p>Le score global est une moyenne pondérée. Mais il y a une subtilité importante : les critères techniques (Citabilité, Accessibilité IA) agissent comme des <strong>prérequis</strong>. Un site bloquant les bots IA dans son robots.txt aura un score Accessibilité IA de 0, ce qui plafonne mécaniquement son score global, peu importe la qualité de son contenu.</p>
 
       <p>L'ordre d'optimisation recommandé :</p>
 
       <ol>
-        <li><strong>Débloquer les bots IA</strong> (Accessibilité IA) — prérequis absolu</li>
-        <li><strong>Structurer le contenu</strong> (Citabilité) — impact immédiat le plus fort</li>
-        <li><strong>Ajouter les schemas prioritaires</strong> (Données structurées) — quick win technique</li>
-        <li><strong>Renforcer l'autorité</strong> (E-E-A-T) — investissement moyen terme</li>
-        <li><strong>Sourcer les affirmations</strong> (Vérifiabilité) — amélioration continue</li>
-        <li><strong>Ajuster le ton</strong> (Neutralité) — relecture et reformulation</li>
-        <li><strong>Développer la présence externe</strong> — travail de fond</li>
-        <li><strong>Maintenir la fraîcheur</strong> — discipline éditoriale</li>
+        <li><strong>Débloquer les bots IA</strong> (Accessibilité IA) : prérequis absolu</li>
+        <li><strong>Structurer le contenu</strong> (Citabilité) : impact immédiat le plus fort</li>
+        <li><strong>Ajouter les schemas prioritaires</strong> (Données structurées) : quick win technique</li>
+        <li><strong>Renforcer l'autorité</strong> (E-E-A-T) : investissement moyen terme</li>
+        <li><strong>Sourcer les affirmations</strong> (Vérifiabilité) : amélioration continue</li>
+        <li><strong>Ajuster le ton</strong> (Neutralité) : relecture et reformulation</li>
+        <li><strong>Développer la présence externe</strong> : travail de fond</li>
+        <li><strong>Maintenir la fraîcheur</strong> : discipline éditoriale</li>
       </ol>
 
       <h2>Ce que le score ne mesure pas</h2>
@@ -196,10 +196,10 @@ export default function HuitCriteresGeoMethodologieDetekia() {
       <p>Le score GEO Detekia mesure la citabilité potentielle. Il ne mesure pas :</p>
 
       <ul>
-        <li><strong>Si vous êtes déjà cité</strong> — pour ça, il faut tester directement dans ChatGPT, Perplexity, etc.</li>
-        <li><strong>La qualité du fond</strong> — un article factuellement faux mais bien structuré peut avoir un bon score technique</li>
-        <li><strong>Le volume des sujets couverts</strong> — un site avec un seul article excellent vs un site avec 50 articles moyens</li>
-        <li><strong>La popularité de la requête</strong> — être citable sur un sujet que personne ne recherche n'apporte pas de trafic</li>
+        <li><strong>Si vous êtes déjà cité</strong> : pour ça, il faut tester directement dans ChatGPT, Perplexity, etc.</li>
+        <li><strong>La qualité du fond</strong> : un article factuellement faux mais bien structuré peut avoir un bon score technique</li>
+        <li><strong>Le volume des sujets couverts</strong> : un site avec un seul article excellent vs un site avec 50 articles moyens</li>
+        <li><strong>La popularité de la requête</strong> : être citable sur un sujet que personne ne recherche n'apporte pas de trafic</li>
       </ul>
 
       <p>C'est pourquoi le score GEO s'interprète comme un <strong>potentiel de citabilité</strong>, pas comme une garantie. La stratégie complète combine l'optimisation technique (score GEO) avec la stratégie éditoriale (sujets à couvrir) et la distribution (présence externe).</p>
@@ -218,7 +218,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
 
       <h3>Le score GEO remplace-t-il le score SEO ?</h3>
 
-      <p>Non — les deux scores mesurent des choses complémentaires. Un bon score SEO (autorité de domaine, backlinks, positions sur Google) contribue au score GEO (présence externe, vérifiabilité). Mais des pages très bien positionnées sur Google peuvent avoir un mauvais score GEO si le contenu n'est pas extractible par les IA.</p>
+      <p>Non, les deux scores mesurent des choses complémentaires. Un bon score SEO (autorité de domaine, backlinks, positions sur Google) contribue au score GEO (présence externe, vérifiabilité). Mais des pages très bien positionnées sur Google peuvent avoir un mauvais score GEO si le contenu n'est pas extractible par les IA.</p>
 
       <ArrowLink href="/blog/seo-vs-geo-differences-2026">SEO vs GEO : les différences clés et comment les combiner →</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>

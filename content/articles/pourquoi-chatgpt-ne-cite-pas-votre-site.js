@@ -37,7 +37,7 @@ export default function PourquoiChatGPTNeCitePasVotreSite() {
 
       <p>Ce n'est pas un bug. Ce n'est pas non plus une question de budget publicitaire. Si ChatGPT, Gemini ou Perplexity ne citent pas votre site, c'est parce que votre contenu ne remplit pas les critères que ces moteurs utilisent pour <InternalLink href="/blog/comment-chatgpt-choisit-ses-sources">sélectionner leurs sources</InternalLink>.</p>
 
-      <p>La bonne nouvelle : c'est corrigible. Et souvent plus rapidement qu'on ne le pense. Voici les 6 raisons les plus fréquentes — et comment les résoudre.</p>
+      <p>C'est corrigible. Et souvent plus rapidement qu'on ne le pense. Voici les 6 raisons les plus fréquentes. Et comment les résoudre.</p>
 
       <h2>Le test que vous devriez faire maintenant</h2>
 
@@ -51,7 +51,7 @@ export default function PourquoiChatGPTNeCitePasVotreSite() {
 
       <p>Si votre site n'apparaît dans aucune des réponses, vous avez un problème de visibilité IA. Si vos concurrents apparaissent et pas vous, le problème est urgent.</p>
 
-      <p>Notez les noms qui reviennent dans les réponses. Ce sont vos concurrents GEO — et ils ne sont pas forcément les mêmes que vos concurrents SEO.</p>
+      <p>Notez les noms qui reviennent dans les réponses. Ce sont vos concurrents GEO. Et ils ne sont pas forcément les mêmes que vos concurrents SEO.</p>
 
       <h2>Raison n°1 : votre contenu n'est pas extractible</h2>
 
@@ -82,7 +82,7 @@ export default function PourquoiChatGPTNeCitePasVotreSite() {
 
       <h2>Raison n°2 : vous bloquez les robots IA sans le savoir</h2>
 
-      <p>C'est le problème le plus simple à diagnostiquer — et le plus absurde quand on le découvre. Beaucoup de sites bloquent les <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">crawlers IA dans leur fichier <code>robots.txt</code></InternalLink> sans même le savoir.</p>
+      <p>C'est le problème le plus simple à diagnostiquer. Et le plus absurde quand on le découvre. Beaucoup de sites bloquent les <InternalLink href="/blog/llms-txt-robots-crawlabilite-ia">crawlers IA dans leur fichier <code>robots.txt</code></InternalLink> sans même le savoir.</p>
 
       <p><strong>Vérifiez maintenant :</strong> allez sur <code>votresite.fr/robots.txt</code> et cherchez ces lignes :</p>
 
@@ -118,9 +118,9 @@ Disallow: /`}</code></pre>
       <p>Implémentez ces trois schemas en priorité :</p>
 
       <ul>
-        <li><code>Organization</code> sur votre homepage — indique qui vous êtes, votre logo, vos coordonnées, vos réseaux sociaux.</li>
-        <li><code>FAQPage</code> sur vos pages qui contiennent des questions-réponses — c'est le format le plus naturel pour les IA.</li>
-        <li><code>Article</code> sur vos contenus éditoriaux — précise l'auteur, la date, le sujet.</li>
+        <li><code>Organization</code> sur votre homepage : indique qui vous êtes, votre logo, vos coordonnées, vos réseaux sociaux.</li>
+        <li><code>FAQPage</code> sur vos pages qui contiennent des questions-réponses : c'est le format le plus naturel pour les IA.</li>
+        <li><code>Article</code> sur vos contenus éditoriaux : précise l'auteur, la date, le sujet.</li>
       </ul>
 
       <p>Le format JSON-LD s'ajoute dans le code source de vos pages sans modifier le contenu visible.</p>
@@ -156,17 +156,17 @@ Disallow: /`}</code></pre>
 
       <p>Les IA <InternalLink href="/blog/sources-contenus-citations-ia">croisent les sources</InternalLink>. Quand elles évaluent la crédibilité d'un site, elles cherchent des confirmations externes : votre marque est-elle mentionnée ailleurs sur le web ? D'autres sites vous citent-ils comme référence ?</p>
 
-      <p>Si votre entreprise n'existe que sur son propre site — pas de mentions presse, pas de profils forums, pas de citations dans des articles tiers — l'IA n'a aucun moyen de confirmer votre expertise.</p>
+      <p>Si votre entreprise n'existe que sur son propre site, pas de mentions presse, pas de profils forums, pas de citations dans des articles tiers, l'IA n'a aucun moyen de confirmer votre expertise.</p>
 
       <p><strong>Comment corriger :</strong></p>
 
       <p>Développez votre présence externe de manière méthodique :</p>
 
       <ul>
-        <li><strong>Reddit</strong> — c'est la première plateforme citée par les LLM en 2026. Identifiez 5-10 subreddits pertinents pour votre secteur. Répondez à des questions avec expertise et authenticité, sans promotion directe. Un seul commentaire utile et bien sourcé peut être repris par une IA.</li>
-        <li><strong>Articles invités et presse sectorielle</strong> — proposez des tribunes à des médias spécialisés dans votre domaine. Chaque article publié sur un site tiers qui mentionne votre marque renforce votre autorité aux yeux des IA.</li>
-        <li><strong>Annuaires professionnels</strong> — inscrivez-vous sur les annuaires reconnus de votre secteur. Ces mentions structurées sont facilement identifiables par les crawlers IA.</li>
-        <li><strong>Google Business Profile</strong> — même si vous n'avez pas de boutique physique, un profil vérifié avec des avis renforce votre crédibilité en ligne.</li>
+        <li><strong>Reddit</strong> : c'est la première plateforme citée par les LLM en 2026. Identifiez 5-10 subreddits pertinents pour votre secteur. Répondez à des questions avec expertise et authenticité, sans promotion directe. Un seul commentaire utile et bien sourcé peut être repris par une IA.</li>
+        <li><strong>Articles invités et presse sectorielle</strong> : proposez des tribunes à des médias spécialisés dans votre domaine. Chaque article publié sur un site tiers qui mentionne votre marque renforce votre autorité aux yeux des IA.</li>
+        <li><strong>Annuaires professionnels</strong> : inscrivez-vous sur les annuaires reconnus de votre secteur. Ces mentions structurées sont facilement identifiables par les crawlers IA.</li>
+        <li><strong>Google Business Profile</strong> : même si vous n'avez pas de boutique physique, un profil vérifié avec des avis renforce votre crédibilité en ligne.</li>
       </ul>
 
       <p>L'objectif n'est pas d'être partout, mais d'avoir des mentions crédibles et cohérentes sur des sources que les IA reconnaissent.</p>
@@ -180,10 +180,10 @@ Disallow: /`}</code></pre>
       <p><strong>Comment corriger :</strong></p>
 
       <ul>
-        <li><strong>Identifiez vos pages à fort potentiel</strong> — quelles pages génèrent du trafic ou couvrent des sujets importants pour votre activité ?</li>
-        <li><strong>Mettez-les à jour</strong> — actualisez les chiffres, les dates, les exemples. Supprimez les références obsolètes.</li>
-        <li><strong>Affichez la date de mise à jour</strong> — ajoutez visiblement "Dernière mise à jour : [date]" sur chaque page actualisée.</li>
-        <li><strong>Instaurez un calendrier</strong> — mettez à jour vos pages piliers tous les trimestres, vos articles importants tous les mois.</li>
+        <li><strong>Identifiez vos pages à fort potentiel</strong> : quelles pages génèrent du trafic ou couvrent des sujets importants pour votre activité ?</li>
+        <li><strong>Mettez-les à jour</strong> : actualisez les chiffres, les dates, les exemples. Supprimez les références obsolètes.</li>
+        <li><strong>Affichez la date de mise à jour</strong> : ajoutez visiblement "Dernière mise à jour : [date]" sur chaque page actualisée.</li>
+        <li><strong>Instaurez un calendrier</strong> : mettez à jour vos pages piliers tous les trimestres, vos articles importants tous les mois.</li>
       </ul>
 
       <p>Un article de 2023 mis à jour en mars 2026 avec des données fraîches sera traité comme un contenu récent par les IA.</p>
@@ -203,13 +203,13 @@ Disallow: /`}</code></pre>
       <p>Si vous voulez des résultats rapidement, voici un plan jour par jour :</p>
 
       <ol>
-        <li><strong>Jour 1 — Diagnostic.</strong> Faites le test des 3 questions (recommandation, expertise, nom direct) sur ChatGPT, Gemini et Perplexity. Lancez un audit GEO sur Detekia. Notez votre score de référence.</li>
-        <li><strong>Jour 2 — Accessibilité IA.</strong> Vérifiez votre <code>robots.txt</code>. Supprimez les blocages des bots IA. Créez votre fichier <code>llms.txt</code>.</li>
-        <li><strong>Jour 3 — Citabilité.</strong> Réécrivez les 100 premiers mots de vos 5 pages les plus importantes. Ajoutez une réponse directe en tête de chaque page.</li>
-        <li><strong>Jour 4 — Données structurées.</strong> Implémentez <code>Organization</code> sur la homepage, <code>FAQPage</code> sur votre page FAQ, <code>Article</code> sur vos contenus éditoriaux.</li>
-        <li><strong>Jour 5 — Preuves.</strong> Passez en revue vos pages clés. Remplacez chaque affirmation vague par un chiffre, une source ou un exemple concret.</li>
-        <li><strong>Jour 6 — Fraîcheur.</strong> Mettez à jour vos 3 contenus les plus importants. Ajoutez des dates de mise à jour visibles.</li>
-        <li><strong>Jour 7 — Présence externe.</strong> Créez un compte Reddit et répondez à 3 questions pertinentes dans votre secteur. Vérifiez votre Google Business Profile.</li>
+        <li><strong>Jour 1 : Diagnostic.</strong> Faites le test des 3 questions (recommandation, expertise, nom direct) sur ChatGPT, Gemini et Perplexity. Lancez un audit GEO sur Detekia. Notez votre score de référence.</li>
+        <li><strong>Jour 2 : Accessibilité IA.</strong> Vérifiez votre <code>robots.txt</code>. Supprimez les blocages des bots IA. Créez votre fichier <code>llms.txt</code>.</li>
+        <li><strong>Jour 3 : Citabilité.</strong> Réécrivez les 100 premiers mots de vos 5 pages les plus importantes. Ajoutez une réponse directe en tête de chaque page.</li>
+        <li><strong>Jour 4 : Données structurées.</strong> Implémentez <code>Organization</code> sur la homepage, <code>FAQPage</code> sur votre page FAQ, <code>Article</code> sur vos contenus éditoriaux.</li>
+        <li><strong>Jour 5 : Preuves.</strong> Passez en revue vos pages clés. Remplacez chaque affirmation vague par un chiffre, une source ou un exemple concret.</li>
+        <li><strong>Jour 6 : Fraîcheur.</strong> Mettez à jour vos 3 contenus les plus importants. Ajoutez des dates de mise à jour visibles.</li>
+        <li><strong>Jour 7 : Présence externe.</strong> Créez un compte Reddit et répondez à 3 questions pertinentes dans votre secteur. Vérifiez votre Google Business Profile.</li>
       </ol>
 
       <p>Après 7 jours, relancez l'audit. Vous devriez constater une amélioration mesurable de votre score. Les effets sur les citations IA se manifesteront dans les semaines suivantes.</p>
@@ -236,7 +236,7 @@ Disallow: /`}</code></pre>
 
       <p>Vous ne pouvez pas corriger ce que vous ne mesurez pas. La première étape est de savoir où vous en êtes : quel est votre score GEO, quels critères sont défaillants, et par quoi commencer.</p>
 
-      <p>Analysez votre site gratuitement sur Detekia — score sur 100, 7 critères, recommandations priorisées, en moins de 60 secondes. Sans inscription.</p>
+      <p>Analysez votre site gratuitement sur Detekia, score sur 100, 7 critères, recommandations priorisées, en moins de 60 secondes. Sans inscription.</p>
       <ArrowLink href="/blog/geo-guide-complet-2026">GEO : le guide complet pour être cité par les IA en 2026</ArrowLink>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>

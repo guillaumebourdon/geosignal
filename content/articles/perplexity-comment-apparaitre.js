@@ -32,7 +32,7 @@ function InlineCTA({ href, children }) {
 export default function PerplexityCommentApparaitre() {
   return (
     <>
-      <p>Perplexity est le moteur de recherche IA qui monte. Avec plusieurs centaines de millions de requêtes par mois en 2026 et une croissance à trois chiffres sur l'année écoulée, il s'impose comme une alternative sérieuse à Google pour les utilisateurs qui cherchent des réponses synthétiques, sourcées et actualisées. Ne pas y apparaître, c'est perdre un flux de trafic hautement qualifié — et qui, lui, clique.</p>
+      <p>Perplexity est le moteur de recherche IA qui monte. Avec plusieurs centaines de millions de requêtes par mois en 2026 et une croissance à trois chiffres sur l'année écoulée, il s'impose comme une alternative sérieuse à Google pour les utilisateurs qui cherchent des réponses synthétiques, sourcées et actualisées. Ne pas y apparaître, c'est perdre un flux de trafic hautement qualifié. Et qui, lui, clique.</p>
 
       <p>Contrairement à ChatGPT, qui s'appuie sur Bing, Perplexity a construit son propre index web. Ses critères de sélection, ses sources privilégiées et ses mécanismes de citation sont spécifiques. Ce guide explique comment Perplexity fonctionne réellement et détaille cinq actions concrètes pour s'y rendre visible.</p>
 
@@ -43,10 +43,10 @@ export default function PerplexityCommentApparaitre() {
       <p>Le processus se décompose en quatre étapes :</p>
 
       <ol>
-        <li><strong>Interprétation de la requête</strong> — Perplexity reformule la question de l'utilisateur en plusieurs requêtes de recherche intermédiaires pour couvrir toutes les facettes du sujet.</li>
-        <li><strong>Recherche dans l'index</strong> — le moteur interroge son propre index web, crawlé en continu par le bot <code>PerplexityBot</code> (et <code>Perplexity-User</code> pour la navigation en temps réel).</li>
-        <li><strong>Extraction et ranking</strong> — les pages retournées sont classées selon des signaux de pertinence, d'autorité et de fraîcheur.</li>
-        <li><strong>Synthèse avec citations</strong> — le modèle génère une réponse en injectant des numéros de citation <code>[1][2][3]</code> renvoyant vers les sources utilisées.</li>
+        <li><strong>Interprétation de la requête</strong> : Perplexity reformule la question de l'utilisateur en plusieurs requêtes de recherche intermédiaires pour couvrir toutes les facettes du sujet.</li>
+        <li><strong>Recherche dans l'index</strong> : le moteur interroge son propre index web, crawlé en continu par le bot <code>PerplexityBot</code> (et <code>Perplexity-User</code> pour la navigation en temps réel).</li>
+        <li><strong>Extraction et ranking</strong> : les pages retournées sont classées selon des signaux de pertinence, d'autorité et de fraîcheur.</li>
+        <li><strong>Synthèse avec citations</strong> : le modèle génère une réponse en injectant des numéros de citation <code>[1][2][3]</code> renvoyant vers les sources utilisées.</li>
       </ol>
 
       <p>Différence majeure avec ChatGPT : <strong>chaque affirmation est liée à une source vérifiable</strong>. Perplexity affiche systématiquement les URLs utilisées, ce qui rend ses réponses plus transparentes mais aussi plus exigeantes sur la qualité des sources citées.</p>
@@ -59,7 +59,7 @@ export default function PerplexityCommentApparaitre() {
 
       <p><strong>Les données chiffrées</strong> sont un signal fort. Les pages contenant des pourcentages, des dates, des volumes et des comparatifs sont citées significativement plus souvent. Perplexity extrait ces chiffres pour les intégrer directement dans ses réponses synthétiques.</p>
 
-      <p><strong>La structure claire</strong> — H2/H3 hiérarchisés, paragraphes courts, listes à puces — facilite l'extraction. Le moteur doit pouvoir isoler des passages courts et autonomes qui répondent à une sous-question. Un mur de texte de 3 000 mots sans structure est un cauchemar pour le parser.</p>
+      <p><strong>La structure claire</strong>, H2/H3 hiérarchisés, paragraphes courts, listes à puces, facilite l'extraction. Le moteur doit pouvoir isoler des passages courts et autonomes qui répondent à une sous-question. Un mur de texte de 3 000 mots sans structure est un cauchemar pour le parser.</p>
 
       <p><strong>L'autorité de domaine</strong> reste un signal de ranking fort, comme sur tous les moteurs. Mais Perplexity compense partiellement ce biais en valorisant la pertinence du contenu sur la requête spécifique.</p>
 
@@ -87,7 +87,7 @@ export default function PerplexityCommentApparaitre() {
 
       <h2>5 actions concrètes pour apparaître dans Perplexity</h2>
 
-      <p>Voici les leviers qui ont le plus d'impact mesurable, classés par priorité.</p>
+      <p>Voici les moyens qui ont le plus d'impact mesurable, classés par priorité.</p>
 
       <h3>1. Structurer le contenu en réponses directes</h3>
 
@@ -142,11 +142,11 @@ export default function PerplexityCommentApparaitre() {
       <p>Les données structurées facilitent le parsing par Perplexity. Les schemas prioritaires pour le GEO :</p>
 
       <ul>
-        <li><code>Article</code> — pour les contenus éditoriaux, avec <code>author</code>, <code>datePublished</code>, <code>dateModified</code></li>
-        <li><code>FAQPage</code> — pour les pages questions/réponses, directement extractibles par Perplexity</li>
-        <li><code>HowTo</code> — pour les tutoriels étape par étape</li>
-        <li><code>Organization</code> — pour établir l'identité et l'autorité de votre entreprise</li>
-        <li><code>AggregateRating</code> — pour remonter vos notes et avis</li>
+        <li><code>Article</code> : pour les contenus éditoriaux, avec <code>author</code>, <code>datePublished</code>, <code>dateModified</code></li>
+        <li><code>FAQPage</code> : pour les pages questions/réponses, directement extractibles par Perplexity</li>
+        <li><code>HowTo</code> : pour les tutoriels étape par étape</li>
+        <li><code>Organization</code> : pour établir l'identité et l'autorité de votre entreprise</li>
+        <li><code>AggregateRating</code> : pour remonter vos notes et avis</li>
       </ul>
 
       <p>Ces schemas ne sont pas un facteur de ranking direct, mais ils augmentent significativement la probabilité que vos informations soient correctement interprétées et citées.</p>
@@ -187,12 +187,12 @@ export default function PerplexityCommentApparaitre() {
       <p>Les trois actions les plus rentables si vous démarrez :</p>
 
       <ol>
-        <li><strong>Vérifiez que <code>PerplexityBot</code> et <code>Perplexity-User</code> ne sont pas bloqués</strong> dans votre <code>robots.txt</code> — c'est le prérequis absolu</li>
+        <li><strong>Vérifiez que <code>PerplexityBot</code> et <code>Perplexity-User</code> ne sont pas bloqués</strong> dans votre <code>robots.txt</code> : c'est le prérequis absolu</li>
         <li><strong>Restructurez vos pages phares en pyramide inversée</strong> avec chiffres, dates et sources dès le premier paragraphe</li>
         <li><strong>Lancez une présence organique sur Reddit</strong> dans vos subreddits cibles, avec une approche qualitative et long terme</li>
       </ol>
 
-      <p>Perplexity est encore en phase de croissance. Les sites qui se positionnent maintenant capturent des parts de citation qui seront beaucoup plus difficiles à déloger dans 18 mois, une fois les positions consolidées. L'avantage est au premier entrant — à condition d'optimiser sur les critères réellement discriminants du moteur.</p>
+      <p>Perplexity est encore en phase de croissance. Les sites qui se positionnent maintenant capturent des parts de citation qui seront beaucoup plus difficiles à déloger dans 18 mois, une fois les positions consolidées. L'avantage est au premier entrant, à condition d'optimiser sur les critères réellement discriminants du moteur.</p>
 
       <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et JSON-LD : le guide complet pour la visibilité IA</ArrowLink>
     </>
