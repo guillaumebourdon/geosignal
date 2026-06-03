@@ -921,8 +921,9 @@ export default async function handler(req, res) {
     $('script[type="application/ld+json"]').each((_, el) => {
       try {
         const d = JSON.parse($(el).html());
-        if (d['@type']) detectedSchemas.push(d['@type']);
-        if (Array.isArray(d['@graph'])) d['@graph'].forEach(item => { if (item['@type']) detectedSchemas.push(item['@type']); });
+        const pushType = (t) => { if (Array.isArray(t)) t.forEach(v => { if (typeof v === 'string') detectedSchemas.push(v); }); else if (typeof t === 'string') detectedSchemas.push(t); };
+        if (d['@type']) pushType(d['@type']);
+        if (Array.isArray(d['@graph'])) d['@graph'].forEach(item => { if (item['@type']) pushType(item['@type']); });
       } catch {}
     });
     if (detectedSchemas.length) signalParts.push(`JSON-LD schemas: ${detectedSchemas.join(', ')}`);
