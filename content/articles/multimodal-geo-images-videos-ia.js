@@ -44,6 +44,8 @@ export default function MultimodalGeoImagesVideosIA() {
 
       <h3>1. L'attribut alt des images</h3>
 
+      <p>L'alt est aussi important pour le GEO que les <InternalLink href="/blog/meta-descriptions-seo-geo-2026">meta descriptions</InternalLink> le sont pour le SEO classique : c'est le texte que les IA lisent pour comprendre votre visuel.</p>
+
       <p>C'est le signal n°1. Un <code>alt=""</code> vide ou un <code>alt="IMG_4523"</code> rend votre image invisible pour les IA. Un <code>alt="Tableau comparatif des tarifs d'assurance habitation en France 2026"</code> rend votre image citable. L'alt doit decrire <strong>ce que l'image montre</strong> et <strong>pourquoi elle est pertinente</strong> dans le contexte de la page.</p>
 
       <h3>2. Le contexte textuel autour de l'image</h3>
@@ -59,7 +61,7 @@ export default function MultimodalGeoImagesVideosIA() {
 
       <h3>3. Les schemas ImageObject et VideoObject</h3>
 
-      <p>Le schema <code>ImageObject</code> en JSON-LD permet de structurer les metadonnees d'une image (auteur, date, description, licence). Le schema <code>VideoObject</code> fait la meme chose pour les videos et est directement utilise par Google AI Mode pour selectionner les videos a afficher dans les reponses IA.</p>
+      <p>Le schema <code>ImageObject</code> en JSON-LD permet de structurer les metadonnees d'une image (auteur, date, description, licence). Le schema <code>VideoObject</code> fait la meme chose pour les videos et est directement utilise par Google AI Mode pour selectionner les videos a afficher dans les reponses IA. Pour en savoir plus sur l'implementation des schemas, consultez notre <InternalLink href="/blog/schema-org-ia-guide-pratique">guide Schema.org pour la visibilite IA</InternalLink>.</p>
 
       <h3>4. Le format et la performance technique</h3>
 
@@ -74,7 +76,7 @@ export default function MultimodalGeoImagesVideosIA() {
       <h3>Pourquoi les IA citent autant YouTube</h3>
 
       <ul>
-        <li><strong>Transcriptions automatiques</strong> : chaque video YouTube genere une transcription textuelle que les IA peuvent indexer et extraire. Votre video de 10 minutes devient un document texte de 2 000 mots, riche en informations citables.</li>
+        <li><strong>Transcriptions automatiques</strong> : chaque video YouTube genere une transcription textuelle que les IA peuvent indexer et extraire. Votre video de 10 minutes devient un document texte de 2 000 mots, riche en informations citables. C'est le meme principe que le <InternalLink href="/blog/contenu-long-vs-court-ia">contenu long qui performe mieux</InternalLink> en citabilite IA.</li>
         <li><strong>Signaux de confiance</strong> : nombre de vues, likes, commentaires, anciennete de la chaine. Ces signaux aident les IA a evaluer la credibilite du contenu.</li>
         <li><strong>Schema VideoObject integre</strong> : YouTube genere automatiquement les metadonnees structurees que les IA utilisent pour comprendre le contenu de la video.</li>
         <li><strong>Timestamps et chapitres</strong> : les chapitres YouTube permettent aux IA de citer un moment precis de la video, pas juste la video entiere.</li>
@@ -103,7 +105,7 @@ export default function MultimodalGeoImagesVideosIA() {
 
       <h3>Le piege du "tout image"</h3>
 
-      <p>Certains sites, notamment en e-commerce et en restauration, mettent l'essentiel de leur contenu dans des images (menus en image, fiches produits en image, tarifs en image). <strong>Les IA ne peuvent pas lire le texte dans une image.</strong> Si votre menu, vos prix ou vos specifications sont uniquement dans des visuels, ils n'existent pas pour ChatGPT, Perplexity ou Gemini.</p>
+      <p>Certains sites, notamment en <InternalLink href="/blog/ecommerce-recommandations-ia">e-commerce</InternalLink> et en restauration, mettent l'essentiel de leur contenu dans des images (menus en image, fiches produits en image, tarifs en image). <strong>Les IA ne peuvent pas lire le texte dans une image.</strong> Si votre menu, vos prix ou vos specifications sont uniquement dans des visuels, ils n'existent pas pour ChatGPT, Perplexity ou Gemini.</p>
 
       <p>La regle : chaque information importante doit exister en texte sur la page. Les images illustrent et enrichissent, elles ne remplacent pas le texte.</p>
 
@@ -112,7 +114,7 @@ export default function MultimodalGeoImagesVideosIA() {
       <p>Les podcasts sont un format en croissance pour la visibilite IA, principalement grace aux transcriptions :</p>
 
       <ul>
-        <li><strong>Publiez la transcription complete</strong> de chaque episode sur votre site. C'est du contenu long, riche, avec des citations d'experts, exactement ce que les IA valorisent.</li>
+        <li><strong>Publiez la transcription complete</strong> de chaque episode sur votre site. C'est du contenu long, riche, avec des <InternalLink href="/blog/pourquoi-ia-adorent-chiffres-contenu-factuel">citations d'experts et des donnees chiffrees</InternalLink>, exactement ce que les IA valorisent.</li>
         <li><strong>Structurez la transcription</strong> avec des H2 par sujet aborde, des timestamps, et des liens vers les sources mentionnees.</li>
         <li><strong>Ajoutez un schema PodcastEpisode</strong> en JSON-LD pour structurer les metadonnees (invites, sujet, duree, date).</li>
       </ul>

@@ -53,7 +53,7 @@ export default function WikipediaSourceIA() {
 
       <h3>3. Des sources verifiables partout</h3>
 
-      <p>Chaque affirmation sur Wikipedia est accompagnee d'une reference numerotee. L'etude Princeton/Georgia Tech (KDD 2024) demontre que <strong>l'ajout de citations de sources externes augmente la visibilite IA de 115 %</strong> pour les sites de rang moyen. Wikipedia applique ce principe de maniere systematique, avec parfois plus de 100 references par article.</p>
+      <p>Chaque affirmation sur Wikipedia est accompagnee d'une reference numerotee. L'etude Princeton/Georgia Tech (KDD 2024) demontre que <strong>l'ajout de citations de sources externes augmente la visibilite IA de 115 %</strong> pour les sites de rang moyen. Wikipedia applique ce principe de maniere systematique, avec parfois plus de 100 references par article. C'est le meme facteur que mesure le <InternalLink href="/blog/score-geo-mesurer-visibilite-ia">critere Verifiabilite</InternalLink> de l'audit Detekia.</p>
 
       <h3>4. Une structure de headings logique</h3>
 
@@ -77,7 +77,7 @@ export default function WikipediaSourceIA() {
         <li><strong>L'introduction directe</strong> : commencez chaque page par 30-50 mots qui repondent a la question principale. Pas de formule de bienvenue, pas de slogan. La reponse d'abord.</li>
         <li><strong>Les sources dans le texte</strong> : chaque chiffre, chaque affirmation factuelle devrait avoir un lien vers sa source. "Notre taux de satisfaction est de 98 % (enquete client Q1 2026, 1 200 repondants)" est citable. "Nos clients nous adorent" ne l'est pas.</li>
         <li><strong>Les titres descriptifs</strong> : remplacez "Nos avantages" par "Comment [votre produit] reduit le temps de [tache] de 40 %". Mieux encore, formulez-les en question : "Combien coute [votre service] en 2026 ?"</li>
-        <li><strong>Le ton factuel</strong> : supprimez les superlatifs non prouves. Remplacez "leader du marche" par "utilise par X entreprises dans Y pays". Les IA citent les faits, pas les pretentions.</li>
+        <li><strong>Le ton factuel</strong> : supprimez les superlatifs non prouves. Remplacez "leader du marche" par "utilise par X entreprises dans Y pays". Les IA citent les faits, pas les pretentions. Notre article sur <InternalLink href="/blog/pourquoi-ia-adorent-chiffres-contenu-factuel">pourquoi les IA adorent les chiffres</InternalLink> detaille ce point.</li>
         <li><strong>La profondeur</strong> : un guide de 2 000+ mots qui couvre un sujet en entier sera cite. Une page de 300 mots qui survole le sujet ne le sera pas.</li>
       </ul>
 
@@ -86,7 +86,7 @@ export default function WikipediaSourceIA() {
       <ul>
         <li><strong>L'autorite de domaine</strong> : Wikipedia a 25 ans d'historique et des millions de backlinks. Vous ne rattraperez pas ca. Mais l'autorite de domaine n'est que le 4e facteur de citation IA, derriere la structure du contenu, les sources, et la fraicheur.</li>
         <li><strong>La neutralite totale</strong> : votre site vend quelque chose, et c'est normal. L'objectif n'est pas d'etre Wikipedia, mais d'etre <em>aussi citable que Wikipedia</em> sur votre domaine d'expertise.</li>
-        <li><strong>Le volume de contributeurs</strong> : mais vous pouvez compenser par un <InternalLink href="/blog/contenu-long-vs-court-ia">calendrier de mise a jour regulier</InternalLink> (trimestriel minimum).</li>
+        <li><strong>Le volume de contributeurs</strong> : mais vous pouvez compenser par un <InternalLink href="/blog/contenu-long-vs-court-ia">calendrier de mise a jour regulier</InternalLink> (trimestriel minimum). La <InternalLink href="/blog/sitemap-robots-txt-bots-ia-2026">configuration technique</InternalLink> (sitemap, robots.txt) aide aussi les IA a decouvrir vos mises a jour.</li>
       </ul>
 
       <h2>Le test : votre page vs un article Wikipedia</h2>
@@ -122,7 +122,7 @@ export default function WikipediaSourceIA() {
 
       <p>Wikipedia n'a jamais fait de GEO. Personne chez Wikipedia ne se demande "comment etre cite par ChatGPT ?". Et pourtant, c'est la source n°1. Pourquoi ? Parce que les criteres que les IA utilisent pour selectionner leurs sources sont les memes que les principes editoriaux de Wikipedia : neutralite, verificabilite, exhaustivite, structure claire.</p>
 
-      <p>Le GEO n'est pas une discipline artificielle inventee pour vendre des outils. C'est la formalisation de ce que Wikipedia fait naturellement depuis 25 ans. Les moteurs IA ont ete entraines sur Wikipedia, et ils cherchent des contenus qui ressemblent a Wikipedia. Comprendre ca, c'est comprendre l'essence du GEO.</p>
+      <p>Le GEO n'est pas une discipline artificielle inventee pour vendre des outils. C'est la formalisation de ce que Wikipedia fait naturellement depuis 25 ans. Les moteurs IA ont ete entraines sur Wikipedia, et ils cherchent des contenus qui ressemblent a Wikipedia. Comprendre ca, c'est comprendre l'essence du GEO. Si le sujet vous interesse, notre <InternalLink href="/blog/seo-vs-geo-differences-2026">comparatif SEO vs GEO</InternalLink> explique en detail ce qui a change.</p>
 
       <p>La bonne nouvelle : vous n'avez pas besoin d'etre Wikipedia. Vous avez juste besoin d'ecrire sur votre domaine d'expertise avec la meme rigueur que Wikipedia applique a ses articles. Faits sources, structure claire, ton neutre, contenu profond. Les IA feront le reste.</p>
     </>
