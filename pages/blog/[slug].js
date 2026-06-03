@@ -78,6 +78,7 @@ const CONTENT_MAP = {
   'maillage-interne-ia-structure': require('../../content/articles/maillage-interne-ia-structure').default,
   'avocat-medecin-ia-ymyl': require('../../content/articles/avocat-medecin-ia-ymyl').default,
   'wikipedia-source-numero-1-ia': require('../../content/articles/wikipedia-source-numero-1-ia').default,
+  'multimodal-geo-images-videos-ia': require('../../content/articles/multimodal-geo-images-videos-ia').default,
 };
 
 const CATEGORY_COLORS = {
