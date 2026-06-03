@@ -771,6 +771,10 @@ export default async function handler(req, res) {
       if (cached) {
         scrapeCache = typeof cached === 'string' ? JSON.parse(cached) : cached;
         console.log(`[analyze] Scrape cache hit for paid tier: ${url}`);
+      } else {
+        // Scrape cache missing — trigger a fresh free scan in background to populate it
+        // This happens when the free scan came from the response cache (no scraping was done)
+        console.log(`[analyze] No scrape cache for ${url}, will do full analysis`);
       }
     } catch {}
   }
@@ -1199,7 +1203,7 @@ export default async function handler(req, res) {
       textContent: textContent.slice(0, 50000),
       rawContent: rawContent.slice(0, 100000),
       directHtml: (directHtml || '').slice(0, 100000),
-    }, { ex: 600 }) // 10 min TTL
+    }, { ex: 7200 }) // 2h TTL — survives between free scan and paid report purchase
       .catch(e => console.error('Scrape cache write error:', e.message));
 
   } catch (err) {
