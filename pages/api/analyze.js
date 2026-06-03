@@ -75,7 +75,7 @@ const EV = {
 // ─────────────────────────────────────────────────────────────────────────────
 
 
-const { scoreCitability, scoreVerifiability, scoreAuthority, scoreAccessibility, scoreExternalPresence, scoreFreshness } = require('../../lib/scoring');
+const { scoreCitability, scoreVerifiability, scoreAuthority, scoreAccessibility, scoreExternalPresence, scoreFreshness, scoreNeutrality } = require('../../lib/scoring');
 
 async function collectEvidence($, textContent, rawContent, url, directMeta = {}, prefetchedRobotsLlms = null) {
   console.log('collectEvidence URL:', url);
@@ -908,6 +908,7 @@ export default async function handler(req, res) {
       verifiability:    scoreVerifiability($, textContent, rawContent, siteHostname, locale),
       authority:        scoreAuthority($, rawContent, locale, directHtml || ''),
       accessibility:    scoreAccessibility($, rawContent, locale, directHtml || '', earlyRobotsTxt || ''),
+      neutrality:       scoreNeutrality($, textContent, locale),
       externalPresence: scoreExternalPresence($, rawContent, locale, directMeta),
       freshness:        scoreFreshness($, rawContent, locale),
     };
@@ -986,33 +987,31 @@ export default async function handler(req, res) {
     let claude, evidence, citationTest;
 
     if (plan === 'free') {
-      // FREE TIER: fast mini-Claude call (neutrality + verdict only, no recommendations)
-      const allScoresSummary = [
-        { key: 'citability', label: 'Citabilité', max: 25 },
-        { key: 'verifiability', label: 'Vérifiabilité', max: 20 },
-        { key: 'authority', label: 'Autorité', max: 15 },
-        { key: 'accessibility', label: 'Accessibilité IA', max: 10 },
-        { key: 'externalPresence', label: 'Présence externe', max: 10 },
-        { key: 'freshness', label: 'Fraîcheur', max: 10 },
-      ].map(c => `${c.label}: ${scores[c.key].score}/${c.max}`).join(', ');
+      // FREE TIER: no Claude call needed — all 7 criteria are deterministic
+      // Just generate a simple verdict from the scores
+      const totalForVerdict = Object.values(scores).reduce((s, c) => s + c.score, 0);
+      const weakest = Object.entries(scores).sort((a, b) => (a[1].score / a[1].max) - (b[1].score / b[1].max))[0];
+      const strongest = Object.entries(scores).sort((a, b) => (b[1].score / b[1].max) - (a[1].score / a[1].max))[0];
+      const criteriaLabels = { citability: 'citabilité', verifiability: 'vérifiabilité', authority: 'autorité', accessibility: 'accessibilité IA', neutrality: 'neutralité', externalPresence: 'présence externe', freshness: 'fraîcheur' };
+      const verdict = totalForVerdict >= 75
+        ? `Ce site présente un bon niveau de citabilité IA avec des forces en ${criteriaLabels[strongest[0]]}.`
+        : totalForVerdict >= 50
+        ? `Ce site a des bases correctes mais peut améliorer sa ${criteriaLabels[weakest[0]]} pour être mieux cité par les IA.`
+        : `Ce site nécessite des optimisations significatives, en priorité sur la ${criteriaLabels[weakest[0]]}.`;
 
-      const miniPrompt = `${locale === 'en' ? 'OUTPUT: English.' : 'OUTPUT: Français.'}
-Rate the editorial neutrality of this page 0-10 (10=factual, 0=promotional). Then write a 1-sentence verdict and 2 short strengths.
-URL: ${url} | Scores: ${allScoresSummary}
-Content (300 chars): ${textContent.slice(0, 300)}
-JSON only: {"neutralityScore":<0-10>,"verdict":"<1 sentence>","strengths":["<short>","<short>"],"topPriority":"<1 sentence>","recommendations":[]}`;
+      claude = {
+        neutralityScore: scores.neutrality.score,
+        neutralityDetail: scores.neutrality.detail,
+        verdict,
+        strengths: [strongest[1].detail.substring(0, 100)],
+        topPriority: `Améliorer la ${criteriaLabels[weakest[0]]} (${weakest[1].score}/${weakest[1].max}).`,
+        recommendations: [],
+      };
 
-      const [miniResult, ev, ct] = await Promise.all([
-        client.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 500, temperature: 0.2, messages: [{ role: 'user', content: miniPrompt }] }),
+      const [ev, ct] = await Promise.all([
         collectEvidence($, textContent, rawContent, url, directMeta, { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt }),
         runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
       ]);
-      const miniRaw = miniResult.content[0].text;
-      const miniJson = miniRaw.match(/\{[\s\S]*\}/);
-      claude = miniJson ? JSON.parse(miniJson[0]) : { neutralityScore: 5, verdict: '', strengths: [], topPriority: '', recommendations: [] };
-      if (typeof claude.neutralityScore !== 'number' || isNaN(claude.neutralityScore)) claude.neutralityScore = 5;
-      claude.neutralityScore = Math.max(0, Math.min(10, Math.round(claude.neutralityScore)));
-      if (!claude.recommendations) claude.recommendations = [];
       evidence = ev;
       citationTest = ct;
     } else {
@@ -1026,9 +1025,9 @@ JSON only: {"neutralityScore":<0-10>,"verdict":"<1 sentence>","strengths":["<sho
       evidence = ev;
       citationTest = ct;
     }
-    // Score V2: 6 technical criteria (max 90) + neutrality (max 10) = max 100
-    // Direct /100 — no normalization needed
-    const rawTotal = Object.values(scores).reduce((s, c) => s + c.score, 0) + (claude.neutralityScore || 0);
+    // Score V2: 7 criteria (all deterministic) = max 100
+    // Direct /100 — no normalization, no Claude dependency
+    const rawTotal = Object.values(scores).reduce((s, c) => s + c.score, 0);
     const totalScore = Math.max(0, Math.min(100, rawTotal));
 
     // Verdict is already generated in runClaudeAnalysis with the pre-normalization score
@@ -1058,7 +1057,7 @@ JSON only: {"neutralityScore":<0-10>,"verdict":"<1 sentence>","strengths":["<sho
         { name: 'Vérifiabilité & preuves',          score: scores.verifiability.score,  max: 20, detail: scores.verifiability.detail },
         { name: 'Autorité & E-E-A-T',               score: scores.authority.score,      max: 15, detail: scores.authority.detail },
         { name: 'Accessibilité IA',                 score: scores.accessibility.score,  max: 10, detail: scores.accessibility.detail },
-        { name: 'Neutralité éditoriale',            score: claude.neutralityScore || 0,  max: 10, detail: claude.neutralityDetail },
+        { name: 'Neutralité éditoriale',            score: scores.neutrality.score,      max: 10, detail: scores.neutrality.detail },
         { name: 'Présence externe',                 score: scores.externalPresence.score, max: 10, detail: scores.externalPresence.detail },
         { name: 'Fraîcheur & signaux temporels',    score: scores.freshness.score,       max: 10, detail: scores.freshness.detail },
       ],
