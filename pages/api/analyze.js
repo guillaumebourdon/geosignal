@@ -1028,11 +1028,49 @@ export default async function handler(req, res) {
 
     // Run analysis + evidence in parallel. Citation test: 2 free, 10 one-page, 30 pro
     const queryCount = plan === 'pro' ? 30 : plan === 'onepage' ? 10 : 2;
-    const [claude, evidence, citationTest] = await Promise.all([
-      runClaudeAnalysis(url, textContent, scores, locale, detectedSignals, siteType, missingSchemas),
-      collectEvidence($, textContent, rawContent, url, directMeta, { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt }),
-      runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
-    ]);
+    let claude, evidence, citationTest;
+
+    if (plan === 'free') {
+      // FREE TIER: fast mini-Claude call (neutrality + verdict only, no recommendations)
+      const allScoresSummary = [
+        { key: 'citability', label: 'Citabilité', max: 25 },
+        { key: 'verifiability', label: 'Vérifiabilité', max: 20 },
+        { key: 'authority', label: 'Autorité', max: 15 },
+        { key: 'accessibility', label: 'Accessibilité IA', max: 10 },
+        { key: 'externalPresence', label: 'Présence externe', max: 10 },
+        { key: 'freshness', label: 'Fraîcheur', max: 10 },
+      ].map(c => `${c.label}: ${scores[c.key].score}/${c.max}`).join(', ');
+
+      const miniPrompt = `${locale === 'en' ? 'OUTPUT: English.' : 'OUTPUT: Français.'}
+Rate the editorial neutrality of this page 0-10 (10=factual, 0=promotional). Then write a 1-sentence verdict and 2 short strengths.
+URL: ${url} | Scores: ${allScoresSummary}
+Content (300 chars): ${textContent.slice(0, 300)}
+JSON only: {"neutralityScore":<0-10>,"verdict":"<1 sentence>","strengths":["<short>","<short>"],"topPriority":"<1 sentence>","recommendations":[]}`;
+
+      const [miniResult, ev, ct] = await Promise.all([
+        client.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 500, temperature: 0.2, messages: [{ role: 'user', content: miniPrompt }] }),
+        collectEvidence($, textContent, rawContent, url, directMeta, { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt }),
+        runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
+      ]);
+      const miniRaw = miniResult.content[0].text;
+      const miniJson = miniRaw.match(/\{[\s\S]*\}/);
+      claude = miniJson ? JSON.parse(miniJson[0]) : { neutralityScore: 5, verdict: '', strengths: [], topPriority: '', recommendations: [] };
+      if (typeof claude.neutralityScore !== 'number' || isNaN(claude.neutralityScore)) claude.neutralityScore = 5;
+      claude.neutralityScore = Math.max(0, Math.min(10, Math.round(claude.neutralityScore)));
+      if (!claude.recommendations) claude.recommendations = [];
+      evidence = ev;
+      citationTest = ct;
+    } else {
+      // PAID TIER: full Claude analysis with 7 recommendations
+      const [fullClaude, ev, ct] = await Promise.all([
+        runClaudeAnalysis(url, textContent, scores, locale, detectedSignals, siteType, missingSchemas),
+        collectEvidence($, textContent, rawContent, url, directMeta, { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt }),
+        runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
+      ]);
+      claude = fullClaude;
+      evidence = ev;
+      citationTest = ct;
+    }
     // Score V2: 6 technical criteria (max 90) + neutrality (max 10) = max 100
     // Direct /100 — no normalization needed
     const rawTotal = Object.values(scores).reduce((s, c) => s + c.score, 0) + (claude.neutralityScore || 0);
