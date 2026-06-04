@@ -193,12 +193,41 @@ export default async function handler(req, res) {
       } catch (e) { console.error('[pro-trigger] Criteria parse failed:', e.message); }
       console.log(`[pro-trigger] Criteria done. Count: ${criteriaConsolidated.length}`);
 
-      const fullPages = pages.map(p => ({
-        url: p.url, score: p.score, error: p.error || null,
-        topPriority: p.topPriority || null, verdict: p.verdict || null,
-        strengths: p.strengths || [], criteria: p.criteria || [],
-        recommendations: (p.recommendations || []).slice(0, 3),
-      }));
+      // Call 4: Per-page recommendations (single call for all pages)
+      let pageRecommendations = {};
+      try {
+        const pagesData = validPages.map(p => {
+          const weakCriteria = (p.criteria || [])
+            .filter(c => c.max > 0 && (c.score / c.max) < 0.8)
+            .sort((a, b) => (a.score / a.max) - (b.score / b.max))
+            .map(c => `${c.name}: ${c.score}/${c.max} — ${c.detail || ''}`)
+            .join('\n    ');
+          return `  URL: ${p.url} (score: ${p.score}/100)\n    ${weakCriteria}`;
+        }).join('\n\n');
+
+        const pageRecoMsg = await callHaikuWithRetry({
+          model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2,
+          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant. Generate recommendations for each page of a website audit.\n\nSite: ${rootUrl}\n\nFor each page below, generate 3-5 recommendations targeting the weakest criteria.\n\nPages:\n${pagesData}\n\nReturn a JSON object mapping each URL to its recommendations array:\n{"${validPages[0]?.url || 'url'}":[{"priority":"high|medium|low","criterion":"criterion name","title":"5 words max","problem":"3-5 sentences describing what is wrong","solution":"3-5 sentences describing the fix","technicalImplementation":["step 1","step 2","step 3"],"codeExample":"<code snippet or null>","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}\n\nRules:\n- Each recommendation must target a criterion below 80%\n- Be specific to the page content and URL\n- "criterion" MUST use exact French name from: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'\n- JSON only, no markdown` }],
+        });
+        const raw = pageRecoMsg.content[0].text;
+        const jsonMatch = raw.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          pageRecommendations = JSON.parse(jsonMatch[0]);
+          console.log(`[pro-trigger] Page recommendations done: ${Object.keys(pageRecommendations).length} pages`);
+        }
+      } catch (e) { console.error('[pro-trigger] Page recommendations failed:', e.message); }
+
+      const fullPages = pages.map(p => {
+        const recos = p.recommendations && p.recommendations.length > 0
+          ? p.recommendations
+          : (pageRecommendations[p.url] || []);
+        return {
+          url: p.url, score: p.score, error: p.error || null,
+          topPriority: p.topPriority || null, verdict: p.verdict || null,
+          strengths: p.strengths || [], criteria: p.criteria || [],
+          recommendations: recos,
+        };
+      });
 
       const consolidatedReport = {
         siteJobId, rootUrl, locale, queuedAt: meta.queuedAt,
