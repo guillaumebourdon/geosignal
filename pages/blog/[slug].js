@@ -7,6 +7,7 @@ import { articles, getArticleBySlug, getRelatedArticles, formatDate } from '../.
 
 // EN content overrides — add require lines here as EN articles are created in content/articles/en/
 const CONTENT_MAP_EN = {};
+CONTENT_MAP_EN['ia-e-reputation-chatgpt-marque'] = require('../../content/articles/en/ia-e-reputation-chatgpt-marque').default;
 CONTENT_MAP_EN['geo-guide-complet-2026'] = require('../../content/articles/en/geo-guide-complet-2026').default;
 CONTENT_MAP_EN['pourquoi-chatgpt-ne-cite-pas-votre-site'] = require('../../content/articles/en/pourquoi-chatgpt-ne-cite-pas-votre-site').default;
 CONTENT_MAP_EN['seo-vs-geo-differences-2026'] = require('../../content/articles/en/seo-vs-geo-differences-2026').default;
@@ -41,6 +42,7 @@ CONTENT_MAP_EN['pourquoi-ia-adorent-chiffres-contenu-factuel'] = require('../../
 CONTENT_MAP_EN['mesurer-visibilite-ia-outils-methodes-2026'] = require('../../content/articles/en/mesurer-visibilite-ia-outils-methodes-2026').default;
 
 const CONTENT_MAP = {
+  'ia-e-reputation-chatgpt-marque': require('../../content/articles/ia-e-reputation-chatgpt-marque').default,
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
   'geo-guide-complet-2026': require('../../content/articles/geo-guide-complet-2026').default,
   'pourquoi-chatgpt-ne-cite-pas-votre-site': require('../../content/articles/pourquoi-chatgpt-ne-cite-pas-votre-site').default,
