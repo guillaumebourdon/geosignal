@@ -71,6 +71,15 @@ export default async function handler(req, res) {
   console.log(`[pro-finalize] Starting for ${siteJobId}`);
   const startMs = Date.now();
 
+  // Idempotence: skip if already delivered
+  try {
+    const existingStatus = await redis.get(`${JOB_PREFIX}:${siteJobId}:status`);
+    if (existingStatus === 'delivered') {
+      console.log(`[pro-finalize] Already delivered for ${siteJobId}, skipping`);
+      return res.status(200).json({ success: true, alreadyDelivered: true, siteJobId });
+    }
+  } catch {}
+
   try {
     // Read consolidated report + meta + full pages
     const [consolidatedRaw, metaRaw] = await Promise.all([

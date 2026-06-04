@@ -428,15 +428,11 @@ export default async function handler(req, res) {
 
     console.log(`[pro-consolidate] Consolidated ${siteJobId} in ${Date.now() - startMs}ms. Score: ${agg.scoreAverage}/100`);
 
-    // Trigger finalize (atomic guard)
-    const pdfLock = `${JOB_PREFIX}:${siteJobId}:pdf_triggered`;
-    const acquired = await redis.set(pdfLock, '1', { nx: true, ex: CONSOLIDATED_TTL });
-    if (acquired) {
-      const proto = req.headers['x-forwarded-proto'] || 'https';
-      const host = req.headers['host'] || 'localhost:3000';
-      await triggerFinalizeReport(siteJobId, { baseUrl: `${proto}://${host}` });
-      console.log(`[pro-consolidate] Finalization triggered for ${siteJobId}`);
-    }
+    // Trigger finalize — no lock needed, finalize-report is idempotent
+    const proto = req.headers['x-forwarded-proto'] || 'https';
+    const host = req.headers['host'] || 'localhost:3000';
+    await triggerFinalizeReport(siteJobId, { baseUrl: `${proto}://${host}` });
+    console.log(`[pro-consolidate] Finalization triggered for ${siteJobId}`);
 
     return res.status(200).json({ success: true, siteJobId, status: 'consolidated' });
   } catch (err) {
