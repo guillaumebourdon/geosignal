@@ -73,6 +73,7 @@ export default async function handler(req, res) {
           customerName: session.customer_details?.name || null,
           customerCountry: session.customer_details?.address?.country || null,
           customerStripeId: session.customer || null,
+          paymentIntentId: session.payment_intent || null,
           purchaseDate: new Date().toISOString(),
           plan,
           amount,

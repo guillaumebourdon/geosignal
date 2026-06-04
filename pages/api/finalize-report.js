@@ -220,7 +220,7 @@ export default async function handler(req, res) {
           console.error(`[finalize-report] CRITICAL validation error — triggering refund for ${me(email)}`);
           const { triggerAutoRefund } = require('../../lib/autoRefund');
           await triggerAutoRefund({
-            paymentIntentId: req.body.paymentIntentId || null,
+            paymentIntentId: customerInfo?.paymentIntentId || null,
             customerEmail: email,
             url,
             plan: 'rapport',

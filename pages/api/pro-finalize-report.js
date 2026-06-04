@@ -62,23 +62,16 @@ export default async function handler(req, res) {
   if (!siteJobId) return res.status(400).json({ error: 'Missing siteJobId' });
 
   // Idempotence
-  const currentStatus = await redis.get(`${JOB_PREFIX}:${siteJobId}:status`);
-  if (currentStatus === 'delivered') {
-    console.log(`[pro-finalize] Idempotent skip for ${siteJobId}`);
-    return res.status(200).json({ success: true, skipped: true, siteJobId });
+  // Atomic idempotence: SET NX to claim finalization — prevents double email
+  const finalizeLock = `${JOB_PREFIX}:${siteJobId}:finalizing`;
+  const acquired = await redis.set(finalizeLock, '1', { nx: true, ex: 600 }); // 10 min TTL
+  if (!acquired) {
+    console.log(`[pro-finalize] Already finalizing or delivered for ${siteJobId}, skipping`);
+    return res.status(200).json({ success: true, alreadyDelivered: true, siteJobId });
   }
 
   console.log(`[pro-finalize] Starting for ${siteJobId}`);
   const startMs = Date.now();
-
-  // Idempotence: skip if already delivered
-  try {
-    const existingStatus = await redis.get(`${JOB_PREFIX}:${siteJobId}:status`);
-    if (existingStatus === 'delivered') {
-      console.log(`[pro-finalize] Already delivered for ${siteJobId}, skipping`);
-      return res.status(200).json({ success: true, alreadyDelivered: true, siteJobId });
-    }
-  } catch {}
 
   try {
     // Read consolidated report + meta + full pages
@@ -266,7 +259,7 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
           console.error(`[pro-finalize] CRITICAL validation error — triggering refund`);
           const { triggerAutoRefund } = require('../../lib/autoRefund');
           await triggerAutoRefund({
-            paymentIntentId: null,
+            paymentIntentId: customerInfo?.paymentIntentId || null,
             customerEmail: meta?.customerEmail,
             url: consolidated.rootUrl,
             plan: 'pro',
