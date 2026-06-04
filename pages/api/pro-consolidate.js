@@ -305,13 +305,19 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
   // Build per-page recommendations prompt
   const pageRecoPrompt = buildPageRecommendationsPrompt(locale || 'fr', rootUrl, metaDescription || '', validPages || []);
 
-  const [synthR, citR, critR, pageRecoR] = await Promise.allSettled([
+  // First 3 calls in parallel (synthesis + citation + criteria)
+  const [synthR, citR, critR] = await Promise.allSettled([
     callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
     runRealCitationTest(rootUrl, hostname, brand, metaDescription || '', intro || '', 30, locale || 'fr', anthropic),
     callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
-    callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
   ]);
-  console.log(`[pro-consolidate] Parallel calls completed in ${Date.now() - start}ms`);
+  console.log(`[pro-consolidate] First 3 calls completed in ${Date.now() - start}ms`);
+
+  // 4th call AFTER the first 3 to avoid Anthropic rate limit
+  const pageRecoR = await Promise.allSettled([
+    callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
+  ]).then(r => r[0]);
+  console.log(`[pro-consolidate] Page reco call completed in ${Date.now() - start}ms`);
 
   let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
   if (synthR.status === 'fulfilled') {
