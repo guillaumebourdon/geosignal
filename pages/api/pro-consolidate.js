@@ -250,19 +250,66 @@ Rules:
 JSON array only, no markdown:`;
 }
 
-// ── Step 5: Run 3 Sonnet calls in parallel ──────────────────────────────────
+// ── Step 4b: Build per-page recommendations prompt ──────────────────────────
 
-async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt, { rootUrl, metaDescription, intro, locale } = {}) {
+function buildPageRecommendationsPrompt(locale, rootUrl, metaDescription, validPages) {
+  const langInstruction = locale === 'en'
+    ? 'OUTPUT LANGUAGE: English (US). ALL text values MUST be in American English.'
+    : 'LANGUE DE SORTIE : Francais. Toutes les valeurs texte en francais professionnel.';
+
+  const pagesData = validPages.map(p => {
+    const weakCriteria = (p.criteria || [])
+      .filter(c => c.max > 0 && (c.score / c.max) < 0.8)
+      .sort((a, b) => (a.score / a.max) - (b.score / b.max))
+      .map(c => `${c.name}: ${c.score}/${c.max} — ${c.detail || ''}`)
+      .join('\n    ');
+    return `  URL: ${p.url} (score: ${p.score}/100)\n    ${weakCriteria}`;
+  }).join('\n\n');
+
+  return `${langInstruction}
+
+You are a senior GEO consultant. Generate recommendations for each page of a website audit.
+
+Site: ${rootUrl}
+
+For each page below, generate 3-5 recommendations targeting the weakest criteria.
+
+Pages:
+${pagesData}
+
+Return a JSON object mapping each URL to its recommendations array:
+{"${validPages[0]?.url || 'url'}":[{"priority":"high|medium|low","criterion":"criterion name","title":"5 words max","problem":"3-5 sentences describing what is wrong","solution":"3-5 sentences describing the fix","technicalImplementation":["step 1","step 2","step 3"],"codeExample":"<code snippet or null>","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}],"url2":[...]}
+
+Rules:
+- Each recommendation must target a criterion below 80%
+- Be specific to the page content and URL
+- Priority: high for criteria <50%, medium for 50-70%, low for 70-80%
+- 3-5 recommendations per page, sorted by priority
+- "problem": 3-5 sentences, describe what is wrong and why it hurts AI visibility
+- "solution": 3-5 sentences, concrete fix
+- "technicalImplementation": 2-4 numbered steps a developer can follow
+- "codeExample": JSON-LD, HTML, or meta tag when relevant, null otherwise
+- "criterion" MUST use the EXACT French name from this list: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'
+- JSON only, no markdown`;
+}
+
+// ── Step 5: Run 4 Sonnet calls in parallel ──────────────────────────────────
+
+async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt, { rootUrl, metaDescription, intro, locale, validPages } = {}) {
   console.log('[pro-consolidate] Starting Sonnet synthesis + criteria + real citation test...');
   const start = Date.now();
 
   const hostname = new URL(rootUrl).hostname.replace(/^www\./, '');
   const brand = hostname.split('.')[0];
 
-  const [synthR, citR, critR] = await Promise.allSettled([
+  // Build per-page recommendations prompt
+  const pageRecoPrompt = buildPageRecommendationsPrompt(locale || 'fr', rootUrl, metaDescription || '', validPages || []);
+
+  const [synthR, citR, critR, pageRecoR] = await Promise.allSettled([
     callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
     runRealCitationTest(rootUrl, hostname, brand, metaDescription || '', intro || '', 30, locale || 'fr', anthropic),
     callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
+    callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
   ]);
   console.log(`[pro-consolidate] Parallel calls completed in ${Date.now() - start}ms`);
 
@@ -339,7 +386,21 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
     } catch (e) { console.error('[pro-consolidate] Criteria parse error:', e.message); }
   } else { console.error('[pro-consolidate] Criteria FAILED:', critR.reason?.message); }
 
-  return { synthesis, citationTest, criteriaConsolidated };
+  // Parse per-page recommendations
+  let pageRecommendations = {};
+  if (pageRecoR.status === 'fulfilled') {
+    try {
+      const raw = pageRecoR.value.content[0].text;
+      const jsonMatch = raw.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        pageRecommendations = JSON.parse(jsonMatch[0]);
+        const pageCount = Object.keys(pageRecommendations).length;
+        console.log(`[pro-consolidate] Page recommendations OK: ${pageCount} pages`);
+      }
+    } catch (e) { console.error('[pro-consolidate] Page recommendations parse error:', e.message); }
+  } else { console.error('[pro-consolidate] Page recommendations FAILED:', pageRecoR.reason?.message); }
+
+  return { synthesis, citationTest, criteriaConsolidated, pageRecommendations };
 }
 
 // ── Step 6: Build and store consolidated report ─────────────────────────────
@@ -384,11 +445,11 @@ export default async function handler(req, res) {
     const ctx = buildPromptContext(locale, rootUrl, agg);
 
     const homepageEvidence = agg.validPages[0]?.evidence || {};
-    const { synthesis, citationTest, criteriaConsolidated: rawCriteria } = await runParallelCalls(
+    const { synthesis, citationTest, criteriaConsolidated: rawCriteria, pageRecommendations } = await runParallelCalls(
       buildSynthesisPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages),
       buildCitationPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages),
       buildCriteriaPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages),
-      { rootUrl, metaDescription: homepageEvidence.metaDescription, intro: homepageEvidence.intro, locale },
+      { rootUrl, metaDescription: homepageEvidence.metaDescription, intro: homepageEvidence.intro, locale, validPages: agg.validPages },
     );
 
     // Enrich criteria with score data
@@ -402,12 +463,19 @@ export default async function handler(req, res) {
       };
     });
 
-    const fullPages = pages.map(p => ({
-      url: p.url, score: p.score, error: p.error || null,
-      topPriority: p.topPriority || null, verdict: p.verdict || null,
-      strengths: p.strengths || [], criteria: p.criteria || [],
-      recommendations: p.recommendations || [],
-    }));
+    // Inject per-page recommendations from consolidation Claude call
+    // Workers only do scoring; recos are generated here in a single Claude call
+    const fullPages = pages.map(p => {
+      const recos = p.recommendations && p.recommendations.length > 0
+        ? p.recommendations  // Use existing recos if present (e.g. from cache)
+        : (pageRecommendations[p.url] || []);  // Otherwise use consolidation-generated recos
+      return {
+        url: p.url, score: p.score, error: p.error || null,
+        topPriority: p.topPriority || null, verdict: p.verdict || null,
+        strengths: p.strengths || [], criteria: p.criteria || [],
+        recommendations: recos,
+      };
+    });
 
     const consolidatedReport = {
       siteJobId, rootUrl, locale, queuedAt: meta.queuedAt,
