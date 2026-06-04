@@ -152,10 +152,15 @@ NEVER use "catastrophique" for a score above 30%. NEVER use "faible" for a score
 // ── Step 4: Build prompts ───────────────────────────────────────────────────
 
 function buildSynthesisPrompt(ctx, rootUrl, scoreAverage, validPages, criteriaAverages) {
-  const pagesForPrompt = validPages.map(p => ({
-    url: p.url, score: p.score,
-    topRecos: (p.recommendations || []).slice(0, 3).map(r => `${r.criterion}: ${r.title || r.diagnostic || ''}`).join('; '),
-  }));
+  const pagesForPrompt = validPages.map(p => {
+    const weakCriteria = (p.criteria || [])
+      .filter(c => c.max > 0 && (c.score / c.max) < 0.7)
+      .sort((a, b) => (a.score / a.max) - (b.score / b.max))
+      .slice(0, 3)
+      .map(c => `${c.name}: ${c.score}/${c.max}`)
+      .join('; ');
+    return { url: p.url, score: p.score, weakCriteria: weakCriteria || 'all criteria above 70%' };
+  });
 
   return `${ctx.langInstruction}
 
@@ -167,7 +172,7 @@ Site: ${rootUrl}
 Average GEO score: ${scoreAverage}/100
 
 Pages analyzed:
-${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}
+${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — weakest: ${p.weakCriteria}`).join('\n')}
 
 Criteria averages:
 ${Object.entries(criteriaAverages).map(([k, v]) => `- ${k}: ${v.avgScore}/${v.max}`).join('\n')}
