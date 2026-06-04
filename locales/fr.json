@@ -2077,10 +2077,11 @@
   },
   "checkout": {
     "verification": {
-      "title": "Nous verifions votre site...",
-      "step1": "Accessibilite du site",
-      "step2": "Detection des pages cles",
-      "step3": "Verification de la compatibilite"
+      "title": "Nous preparons votre audit...",
+      "step1": "Connexion au site",
+      "step2": "Verification anti-bot",
+      "step3": "Detection des pages cles",
+      "step4": "Preparation de la selection"
     }
   }
 }

@@ -37,8 +37,9 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
   const [clientSecret, setClientSecret] = useState(null);
   const [showFallback, setShowFallback] = useState(false);
 
-  // Verification steps state (Pro flow)
-  const [verificationStep, setVerificationStep] = useState(0); // 0=none, 1=accessibility, 2=pages, 3=compatibility
+  // Verification steps state (Pro flow) — visual progression
+  const [verificationStep, setVerificationStep] = useState(0); // 0=none, 1-5=visual steps
+  const verificationTimerRef = useRef(null);
 
   // Page selector state (Pro flow only)
   const [showPageSelector, setShowPageSelector] = useState(false);
@@ -68,7 +69,9 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
   function handleClose() {
     setModalUrl(''); setUrlError(''); setModalError('');
     setShowCheckout(false); setClientSecret(null);
-    setShowFallback(false); setLoadingText(''); setVerificationStep(0);
+    setShowFallback(false); setLoadingText('');
+    if (verificationTimerRef.current) clearInterval(verificationTimerRef.current);
+    setVerificationStep(0);
     setShowPageSelector(false); setSuggestedPages([]);
     setPageSelectorHostname(''); setPageSelectorUrl('');
     onClose();
@@ -103,8 +106,18 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
   async function handleSubmit() {
     if (!isValidUrl(modalUrl)) { setUrlError(t('pricing.modal.urlInvalidError')); return; }
     setUrlError(''); setModalError(''); setShowFallback(false); setModalLoading(true);
-    setVerificationStep(plan === 'pro' ? 1 : 0);
     const url = normalizeUrl(modalUrl);
+
+    // Start visual step progression for Pro (advances automatically every 3s)
+    if (plan === 'pro') {
+      setVerificationStep(1);
+      let step = 1;
+      verificationTimerRef.current = setInterval(() => {
+        step++;
+        if (step <= 4) setVerificationStep(step);
+        else clearInterval(verificationTimerRef.current);
+      }, 3000);
+    }
 
     // Step 1: Pre-check auditability
     setLoadingText(t('pricing.modal.checking'));
@@ -127,6 +140,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
       const auditable = isPro ? check.proAuditable : check.onePageAuditable;
 
       if (!auditable) {
+        if (verificationTimerRef.current) clearInterval(verificationTimerRef.current);
         setVerificationStep(0);
         // Pro not possible but one-page is -> show fallback
         if (isPro && check.onePageAuditable) {
@@ -151,7 +165,6 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
 
     // Step 2 (Pro only): Show page selector
     if (plan === 'pro') {
-      setVerificationStep(2);
       setLoadingText(t('pageSelector.loading'));
       try {
         const suggestRes = await fetch('/api/suggest-pages', {
@@ -162,8 +175,9 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
         if (suggestRes.ok) {
           const suggestData = await suggestRes.json();
           if (suggestData.pages && suggestData.pages.length >= 1) {
-            setVerificationStep(3);
-            await new Promise(r => setTimeout(r, 600)); // Brief pause to show "ready" state
+            if (verificationTimerRef.current) clearInterval(verificationTimerRef.current);
+            setVerificationStep(5); // All done
+            await new Promise(r => setTimeout(r, 500));
             setSuggestedPages(suggestData.pages);
             setPageSelectorHostname(suggestData.hostname);
             setPageSelectorUrl(url);
@@ -268,6 +282,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
                   { step: 1, label: t('checkout.verification.step1') },
                   { step: 2, label: t('checkout.verification.step2') },
                   { step: 3, label: t('checkout.verification.step3') },
+                  { step: 4, label: t('checkout.verification.step4') },
                 ].map(({ step, label }) => {
                   const done = verificationStep > step;
                   const active = verificationStep === step;

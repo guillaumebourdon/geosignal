@@ -2075,10 +2075,11 @@
   },
   "checkout": {
     "verification": {
-      "title": "We're checking your site...",
-      "step1": "Site accessibility",
-      "step2": "Detecting key pages",
-      "step3": "Compatibility check"
+      "title": "Preparing your audit...",
+      "step1": "Connecting to site",
+      "step2": "Anti-bot verification",
+      "step3": "Detecting key pages",
+      "step4": "Preparing page selection"
     }
   }
 }

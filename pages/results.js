@@ -296,6 +296,8 @@ export default function Results() {
   const [showPageSelector, setShowPageSelector] = useState(false);
   const [suggestedPages, setSuggestedPages] = useState([]);
   const [pageSelectorHostname, setPageSelectorHostname] = useState('');
+  const [verificationStep, setVerificationStep] = useState(0);
+  const verificationTimerRef = useRef(null);
 
   async function handleCheckout(selectedPlan) {
     const plan = selectedPlan || 'rapport';
@@ -305,6 +307,15 @@ export default function Results() {
 
     // Pre-check for Pro plan (one-page is already confirmed by the free audit)
     if (plan === 'pro') {
+      // Start visual step progression (advances every 3s)
+      setVerificationStep(1);
+      let vstep = 1;
+      verificationTimerRef.current = setInterval(() => {
+        vstep++;
+        if (vstep <= 4) setVerificationStep(vstep);
+        else clearInterval(verificationTimerRef.current);
+      }, 3000);
+
       try {
         const checkRes = await fetch('/api/pre-check', {
           method: 'POST',
@@ -313,6 +324,8 @@ export default function Results() {
         });
         const check = await checkRes.json();
         if (!check.proAuditable) {
+          if (verificationTimerRef.current) clearInterval(verificationTimerRef.current);
+          setVerificationStep(0);
           setCheckError(check.onePageAuditable
             ? t('pricing.modal.errorProInsufficient')
             : t('pricing.modal.errorAntibot'));
@@ -331,16 +344,22 @@ export default function Results() {
         if (suggestRes.ok) {
           const suggestData = await suggestRes.json();
           if (suggestData.pages && suggestData.pages.length >= 1) {
+            if (verificationTimerRef.current) clearInterval(verificationTimerRef.current);
+            setVerificationStep(5); // All done
+            await new Promise(r => setTimeout(r, 500));
             setSuggestedPages(suggestData.pages);
             setPageSelectorHostname(suggestData.hostname);
             setShowPageSelector(true);
             setCheckoutLoading(false);
+            setVerificationStep(0);
             return;
           }
         }
       } catch {
         console.warn('[results] suggest-pages failed, proceeding without page selection');
       }
+      if (verificationTimerRef.current) clearInterval(verificationTimerRef.current);
+      setVerificationStep(0);
     }
 
     await proceedToCheckout(plan, url);
@@ -582,6 +601,43 @@ export default function Results() {
               {checkError && (
                 <div style={{ textAlign: 'center', marginTop: 12 }}>
                   <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', lineHeight: 1.5 }}>{checkError}</div>
+                </div>
+              )}
+              {verificationStep > 0 && (
+                <div style={{ maxWidth: 360, margin: '16px auto 0', background: '#F7F5F2', borderRadius: 12, padding: '18px 22px', border: '1px solid #E5E2DC' }}>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#1A1916', fontWeight: 600, marginBottom: 14 }}>
+                    {t('checkout.verification.title')}
+                  </div>
+                  {[
+                    { step: 1, label: t('checkout.verification.step1') },
+                    { step: 2, label: t('checkout.verification.step2') },
+                    { step: 3, label: t('checkout.verification.step3') },
+                    { step: 4, label: t('checkout.verification.step4') },
+                  ].map(({ step, label }) => {
+                    const done = verificationStep > step;
+                    const active = verificationStep === step;
+                    return (
+                      <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0', opacity: active || done ? 1 : 0.4 }}>
+                        <div style={{
+                          width: 20, height: 20, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                          background: done ? '#10A37F' : active ? '#D97757' : '#E5E2DC',
+                          transition: 'background 0.3s',
+                        }}>
+                          {done ? (
+                            <span style={{ color: '#fff', fontSize: 11, fontWeight: 700 }}>&#10003;</span>
+                          ) : active ? (
+                            <span style={{ display: 'block', width: 8, height: 8, borderRadius: '50%', border: '2px solid #fff', borderTopColor: 'transparent', animation: 'detekia-spin 0.8s linear infinite' }} />
+                          ) : (
+                            <span style={{ color: '#B0ABA5', fontSize: 10, fontWeight: 600 }}>{step}</span>
+                          )}
+                        </div>
+                        <span style={{ fontFamily: 'system-ui', fontSize: 12, color: done ? '#10A37F' : active ? '#1A1916' : '#B0ABA5', fontWeight: active ? 600 : 400 }}>
+                          {label}
+                        </span>
+                      </div>
+                    );
+                  })}
+                  <style>{`@keyframes detekia-spin { to { transform: rotate(360deg); } }`}</style>
                 </div>
               )}
               <div style={{ textAlign: 'center', marginTop: 14 }}>
