@@ -272,45 +272,6 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
               {urlError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{urlError}</div>}
               {modalError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 10, background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 8, padding: '12px 14px', lineHeight: 1.6 }} dangerouslySetInnerHTML={{ __html: modalError.replace(/hello@detekia\.fr/g, '<a href="mailto:hello@detekia.fr" style="color:#D97757;font-weight:600">hello@detekia.fr</a>').replace(/DetekiaBot/g, '<code style="background:rgba(217,119,87,0.1);padding:2px 5px;border-radius:3px;font-size:11px">DetekiaBot</code>') }} />}
             </div>
-            {/* Verification steps UI (Pro only) */}
-            {verificationStep > 0 && (
-              <div style={{ background: '#F7F5F2', borderRadius: 12, padding: '20px 24px', marginBottom: 16, border: '1px solid #E5E2DC' }}>
-                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#1A1916', fontWeight: 600, marginBottom: 16 }}>
-                  {t('checkout.verification.title')}
-                </div>
-                {[
-                  { step: 1, label: t('checkout.verification.step1') },
-                  { step: 2, label: t('checkout.verification.step2') },
-                  { step: 3, label: t('checkout.verification.step3') },
-                  { step: 4, label: t('checkout.verification.step4') },
-                ].map(({ step, label }) => {
-                  const done = verificationStep > step;
-                  const active = verificationStep === step;
-                  return (
-                    <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', opacity: active || done ? 1 : 0.4 }}>
-                      <div style={{
-                        width: 22, height: 22, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                        background: done ? '#10A37F' : active ? '#D97757' : '#E5E2DC',
-                        transition: 'background 0.3s',
-                      }}>
-                        {done ? (
-                          <span style={{ color: '#fff', fontSize: 12, fontWeight: 700 }}>&#10003;</span>
-                        ) : active ? (
-                          <span style={{ display: 'block', width: 10, height: 10, borderRadius: '50%', border: '2px solid #fff', borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
-                        ) : (
-                          <span style={{ color: '#B0ABA5', fontSize: 11, fontWeight: 600 }}>{step}</span>
-                        )}
-                      </div>
-                      <span style={{ fontFamily: 'system-ui', fontSize: 13, color: done ? '#10A37F' : active ? '#1A1916' : '#B0ABA5', fontWeight: active ? 600 : 400, transition: 'color 0.3s' }}>
-                        {label}
-                      </span>
-                    </div>
-                  );
-                })}
-                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-              </div>
-            )}
-
             <button onClick={handleSubmit} disabled={modalLoading || !modalUrl.trim()}
               style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
               {modalLoading ? (loadingText || '...') : submitText}
@@ -324,6 +285,47 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
             <button onClick={handleClose} style={{ display: 'block', width: '100%', background: 'transparent', color: '#6B6762', padding: '10px 0', border: 'none', cursor: 'pointer', fontFamily: 'system-ui', fontSize: 13 }}>
               {t('pricing.modal.cancelButton')}
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Verification Modal (Pro only) */}
+      {verificationStep > 0 && !showPageSelector && !showCheckout && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1001, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>
+          <div style={{ background: '#fff', borderRadius: 16, maxWidth: 380, width: '100%', padding: '32px 28px', boxShadow: '0 24px 64px rgba(26,25,22,0.28)' }}>
+            <div style={{ textAlign: 'center', marginBottom: 24 }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: '50%', background: 'rgba(217,119,87,0.1)', marginBottom: 14 }}>
+                <span style={{ display: 'block', width: 20, height: 20, borderRadius: '50%', border: '3px solid #D97757', borderTopColor: 'transparent', animation: 'detekia-vspin 0.8s linear infinite' }} />
+              </div>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6 }}>{t('checkout.verification.title')}</h3>
+              <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762' }}>
+                {t('checkout.verification.subtitle') || (router.locale === 'en' ? 'This only takes a few seconds.' : 'Cela ne prend que quelques secondes.')}
+              </p>
+            </div>
+            {[
+              { step: 1, label: t('checkout.verification.step1') },
+              { step: 2, label: t('checkout.verification.step2') },
+              { step: 3, label: t('checkout.verification.step3') },
+              { step: 4, label: t('checkout.verification.step4') },
+            ].map(({ step, label }) => {
+              const done = verificationStep > step;
+              const active = verificationStep === step;
+              return (
+                <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: step < 4 ? '1px solid #F0EDE8' : 'none', opacity: active || done ? 1 : 0.35, transition: 'opacity 0.3s' }}>
+                  <div style={{
+                    width: 24, height: 24, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                    background: done ? '#10A37F' : active ? '#D97757' : '#E5E2DC', transition: 'background 0.3s',
+                  }}>
+                    {done ? <span style={{ color: '#fff', fontSize: 13, fontWeight: 700 }}>&#10003;</span>
+                      : active ? <span style={{ display: 'block', width: 10, height: 10, borderRadius: '50%', border: '2px solid #fff', borderTopColor: 'transparent', animation: 'detekia-vspin 0.8s linear infinite' }} />
+                      : <span style={{ color: '#B0ABA5', fontSize: 11, fontWeight: 600 }}>{step}</span>}
+                  </div>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 14, color: done ? '#10A37F' : active ? '#1A1916' : '#B0ABA5', fontWeight: active ? 600 : 400 }}>{label}</span>
+                  {done && <span style={{ marginLeft: 'auto', fontSize: 11, color: '#10A37F', fontFamily: 'monospace' }}>OK</span>}
+                </div>
+              );
+            })}
+            <style>{`@keyframes detekia-vspin { to { transform: rotate(360deg); } }`}</style>
           </div>
         </div>
       )}

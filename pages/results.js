@@ -603,43 +603,7 @@ export default function Results() {
                   <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', lineHeight: 1.5 }}>{checkError}</div>
                 </div>
               )}
-              {verificationStep > 0 && (
-                <div style={{ maxWidth: 360, margin: '16px auto 0', background: '#F7F5F2', borderRadius: 12, padding: '18px 22px', border: '1px solid #E5E2DC' }}>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#1A1916', fontWeight: 600, marginBottom: 14 }}>
-                    {t('checkout.verification.title')}
-                  </div>
-                  {[
-                    { step: 1, label: t('checkout.verification.step1') },
-                    { step: 2, label: t('checkout.verification.step2') },
-                    { step: 3, label: t('checkout.verification.step3') },
-                    { step: 4, label: t('checkout.verification.step4') },
-                  ].map(({ step, label }) => {
-                    const done = verificationStep > step;
-                    const active = verificationStep === step;
-                    return (
-                      <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0', opacity: active || done ? 1 : 0.4 }}>
-                        <div style={{
-                          width: 20, height: 20, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                          background: done ? '#10A37F' : active ? '#D97757' : '#E5E2DC',
-                          transition: 'background 0.3s',
-                        }}>
-                          {done ? (
-                            <span style={{ color: '#fff', fontSize: 11, fontWeight: 700 }}>&#10003;</span>
-                          ) : active ? (
-                            <span style={{ display: 'block', width: 8, height: 8, borderRadius: '50%', border: '2px solid #fff', borderTopColor: 'transparent', animation: 'detekia-spin 0.8s linear infinite' }} />
-                          ) : (
-                            <span style={{ color: '#B0ABA5', fontSize: 10, fontWeight: 600 }}>{step}</span>
-                          )}
-                        </div>
-                        <span style={{ fontFamily: 'system-ui', fontSize: 12, color: done ? '#10A37F' : active ? '#1A1916' : '#B0ABA5', fontWeight: active ? 600 : 400 }}>
-                          {label}
-                        </span>
-                      </div>
-                    );
-                  })}
-                  <style>{`@keyframes detekia-spin { to { transform: rotate(360deg); } }`}</style>
-                </div>
-              )}
+              {/* Verification popup rendered as portal below */}
               <div style={{ textAlign: 'center', marginTop: 14 }}>
                 <Link href="/pricing" style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
                   {locale === 'en' ? 'Compare all plans →' : 'Comparer toutes les offres →'}
@@ -796,6 +760,53 @@ export default function Results() {
               onConfirm={handlePageSelectorConfirm}
               onBack={handlePageSelectorBack}
             />
+          </div>
+        </div>
+      )}
+
+      {verificationStep > 0 && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>
+          <div style={{ background: '#fff', borderRadius: 16, maxWidth: 380, width: '100%', padding: '32px 28px', position: 'relative', boxShadow: '0 24px 64px rgba(26,25,22,0.28)', animation: 'fadeIn 0.2s ease-out' }}>
+            <div style={{ textAlign: 'center', marginBottom: 24 }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: '50%', background: 'rgba(217,119,87,0.1)', marginBottom: 14 }}>
+                <span style={{ display: 'block', width: 20, height: 20, borderRadius: '50%', border: '3px solid #D97757', borderTopColor: 'transparent', animation: 'detekia-spin 0.8s linear infinite' }} />
+              </div>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6 }}>{t('checkout.verification.title')}</h3>
+              <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.5 }}>
+                {locale === 'en' ? 'This only takes a few seconds.' : 'Cela ne prend que quelques secondes.'}
+              </p>
+            </div>
+            {[
+              { step: 1, label: t('checkout.verification.step1') },
+              { step: 2, label: t('checkout.verification.step2') },
+              { step: 3, label: t('checkout.verification.step3') },
+              { step: 4, label: t('checkout.verification.step4') },
+            ].map(({ step, label }) => {
+              const done = verificationStep > step;
+              const active = verificationStep === step;
+              return (
+                <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: step < 4 ? '1px solid #F0EDE8' : 'none', opacity: active || done ? 1 : 0.35, transition: 'opacity 0.3s' }}>
+                  <div style={{
+                    width: 24, height: 24, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                    background: done ? '#10A37F' : active ? '#D97757' : '#E5E2DC',
+                    transition: 'background 0.3s',
+                  }}>
+                    {done ? (
+                      <span style={{ color: '#fff', fontSize: 13, fontWeight: 700 }}>&#10003;</span>
+                    ) : active ? (
+                      <span style={{ display: 'block', width: 10, height: 10, borderRadius: '50%', border: '2px solid #fff', borderTopColor: 'transparent', animation: 'detekia-spin 0.8s linear infinite' }} />
+                    ) : (
+                      <span style={{ color: '#B0ABA5', fontSize: 11, fontWeight: 600 }}>{step}</span>
+                    )}
+                  </div>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 14, color: done ? '#10A37F' : active ? '#1A1916' : '#B0ABA5', fontWeight: active ? 600 : 400, transition: 'color 0.3s' }}>
+                    {label}
+                  </span>
+                  {done && <span style={{ marginLeft: 'auto', fontSize: 11, color: '#10A37F', fontFamily: 'monospace' }}>OK</span>}
+                </div>
+              );
+            })}
+            <style>{`@keyframes detekia-spin { to { transform: rotate(360deg); } }`}</style>
           </div>
         </div>
       )}
