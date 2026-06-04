@@ -143,7 +143,7 @@ export default async function handler(req, res) {
       console.log(`[pro-trigger] Starting 3 Haiku calls for ${siteJobId}...`);
 
       // Call 1: Synthesis (with retry on failure)
-      const synthesisPrompt = `${langInstruction}\n\nYou are a senior GEO consultant analyzing a FULL WEBSITE audit (${validPages.length} pages).\n\nSite: ${rootUrl}\nAverage GEO score: ${scoreAverage}/100\nDistribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)\n\nPages analyzed:\n${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}\n\nCriteria averages:\n${Object.entries(criteriaAverages).map(([k, v]) => `- ${k}: ${v.avgScore}/${v.max}`).join('\n')}\n\nGenerate a comprehensive site-level analysis. JSON only, no markdown fences:\n{"executiveSummary":"2-3 paragraphs","topStrengths":["s1","s2","s3"],"topWeaknesses":["w1","w2","w3"],"patterns":[{"pattern":"desc","pagesAffected":["url"],"criterion":"name","severity":"critique|important|mineur"}],"actionPlan":[{"priority":1,"action":"desc","criterion":"name","impact":"eleve|moyen|faible","effort":"faible|moyen|eleve","pagesAffected":["url"]}]}\n\nRules:\n- executiveSummary: 2-3 substantial paragraphs\n- patterns: 5 to 8 cross-page patterns\n- actionPlan: 10 to 15 actions sorted by priority\n- Be specific to ${rootUrl}\n- IMPORTANT: output raw JSON only, no markdown, no explanation`;
+      const synthesisPrompt = `${langInstruction}\n\nYou are a senior GEO consultant analyzing a FULL WEBSITE audit (${validPages.length} pages).\n\nSite: ${rootUrl}\nAverage GEO score: ${scoreAverage}/100\nDistribution: ${distribution.faible} low (<45), ${distribution.moyen} average (45-69), ${distribution.bon} good (70+)\n\nPages analyzed:\n${pagesForPrompt.map(p => `- ${p.url} (score: ${p.score}) — ${p.topRecos}`).join('\n')}\n\nCriteria averages:\n${Object.entries(criteriaAverages).map(([k, v]) => `- ${k}: ${v.avgScore}/${v.max}`).join('\n')}\n\nGenerate a comprehensive site-level analysis. JSON only, no markdown fences:\n{"executiveSummary":"2-3 paragraphs","topStrengths":["s1","s2","s3"],"topWeaknesses":["w1","w2","w3"],"patterns":[{"pattern":"desc","pagesAffected":["url"],"criterion":"name","severity":"critique|important|mineur"}],"actionPlan":[{"priority":1,"action":"desc","criterion":"name","impact":"eleve|moyen|faible","effort":"faible|moyen|eleve","pagesAffected":["url"]}]}\n\nRules:\n- executiveSummary: 2-3 substantial paragraphs\n- patterns: 5 to 8 cross-page patterns\n- actionPlan: 10 to 15 actions sorted by priority. Each action MUST be UNIQUE — do not repeat the same recommendation with different wording. Group pages needing the same fix into ONE action.\n- Be specific to ${rootUrl}\n- IMPORTANT: output raw JSON only, no markdown, no explanation`;
 
       let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
       for (let attempt = 0; attempt < 2; attempt++) {
@@ -229,6 +229,41 @@ export default async function handler(req, res) {
           recommendations: recos,
         };
       });
+
+      // Call 5: Generate code examples for top high-priority recos
+      const allHighRecos = [];
+      for (const p of fullPages) {
+        for (const r of (p.recommendations || [])) {
+          if (r.priority === 'high') allHighRecos.push({ url: p.url, ...r });
+        }
+      }
+      const topRecos = allHighRecos.slice(0, 5);
+      if (topRecos.length > 0) {
+        console.log(`[pro-trigger] Generating code examples for ${topRecos.length} recos...`);
+        try {
+          const codeMsg = await callHaikuWithRetry({
+            model: 'claude-4-sonnet-20250514', max_tokens: 4000, temperature: 0.2,
+            messages: [{ role: 'user', content: `${langInstruction}\n\nGenerate code examples for these website audit recommendations.\n\nSite: ${rootUrl}\n\n${topRecos.map((r, i) => `${i + 1}. [${r.url}] ${r.criterion}: ${r.title} — ${r.solution || r.problem}`).join('\n')}\n\nReturn a JSON array:\n[{"index":0,"codeExample":"<code>"}]\n\nRules:\n- Real, copy-pasteable code (JSON-LD, HTML, meta tags)\n- Add <!-- Adaptez avec vos vraies valeurs --> if placeholder values\n- Under 15 lines each\n- JSON array only, no markdown` }],
+          });
+          let codeRaw = codeMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+          const codeMatch = codeRaw.match(/\[[\s\S]*\]/);
+          if (codeMatch) {
+            const codeExamples = JSON.parse(codeMatch[0]);
+            for (const ce of codeExamples) {
+              if (ce.index >= 0 && ce.index < topRecos.length && ce.codeExample) {
+                const rUrl = topRecos[ce.index].url;
+                const rTitle = topRecos[ce.index].title;
+                const page = fullPages.find(p => p.url === rUrl);
+                if (page) {
+                  const match = (page.recommendations || []).find(r => r.title === rTitle);
+                  if (match) match.codeExample = ce.codeExample;
+                }
+              }
+            }
+            console.log(`[pro-trigger] Code examples: ${codeExamples.length} generated`);
+          }
+        } catch (e) { console.error('[pro-trigger] Code examples failed (non-blocking):', e.message); }
+      }
 
       const consolidatedReport = {
         siteJobId, rootUrl, locale, queuedAt: meta.queuedAt,

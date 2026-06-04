@@ -183,7 +183,7 @@ Generate a comprehensive site-level analysis. JSON only:
 Rules:
 - executiveSummary: 2-3 substantial paragraphs, specific to this site. Use the FIXED STATS numbers above verbatim.
 - patterns: 5 to 8 cross-page patterns detected
-- actionPlan: 10 to 15 site-level actions, sorted by priority (impact/effort ratio)
+- actionPlan: 10 to 15 site-level actions, sorted by priority (impact/effort ratio). Each action MUST be UNIQUE — do not repeat the same recommendation with different wording. If multiple pages need the same fix, group them into ONE action with multiple pagesAffected.
 - Be specific: reference actual URLs from the audit
 - NEVER write "${ctx.totalValid} pages sur ${ctx.totalValid}" — that's trivially obvious. Write "${ctx.totalValid} pages" or "toutes les ${ctx.totalValid} pages".
 - Each action in the plan should affect 2+ pages. If a recommendation only applies to 1 page, it belongs in the per-page analysis, not in the site-level action plan. Consolidate single-page issues into broader patterns (e.g., instead of "add legal references to the insurance page", write "add external source citations across content pages").
@@ -239,11 +239,12 @@ Criteria data:
 ${criteriaForPrompt}
 
 For each of the 8 GEO criteria, generate a JSON array of 8 objects:
-[{"criterion":"exact criterion name","synthesis":"2-3 sentences describing the state of this criterion across all pages","consolidatedRecommendation":{"diagnostic":"1 sentence","whyCritical":"1 sentence","whatToDo":"2 sentences","howToDoIt":"2-3 sentences","concreteExample":"1 sentence","expectedImpact":"1 sentence","expertTip":"1 sentence","pagesAffected":["url1","url2"]}}]
+[{"criterion":"exact criterion name","synthesis":"2-3 sentences describing the state of this criterion across all pages","consolidatedRecommendation":{"diagnostic":"1 sentence","whyCritical":"1 sentence","whatToDo":"2 sentences","howToDoIt":"2-3 sentences","concreteExample":"AVANT: [what the weakest page currently does wrong] → APRES: [what it should look like after the fix, with a concrete example]","expectedImpact":"1 sentence","expertTip":"1 sentence","pagesAffected":["url1","url2"]}}]
 
 Rules:
 - synthesis must use the FIXED STATS numbers above
 - consolidatedRecommendation must be site-level, not page-specific
+- concreteExample MUST use the AVANT/APRES format showing current state vs desired state with a real example from the site
 - pagesAffected: list up to 5 most impacted URLs
 - Be specific to ${rootUrl}
 
@@ -435,6 +436,45 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
       } catch {}
     }
   } else { console.error('[pro-consolidate] Page recommendations FAILED:', pageRecoR.reason?.message); }
+
+  // Call 5: Generate code examples for the top 5 high-priority recos
+  const allRecos = [];
+  for (const [url, recos] of Object.entries(pageRecommendations)) {
+    for (const r of recos) {
+      if (r.priority === 'high') allRecos.push({ url, ...r });
+    }
+  }
+  const topRecos = allRecos.slice(0, 5);
+
+  if (topRecos.length > 0) {
+    console.log(`[pro-consolidate] Generating code examples for ${topRecos.length} high-priority recos...`);
+    await new Promise(r => setTimeout(r, 5000)); // Brief cooldown
+    try {
+      const codePrompt = `${locale === 'en' ? 'OUTPUT LANGUAGE: English.' : 'LANGUE DE SORTIE : Francais.'}\n\nGenerate code examples (JSON-LD, HTML, or meta tags) for these website audit recommendations.\n\nSite: ${rootUrl}\n\n${topRecos.map((r, i) => `${i + 1}. [${r.url}] ${r.criterion}: ${r.title} — ${r.solution || r.problem}`).join('\n')}\n\nReturn a JSON array of ${topRecos.length} code snippets:\n[{"index":0,"codeExample":"<code here>"},{"index":1,"codeExample":"<code>"}]\n\nRules:\n- Each codeExample must be a real, copy-pasteable code snippet (JSON-LD, HTML meta tag, or HTML structure)\n- Add <!-- Adaptez avec vos vraies valeurs --> at the top if it contains placeholder values\n- Keep each snippet under 15 lines\n- JSON array only, no markdown`;
+
+      const codeMsg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 4000, temperature: 0.2, messages: [{ role: 'user', content: codePrompt }] });
+      let codeRaw = codeMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+      const codeMatch = codeRaw.match(/\[[\s\S]*\]/);
+      if (codeMatch) {
+        const codeExamples = JSON.parse(codeMatch[0]);
+        for (const ce of codeExamples) {
+          const idx = ce.index;
+          if (idx >= 0 && idx < topRecos.length && ce.codeExample) {
+            const rUrl = topRecos[idx].url;
+            const rTitle = topRecos[idx].title;
+            const pageRecos = pageRecommendations[rUrl];
+            if (pageRecos) {
+              const match = pageRecos.find(r => r.title === rTitle);
+              if (match) match.codeExample = ce.codeExample;
+            }
+          }
+        }
+        console.log(`[pro-consolidate] Code examples: ${codeExamples.length} generated`);
+      }
+    } catch (e) {
+      console.error('[pro-consolidate] Code examples failed (non-blocking):', e.message);
+    }
+  }
 
   return { synthesis, citationTest, criteriaConsolidated, pageRecommendations };
 }
