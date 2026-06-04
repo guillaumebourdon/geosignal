@@ -18,6 +18,9 @@ export default async function handler(req, res) {
   const { uuid } = req.query;
   if (!uuid) return res.status(400).json({ error: 'Missing uuid parameter' });
 
+  const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if (!uuidV4Regex.test(uuid)) return res.status(400).json({ error: 'Invalid uuid format' });
+
   try {
     // Fetch report record and customer info in parallel
     const [report, customerRecord] = await Promise.all([

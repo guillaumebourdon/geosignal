@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import { Redis } from '@upstash/redis';
 import { randomUUID } from 'crypto';
 
-export const config = { maxDuration: 30 };
+export const config = { maxDuration: 120 };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);

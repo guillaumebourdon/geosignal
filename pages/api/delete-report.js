@@ -13,14 +13,8 @@ export default async function handler(req, res) {
   const { id } = req.query;
   if (!id) return res.status(400).json({ error: 'Missing id' });
 
-  // Read secret from Authorization header (preferred) or query string (deprecated fallback)
-  const authHeader = req.headers.authorization?.replace('Bearer ', '');
-  const querySecret = req.query.secret;
-  const secret = authHeader || querySecret;
-
-  if (querySecret && !authHeader) {
-    console.warn('[delete-report] Deprecated: secret passed as query string. Use Authorization: Bearer <secret> header.');
-  }
+  // Read secret from Authorization header only
+  const secret = req.headers.authorization?.replace('Bearer ', '');
 
   if (!DELETE_SECRET || secret !== DELETE_SECRET) return res.status(401).json({ error: 'Unauthorized' });
 

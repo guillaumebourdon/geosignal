@@ -33,8 +33,15 @@ export default async function handler(req, res) {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-    const email   = session.customer_details?.email;
+    const rawEmail = session.customer_details?.email;
     const amount  = session.amount_total;
+
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (rawEmail && !emailRegex.test(rawEmail)) {
+      console.warn(`[webhook] Invalid email format: ${rawEmail} — session ${session.id}. Continuing without email.`);
+    }
+    const email = rawEmail && emailRegex.test(rawEmail) ? rawEmail : null;
 
     // Correction 1: Idempotence — skip if this session was already processed
     const idempotencyKey = `webhook:processed:${session.id}`;
@@ -83,6 +90,22 @@ export default async function handler(req, res) {
         }, { ex: CUSTOMER_TTL });
       } catch (e) {
         console.error('[webhook] Customer info store failed:', e.message);
+        try {
+          const { Resend } = require('resend');
+          const alertResend = new Resend(process.env.RESEND_API_KEY);
+          await alertResend.emails.send({
+            from: 'Detekia <hello@detekia.fr>',
+            to: 'guillaume@beeleven.fr',
+            subject: `⚠️ Customer info store failed — session ${session.id}`,
+            html: `<div style="font-family:system-ui;max-width:480px;padding:24px;">
+              <h2 style="color:#D97757;">Customer info Redis write failed</h2>
+              <p><strong>Session :</strong> ${session.id}</p>
+              <p><strong>Email :</strong> ${email || 'N/A'}</p>
+              <p><strong>Erreur :</strong> ${e.message}</p>
+              <p style="color:#D97757;font-weight:bold;">Action : vérifier Redis et les données client.</p>
+            </div>`,
+          }).catch(alertErr => console.error('[webhook] Alert email also failed:', alertErr.message));
+        } catch (_) {}
       }
 
       const { maskEmail } = require('../../lib/maskEmail');

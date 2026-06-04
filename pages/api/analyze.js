@@ -1208,6 +1208,6 @@ export default async function handler(req, res) {
         </div>
       `,
     }).catch(e => console.log('Error notification failed:', e.message));
-    res.status(500).json({ error: "Erreur lors de l'analyse", detail: err.message });
+    res.status(500).json({ error: "Erreur lors de l'analyse" });
   }
 }
