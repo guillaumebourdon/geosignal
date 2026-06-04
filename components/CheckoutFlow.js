@@ -188,13 +188,22 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
             return;
           }
         }
-        console.warn('[CheckoutFlow] suggest-pages failed, proceeding without page selection');
-      } catch {
-        console.warn('[CheckoutFlow] suggest-pages error, proceeding without page selection');
+        console.warn('[CheckoutFlow] suggest-pages failed');
+      } catch (e) {
+        console.warn('[CheckoutFlow] suggest-pages error:', e.message);
+      }
+      // suggest-pages failed — don't proceed to checkout without pages for Pro
+      if (plan === 'pro') {
+        if (verificationTimerRef.current) clearInterval(verificationTimerRef.current);
+        setVerificationStep(0);
+        setModalError(t('pageSelector.errorLoading'));
+        setModalLoading(false);
+        setLoadingText('');
+        return;
       }
     }
 
-    // Step 3: Create Stripe checkout
+    // Step 3: Create Stripe checkout (one-page only at this point)
     setLoadingText('');
     await proceedToCheckout(url);
   }

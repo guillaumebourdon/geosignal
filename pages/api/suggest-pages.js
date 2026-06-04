@@ -7,7 +7,7 @@
 import { checkRateLimit } from '../../lib/rateLimit';
 import { checkPageScrapability } from '../../lib/scrapabilityCheck';
 
-export const config = { maxDuration: 30 };
+export const config = { maxDuration: 60 };
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });

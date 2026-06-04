@@ -355,11 +355,15 @@ export default function Results() {
             return;
           }
         }
-      } catch {
-        console.warn('[results] suggest-pages failed, proceeding without page selection');
+      } catch (e) {
+        console.warn('[results] suggest-pages failed:', e.message);
       }
+      // If we get here, suggest-pages failed — don't proceed to checkout without pages
       if (verificationTimerRef.current) clearInterval(verificationTimerRef.current);
       setVerificationStep(0);
+      setCheckError(t('pageSelector.errorLoading'));
+      setCheckoutLoading(false);
+      return;
     }
 
     await proceedToCheckout(plan, url);
