@@ -37,6 +37,9 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
   const [clientSecret, setClientSecret] = useState(null);
   const [showFallback, setShowFallback] = useState(false);
 
+  // Verification steps state (Pro flow)
+  const [verificationStep, setVerificationStep] = useState(0); // 0=none, 1=accessibility, 2=pages, 3=compatibility
+
   // Page selector state (Pro flow only)
   const [showPageSelector, setShowPageSelector] = useState(false);
   const [suggestedPages, setSuggestedPages] = useState([]);
@@ -65,7 +68,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
   function handleClose() {
     setModalUrl(''); setUrlError(''); setModalError('');
     setShowCheckout(false); setClientSecret(null);
-    setShowFallback(false); setLoadingText('');
+    setShowFallback(false); setLoadingText(''); setVerificationStep(0);
     setShowPageSelector(false); setSuggestedPages([]);
     setPageSelectorHostname(''); setPageSelectorUrl('');
     onClose();
@@ -100,6 +103,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
   async function handleSubmit() {
     if (!isValidUrl(modalUrl)) { setUrlError(t('pricing.modal.urlInvalidError')); return; }
     setUrlError(''); setModalError(''); setShowFallback(false); setModalLoading(true);
+    setVerificationStep(plan === 'pro' ? 1 : 0);
     const url = normalizeUrl(modalUrl);
 
     // Step 1: Pre-check auditability
@@ -123,6 +127,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
       const auditable = isPro ? check.proAuditable : check.onePageAuditable;
 
       if (!auditable) {
+        setVerificationStep(0);
         // Pro not possible but one-page is -> show fallback
         if (isPro && check.onePageAuditable) {
           setModalError(t('pricing.modal.errorProInsufficient'));
@@ -146,6 +151,7 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
 
     // Step 2 (Pro only): Show page selector
     if (plan === 'pro') {
+      setVerificationStep(2);
       setLoadingText(t('pageSelector.loading'));
       try {
         const suggestRes = await fetch('/api/suggest-pages', {
@@ -156,12 +162,15 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
         if (suggestRes.ok) {
           const suggestData = await suggestRes.json();
           if (suggestData.pages && suggestData.pages.length >= 1) {
+            setVerificationStep(3);
+            await new Promise(r => setTimeout(r, 600)); // Brief pause to show "ready" state
             setSuggestedPages(suggestData.pages);
             setPageSelectorHostname(suggestData.hostname);
             setPageSelectorUrl(url);
             setShowPageSelector(true);
             setModalLoading(false);
             setLoadingText('');
+            setVerificationStep(0);
             return;
           }
         }
@@ -249,6 +258,44 @@ export default function CheckoutFlow({ plan, showModal, onClose, initialUrl, onS
               {urlError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 8 }}>{urlError}</div>}
               {modalError && <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', marginTop: 10, background: 'rgba(217,119,87,0.06)', border: '1px solid rgba(217,119,87,0.2)', borderRadius: 8, padding: '12px 14px', lineHeight: 1.6 }} dangerouslySetInnerHTML={{ __html: modalError.replace(/hello@detekia\.fr/g, '<a href="mailto:hello@detekia.fr" style="color:#D97757;font-weight:600">hello@detekia.fr</a>').replace(/DetekiaBot/g, '<code style="background:rgba(217,119,87,0.1);padding:2px 5px;border-radius:3px;font-size:11px">DetekiaBot</code>') }} />}
             </div>
+            {/* Verification steps UI (Pro only) */}
+            {verificationStep > 0 && (
+              <div style={{ background: '#F7F5F2', borderRadius: 12, padding: '20px 24px', marginBottom: 16, border: '1px solid #E5E2DC' }}>
+                <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#1A1916', fontWeight: 600, marginBottom: 16 }}>
+                  {t('checkout.verification.title')}
+                </div>
+                {[
+                  { step: 1, label: t('checkout.verification.step1') },
+                  { step: 2, label: t('checkout.verification.step2') },
+                  { step: 3, label: t('checkout.verification.step3') },
+                ].map(({ step, label }) => {
+                  const done = verificationStep > step;
+                  const active = verificationStep === step;
+                  return (
+                    <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', opacity: active || done ? 1 : 0.4 }}>
+                      <div style={{
+                        width: 22, height: 22, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                        background: done ? '#10A37F' : active ? '#D97757' : '#E5E2DC',
+                        transition: 'background 0.3s',
+                      }}>
+                        {done ? (
+                          <span style={{ color: '#fff', fontSize: 12, fontWeight: 700 }}>&#10003;</span>
+                        ) : active ? (
+                          <span style={{ display: 'block', width: 10, height: 10, borderRadius: '50%', border: '2px solid #fff', borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
+                        ) : (
+                          <span style={{ color: '#B0ABA5', fontSize: 11, fontWeight: 600 }}>{step}</span>
+                        )}
+                      </div>
+                      <span style={{ fontFamily: 'system-ui', fontSize: 13, color: done ? '#10A37F' : active ? '#1A1916' : '#B0ABA5', fontWeight: active ? 600 : 400, transition: 'color 0.3s' }}>
+                        {label}
+                      </span>
+                    </div>
+                  );
+                })}
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+              </div>
+            )}
+
             <button onClick={handleSubmit} disabled={modalLoading || !modalUrl.trim()}
               style={{ display: 'block', width: '100%', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: modalLoading || !modalUrl.trim() ? 'not-allowed' : 'pointer', fontFamily: 'system-ui', opacity: modalLoading || !modalUrl.trim() ? 0.6 : 1, transition: 'opacity 0.2s', marginBottom: 12 }}>
               {modalLoading ? (loadingText || '...') : submitText}

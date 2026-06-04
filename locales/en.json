@@ -2072,5 +2072,13 @@
     "reasonNoContent": "Insufficient content",
     "reasonError": "Verification error",
     "revalidating": "Validating pages..."
+  },
+  "checkout": {
+    "verification": {
+      "title": "We're checking your site...",
+      "step1": "Site accessibility",
+      "step2": "Detecting key pages",
+      "step3": "Compatibility check"
+    }
   }
 }
