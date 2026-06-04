@@ -12,7 +12,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { triggerConsolidation } from '../../lib/proQueue';
 import { generateProReportHTML } from '../../lib/proReportTemplate';
 
-export const config = { maxDuration: 300 };
+export const config = { maxDuration: 600 };
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,

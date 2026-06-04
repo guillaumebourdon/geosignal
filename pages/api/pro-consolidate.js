@@ -4,7 +4,7 @@ import { verifyQstashSignature, triggerFinalizeReport } from '../../lib/proQueue
 const { runRealCitationTest } = require('../../lib/citationTest');
 
 export const config = {
-  maxDuration: 300,
+  maxDuration: 600,
   api: { bodyParser: false },
 };
 
