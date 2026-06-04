@@ -572,6 +572,60 @@ export default async function handler(req, res) {
       pages: fullPages,
     };
 
+    // QA pass: verify and fix the consolidated report before storing
+    try {
+      const qaSummary = {
+        scoreAverage: consolidatedReport.scoreAverage,
+        pagesValid: consolidatedReport.pagesValid,
+        criteriaAverages: Object.entries(consolidatedReport.criteriaAverages).map(([k, v]) => `${k}: ${v.avgScore}/${v.max}`),
+        actionPlanTitles: (consolidatedReport.actionPlan || []).map(a => a.action?.substring(0, 60)),
+        pagesWithRecos: consolidatedReport.pages.filter(p => (p.recommendations || []).length > 0).length,
+        pagesWithoutRecos: consolidatedReport.pages.filter(p => !p.error && (p.recommendations || []).length === 0).map(p => p.url),
+        criteriaWithoutRecos: Object.entries(consolidatedReport.criteriaAverages)
+          .filter(([name, data]) => data.avgScore < data.max)
+          .filter(([name]) => {
+            const allRecos = consolidatedReport.pages.flatMap(p => (p.recommendations || []).filter(r => r.criterion === name));
+            return allRecos.length === 0;
+          })
+          .map(([name, data]) => `${name}: ${data.avgScore}/${data.max} — 0 recos`),
+        executiveSummaryLength: (consolidatedReport.executiveSummary || '').length,
+      };
+
+      const qaPrompt = `${locale === 'en' ? 'English.' : 'Francais.'}\n\nYou are a QA reviewer for a GEO audit report. Check this report summary for issues:\n\n${JSON.stringify(qaSummary, null, 2)}\n\nCheck:\n1. Pages without recommendations (should have 3 each unless error page)\n2. Criteria below max score with 0 recos (every non-max criterion needs recos)\n3. Duplicate actions in the plan (same idea repeated with different words)\n4. Executive summary present and substantial (>200 chars)\n\nReturn JSON:\n{"issues":[{"type":"missing_recos_page|missing_recos_criterion|duplicate_action|empty_summary","detail":"description","severity":"critical|warning"}],"duplicateActionIndices":[[0,3],[2,7]]}\n\nIf no issues: {"issues":[]}\nJSON only.`;
+
+      await new Promise(r => setTimeout(r, 3000));
+      const qaMsg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 2000, temperature: 0, messages: [{ role: 'user', content: qaPrompt }] });
+      let qaRaw = qaMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+      const qaMatch = qaRaw.match(/\{[\s\S]*\}/);
+      if (qaMatch) {
+        const qa = JSON.parse(qaMatch[0]);
+        const issues = qa.issues || [];
+        console.log(`[pro-consolidate] QA: ${issues.length} issues found`);
+
+        // Auto-fix: remove duplicate actions
+        if (qa.duplicateActionIndices && qa.duplicateActionIndices.length > 0) {
+          const toRemove = new Set();
+          for (const group of qa.duplicateActionIndices) {
+            // Keep first, remove rest
+            for (let i = 1; i < group.length; i++) toRemove.add(group[i]);
+          }
+          if (toRemove.size > 0) {
+            consolidatedReport.actionPlan = consolidatedReport.actionPlan.filter((_, i) => !toRemove.has(i));
+            console.log(`[pro-consolidate] QA: removed ${toRemove.size} duplicate actions`);
+          }
+        }
+
+        // Log critical issues for visibility
+        for (const issue of issues) {
+          if (issue.severity === 'critical') {
+            console.warn(`[pro-consolidate] QA CRITICAL: ${issue.type} — ${issue.detail}`);
+          }
+        }
+      }
+    } catch (e) {
+      console.error('[pro-consolidate] QA pass failed (non-blocking):', e.message);
+    }
+
     await redis.set(`${JOB_PREFIX}:${siteJobId}:consolidated`, consolidatedReport, { ex: CONSOLIDATED_TTL });
     await redis.set(`${JOB_PREFIX}:${siteJobId}:status`, 'consolidated', { ex: CONSOLIDATED_TTL });
 
