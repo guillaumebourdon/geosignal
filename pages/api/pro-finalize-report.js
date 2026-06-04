@@ -112,15 +112,24 @@ export default async function handler(req, res) {
     }
 
     // Read full page results for the template
+    // Workers store scoring data; consolidation adds recommendations per page
+    // We need both: worker data (evidence, detailed criteria) + consolidated recos
     const total = consolidated.pages?.length || 0;
     const pageKeys = Array.from({ length: total }, (_, i) => `${JOB_PREFIX}:${siteJobId}:page:${i}`);
     const pageSettled = await Promise.allSettled(pageKeys.map(k => redis.get(k)));
     const fullPages = pageSettled.map((result, i) => {
-      if (result.status !== 'fulfilled' || !result.value) {
-        return consolidated.pages?.[i] || { url: `page-${i}`, error: 'Not found' };
-      }
-      const raw = result.value;
-      return typeof raw === 'string' ? JSON.parse(raw) : raw;
+      const workerData = (result.status === 'fulfilled' && result.value)
+        ? (typeof result.value === 'string' ? JSON.parse(result.value) : result.value)
+        : null;
+      const consolidatedPage = consolidated.pages?.[i] || {};
+      const base = workerData || consolidatedPage;
+      // Merge: use worker data as base, but inject recos from consolidated (workers don't generate recos)
+      return {
+        ...base,
+        recommendations: (consolidatedPage.recommendations && consolidatedPage.recommendations.length > 0)
+          ? consolidatedPage.recommendations
+          : (base.recommendations || []),
+      };
     });
 
     // Sonnet dedup pass — merge semantic duplicates across page recos
