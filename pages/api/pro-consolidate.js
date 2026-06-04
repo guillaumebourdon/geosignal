@@ -390,14 +390,46 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
   let pageRecommendations = {};
   if (pageRecoR.status === 'fulfilled') {
     try {
-      const raw = pageRecoR.value.content[0].text;
+      let raw = pageRecoR.value.content[0].text;
+      // Strip markdown fences if present
+      raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+      // Strip control characters that break JSON.parse
+      raw = raw.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
       const jsonMatch = raw.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         pageRecommendations = JSON.parse(jsonMatch[0]);
         const pageCount = Object.keys(pageRecommendations).length;
         console.log(`[pro-consolidate] Page recommendations OK: ${pageCount} pages`);
+      } else {
+        console.error('[pro-consolidate] Page recommendations: no JSON found in response');
       }
-    } catch (e) { console.error('[pro-consolidate] Page recommendations parse error:', e.message); }
+    } catch (e) {
+      console.error('[pro-consolidate] Page recommendations parse error:', e.message);
+      // Retry with simpler approach: try to extract URL-keyed objects
+      try {
+        const raw = pageRecoR.value.content[0].text;
+        const urlPattern = /"(https?:\/\/[^"]+)"\s*:\s*\[/g;
+        let match;
+        while ((match = urlPattern.exec(raw)) !== null) {
+          const url = match[1];
+          // Find the array for this URL
+          const start = match.index + match[0].length - 1;
+          let depth = 1, end = start + 1;
+          while (depth > 0 && end < raw.length) {
+            if (raw[end] === '[') depth++;
+            if (raw[end] === ']') depth--;
+            end++;
+          }
+          try {
+            const arr = JSON.parse(raw.substring(start, end));
+            if (Array.isArray(arr)) pageRecommendations[url] = arr;
+          } catch {}
+        }
+        if (Object.keys(pageRecommendations).length > 0) {
+          console.log(`[pro-consolidate] Page recommendations recovered: ${Object.keys(pageRecommendations).length} pages`);
+        }
+      } catch {}
+    }
   } else { console.error('[pro-consolidate] Page recommendations FAILED:', pageRecoR.reason?.message); }
 
   return { synthesis, citationTest, criteriaConsolidated, pageRecommendations };
