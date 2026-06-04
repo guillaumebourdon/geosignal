@@ -110,12 +110,13 @@ Stripe checkout → webhook → /api/pro-enqueue
 7. **Annexe page par page** — Score, 7 critères, verdict, 3-5 recommandations par page
 8. **Méthodologie** — Explication transparente
 
-La consolidation fait 5 appels Sonnet :
+La consolidation fait 6 appels Sonnet :
 1. Synthèse exécutive + patterns + plan d'action (dédupliqué)
 2. Critères consolidés avec format AVANT/APRÈS dans concreteExample
 3. Test citation IA (30 requêtes GPT-4o-mini)
 4. Recos par page (3 recos/page, concis, sans code)
 5. Code examples pour les 5 recos high-priority (appel séparé, non-bloquant)
+6. QA automatique — vérifie recos manquantes, doublons plan d'action, cohérence (non-bloquant)
 
 Le template est dans `lib/proReportTemplate.js`. Il lit :
 - `report.pages[].recommendations` pour les recos par page (section 7)
@@ -124,6 +125,8 @@ Le template est dans `lib/proReportTemplate.js`. Il lit :
 - `report.citationTestConsolidated` pour section 6
 
 **Si les `recommendations` par page sont vides, les sections 3 et 7 sont vides.**
+
+Pour les critères bien notés sans recos détaillées, le template affiche un conseil contextuel depuis `GOOD_SCORE_TIPS` (un conseil spécifique par critère). Seul un score 100% affiche "parfaitement optimisé".
 
 ---
 
