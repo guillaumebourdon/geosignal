@@ -197,18 +197,20 @@ export default async function handler(req, res) {
       let pageRecommendations = {};
       try {
         const pagesData = validPages.map(p => {
+          const title = p.evidence?.metaTitle || p.url.split('/').pop() || '';
           const weakCriteria = (p.criteria || [])
             .filter(c => c.max > 0 && c.score < c.max)
             .sort((a, b) => (a.score / a.max) - (b.score / b.max))
             .slice(0, 5)
             .map(c => `${c.name}: ${c.score}/${c.max}`)
             .join(', ');
-          return `- ${p.url} (${p.score}/100) — ${weakCriteria}`;
+          const context = title ? `"${title.substring(0, 60)}"` : '';
+          return `- ${p.url} ${context} (${p.score}/100) — ${weakCriteria}`;
         }).join('\n');
 
         const pageRecoMsg = await callHaikuWithRetry({
           model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2,
-          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant. Generate 3 recommendations per page for a website audit.\n\nSite: ${rootUrl}\n${validPages.length} pages analyzed.\n\n${pagesData}\n\nCRITICAL: You MUST return recommendations for ALL ${validPages.length} pages. Do not skip any page.\n\nJSON object, one key per URL:\n{"url":[{"priority":"high|medium|low","criterion":"French criterion name","title":"5 words max","problem":"2 sentences","solution":"2 sentences","technicalImplementation":["step 1","step 2"],"impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}\n\nRules:\n- EXACTLY 3 recommendations per page, for criteria NOT at maximum score\n- priority: high <50%, medium 50-70%, low >70%\n- "criterion" must be one of: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'\n- Keep problem and solution concise (2 sentences each)\n- JSON only, no markdown, no code examples` }],
+          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant. Generate 3 recommendations per page for a website audit.\n\nSite: ${rootUrl}\n${validPages.length} pages analyzed.\n\n${pagesData}\n\nCRITICAL: You MUST return recommendations for ALL ${validPages.length} pages. Do not skip any page.\n\nJSON object, one key per URL:\n{"url":[{"priority":"high|medium|low","criterion":"French criterion name","title":"5 words max","problem":"2 sentences","solution":"2 sentences","technicalImplementation":["step 1","step 2"],"impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}\n\nRules:\n- EXACTLY 3 recommendations per page, for criteria NOT at maximum score\n- priority: high <50%, medium 50-70%, low >70%\n- "criterion" must be one of: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'\n- Keep problem and solution concise (2 sentences each)\n- Be SPECIFIC to each page's content and purpose (use the page title for context)\n- JSON only, no markdown, no code examples` }],
         });
         const raw = pageRecoMsg.content[0].text;
         const jsonMatch = raw.match(/\{[\s\S]*\}/);

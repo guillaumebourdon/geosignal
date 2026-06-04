@@ -183,7 +183,7 @@ Generate a comprehensive site-level analysis. JSON only:
 Rules:
 - executiveSummary: 2-3 substantial paragraphs, specific to this site. Use the FIXED STATS numbers above verbatim.
 - patterns: 5 to 8 cross-page patterns detected
-- actionPlan: 10 to 15 site-level actions, sorted by priority (impact/effort ratio). Each action MUST be UNIQUE — do not repeat the same recommendation with different wording. If multiple pages need the same fix, group them into ONE action with multiple pagesAffected.
+- actionPlan: 8 to 12 site-level actions, sorted by priority (impact/effort ratio). DEDUPLICATION IS CRITICAL: each action must address a DIFFERENT problem. Never have 2 actions about the same criterion or the same type of fix. Example of WRONG: "Add publication dates" + "Implement dateModified schema" + "Show last update date" = these are ONE action about freshness, not three.
 - Be specific: reference actual URLs from the audit
 - NEVER write "${ctx.totalValid} pages sur ${ctx.totalValid}" — that's trivially obvious. Write "${ctx.totalValid} pages" or "toutes les ${ctx.totalValid} pages".
 - Each action in the plan should affect 2+ pages. If a recommendation only applies to 1 page, it belongs in the per-page analysis, not in the site-level action plan. Consolidate single-page issues into broader patterns (e.g., instead of "add legal references to the insurance page", write "add external source citations across content pages").
@@ -259,13 +259,16 @@ function buildPageRecommendationsPrompt(locale, rootUrl, metaDescription, validP
     : 'LANGUE DE SORTIE : Francais. Toutes les valeurs texte en francais professionnel.';
 
   const pagesData = validPages.map(p => {
+    const title = p.evidence?.metaTitle || p.url.split('/').pop() || '';
+    const desc = p.evidence?.metaDescription || '';
     const weakCriteria = (p.criteria || [])
       .filter(c => c.max > 0 && c.score < c.max)
       .sort((a, b) => (a.score / a.max) - (b.score / b.max))
       .slice(0, 5)
       .map(c => `${c.name}: ${c.score}/${c.max}`)
       .join(', ');
-    return `- ${p.url} (${p.score}/100) — ${weakCriteria}`;
+    const context = title ? `"${title.substring(0, 60)}"` : '';
+    return `- ${p.url} ${context} (${p.score}/100) — ${weakCriteria}`;
   }).join('\n');
 
   return `${langInstruction}
@@ -287,6 +290,7 @@ Rules:
 - priority: high <50%, medium 50-70%, low >70%
 - "criterion" must be one of: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'
 - Keep problem and solution concise (2 sentences each)
+- Be SPECIFIC to each page's content and purpose (use the page title for context). Don't give the same generic advice to every page. A contact page needs different recos than a product page.
 - JSON only, no markdown, no code examples`;
 }
 
