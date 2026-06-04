@@ -261,36 +261,32 @@ function buildPageRecommendationsPrompt(locale, rootUrl, metaDescription, validP
     const weakCriteria = (p.criteria || [])
       .filter(c => c.max > 0 && c.score < c.max)
       .sort((a, b) => (a.score / a.max) - (b.score / b.max))
-      .map(c => `${c.name}: ${c.score}/${c.max} — ${c.detail || ''}`)
-      .join('\n    ');
-    return `  URL: ${p.url} (score: ${p.score}/100)\n    ${weakCriteria}`;
-  }).join('\n\n');
+      .slice(0, 5)
+      .map(c => `${c.name}: ${c.score}/${c.max}`)
+      .join(', ');
+    return `- ${p.url} (${p.score}/100) — ${weakCriteria}`;
+  }).join('\n');
 
   return `${langInstruction}
 
-You are a senior GEO consultant. Generate recommendations for each page of a website audit.
+You are a senior GEO consultant. Generate 3 recommendations per page for a website audit.
 
 Site: ${rootUrl}
+${validPages.length} pages analyzed.
 
-For each page below, generate 3-5 recommendations targeting the weakest criteria.
-
-Pages:
 ${pagesData}
 
-Return a JSON object mapping each URL to its recommendations array:
-{"${validPages[0]?.url || 'url'}":[{"priority":"high|medium|low","criterion":"criterion name","title":"5 words max","problem":"3-5 sentences describing what is wrong","solution":"3-5 sentences describing the fix","technicalImplementation":["step 1","step 2","step 3"],"codeExample":"<code snippet or null>","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}],"url2":[...]}
+CRITICAL: You MUST return recommendations for ALL ${validPages.length} pages. Do not skip any page.
+
+JSON object, one key per URL:
+{"url":[{"priority":"high|medium|low","criterion":"French criterion name","title":"5 words max","problem":"2 sentences","solution":"2 sentences","technicalImplementation":["step 1","step 2"],"impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}
 
 Rules:
-- Each recommendation must target a criterion that is NOT at maximum score
-- Be specific to the page content and URL
-- Priority: high for criteria <50%, medium for 50-70%, low for 70-80%
-- 3-5 recommendations per page, sorted by priority
-- "problem": 3-5 sentences, describe what is wrong and why it hurts AI visibility
-- "solution": 3-5 sentences, concrete fix
-- "technicalImplementation": 2-4 numbered steps a developer can follow
-- "codeExample": JSON-LD, HTML, or meta tag when relevant, null otherwise
-- "criterion" MUST use the EXACT French name from this list: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'
-- JSON only, no markdown`;
+- EXACTLY 3 recommendations per page, for criteria NOT at maximum score
+- priority: high <50%, medium 50-70%, low >70%
+- "criterion" must be one of: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'
+- Keep problem and solution concise (2 sentences each)
+- JSON only, no markdown, no code examples`;
 }
 
 // ── Step 5: Run 4 Sonnet calls in parallel ──────────────────────────────────
