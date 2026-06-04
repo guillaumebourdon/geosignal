@@ -198,7 +198,7 @@ export default async function handler(req, res) {
       try {
         const pagesData = validPages.map(p => {
           const weakCriteria = (p.criteria || [])
-            .filter(c => c.max > 0 && (c.score / c.max) < 0.8)
+            .filter(c => c.max > 0 && c.score < c.max)
             .sort((a, b) => (a.score / a.max) - (b.score / b.max))
             .map(c => `${c.name}: ${c.score}/${c.max} — ${c.detail || ''}`)
             .join('\n    ');
@@ -207,7 +207,7 @@ export default async function handler(req, res) {
 
         const pageRecoMsg = await callHaikuWithRetry({
           model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2,
-          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant. Generate recommendations for each page of a website audit.\n\nSite: ${rootUrl}\n\nFor each page below, generate 3-5 recommendations targeting the weakest criteria.\n\nPages:\n${pagesData}\n\nReturn a JSON object mapping each URL to its recommendations array:\n{"${validPages[0]?.url || 'url'}":[{"priority":"high|medium|low","criterion":"criterion name","title":"5 words max","problem":"3-5 sentences describing what is wrong","solution":"3-5 sentences describing the fix","technicalImplementation":["step 1","step 2","step 3"],"codeExample":"<code snippet or null>","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}\n\nRules:\n- Each recommendation must target a criterion below 80%\n- Be specific to the page content and URL\n- "criterion" MUST use exact French name from: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'\n- JSON only, no markdown` }],
+          messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant. Generate recommendations for each page of a website audit.\n\nSite: ${rootUrl}\n\nFor each page below, generate 3-5 recommendations targeting the weakest criteria.\n\nPages:\n${pagesData}\n\nReturn a JSON object mapping each URL to its recommendations array:\n{"${validPages[0]?.url || 'url'}":[{"priority":"high|medium|low","criterion":"criterion name","title":"5 words max","problem":"3-5 sentences describing what is wrong","solution":"3-5 sentences describing the fix","technicalImplementation":["step 1","step 2","step 3"],"codeExample":"<code snippet or null>","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}\n\nRules:\n- Each recommendation must target a criterion that is NOT at maximum score\n- Be specific to the page content and URL\n- "criterion" MUST use exact French name from: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'\n- JSON only, no markdown` }],
         });
         const raw = pageRecoMsg.content[0].text;
         const jsonMatch = raw.match(/\{[\s\S]*\}/);

@@ -259,7 +259,7 @@ function buildPageRecommendationsPrompt(locale, rootUrl, metaDescription, validP
 
   const pagesData = validPages.map(p => {
     const weakCriteria = (p.criteria || [])
-      .filter(c => c.max > 0 && (c.score / c.max) < 0.8)
+      .filter(c => c.max > 0 && c.score < c.max)
       .sort((a, b) => (a.score / a.max) - (b.score / b.max))
       .map(c => `${c.name}: ${c.score}/${c.max} — ${c.detail || ''}`)
       .join('\n    ');
@@ -281,7 +281,7 @@ Return a JSON object mapping each URL to its recommendations array:
 {"${validPages[0]?.url || 'url'}":[{"priority":"high|medium|low","criterion":"criterion name","title":"5 words max","problem":"3-5 sentences describing what is wrong","solution":"3-5 sentences describing the fix","technicalImplementation":["step 1","step 2","step 3"],"codeExample":"<code snippet or null>","impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}],"url2":[...]}
 
 Rules:
-- Each recommendation must target a criterion below 80%
+- Each recommendation must target a criterion that is NOT at maximum score
 - Be specific to the page content and URL
 - Priority: high for criteria <50%, medium for 50-70%, low for 70-80%
 - 3-5 recommendations per page, sorted by priority

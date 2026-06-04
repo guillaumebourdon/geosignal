@@ -1179,8 +1179,6 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
     'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T',
     'Accessibilite IA', 'Neutralite editoriale',
     'Presence externe', 'Fraicheur & signaux temporels',
-    // Legacy fallbacks
-    'Extractibilite & reponse directe', 'Crawlabilite IA', 'Donnees structurees', 'Fraicheur & maintenance',
   ];
 
   // 3 weakest criteria

@@ -218,6 +218,7 @@ Direct HTTP (15s timeout) → Browserless headless Chrome (15s) → erreur
 5. **Ne jamais proposer de remettre Jina**
 6. **Ne jamais augmenter un timeout comme seule solution** — chercher la cause racine
 7. **Toujours deploy sur main sauf indication contraire**
+8. **Si un critère n'est pas au score max, il DOIT avoir au moins une recommandation** — pas de "bien optimisé" à 8/10. Seul un 10/10 ou 25/25 peut afficher "bien optimisé"
 
 ---
 
