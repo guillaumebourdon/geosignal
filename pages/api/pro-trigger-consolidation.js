@@ -245,7 +245,7 @@ export default async function handler(req, res) {
         try {
           const codeMsg = await callHaikuWithRetry({
             model: 'claude-4-sonnet-20250514', max_tokens: 4000, temperature: 0.2,
-            messages: [{ role: 'user', content: `${langInstruction}\n\nGenerate code examples for these website audit recommendations.\n\nSite: ${rootUrl}\n\n${topRecos.map((r, i) => `${i + 1}. [${r.url}] ${r.criterion}: ${r.title} — ${r.solution || r.problem}`).join('\n')}\n\nReturn a JSON array:\n[{"index":0,"codeExample":"<code>"}]\n\nRules:\n- Real, copy-pasteable code (JSON-LD, HTML, meta tags)\n- Add <!-- Adaptez avec vos vraies valeurs --> if placeholder values\n- Under 15 lines each\n- JSON array only, no markdown` }],
+            messages: [{ role: 'user', content: `${langInstruction}\n\nGenerate code examples for these website audit recommendations.\n\nSite: ${rootUrl}\n\n${topRecos.map((r, i) => `${i + 1}. [${r.url}] ${r.criterion}: ${r.title} — ${r.solution || r.problem}`).join('\n')}\n\nReturn a JSON array:\n[{"index":0,"codeExample":"<code>"}]\n\nRules:\n- Real, copy-pasteable code (JSON-LD, HTML, meta tags)\n- CRITICAL: Never invent realistic-looking fake data. Use neutral placeholders: [nombre d'utilisateurs], [certification reelle], [date de mise a jour], [nom du client], [resultat mesure]\n- Add <!-- Adaptez avec vos vraies valeurs --> at the top\n- Under 15 lines each\n- JSON array only, no markdown` }],
           });
           let codeRaw = codeMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
           const codeMatch = codeRaw.match(/\[[\s\S]*\]/);
