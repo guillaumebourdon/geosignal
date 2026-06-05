@@ -139,6 +139,142 @@ export default async function handler(req, res) {
           }, { ex: JOB_TTL });
           console.log(`🚀 Pro audit triggered for ${session.metadata.url} — job ${result.siteJobId}, pages: ${result.queuedCount}`);
 
+          // Send confirmation email to customer
+          if (email) {
+            try {
+              const { Resend } = require('resend');
+              const confirmResend = new Resend(process.env.RESEND_API_KEY);
+              const siteUrl = session.metadata.url;
+              const loc = session.metadata.locale || 'fr';
+              const isFr = loc !== 'en';
+
+              await confirmResend.emails.send({
+                from: 'Detekia <hello@detekia.fr>',
+                to: email,
+                bcc: 'guillaume@beeleven.fr',
+                subject: isFr
+                  ? `Detekia — Votre audit GEO est en cours`
+                  : `Detekia — Your GEO audit is in progress`,
+                html: isFr ? `
+<div style="font-family:system-ui,-apple-system,sans-serif;max-width:520px;margin:0 auto;padding:0;">
+  <!-- Header -->
+  <div style="background:#1A1916;border-radius:16px 16px 0 0;padding:36px 32px 28px;text-align:center;">
+    <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;width:16px;height:16px;">
+        <div style="background:#10A37F;border-radius:50%;"></div>
+        <div style="background:#D97757;border-radius:50%;"></div>
+        <div style="background:#4285F4;border-radius:50%;"></div>
+        <div style="background:#1C7DC4;border-radius:50%;"></div>
+      </div>
+      <span style="font-family:Georgia,serif;font-size:16px;color:#F7F5F2;font-weight:bold;">Detekia</span>
+    </div>
+    <div style="width:56px;height:56px;border-radius:50%;background:rgba(16,163,127,0.12);border:2px solid rgba(16,163,127,0.25);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
+      <span style="font-size:24px;">&#10003;</span>
+    </div>
+    <h1 style="font-family:Georgia,serif;font-size:24px;color:#F7F5F2;margin:0 0 6px;line-height:1.2;">Paiement confirme !</h1>
+    <p style="font-size:14px;color:#C4B5A3;margin:0;">Votre audit complet est lance.</p>
+  </div>
+
+  <!-- Body -->
+  <div style="background:#fff;border:1px solid #E5E2DC;border-top:none;border-radius:0 0 16px 16px;padding:32px;">
+    <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 20px;">
+      Bonjour,
+    </p>
+    <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 20px;">
+      Merci pour votre confiance ! Notre IA est en train d'analyser <strong>${siteUrl}</strong> en profondeur.
+    </p>
+
+    <!-- What's happening -->
+    <div style="background:#F7F5F2;border-radius:12px;padding:20px 24px;margin-bottom:24px;">
+      <div style="font-family:monospace;font-size:10px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">Ce qui se passe en ce moment</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <span style="color:#10A37F;font-size:14px;">&#10003;</span>
+        <span style="font-size:13px;color:#1A1916;">Paiement recu et valide</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <span style="color:#D97757;font-size:14px;">&#9679;</span>
+        <span style="font-size:13px;color:#1A1916;">Analyse de vos ${result.queuedCount} pages en cours</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <span style="color:#B0ABA5;font-size:14px;">&#9675;</span>
+        <span style="font-size:13px;color:#8A8680;">Generation du rapport</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="color:#B0ABA5;font-size:14px;">&#9675;</span>
+        <span style="font-size:13px;color:#8A8680;">Envoi par email</span>
+      </div>
+    </div>
+
+    <!-- Timing -->
+    <div style="background:rgba(217,119,87,0.06);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:24px;">
+      <p style="font-size:14px;color:#1A1916;line-height:1.6;margin:0;">
+        <strong>Temps estime :</strong> 15 a 20 minutes. Vous recevrez votre rapport complet a <strong>${email}</strong> des qu'il sera pret.
+      </p>
+    </div>
+
+    <p style="font-size:14px;color:#6B6762;line-height:1.6;margin:0 0 24px;">
+      Vous pouvez fermer cette page en toute tranquillite — l'analyse continue en arriere-plan. Aucune action de votre part n'est necessaire.
+    </p>
+
+    <!-- Spam notice -->
+    <div style="background:#F7F5F2;border-radius:10px;padding:14px 18px;margin-bottom:24px;">
+      <p style="font-size:12px;color:#6B6762;line-height:1.5;margin:0;">
+        <strong style="color:#1A1916;">Pensez a verifier vos spams.</strong> Notre email peut atterrir dans les indesirables. Expediteur : <code style="background:rgba(217,119,87,0.08);padding:2px 6px;border-radius:4px;font-size:11px;color:#D97757;">hello@detekia.fr</code>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <p style="font-size:12px;color:#B0ABA5;text-align:center;margin:0;">
+      Une question ? Repondez a cet email ou ecrivez-nous a <a href="mailto:hello@detekia.fr" style="color:#D97757;text-decoration:none;">hello@detekia.fr</a>
+    </p>
+  </div>
+</div>
+` : `
+<div style="font-family:system-ui,-apple-system,sans-serif;max-width:520px;margin:0 auto;padding:0;">
+  <div style="background:#1A1916;border-radius:16px 16px 0 0;padding:36px 32px 28px;text-align:center;">
+    <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;width:16px;height:16px;">
+        <div style="background:#10A37F;border-radius:50%;"></div>
+        <div style="background:#D97757;border-radius:50%;"></div>
+        <div style="background:#4285F4;border-radius:50%;"></div>
+        <div style="background:#1C7DC4;border-radius:50%;"></div>
+      </div>
+      <span style="font-family:Georgia,serif;font-size:16px;color:#F7F5F2;font-weight:bold;">Detekia</span>
+    </div>
+    <div style="width:56px;height:56px;border-radius:50%;background:rgba(16,163,127,0.12);border:2px solid rgba(16,163,127,0.25);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
+      <span style="font-size:24px;">&#10003;</span>
+    </div>
+    <h1 style="font-family:Georgia,serif;font-size:24px;color:#F7F5F2;margin:0 0 6px;line-height:1.2;">Payment confirmed!</h1>
+    <p style="font-size:14px;color:#C4B5A3;margin:0;">Your full audit has been launched.</p>
+  </div>
+  <div style="background:#fff;border:1px solid #E5E2DC;border-top:none;border-radius:0 0 16px 16px;padding:32px;">
+    <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 20px;">Hi there,</p>
+    <p style="font-size:15px;color:#1A1916;line-height:1.7;margin:0 0 20px;">Thank you for your trust! Our AI is currently analyzing <strong>${siteUrl}</strong> in depth.</p>
+    <div style="background:#F7F5F2;border-radius:12px;padding:20px 24px;margin-bottom:24px;">
+      <div style="font-family:monospace;font-size:10px;color:#D97757;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">What's happening now</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="color:#10A37F;font-size:14px;">&#10003;</span><span style="font-size:13px;color:#1A1916;">Payment received and validated</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="color:#D97757;font-size:14px;">&#9679;</span><span style="font-size:13px;color:#1A1916;">Analyzing your ${result.queuedCount} pages</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="color:#B0ABA5;font-size:14px;">&#9675;</span><span style="font-size:13px;color:#8A8680;">Report generation</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span style="color:#B0ABA5;font-size:14px;">&#9675;</span><span style="font-size:13px;color:#8A8680;">Email delivery</span></div>
+    </div>
+    <div style="background:rgba(217,119,87,0.06);border-left:3px solid #D97757;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:24px;">
+      <p style="font-size:14px;color:#1A1916;line-height:1.6;margin:0;"><strong>Estimated time:</strong> 15-20 minutes. Your full report will be sent to <strong>${email}</strong> as soon as it's ready.</p>
+    </div>
+    <p style="font-size:14px;color:#6B6762;line-height:1.6;margin:0 0 24px;">You can safely close this page — the analysis continues in the background.</p>
+    <div style="background:#F7F5F2;border-radius:10px;padding:14px 18px;margin-bottom:24px;">
+      <p style="font-size:12px;color:#6B6762;line-height:1.5;margin:0;"><strong style="color:#1A1916;">Check your spam folder.</strong> Our email might land in junk. Sender: <code style="background:rgba(217,119,87,0.08);padding:2px 6px;border-radius:4px;font-size:11px;color:#D97757;">hello@detekia.fr</code></p>
+    </div>
+    <p style="font-size:12px;color:#B0ABA5;text-align:center;margin:0;">Questions? Reply to this email or write to <a href="mailto:hello@detekia.fr" style="color:#D97757;text-decoration:none;">hello@detekia.fr</a></p>
+  </div>
+</div>
+`,
+              });
+              console.log(`[webhook] Confirmation email sent to ${maskEmail(email)} for Pro audit`);
+            } catch (emailErr) {
+              console.error('[webhook] Confirmation email failed:', emailErr.message);
+            }
+          }
+
           // SAFEGUARD: alert if page count is critically low
           if (result.queuedCount < 5) {
             const { Resend } = require('resend');
