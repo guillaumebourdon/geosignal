@@ -1483,9 +1483,9 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
               {/* Résumé par catégorie */}
               {(() => {
-                const genericQ = queries.filter(q => q.type === 'generic');
-                const nicheQ = queries.filter(q => q.type === 'niche');
-                const ltQ = queries.filter(q => q.type === 'long_tail');
+                const genericQ = queries.filter(q => (q.type || q.difficulty) === 'generic');
+                const nicheQ = queries.filter(q => (q.type || q.difficulty) === 'niche');
+                const ltQ = queries.filter(q => (q.type || q.difficulty) === 'long_tail');
                 const gC = genericQ.filter(q => q.cited).length;
                 const nC = nicheQ.filter(q => q.cited).length;
                 const lC = ltQ.filter(q => q.cited).length;
