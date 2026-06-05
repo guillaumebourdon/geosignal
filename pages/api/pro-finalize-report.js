@@ -64,7 +64,7 @@ export default async function handler(req, res) {
   // Idempotence
   // Atomic idempotence: SET NX to claim finalization — prevents double email
   const finalizeLock = `${JOB_PREFIX}:${siteJobId}:finalizing`;
-  const acquired = await redis.set(finalizeLock, '1', { nx: true, ex: 600 }); // 10 min TTL
+  const acquired = await redis.set(finalizeLock, '1', { nx: true, ex: 24 * 60 * 60 }); // 24h TTL — prevents double email even on late QStash retries
   if (!acquired) {
     console.log(`[pro-finalize] Already finalizing or delivered for ${siteJobId}, skipping`);
     return res.status(200).json({ success: true, alreadyDelivered: true, siteJobId });

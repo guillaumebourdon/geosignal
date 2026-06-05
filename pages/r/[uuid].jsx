@@ -185,8 +185,13 @@ function softenText(text) {
     .replace(/parfaitement\s+(optimis[eé]|ma[iî]tris[eé])/gi, 'tres bien optimise')
     .replace(/strategie\s+parfaite/gi, 'strategie solide')
     .replace(/exemplaire/gi, 'tres solide')
+    .replace(/excellence\s+remarquable/gi, 'tres bon niveau')
+    .replace(/excellence/gi, 'tres bon niveau')
+    .replace(/remarquable/gi, 'notable')
     .replace(/parfait(?:e|s)?(?!\w)/gi, 'tres bon')
-    .replace(/irr[eé]prochable/gi, 'tres bon');
+    .replace(/irr[eé]prochable/gi, 'tres bon')
+    .replace(/impeccable/gi, 'tres bon')
+    .replace(/sans\s+faille/gi, 'solide');
 }
 
 function lookupMap(map, name) {

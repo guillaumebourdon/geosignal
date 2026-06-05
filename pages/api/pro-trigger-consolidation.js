@@ -51,6 +51,7 @@ export default async function handler(req, res) {
     await Promise.all([
       redis.del(`${JOB_PREFIX}:${siteJobId}:consolidation_triggered`),
       redis.del(`${JOB_PREFIX}:${siteJobId}:pdf_triggered`),
+      redis.del(`${JOB_PREFIX}:${siteJobId}:finalizing`),
       redis.del(`${JOB_PREFIX}:${siteJobId}:status`),
     ]);
     return res.status(200).json({ success: true, action: 'locks_reset', siteJobId });
