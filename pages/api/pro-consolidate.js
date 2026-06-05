@@ -1,10 +1,11 @@
 import { Redis } from '@upstash/redis';
 import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { verifyQstashSignature, triggerFinalizeReport, triggerConsolidationStep } from '../../lib/proQueue';
 const { runRealCitationTest } = require('../../lib/citationTest');
 
 export const config = {
-  maxDuration: 600,
+  maxDuration: 300, // Each step does 1 API call — 300s is plenty
   api: { bodyParser: false },
 };
 
@@ -13,7 +14,45 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: 500000 });
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: 60000 });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: 60000 });
+
+// ── Multi-provider call with fallback ────────────────────────────────────────
+
+async function callSonnetWithFallback(prompt, { maxTokens = 6000 } = {}) {
+  // Try Sonnet first (better for qualitative analysis in French)
+  try {
+    const msg = await anthropic.messages.create({
+      model: 'claude-4-sonnet-20250514', max_tokens: maxTokens, temperature: 0.2,
+      messages: [{ role: 'user', content: prompt }],
+    });
+    return { text: msg.content[0].text, provider: 'sonnet' };
+  } catch (e) {
+    console.warn(`[pro-consolidate] Sonnet failed (${e.status || e.message?.substring(0, 50)}), falling back to GPT-4o`);
+  }
+  // Fallback to GPT-4o (reliable on Vercel)
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4o', max_tokens: maxTokens, temperature: 0.2,
+    messages: [{ role: 'user', content: prompt }],
+  });
+  return { text: completion.choices[0].message.content, provider: 'gpt-4o' };
+}
+
+async function callGPT4o(prompt, { maxTokens = 6000 } = {}) {
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4o', max_tokens: maxTokens, temperature: 0.2,
+    messages: [{ role: 'user', content: prompt }],
+  });
+  return { text: completion.choices[0].message.content, provider: 'gpt-4o' };
+}
+
+async function callGPT4oMini(prompt, { maxTokens = 2000 } = {}) {
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4o-mini', max_tokens: maxTokens, temperature: 0.2,
+    messages: [{ role: 'user', content: prompt }],
+  });
+  return { text: completion.choices[0].message.content, provider: 'gpt-4o-mini' };
+}
 
 const JOB_PREFIX = 'detekia:pro:v1:job';
 const CONSOLIDATED_TTL = 7 * 24 * 60 * 60;
@@ -505,14 +544,30 @@ function sortActionPlan(actionPlan) {
   });
 }
 
-// ── Handler — each step does 1 API call, then triggers the next via QStash ──
+// ── Handler — 4 steps, each with primary provider + fallback ────────────────
 
-const STEP_TTL = 24 * 60 * 60; // 24h — same as job data
+const STEP_TTL = 24 * 60 * 60;
 
 async function getBaseUrl(req) {
   const proto = req.headers['x-forwarded-proto'] || 'https';
   const host = req.headers['host'] || 'localhost:3000';
   return `${proto}://${host}`;
+}
+
+function safeParseJson(raw) {
+  const cleaned = (raw || '').replace(/```json\s*/g, '').replace(/```\s*/g, '').replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
+  const match = cleaned.match(/\{[\s\S]*\}/);
+  if (match) return JSON.parse(match[0]);
+  const arrMatch = cleaned.match(/\[[\s\S]*\]/);
+  if (arrMatch) return JSON.parse(arrMatch[0]);
+  throw new Error('No JSON found in response');
+}
+
+function safeParseArray(raw) {
+  const cleaned = (raw || '').replace(/```json\s*/g, '').replace(/```\s*/g, '');
+  const match = cleaned.match(/\[[\s\S]*\]/);
+  if (match) return JSON.parse(match[0]);
+  throw new Error('No JSON array found in response');
 }
 
 export default async function handler(req, res) {
@@ -529,7 +584,7 @@ export default async function handler(req, res) {
   if (!siteJobId) return res.status(400).json({ error: 'Missing siteJobId' });
 
   const startMs = Date.now();
-  console.log(`[pro-consolidate] Step ${step}/6 for ${siteJobId}`);
+  console.log(`[pro-consolidate] Step ${step}/4 for ${siteJobId}`);
 
   try {
     const jobData = await readJobData(siteJobId);
@@ -543,20 +598,18 @@ export default async function handler(req, res) {
     const baseUrl = await getBaseUrl(req);
     const homepageEvidence = agg.validPages[0]?.evidence || {};
 
-    // ── STEP 1: Synthesis + patterns + action plan ──────────────────────
+    // ══════════════════════════════════════════════════════════════════════
+    // STEP 1: Synthesis + patterns + plan d'action (Sonnet → fallback GPT-4o)
+    // ══════════════════════════════════════════════════════════════════════
     if (step === 1) {
       const prompt = buildSynthesisPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages);
       let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
       try {
-        const msg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
-        synthesis = parseJson(msg.content[0].text);
+        const result = await callSonnetWithFallback(prompt, { maxTokens: 8000 });
+        synthesis = safeParseJson(result.text);
+        console.log(`[pro-consolidate] Step 1 via ${result.provider}`);
       } catch (e) {
-        console.error(`[pro-consolidate] Step 1 Synthesis failed: ${e.message}. Retrying after 15s...`);
-        await new Promise(r => setTimeout(r, 15000));
-        try {
-          const retry = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
-          synthesis = parseJson(retry.content[0].text);
-        } catch (e2) { console.error(`[pro-consolidate] Step 1 retry also failed: ${e2.message}`); }
+        console.error(`[pro-consolidate] Step 1 all providers failed: ${e.message}`);
       }
       await redis.set(`${JOB_PREFIX}:${siteJobId}:step:synthesis`, synthesis, { ex: STEP_TTL });
       console.log(`[pro-consolidate] Step 1 done in ${Date.now() - startMs}ms. Exec=${(synthesis.executiveSummary || '').length}c, Patterns=${(synthesis.patterns || []).length}, Actions=${(synthesis.actionPlan || []).length}`);
@@ -569,10 +622,10 @@ export default async function handler(req, res) {
       const prompt = buildCriteriaPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages);
       let criteriaConsolidated = [];
       try {
-        const msg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
-        const arrMatch = msg.content[0].text.match(/\[[\s\S]*\]/);
-        if (arrMatch) criteriaConsolidated = JSON.parse(arrMatch[0]);
-      } catch (e) { console.error(`[pro-consolidate] Step 2 Criteria failed: ${e.message}`); }
+        const result = await callSonnetWithFallback(prompt, { maxTokens: 6000 });
+        criteriaConsolidated = safeParseArray(result.text);
+        console.log(`[pro-consolidate] Step 2 via ${result.provider}`);
+      } catch (e) { console.error(`[pro-consolidate] Step 2 all providers failed: ${e.message}`); }
       await redis.set(`${JOB_PREFIX}:${siteJobId}:step:criteria`, criteriaConsolidated, { ex: STEP_TTL });
       console.log(`[pro-consolidate] Step 2 done in ${Date.now() - startMs}ms. Criteria=${criteriaConsolidated.length}`);
       await triggerConsolidationStep(siteJobId, 3, { baseUrl });
@@ -625,32 +678,32 @@ export default async function handler(req, res) {
       console.log(`[pro-consolidate] Step 4 prompt length: ${prompt.length} chars for ${agg.validPages.length} pages`);
       let pageRecommendations = {};
 
-      // Attempt 1 — direct call, max_tokens reduced to avoid long generation timeout on Vercel
+      // GPT-4o for page recos — reliable on Vercel, great at structured JSON
       try {
-        const msg = await anthropic.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 6000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
-        let raw = msg.content[0].text;
-        console.log(`[pro-consolidate] Step 4 response length: ${raw.length} chars, stop_reason: ${msg.stop_reason}`);
+        const completion = await openai.chat.completions.create({
+          model: 'gpt-4o', max_tokens: 8000, temperature: 0.2,
+          messages: [{ role: 'user', content: prompt }],
+        });
+        let raw = completion.choices[0].message.content;
+        console.log(`[pro-consolidate] Step 4 GPT-4o response: ${raw.length} chars, finish=${completion.choices[0].finish_reason}`);
         raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '');
         raw = raw.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
         const jsonMatch = raw.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
           pageRecommendations = JSON.parse(jsonMatch[0]);
         } else {
-          console.error(`[pro-consolidate] Step 4: no JSON object found. First 200 chars: ${raw.substring(0, 200)}`);
+          console.error(`[pro-consolidate] Step 4: no JSON found. First 200: ${raw.substring(0, 200)}`);
         }
       } catch (e) {
-        console.error(`[pro-consolidate] Step 4 attempt 1 failed: status=${e.status || 'none'} type=${e.constructor?.name} msg=${e.message?.substring(0, 200)}`);
-        // Attempt 2 after 30s — direct call
-        await new Promise(r => setTimeout(r, 30000));
+        console.error(`[pro-consolidate] Step 4 GPT-4o failed: ${e.message?.substring(0, 200)}`);
+        // Fallback to Sonnet
         try {
-          const msg2 = await anthropic.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 6000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
-          let raw2 = msg2.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-          raw2 = raw2.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
+          const msg = await anthropic.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 6000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
+          let raw2 = msg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
           const jsonMatch2 = raw2.match(/\{[\s\S]*\}/);
           if (jsonMatch2) pageRecommendations = JSON.parse(jsonMatch2[0]);
-          else console.error(`[pro-consolidate] Step 4 attempt 2: no JSON. First 200: ${raw2.substring(0, 200)}`);
         } catch (e2) {
-          console.error(`[pro-consolidate] Step 4 attempt 2 failed: ${e2.status || ''} ${e2.message}`);
+          console.error(`[pro-consolidate] Step 4 Sonnet fallback also failed: ${e2.message?.substring(0, 100)}`);
         }
       }
 
@@ -675,8 +728,8 @@ export default async function handler(req, res) {
       if (topRecos.length > 0) {
         try {
           const codePrompt = `${locale === 'en' ? 'OUTPUT LANGUAGE: English.' : 'LANGUE DE SORTIE : Francais.'}\n\nGenerate code examples (JSON-LD, HTML, or meta tags) for these website audit recommendations.\n\nSite: ${rootUrl}\n\n${topRecos.map((r, i) => `${i + 1}. [${r.url}] ${r.criterion}: ${r.title} — ${r.solution || r.problem}`).join('\n')}\n\nReturn a JSON array of ${topRecos.length} code snippets:\n[{"index":0,"codeExample":"<code here>"},{"index":1,"codeExample":"<code>"}]\n\nRules:\n- Each codeExample must be a real, copy-pasteable code snippet (JSON-LD, HTML meta tag, or HTML structure)\n- CRITICAL: Never invent realistic-looking fake data (fake user counts, fake certifications, fake dates). Use neutral placeholders: [nombre d'utilisateurs], [certification reelle], [date de mise a jour], [nom du client], [resultat mesure], [metrique verifiable]\n- Add <!-- Adaptez avec vos vraies valeurs --> at the top\n- Keep each snippet under 15 lines\n- JSON array only, no markdown`;
-          const codeMsg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 4000, temperature: 0.2, messages: [{ role: 'user', content: codePrompt }] });
-          let codeRaw = codeMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+          const codeCompletion = await openai.chat.completions.create({ model: 'gpt-4o', max_tokens: 4000, temperature: 0.2, messages: [{ role: 'user', content: codePrompt }] });
+          let codeRaw = codeCompletion.choices[0].message.content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
           const codeMatch = codeRaw.match(/\[[\s\S]*\]/);
           if (codeMatch) {
             const codeExamples = JSON.parse(codeMatch[0]);
@@ -774,8 +827,8 @@ export default async function handler(req, res) {
           pagesWithoutRecos: consolidatedReport.pages.filter(p => !p.error && (p.recommendations || []).length === 0).map(p => p.url),
         };
         const qaPrompt = `${locale === 'en' ? 'English.' : 'Francais.'}\n\nQA check for a GEO audit report:\n${JSON.stringify(qaSummary)}\n\nCheck for duplicate actions. Return JSON:\n{"duplicateActionIndices":[[0,3]]}\nIf no duplicates: {"duplicateActionIndices":[]}\nJSON only.`;
-        const qaMsg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 1000, temperature: 0, messages: [{ role: 'user', content: qaPrompt }] });
-        let qaRaw = qaMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+        const qaCompletion = await openai.chat.completions.create({ model: 'gpt-4o-mini', max_tokens: 1000, temperature: 0, messages: [{ role: 'user', content: qaPrompt }] });
+        let qaRaw = qaCompletion.choices[0].message.content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
         const qaMatch = qaRaw.match(/\{[\s\S]*\}/);
         if (qaMatch) {
           const qa = JSON.parse(qaMatch[0]);

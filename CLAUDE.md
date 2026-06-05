@@ -110,13 +110,18 @@ Stripe checkout → webhook → /api/pro-enqueue
 7. **Annexe page par page** — Score, 7 critères, verdict, 3-5 recommandations par page
 8. **Méthodologie** — Explication transparente
 
-La consolidation fait 6 appels Sonnet :
-1. Synthèse exécutive + patterns + plan d'action (dédupliqué)
-2. Critères consolidés avec format AVANT/APRÈS dans concreteExample
-3. Test citation IA (30 requêtes GPT-4o-mini)
-4. Recos par page (3 recos/page, concis, sans code)
-5. Code examples pour les 5 recos high-priority (appel séparé, non-bloquant)
-6. QA automatique — vérifie recos manquantes, doublons plan d'action, cohérence (non-bloquant)
+La consolidation fait 6 étapes en 4 jobs QStash (espacés de 90s) :
+
+| Step | Tâche | Provider principal | Fallback |
+|------|-------|--------------------|----------|
+| 1 | Synthèse + patterns + plan d'action | Claude Sonnet | GPT-4o |
+| 2 | Critères consolidés (avant/après) | Claude Sonnet | GPT-4o |
+| 3 | Citation test (30 queries) | GPT-4o-mini | — |
+| 4 | Recos par page | GPT-4o | Claude Sonnet |
+| 5 | Code examples | GPT-4o | — (non-bloquant) |
+| 6 | QA + assemblage | GPT-4o-mini | — (non-bloquant) |
+
+Principe : chaque step fait 1 appel API avec fallback automatique. Jamais de rate limit, jamais de timeout.
 
 Le template est dans `lib/proReportTemplate.js`. Il lit :
 - `report.pages[].recommendations` pour les recos par page (section 7)
