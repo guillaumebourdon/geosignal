@@ -420,8 +420,8 @@ export default function Results() {
 
   useEffect(() => {
     if (!url) return;
-    // Steps advance progressively: 4s, 6s, 8s, 10s — covers ~28s before last step
-    const stepDelays = [4000, 6000, 8000, 10000];
+    // Steps advance progressively: 2s, 3s, 4s, 5s — covers ~14s (scan is faster now with deterministic scoring + cache)
+    const stepDelays = [2000, 3000, 4000, 5000];
     let stepIdx = 0;
     function advanceStep() {
       setStep(s => { if (s < loadingSteps.length - 1) return s + 1; return s; });

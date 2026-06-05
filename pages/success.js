@@ -128,7 +128,7 @@ export default function Success() {
                   </div>
 
                   <div style={{ fontSize: 19, color: '#F7F5F2', marginBottom: 10, lineHeight: 1.3 }}>
-                    {isPro ? 'Votre rapport sera prêt dans 5 à 10 minutes' : 'Votre rapport sera prêt dans 1 à 2 minutes'}
+                    {isPro ? 'Votre rapport sera prêt dans 15 à 20 minutes' : 'Votre rapport sera prêt dans 1 à 2 minutes'}
                   </div>
 
                   <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', lineHeight: 1.7, marginBottom: 0 }}>
