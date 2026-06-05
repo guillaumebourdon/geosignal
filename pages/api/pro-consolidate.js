@@ -222,7 +222,7 @@ Generate a comprehensive site-level analysis. JSON only:
 Rules:
 - executiveSummary: 2-3 substantial paragraphs, specific to this site. Use the FIXED STATS numbers above verbatim.
 - patterns: 5 to 8 cross-page patterns detected
-- actionPlan: ALL relevant site-level actions, sorted by priority (impact/effort ratio). Include as many actions as the audit justifies — no artificial minimum or maximum. DEDUPLICATION IS CRITICAL: each action must address a DIFFERENT problem. Never have 2 actions about the same criterion or the same type of fix. Example of WRONG: "Add publication dates" + "Implement dateModified schema" + "Show last update date" = these are ONE action about freshness, not three.
+- actionPlan: ALL relevant site-level actions, sorted by priority (impact/effort ratio). Include EVERY action the audit justifies — no artificial limit. You CAN have multiple actions for the same criterion if they address DIFFERENT problems. Only merge actions that are literally the same fix rephrased. Example of WRONG: "Add publication dates" + "Implement dateModified schema" = these are the same fix. Example of RIGHT: "Add external source links" + "Add statistics and data points" = these are different fixes for the same criterion (Vérifiabilité), keep both.
 - Be specific: reference actual URLs from the audit
 - NEVER write "${ctx.totalValid} pages sur ${ctx.totalValid}" — that's trivially obvious. Write "${ctx.totalValid} pages" or "toutes les ${ctx.totalValid} pages".
 - Each action in the plan should affect 2+ pages. If a recommendation only applies to 1 page, it belongs in the per-page analysis, not in the site-level action plan. Consolidate single-page issues into broader patterns (e.g., instead of "add legal references to the insurance page", write "add external source citations across content pages").
@@ -277,14 +277,15 @@ You are a senior GEO consultant. For a site audit of ${rootUrl} (${ctx.totalVali
 Criteria data:
 ${criteriaForPrompt}
 
-For each of the 8 GEO criteria, generate a JSON array of 8 objects:
-[{"criterion":"exact criterion name","synthesis":"2-3 sentences describing the state of this criterion across all pages","consolidatedRecommendation":{"diagnostic":"1 sentence","whyCritical":"1 sentence","whatToDo":"2 sentences","howToDoIt":"2-3 sentences","concreteExample":"AVANT: [what the weakest page currently does wrong] → APRES: [what it should look like after the fix, with a concrete example]","expectedImpact":"1 sentence","expertTip":"1 sentence","pagesAffected":["url1","url2"]}}]
+For each of the 7 GEO criteria, generate a JSON array of 7 objects. Each object must have a synthesis AND as many recommendations as needed (not just one):
+[{"criterion":"exact criterion name","synthesis":"2-3 sentences describing the state of this criterion across all pages","recommendations":[{"diagnostic":"1 sentence","whyCritical":"1 sentence","whatToDo":"2 sentences","howToDoIt":"2-3 sentences","concreteExample":"AVANT: [current state] → APRES: [desired state with concrete example]","expectedImpact":"1 sentence","expertTip":"1 sentence","pagesAffected":["url1","url2"]}]}]
 
 Rules:
 - synthesis must use the FIXED STATS numbers above
-- consolidatedRecommendation must be site-level, not page-specific
-- concreteExample MUST use the AVANT/APRES format showing current state vs desired state with a real example from the site
-- pagesAffected: list up to 5 most impacted URLs
+- Generate AS MANY recommendations as the criterion needs. If there are 5 different things to fix, generate 5 recommendations. Do NOT limit to 1.
+- Each recommendation must address a DIFFERENT specific problem (not the same advice rephrased)
+- concreteExample MUST use the AVANT/APRES format
+- pagesAffected: list up to 5 most impacted URLs per recommendation
 - Be specific to ${rootUrl}
 
 JSON array only, no markdown:`;
@@ -312,7 +313,7 @@ function buildPageRecommendationsPrompt(locale, rootUrl, metaDescription, validP
 
   return `${langInstruction}
 
-You are a senior GEO consultant. Generate 3 recommendations per page for a website audit.
+You are a senior GEO consultant. Generate recommendations for each page of a website audit. Include ALL relevant recommendations — one for each criterion that is not at maximum score.
 
 Site: ${rootUrl}
 ${validPages.length} pages analyzed.
@@ -325,7 +326,7 @@ JSON object, one key per URL:
 {"url":[{"priority":"high|medium|low","criterion":"French criterion name","title":"5 words max","problem":"2 sentences","solution":"2 sentences","technicalImplementation":["step 1","step 2"],"impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}
 
 Rules:
-- EXACTLY 3 recommendations per page, for criteria NOT at maximum score
+- One recommendation per criterion that is NOT at maximum score. If a page has 5 criteria below max, generate 5 recommendations.
 - priority: high <50%, medium 50-70%, low >70%
 - "criterion" must be one of: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'
 - Keep problem and solution concise (2 sentences each)

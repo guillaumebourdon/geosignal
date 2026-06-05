@@ -107,7 +107,7 @@ Stripe checkout → webhook → /api/pro-enqueue
 4. **Patterns transverses** — 5-8 problèmes récurrents multi-pages
 5. **Plan d'action** — Autant d'actions que l'audit justifie, priorisées impact/effort (pas de minimum ni maximum artificiel)
 6. **Test de citation IA** — 30 requêtes GPT, taux de citation, concurrents réels
-7. **Annexe page par page** — Score, 7 critères, verdict, 3-5 recommandations par page
+7. **Annexe page par page** — Score, 7 critères, verdict, 1 recommandation par critère non-max
 8. **Méthodologie** — Explication transparente
 
 La consolidation fait 6 étapes en 4 jobs QStash (espacés de 90s) :
