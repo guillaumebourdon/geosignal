@@ -158,6 +158,26 @@ const CASES_EN = {
 
 function getCases(locale) { return locale === 'en' ? CASES_EN : CASES_FR; }
 
+const GOOD_SCORE_TIPS_FR = {
+  citabilite: "Votre citabilite est deja solide. Pour atteindre le maximum, verifiez que chaque page commence par une reponse directe a la question principale et que tous les titres H2/H3 sont formules en questions.",
+  verifiabilite: "Votre verifiabilite est bonne. Pour aller plus loin, ajoutez 1 a 2 liens externes supplementaires vers des sources de reference sur chaque page cle.",
+  autorite: "Votre autorite E-E-A-T est bien etablie. Pour la renforcer, ajoutez des biographies d'auteurs detaillees et enrichissez votre schema Organization.",
+  accessibilite: "Votre accessibilite IA est tres bonne. Pour atteindre 100%, verifiez que votre robots.txt autorise GPTBot, ClaudeBot et PerplexityBot, et ajoutez un fichier llms.txt.",
+  neutralite: "Votre neutralite editoriale est excellente. Pour la perfectionner, passez en revue les dernieres pages ou des formulations promotionnelles subsistent.",
+  presence: "Votre presence externe est forte. Pour maximiser ce critere, developpez votre activite sur les plateformes ou vos concurrents sont les plus cites.",
+  fraicheur: "Votre fraicheur est correcte. Pour l'optimiser, ajoutez les balises datePublished et dateModified en schema.org sur toutes vos pages.",
+};
+const GOOD_SCORE_TIPS_EN = {
+  citabilite: "Your citability is already solid. To reach the maximum, ensure each page starts with a direct answer and all H2/H3 headings are phrased as questions.",
+  verifiabilite: "Your verifiability is good. To go further, add 1-2 more external links to authoritative sources on each key page.",
+  autorite: "Your E-E-A-T authority is well established. To strengthen it, add detailed author bios and enrich your Organization schema.",
+  accessibilite: "Your AI accessibility is very good. To reach 100%, verify your robots.txt allows GPTBot, ClaudeBot and PerplexityBot, and add an llms.txt file.",
+  neutralite: "Your editorial neutrality is excellent. To perfect it, review remaining pages for promotional language.",
+  presence: "Your external presence is strong. To maximize this criterion, develop your activity on platforms where your competitors are most cited.",
+  fraicheur: "Your freshness is decent. To optimize it, add datePublished and dateModified schema.org tags on all your pages.",
+};
+function getGoodScoreTips(locale) { return locale === 'en' ? GOOD_SCORE_TIPS_EN : GOOD_SCORE_TIPS_FR; }
+
 function lookupMap(map, name) {
   const n = String(name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   for (const [k, v] of Object.entries(map)) if (n.includes(k)) return v;
@@ -1344,10 +1364,26 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
 
             {/* Executive summary */}
             {r.executiveSummary && (
-              <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 24 }}>
+              <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>
                 {r.executiveSummary.split('\n').filter(Boolean).map((p, i) => <p key={i} style={{ marginBottom: 10 }}>{p}</p>)}
               </div>
             )}
+
+            {/* Lecture business */}
+            {(() => {
+              const sorted = Object.entries(criteriaAverages).map(([name, data]) => ({ name, pct: data.max > 0 ? data.avgScore / data.max : 1 })).sort((a, b) => a.pct - b.pct);
+              const w = sorted.slice(0, 3).map(c => tc(c.name, locale).toLowerCase());
+              return (
+                <div style={{ background: '#1A1916', borderRadius: 10, padding: '16px 20px', marginBottom: 24 }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, marginBottom: 6 }}>LECTURE BUSINESS</div>
+                  <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.85)', lineHeight: 1.65, margin: 0 }}>
+                    {locale === 'en'
+                      ? `The site does not appear to be blocked by technical accessibility. The priority is to make pages more credible and citable by improving ${w[0] || 'freshness'}, ${w[1] || 'verifiability'} and ${w[2] || 'authority'}.`
+                      : `Le site ne semble pas bloque par l'accessibilite technique. L'enjeu prioritaire est de rendre les pages plus credibles et citables en ameliorant la ${w[0] || 'fraicheur'}, la ${w[1] || 'verifiabilite'} et l'${w[2] || 'autorite'}.`}
+                  </p>
+                </div>
+              );
+            })()}
 
             {/* 7 criteria table */}
             <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: '#1A1916', marginBottom: 14 }}>{rs(locale).the8Criteria}</h2>
@@ -1428,9 +1464,13 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             <section id="test-ia" style={{ marginBottom: 48 }}>
               <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 8 }}>{rs(locale).testIaConsolidated}</div>
               <h2 style={{ fontFamily: 'Georgia,serif', fontSize: 26, color: '#1A1916', letterSpacing: -0.5, marginBottom: 12, lineHeight: 1.2 }}>{rs(locale).testIa30}</h2>
-              <p style={{ fontSize: 13, color: '#6B6762', marginBottom: 20 }}>{rs(locale).citationTestDesc30}</p>
+              <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65, marginBottom: 20 }}>
+                {locale === 'en'
+                  ? 'The queries were generated to simulate different levels of user intent: broad queries, industry queries, comparison queries and long-tail queries. They aim to verify if your site is spontaneously cited by AI engines on searches related to your market.'
+                  : 'Les requetes ont ete generees pour simuler differents niveaux d\'intention utilisateur : requetes larges, requetes metier, requetes de comparaison et requetes longue traine. Elles visent a verifier si votre site est cite spontanement par les IA sur des recherches liees a votre marche.'}
+              </p>
 
-              <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: 16, marginBottom: 16, flexWrap: 'wrap' }}>
                 <div style={{ background: '#1A1916', borderRadius: 14, padding: '20px 28px', textAlign: 'center', flexShrink: 0 }}>
                   <div style={{ fontFamily: 'Georgia,serif', fontSize: 36, color: '#F7F5F2' }}>{citedCount}/{queries.length}</div>
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', whiteSpace: 'pre-line' }}>{rs(locale).queriesCite}</div>
@@ -1439,6 +1479,54 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   {ct.bestOpportunity && <div style={{ background: '#E8F7F3', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', marginBottom: 4 }}>{rs(locale).bestOpportunity}</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{ct.bestOpportunity}</div></div>}
                   {ct.mainBlocker && <div style={{ background: 'rgba(217,119,87,0.06)', borderRadius: 10, padding: '12px 16px' }}><div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', marginBottom: 4 }}>{rs(locale).mainBlocker}</div><div style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.5 }}>{ct.mainBlocker}</div></div>}
                 </div>
+              </div>
+
+              {/* Résumé par catégorie */}
+              {(() => {
+                const genericQ = queries.filter(q => q.type === 'generic');
+                const nicheQ = queries.filter(q => q.type === 'niche');
+                const ltQ = queries.filter(q => q.type === 'long_tail');
+                const gC = genericQ.filter(q => q.cited).length;
+                const nC = nicheQ.filter(q => q.cited).length;
+                const lC = ltQ.filter(q => q.cited).length;
+                const allComp = queries.flatMap(q => q.competitorsCited || q.competitors_cited || []);
+                const freq = {};
+                allComp.forEach(c => { freq[c] = (freq[c] || 0) + 1; });
+                const topComp = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 5);
+                return (
+                  <div style={{ background: '#F7F5F2', borderRadius: 10, padding: '16px 20px', marginBottom: 16 }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, marginBottom: 10 }}>
+                      {locale === 'en' ? 'SUMMARY BY CATEGORY' : 'RESUME PAR CATEGORIE'}
+                    </div>
+                    <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+                      {[
+                        { label: locale === 'en' ? 'GENERIC' : 'GENERIQUE', cited: gC, total: genericQ.length },
+                        { label: 'NICHE', cited: nC, total: nicheQ.length },
+                        { label: locale === 'en' ? 'LONG TAIL' : 'LONGUE TRAINE', cited: lC, total: ltQ.length },
+                      ].map(cat => (
+                        <div key={cat.label} style={{ flex: 1, background: '#fff', borderRadius: 8, padding: '10px 12px', textAlign: 'center', border: '1px solid #E5E2DC' }}>
+                          <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#8A8680', marginBottom: 4 }}>{cat.label}</div>
+                          <div style={{ fontFamily: 'Georgia,serif', fontSize: 20, color: cat.cited > 0 ? '#10A37F' : '#D97757' }}>{cat.cited}/{cat.total}</div>
+                        </div>
+                      ))}
+                    </div>
+                    {topComp.length > 0 && (
+                      <div style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.6 }}>
+                        <strong>{locale === 'en' ? 'Top domains cited instead:' : 'Principaux domaines cites a votre place :'}</strong>{' '}
+                        {topComp.map(([c, n]) => `${c} (${n}x)`).join(', ')}
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* Note interprétation concurrents */}
+              <div style={{ background: 'rgba(66,133,244,0.06)', borderLeft: '3px solid #4285F4', borderRadius: '0 8px 8px 0', padding: '12px 16px', marginBottom: 16 }}>
+                <p style={{ fontSize: 11, color: '#3A3835', lineHeight: 1.6, margin: 0 }}>
+                  {locale === 'en'
+                    ? 'The domains cited in your place reflect responses actually generated by AI engines. Some may be direct competitors, broad alternatives, international players or informational sources depending on the query.'
+                    : 'Les domaines cites a votre place refletent les reponses reellement generees par les IA. Certains peuvent etre des concurrents directs, des alternatives larges, des acteurs internationaux ou des sources informationnelles selon la requete.'}
+                </p>
               </div>
 
               {queries.map((q, i) => <CitationCard key={i} q={q} locale={locale} />)}
@@ -1504,9 +1592,20 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     {deduped.length > 0 ? deduped.map((rec, ri) => (
                       <ProRecoCard key={ri} r={rec} index={ri} rootUrl={url} locale={locale} />
                     )) : pct >= 75 ? (
-                      <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 8, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
-                        <span style={{ fontSize: 18 }}>✓</span>
-                        <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 500 }}>{rs(locale).criterionWellOptimizedSite}</span>
+                      <div style={{ background: 'rgba(16,163,127,0.06)', border: '1px solid rgba(16,163,127,0.2)', borderRadius: 10, padding: '16px 20px' }}>
+                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: pct < 100 ? 8 : 0 }}>
+                          <span style={{ color: '#10A37F', fontSize: 14, flexShrink: 0 }}>✓</span>
+                          <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 600 }}>
+                            {pct >= 100
+                              ? (locale === 'en' ? 'Very good level detected on measured signals. No corrective action needed.' : 'Tres bon niveau detecte sur les signaux mesures par l\'audit. Aucune action corrective necessaire.')
+                              : (locale === 'en' ? `Good level (${pct}%)` : `Bon niveau (${pct}%)`)}
+                          </span>
+                        </div>
+                        {pct < 100 && (
+                          <p style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65, margin: 0 }}>
+                            {lookupMap(getGoodScoreTips(locale), criterionName) || (locale === 'en' ? 'This criterion is well optimized. Minor adjustments could still improve your score.' : 'Ce critere est bien optimise. Quelques ajustements mineurs pourraient encore ameliorer votre score.')}
+                          </p>
+                        )}
                       </div>
                     ) : (
                       <div style={{ background: 'rgba(201,134,26,0.06)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 8, padding: '16px 20px', fontSize: 13, color: '#C9861A', lineHeight: 1.6 }}>
