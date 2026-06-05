@@ -1,6 +1,6 @@
 import { Redis } from '@upstash/redis';
 import Anthropic from '@anthropic-ai/sdk';
-import { verifyQstashSignature, triggerFinalizeReport } from '../../lib/proQueue';
+import { verifyQstashSignature, triggerFinalizeReport, triggerConsolidationStep } from '../../lib/proQueue';
 const { runRealCitationTest } = require('../../lib/citationTest');
 
 export const config = {
@@ -505,7 +505,15 @@ function sortActionPlan(actionPlan) {
   });
 }
 
-// ── Handler ─────────────────────────────────────────────────────────────────
+// ── Handler — each step does 1 API call, then triggers the next via QStash ──
+
+const STEP_TTL = 24 * 60 * 60; // 24h — same as job data
+
+async function getBaseUrl(req) {
+  const proto = req.headers['x-forwarded-proto'] || 'https';
+  const host = req.headers['host'] || 'localhost:3000';
+  return `${proto}://${host}`;
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
@@ -517,11 +525,11 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const { siteJobId } = JSON.parse(rawBody);
+  const { siteJobId, step = 1 } = JSON.parse(rawBody);
   if (!siteJobId) return res.status(400).json({ error: 'Missing siteJobId' });
 
   const startMs = Date.now();
-  console.log(`[pro-consolidate] Starting consolidation for ${siteJobId}`);
+  console.log(`[pro-consolidate] Step ${step}/6 for ${siteJobId}`);
 
   try {
     const jobData = await readJobData(siteJobId);
@@ -532,128 +540,250 @@ export default async function handler(req, res) {
     const rootUrl = meta.rootUrl;
     const agg = computeAggregates(pages);
     const ctx = buildPromptContext(locale, rootUrl, agg);
-
+    const baseUrl = await getBaseUrl(req);
     const homepageEvidence = agg.validPages[0]?.evidence || {};
-    const { synthesis, citationTest, criteriaConsolidated: rawCriteria, pageRecommendations } = await runParallelCalls(
-      buildSynthesisPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages),
-      buildCitationPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages),
-      buildCriteriaPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages),
-      { rootUrl, metaDescription: homepageEvidence.metaDescription, intro: homepageEvidence.intro, locale, validPages: agg.validPages },
-    );
 
-    // Enrich criteria with score data
-    const criteriaConsolidated = rawCriteria.map(cc => {
-      const avg = agg.criteriaAverages[cc.criterion];
-      return {
-        ...cc, avgScore: avg?.avgScore || 0, max: avg?.max || 0,
-        concreteExamples: agg.validPages
-          .map(p => { const c = (p.criteria || []).find(cr => cr.name === cc.criterion); return c ? { url: p.url, score: c.score, max: c.max } : null; })
-          .filter(Boolean).sort((a, b) => (a.score / a.max) - (b.score / b.max)).slice(0, 3),
-      };
-    });
-
-    // Inject per-page recommendations from consolidation Claude call
-    // Workers only do scoring; recos are generated here in a single Claude call
-    const fullPages = pages.map(p => {
-      const recos = p.recommendations && p.recommendations.length > 0
-        ? p.recommendations  // Use existing recos if present (e.g. from cache)
-        : (pageRecommendations[p.url] || []);  // Otherwise use consolidation-generated recos
-      return {
-        url: p.url, score: p.score, error: p.error || null,
-        topPriority: p.topPriority || null, verdict: p.verdict || null,
-        strengths: p.strengths || [], criteria: p.criteria || [],
-        recommendations: recos,
-      };
-    });
-
-    const consolidatedReport = {
-      siteJobId, rootUrl, locale, queuedAt: meta.queuedAt,
-      consolidatedAt: new Date().toISOString(),
-      scoreAverage: agg.scoreAverage, scoreMedian: agg.scoreMedian, distribution: agg.distribution,
-      pagesValid: agg.validPages.length, pagesWithError: agg.errorPages.length,
-      criteriaAverages: agg.criteriaAverages, criteriaConsolidated,
-      executiveSummary: synthesis.executiveSummary,
-      topStrengths: synthesis.topStrengths || [], topWeaknesses: synthesis.topWeaknesses || [],
-      patterns: synthesis.patterns || [],
-      actionPlan: sortActionPlan(synthesis.actionPlan),
-      citationTestConsolidated: {
-        queries: citationTest.tests || citationTest.queries || [],
-        citationRate: citationTest.summary?.cited_count ? `${citationTest.summary.cited_count}/${citationTest.summary.total_tests}` : (citationTest.citationRate || '0/0'),
-        bestOpportunity: citationTest.summary?.best_opportunity || citationTest.bestOpportunity || '',
-        mainBlocker: citationTest.summary?.main_blocker || citationTest.mainBlocker || '',
-      },
-      pages: fullPages,
-    };
-
-    // QA pass: verify and fix the consolidated report before storing
-    try {
-      const qaSummary = {
-        scoreAverage: consolidatedReport.scoreAverage,
-        pagesValid: consolidatedReport.pagesValid,
-        criteriaAverages: Object.entries(consolidatedReport.criteriaAverages).map(([k, v]) => `${k}: ${v.avgScore}/${v.max}`),
-        actionPlanTitles: (consolidatedReport.actionPlan || []).map(a => a.action?.substring(0, 60)),
-        pagesWithRecos: consolidatedReport.pages.filter(p => (p.recommendations || []).length > 0).length,
-        pagesWithoutRecos: consolidatedReport.pages.filter(p => !p.error && (p.recommendations || []).length === 0).map(p => p.url),
-        criteriaWithoutRecos: Object.entries(consolidatedReport.criteriaAverages)
-          .filter(([name, data]) => data.avgScore < data.max)
-          .filter(([name]) => {
-            const allRecos = consolidatedReport.pages.flatMap(p => (p.recommendations || []).filter(r => r.criterion === name));
-            return allRecos.length === 0;
-          })
-          .map(([name, data]) => `${name}: ${data.avgScore}/${data.max} — 0 recos`),
-        executiveSummaryLength: (consolidatedReport.executiveSummary || '').length,
-      };
-
-      const qaPrompt = `${locale === 'en' ? 'English.' : 'Francais.'}\n\nYou are a QA reviewer for a GEO audit report. Check this report summary for issues:\n\n${JSON.stringify(qaSummary, null, 2)}\n\nCheck:\n1. Pages without recommendations (should have 3 each unless error page)\n2. Criteria below max score with 0 recos (every non-max criterion needs recos)\n3. Duplicate actions in the plan (same idea repeated with different words)\n4. Executive summary present and substantial (>200 chars)\n\nReturn JSON:\n{"issues":[{"type":"missing_recos_page|missing_recos_criterion|duplicate_action|empty_summary","detail":"description","severity":"critical|warning"}],"duplicateActionIndices":[[0,3],[2,7]]}\n\nIf no issues: {"issues":[]}\nJSON only.`;
-
-      await new Promise(r => setTimeout(r, 3000));
-      const qaMsg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 2000, temperature: 0, messages: [{ role: 'user', content: qaPrompt }] });
-      let qaRaw = qaMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-      const qaMatch = qaRaw.match(/\{[\s\S]*\}/);
-      if (qaMatch) {
-        const qa = JSON.parse(qaMatch[0]);
-        const issues = qa.issues || [];
-        console.log(`[pro-consolidate] QA: ${issues.length} issues found`);
-
-        // Auto-fix: remove duplicate actions
-        if (qa.duplicateActionIndices && qa.duplicateActionIndices.length > 0) {
-          const toRemove = new Set();
-          for (const group of qa.duplicateActionIndices) {
-            // Keep first, remove rest
-            for (let i = 1; i < group.length; i++) toRemove.add(group[i]);
-          }
-          if (toRemove.size > 0) {
-            consolidatedReport.actionPlan = consolidatedReport.actionPlan.filter((_, i) => !toRemove.has(i));
-            console.log(`[pro-consolidate] QA: removed ${toRemove.size} duplicate actions`);
-          }
-        }
-
-        // Log critical issues for visibility
-        for (const issue of issues) {
-          if (issue.severity === 'critical') {
-            console.warn(`[pro-consolidate] QA CRITICAL: ${issue.type} — ${issue.detail}`);
-          }
-        }
+    // ── STEP 1: Synthesis + patterns + action plan ──────────────────────
+    if (step === 1) {
+      const prompt = buildSynthesisPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages);
+      let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
+      try {
+        const msg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
+        synthesis = parseJson(msg.content[0].text);
+      } catch (e) {
+        console.error(`[pro-consolidate] Step 1 Synthesis failed: ${e.message}. Retrying after 15s...`);
+        await new Promise(r => setTimeout(r, 15000));
+        try {
+          const retry = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
+          synthesis = parseJson(retry.content[0].text);
+        } catch (e2) { console.error(`[pro-consolidate] Step 1 retry also failed: ${e2.message}`); }
       }
-    } catch (e) {
-      console.error('[pro-consolidate] QA pass failed (non-blocking):', e.message);
+      await redis.set(`${JOB_PREFIX}:${siteJobId}:step:synthesis`, synthesis, { ex: STEP_TTL });
+      console.log(`[pro-consolidate] Step 1 done in ${Date.now() - startMs}ms. Exec=${(synthesis.executiveSummary || '').length}c, Patterns=${(synthesis.patterns || []).length}, Actions=${(synthesis.actionPlan || []).length}`);
+      await triggerConsolidationStep(siteJobId, 2, { baseUrl });
+      return res.status(200).json({ success: true, step: 1 });
     }
 
-    await redis.set(`${JOB_PREFIX}:${siteJobId}:consolidated`, consolidatedReport, { ex: CONSOLIDATED_TTL });
-    await redis.set(`${JOB_PREFIX}:${siteJobId}:status`, 'consolidated', { ex: CONSOLIDATED_TTL });
+    // ── STEP 2: Per-criterion consolidated analysis ─────────────────────
+    if (step === 2) {
+      const prompt = buildCriteriaPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages);
+      let criteriaConsolidated = [];
+      try {
+        const msg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
+        const arrMatch = msg.content[0].text.match(/\[[\s\S]*\]/);
+        if (arrMatch) criteriaConsolidated = JSON.parse(arrMatch[0]);
+      } catch (e) { console.error(`[pro-consolidate] Step 2 Criteria failed: ${e.message}`); }
+      await redis.set(`${JOB_PREFIX}:${siteJobId}:step:criteria`, criteriaConsolidated, { ex: STEP_TTL });
+      console.log(`[pro-consolidate] Step 2 done in ${Date.now() - startMs}ms. Criteria=${criteriaConsolidated.length}`);
+      await triggerConsolidationStep(siteJobId, 3, { baseUrl });
+      return res.status(200).json({ success: true, step: 2 });
+    }
 
-    console.log(`[pro-consolidate] Consolidated ${siteJobId} in ${Date.now() - startMs}ms. Score: ${agg.scoreAverage}/100`);
+    // ── STEP 3: Real citation test (30 GPT queries) ─────────────────────
+    if (step === 3) {
+      const hostname = new URL(rootUrl).hostname.replace(/^www\./, '');
+      const brand = hostname.split('.')[0];
+      let citationTest = { tests: [], summary: { cited_count: 0, total_tests: 0, best_opportunity: '', main_blocker: '' } };
+      try {
+        const result = await runRealCitationTest(rootUrl, hostname, brand, homepageEvidence.metaDescription || '', homepageEvidence.intro || '', 30, locale, anthropic);
+        if (result) citationTest = result;
+      } catch (e) { console.error(`[pro-consolidate] Step 3 Citation test failed: ${e.message}`); }
 
-    // Trigger finalize — no lock needed, finalize-report is idempotent
-    const proto = req.headers['x-forwarded-proto'] || 'https';
-    const host = req.headers['host'] || 'localhost:3000';
-    await triggerFinalizeReport(siteJobId, { baseUrl: `${proto}://${host}` });
-    console.log(`[pro-consolidate] Finalization triggered for ${siteJobId}`);
+      // Clean fake competitors (same logic as before)
+      const fakeCompetitorPattern = /^(le |la |les |l'|un |une |des |du |de |en |au |the |a |an |for |with )/i;
+      const fakeWords = new Set(['conclusion', 'consultez', 'contactez', 'appelez', 'expliquez', 'demandez',
+        'renseignez', 'comparez', 'utilisez', 'choisissez', 'optez', 'inscrivez', 'recherche',
+        'certaines', 'plusieurs', 'notamment', 'voici', 'cela', 'prendre', 'types', 'selon', 'comme',
+        'aussi', 'ainsi', 'cette', 'entre', 'faire', 'avant', 'apres', 'depuis', 'parmi', 'leurs',
+        'notre', 'votre', 'moins', 'toute', 'toutes', 'chaque', 'autre', 'autres', 'grâce', 'grace',
+        'outre', 'alors', 'reste', 'suite', 'point', 'partie', 'niveau', 'place', 'forme', 'monde',
+        'genre', 'type', 'aide', 'guide', 'notez', 'sachez', 'voyez', 'lisez', 'allez', 'venez',
+        'faites', 'dites', 'mieux', 'prise', 'mise', 'bien', 'tout', 'rien', 'plus']);
+      const queries = citationTest.queries || citationTest.tests || [];
+      for (const q of queries) {
+        const field = q.competitorsCited || q.competitors_cited || [];
+        const cleaned = field.filter(c => {
+          const lower = (c || '').toLowerCase().trim();
+          if (!lower || lower.length < 5) return false;
+          if (fakeWords.has(lower)) return false;
+          if (fakeCompetitorPattern.test(c)) return false;
+          return true;
+        });
+        if (q.competitorsCited) q.competitorsCited = cleaned;
+        if (q.competitors_cited) q.competitors_cited = cleaned;
+      }
 
-    return res.status(200).json({ success: true, siteJobId, status: 'consolidated' });
+      await redis.set(`${JOB_PREFIX}:${siteJobId}:step:citations`, citationTest, { ex: STEP_TTL });
+      console.log(`[pro-consolidate] Step 3 done in ${Date.now() - startMs}ms. Queries=${queries.length}`);
+      await triggerConsolidationStep(siteJobId, 4, { baseUrl });
+      return res.status(200).json({ success: true, step: 3 });
+    }
+
+    // ── STEP 4: Per-page recommendations ────────────────────────────────
+    if (step === 4) {
+      const prompt = buildPageRecommendationsPrompt(locale, rootUrl, homepageEvidence.metaDescription || '', agg.validPages);
+      let pageRecommendations = {};
+      try {
+        const msg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
+        let raw = msg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+        raw = raw.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
+        const jsonMatch = raw.match(/\{[\s\S]*\}/);
+        if (jsonMatch) pageRecommendations = JSON.parse(jsonMatch[0]);
+      } catch (e) { console.error(`[pro-consolidate] Step 4 Page recos failed: ${e.message}`); }
+      await redis.set(`${JOB_PREFIX}:${siteJobId}:step:page-recos`, pageRecommendations, { ex: STEP_TTL });
+      console.log(`[pro-consolidate] Step 4 done in ${Date.now() - startMs}ms. Pages with recos=${Object.keys(pageRecommendations).length}`);
+      await triggerConsolidationStep(siteJobId, 5, { baseUrl });
+      return res.status(200).json({ success: true, step: 4 });
+    }
+
+    // ── STEP 5: Code examples for high-priority recos ───────────────────
+    if (step === 5) {
+      const pageRecos = await redis.get(`${JOB_PREFIX}:${siteJobId}:step:page-recos`) || {};
+      const parsed = typeof pageRecos === 'string' ? JSON.parse(pageRecos) : pageRecos;
+      const allHighRecos = [];
+      for (const [url, recos] of Object.entries(parsed)) {
+        for (const r of (recos || [])) {
+          if (r.priority === 'high') allHighRecos.push({ url, ...r });
+        }
+      }
+      const topRecos = allHighRecos.slice(0, 5);
+
+      if (topRecos.length > 0) {
+        try {
+          const codePrompt = `${locale === 'en' ? 'OUTPUT LANGUAGE: English.' : 'LANGUE DE SORTIE : Francais.'}\n\nGenerate code examples (JSON-LD, HTML, or meta tags) for these website audit recommendations.\n\nSite: ${rootUrl}\n\n${topRecos.map((r, i) => `${i + 1}. [${r.url}] ${r.criterion}: ${r.title} — ${r.solution || r.problem}`).join('\n')}\n\nReturn a JSON array of ${topRecos.length} code snippets:\n[{"index":0,"codeExample":"<code here>"},{"index":1,"codeExample":"<code>"}]\n\nRules:\n- Each codeExample must be a real, copy-pasteable code snippet (JSON-LD, HTML meta tag, or HTML structure)\n- CRITICAL: Never invent realistic-looking fake data (fake user counts, fake certifications, fake dates). Use neutral placeholders: [nombre d'utilisateurs], [certification reelle], [date de mise a jour], [nom du client], [resultat mesure], [metrique verifiable]\n- Add <!-- Adaptez avec vos vraies valeurs --> at the top\n- Keep each snippet under 15 lines\n- JSON array only, no markdown`;
+          const codeMsg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 4000, temperature: 0.2, messages: [{ role: 'user', content: codePrompt }] });
+          let codeRaw = codeMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+          const codeMatch = codeRaw.match(/\[[\s\S]*\]/);
+          if (codeMatch) {
+            const codeExamples = JSON.parse(codeMatch[0]);
+            for (const ce of codeExamples) {
+              if (ce.index >= 0 && ce.index < topRecos.length && ce.codeExample) {
+                const rUrl = topRecos[ce.index].url;
+                const rTitle = topRecos[ce.index].title;
+                const recos = parsed[rUrl];
+                if (recos) {
+                  const match = recos.find(r => r.title === rTitle);
+                  if (match) match.codeExample = ce.codeExample;
+                }
+              }
+            }
+            // Save updated page recos with code examples
+            await redis.set(`${JOB_PREFIX}:${siteJobId}:step:page-recos`, parsed, { ex: STEP_TTL });
+            console.log(`[pro-consolidate] Step 5 done. Code examples: ${codeExamples.length}`);
+          }
+        } catch (e) { console.error(`[pro-consolidate] Step 5 Code examples failed (non-blocking): ${e.message}`); }
+      } else {
+        console.log(`[pro-consolidate] Step 5 skipped — no high-priority recos`);
+      }
+      // Use shorter delay for assembly step
+      await triggerConsolidationStep(siteJobId, 6, { baseUrl });
+      return res.status(200).json({ success: true, step: 5 });
+    }
+
+    // ── STEP 6: Assembly + QA + store + trigger finalize ─────────────────
+    if (step === 6) {
+      // Read all step results from Redis
+      const [synthesisRaw, criteriaRaw, citationsRaw, pageRecosRaw] = await Promise.all([
+        redis.get(`${JOB_PREFIX}:${siteJobId}:step:synthesis`),
+        redis.get(`${JOB_PREFIX}:${siteJobId}:step:criteria`),
+        redis.get(`${JOB_PREFIX}:${siteJobId}:step:citations`),
+        redis.get(`${JOB_PREFIX}:${siteJobId}:step:page-recos`),
+      ]);
+
+      const synthesis = (typeof synthesisRaw === 'string' ? JSON.parse(synthesisRaw) : synthesisRaw) || { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
+      const rawCriteria = (typeof criteriaRaw === 'string' ? JSON.parse(criteriaRaw) : criteriaRaw) || [];
+      const citationTest = (typeof citationsRaw === 'string' ? JSON.parse(citationsRaw) : citationsRaw) || { tests: [], summary: {} };
+      const pageRecommendations = (typeof pageRecosRaw === 'string' ? JSON.parse(pageRecosRaw) : pageRecosRaw) || {};
+
+      // Log what we have
+      console.log(`[pro-consolidate] Step 6 Assembly — Synthesis: ${(synthesis.executiveSummary || '').length}c, Criteria: ${rawCriteria.length}, Citations: ${(citationTest.tests || citationTest.queries || []).length}q, PageRecos: ${Object.keys(pageRecommendations).length} pages`);
+
+      // Enrich criteria with score data
+      const criteriaConsolidated = (Array.isArray(rawCriteria) ? rawCriteria : []).map(cc => {
+        const avg = agg.criteriaAverages[cc.criterion];
+        return {
+          ...cc, avgScore: avg?.avgScore || 0, max: avg?.max || 0,
+          concreteExamples: agg.validPages
+            .map(p => { const c = (p.criteria || []).find(cr => cr.name === cc.criterion); return c ? { url: p.url, score: c.score, max: c.max } : null; })
+            .filter(Boolean).sort((a, b) => (a.score / a.max) - (b.score / b.max)).slice(0, 3),
+        };
+      });
+
+      // Inject per-page recommendations
+      const fullPages = pages.map(p => {
+        const recos = p.recommendations && p.recommendations.length > 0
+          ? p.recommendations
+          : (pageRecommendations[p.url] || []);
+        return {
+          url: p.url, score: p.score, error: p.error || null,
+          topPriority: p.topPriority || null, verdict: p.verdict || null,
+          strengths: p.strengths || [], criteria: p.criteria || [],
+          recommendations: recos,
+        };
+      });
+
+      const consolidatedReport = {
+        siteJobId, rootUrl, locale, queuedAt: meta.queuedAt,
+        consolidatedAt: new Date().toISOString(),
+        scoreAverage: agg.scoreAverage, scoreMedian: agg.scoreMedian, distribution: agg.distribution,
+        pagesValid: agg.validPages.length, pagesWithError: agg.errorPages.length,
+        criteriaAverages: agg.criteriaAverages, criteriaConsolidated,
+        executiveSummary: synthesis.executiveSummary,
+        topStrengths: synthesis.topStrengths || [], topWeaknesses: synthesis.topWeaknesses || [],
+        patterns: synthesis.patterns || [],
+        actionPlan: sortActionPlan(synthesis.actionPlan),
+        citationTestConsolidated: {
+          queries: citationTest.tests || citationTest.queries || [],
+          citationRate: citationTest.summary?.cited_count ? `${citationTest.summary.cited_count}/${citationTest.summary.total_tests}` : (citationTest.citationRate || '0/0'),
+          bestOpportunity: citationTest.summary?.best_opportunity || citationTest.bestOpportunity || '',
+          mainBlocker: citationTest.summary?.main_blocker || citationTest.mainBlocker || '',
+        },
+        pages: fullPages,
+      };
+
+      // QA pass (non-blocking)
+      try {
+        const qaSummary = {
+          scoreAverage: consolidatedReport.scoreAverage,
+          actionPlanTitles: (consolidatedReport.actionPlan || []).map(a => a.action?.substring(0, 60)),
+          pagesWithRecos: consolidatedReport.pages.filter(p => (p.recommendations || []).length > 0).length,
+          pagesWithoutRecos: consolidatedReport.pages.filter(p => !p.error && (p.recommendations || []).length === 0).map(p => p.url),
+        };
+        const qaPrompt = `${locale === 'en' ? 'English.' : 'Francais.'}\n\nQA check for a GEO audit report:\n${JSON.stringify(qaSummary)}\n\nCheck for duplicate actions. Return JSON:\n{"duplicateActionIndices":[[0,3]]}\nIf no duplicates: {"duplicateActionIndices":[]}\nJSON only.`;
+        const qaMsg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 1000, temperature: 0, messages: [{ role: 'user', content: qaPrompt }] });
+        let qaRaw = qaMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+        const qaMatch = qaRaw.match(/\{[\s\S]*\}/);
+        if (qaMatch) {
+          const qa = JSON.parse(qaMatch[0]);
+          if (qa.duplicateActionIndices?.length > 0) {
+            const toRemove = new Set();
+            for (const group of qa.duplicateActionIndices) {
+              for (let i = 1; i < group.length; i++) toRemove.add(group[i]);
+            }
+            if (toRemove.size > 0) {
+              consolidatedReport.actionPlan = consolidatedReport.actionPlan.filter((_, i) => !toRemove.has(i));
+              console.log(`[pro-consolidate] QA: removed ${toRemove.size} duplicate actions`);
+            }
+          }
+        }
+      } catch (e) { console.error(`[pro-consolidate] QA failed (non-blocking): ${e.message}`); }
+
+      // Store consolidated report
+      await redis.set(`${JOB_PREFIX}:${siteJobId}:consolidated`, consolidatedReport, { ex: CONSOLIDATED_TTL });
+      await redis.set(`${JOB_PREFIX}:${siteJobId}:status`, 'consolidated', { ex: CONSOLIDATED_TTL });
+
+      console.log(`[pro-consolidate] Step 6 done in ${Date.now() - startMs}ms. Score: ${agg.scoreAverage}/100. Recos: ${fullPages.reduce((s, p) => s + (p.recommendations || []).length, 0)}`);
+
+      // Trigger finalize
+      await triggerFinalizeReport(siteJobId, { baseUrl });
+      console.log(`[pro-consolidate] Finalization triggered for ${siteJobId}`);
+
+      return res.status(200).json({ success: true, step: 6, status: 'consolidated' });
+    }
+
+    return res.status(400).json({ error: `Invalid step: ${step}` });
   } catch (err) {
-    console.error(`[pro-consolidate] Error for ${siteJobId}:`, err.message);
-    // Alert admin — client paid but consolidation failed
+    console.error(`[pro-consolidate] Step ${step} error for ${siteJobId}:`, err.message);
     try {
       const { Resend } = require('resend');
       const alertResend = new Resend(process.env.RESEND_API_KEY);
@@ -661,14 +791,13 @@ export default async function handler(req, res) {
       await alertResend.emails.send({
         from: 'Detekia <hello@detekia.fr>',
         to: 'guillaume@beeleven.fr',
-        subject: `🚨 Consolidation échouée — ${siteJobId}`,
+        subject: `🚨 Consolidation step ${step} échouée — ${siteJobId}`,
         html: `<div style="font-family:system-ui;padding:24px;">
-          <h2 style="color:#D97757;">Consolidation Pro échouée</h2>
+          <h2 style="color:#D97757;">Consolidation Pro step ${step}/6 échouée</h2>
           <p><strong>Job :</strong> ${siteJobId}</p>
           <p><strong>Site :</strong> ${meta?.rootUrl || 'inconnu'}</p>
-          <p><strong>Email client :</strong> ${meta?.customerEmail || 'inconnu'}</p>
+          <p><strong>Step :</strong> ${step}/6</p>
           <p><strong>Erreur :</strong> ${err.message}</p>
-          <p style="color:#D97757;font-weight:bold;">Action requise : relancer manuellement via /api/pro-trigger-consolidation</p>
         </div>`,
       });
     } catch (_) {}
