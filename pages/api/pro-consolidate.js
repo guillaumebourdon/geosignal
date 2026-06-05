@@ -625,9 +625,9 @@ export default async function handler(req, res) {
       console.log(`[pro-consolidate] Step 4 prompt length: ${prompt.length} chars for ${agg.validPages.length} pages`);
       let pageRecommendations = {};
 
-      // Attempt 1 — direct call (no callWithRetry, avoids internal 429 retry loops)
+      // Attempt 1 — direct call, max_tokens reduced to avoid long generation timeout on Vercel
       try {
-        const msg = await anthropic.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
+        const msg = await anthropic.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 6000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
         let raw = msg.content[0].text;
         console.log(`[pro-consolidate] Step 4 response length: ${raw.length} chars, stop_reason: ${msg.stop_reason}`);
         raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '');
@@ -643,7 +643,7 @@ export default async function handler(req, res) {
         // Attempt 2 after 30s — direct call
         await new Promise(r => setTimeout(r, 30000));
         try {
-          const msg2 = await anthropic.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
+          const msg2 = await anthropic.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 6000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
           let raw2 = msg2.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
           raw2 = raw2.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
           const jsonMatch2 = raw2.match(/\{[\s\S]*\}/);
