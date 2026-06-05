@@ -178,6 +178,17 @@ const GOOD_SCORE_TIPS_EN = {
 };
 function getGoodScoreTips(locale) { return locale === 'en' ? GOOD_SCORE_TIPS_EN : GOOD_SCORE_TIPS_FR; }
 
+// Clean absolute/superlative phrasing from Claude-generated text
+function softenText(text) {
+  if (!text) return text;
+  return text
+    .replace(/parfaitement\s+(optimis[eé]|ma[iî]tris[eé])/gi, 'tres bien optimise')
+    .replace(/strategie\s+parfaite/gi, 'strategie solide')
+    .replace(/exemplaire/gi, 'tres solide')
+    .replace(/parfait(?:e|s)?(?!\w)/gi, 'tres bon')
+    .replace(/irr[eé]prochable/gi, 'tres bon');
+}
+
 function lookupMap(map, name) {
   const n = String(name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   for (const [k, v] of Object.entries(map)) if (n.includes(k)) return v;
@@ -1300,7 +1311,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
     const d = criteriaAverages[name];
     if (d && d.avgScore / d.max < 0.75) projGain += Math.round(d.max * 0.8 - d.avgScore);
   });
-  const projected = Math.min(100, r.scoreAverage + Math.round(projGain * 0.7));
+  const projected = Math.min(100, r.scoreAverage + Math.round(projGain * 0.5));
 
   return (
     <>
@@ -1365,7 +1376,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
             {/* Executive summary */}
             {r.executiveSummary && (
               <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>
-                {r.executiveSummary.split('\n').filter(Boolean).map((p, i) => <p key={i} style={{ marginBottom: 10 }}>{p}</p>)}
+                {softenText(r.executiveSummary).split('\n').filter(Boolean).map((p, i) => <p key={i} style={{ marginBottom: 10 }}>{p}</p>)}
               </div>
             )}
 
@@ -1572,10 +1583,10 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   {below > 0 && <div style={{ fontSize: 12, color: '#6B6762', marginBottom: 16 }}>{below}/{validPages.length} {rs(locale).pagesBelowThreshold}</div>}
 
                   {/* Consolidated synthesis */}
-                  {cc.synthesis && (
+                  {cc.synthesis && (/* softenText applied below */
                     <div style={{ marginBottom: 16 }}>
                       <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).whatWeFound}</div>
-                      <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65 }}>{cc.synthesis}</div>
+                      <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.65 }}>{softenText(cc.synthesis)}</div>
                     </div>
                   )}
 
@@ -1692,7 +1703,11 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)' }}>/100</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 200 }}>
-                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>{rs(locale).projectionText} {r.scoreAverage} {rs(locale).projectionTo} {projected}/100.</div>
+                  <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.7)', lineHeight: 1.6 }}>
+                    {rs(locale).projectionText} {r.scoreAverage} {rs(locale).projectionTo} {projected}/100.
+                    {' '}{locale === 'en' ? 'The estimated gain comes mainly from improving' : 'Le gain estime vient principalement de l\'amelioration de'}{' '}
+                    {Object.entries(criteriaAverages).map(([name, data]) => ({ name, pct: data.max > 0 ? data.avgScore / data.max : 1 })).filter(c => c.pct < 0.75).sort((a, b) => a.pct - b.pct).slice(0, 3).map(c => tc(c.name, locale).toLowerCase()).join(', ') || (locale === 'en' ? 'several criteria' : 'plusieurs criteres')}.
+                  </div>
                 </div>
               </div>
             </div>
