@@ -622,14 +622,38 @@ export default async function handler(req, res) {
     // ── STEP 4: Per-page recommendations ────────────────────────────────
     if (step === 4) {
       const prompt = buildPageRecommendationsPrompt(locale, rootUrl, homepageEvidence.metaDescription || '', agg.validPages);
+      console.log(`[pro-consolidate] Step 4 prompt length: ${prompt.length} chars for ${agg.validPages.length} pages`);
       let pageRecommendations = {};
+
+      // Attempt 1
       try {
         const msg = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
-        let raw = msg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+        let raw = msg.content[0].text;
+        console.log(`[pro-consolidate] Step 4 response length: ${raw.length} chars, stop_reason: ${msg.stop_reason}`);
+        raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '');
         raw = raw.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
         const jsonMatch = raw.match(/\{[\s\S]*\}/);
-        if (jsonMatch) pageRecommendations = JSON.parse(jsonMatch[0]);
-      } catch (e) { console.error(`[pro-consolidate] Step 4 Page recos failed: ${e.message}`); }
+        if (jsonMatch) {
+          pageRecommendations = JSON.parse(jsonMatch[0]);
+        } else {
+          console.error(`[pro-consolidate] Step 4: no JSON object found. First 200 chars: ${raw.substring(0, 200)}`);
+        }
+      } catch (e) {
+        console.error(`[pro-consolidate] Step 4 attempt 1 failed: ${e.status || ''} ${e.message}`);
+        // Attempt 2 after 15s
+        await new Promise(r => setTimeout(r, 15000));
+        try {
+          const msg2 = await callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
+          let raw2 = msg2.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+          raw2 = raw2.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
+          const jsonMatch2 = raw2.match(/\{[\s\S]*\}/);
+          if (jsonMatch2) pageRecommendations = JSON.parse(jsonMatch2[0]);
+          else console.error(`[pro-consolidate] Step 4 attempt 2: no JSON. First 200: ${raw2.substring(0, 200)}`);
+        } catch (e2) {
+          console.error(`[pro-consolidate] Step 4 attempt 2 failed: ${e2.status || ''} ${e2.message}`);
+        }
+      }
+
       await redis.set(`${JOB_PREFIX}:${siteJobId}:step:page-recos`, pageRecommendations, { ex: STEP_TTL });
       console.log(`[pro-consolidate] Step 4 done in ${Date.now() - startMs}ms. Pages with recos=${Object.keys(pageRecommendations).length}`);
       await triggerConsolidationStep(siteJobId, 5, { baseUrl });
