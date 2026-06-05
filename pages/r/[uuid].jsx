@@ -182,7 +182,7 @@ function getGoodScoreTips(locale) { return locale === 'en' ? GOOD_SCORE_TIPS_EN 
 function softenText(text) {
   if (!text) return text;
   return text
-    .replace(/parfaitement\s+(optimis[eé]|ma[iî]tris[eé])/gi, 'tres bien optimise')
+    .replace(/parfaitement/gi, 'tres bien')
     .replace(/strategie\s+parfaite/gi, 'strategie solide')
     .replace(/exemplaire/gi, 'tres solide')
     .replace(/excellence\s+remarquable/gi, 'tres bon niveau')
