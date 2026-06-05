@@ -314,13 +314,22 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
   ]);
   console.log(`[pro-consolidate] First 3 calls completed in ${Date.now() - start}ms`);
 
-  // 4th call AFTER the first 3 + 20s cooldown to avoid Anthropic rate limit
-  console.log(`[pro-consolidate] Waiting 20s before page recos to avoid rate limit...`);
-  await new Promise(r => setTimeout(r, 20000));
-  const pageRecoR = await Promise.allSettled([
+  // 4th call AFTER the first 3 + 30s cooldown + retry on failure
+  console.log(`[pro-consolidate] Waiting 30s before page recos...`);
+  await new Promise(r => setTimeout(r, 30000));
+  let pageRecoR = await Promise.allSettled([
     callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
   ]).then(r => r[0]);
-  console.log(`[pro-consolidate] Page reco call completed in ${Date.now() - start}ms (status: ${pageRecoR.status})`);
+  console.log(`[pro-consolidate] Page reco attempt 1: ${pageRecoR.status} (${Date.now() - start}ms)`);
+  // Retry once if failed
+  if (pageRecoR.status !== 'fulfilled') {
+    console.log(`[pro-consolidate] Page reco failed, retrying after 30s...`);
+    await new Promise(r => setTimeout(r, 30000));
+    pageRecoR = await Promise.allSettled([
+      callSonnet({ model: 'claude-4-sonnet-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
+    ]).then(r => r[0]);
+    console.log(`[pro-consolidate] Page reco attempt 2: ${pageRecoR.status} (${Date.now() - start}ms)`);
+  }
 
   let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
   if (synthR.status === 'fulfilled') {
