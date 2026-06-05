@@ -14,7 +14,7 @@ Detekia (detekia.fr) est un outil de visibilité IA pour les entreprises. Next.j
 Analyse d'une seule page web. Score GEO /100, 7 critères, 7 recommandations détaillées, test de citation IA (10 requêtes GPT).
 
 ### 2. Audit GEO complet / Pro (99€)
-Analyse de 10 pages clés du site. Score moyen, synthèse exécutive, 7 critères consolidés avec recommandations, patterns transverses, plan d'action 10-15 actions, test de citation IA (30 requêtes GPT), annexe page par page avec recommandations.
+Analyse de 10 pages clés du site. Score moyen, synthèse exécutive, 7 critères consolidés avec recommandations, patterns transverses, plan d'action (autant d'actions que justifié par l'audit), test de citation IA (30 requêtes GPT), annexe page par page avec recommandations.
 
 ---
 
@@ -105,7 +105,7 @@ Stripe checkout → webhook → /api/pro-enqueue
 2. **Synthèse exécutive** — 2-3 paragraphes, top 3 forces, top 3 faiblesses
 3. **7 critères consolidés** — Score moyen par critère, synthèse, recommandations détaillées (problem, solution, code, pages concernées)
 4. **Patterns transverses** — 5-8 problèmes récurrents multi-pages
-5. **Plan d'action** — 10-15 actions priorisées impact/effort
+5. **Plan d'action** — Autant d'actions que l'audit justifie, priorisées impact/effort (pas de minimum ni maximum artificiel)
 6. **Test de citation IA** — 30 requêtes GPT, taux de citation, concurrents réels
 7. **Annexe page par page** — Score, 7 critères, verdict, 3-5 recommandations par page
 8. **Méthodologie** — Explication transparente

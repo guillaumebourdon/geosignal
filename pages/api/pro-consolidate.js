@@ -183,7 +183,7 @@ Generate a comprehensive site-level analysis. JSON only:
 Rules:
 - executiveSummary: 2-3 substantial paragraphs, specific to this site. Use the FIXED STATS numbers above verbatim.
 - patterns: 5 to 8 cross-page patterns detected
-- actionPlan: 8 to 12 site-level actions, sorted by priority (impact/effort ratio). DEDUPLICATION IS CRITICAL: each action must address a DIFFERENT problem. Never have 2 actions about the same criterion or the same type of fix. Example of WRONG: "Add publication dates" + "Implement dateModified schema" + "Show last update date" = these are ONE action about freshness, not three.
+- actionPlan: ALL relevant site-level actions, sorted by priority (impact/effort ratio). Include as many actions as the audit justifies — no artificial minimum or maximum. DEDUPLICATION IS CRITICAL: each action must address a DIFFERENT problem. Never have 2 actions about the same criterion or the same type of fix. Example of WRONG: "Add publication dates" + "Implement dateModified schema" + "Show last update date" = these are ONE action about freshness, not three.
 - Be specific: reference actual URLs from the audit
 - NEVER write "${ctx.totalValid} pages sur ${ctx.totalValid}" — that's trivially obvious. Write "${ctx.totalValid} pages" or "toutes les ${ctx.totalValid} pages".
 - Each action in the plan should affect 2+ pages. If a recommendation only applies to 1 page, it belongs in the per-page analysis, not in the site-level action plan. Consolidate single-page issues into broader patterns (e.g., instead of "add legal references to the insurance page", write "add external source citations across content pages").
