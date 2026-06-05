@@ -1185,7 +1185,23 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
     setDownloading(false);
   };
 
-  const r = proReport;
+  // Apply softenText to all string fields in the report (removes absolute phrasing from Claude)
+  const softenObj = (obj) => {
+    if (!obj) return obj;
+    if (typeof obj === 'string') return softenText(obj);
+    if (Array.isArray(obj)) return obj.map(softenObj);
+    if (typeof obj === 'object') {
+      const out = {};
+      for (const [k, v] of Object.entries(obj)) {
+        // Don't soften URLs, dates, criterion names, or code examples
+        if (k === 'url' || k === 'rootUrl' || k === 'criterion' || k === 'codeExample' || k === 'consolidatedAt' || k === 'queuedAt' || k === 'query') out[k] = v;
+        else out[k] = softenObj(v);
+      }
+      return out;
+    }
+    return obj;
+  };
+  const r = softenObj(proReport);
   const g = gradeInfo(r.scoreAverage, locale);
   const totalPages = r.pagesValid + (r.pagesWithError || 0);
   const date = createdAt ? new Date(createdAt).toLocaleDateString(locale === 'en' ? 'en-US' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
