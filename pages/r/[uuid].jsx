@@ -164,7 +164,7 @@ const GOOD_SCORE_TIPS_FR = {
   autorite: "Votre autorite E-E-A-T est bien etablie. Pour la renforcer, ajoutez des biographies d'auteurs detaillees et enrichissez votre schema Organization.",
   accessibilite: "Votre accessibilite IA est tres bonne. Pour atteindre 100%, verifiez que votre robots.txt autorise GPTBot, ClaudeBot et PerplexityBot, et ajoutez un fichier llms.txt.",
   neutralite: "Votre neutralite editoriale est excellente. Pour la perfectionner, passez en revue les dernieres pages ou des formulations promotionnelles subsistent.",
-  presence: "Votre presence externe est forte. Pour maximiser ce critere, developpez votre activite sur les plateformes ou vos concurrents sont les plus cites.",
+  presence: "Votre presence externe est forte. Pour maximiser ce critere, obtenez des mentions dans des medias de votre secteur, renforcez vos profils sur les plateformes ou vos concurrents sont cites, et sollicitez des avis clients sur les plateformes de reference.",
   fraicheur: "Votre fraicheur est correcte. Pour l'optimiser, ajoutez les balises datePublished et dateModified en schema.org sur toutes vos pages.",
 };
 const GOOD_SCORE_TIPS_EN = {
@@ -173,7 +173,7 @@ const GOOD_SCORE_TIPS_EN = {
   autorite: "Your E-E-A-T authority is well established. To strengthen it, add detailed author bios and enrich your Organization schema.",
   accessibilite: "Your AI accessibility is very good. To reach 100%, verify your robots.txt allows GPTBot, ClaudeBot and PerplexityBot, and add an llms.txt file.",
   neutralite: "Your editorial neutrality is excellent. To perfect it, review remaining pages for promotional language.",
-  presence: "Your external presence is strong. To maximize this criterion, develop your activity on platforms where your competitors are most cited.",
+  presence: "Your external presence is strong. To maximize it, get mentions in industry media, strengthen your profiles on platforms where competitors are cited, and collect customer reviews on key platforms.",
   fraicheur: "Your freshness is decent. To optimize it, add datePublished and dateModified schema.org tags on all your pages.",
 };
 function getGoodScoreTips(locale) { return locale === 'en' ? GOOD_SCORE_TIPS_EN : GOOD_SCORE_TIPS_FR; }
