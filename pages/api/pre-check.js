@@ -147,30 +147,32 @@ export default async function handler(req, res) {
     console.log(`[pre-check] ${hostname} — pages: ${pages.length} total, ${sameHostPages.length} same-host, ${uniquePaths.size} unique paths`);
 
     if (pagesFound >= 10) {
-      // Spot-check: test 2 random internal pages (not homepage) for scrapability
+      // Spot-check: test 5 random internal pages (not homepage) for scrapability
+      // Require at least 80% scrapable to qualify for Pro audit
       const internalPages = sameHostPages.filter(p => {
         try { return new URL(p.url).pathname !== '/'; } catch { return false; }
       });
-      const samplesToTest = internalPages.sort(() => Math.random() - 0.5).slice(0, 2);
+      const samplesToTest = internalPages.sort(() => Math.random() - 0.5).slice(0, 5);
 
-      let scrapableCount = 0;
-      for (const sample of samplesToTest) {
-        const check = await fetchCheck(sample.url, 6000);
-        const isBlocked = !check.ok || check.status === 403 || check.status === 429 || detectAntiBot(check.body || '');
-        const hasContent = hasSubstantialContent(check.body || '');
-        if (!isBlocked && hasContent) {
-          scrapableCount++;
-        } else {
-          console.log(`[pre-check] ${hostname} — sample page NOT scrapable: ${sample.url} (status: ${check.status}, antibot: ${detectAntiBot(check.body || '')}, content: ${hasContent})`);
-        }
-      }
+      const scrapabilityChecks = await Promise.allSettled(
+        samplesToTest.map(async (sample) => {
+          const check = await fetchCheck(sample.url, 6000);
+          const isBlocked = !check.ok || check.status === 403 || check.status === 429 || detectAntiBot(check.body || '');
+          const hasContent = hasSubstantialContent(check.body || '');
+          if (!isBlocked && hasContent) return true;
+          console.log(`[pre-check] ${hostname} — sample NOT scrapable: ${sample.url} (status: ${check.status})`);
+          return false;
+        })
+      );
+      const scrapableCount = scrapabilityChecks.filter(r => r.status === 'fulfilled' && r.value).length;
+      const minRequired = Math.max(1, Math.ceil(samplesToTest.length * 0.8)); // 80% must be scrapable
 
-      if (samplesToTest.length === 0 || scrapableCount >= 1) {
+      if (samplesToTest.length === 0 || scrapableCount >= minRequired) {
         proAuditable = true;
         proBlockReason = 'ok';
       } else {
         proBlockReason = 'pages_not_scrapable';
-        console.log(`[pre-check] ${hostname} — Pro BLOCKED: ${samplesToTest.length} sample pages tested, ${scrapableCount} scrapable`);
+        console.log(`[pre-check] ${hostname} — Pro BLOCKED: ${scrapableCount}/${samplesToTest.length} scrapable (need ${minRequired})`);
       }
     } else {
       proBlockReason = pagesFound < 5 ? 'insufficient_pages' : 'insufficient_unique_pages';
