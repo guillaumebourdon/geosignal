@@ -603,8 +603,17 @@ export default async function handler(req, res) {
     // STEP 1: Synthesis + patterns + plan d'action (Sonnet → fallback GPT-4o)
     // ══════════════════════════════════════════════════════════════════════
     if (step === 1) {
+      // Skip if already done (retrigger scenario)
+      const existing = await redis.get(`${JOB_PREFIX}:${siteJobId}:step:synthesis`);
+      const existingParsed = existing ? (typeof existing === 'string' ? JSON.parse(existing) : existing) : null;
+      if (existingParsed?.executiveSummary && existingParsed.executiveSummary.length > 50) {
+        console.log(`[pro-consolidate] Step 1 already done, skipping`);
+        await triggerConsolidationStep(siteJobId, 2, { baseUrl });
+        return res.status(200).json({ success: true, step: 1, skipped: true });
+      }
+
       const prompt = buildSynthesisPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages);
-      let synthesis = { executiveSummary: '', topStrengths: [], topWeaknesses: [], patterns: [], actionPlan: [] };
+      let synthesis = null;
       try {
         const result = await callSonnetWithFallback(prompt, { maxTokens: 8000 });
         synthesis = safeParseJson(result.text);
@@ -612,14 +621,29 @@ export default async function handler(req, res) {
       } catch (e) {
         console.error(`[pro-consolidate] Step 1 all providers failed: ${e.message}`);
       }
-      await redis.set(`${JOB_PREFIX}:${siteJobId}:step:synthesis`, synthesis, { ex: STEP_TTL });
-      console.log(`[pro-consolidate] Step 1 done in ${Date.now() - startMs}ms. Exec=${(synthesis.executiveSummary || '').length}c, Patterns=${(synthesis.patterns || []).length}, Actions=${(synthesis.actionPlan || []).length}`);
+
+      // Only store if we got real data
+      if (synthesis?.executiveSummary && synthesis.executiveSummary.length > 50) {
+        await redis.set(`${JOB_PREFIX}:${siteJobId}:step:synthesis`, synthesis, { ex: STEP_TTL });
+        console.log(`[pro-consolidate] Step 1 done. Exec=${synthesis.executiveSummary.length}c, Actions=${(synthesis.actionPlan || []).length}`);
+      } else {
+        console.error(`[pro-consolidate] Step 1 produced empty synthesis — NOT stored. Will be retried by step 6.`);
+      }
       await triggerConsolidationStep(siteJobId, 2, { baseUrl });
       return res.status(200).json({ success: true, step: 1 });
     }
 
     // ── STEP 2: Per-criterion consolidated analysis ─────────────────────
     if (step === 2) {
+      // Skip if already done
+      const existingCrit = await redis.get(`${JOB_PREFIX}:${siteJobId}:step:criteria`);
+      const existingCritParsed = existingCrit ? (typeof existingCrit === 'string' ? JSON.parse(existingCrit) : existingCrit) : null;
+      if (Array.isArray(existingCritParsed) && existingCritParsed.length > 0) {
+        console.log(`[pro-consolidate] Step 2 already done (${existingCritParsed.length} criteria), skipping`);
+        await triggerConsolidationStep(siteJobId, 3, { baseUrl });
+        return res.status(200).json({ success: true, step: 2, skipped: true });
+      }
+
       const prompt = buildCriteriaPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages);
       let criteriaConsolidated = [];
       try {
@@ -627,7 +651,12 @@ export default async function handler(req, res) {
         criteriaConsolidated = safeParseArray(result.text);
         console.log(`[pro-consolidate] Step 2 via ${result.provider}`);
       } catch (e) { console.error(`[pro-consolidate] Step 2 all providers failed: ${e.message}`); }
-      await redis.set(`${JOB_PREFIX}:${siteJobId}:step:criteria`, criteriaConsolidated, { ex: STEP_TTL });
+
+      if (Array.isArray(criteriaConsolidated) && criteriaConsolidated.length > 0) {
+        await redis.set(`${JOB_PREFIX}:${siteJobId}:step:criteria`, criteriaConsolidated, { ex: STEP_TTL });
+      } else {
+        console.error(`[pro-consolidate] Step 2 produced empty criteria — NOT stored.`);
+      }
       console.log(`[pro-consolidate] Step 2 done in ${Date.now() - startMs}ms. Criteria=${criteriaConsolidated.length}`);
       await triggerConsolidationStep(siteJobId, 3, { baseUrl });
       return res.status(200).json({ success: true, step: 2 });
@@ -675,6 +704,15 @@ export default async function handler(req, res) {
 
     // ── STEP 4: Per-page recommendations (split into batches of 5 pages) ─
     if (step === 4) {
+      // Skip if already done
+      const existingRecos = await redis.get(`${JOB_PREFIX}:${siteJobId}:step:page-recos`);
+      const existingRecosParsed = existingRecos ? (typeof existingRecos === 'string' ? JSON.parse(existingRecos) : existingRecos) : null;
+      if (existingRecosParsed && typeof existingRecosParsed === 'object' && Object.keys(existingRecosParsed).length >= Math.floor(agg.validPages.length * 0.5)) {
+        console.log(`[pro-consolidate] Step 4 already done (${Object.keys(existingRecosParsed).length} pages), skipping`);
+        await triggerConsolidationStep(siteJobId, 5, { baseUrl });
+        return res.status(200).json({ success: true, step: 4, skipped: true });
+      }
+
       let pageRecommendations = {};
 
       // Split pages into batches of 5 to avoid output truncation
@@ -711,7 +749,11 @@ export default async function handler(req, res) {
         if (bi < batches.length - 1) await new Promise(r => setTimeout(r, 5000));
       }
 
-      await redis.set(`${JOB_PREFIX}:${siteJobId}:step:page-recos`, pageRecommendations, { ex: STEP_TTL });
+      if (Object.keys(pageRecommendations).length > 0) {
+        await redis.set(`${JOB_PREFIX}:${siteJobId}:step:page-recos`, pageRecommendations, { ex: STEP_TTL });
+      } else {
+        console.error(`[pro-consolidate] Step 4 produced 0 page recos — NOT stored. Will be retried by step 6.`);
+      }
       console.log(`[pro-consolidate] Step 4 done in ${Date.now() - startMs}ms. Pages with recos=${Object.keys(pageRecommendations).length}`);
       await triggerConsolidationStep(siteJobId, 5, { baseUrl });
       return res.status(200).json({ success: true, step: 4 });
@@ -778,6 +820,18 @@ export default async function handler(req, res) {
 
       // Log what we have
       console.log(`[pro-consolidate] Step 6 Assembly — Synthesis: ${(synthesis.executiveSummary || '').length}c, Criteria: ${rawCriteria.length}, Citations: ${(citationTest.tests || citationTest.queries || []).length}q, PageRecos: ${Object.keys(pageRecommendations).length} pages`);
+
+      // Check for critical missing data — retrigger failed steps instead of delivering incomplete report
+      const missingSteps = [];
+      if (!synthesis.executiveSummary || (synthesis.executiveSummary || '').length < 50) missingSteps.push(1);
+      if (!Array.isArray(rawCriteria) || rawCriteria.length === 0) missingSteps.push(2);
+      if (Object.keys(pageRecommendations).length === 0) missingSteps.push(4);
+
+      if (missingSteps.length > 0) {
+        console.warn(`[pro-consolidate] Step 6: missing data for steps ${missingSteps.join(', ')}. Retriggering step ${missingSteps[0]}...`);
+        await triggerConsolidationStep(siteJobId, missingSteps[0], { baseUrl });
+        return res.status(200).json({ success: false, reason: 'missing_data', missingSteps, retriggered: missingSteps[0] });
+      }
 
       // Enrich criteria with score data
       const criteriaConsolidated = (Array.isArray(rawCriteria) ? rawCriteria : []).map(cc => {
