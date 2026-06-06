@@ -163,7 +163,7 @@ function buildPromptContext(locale, rootUrl, agg) {
 
   const criteriaLabels = Object.entries(criteriaAverages).map(([k, v]) => {
     const pct = Math.round((v.avgScore / v.max) * 100);
-    const adj = pct < 30 ? 'catastrophique' : pct < 50 ? 'faible' : pct < 70 ? 'moyen' : pct < 85 ? 'bon' : 'excellent';
+    const adj = pct < 30 ? 'tres faible' : pct < 50 ? 'faible' : pct < 70 ? 'moyen' : pct < 85 ? 'bon' : 'excellent';
     return `  ${k}: ${v.avgScore}/${v.max} (${pct}%) → qualificatif: ${adj}`;
   }).join('\n');
 
@@ -178,12 +178,12 @@ function buildPromptContext(locale, rootUrl, agg) {
 ${Object.entries(belowByCriterion).map(([k, v]) => `  ${k}: ${v}/${totalValid}`).join('\n')}
 
 VOCABULARY CALIBRATION (mandatory — use the qualifier that matches the score %):
-<30% = catastrophique | 30-50% = faible | 50-70% = moyen | 70-85% = bon | >85% = excellent
-FORBIDDEN above 50%: catastrophique, grave, lacune critique, défaillant, alarmant.
+<30% = tres faible | 30-50% = faible | 50-70% = moyen | 70-85% = bon | >85% = excellent
+FORBIDDEN: catastrophique, grave, lacune critique, défaillant, alarmant. Use "tres faible" instead.
 Above 50%, acceptable words: moyen, à améliorer, perfectible, insuffisant, modéré.
 Per-criterion qualifiers (use these exact words):
 ${criteriaLabels}
-NEVER use "catastrophique" for a score above 30%. NEVER use "faible" for a score above 50%.`;
+NEVER use "catastrophique" — always use "tres faible" instead. NEVER use "faible" for a score above 50%.`;
 
   return { langInstruction, statsBlock, totalValid, belowByCriterion };
 }

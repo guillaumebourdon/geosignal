@@ -191,7 +191,8 @@ function softenText(text) {
     .replace(/parfait(?:e|s)?(?!\w)/gi, 'tres bon')
     .replace(/irr[eé]prochable/gi, 'tres bon')
     .replace(/impeccable/gi, 'tres bon')
-    .replace(/sans\s+faille/gi, 'solide');
+    .replace(/sans\s+faille/gi, 'solide')
+    .replace(/catastrophique/gi, 'tres faible');
 }
 
 function lookupMap(map, name) {
@@ -1401,7 +1402,8 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <p key={i} style={{ marginBottom: 12 }} dangerouslySetInnerHTML={{ __html:
                     p.replace(/(\d+[,.]?\d*\s*[%/]\s*\d*)/g, '<strong style="color:#1A1916">$1</strong>')
                      .replace(/(\d+[,.]?\d*\s*(?:pages?|critères?|points?))/gi, '<strong style="color:#1A1916">$1</strong>')
-                     .replace(/\b(catastrophique|critique|insuffisant)\b/gi, '<strong style="color:#D97757">$1</strong>')
+                     .replace(/\b(critique|insuffisant)\b/gi, '<strong style="color:#D97757">$1</strong>')
+                     .replace(/\bcatastrophique\b/gi, '<strong style="color:#D97757">très faible</strong>')
                      .replace(/\b(faible)\b/gi, '<strong style="color:#D97757">$1</strong>')
                      .replace(/\b(excellente?|solide|performante?)\b/gi, '<strong style="color:#10A37F">$1</strong>')
                   }} />

@@ -418,8 +418,8 @@ ${locale === 'en'
 FORBIDDEN above 50%: catastrophic, severe, critical gap, failing, alarming.
 Above 50%, acceptable words: average, needs improvement, room for improvement, insufficient, moderate.`
 : `VOCABULARY CALIBRATION (mandatory):
-<30% = catastrophique | 30-50% = faible | 50-70% = moyen | 70-85% = bon | >85% = excellent
-FORBIDDEN above 50%: catastrophique, grave, lacune critique, défaillant, alarmant.
+<30% = tres faible | 30-50% = faible | 50-70% = moyen | 70-85% = bon | >85% = excellent
+FORBIDDEN: catastrophique, grave, lacune critique, défaillant, alarmant. Use "tres faible" instead.
 Above 50%, acceptable words: moyen, à améliorer, perfectible, insuffisant, modéré.`}
 
 You are a senior GEO consultant. Audit ${url}.
