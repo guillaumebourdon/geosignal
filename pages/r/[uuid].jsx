@@ -1394,10 +1394,17 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
               </div>
             </div>
 
-            {/* Executive summary */}
+            {/* Executive summary — highlight key metrics and scores */}
             {r.executiveSummary && (
-              <div style={{ fontSize: 13, color: '#3A3835', lineHeight: 1.75, marginBottom: 16 }}>
-                {softenText(r.executiveSummary).split('\n').filter(Boolean).map((p, i) => <p key={i} style={{ marginBottom: 10 }}>{p}</p>)}
+              <div style={{ fontSize: 14, color: '#3A3835', lineHeight: 1.8, marginBottom: 16 }}>
+                {softenText(r.executiveSummary).split('\n').filter(Boolean).map((p, i) => (
+                  <p key={i} style={{ marginBottom: 12 }} dangerouslySetInnerHTML={{ __html:
+                    p.replace(/(\d+[,.]?\d*\s*[%/]\s*\d*)/g, '<strong style="color:#1A1916">$1</strong>')
+                     .replace(/(\d+[,.]?\d*\s*(?:pages?|critères?|points?))/gi, '<strong style="color:#1A1916">$1</strong>')
+                     .replace(/(catastrophique|critique|faible|insuffisant)/gi, '<strong style="color:#D97757">$1</strong>')
+                     .replace(/(excellent|solide|tres bon|performant)/gi, '<strong style="color:#10A37F">$1</strong>')
+                  }} />
+                ))}
               </div>
             )}
 
