@@ -673,39 +673,42 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, step: 3 });
     }
 
-    // ── STEP 4: Per-page recommendations ────────────────────────────────
+    // ── STEP 4: Per-page recommendations (split into batches of 5 pages) ─
     if (step === 4) {
-      const prompt = buildPageRecommendationsPrompt(locale, rootUrl, homepageEvidence.metaDescription || '', agg.validPages);
-      console.log(`[pro-consolidate] Step 4 prompt length: ${prompt.length} chars for ${agg.validPages.length} pages`);
       let pageRecommendations = {};
 
-      // GPT-4o for page recos — reliable on Vercel, great at structured JSON
-      try {
-        const completion = await openai.chat.completions.create({
-          model: 'gpt-4o', max_tokens: 8000, temperature: 0.2,
-          messages: [{ role: 'user', content: prompt }],
-        });
-        let raw = completion.choices[0].message.content;
-        console.log(`[pro-consolidate] Step 4 GPT-4o response: ${raw.length} chars, finish=${completion.choices[0].finish_reason}`);
-        raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-        raw = raw.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
-        const jsonMatch = raw.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          pageRecommendations = JSON.parse(jsonMatch[0]);
-        } else {
-          console.error(`[pro-consolidate] Step 4: no JSON found. First 200: ${raw.substring(0, 200)}`);
-        }
-      } catch (e) {
-        console.error(`[pro-consolidate] Step 4 GPT-4o failed: ${e.message?.substring(0, 200)}`);
-        // Fallback to Sonnet
+      // Split pages into batches of 5 to avoid output truncation
+      const batchSize = 5;
+      const batches = [];
+      for (let i = 0; i < agg.validPages.length; i += batchSize) {
+        batches.push(agg.validPages.slice(i, i + batchSize));
+      }
+
+      for (let bi = 0; bi < batches.length; bi++) {
+        const batch = batches[bi];
+        const prompt = buildPageRecommendationsPrompt(locale, rootUrl, homepageEvidence.metaDescription || '', batch);
+        console.log(`[pro-consolidate] Step 4 batch ${bi + 1}/${batches.length}: ${batch.length} pages, ${prompt.length} chars`);
+
         try {
-          const msg = await anthropic.messages.create({ model: 'claude-4-sonnet-20250514', max_tokens: 6000, temperature: 0.2, messages: [{ role: 'user', content: prompt }] });
-          let raw2 = msg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-          const jsonMatch2 = raw2.match(/\{[\s\S]*\}/);
-          if (jsonMatch2) pageRecommendations = JSON.parse(jsonMatch2[0]);
-        } catch (e2) {
-          console.error(`[pro-consolidate] Step 4 Sonnet fallback also failed: ${e2.message?.substring(0, 100)}`);
+          const completion = await openai.chat.completions.create({
+            model: 'gpt-4o', max_tokens: 8000, temperature: 0.2,
+            messages: [{ role: 'user', content: prompt }],
+          });
+          let raw = completion.choices[0].message.content;
+          console.log(`[pro-consolidate] Step 4 batch ${bi + 1} response: ${raw.length} chars, finish=${completion.choices[0].finish_reason}`);
+          raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+          raw = raw.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
+          const jsonMatch = raw.match(/\{[\s\S]*\}/);
+          if (jsonMatch) {
+            const batchRecos = JSON.parse(jsonMatch[0]);
+            Object.assign(pageRecommendations, batchRecos);
+          }
+        } catch (e) {
+          console.error(`[pro-consolidate] Step 4 batch ${bi + 1} failed: ${e.message?.substring(0, 200)}`);
         }
+
+        // Brief pause between batches
+        if (bi < batches.length - 1) await new Promise(r => setTimeout(r, 5000));
       }
 
       await redis.set(`${JOB_PREFIX}:${siteJobId}:step:page-recos`, pageRecommendations, { ex: STEP_TTL });
