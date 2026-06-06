@@ -626,10 +626,11 @@ export default async function handler(req, res) {
       if (synthesis?.executiveSummary && synthesis.executiveSummary.length > 50) {
         await redis.set(`${JOB_PREFIX}:${siteJobId}:step:synthesis`, synthesis, { ex: STEP_TTL });
         console.log(`[pro-consolidate] Step 1 done. Exec=${synthesis.executiveSummary.length}c, Actions=${(synthesis.actionPlan || []).length}`);
+        await triggerConsolidationStep(siteJobId, 2, { baseUrl });
       } else {
-        console.error(`[pro-consolidate] Step 1 produced empty synthesis — NOT stored. Will be retried by step 6.`);
+        console.error(`[pro-consolidate] Step 1 produced empty synthesis — NOT stored. Jumping to step 6 for retrigger.`);
+        await triggerConsolidationStep(siteJobId, 6, { baseUrl });
       }
-      await triggerConsolidationStep(siteJobId, 2, { baseUrl });
       return res.status(200).json({ success: true, step: 1 });
     }
 
@@ -646,19 +647,37 @@ export default async function handler(req, res) {
 
       const prompt = buildCriteriaPrompt(ctx, rootUrl, agg.scoreAverage, agg.validPages, agg.criteriaAverages);
       let criteriaConsolidated = [];
+
+      // Try Sonnet → GPT-4o fallback
       try {
-        const result = await callSonnetWithFallback(prompt, { maxTokens: 6000 });
+        const result = await callSonnetWithFallback(prompt, { maxTokens: 8000 });
         criteriaConsolidated = safeParseArray(result.text);
         console.log(`[pro-consolidate] Step 2 via ${result.provider}`);
-      } catch (e) { console.error(`[pro-consolidate] Step 2 all providers failed: ${e.message}`); }
+      } catch (e) {
+        console.warn(`[pro-consolidate] Step 2 first attempt failed: ${e.message}`);
+      }
+
+      // Retry with GPT-4o directly if first attempt failed
+      if (!Array.isArray(criteriaConsolidated) || criteriaConsolidated.length === 0) {
+        console.log(`[pro-consolidate] Step 2 retrying with GPT-4o after 10s...`);
+        await new Promise(r => setTimeout(r, 10000));
+        try {
+          const result = await callGPT4o(prompt, { maxTokens: 8000 });
+          criteriaConsolidated = safeParseArray(result.text);
+          console.log(`[pro-consolidate] Step 2 retry OK via ${result.provider}`);
+        } catch (e) {
+          console.error(`[pro-consolidate] Step 2 retry also failed: ${e.message}`);
+        }
+      }
 
       if (Array.isArray(criteriaConsolidated) && criteriaConsolidated.length > 0) {
         await redis.set(`${JOB_PREFIX}:${siteJobId}:step:criteria`, criteriaConsolidated, { ex: STEP_TTL });
+        console.log(`[pro-consolidate] Step 2 done in ${Date.now() - startMs}ms. Criteria=${criteriaConsolidated.length}`);
+        await triggerConsolidationStep(siteJobId, 3, { baseUrl });
       } else {
-        console.error(`[pro-consolidate] Step 2 produced empty criteria — NOT stored.`);
+        console.error(`[pro-consolidate] Step 2 produced empty criteria after 2 attempts — NOT stored. Jumping to step 6 for retrigger.`);
+        await triggerConsolidationStep(siteJobId, 6, { baseUrl });
       }
-      console.log(`[pro-consolidate] Step 2 done in ${Date.now() - startMs}ms. Criteria=${criteriaConsolidated.length}`);
-      await triggerConsolidationStep(siteJobId, 3, { baseUrl });
       return res.status(200).json({ success: true, step: 2 });
     }
 
@@ -751,11 +770,12 @@ export default async function handler(req, res) {
 
       if (Object.keys(pageRecommendations).length > 0) {
         await redis.set(`${JOB_PREFIX}:${siteJobId}:step:page-recos`, pageRecommendations, { ex: STEP_TTL });
+        console.log(`[pro-consolidate] Step 4 done in ${Date.now() - startMs}ms. Pages with recos=${Object.keys(pageRecommendations).length}`);
+        await triggerConsolidationStep(siteJobId, 5, { baseUrl });
       } else {
-        console.error(`[pro-consolidate] Step 4 produced 0 page recos — NOT stored. Will be retried by step 6.`);
+        console.error(`[pro-consolidate] Step 4 produced 0 page recos — NOT stored. Jumping to step 6 for retrigger.`);
+        await triggerConsolidationStep(siteJobId, 6, { baseUrl });
       }
-      console.log(`[pro-consolidate] Step 4 done in ${Date.now() - startMs}ms. Pages with recos=${Object.keys(pageRecommendations).length}`);
-      await triggerConsolidationStep(siteJobId, 5, { baseUrl });
       return res.status(200).json({ success: true, step: 4 });
     }
 
@@ -828,9 +848,18 @@ export default async function handler(req, res) {
       if (Object.keys(pageRecommendations).length === 0) missingSteps.push(4);
 
       if (missingSteps.length > 0) {
-        console.warn(`[pro-consolidate] Step 6: missing data for steps ${missingSteps.join(', ')}. Retriggering step ${missingSteps[0]}...`);
-        await triggerConsolidationStep(siteJobId, missingSteps[0], { baseUrl });
-        return res.status(200).json({ success: false, reason: 'missing_data', missingSteps, retriggered: missingSteps[0] });
+        // Check retrigger counter to prevent infinite loops (max 2 retriggers)
+        const retriggerKey = `${JOB_PREFIX}:${siteJobId}:retrigger_count`;
+        const retriggerCount = Number(await redis.get(retriggerKey)) || 0;
+        if (retriggerCount >= 2) {
+          console.error(`[pro-consolidate] Step 6: missing steps ${missingSteps.join(', ')} but max retriggers (2) reached. Delivering partial report.`);
+          // Continue with what we have — don't block delivery forever
+        } else {
+          await redis.set(retriggerKey, retriggerCount + 1, { ex: STEP_TTL });
+          console.warn(`[pro-consolidate] Step 6: missing data for steps ${missingSteps.join(', ')}. Retrigger ${retriggerCount + 1}/2 → step ${missingSteps[0]}`);
+          await triggerConsolidationStep(siteJobId, missingSteps[0], { baseUrl });
+          return res.status(200).json({ success: false, reason: 'missing_data', missingSteps, retriggered: missingSteps[0], retriggerCount: retriggerCount + 1 });
+        }
       }
 
       // Enrich criteria with score data
@@ -869,7 +898,9 @@ export default async function handler(req, res) {
         actionPlan: sortActionPlan(synthesis.actionPlan),
         citationTestConsolidated: {
           queries: citationTest.tests || citationTest.queries || [],
-          citationRate: citationTest.summary?.cited_count ? `${citationTest.summary.cited_count}/${citationTest.summary.total_tests}` : (citationTest.citationRate || '0/0'),
+          citationRate: citationTest.summary?.total_tests
+            ? `${citationTest.summary.cited_count || 0}/${citationTest.summary.total_tests}`
+            : (citationTest.citationRate || `0/${(citationTest.tests || citationTest.queries || []).length || 0}`),
           bestOpportunity: citationTest.summary?.best_opportunity || citationTest.bestOpportunity || '',
           mainBlocker: citationTest.summary?.main_blocker || citationTest.mainBlocker || '',
         },

@@ -279,7 +279,9 @@ export default async function handler(req, res) {
         patterns: synthesis.patterns || [], actionPlan: synthesis.actionPlan || [],
         citationTestConsolidated: {
           queries: citationTest.tests || citationTest.queries || [],
-          citationRate: citationTest.summary ? `${citationTest.summary.cited_count}/${citationTest.summary.total_tests}` : citationTest.citationRate || '0/0',
+          citationRate: citationTest.summary?.total_tests
+            ? `${citationTest.summary.cited_count || 0}/${citationTest.summary.total_tests}`
+            : (citationTest.citationRate || `0/${(citationTest.tests || citationTest.queries || []).length || 0}`),
           bestOpportunity: citationTest.summary?.best_opportunity || citationTest.bestOpportunity || '',
           mainBlocker: citationTest.summary?.main_blocker || citationTest.mainBlocker || '',
         }, pages: fullPages,
