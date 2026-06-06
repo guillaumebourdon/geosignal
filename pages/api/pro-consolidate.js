@@ -14,8 +14,8 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: 60000 });
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: 60000 });
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: 180000 });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: 180000 });
 
 // ── Multi-provider call with fallback ────────────────────────────────────────
 
