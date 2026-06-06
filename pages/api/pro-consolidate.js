@@ -313,7 +313,7 @@ function buildPageRecommendationsPrompt(locale, rootUrl, metaDescription, validP
 
   return `${langInstruction}
 
-You are a senior GEO consultant. Generate recommendations for each page of a website audit. Include ALL relevant recommendations — one for each criterion that is not at maximum score.
+You are a senior GEO consultant. Generate ALL relevant recommendations for each page of a website audit. No limit — if a page has 10 things to fix, generate 10 recommendations.
 
 Site: ${rootUrl}
 ${validPages.length} pages analyzed.
@@ -326,7 +326,7 @@ JSON object, one key per URL:
 {"url":[{"priority":"high|medium|low","criterion":"French criterion name","title":"5 words max","problem":"2 sentences","solution":"2 sentences","technicalImplementation":["step 1","step 2"],"impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}
 
 Rules:
-- One recommendation per criterion that is NOT at maximum score. If a page has 5 criteria below max, generate 5 recommendations.
+- Generate as many recommendations as needed per page. Multiple recos per criterion are OK if there are multiple distinct problems to fix. No artificial limit.
 - priority: high <50%, medium 50-70%, low >70%
 - "criterion" must be one of: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'
 - Keep problem and solution concise (2 sentences each)
