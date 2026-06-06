@@ -1401,8 +1401,9 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <p key={i} style={{ marginBottom: 12 }} dangerouslySetInnerHTML={{ __html:
                     p.replace(/(\d+[,.]?\d*\s*[%/]\s*\d*)/g, '<strong style="color:#1A1916">$1</strong>')
                      .replace(/(\d+[,.]?\d*\s*(?:pages?|critères?|points?))/gi, '<strong style="color:#1A1916">$1</strong>')
-                     .replace(/(catastrophique|critique|faible|insuffisant)/gi, '<strong style="color:#D97757">$1</strong>')
-                     .replace(/(excellent|solide|tres bon|performant)/gi, '<strong style="color:#10A37F">$1</strong>')
+                     .replace(/\b(catastrophique|critique|insuffisant)\b/gi, '<strong style="color:#D97757">$1</strong>')
+                     .replace(/\b(faible)\b/gi, '<strong style="color:#D97757">$1</strong>')
+                     .replace(/\b(excellente?|solide|performante?)\b/gi, '<strong style="color:#10A37F">$1</strong>')
                   }} />
                 ))}
               </div>
@@ -1437,7 +1438,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
                       <a href={`#critere-${i + 1}`} onClick={() => track(`nav-critere-${i + 1}`)} style={{ fontSize: 13, color: '#1A1916', textDecoration: 'none' }}>{tc(name, locale)}</a>
                       <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                        {below > 0 && <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757' }}>{below}/{validPages.length} {rs(locale).belowThreshold}</span>}
+                        {/* Removed "X/10 sous seuil" — confusing for clients */}
                         <span style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: col }}>{d.avgScore}/{d.max}</span>
                       </div>
                     </div>
@@ -1601,14 +1602,14 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                     <h3 style={{ fontFamily: 'Georgia,serif', fontSize: 22, color: '#1A1916', margin: 0, lineHeight: 1.2 }}>{tc(criterionName, locale)}</h3>
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
                       <div style={{ fontFamily: 'Georgia,serif', fontSize: 32, color: col, lineHeight: 1 }}>{avgData.avgScore}<span style={{ fontSize: 14, color: '#C0BBB5' }}>/{avgData.max}</span></div>
-                      <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#B0ABA5' }}>{pct}% — {rs(locale).average}</div>
+                      {/* Removed percentage — confusing for clients, score X/Y is enough */}
                     </div>
                   </div>
                   <div style={{ height: 6, background: '#E5E2DC', borderRadius: 3, overflow: 'hidden', marginBottom: 16 }}>
                     <div style={{ height: '100%', width: `${pct}%`, background: col, borderRadius: 3 }} />
                   </div>
 
-                  {below > 0 && <div style={{ fontSize: 12, color: '#6B6762', marginBottom: 16 }}>{below}/{validPages.length} {rs(locale).pagesBelowThreshold}</div>}
+                  {/* Removed "X/10 pages sous le seuil 75%" — confusing */}
 
                   {/* Consolidated synthesis */}
                   {cc.synthesis && (/* softenText applied below */
@@ -1637,7 +1638,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                           <span style={{ fontSize: 13, color: '#10A37F', fontWeight: 600 }}>
                             {pct >= 100
                               ? (locale === 'en' ? 'Very good level detected on measured signals. No corrective action needed.' : 'Tres bon niveau detecte sur les signaux mesures par l\'audit. Aucune action corrective necessaire.')
-                              : (locale === 'en' ? `Good level (${pct}%)` : `Bon niveau (${pct}%)`)}
+                              : (locale === 'en' ? 'Good level' : 'Bon niveau')}
                           </span>
                         </div>
                         {pct < 100 && (
@@ -1648,7 +1649,7 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                       </div>
                     ) : (
                       <div style={{ background: 'rgba(201,134,26,0.06)', border: '1px solid rgba(201,134,26,0.2)', borderRadius: 8, padding: '16px 20px', fontSize: 13, color: '#C9861A', lineHeight: 1.6 }}>
-                        {rs(locale).criterionNeedsWork} ({pct}%). {rs(locale).criterionNeedsWorkSuffix}
+                        {rs(locale).criterionNeedsWork}. {rs(locale).criterionNeedsWorkSuffix}
                       </div>
                     )}
                   </div>
