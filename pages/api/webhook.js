@@ -297,6 +297,24 @@ export default async function handler(req, res) {
           }
         } catch (e) {
           console.error('Pro auto-trigger failed:', e.message);
+          // Alert: customer paid but audit won't start — needs manual intervention
+          try {
+            const { Resend } = require('resend');
+            const alertResend = new Resend(process.env.RESEND_API_KEY);
+            await alertResend.emails.send({
+              from: 'Detekia <hello@detekia.fr>',
+              to: 'guillaume@beeleven.fr',
+              subject: `🚨 CRITIQUE — Audit Pro non démarré après paiement`,
+              html: `<div style="font-family:system-ui;padding:24px;">
+                <h2 style="color:#D97757;">Audit Pro non démarré après paiement</h2>
+                <p><strong>Client :</strong> ${email}</p>
+                <p><strong>URL :</strong> ${session.metadata?.url || 'inconnue'}</p>
+                <p><strong>Session Stripe :</strong> ${session.id}</p>
+                <p><strong>Erreur :</strong> ${e.message}</p>
+                <p style="color:#D97757;font-weight:bold;">Action requise : relancer manuellement ou rembourser.</p>
+              </div>`,
+            }).catch(() => {});
+          } catch (_) {}
         }
       }
     }

@@ -710,8 +710,16 @@ export default async function handler(req, res) {
   const isAdmin = req.body.adminKey === process.env.ADMIN_SECRET;
   if (!isAdmin && !(await checkRateLimit('analyze', req, res))) return;
 
-  // Daily limit: 3 free scans per IP per day
+  // Payment verification: paid plans require a valid Stripe session
   const plan = req.body.plan || 'free';
+  if (plan !== 'free' && !isAdmin) {
+    const sid = req.body.stripeSessionId;
+    if (!sid) return res.status(403).json({ error: 'Missing payment session' });
+    const customerInfo = await redis.get(`detekia:customer:${sid}`);
+    if (!customerInfo) return res.status(403).json({ error: 'Payment not verified' });
+  }
+
+  // Daily limit: 3 free scans per IP per day
   if (plan === 'free' && !isAdmin) {
     const dailyOk = await checkDailyLimit(req);
     if (!dailyOk) {

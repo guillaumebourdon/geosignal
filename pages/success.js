@@ -36,7 +36,7 @@ export default function Success() {
           fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: reportUrl, locale: data.locale || 'fr', plan: 'onepage' }),
+            body: JSON.stringify({ url: reportUrl, locale: data.locale || 'fr', plan: 'onepage', stripeSessionId: session_id }),
           }).then(r => r.json()).then(report => {
             if (!report.error) {
               fetch('/api/finalize-report', {

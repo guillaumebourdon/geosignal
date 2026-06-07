@@ -82,14 +82,26 @@ export default async function handler(req, res) {
 
     if (!consolidatedRaw) {
       console.error(`[pro-finalize] No consolidated report for ${siteJobId}`);
+      await redis.del(finalizeLock); // Release lock so retrigger can work
       return res.status(500).json({ error: 'Consolidated report not found' });
     }
 
     const consolidated = typeof consolidatedRaw === 'string' ? JSON.parse(consolidatedRaw) : consolidatedRaw;
     const meta = typeof metaRaw === 'string' ? JSON.parse(metaRaw) : metaRaw;
-    const locale = meta?.locale || 'fr';
-    const customerEmail = meta?.customerEmail || 'guillaume@beeleven.fr';
+    const locale = meta?.locale || consolidated.locale || 'fr';
     const rootUrl = consolidated.rootUrl || meta?.rootUrl || 'unknown';
+    const customerEmail = meta?.customerEmail;
+    if (!customerEmail) {
+      console.error(`[pro-finalize] No customer email for ${siteJobId} — meta expired or missing`);
+      // Alert Guillaume instead of sending to wrong person
+      await resend.emails.send({
+        from: 'Detekia <hello@detekia.fr>', to: 'guillaume@beeleven.fr',
+        subject: `🚨 Rapport Pro prêt mais email client inconnu — ${rootUrl}`,
+        html: `<p>Le rapport pour ${rootUrl} (job ${siteJobId}) est prêt mais la clé meta Redis a expiré. Pas d'email client.</p><p>Action requise : retrouver l'email dans Stripe et envoyer manuellement.</p>`,
+      }).catch(() => {});
+      await redis.del(finalizeLock);
+      return res.status(500).json({ error: 'Customer email missing — meta expired' });
+    }
 
     // Guard: alert Guillaume if Pro report is degraded (< 5 valid pages)
     const validPageCount = consolidated.pagesValid || (consolidated.pages || []).filter(p => !p.error).length;
@@ -335,8 +347,29 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
     });
 
     const { maskEmail } = require('../../lib/maskEmail');
-    if (emailError) console.error('[pro-finalize] Email error:', emailError);
-    else console.log(`[pro-finalize] Email sent to ${maskEmail(customerEmail)}`);
+    if (emailError) {
+      console.error('[pro-finalize] Email error:', emailError);
+      // Retry once after 3s
+      await new Promise(r => setTimeout(r, 3000));
+      const { error: retryError } = await resend.emails.send({
+        from: 'Detekia <hello@detekia.fr>', to: customerEmail, bcc: 'guillaume@beeleven.fr',
+        subject: isFr ? `Votre rapport GEO complet est prêt — ${rootUrl}` : `Your full GEO report is ready — ${rootUrl}`,
+        html: `<div style="font-family:system-ui;padding:24px;text-align:center"><p>Votre rapport est prêt :</p><a href="${reportUrl}" style="display:inline-block;background:#D97757;color:#fff;padding:14px 40px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none">Voir mon rapport →</a></div>`,
+      });
+      if (retryError) {
+        console.error('[pro-finalize] Email retry also failed:', retryError);
+        // Alert Guillaume — customer won't receive their report
+        await resend.emails.send({
+          from: 'Detekia <hello@detekia.fr>', to: 'guillaume@beeleven.fr',
+          subject: `🚨 Email rapport non envoyé — ${customerEmail}`,
+          html: `<p>Le rapport <a href="${reportUrl}">${rootUrl}</a> est prêt mais l'email n'a pas pu être envoyé à ${customerEmail}.</p><p>Erreur: ${retryError.message || JSON.stringify(retryError)}</p>`,
+        }).catch(() => {});
+      } else {
+        console.log(`[pro-finalize] Email retry OK to ${maskEmail(customerEmail)}`);
+      }
+    } else {
+      console.log(`[pro-finalize] Email sent to ${maskEmail(customerEmail)}`);
+    }
 
     // Notify Guillaume
     try {
@@ -369,6 +402,7 @@ ${recoList.map(r => `[${r.criterion}] "${r.title}" (${r.pages}x, pid:${r.pattern
 
   } catch (err) {
     console.error(`[pro-finalize] Error for ${siteJobId}:`, err.message);
+    await redis.del(finalizeLock).catch(() => {}); // Release lock so retrigger can work
     return res.status(500).json({ error: err.message });
   }
 }

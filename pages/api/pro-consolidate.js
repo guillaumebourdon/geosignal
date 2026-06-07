@@ -709,6 +709,7 @@ export default async function handler(req, res) {
           if (!lower || lower.length < 5) return false;
           if (fakeWords.has(lower)) return false;
           if (fakeCompetitorPattern.test(c)) return false;
+          if (hostname && lower.includes(hostname.replace(/\.[^.]+$/, ''))) return false; // Exclude own site
           return true;
         });
         if (q.competitorsCited) q.competitorsCited = cleaned;
@@ -726,7 +727,7 @@ export default async function handler(req, res) {
       // Skip if already done
       const existingRecos = await redis.get(`${JOB_PREFIX}:${siteJobId}:step:page-recos`);
       const existingRecosParsed = existingRecos ? (typeof existingRecos === 'string' ? JSON.parse(existingRecos) : existingRecos) : null;
-      if (existingRecosParsed && typeof existingRecosParsed === 'object' && Object.keys(existingRecosParsed).length >= Math.floor(agg.validPages.length * 0.5)) {
+      if (existingRecosParsed && typeof existingRecosParsed === 'object' && Object.keys(existingRecosParsed).length >= Math.max(agg.validPages.length - 1, 1)) {
         console.log(`[pro-consolidate] Step 4 already done (${Object.keys(existingRecosParsed).length} pages), skipping`);
         await triggerConsolidationStep(siteJobId, 5, { baseUrl });
         return res.status(200).json({ success: true, step: 4, skipped: true });
@@ -873,11 +874,16 @@ export default async function handler(req, res) {
         };
       });
 
-      // Inject per-page recommendations
+      // Inject per-page recommendations (fuzzy URL matching to handle trailing slash differences from GPT)
+      const normalizeUrl = u => (u || '').replace(/\/+$/, '').toLowerCase();
+      const recosByNormalized = {};
+      for (const [url, recos] of Object.entries(pageRecommendations)) {
+        recosByNormalized[normalizeUrl(url)] = recos;
+      }
       const fullPages = pages.map(p => {
         const recos = p.recommendations && p.recommendations.length > 0
           ? p.recommendations
-          : (pageRecommendations[p.url] || []);
+          : (recosByNormalized[normalizeUrl(p.url)] || []);
         return {
           url: p.url, score: p.score, error: p.error || null,
           topPriority: p.topPriority || null, verdict: p.verdict || null,
