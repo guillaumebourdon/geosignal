@@ -72,6 +72,32 @@ export default async function handler(req, res) {
         date: new Date().toISOString(),
       }, { ex: 30 * 24 * 60 * 60 });
 
+      // Notify Guillaume of every payment
+      try {
+        const { Resend } = require('resend');
+        const notifResend = new Resend(process.env.RESEND_API_KEY);
+        const isFr = (session.metadata?.locale || 'fr') !== 'en';
+        const planLabel = plan === 'pro' ? 'Audit Pro (99€)' : 'Rapport one-page (29€)';
+        const siteUrl = session.metadata?.url || 'inconnue';
+        await notifResend.emails.send({
+          from: 'Detekia <hello@detekia.fr>',
+          to: 'guillaume@beeleven.fr',
+          subject: `💰 Vente — ${planLabel} — ${siteUrl}`,
+          html: `<div style="font-family:system-ui;max-width:480px;padding:24px;">
+            <div style="font-family:Georgia,serif;font-size:18px;color:#1A1916;margin-bottom:16px;">💰 Nouvelle vente</div>
+            <div style="background:#F7F5F2;border-radius:8px;padding:16px 20px;">
+              <div style="margin-bottom:6px;"><strong>Produit :</strong> ${planLabel}</div>
+              <div style="margin-bottom:6px;"><strong>Client :</strong> ${email}</div>
+              <div style="margin-bottom:6px;"><strong>Site :</strong> ${siteUrl}</div>
+              <div style="margin-bottom:6px;"><strong>Montant :</strong> ${(amount / 100).toFixed(2)}€</div>
+              <div style="margin-bottom:6px;"><strong>Session :</strong> ${session.id}</div>
+              <div><strong>Date :</strong> ${new Date().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}</div>
+            </div>
+            <p style="font-size:12px;color:#8A8680;margin-top:12px;">Vérifier la livraison du rapport dans 15-20 min (Pro) ou 2-3 min (one-page).</p>
+          </div>`,
+        });
+      } catch (_) {}
+
       // Store customer info for SAV — indexed by session ID for later retrieval by finalize endpoints
       const CUSTOMER_TTL = 3 * 365 * 24 * 60 * 60; // 3 years
       try {
