@@ -716,7 +716,19 @@ export default async function handler(req, res) {
     const sid = req.body.stripeSessionId;
     if (!sid) return res.status(403).json({ error: 'Missing payment session' });
     const customerInfo = await redis.get(`detekia:customer:${sid}`);
-    if (!customerInfo) return res.status(403).json({ error: 'Payment not verified' });
+    if (!customerInfo) {
+      // Fallback: webhook may not have fired yet — verify directly with Stripe
+      try {
+        const Stripe = require('stripe');
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+        const session = await stripe.checkout.sessions.retrieve(sid);
+        if (session.payment_status !== 'paid') {
+          return res.status(403).json({ error: 'Payment not verified' });
+        }
+      } catch (e) {
+        return res.status(403).json({ error: 'Payment not verified' });
+      }
+    }
   }
 
   // Daily limit: 3 free scans per IP per day
