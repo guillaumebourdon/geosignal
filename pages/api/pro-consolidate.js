@@ -311,19 +311,21 @@ function buildPageRecommendationsPrompt(locale, rootUrl, metaDescription, validP
     return `- ${p.url} ${context} (${p.score}/100) — ${weakCriteria}`;
   }).join('\n');
 
+  const isFr = locale !== 'en';
   return `${langInstruction}
+${isFr ? 'IMPORTANT: Toutes les valeurs du JSON (title, problem, solution, technicalImplementation) DOIVENT etre en francais. Ne jamais ecrire en anglais.' : ''}
 
-You are a senior GEO consultant. Generate ALL relevant recommendations for each page of a website audit. No limit — if a page has 10 things to fix, generate 10 recommendations.
+${isFr ? 'Tu es un consultant GEO senior. Genere TOUTES les recommandations pertinentes pour chaque page de cet audit de site web. Pas de limite — si une page a 10 choses a corriger, genere 10 recommandations.' : 'You are a senior GEO consultant. Generate ALL relevant recommendations for each page of a website audit. No limit — if a page has 10 things to fix, generate 10 recommendations.'}
 
 Site: ${rootUrl}
-${validPages.length} pages analyzed.
+${validPages.length} pages ${isFr ? 'analysees' : 'analyzed'}.
 
 ${pagesData}
 
-CRITICAL: You MUST return recommendations for ALL ${validPages.length} pages. Do not skip any page.
+${isFr ? 'CRITIQUE: Tu DOIS retourner des recommandations pour les ' + validPages.length + ' pages. Ne saute aucune page.' : 'CRITICAL: You MUST return recommendations for ALL ' + validPages.length + ' pages. Do not skip any page.'}
 
 JSON object, one key per URL:
-{"url":[{"priority":"high|medium|low","criterion":"French criterion name","title":"5 words max","problem":"2 sentences","solution":"2 sentences","technicalImplementation":["step 1","step 2"],"impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}
+{"url":[{"priority":"high|medium|low","criterion":"${isFr ? 'nom du critere en francais' : 'criterion name'}","title":"5 ${isFr ? 'mots max' : 'words max'}","problem":"2 ${isFr ? 'phrases' : 'sentences'}","solution":"2 ${isFr ? 'phrases' : 'sentences'}","technicalImplementation":["${isFr ? 'etape' : 'step'} 1","${isFr ? 'etape' : 'step'} 2"],"impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}
 
 Rules:
 - Generate as many recommendations as needed per page. Multiple recos per criterion are OK if there are multiple distinct problems to fix. No artificial limit.
@@ -331,6 +333,7 @@ Rules:
 - "criterion" must be one of: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'
 - Keep problem and solution concise (2 sentences each)
 - Be SPECIFIC to each page's content and purpose (use the page title for context). Don't give the same generic advice to every page. A contact page needs different recos than a product page.
+${isFr ? '- RAPPEL: Toutes les valeurs texte en FRANCAIS. Pas un seul mot en anglais dans les valeurs JSON.' : ''}
 - JSON only, no markdown, no code examples`;
 }
 

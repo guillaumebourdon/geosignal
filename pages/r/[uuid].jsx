@@ -192,7 +192,10 @@ function softenText(text) {
     .replace(/irr[eé]prochable/gi, 'tres bon')
     .replace(/impeccable/gi, 'tres bon')
     .replace(/sans\s+faille/gi, 'solide')
-    .replace(/catastrophique/gi, 'tres faible');
+    .replace(/catastrophique/gi, 'tres faible')
+    // Strip percentages like "(excellent à 90%)" or "(42%)" or "(à 90%)"
+    .replace(/\s*\([^)]*\d+\s*%[^)]*\)/g, '')
+    .replace(/\s+à\s+\d+\s*%/g, '');
 }
 
 function lookupMap(map, name) {
@@ -256,9 +259,20 @@ const CRITERIA_EN = {
   'Fraîcheur': 'Freshness',
 };
 
+const CRITERIA_FR_DISPLAY = {
+  'Citabilite & reponse directe': 'Citabilité & réponse directe',
+  'Verifiabilite & preuves': 'Vérifiabilité & preuves',
+  'Autorite & E-E-A-T': 'Autorité & E-E-A-T',
+  'Accessibilite IA': 'Accessibilité IA',
+  'Neutralite editoriale': 'Neutralité éditoriale',
+  'Presence externe': 'Présence externe',
+  'Fraicheur & signaux temporels': 'Fraîcheur & signaux temporels',
+};
+
 function tc(name, locale) {
-  if (locale !== 'en' || !name) return name || '';
-  return CRITERIA_EN[name] || CRITERIA_EN[name.trim()] || name;
+  if (!name) return '';
+  if (locale === 'en') return CRITERIA_EN[name] || CRITERIA_EN[name.trim()] || name;
+  return CRITERIA_FR_DISPLAY[name] || CRITERIA_FR_DISPLAY[name.trim()] || name;
 }
 
 const METHODOLOGY_TABLE_FR = [
@@ -855,13 +869,6 @@ function OnePageReportPage({ uuid, reportData, url, locale, createdAt, loyaltyCo
                   <p style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.6, margin: 0 }}>{card.text} <span style={{ color: '#B0ABA5' }}>({card.source})</span></p>
                 </div>
               ))}
-            </div>
-            <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px', marginBottom: 12 }}>
-              <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.7, margin: 0 }} dangerouslySetInnerHTML={{ __html: `<strong>${locale === 'en' ? 'Only 11%' : 'Seulement 11%'}</strong> ${rs(locale).only11.replace(/^[^%]+% /, '')}` }} />
-            </div>
-            <div style={{ background: '#F7F5F2', borderRadius: 10, padding: '18px 22px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).academicSource}</div>
-              <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.65, margin: 0 }}>{rs(locale).academicRef}</p>
             </div>
           </section>
 
@@ -1491,13 +1498,6 @@ function ProReportPage({ uuid, proReport, url, locale, createdAt }) {
                   <p style={{ fontSize: 12, color: '#6B6762', lineHeight: 1.6, margin: 0 }}>{card.text} <span style={{ color: '#B0ABA5' }}>({card.source})</span></p>
                 </div>
               ))}
-            </div>
-            <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 10, padding: '18px 20px', marginBottom: 12 }}>
-              <p style={{ fontSize: 13, color: '#1A1916', lineHeight: 1.7, margin: 0 }} dangerouslySetInnerHTML={{ __html: `<strong>${locale === 'en' ? 'Only 11%' : 'Seulement 11%'}</strong> ${rs(locale).only11Short.replace(/^[^%]+% /, '')}` }} />
-            </div>
-            <div style={{ background: '#F7F5F2', borderRadius: 10, padding: '18px 22px' }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{rs(locale).academicSourceShort}</div>
-              <p style={{ fontSize: 12, color: '#1A1916', lineHeight: 1.65, margin: 0 }}>"Generative Engine Optimization" — Aggarwal et al., Princeton / Georgia Tech, KDD 2024.</p>
             </div>
           </section>
 
