@@ -745,28 +745,61 @@ export default async function handler(req, res) {
         batches.push(agg.validPages.slice(i, i + batchSize));
       }
 
+      // Detect if recos are in English when they should be in French
+      const EN_WORDS = new Set(['the','this','that','with','from','should','could','would','have','been','does','improve','ensure','consider','implement','adding','create','update','include','provide','users','content','page','website','information']);
+      function isEnglishText(text) {
+        if (!text || text.length < 20) return false;
+        const words = text.toLowerCase().split(/\s+/);
+        const enCount = words.filter(w => EN_WORDS.has(w)).length;
+        return enCount / words.length > 0.15; // >15% English common words
+      }
+      function batchIsEnglish(recos) {
+        const texts = [];
+        for (const arr of Object.values(recos)) {
+          for (const r of (arr || [])) {
+            if (r.problem) texts.push(r.problem);
+            if (r.solution) texts.push(r.solution);
+            if (r.title) texts.push(r.title);
+          }
+        }
+        const sample = texts.slice(0, 10).join(' ');
+        return isEnglishText(sample);
+      }
+
       for (let bi = 0; bi < batches.length; bi++) {
         const batch = batches[bi];
         const prompt = buildPageRecommendationsPrompt(locale, rootUrl, homepageEvidence.metaDescription || '', batch);
         console.log(`[pro-consolidate] Step 4 batch ${bi + 1}/${batches.length}: ${batch.length} pages, ${prompt.length} chars`);
 
-        try {
-          const completion = await openai.chat.completions.create({
-            model: 'gpt-4o', max_tokens: 8000, temperature: 0.2,
-            messages: [{ role: 'user', content: prompt }],
-          });
-          let raw = completion.choices[0].message.content;
-          console.log(`[pro-consolidate] Step 4 batch ${bi + 1} response: ${raw.length} chars, finish=${completion.choices[0].finish_reason}`);
-          raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-          raw = raw.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
-          const jsonMatch = raw.match(/\{[\s\S]*\}/);
-          if (jsonMatch) {
-            const batchRecos = JSON.parse(jsonMatch[0]);
-            Object.assign(pageRecommendations, batchRecos);
+        let batchRecos = null;
+        for (let attempt = 0; attempt < 2; attempt++) {
+          try {
+            const messages = attempt === 0
+              ? [{ role: 'user', content: prompt }]
+              : [{ role: 'user', content: prompt }, { role: 'assistant', content: 'I will write all recommendations in French.' }, { role: 'user', content: 'RAPPEL CRITIQUE: Toutes les valeurs (title, problem, solution, technicalImplementation) DOIVENT etre en francais. Recommence.' }];
+            const completion = await openai.chat.completions.create({
+              model: 'gpt-4o', max_tokens: 8000, temperature: 0.2, messages,
+            });
+            let raw = completion.choices[0].message.content;
+            console.log(`[pro-consolidate] Step 4 batch ${bi + 1} attempt ${attempt + 1}: ${raw.length} chars, finish=${completion.choices[0].finish_reason}`);
+            raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+            raw = raw.replace(/[\x00-\x1f\x7f]/g, m => m === '\n' || m === '\r' || m === '\t' ? m : '');
+            const jsonMatch = raw.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+              batchRecos = JSON.parse(jsonMatch[0]);
+              // Check language if locale is FR
+              if (locale !== 'en' && batchIsEnglish(batchRecos) && attempt === 0) {
+                console.warn(`[pro-consolidate] Step 4 batch ${bi + 1}: recos in English detected, retrying in French...`);
+                await new Promise(r => setTimeout(r, 5000));
+                continue; // retry with stronger FR instruction
+              }
+              break; // success
+            }
+          } catch (e) {
+            console.error(`[pro-consolidate] Step 4 batch ${bi + 1} attempt ${attempt + 1} failed: ${e.message?.substring(0, 200)}`);
           }
-        } catch (e) {
-          console.error(`[pro-consolidate] Step 4 batch ${bi + 1} failed: ${e.message?.substring(0, 200)}`);
         }
+        if (batchRecos) Object.assign(pageRecommendations, batchRecos);
 
         // Brief pause between batches
         if (bi < batches.length - 1) await new Promise(r => setTimeout(r, 5000));
