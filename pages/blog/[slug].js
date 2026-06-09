@@ -41,8 +41,10 @@ CONTENT_MAP_EN['avis-clients-temoignages-visibilite-ia'] = require('../../conten
 CONTENT_MAP_EN['linkedin-geo-profil-visibilite-ia'] = require('../../content/articles/en/linkedin-geo-profil-visibilite-ia').default;
 CONTENT_MAP_EN['pourquoi-ia-adorent-chiffres-contenu-factuel'] = require('../../content/articles/en/pourquoi-ia-adorent-chiffres-contenu-factuel').default;
 CONTENT_MAP_EN['mesurer-visibilite-ia-outils-methodes-2026'] = require('../../content/articles/en/mesurer-visibilite-ia-outils-methodes-2026').default;
+CONTENT_MAP_EN['voice-search-ia-assistants-vocaux'] = require('../../content/articles/en/voice-search-ia-assistants-vocaux').default;
 
 const CONTENT_MAP = {
+  'voice-search-ia-assistants-vocaux': require('../../content/articles/voice-search-ia-assistants-vocaux').default,
   'structured-data-avance-schemas-oublies': require('../../content/articles/structured-data-avance-schemas-oublies').default,
   'ia-e-reputation-chatgpt-marque': require('../../content/articles/ia-e-reputation-chatgpt-marque').default,
   'visibilite-ia-guide-debutant': require('../../content/articles/visibilite-ia-guide-debutant').default,
