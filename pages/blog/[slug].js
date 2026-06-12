@@ -42,6 +42,7 @@ CONTENT_MAP_EN['linkedin-geo-profil-visibilite-ia'] = require('../../content/art
 CONTENT_MAP_EN['pourquoi-ia-adorent-chiffres-contenu-factuel'] = require('../../content/articles/en/pourquoi-ia-adorent-chiffres-contenu-factuel').default;
 CONTENT_MAP_EN['mesurer-visibilite-ia-outils-methodes-2026'] = require('../../content/articles/en/mesurer-visibilite-ia-outils-methodes-2026').default;
 CONTENT_MAP_EN['voice-search-ia-assistants-vocaux'] = require('../../content/articles/en/voice-search-ia-assistants-vocaux').default;
+CONTENT_MAP_EN['avocat-medecin-ia-ymyl'] = require('../../content/articles/en/avocat-medecin-ia-ymyl').default;
 
 const CONTENT_MAP = {
   'voice-search-ia-assistants-vocaux': require('../../content/articles/voice-search-ia-assistants-vocaux').default,
