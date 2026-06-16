@@ -164,7 +164,7 @@ export default async function handler(req, res) {
 
       if (recoList.length > 5) {
         const sonnetMsg = await anthropic.messages.create({
-          model: 'claude-4-sonnet-20250514',
+          model: 'claude-sonnet-4-6-20250514',
           max_tokens: 4000,
           temperature: 0,
           messages: [{ role: 'user', content: `Deduplicate these website audit recommendations. Many titles describe the SAME action differently.
