@@ -44,8 +44,10 @@ CONTENT_MAP_EN['mesurer-visibilite-ia-outils-methodes-2026'] = require('../../co
 CONTENT_MAP_EN['voice-search-ia-assistants-vocaux'] = require('../../content/articles/en/voice-search-ia-assistants-vocaux').default;
 CONTENT_MAP_EN['avocat-medecin-ia-ymyl'] = require('../../content/articles/en/avocat-medecin-ia-ymyl').default;
 CONTENT_MAP_EN['recherche-locale-ia-google-maps-llm'] = require('../../content/articles/en/recherche-locale-ia-google-maps-llm').default;
+CONTENT_MAP_EN['wordpress-geo-plugins-optimisations'] = require('../../content/articles/en/wordpress-geo-plugins-optimisations').default;
 
 const CONTENT_MAP = {
+  'wordpress-geo-plugins-optimisations': require('../../content/articles/wordpress-geo-plugins-optimisations').default,
   'recherche-locale-ia-google-maps-llm': require('../../content/articles/recherche-locale-ia-google-maps-llm').default,
   'voice-search-ia-assistants-vocaux': require('../../content/articles/voice-search-ia-assistants-vocaux').default,
   'structured-data-avance-schemas-oublies': require('../../content/articles/structured-data-avance-schemas-oublies').default,
