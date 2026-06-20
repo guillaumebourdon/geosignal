@@ -475,7 +475,7 @@ JSON only, no markdown:
 {"neutralityScore":<0-10>,"neutralityDetail":"<1 sentence>","recommendations":[{"priority":"high|medium|low","impact":"high|medium|low","effort":"low|medium|high","timeframe":"${locale === 'en' ? '1-2 weeks|1 month|2-3 months' : '1-2 sem|1 mois|2-3 mois'}","criterion":"<French criterion name>","title":"<6 words max>","problem":"<3-5 sentences>","solution":"<3-5 sentences>","technicalImplementation":"<2-4 numbered steps>","codeExample":"<code snippet or null>"}],"verdict":"<1 sentence>","strengths":["<1 sentence>","<1 sentence>"],"topPriority":"<1 sentence>"}`;
 
   const message = await client.messages.create({
-    model: 'claude-sonnet-4-6-20250514',
+    model: 'claude-sonnet-4-6',
     max_tokens: 8192,
     temperature: 0.2,
     messages: [{ role: 'user', content: prompt }],
@@ -644,7 +644,7 @@ Reply ONLY in JSON without markdown:
 {"tests":[{"query":"","difficulty":"${difficultyValues.generic}|${difficultyValues.niche}|${difficultyValues.longTail}","cited":false,"competitors_cited":[],"difficulty_to_rank":"${difficultyValues.easy}|${difficultyValues.medium}|${difficultyValues.hard}","recommendation":"1 concrete sentence","ai_response_excerpt":"first 150 characters of the simulated response"}],"summary":{"cited_count":0,"total_tests":10,"best_opportunity":"query where the site has the best chance","main_blocker":"main reason"}}`;
 
   const message = await client.messages.create({
-    model: 'claude-sonnet-4-6-20250514',
+    model: 'claude-sonnet-4-6',
     max_tokens: 5000,
     temperature: 0.3,
     messages: [{ role: 'user', content: prompt }],

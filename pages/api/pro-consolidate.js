@@ -23,7 +23,7 @@ async function callSonnetWithFallback(prompt, { maxTokens = 6000 } = {}) {
   // Try Sonnet first (better for qualitative analysis in French)
   try {
     const msg = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6-20250514', max_tokens: maxTokens, temperature: 0.2,
+      model: 'claude-sonnet-4-6', max_tokens: maxTokens, temperature: 0.2,
       messages: [{ role: 'user', content: prompt }],
     });
     return { text: msg.content[0].text, provider: 'sonnet' };
@@ -351,9 +351,9 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
 
   // First 3 calls in parallel (synthesis + citation + criteria)
   const [synthR, citR, critR] = await Promise.allSettled([
-    callSonnet({ model: 'claude-sonnet-4-6-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
+    callSonnet({ model: 'claude-sonnet-4-6', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] }),
     runRealCitationTest(rootUrl, hostname, brand, metaDescription || '', intro || '', 30, locale || 'fr', anthropic),
-    callSonnet({ model: 'claude-sonnet-4-6-20250514', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
+    callSonnet({ model: 'claude-sonnet-4-6', max_tokens: 8000, temperature: 0.2, messages: [{ role: 'user', content: criteriaPrompt }] }),
   ]);
   console.log(`[pro-consolidate] First 3 calls completed in ${Date.now() - start}ms`);
 
@@ -361,7 +361,7 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
   console.log(`[pro-consolidate] Waiting 30s before page recos...`);
   await new Promise(r => setTimeout(r, 30000));
   let pageRecoR = await Promise.allSettled([
-    callSonnet({ model: 'claude-sonnet-4-6-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
+    callSonnet({ model: 'claude-sonnet-4-6', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
   ]).then(r => r[0]);
   console.log(`[pro-consolidate] Page reco attempt 1: ${pageRecoR.status} (${Date.now() - start}ms)`);
   // Retry once if failed
@@ -369,7 +369,7 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
     console.log(`[pro-consolidate] Page reco failed, retrying after 30s...`);
     await new Promise(r => setTimeout(r, 30000));
     pageRecoR = await Promise.allSettled([
-      callSonnet({ model: 'claude-sonnet-4-6-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
+      callSonnet({ model: 'claude-sonnet-4-6', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: pageRecoPrompt }] }),
     ]).then(r => r[0]);
     console.log(`[pro-consolidate] Page reco attempt 2: ${pageRecoR.status} (${Date.now() - start}ms)`);
   }
@@ -384,7 +384,7 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
     console.warn('[pro-consolidate] Synthesis empty, retrying after 15s...');
     await new Promise(r => setTimeout(r, 15000));
     try {
-      const retryMsg = await callSonnet({ model: 'claude-sonnet-4-6-20250514', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] });
+      const retryMsg = await callSonnet({ model: 'claude-sonnet-4-6', max_tokens: 10000, temperature: 0.2, messages: [{ role: 'user', content: synthesisPrompt }] });
       const retrySynthesis = parseJson(retryMsg.content[0].text);
       if (retrySynthesis.executiveSummary) { synthesis = retrySynthesis; console.log('[pro-consolidate] Synthesis retry OK'); }
     } catch (e) { console.error('[pro-consolidate] Synthesis retry failed:', e.message); }
@@ -508,7 +508,7 @@ async function runParallelCalls(synthesisPrompt, citationPrompt, criteriaPrompt,
     try {
       const codePrompt = `${locale === 'en' ? 'OUTPUT LANGUAGE: English.' : 'LANGUE DE SORTIE : Francais.'}\n\nGenerate code examples (JSON-LD, HTML, or meta tags) for these website audit recommendations.\n\nSite: ${rootUrl}\n\n${topRecos.map((r, i) => `${i + 1}. [${r.url}] ${r.criterion}: ${r.title} — ${r.solution || r.problem}`).join('\n')}\n\nReturn a JSON array of ${topRecos.length} code snippets:\n[{"index":0,"codeExample":"<code here>"},{"index":1,"codeExample":"<code>"}]\n\nRules:\n- Each codeExample must be a real, copy-pasteable code snippet (JSON-LD, HTML meta tag, or HTML structure)\n- CRITICAL: Never invent realistic-looking fake data (fake user counts, fake certifications, fake dates). Use neutral placeholders: [nombre d'utilisateurs], [certification reelle], [date de mise a jour], [nom du client], [resultat mesure], [metrique verifiable]\n- Add <!-- Adaptez avec vos vraies valeurs --> at the top\n- Keep each snippet under 15 lines\n- JSON array only, no markdown`;
 
-      const codeMsg = await callSonnet({ model: 'claude-sonnet-4-6-20250514', max_tokens: 4000, temperature: 0.2, messages: [{ role: 'user', content: codePrompt }] });
+      const codeMsg = await callSonnet({ model: 'claude-sonnet-4-6', max_tokens: 4000, temperature: 0.2, messages: [{ role: 'user', content: codePrompt }] });
       let codeRaw = codeMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
       const codeMatch = codeRaw.match(/\[[\s\S]*\]/);
       if (codeMatch) {

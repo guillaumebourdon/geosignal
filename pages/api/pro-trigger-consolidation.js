@@ -151,7 +151,7 @@ export default async function handler(req, res) {
         try {
           if (attempt > 0) { console.log('[pro-trigger] Synthesis retry after 15s...'); await new Promise(r => setTimeout(r, 15000)); }
           const synthesisMsg = await callHaikuWithRetry({
-            model: 'claude-sonnet-4-6-20250514', max_tokens: 6000, temperature: 0.2,
+            model: 'claude-sonnet-4-6', max_tokens: 6000, temperature: 0.2,
             messages: [{ role: 'user', content: synthesisPrompt }],
           });
           synthesis = parseHaikuJson(synthesisMsg.content[0].text);
@@ -187,7 +187,7 @@ export default async function handler(req, res) {
         }).join('\n');
 
         const criteriaMsg = await callHaikuWithRetry({
-          model: 'claude-sonnet-4-6-20250514', max_tokens: 8000, temperature: 0.2,
+          model: 'claude-sonnet-4-6', max_tokens: 8000, temperature: 0.2,
           messages: [{ role: 'user', content: `${langInstruction}\n\nFor a site audit of ${rootUrl} (${validPages.length} pages, avg ${scoreAverage}/100), generate per-criterion analysis.\n\nCriteria data:\n${criteriaForPrompt}\n\nJSON array of 7 objects:\n[{"criterion":"exact name","synthesis":"2-3 sentences"}]\n\nRules: synthesis must reference specific numbers.\nIMPORTANT: output raw JSON array only, no markdown fences, no explanation` }],
         });
         criteriaConsolidated = parseHaikuArray(criteriaMsg.content[0].text);
@@ -210,7 +210,7 @@ export default async function handler(req, res) {
         }).join('\n');
 
         const pageRecoMsg = await callHaikuWithRetry({
-          model: 'claude-sonnet-4-6-20250514', max_tokens: 10000, temperature: 0.2,
+          model: 'claude-sonnet-4-6', max_tokens: 10000, temperature: 0.2,
           messages: [{ role: 'user', content: `${langInstruction}\n\nYou are a senior GEO consultant. Generate ALL relevant recommendations for each page of a website audit. No limit — if a page has 10 things to fix, generate 10 recommendations.\n\nSite: ${rootUrl}\n${validPages.length} pages analyzed.\n\n${pagesData}\n\nCRITICAL: You MUST return recommendations for ALL ${validPages.length} pages. Do not skip any page.\n\nJSON object, one key per URL:\n{"url":[{"priority":"high|medium|low","criterion":"French criterion name","title":"5 words max","problem":"2 sentences","solution":"2 sentences","technicalImplementation":["step 1","step 2"],"impact":"high|medium|low","effort":"low|medium|high","timeframe":"1-2 sem|1 mois|2-3 mois"}]}\n\nRules:\n- Generate as many recommendations as needed per page. Multiple recos per criterion are OK if there are multiple distinct problems. No artificial limit.\n- priority: high <50%, medium 50-70%, low >70%\n- "criterion" must be one of: 'Citabilite & reponse directe', 'Verifiabilite & preuves', 'Autorite & E-E-A-T', 'Accessibilite IA', 'Neutralite editoriale', 'Presence externe', 'Fraicheur & signaux temporels'\n- Keep problem and solution concise (2 sentences each)\n- Be SPECIFIC to each page's content and purpose (use the page title for context)\n- JSON only, no markdown, no code examples` }],
         });
         const raw = pageRecoMsg.content[0].text;
@@ -245,7 +245,7 @@ export default async function handler(req, res) {
         console.log(`[pro-trigger] Generating code examples for ${topRecos.length} recos...`);
         try {
           const codeMsg = await callHaikuWithRetry({
-            model: 'claude-sonnet-4-6-20250514', max_tokens: 4000, temperature: 0.2,
+            model: 'claude-sonnet-4-6', max_tokens: 4000, temperature: 0.2,
             messages: [{ role: 'user', content: `${langInstruction}\n\nGenerate code examples for these website audit recommendations.\n\nSite: ${rootUrl}\n\n${topRecos.map((r, i) => `${i + 1}. [${r.url}] ${r.criterion}: ${r.title} — ${r.solution || r.problem}`).join('\n')}\n\nReturn a JSON array:\n[{"index":0,"codeExample":"<code>"}]\n\nRules:\n- Real, copy-pasteable code (JSON-LD, HTML, meta tags)\n- CRITICAL: Never invent realistic-looking fake data. Use neutral placeholders: [nombre d'utilisateurs], [certification reelle], [date de mise a jour], [nom du client], [resultat mesure]\n- Add <!-- Adaptez avec vos vraies valeurs --> at the top\n- Under 15 lines each\n- JSON array only, no markdown` }],
           });
           let codeRaw = codeMsg.content[0].text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
