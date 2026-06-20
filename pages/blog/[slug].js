@@ -46,8 +46,10 @@ CONTENT_MAP_EN['avocat-medecin-ia-ymyl'] = require('../../content/articles/en/av
 CONTENT_MAP_EN['recherche-locale-ia-google-maps-llm'] = require('../../content/articles/en/recherche-locale-ia-google-maps-llm').default;
 CONTENT_MAP_EN['wordpress-geo-plugins-optimisations'] = require('../../content/articles/en/wordpress-geo-plugins-optimisations').default;
 CONTENT_MAP_EN['refonte-site-geo-visibilite-ia'] = require('../../content/articles/en/refonte-site-geo-visibilite-ia').default;
+CONTENT_MAP_EN['kpis-geo-mesurer-visibilite-ia'] = require('../../content/articles/en/kpis-geo-mesurer-visibilite-ia').default;
 
 const CONTENT_MAP = {
+  'kpis-geo-mesurer-visibilite-ia': require('../../content/articles/kpis-geo-mesurer-visibilite-ia').default,
   'refonte-site-geo-visibilite-ia': require('../../content/articles/refonte-site-geo-visibilite-ia').default,
   'wordpress-geo-plugins-optimisations': require('../../content/articles/wordpress-geo-plugins-optimisations').default,
   'recherche-locale-ia-google-maps-llm': require('../../content/articles/recherche-locale-ia-google-maps-llm').default,
