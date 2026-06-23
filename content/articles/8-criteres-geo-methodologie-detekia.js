@@ -57,16 +57,16 @@ export default function HuitCriteresGeoMethodologieDetekia() {
       <p>Les 7 critères sont regroupés en trois couches :</p>
 
       <ul>
-        <li><strong>Couche technique</strong> (ce que les IA peuvent lire) : Citabilité, Accessibilité IA</li>
-        <li><strong>Couche sémantique</strong> (ce que les IA comprennent) : Données structurées, Fraîcheur</li>
-        <li><strong>Couche de confiance</strong> (ce que les IA valorisent) : Vérifiabilité, Autorité E-E-A-T, Neutralité éditoriale, Présence externe</li>
+        <li><strong>Couche technique</strong> (ce que les IA peuvent lire) : Citabilité (25 pts), Accessibilité IA (10 pts)</li>
+        <li><strong>Couche de confiance</strong> (ce que les IA valorisent) : Vérifiabilité (20 pts), Autorité E-E-A-T (15 pts), Neutralité éditoriale (10 pts), Présence externe (10 pts)</li>
+        <li><strong>Couche temporelle</strong> (ce qui maintient la pertinence) : Fraîcheur (10 pts)</li>
       </ul>
 
       <p>Chaque critère est noté de 0 à 100. Le score global est une moyenne pondérée. Les pondérations reflètent l'impact empirique de chaque critère sur la probabilité d'être cité.</p>
 
       <h2>Les 7 critères en détail</h2>
 
-      <CritereCard numero={1} nom="Citabilité" poids="Pondération : 20%" couleur="#10A37F">
+      <CritereCard numero={1} nom="Citabilité & réponse directe" poids="25 points" couleur="#10A37F">
         <p><strong>Ce que c'est :</strong> La capacité des IA à extraire facilement des informations factuelles de votre contenu.</p>
         <p><strong>Comment c'est mesuré :</strong> Analyse de la structure du contenu, présence de titres clairs (H1, H2, H3), de listes à puces, de données chiffrées, de définitions explicites. On mesure la densité informationnelle et la clarté de l'organisation.</p>
         <p><strong>Pourquoi ça compte :</strong> Les LLM fonctionnent par extraction de patterns. Un texte dense et mal structuré sera paraphrasé de façon approximative ou ignoré. Un contenu avec des faits clairement présentés sera cité littéralement.</p>
@@ -79,7 +79,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={2} nom="Vérifiabilité" poids="Pondération : 15%" couleur="#4285F4">
+      <CritereCard numero={2} nom="Vérifiabilité & preuves" poids="20 points" couleur="#4285F4">
         <p><strong>Ce que c'est :</strong> La mesure dans laquelle vos affirmations peuvent être vérifiées par l'IA ou ses utilisateurs.</p>
         <p><strong>Comment c'est mesuré :</strong> Présence de sources citées (liens externes vers des études, données officielles), de dates sur les informations, d'auteurs identifiés, de méthodologies expliquées. On vérifie aussi que les liens sortants pointent vers des sources reconnues.</p>
         <p><strong>Pourquoi ça compte :</strong> Les LLM sont entraînés à valoriser les informations vérifiables. Une affirmation sans source est perçue comme moins fiable qu'une affirmation sourçable. Citer des études, c'est augmenter la probabilité que l'IA reprenne votre formulation.</p>
@@ -92,7 +92,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={3} nom="Autorité E-E-A-T" poids="Pondération : 20%" couleur="#D97757">
+      <CritereCard numero={3} nom="Autorité & E-E-A-T" poids="15 points" couleur="#D97757">
         <p><strong>Ce que c'est :</strong> L'Expérience, l'Expertise, l'Autorité et la Fiabilité (Trust) du site et de ses auteurs, le cadre de Google repris par les LLM.</p>
         <p><strong>Comment c'est mesuré :</strong> Présence d'une page "À propos" détaillée, biographies d'auteurs avec credentials, mentions de partenaires/clients/certifications, page de contact accessible, politique de confidentialité, liens entrants de qualité.</p>
         <p><strong>Pourquoi ça compte :</strong> Les IA citent des sources fiables. Un site sans auteur identifié, sans page "À propos", sans signaux de légitimité sera systématiquement sous-pondéré face à un concurrent qui en a.</p>
@@ -105,7 +105,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={4} nom="Accessibilité IA" poids="Pondération : 15%" couleur="#1C7DC4">
+      <CritereCard numero={4} nom="Accessibilité IA" poids="10 points" couleur="#1C7DC4">
         <p><strong>Ce que c'est :</strong> La capacité des robots des IA à accéder et lire votre site.</p>
         <p><strong>Comment c'est mesuré :</strong> Analyse du robots.txt pour les user-agents IA (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Googlebot-Extended), présence éventuelle d'un llms.txt, vitesse de chargement, accessibilité des pages importantes.</p>
         <p><strong>Pourquoi ça compte :</strong> Un site qui bloque les bots IA dans son robots.txt sera simplement ignoré. Un site lent ou avec du contenu en JavaScript non rendu sera partiellement lu. C'est un prérequis absolu.</p>
@@ -120,22 +120,9 @@ export default function HuitCriteresGeoMethodologieDetekia() {
 
       <ArrowLink href="/blog/llms-txt-robots-crawlabilite-ia">Guide technique complet : robots.txt et llms.txt pour les bots IA →</ArrowLink>
 
-      <CritereCard numero={5} nom="Données structurées" poids="Pondération : 15%" couleur="#9B59B6">
-        <p><strong>Ce que c'est :</strong> La présence et la qualité du balisage <InternalLink href="/blog/schema-org-ia-guide-pratique">Schema.org en JSON-LD</InternalLink> sur les pages clés.</p>
-        <p><strong>Comment c'est mesuré :</strong> Détection et validation des schemas JSON-LD (Organization, WebSite, Article, FAQPage, Product, BreadcrumbList, LocalBusiness). On vérifie la présence, la complétude et la cohérence avec le contenu de la page.</p>
-        <p><strong>Pourquoi ça compte :</strong> Les schemas JSON-LD sont conçus exactement pour que les machines comprennent le contenu sans ambiguïté. Un schema FAQPage bien rempli sera extrait directement par les LLM pour répondre aux questions des utilisateurs.</p>
-        <p><strong>Comment améliorer :</strong></p>
-        <ul>
-          <li>Ajouter Organization sur la homepage</li>
-          <li>Ajouter Article sur chaque article de blog</li>
-          <li>Ajouter FAQPage sur les pages qui contiennent des questions/réponses</li>
-          <li>Valider avec l'outil de test de Google Rich Results</li>
-        </ul>
-      </CritereCard>
-
       <ArrowLink href="/blog/schema-org-ia-guide-pratique">Schema.org et IA : les 5 schemas prioritaires pour le GEO →</ArrowLink>
 
-      <CritereCard numero={6} nom="Neutralité éditoriale" poids="Pondération : 10%" couleur="#E67E22">
+      <CritereCard numero={5} nom="Neutralité éditoriale" poids="10 points" couleur="#E67E22">
         <p><strong>Ce que c'est :</strong> La capacité de votre contenu à informer objectivement, sans sur-promotion commerciale.</p>
         <p><strong>Comment c'est mesuré :</strong> Analyse du langage, densité de superlatifs ("meilleur", "révolutionnaire", "incroyable"), présence d'arguments pour/contre, mentions honnêtes des limites du produit/service, ton informatif vs persuasif.</p>
         <p><strong>Pourquoi ça compte :</strong> Les IA évitent de citer du contenu perçu comme du marketing. Elles privilégient les sources qui ressemblent à des encyclopédies ou des guides experts. Un article qui présente des nuances et reconnaît des limites est plus crédible qu'un article uniquement positif.</p>
@@ -148,7 +135,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={7} nom="Présence externe" poids="Pondération : 10%" couleur="#27AE60">
+      <CritereCard numero={6} nom="Présence externe" poids="10 points" couleur="#27AE60">
         <p><strong>Ce que c'est :</strong> Les mentions et citations de votre marque/site sur d'autres plateformes.</p>
         <p><strong>Comment c'est mesuré :</strong> Détection de backlinks de qualité, mentions sur des plateformes tierces (LinkedIn, forums spécialisés, publications sectorielles), présence sur Wikipedia ou des annuaires reconnus, citations dans d'autres articles.</p>
         <p><strong>Pourquoi ça compte :</strong> Les LLM ont été entraînés sur un corpus Web large. Si votre marque est mentionnée dans de nombreuses sources indépendantes, l'IA la connaît et lui fait confiance. La présence externe est un proxy de la notoriété perçue.</p>
@@ -161,7 +148,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
         </ul>
       </CritereCard>
 
-      <CritereCard numero={8} nom="Fraîcheur" poids="Pondération : 5%" couleur="#6B6762">
+      <CritereCard numero={7} nom="Fraîcheur & signaux temporels" poids="10 points" couleur="#6B6762">
         <p><strong>Ce que c'est :</strong> La récence et la régularité de mise à jour du contenu.</p>
         <p><strong>Comment c'est mesuré :</strong> Date de publication et de modification des pages, fréquence de publication de nouveaux contenus, présence de la date dans le balisage Schema.org et dans le HTML visible.</p>
         <p><strong>Pourquoi ça compte :</strong> Les IA préfèrent les informations récentes pour les sujets évolutifs. Un article de 2021 sur les IA sera moins cité qu'un article de 2026, même si le contenu est similaire. La fraîcheur a moins d'importance pour les sujets stables (mathématiques, histoire) que pour les sujets technologiques.</p>
@@ -183,8 +170,7 @@ export default function HuitCriteresGeoMethodologieDetekia() {
       <ol>
         <li><strong>Débloquer les bots IA</strong> (Accessibilité IA) : prérequis absolu</li>
         <li><strong>Structurer le contenu</strong> (Citabilité) : impact immédiat le plus fort</li>
-        <li><strong>Ajouter les schemas prioritaires</strong> (Données structurées) : quick win technique</li>
-        <li><strong>Renforcer l'autorité</strong> (E-E-A-T) : investissement moyen terme</li>
+        <li><strong>Renforcer l'autorité</strong> (E-E-A-T + schemas JSON-LD) : investissement moyen terme</li>
         <li><strong>Sourcer les affirmations</strong> (Vérifiabilité) : amélioration continue</li>
         <li><strong>Ajuster le ton</strong> (Neutralité) : relecture et reformulation</li>
         <li><strong>Développer la présence externe</strong> : travail de fond</li>

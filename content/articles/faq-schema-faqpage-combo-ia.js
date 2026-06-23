@@ -32,7 +32,7 @@ function InlineCTA({ href, children }) {
 export default function FaqSchemaFaqpageComboIa() {
   return (
     <>
-      <p>Sur les sites que nous analysons, deux critères reviennent systématiquement comme les plus faciles à améliorer : l'citabilité du contenu (25 points sur 100) et les données structurées (10 points). Ensemble, ils représentent 35 % du score GEO. Et le moyen le plus rapide pour les booster est souvent le même : une bonne page FAQ couplée à un Schema FAQPage.</p>
+      <p>Sur les sites que nous analysons, deux critères reviennent systématiquement comme les plus faciles à améliorer : la citabilité du contenu (25 points sur 100) et l'autorité E-E-A-T (15 points), dont les schemas JSON-LD sont une composante directe. Ensemble, ces deux critères représentent 40 % du score GEO. Et le moyen le plus rapide pour les booster est souvent le même : une bonne page FAQ couplée à un Schema FAQPage.</p>
 
       <p>Le problème : la plupart des FAQ de sites web sont des cimetières de questions corporate que personne ne pose. "Pourquoi nous choisir ?" n'est pas une question que les gens tapent dans ChatGPT. Et un Schema FAQPage mal implémenté, avec des réponses de 8 mots ou du contenu invisible, n'apporte rien.</p>
 
@@ -236,7 +236,7 @@ export default function FaqSchemaFaqpageComboIa() {
         <li><strong>Créez ou améliorez votre page FAQ visible</strong>. Le contenu doit être affiché clairement pour les humains, pas caché dans un accordéon JavaScript inaccessible.</li>
         <li><strong>Ajoutez le Schema FAQPage</strong> en JSON-LD dans le head de la page. Vérifiez que le texte du Schema correspond mot pour mot au contenu visible.</li>
         <li><strong>Testez via Rich Results Test</strong> (search.google.com/test/rich-results). Corrigez les erreurs de balisage. Vérifiez que toutes les questions sont détectées.</li>
-        <li><strong>Lancez un audit Detekia</strong> pour mesurer l'impact sur les critères citabilité (25 points) et données structurées (10 points). Comparez votre score avant et après.</li>
+        <li><strong>Lancez un audit Detekia</strong> pour mesurer l'impact sur les critères citabilité (25 points) et autorité E-E-A-T (15 points). Comparez votre score avant et après.</li>
         <li><strong>Mettez à jour trimestriellement</strong>. Les questions de vos utilisateurs évoluent. Les prix, délais et chiffres aussi. Une FAQ périmée perd en crédibilité auprès des IA.</li>
       </ol>
 
@@ -264,7 +264,7 @@ export default function FaqSchemaFaqpageComboIa() {
 
       <h2>Ce qu'il faut retenir</h2>
 
-      <p>Le combo FAQ + Schema FAQPage est le moyen GEO le plus accessible et le plus rapide à implémenter. Il impacte directement 35 points sur 100 du score Detekia (citabilité + données structurées). Mais la clé n'est pas technique. Elle est éditoriale. Des questions réelles, des réponses factuelles et autonomes, et un balisage propre. Le Schema est le contenant ; la qualité des réponses est le contenu.</p>
+      <p>Le combo FAQ + Schema FAQPage est le moyen GEO le plus accessible et le plus rapide à implémenter. Il impacte directement 40 points sur 100 du score Detekia (citabilité + autorité E-E-A-T). Mais la clé n'est pas technique. Elle est éditoriale. Des questions réelles, des réponses factuelles et autonomes, et un balisage propre. Le Schema est le contenant ; la qualité des réponses est le contenu.</p>
 
       <p>Commencez par vos 5 questions les plus fréquentes. Réécrivez-les selon les critères de cet article. Ajoutez le Schema. Mesurez l'impact. Vous verrez la différence en quelques jours.</p>
     </>

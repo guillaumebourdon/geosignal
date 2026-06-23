@@ -424,7 +424,7 @@ export default function HomePage() {
 
       <h3>Les données structurées suffisent-elles pour être cité par les IA ?</h3>
 
-      <p>Non. Elles représentent un des 7 critères du score GEO (10 points directs + impact indirect sur l'autorité et l'citabilité). Mais sans contenu de qualité, sans accessibilité IA et sans présence externe, le balisage seul ne suffit pas. C'est un accélérateur, pas un substitut.</p>
+      <p>Non. Elles contribuent au critère Autorité E-E-A-T (15 points) et ont un impact indirect sur la citabilité. Mais sans contenu de qualité, sans accessibilité IA et sans présence externe, le balisage seul ne suffit pas. C'est un accélérateur, pas un substitut.</p>
 
       <h3>Combien de temps avant de voir l'impact ?</h3>
 
@@ -442,7 +442,7 @@ export default function HomePage() {
 
       <p>Vous avez implémenté vos schemas ? Mesurez l'impact immédiatement.</p>
 
-      <p>Lancez un audit GEO sur Detekia. Votre score de données structurées passera de 0-3 à 7-10 si l'implémentation est correcte. En moins de 60 secondes, sans inscription.</p>
+      <p>Lancez un audit GEO sur Detekia. Votre score d'autorité E-E-A-T augmentera significativement si l'implémentation des schemas est correcte. En moins de 60 secondes, sans inscription.</p>
       <InlineCTA href="/">Votre site est-il visible pour les IA ? Testez gratuitement.</InlineCTA>
     </>
   );

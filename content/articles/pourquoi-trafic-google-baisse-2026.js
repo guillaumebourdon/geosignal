@@ -109,7 +109,7 @@ export default function PourquoiTraficGoogleBaisse2026() {
 
       <h3>Action 1 — Diagnostiquer votre visibilité IA</h3>
 
-      <p>Avant d'agir, mesurez. Analysez votre site sur les 7 critères qui déterminent si une IA vous cite : citabilité du contenu, vérifiabilité des données, autorité, accessibilité IA par les bots IA, données structurées, neutralité éditoriale, présence externe, et fraîcheur.</p>
+      <p>Avant d'agir, mesurez. Analysez votre site sur les 7 critères qui déterminent si une IA vous cite : citabilité du contenu, vérifiabilité des données, autorité E-E-A-T, accessibilité IA, neutralité éditoriale, présence externe et fraîcheur.</p>
 
       <p>Detekia analyse automatiquement ces 7 critères et vous donne un score sur 100 en moins de 60 secondes. C'est gratuit et sans inscription.</p>
 

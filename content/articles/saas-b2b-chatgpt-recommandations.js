@@ -205,7 +205,7 @@ Solution : automatisation avec VotreOutil. Résultat : -40% tickets en 3 mois."
 
       <h3>L'audit des 7 critères GEO</h3>
 
-      <p>Chaque page de votre site peut être évaluée sur les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères GEO</InternalLink> qui déterminent la citabilité IA : citabilité, vérifiabilité, autorité, accessibilité IA, données structurées, neutralité, présence externe, fraîcheur.</p>
+      <p>Chaque page de votre site peut être évaluée sur les <InternalLink href="/blog/8-criteres-geo-methodologie-detekia">7 critères GEO</InternalLink> qui déterminent la citabilité IA : citabilité, vérifiabilité, autorité E-E-A-T, accessibilité IA, neutralité, présence externe et fraîcheur.</p>
 
       <ArrowLink href="/blog/audit-geo-visibilite-ia">Audit GEO : comment évaluer votre visibilité IA →</ArrowLink>
 

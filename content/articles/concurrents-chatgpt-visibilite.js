@@ -87,7 +87,7 @@ export default function ConcurrentsChattgptVisibilite() {
       <p>Cherchez les écarts significatifs :</p>
       <ul>
         <li>Leur citabilité est à 20/25 et la vôtre à 8/25 ? C'est probablement le facteur déterminant.</li>
-        <li>Leur score données structurées est à 9/10 et le vôtre à 0/10 ? Vous avez un quick win évident.</li>
+        <li>Leur score autorité E-E-A-T est à 12/15 et le vôtre à 3/15 ? Vous avez un quick win évident (schemas JSON-LD, page auteur).</li>
         <li>Leur neutralité est à 9/10 et la vôtre à 3/10 ? Votre ton est trop commercial.</li>
       </ul>
 

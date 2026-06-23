@@ -160,7 +160,7 @@ export default function CommentChatgptChoisitSesSources() {
 
       <h3>L'analyse automatisée avec Detekia</h3>
 
-      <p>Le test manuel donne une indication qualitative, mais il n'est pas reproductible et ne couvre qu'un échantillon de requêtes. <InternalLink href="/">Detekia</InternalLink> automatise le diagnostic en analysant les 7 critères GEO de votre site : citabilité du contenu, vérifiabilité des informations, autorité E-E-A-T, accessibilité IA par les bots IA, données structurées, neutralité éditoriale, présence externe et fraîcheur.</p>
+      <p>Le test manuel donne une indication qualitative, mais il n'est pas reproductible et ne couvre qu'un échantillon de requêtes. <InternalLink href="/">Detekia</InternalLink> automatise le diagnostic en analysant les 7 critères GEO de votre site : citabilité du contenu, vérifiabilité des informations, autorité E-E-A-T, accessibilité IA, neutralité éditoriale, présence externe et fraîcheur.</p>
 
       <p>Le score sur 100 vous donne une mesure objective et comparable dans le temps. Les recommandations priorisées vous indiquent exactement quoi corriger en premier pour maximiser votre impact.</p>
 

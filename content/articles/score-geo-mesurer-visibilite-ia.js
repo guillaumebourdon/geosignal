@@ -205,27 +205,27 @@ export default function ScoreGeoMesurerVisibiliteIa() {
       <GroupCard
         color="#4285F4"
         label="Lisibilité IA"
-        points={50}
-        criteria="Citabilité + Accessibilité IA + Données structurées"
+        points={35}
+        criteria="Citabilité (25 pts) + Accessibilité IA (10 pts)"
         description="Ce groupe mesure si les IA peuvent accéder à votre contenu et le comprendre. C'est la base technique. Si ce groupe est faible, les IA ne peuvent pas vous citer, même si votre contenu est excellent."
-        priority="Haute, corrections souvent rapides (robots.txt, Schema.org, restructuration des introductions)"
+        priority="Haute, corrections souvent rapides (robots.txt, restructuration des introductions)"
       />
 
       <GroupCard
         color="#10A37F"
         label="Crédibilité"
-        points={45}
-        criteria="Vérifiabilité + Autorité + Neutralité + Présence externe"
-        description="Ce groupe mesure si les IA font confiance à votre contenu. Même si elles peuvent le lire, elles ne le citeront pas s'il n'est pas perçu comme crédible."
+        points={55}
+        criteria="Vérifiabilité (20 pts) + Autorité E-E-A-T (15 pts) + Neutralité (10 pts) + Présence externe (10 pts)"
+        description="Ce groupe mesure si les IA font confiance à votre contenu. Même si elles peuvent le lire, elles ne le citeront pas s'il n'est pas perçu comme crédible. Les schemas JSON-LD (Organization, Person, FAQPage) contribuent au critère Autorité."
         priority="Moyenne, demande plus de travail (sourcer les affirmations, développer la présence externe, ajuster le ton)"
       />
 
       <GroupCard
         color="#C9861A"
         label="Fraîcheur"
-        points={5}
-        criteria="Fraîcheur & signaux temporels"
-        description="Ce groupe mesure si votre contenu est actuel et maintenu. C'est un signal faible mais constant : les IA privilégient les contenus récents."
+        points={10}
+        criteria="Fraîcheur & signaux temporels (10 pts)"
+        description="Ce groupe mesure si votre contenu est actuel et maintenu. Les IA privilégient les contenus récents pour les sujets évolutifs."
         priority="Continue, pas un chantier ponctuel mais une discipline régulière"
       />
 
@@ -238,14 +238,14 @@ export default function ScoreGeoMesurerVisibiliteIa() {
       <ul>
         <li><strong>Débloquer les crawlers IA</strong> : si votre <code>robots.txt</code> bloque GPTBot ou ClaudeBot, vous passez de 0 à potentiellement 12-15 points en accessibilité IA juste en supprimant quelques lignes. Effort : 15 minutes. Impact : jusqu'à +15 points.</li>
         <li><strong>Réécrire les introductions de vos pages clés</strong> : ajoutez une réponse directe dans les 100 premiers mots de vos 5 pages principales. Effort : 1-2 heures. Impact : jusqu'à +10 points en citabilité.</li>
-        <li><strong>Ajouter Schema Organization</strong> : un seul bloc JSON-LD sur votre homepage. Effort : 30 minutes. Impact : +2-3 points en données structurées.</li>
+        <li><strong>Ajouter Schema Organization</strong> : un seul bloc JSON-LD sur votre homepage. Effort : 30 minutes. Impact : +2-3 points en autorité E-E-A-T.</li>
       </ul>
 
       <h3>Actions à impact moyen terme (ce mois)</h3>
 
       <ul>
         <li><strong>Sourcer vos affirmations</strong> : passez en revue vos pages clés et remplacez chaque affirmation vague par une preuve. Effort : une demi-journée. Impact : jusqu'à +8 points en vérifiabilité.</li>
-        <li><strong>Compléter vos données structurées</strong> : ajoutez <code>Article</code> sur vos contenus éditoriaux et <code>FAQPage</code> sur vos pages FAQ. Effort : 2-3 heures. Impact : +4-6 points en données structurées.</li>
+        <li><strong>Compléter vos schemas JSON-LD</strong> : ajoutez <code>Article</code> sur vos contenus éditoriaux et <code>FAQPage</code> sur vos pages FAQ. Effort : 2-3 heures. Impact : +4-6 points en autorité E-E-A-T.</li>
         <li><strong>Créer ou compléter votre page À propos</strong> : photo, bio, parcours, expertise, coordonnées. Effort : 2 heures. Impact : +3-5 points en autorité.</li>
       </ul>
 
