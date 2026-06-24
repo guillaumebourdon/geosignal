@@ -47,8 +47,10 @@ CONTENT_MAP_EN['recherche-locale-ia-google-maps-llm'] = require('../../content/a
 CONTENT_MAP_EN['wordpress-geo-plugins-optimisations'] = require('../../content/articles/en/wordpress-geo-plugins-optimisations').default;
 CONTENT_MAP_EN['refonte-site-geo-visibilite-ia'] = require('../../content/articles/en/refonte-site-geo-visibilite-ia').default;
 CONTENT_MAP_EN['kpis-geo-mesurer-visibilite-ia'] = require('../../content/articles/en/kpis-geo-mesurer-visibilite-ia').default;
+CONTENT_MAP_EN['claude-gemini-perplexity-differences-citation'] = require('../../content/articles/en/claude-gemini-perplexity-differences-citation').default;
 
 const CONTENT_MAP = {
+  'claude-gemini-perplexity-differences-citation': require('../../content/articles/claude-gemini-perplexity-differences-citation').default,
   'kpis-geo-mesurer-visibilite-ia': require('../../content/articles/kpis-geo-mesurer-visibilite-ia').default,
   'refonte-site-geo-visibilite-ia': require('../../content/articles/refonte-site-geo-visibilite-ia').default,
   'wordpress-geo-plugins-optimisations': require('../../content/articles/wordpress-geo-plugins-optimisations').default,
