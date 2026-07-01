@@ -6,8 +6,10 @@ import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import Header from '../components/Header';
 import PageSelector from '../components/PageSelector';
+import BeelevenContactModal from '../components/BeelevenContactModal';
 import { useTranslation } from '../lib/useTranslation';
 import { useFocusTrap } from '../lib/useFocusTrap';
+import { generateTemplateRecos } from '../lib/templateRecos';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -276,6 +278,26 @@ export default function Results() {
   const [showShare, setShowShare] = useState(false);
   const [copied, setCopied] = useState(false);
   const shareRef = useRef(null);
+  const [gateEmail, setGateEmail] = useState('');
+  const [gateUnlocked, setGateUnlocked] = useState(false);
+  const [gateLoading, setGateLoading] = useState(false);
+  const [showBeeleven, setShowBeeleven] = useState(false);
+
+  async function handleGateSubmit(e) {
+    e.preventDefault();
+    if (!gateEmail || !gateEmail.includes('@')) return;
+    setGateLoading(true);
+    try {
+      await fetch('/api/capture-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: gateEmail, url, score: result?.score, source: 'gate' }) });
+    } catch (_) {}
+    setGateUnlocked(true);
+    setGateLoading(false);
+  }
+
+  const templateRecos = useMemo(
+    () => result?.criteria ? generateTemplateRecos(result.criteria) : [],
+    [result?.criteria]
+  );
 
   const grades = t('common.grades');
   const verdicts = t('common.verdicts');
@@ -583,36 +605,99 @@ export default function Results() {
             </div>
           </div>
 
-          {/* ── 1. ANALYSE DÉTAILLÉE (ci-dessus, inchangée) ── */}
+          {/* ── EMAIL GATE ──────────────────────────── */}
+          {!gateUnlocked && !isPaid && (
+            <div style={{ background: '#fff', border: '2px solid #D97757', borderRadius: 20, padding: '36px 32px', marginBottom: 20, textAlign: 'center', boxShadow: '0 8px 32px rgba(217,119,87,0.1)' }}>
+              <div style={{ fontSize: 28, marginBottom: 12 }}>🔓</div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 8, letterSpacing: -0.5 }}>
+                {locale === 'en' ? 'Unlock your full analysis' : 'Débloquez votre analyse complète'}
+              </div>
+              <div style={{ fontFamily: 'system-ui', fontSize: 14, color: '#6B6762', lineHeight: 1.7, marginBottom: 20, maxWidth: 440, margin: '0 auto 20px' }}>
+                {locale === 'en'
+                  ? 'Enter your email to see your 7 detailed criteria, personalized recommendations and action plan — 100% free.'
+                  : 'Entrez votre email pour voir vos 7 critères détaillés, recommandations personnalisées et plan d\'action — 100% gratuit.'}
+              </div>
+              <form onSubmit={handleGateSubmit} style={{ display: 'flex', gap: 10, maxWidth: 420, margin: '0 auto' }}>
+                <input type="email" value={gateEmail} onChange={e => setGateEmail(e.target.value)} placeholder={locale === 'en' ? 'your@email.com' : 'votre@email.com'} required style={{ flex: 1, border: '1px solid #E5E2DC', borderRadius: 10, padding: '14px 18px', fontSize: 14, fontFamily: 'system-ui', color: '#1A1916', background: '#F7F5F2', outline: 'none' }} />
+                <button type="submit" disabled={gateLoading} className="btn-interactive" style={{ background: '#D97757', color: '#fff', border: 'none', borderRadius: 10, padding: '14px 28px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, cursor: gateLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', boxShadow: '0 4px 16px rgba(217,119,87,0.3)' }}>
+                  {gateLoading ? '...' : (locale === 'en' ? 'See my results' : 'Voir mes résultats')}
+                </button>
+              </form>
+              <div style={{ fontFamily: 'system-ui', fontSize: 11, color: '#B0ABA5', marginTop: 12 }}>
+                {locale === 'en' ? 'No spam. We only send your score and recommendations.' : 'Pas de spam. On vous envoie uniquement votre score et vos recommandations.'}
+              </div>
+            </div>
+          )}
 
+          {/* ── 1. ANALYSE DÉTAILLÉE ── */}
+          {(gateUnlocked || isPaid) && (
+            <>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{t('results.detailedAnalysis')}</div>
           {groups.map(group => (
             <GroupAccordion key={group.id} group={group} getCriteriaForGroup={getCriteriaForGroup} getLevelColor={getLevelColor} isOpen={openGroup === group.id} onMouseEnter={() => handleGroupEnter(group.id)} onMouseLeave={handleGroupLeave} t={t} />
           ))}
 
-          {/* ── 2. DOUBLE CTA 29€ + 99€ ──────────────── */}
+          {/* ── 2. TEMPLATE RECOS (gratuit après gate) ──────────────── */}
+          {templateRecos.length > 0 && (
+            <div style={{ marginTop: 20, marginBottom: 16 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>
+                {locale === 'en' ? 'YOUR ACTION PLAN' : 'VOTRE PLAN D\'ACTION'}
+              </div>
+              <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5, marginBottom: 16 }}>
+                {locale === 'en' ? `${templateRecos.length} recommendations to improve your AI visibility` : `${templateRecos.length} recommandations pour améliorer votre visibilité IA`}
+              </div>
+              {templateRecos.map((r, i) => (
+                <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: '50%', background: r.priority === 'high' ? 'rgba(217,87,87,0.08)' : 'rgba(217,167,87,0.08)', color: r.priority === 'high' ? '#D95757' : '#D9A757', fontSize: 12, fontWeight: 700 }}>{i + 1}</span>
+                    <span style={{ fontFamily: 'system-ui', fontSize: 15, fontWeight: 600, color: '#1A1916' }}>{r.title}</span>
+                    {r.priority === 'high' && <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#D95757', background: 'rgba(217,87,87,0.06)', padding: '2px 8px', borderRadius: 10, letterSpacing: 1 }}>{locale === 'en' ? 'PRIORITY' : 'PRIORITAIRE'}</span>}
+                  </div>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.7, marginBottom: 10 }}>{r.diagnostic}</div>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 13, color: '#1A1916', lineHeight: 1.7, padding: '12px 16px', background: '#F7F5F2', borderRadius: 8, borderLeft: '3px solid #D97757' }}>
+                    <strong>{locale === 'en' ? 'Action:' : 'Action :'}</strong> {r.action}
+                  </div>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#10A37F', marginTop: 8 }}>↗ {r.impact}</div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ── CTA BEELEVEN (principal) ──────────────── */}
           {!isPaid && (
             <div style={{ marginTop: 28, marginBottom: 24 }}>
-              <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>{t('results.doubleCta.intro')}</div>
-              <div className="results-double-cta" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-                <button onClick={() => handleCheckout('rapport')} disabled={checkoutLoading} className="btn-interactive" style={{ background: '#D97757', color: '#fff', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, border: 'none', cursor: checkoutLoading ? 'wait' : 'pointer', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)', textAlign: 'center', opacity: checkoutLoading ? 0.7 : 1 }}>
-                  {t('results.doubleCta.onepage')}
+              <div style={{ background: 'linear-gradient(135deg, #1A1916 0%, #2A2824 100%)', borderRadius: 20, padding: '32px 28px', textAlign: 'center' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 8, letterSpacing: -0.5 }}>
+                  {locale === 'en' ? 'Want to fix these issues?' : 'Envie de corriger ces problèmes ?'}
+                </div>
+                <div style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.6)', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>
+                  {locale === 'en'
+                    ? 'Our GEO experts at Beeleven can implement these recommendations and get your site cited by AI engines.'
+                    : 'Nos experts GEO chez Beeleven peuvent implémenter ces recommandations et faire citer votre site par les moteurs IA.'}
+                </div>
+                <button onClick={() => setShowBeeleven(true)} className="btn-interactive" style={{ background: '#D97757', color: '#fff', padding: '16px 36px', borderRadius: 12, fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
+                  {locale === 'en' ? 'Talk to a GEO expert →' : 'Discuter avec un expert GEO →'}
                 </button>
-                <button onClick={() => handleCheckout('pro')} disabled={checkoutLoading} className="btn-interactive" style={{ background: '#1A1916', color: '#F7F5F2', padding: '15px 32px', borderRadius: 10, fontWeight: 700, fontSize: 14, border: '1px solid rgba(247,245,242,0.15)', cursor: checkoutLoading ? 'wait' : 'pointer', fontFamily: 'system-ui', boxShadow: '0 4px 16px rgba(26,25,22,0.2)', textAlign: 'center', opacity: checkoutLoading ? 0.7 : 1 }}>
-                  {t('results.doubleCta.pro')}
-                </button>
+              </div>
+              {/* CTA secondaire : rapports payants */}
+              <div style={{ textAlign: 'center', marginTop: 16 }}>
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#B0ABA5', marginBottom: 8 }}>
+                  {locale === 'en' ? 'Or get a detailed automated report:' : 'Ou obtenez un rapport automatisé détaillé :'}
+                </div>
+                <div className="results-double-cta" style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+                  <button onClick={() => handleCheckout('rapport')} disabled={checkoutLoading} style={{ background: 'transparent', color: '#6B6762', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 12, border: '1px solid #E5E2DC', cursor: checkoutLoading ? 'wait' : 'pointer', fontFamily: 'system-ui' }}>
+                    {t('results.doubleCta.onepage')}
+                  </button>
+                  <button onClick={() => handleCheckout('pro')} disabled={checkoutLoading} style={{ background: 'transparent', color: '#6B6762', padding: '10px 20px', borderRadius: 8, fontWeight: 600, fontSize: 12, border: '1px solid #E5E2DC', cursor: checkoutLoading ? 'wait' : 'pointer', fontFamily: 'system-ui' }}>
+                    {t('results.doubleCta.pro')}
+                  </button>
+                </div>
               </div>
               {checkError && (
                 <div style={{ textAlign: 'center', marginTop: 12 }}>
                   <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#D97757', lineHeight: 1.5 }}>{checkError}</div>
                 </div>
               )}
-              {/* Verification popup rendered as portal below */}
-              <div style={{ textAlign: 'center', marginTop: 14 }}>
-                <Link href="/pricing" style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
-                  {locale === 'en' ? 'Compare all plans →' : 'Comparer toutes les offres →'}
-                </Link>
-              </div>
             </div>
           )}
 
@@ -751,8 +836,12 @@ export default function Results() {
               </div>
             );
           })()}
+            </>
+          )}
         </div>
       )}
+
+      {showBeeleven && <BeelevenContactModal onClose={() => setShowBeeleven(false)} prefillUrl={url} />}
 
       {showPageSelector && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(26,25,22,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, backdropFilter: 'blur(4px)' }}>

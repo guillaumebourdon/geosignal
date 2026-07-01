@@ -368,8 +368,8 @@ export default function Home() {
               {/* Free vs paid differentiator */}
               <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', marginTop: 10, lineHeight: 1.5 }}>
                 {locale === 'en'
-                  ? '✓ Free score in 60 seconds, no signup. Full report with fixes: from €29.'
-                  : '✓ Score gratuit en 60 secondes, sans inscription. Rapport complet avec corrections : à partir de 29 €.'}
+                  ? '✓ Free score in 60 seconds, no signup. Detailed criteria + personalized recommendations included.'
+                  : '✓ Score gratuit en 60 secondes, sans inscription. Critères détaillés + recommandations personnalisées incluses.'}
               </div>
             </div>
           </div>
@@ -588,89 +588,41 @@ export default function Home() {
       </section>
 
 
-      {/* ══ SECTION 5 — NOS OFFRES (pricing table, fond dark) ══ */}
+      {/* ══ SECTION 5 — CE QUE VOUS OBTENEZ (gratuit) ══ */}
       <section style={{ background: '#1A1916', padding: '96px 48px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <RevealSection>
             <div style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 }}>
-              {locale === 'en' ? 'OUR AUDITS' : 'NOS AUDITS'}
+              {locale === 'en' ? '100% FREE' : '100% GRATUIT'}
             </div>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px,4vw,42px)', color: '#F7F5F2', textAlign: 'center', letterSpacing: -1.5, marginBottom: 12, lineHeight: 1.1 }}>
-              {locale === 'en' ? <>Choose the depth <em style={{ color: '#D97757' }}>that suits you</em></> : <>Choisissez la profondeur <em style={{ color: '#D97757' }}>qui vous convient</em></>}
+              {locale === 'en' ? <>Everything you need to <em style={{ color: '#D97757' }}>understand and act</em></> : <>Tout ce qu'il faut pour <em style={{ color: '#D97757' }}>comprendre et agir</em></>}
             </h2>
             <p style={{ fontSize: 15, color: 'rgba(247,245,242,0.45)', textAlign: 'center', fontFamily: 'system-ui', lineHeight: 1.65, maxWidth: 560, margin: '0 auto 48px' }}>
               {locale === 'en'
-                ? 'Each audit is independent. Start with the free score or go straight to the full report.'
-                : 'Chaque audit est indépendant. Commencez par le score gratuit ou passez directement au rapport complet.'}
+                ? 'Enter your URL, get your score, criteria breakdown and personalized recommendations. No credit card, no signup.'
+                : 'Entrez votre URL, obtenez votre score, le détail de vos critères et des recommandations personnalisées. Sans carte bancaire, sans inscription.'}
             </p>
           </RevealSection>
 
           <RevealSection delay={0.1}>
-            <div className="hp-pricing-table" style={{ background: 'rgba(247,245,242,0.03)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 16, overflow: 'hidden' }}>
-              {/* Header row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.06)' }}>
-                <div style={{ padding: '24px 20px' }} />
-                {[
-                  { name: locale === 'en' ? 'Free scoring' : 'Scoring gratuit', price: locale === 'en' ? 'Free' : 'Gratuit', color: '#10A37F', hl: false, sub: locale === 'en' ? 'Know where you stand' : 'Savoir où vous en êtes' },
-                  { name: locale === 'en' ? '1-page audit' : 'Audit 1 page', price: '29 €', color: '#D97757', hl: true, sub: locale === 'en' ? 'Fixes for one key page' : 'Corrections pour une page clé' },
-                  { name: locale === 'en' ? 'Full audit' : 'Audit complet', price: '99 €', color: '#D97757', hl: false, sub: locale === 'en' ? 'Strategy for your entire site' : 'Stratégie pour tout votre site' },
-                ].map((p, i) => (
-                  <div key={i} style={{ padding: '28px 20px', textAlign: 'center', background: p.hl ? 'rgba(217,119,87,0.06)' : 'transparent', borderTop: p.hl ? '3px solid #D97757' : '3px solid transparent' }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 32, color: p.color, fontWeight: 700, letterSpacing: -1, lineHeight: 1 }}>{p.price}</div>
-                    <div style={{ fontFamily: 'Georgia, serif', fontSize: 15, color: '#F7F5F2', marginTop: 8 }}>{p.name}</div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 11, color: 'rgba(247,245,242,0.35)', marginTop: 4 }}>{p.sub}</div>
-                  </div>
-                ))}
-              </div>
-              {/* Feature rows */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="hp-features-grid">
               {[
-                { label: locale === 'en' ? 'Score out of 100' : 'Score sur 100', vals: ['✓', '✓', '✓'] },
-                { label: locale === 'en' ? '7 criteria analyzed' : '7 critères analysés', vals: ['✓', '✓', '✓'] },
-                { label: locale === 'en' ? 'Pages analyzed' : 'Pages analysées', vals: ['–', '✓ (1)', '✓ (10)'] },
-                { label: locale === 'en' ? 'Detailed recommendations' : 'Recommandations détaillées', vals: ['–', '✓', '✓'] },
-                { label: locale === 'en' ? 'ChatGPT queries tested' : 'Requêtes ChatGPT testées', vals: ['–', '✓ (10)', '✓ (30)'] },
-                { label: locale === 'en' ? 'Competitor comparison' : 'Comparaison concurrents', vals: ['–', '✓', '✓'] },
-                { label: locale === 'en' ? 'Cross-page patterns' : 'Patterns transverses', vals: ['–', '–', '✓'] },
-                { label: locale === 'en' ? 'Per-page summary' : 'Bilan page par page', vals: ['–', '–', '✓'] },
-              ].map((row, ri) => (
-                <div key={ri} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 1fr 1fr', borderBottom: '1px solid rgba(247,245,242,0.04)', background: ri % 2 === 1 ? 'rgba(247,245,242,0.02)' : 'transparent' }}>
-                  <div style={{ padding: '13px 20px', fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.5)', whiteSpace: 'nowrap' }}>{row.label}</div>
-                  {row.vals.map((v, vi) => (
-                    <div key={vi} style={{ padding: '13px 20px', textAlign: 'center', fontFamily: 'system-ui', fontSize: 13, color: v.startsWith('✓') ? '#10A37F' : v === '–' ? 'rgba(247,245,242,0.15)' : 'rgba(247,245,242,0.7)', fontWeight: v.startsWith('✓') ? 700 : 400, background: vi === 1 ? 'rgba(217,119,87,0.04)' : 'transparent' }}>
-                      {v}
-                    </div>
-                  ))}
+                { icon: '📊', title: locale === 'en' ? 'Score out of 100' : 'Score sur 100', desc: locale === 'en' ? '7 GEO criteria analyzed in 60 seconds' : '7 critères GEO analysés en 60 secondes' },
+                { icon: '🎯', title: locale === 'en' ? 'Personalized recommendations' : 'Recommandations personnalisées', desc: locale === 'en' ? 'Concrete actions tailored to your site\'s weaknesses' : 'Actions concrètes adaptées aux faiblesses de votre site' },
+                { icon: '🔍', title: locale === 'en' ? 'ChatGPT citation test' : 'Test de citation ChatGPT', desc: locale === 'en' ? 'Real queries sent to ChatGPT to check if your site is cited' : 'Vraies requêtes envoyées à ChatGPT pour vérifier si votre site est cité' },
+              ].map((f, i) => (
+                <div key={i} style={{ background: 'rgba(247,245,242,0.03)', border: '1px solid rgba(247,245,242,0.06)', borderRadius: 16, padding: '32px 24px', textAlign: 'center' }}>
+                  <div style={{ fontSize: 32, marginBottom: 16 }}>{f.icon}</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 17, color: '#F7F5F2', marginBottom: 8 }}>{f.title}</div>
+                  <div style={{ fontFamily: 'system-ui', fontSize: 13, color: 'rgba(247,245,242,0.45)', lineHeight: 1.6 }}>{f.desc}</div>
                 </div>
               ))}
-              {/* CTA row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 1fr 1fr', padding: '20px 0', borderTop: '1px solid rgba(247,245,242,0.08)' }}>
-                <div />
-                <div style={{ textAlign: 'center', padding: '0 20px' }}>
-                  <Link href="/#analyser" style={{ display: 'inline-block', border: '1px solid rgba(247,245,242,0.2)', color: '#F7F5F2', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
-                    {locale === 'en' ? 'Get my score →' : 'Mon score →'}
-                  </Link>
-                </div>
-                <div style={{ textAlign: 'center', padding: '0 20px' }}>
-                  <Link href="/pricing" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 700 }}>
-                    {locale === 'en' ? 'Audit 1 page · €29 →' : 'Audit 1 page · 29 € →'}
-                  </Link>
-                  <div style={{ marginTop: 10 }}>
-                    <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" className="offer-example-link" style={{ fontSize: 11, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none' }}>
-                      {locale === 'en' ? 'See a sample →' : 'Voir un exemple →'}
-                    </a>
-                  </div>
-                </div>
-                <div style={{ textAlign: 'center', padding: '0 20px' }}>
-                  <Link href="/pricing" style={{ display: 'inline-block', background: 'rgba(247,245,242,0.1)', border: '1px solid rgba(247,245,242,0.15)', color: '#F7F5F2', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 600 }}>
-                    {locale === 'en' ? 'Full audit · €99 →' : 'Audit complet · 99 € →'}
-                  </Link>
-                  <div style={{ marginTop: 10 }}>
-                    <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer" className="offer-example-link" style={{ fontSize: 11, color: '#D97757', fontFamily: 'system-ui', textDecoration: 'none' }}>
-                      {locale === 'en' ? 'See a sample →' : 'Voir un exemple →'}
-                    </a>
-                  </div>
-                </div>
-              </div>
+            </div>
+            <div style={{ textAlign: 'center', marginTop: 40 }}>
+              <Link href="/#analyser" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 12, fontSize: 15, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 700, boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
+                {locale === 'en' ? 'Audit my site for free →' : 'Auditer mon site gratuitement →'}
+              </Link>
             </div>
           </RevealSection>
         </div>
