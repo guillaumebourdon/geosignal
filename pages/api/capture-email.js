@@ -1,8 +1,10 @@
 import { Resend } from 'resend';
 import { Redis } from '@upstash/redis';
+import { Client } from '@upstash/qstash';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const redis = Redis.fromEnv();
+const qstash = new Client({ token: process.env.QSTASH_TOKEN });
 
 export const maxDuration = 30;
 
@@ -95,6 +97,31 @@ export default async function handler(req, res) {
 </body>
 </html>`,
     });
+
+    // Schedule nurturing emails via QStash (J+3 and J+7)
+    if (source === 'gate') {
+      const nurturingUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://detekia.fr'}/api/nurturing-email`;
+      try {
+        await Promise.all([
+          qstash.publishJSON({
+            url: nurturingUrl,
+            body: { email: email.toLowerCase(), step: 2 },
+            delay: 3 * 24 * 60 * 60, // 3 days
+            retries: 2,
+          }),
+          qstash.publishJSON({
+            url: nurturingUrl,
+            body: { email: email.toLowerCase(), step: 3 },
+            delay: 7 * 24 * 60 * 60, // 7 days
+            retries: 2,
+          }),
+        ]);
+        console.log(`[capture-email] Nurturing scheduled for ${email} (J+3, J+7)`);
+      } catch (err) {
+        console.error('[capture-email] Failed to schedule nurturing:', err.message);
+        // Non-blocking — the lead is already captured, nurturing is bonus
+      }
+    }
 
     return res.status(200).json({ success: true });
   } catch (e) {
