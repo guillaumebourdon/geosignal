@@ -48,8 +48,10 @@ CONTENT_MAP_EN['wordpress-geo-plugins-optimisations'] = require('../../content/a
 CONTENT_MAP_EN['refonte-site-geo-visibilite-ia'] = require('../../content/articles/en/refonte-site-geo-visibilite-ia').default;
 CONTENT_MAP_EN['kpis-geo-mesurer-visibilite-ia'] = require('../../content/articles/en/kpis-geo-mesurer-visibilite-ia').default;
 CONTENT_MAP_EN['claude-gemini-perplexity-differences-citation'] = require('../../content/articles/en/claude-gemini-perplexity-differences-citation').default;
+CONTENT_MAP_EN['newsletter-email-impact-visibilite-ia'] = require('../../content/articles/en/newsletter-email-impact-visibilite-ia').default;
 
 const CONTENT_MAP = {
+  'newsletter-email-impact-visibilite-ia': require('../../content/articles/newsletter-email-impact-visibilite-ia').default,
   'claude-gemini-perplexity-differences-citation': require('../../content/articles/claude-gemini-perplexity-differences-citation').default,
   'kpis-geo-mesurer-visibilite-ia': require('../../content/articles/kpis-geo-mesurer-visibilite-ia').default,
   'refonte-site-geo-visibilite-ia': require('../../content/articles/refonte-site-geo-visibilite-ia').default,
