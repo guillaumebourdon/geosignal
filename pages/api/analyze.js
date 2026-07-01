@@ -1086,8 +1086,8 @@ export default async function handler(req, res) {
     const brand = metaTitle ? metaTitle.split(/[-|–·]/)[0].trim() : hostname;
     const intro = textContent.slice(0, 300);
 
-    // Run analysis + evidence in parallel. Citation test: 2 free, 10 one-page, 30 pro
-    const queryCount = plan === 'pro' ? 30 : plan === 'onepage' ? 10 : 2;
+    // Run analysis + evidence in parallel. Citation test: 5 free, 10 one-page, 30 pro
+    const queryCount = plan === 'pro' ? 30 : plan === 'onepage' ? 10 : 5;
     let claude, evidence, citationTest;
 
     if (plan === 'free') {
@@ -1112,12 +1112,32 @@ export default async function handler(req, res) {
         recommendations: [],
       };
 
-      const [ev, ct] = await Promise.all([
+      // Mini-diagnostic GPT-4o-mini: 2 phrases personnalisées (~100 tokens, ~0.01€)
+      const OpenAI = require('openai').default;
+      let miniDiagnosticPromise = Promise.resolve(null);
+      try {
+        if (process.env.OPENAI_API_KEY) {
+          const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: 15000 });
+          const weakest = Object.entries(scores).sort((a, b) => (a[1].score / a[1].max) - (b[1].score / b[1].max)).slice(0, 3);
+          const strongest = Object.entries(scores).sort((a, b) => (b[1].score / b[1].max) - (a[1].score / a[1].max))[0];
+          const criteriaLabels = { citability: 'citabilité & réponse directe', verifiability: 'vérifiabilité & preuves', authority: 'autorité & E-E-A-T', accessibility: 'accessibilité IA', neutrality: 'neutralité éditoriale', externalPresence: 'présence externe', freshness: 'fraîcheur' };
+          const diagPrompt = locale === 'en'
+            ? `You are a GEO (Generative Engine Optimization) expert. A website (${hostname}) scored ${Object.values(scores).reduce((s, c) => s + c.score, 0)}/100. Strongest: ${criteriaLabels[strongest[0]]} (${strongest[1].score}/${strongest[1].max}). Weakest: ${weakest.map(w => criteriaLabels[w[0]] + ' (' + w[1].score + '/' + w[1].max + ')').join(', ')}. Write exactly 2 sentences: one about the main strength, one about the critical weakness. Be specific to this site, not generic. Max 60 words.`
+            : `Tu es un expert GEO (Generative Engine Optimization). Le site ${hostname} a obtenu ${Object.values(scores).reduce((s, c) => s + c.score, 0)}/100. Point fort : ${criteriaLabels[strongest[0]]} (${strongest[1].score}/${strongest[1].max}). Points faibles : ${weakest.map(w => criteriaLabels[w[0]] + ' (' + w[1].score + '/' + w[1].max + ')').join(', ')}. Écris exactement 2 phrases : une sur la force principale, une sur la faiblesse critique. Sois spécifique à ce site. Max 60 mots.`;
+          miniDiagnosticPromise = openaiClient.chat.completions.create({
+            model: 'gpt-4o-mini', messages: [{ role: 'user', content: diagPrompt }], max_tokens: 120, temperature: 0.3,
+          }).then(r => r.choices[0]?.message?.content?.trim() || null).catch(() => null);
+        }
+      } catch {}
+
+      const [ev, ct, miniDiag] = await Promise.all([
         collectEvidence($, textContent, rawContent, url, directMeta, { robotsTxt: earlyRobotsTxt, hasLlmsTxt: earlyHasLlmsTxt }),
         runRealCitationTest(url, hostname, brand, metaDescription, intro, queryCount, locale, client).catch(e => { console.error('citationTest error:', e.message); return null; }),
+        miniDiagnosticPromise,
       ]);
       evidence = ev;
       citationTest = ct;
+      if (miniDiag) claude.verdict = miniDiag;
     } else {
       // PAID TIER: full Claude analysis with 7 recommendations
       const [fullClaude, ev, ct] = await Promise.all([
