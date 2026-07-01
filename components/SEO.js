@@ -23,6 +23,7 @@ export default function SEO({ title, description, image, schema, noindex }) {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:locale" content={ogLocale} />
+      <meta property="og:locale:alternate" content={locale === 'fr' ? 'en_US' : 'fr_FR'} />
       <meta property="og:url" content={canonical} />
       <meta property="og:site_name" content="Detekia" />
       <meta property="og:image" content={ogImage} />

@@ -235,6 +235,11 @@ export default function ArticlePage({ article, related }) {
             <Link href="/" style={{ display: 'inline-block', background: '#D97757', color: '#FFFFFF', borderRadius: 8, padding: '14px 32px', fontFamily: 'system-ui', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>
               {t('blog.article.ctaButton')}
             </Link>
+            <div style={{ marginTop: 12 }}>
+              <Link href="/contact" style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.45)', textDecoration: 'none', borderBottom: '1px solid rgba(247,245,242,0.15)', paddingBottom: 1 }}>
+                {locale === 'en' ? 'Or talk directly to a GEO expert →' : 'Ou discutez directement avec un expert GEO →'}
+              </Link>
+            </div>
           </div>
 
           {/* RELATED ARTICLES */}

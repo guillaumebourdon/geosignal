@@ -7,6 +7,7 @@ import Head from 'next/head';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
 import PageSelector from '../components/PageSelector';
+import BeelevenContactModal from '../components/BeelevenContactModal';
 import { useTranslation } from '../lib/useTranslation';
 import { useFocusTrap } from '../lib/useFocusTrap';
 
@@ -53,6 +54,9 @@ export default function Pricing() {
 
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState(null);
+
+  // Beeleven contact modal
+  const [showBeeleven, setShowBeeleven] = useState(false);
 
   // Page selector state (Pro flow only)
   const [showPageSelector, setShowPageSelector] = useState(false);
@@ -241,13 +245,30 @@ export default function Pricing() {
     setShowModal(true);
   }
 
+  // FAQ items for the new positioning
+  const newFaqItems = locale === 'en' ? [
+    { q: 'Is the audit really free?', a: 'Yes. You get a GEO score out of 100, 7 weighted criteria, personalized recommendations and a 5-query ChatGPT citation test — completely free, no account required.' },
+    { q: 'What is the difference between the free audit and the paid reports?', a: 'The free audit covers 1 page with detailed recommendations. The one-page report (29\u20AC) adds an in-depth PDF with code examples and a 10-query citation test. The full report (99\u20AC) analyzes 10 key pages with a prioritized action plan and a 30-query citation test.' },
+    { q: 'What does the Beeleven consulting include?', a: 'Beeleven implements the GEO corrections for you: content restructuring, structured data, authority signals, and monthly tracking. The team works directly on your site based on the audit findings.' },
+    { q: 'How long does the free audit take?', a: 'Results are delivered in about 30 seconds. No waiting, no email required.' },
+    { q: 'Can I upgrade from the free audit to a paid report later?', a: 'Yes. After your free scan, you can purchase a detailed report at any time. If you do it within 2 hours, the report is generated faster thanks to cached data.' },
+  ] : [
+    { q: 'L\'audit est vraiment gratuit ?', a: 'Oui. Vous obtenez un score GEO sur 100, 7 crit\u00E8res pond\u00E9r\u00E9s, des recommandations personnalis\u00E9es et un test de citation ChatGPT (5 requ\u00EAtes) \u2014 enti\u00E8rement gratuit, sans cr\u00E9ation de compte.' },
+    { q: 'Quelle diff\u00E9rence entre l\'audit gratuit et les rapports payants ?', a: 'L\'audit gratuit couvre 1 page avec des recommandations d\u00E9taill\u00E9es. Le rapport one-page (29\u20AC) ajoute un PDF approfondi avec exemples de code et un test de citation sur 10 requ\u00EAtes. Le rapport complet (99\u20AC) analyse 10 pages cl\u00E9s avec un plan d\'action prioris\u00E9 et un test de citation sur 30 requ\u00EAtes.' },
+    { q: 'Que comprend l\'accompagnement Beeleven ?', a: 'Beeleven impl\u00E9mente les corrections GEO pour vous : restructuration de contenu, donn\u00E9es structur\u00E9es, signaux d\'autorit\u00E9 et suivi mensuel. L\'\u00E9quipe intervient directement sur votre site \u00E0 partir des r\u00E9sultats de l\'audit.' },
+    { q: 'Combien de temps prend l\'audit gratuit ?', a: 'Les r\u00E9sultats sont livr\u00E9s en environ 30 secondes. Pas d\'attente, pas d\'email requis.' },
+    { q: 'Puis-je passer du gratuit au rapport payant plus tard ?', a: 'Oui. Apr\u00E8s votre scan gratuit, vous pouvez acheter un rapport d\u00E9taill\u00E9 \u00E0 tout moment. Si vous le faites dans les 2 heures, le rapport est g\u00E9n\u00E9r\u00E9 plus rapidement gr\u00E2ce aux donn\u00E9es en cache.' },
+  ];
+
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
-      <SEO title={t('pricing.seo.title')} description={t('pricing.seo.description')} schema={{
+      <SEO title={locale === 'en' ? 'Your GEO audit, free | Detekia' : 'Votre audit GEO, gratuit | Detekia'} description={locale === 'en' ? 'Get a free GEO score, 7 criteria and personalized recommendations. Paid reports and expert consulting also available.' : 'Obtenez un score GEO gratuit, 7 crit\u00E8res et des recommandations personnalis\u00E9es. Rapports payants et accompagnement expert disponibles.'} schema={{
         "@context": "https://schema.org",
         "@type": "Service",
-        "name": "Detekia — Audit de visibilité IA",
-        "description": "Audit GEO pour sites web — score sur 100, 7 critères pondérés, recommandations priorisées, test de citation IA.",
+        "name": "Detekia — Audit de visibilit\u00E9 IA",
+        "description": locale === 'en'
+          ? "Free GEO audit: score out of 100, 7 weighted criteria, personalized recommendations. Paid reports and expert consulting available."
+          : "Audit GEO gratuit : score sur 100, 7 crit\u00E8res pond\u00E9r\u00E9s, recommandations personnalis\u00E9es. Rapports payants et accompagnement expert disponibles.",
         "serviceType": "AI Visibility Audit",
         "provider": { "@type": "Organization", "name": "Detekia", "url": "https://detekia.fr" },
         "areaServed": { "@type": "Country", "name": "France" },
@@ -256,8 +277,9 @@ export default function Pricing() {
           "@type": "OfferCatalog",
           "name": "Audits GEO Detekia",
           "itemListElement": [
-            { "@type": "Offer", "name": "Audit GEO 1 page", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/one-page", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO détaillé sur 1 page avec recommandations et test IA", "hasMerchantReturnPolicy": { "@type": "MerchantReturnPolicy", "applicableCountry": "FR", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted" }, "shippingDetails": { "@type": "OfferShippingDetails", "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "EUR" }, "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" }, "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" } } } },
-            { "@type": "Offer", "name": "Audit GEO complet (10 pages clés)", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO sur 10 pages clés avec plan d'action priorisé et test IA 30 requêtes", "hasMerchantReturnPolicy": { "@type": "MerchantReturnPolicy", "applicableCountry": "FR", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted" }, "shippingDetails": { "@type": "OfferShippingDetails", "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "EUR" }, "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" }, "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" } } } }
+            { "@type": "Offer", "name": locale === 'en' ? "Free GEO Audit" : "Audit GEO gratuit", "price": "0", "priceCurrency": "EUR", "url": "https://detekia.fr", "availability": "https://schema.org/OnlineOnly", "description": locale === 'en' ? "Free GEO score, 7 criteria, personalized recommendations, 5-query ChatGPT citation test" : "Score GEO gratuit, 7 crit\u00E8res, recommandations personnalis\u00E9es, test de citation ChatGPT 5 requ\u00EAtes" },
+            { "@type": "Offer", "name": "Audit GEO 1 page", "price": "29", "priceCurrency": "EUR", "url": "https://detekia.fr/one-page", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO d\u00E9taill\u00E9 sur 1 page avec recommandations et test IA", "hasMerchantReturnPolicy": { "@type": "MerchantReturnPolicy", "applicableCountry": "FR", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted" }, "shippingDetails": { "@type": "OfferShippingDetails", "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "EUR" }, "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" }, "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" } } } },
+            { "@type": "Offer", "name": "Audit GEO complet (10 pages cl\u00E9s)", "price": "99", "priceCurrency": "EUR", "url": "https://detekia.fr/pro", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO sur 10 pages cl\u00E9s avec plan d'action prioris\u00E9 et test IA 30 requ\u00EAtes", "hasMerchantReturnPolicy": { "@type": "MerchantReturnPolicy", "applicableCountry": "FR", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted" }, "shippingDetails": { "@type": "OfferShippingDetails", "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "EUR" }, "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" }, "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" } } } }
           ]
         }
       }} />
@@ -265,7 +287,7 @@ export default function Pricing() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'FAQPage',
-          mainEntity: faqItems.map(faq => ({
+          mainEntity: newFaqItems.map(faq => ({
             '@type': 'Question',
             name: faq.q,
             acceptedAnswer: { '@type': 'Answer', text: faq.a },
@@ -278,165 +300,184 @@ export default function Pricing() {
 
       {/* HERO */}
       <div style={{ maxWidth: 700, margin: '0 auto', padding: '64px 24px 0', textAlign: 'center', position: 'relative' }}>
-        <div style={{ display: 'inline-block', fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', border: '1px solid rgba(217,119,87,0.3)', borderRadius: 20, padding: '5px 14px', marginBottom: 20 }}>Tarifs & formules</div>
-        <h1 style={{ fontSize: 'clamp(30px, 5vw, 48px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 14, color: '#1A1916' }}>{t('pricing.hero.title')}</h1>
-        <p style={{ fontSize: 15, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>{t('pricing.hero.subtitle')}</p>
+        <div style={{ display: 'inline-block', fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', border: '1px solid rgba(217,119,87,0.3)', borderRadius: 20, padding: '5px 14px', marginBottom: 20 }}>
+          {locale === 'en' ? 'GEO Audit' : 'Audit GEO'}
+        </div>
+        <h1 style={{ fontSize: 'clamp(30px, 5vw, 48px)', lineHeight: 1.1, letterSpacing: -1.5, marginBottom: 14, color: '#1A1916' }}>
+          {locale === 'en' ? 'Your GEO audit, free' : 'Votre audit GEO, gratuit'}
+        </h1>
+        <p style={{ fontSize: 15, color: '#6B6762', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 52 }}>
+          {locale === 'en'
+            ? 'Score out of 100, 7 weighted criteria, personalized recommendations and ChatGPT citation test. No account, no credit card.'
+            : 'Score sur 100, 7 crit\u00E8res pond\u00E9r\u00E9s, recommandations personnalis\u00E9es et test de citation ChatGPT. Sans compte, sans carte bancaire.'}
+        </p>
       </div>
 
-      {/* PLANS — 3 colonnes self-service */}
-      <div className="pricing-cards" style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 48 }}>
-        {/* FREE */}
-        <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.free.label')}</div>
-          <div style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#1A1916', letterSpacing: -1, marginBottom: 4 }}>{t('pricing.free.price')}</div>
-          <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.free.subtitle')}</div>
-          <div style={{ fontSize: 11, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.free.noSignup')}</div>
-          <Link href="/" style={{ display: 'block', textAlign: 'center', background: '#F0EDE8', color: '#1A1916', padding: '11px 0', borderRadius: 9, fontWeight: 600, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui', marginBottom: 24 }}>{t('pricing.free.cta')}</Link>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-            {freeFeatures.map((feat, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 12, color: feat.included ? '#10A37F' : '#D0CBC5', flexShrink: 0 }}>{feat.included ? '✓' : '✗'}</span>
-                <span style={{ fontSize: 12, color: feat.included ? '#3A3835' : '#C2BDB8', fontFamily: 'system-ui' }}>{feat.text}</span>
+      {/* SECTION 1 — CE QUI EST GRATUIT */}
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 24px 56px' }}>
+        <div className="card-interactive" style={{ background: '#fff', border: '2px solid #D97757', borderRadius: 20, padding: '36px 32px', position: 'relative', boxShadow: '0 8px 32px rgba(217,119,87,0.10)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+            <div style={{ background: '#D97757', color: '#fff', fontFamily: 'monospace', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', borderRadius: 20, padding: '5px 14px', fontWeight: 700 }}>
+              {locale === 'en' ? 'FREE' : 'GRATUIT'}
+            </div>
+            <span style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', letterSpacing: -1 }}>0 &euro;</span>
+          </div>
+          <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', marginBottom: 8, lineHeight: 1.2, letterSpacing: -0.5 }}>
+            {locale === 'en' ? 'Everything you need to get started' : 'Tout ce qu\'il faut pour commencer'}
+          </div>
+          <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 24 }}>
+            {locale === 'en'
+              ? 'Analyze any page of your website and get actionable results in 30 seconds.'
+              : 'Analysez n\'importe quelle page de votre site et obtenez des r\u00E9sultats actionnables en 30 secondes.'}
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 28 }}>
+            {(locale === 'en' ? [
+              'GEO score out of 100',
+              '7 weighted criteria with detailed breakdown',
+              'Personalized recommendations with code examples',
+              'ChatGPT citation test (5 queries)',
+              'No account required',
+            ] : [
+              'Score GEO sur 100',
+              '7 crit\u00E8res pond\u00E9r\u00E9s avec d\u00E9tail par crit\u00E8re',
+              'Recommandations personnalis\u00E9es avec exemples de code',
+              'Test de citation ChatGPT (5 requ\u00EAtes)',
+              'Sans cr\u00E9ation de compte',
+            ]).map((feat, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: 14, color: '#10A37F', flexShrink: 0, fontWeight: 700 }}>&#10003;</span>
+                <span style={{ fontSize: 14, color: '#3A3835', fontFamily: 'system-ui' }}>{feat}</span>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* RAPPORT */}
-        <div className="card-interactive" style={{ background: '#1A1916', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.report.label')}</div>
-          <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.report.price')}</span></div>
-          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{t('pricing.report.paymentInfo')}</div>
-          {t('pricing.report.subtitle') && <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.report.subtitle')}</div>}
-          <button
-            ref={triggerRef}
-            onClick={() => { setSelectedPlan('rapport'); openModal(); }}
-            style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 24 }}>
-            {t('pricing.report.cta')}
-          </button>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
-            {reportFeatures.map((feat, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 12, color: '#10A37F', flexShrink: 0 }}>✓</span>
-                <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.75)', fontFamily: 'system-ui' }}>{feat.text}</span>
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
-            <Link href="/one-page" style={{ fontSize: 12, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.report.learnMore')}</Link>
-          </div>
-        </div>
-
-        {/* PRO */}
-        <div className="card-interactive" style={{ background: '#1A1916', border: '1px solid rgba(247,245,242,0.08)', borderRadius: 16, padding: '28px 24px', position: 'relative', boxShadow: '0 16px 48px rgba(26,25,22,0.2)', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.45)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>{t('pricing.proCard.label')}</div>
-          <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 40, color: '#F7F5F2', letterSpacing: -1 }}>{t('pricing.proCard.price')}</span></div>
-          <div style={{ fontSize: 12, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 6 }}>{t('pricing.proCard.paymentInfo')}</div>
-          {t('pricing.proCard.subtitle') && <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui', marginBottom: 20, lineHeight: 1.5 }}>{t('pricing.proCard.subtitle')}</div>}
-          <button
-            onClick={() => { setSelectedPlan('pro'); openModal(); }}
-            style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '13px 0', borderRadius: 9, fontWeight: 700, fontSize: 14, fontFamily: 'system-ui', border: 'none', cursor: 'pointer', marginBottom: 24 }}>
-            {t('pricing.proCard.cta')}
-          </button>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
-            {t('pricing.proCard.features').map((feat, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 12, color: '#10A37F', flexShrink: 0 }}>✓</span>
-                <span style={{ fontSize: 12, color: 'rgba(247,245,242,0.75)', fontFamily: 'system-ui' }}>{feat.text}</span>
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(247,245,242,0.06)' }}>
-            <Link href="/pro" style={{ fontSize: 12, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.proCard.learnMore')}</Link>
-          </div>
+          <Link href="/" style={{ display: 'block', textAlign: 'center', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 15, textDecoration: 'none', fontFamily: 'system-ui' }}>
+            {locale === 'en' ? 'Audit my site for free \u2192' : 'Auditer mon site gratuitement \u2192'}
+          </Link>
         </div>
       </div>
 
-      {/* AUTRES SERVICES */}
-      <div style={{ maxWidth: 960, margin: '0 auto', padding: '0 24px 48px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+      {/* SECTION 2 — ACCOMPAGNEMENT BEELEVEN */}
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 24px 56px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>
-            {locale === 'en' ? 'OTHER SERVICES' : 'AUTRES SERVICES'}
+            {locale === 'en' ? 'EXPERT CONSULTING' : 'ACCOMPAGNEMENT EXPERT'}
           </div>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(22px, 3vw, 32px)', color: '#1A1916', letterSpacing: -1, lineHeight: 1.2 }}>
-            {locale === 'en' ? 'Need to go further?' : 'Besoin d\'aller plus loin ?'}
+            {locale === 'en' ? 'We implement the corrections for you' : 'On impl\u00E9mente les corrections pour vous'}
           </h2>
         </div>
-        <div className="pricing-services" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          {/* Présence IA */}
-          <div style={{ background: '#F7F5F2', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9861A', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>
-              {locale === 'en' ? 'AI PRESENCE' : 'PRÉSENCE IA'}
-            </div>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6, lineHeight: 1.2 }}>
-              {locale === 'en' ? 'What do AI engines say about your brand?' : 'Que disent les IA de votre marque ?'}
-            </div>
-            <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-              {locale === 'en'
-                ? 'We query ChatGPT, Gemini, Claude and Perplexity on your strategic queries. You see who is cited, at what position, with what sentiment.'
-                : 'On interroge ChatGPT, Gemini, Claude et Perplexity sur vos requêtes stratégiques. Vous voyez qui est cité, à quelle position, avec quel sentiment.'}
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
-              {(locale === 'en'
-                ? ['Mention rate, position, sentiment', 'Competitor tracking', 'One-shot report or monthly monitoring']
-                : ['Taux de mention, position, sentiment', 'Suivi concurrentiel', 'Rapport ponctuel ou monitoring mensuel']
-              ).map((f, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ fontSize: 10, color: '#C9861A' }}>✓</span>
-                  <span style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui' }}>{f}</span>
+        <div className="card-interactive" style={{ background: '#1A1916', borderRadius: 20, padding: '36px 32px', boxShadow: '0 16px 48px rgba(26,25,22,0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase' }}>BEELEVEN</div>
+          </div>
+          <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 8, lineHeight: 1.2, letterSpacing: -0.5 }}>
+            {locale === 'en' ? 'Our team implements the GEO corrections' : 'Notre \u00E9quipe impl\u00E9mente les corrections GEO'}
+          </div>
+          <p style={{ fontSize: 13, color: 'rgba(247,245,242,0.65)', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 24 }}>
+            {locale === 'en'
+              ? 'Based on the audit results, our experts restructure your content, add structured data, strengthen authority signals, and track progress monthly.'
+              : '\u00C0 partir des r\u00E9sultats de l\'audit, nos experts restructurent votre contenu, ajoutent les donn\u00E9es structur\u00E9es, renforcent les signaux d\'autorit\u00E9 et suivent la progression chaque mois.'}
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 28 }}>
+            {(locale === 'en' ? [
+              'Content restructuring for AI citability',
+              'Structured data implementation (Schema.org)',
+              'Authority & E-E-A-T signals',
+              'Monthly tracking & reporting',
+            ] : [
+              'Restructuration de contenu pour la citabilit\u00E9 IA',
+              'Impl\u00E9mentation des donn\u00E9es structur\u00E9es (Schema.org)',
+              'Signaux d\'autorit\u00E9 & E-E-A-T',
+              'Suivi et reporting mensuel',
+            ]).map((feat, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: 14, color: '#D97757', flexShrink: 0, fontWeight: 700 }}>&#10003;</span>
+                <span style={{ fontSize: 14, color: 'rgba(247,245,242,0.8)', fontFamily: 'system-ui' }}>{feat}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', marginBottom: 20 }}>
+            {locale === 'en' ? 'Starting at 1,500 \u20AC' : '\u00C0 partir de 1 500 \u20AC'}
+          </div>
+          <button
+            onClick={() => setShowBeeleven(true)}
+            style={{ display: 'block', width: '100%', textAlign: 'center', background: '#D97757', color: '#fff', padding: '14px 0', borderRadius: 10, fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'system-ui' }}>
+            {locale === 'en' ? 'Book a free call \u2192' : 'R\u00E9server un appel gratuit \u2192'}
+          </button>
+        </div>
+      </div>
+
+      {/* SECTION 3 — RAPPORTS SELF-SERVICE */}
+      <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px 56px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>
+            {locale === 'en' ? 'SELF-SERVICE' : 'EN AUTONOMIE'}
+          </div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(20px, 2.5vw, 28px)', color: '#1A1916', letterSpacing: -0.5, lineHeight: 1.2 }}>
+            {locale === 'en' ? 'Detailed reports for the self-starters' : 'Rapports d\u00E9taill\u00E9s pour les autonomes'}
+          </h2>
+          <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.65, marginTop: 8 }}>
+            {locale === 'en'
+              ? 'Go deeper with a comprehensive PDF report, code examples, and extended AI citation tests.'
+              : 'Allez plus loin avec un rapport PDF complet, des exemples de code et des tests de citation IA \u00E9tendus.'}
+          </p>
+        </div>
+        <div className="pricing-selfservice" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          {/* RAPPORT ONE-PAGE — 29 EUR */}
+          <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '24px 22px', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{t('pricing.report.label')}</div>
+            <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', letterSpacing: -1 }}>{t('pricing.report.price')}</span></div>
+            <div style={{ fontSize: 11, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 4 }}>{t('pricing.report.paymentInfo')}</div>
+            {t('pricing.report.subtitle') && <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', marginBottom: 16, lineHeight: 1.5 }}>{t('pricing.report.subtitle')}</div>}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 20, flex: 1 }}>
+              {reportFeatures.map((feat, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                  <span style={{ fontSize: 11, color: '#10A37F', flexShrink: 0 }}>&#10003;</span>
+                  <span style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui' }}>{feat.text}</span>
                 </div>
               ))}
             </div>
-            <div style={{ marginTop: 'auto', display: 'flex', gap: 12, alignItems: 'center' }}>
-              <Link href="/presence-ia" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '10px 20px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                {locale === 'en' ? 'Learn more →' : 'En savoir plus →'}
-              </Link>
-              <Link href="/contact" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
-                {locale === 'en' ? 'Contact us' : 'Nous contacter'}
-              </Link>
+            <button
+              ref={triggerRef}
+              onClick={() => { setSelectedPlan('rapport'); openModal(); }}
+              style={{ display: 'block', width: '100%', textAlign: 'center', background: '#1A1916', color: '#F7F5F2', padding: '11px 0', borderRadius: 9, fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 10 }}>
+              {t('pricing.report.cta')}
+            </button>
+            <div style={{ textAlign: 'center' }}>
+              <Link href="/one-page" style={{ fontSize: 11, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.report.learnMore')}</Link>
             </div>
           </div>
 
-          {/* Accompagnement — Agence Beeleven */}
-          <div style={{ background: '#F7F5F2', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 10 }}>
-              {locale === 'en' ? 'AGENCY' : 'AGENCE'}
-            </div>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#1A1916', marginBottom: 6, lineHeight: 1.2 }}>
-              {locale === 'en' ? 'Beeleven, the agency behind Detekia' : 'Beeleven, l\'agence derrière Detekia'}
-            </div>
-            <p style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-              {locale === 'en'
-                ? 'Detekia is a product of Beeleven, a Paris-based digital agency. We support businesses on all aspects of their digital strategy: GEO, SEO, content, technical optimization, and beyond.'
-                : 'Detekia est un produit de l\'agence Beeleven, basée à Paris. Nous accompagnons les entreprises sur tous les aspects de leur stratégie digitale : GEO, SEO, contenu, optimisation technique, et bien plus.'}
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
-              {(locale === 'en'
-                ? ['GEO & SEO strategy', 'Content creation & optimization', 'Technical implementation', 'Monthly tracking & reporting']
-                : ['Stratégie GEO & SEO', 'Création et optimisation de contenu', 'Implémentation technique', 'Suivi et reporting mensuel']
-              ).map((f, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ fontSize: 10, color: '#D97757' }}>✓</span>
-                  <span style={{ fontSize: 12, color: '#3A3835', fontFamily: 'system-ui' }}>{f}</span>
+          {/* RAPPORT PRO — 99 EUR */}
+          <div className="card-interactive" style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '24px 22px', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>{t('pricing.proCard.label')}</div>
+            <div style={{ marginBottom: 4 }}><span style={{ fontFamily: 'Georgia, serif', fontSize: 32, color: '#1A1916', letterSpacing: -1 }}>{t('pricing.proCard.price')}</span></div>
+            <div style={{ fontSize: 11, color: '#B0ABA5', fontFamily: 'system-ui', marginBottom: 4 }}>{t('pricing.proCard.paymentInfo')}</div>
+            {t('pricing.proCard.subtitle') && <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', marginBottom: 16, lineHeight: 1.5 }}>{t('pricing.proCard.subtitle')}</div>}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 20, flex: 1 }}>
+              {t('pricing.proCard.features').map((feat, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                  <span style={{ fontSize: 11, color: '#10A37F', flexShrink: 0 }}>&#10003;</span>
+                  <span style={{ fontSize: 11, color: '#3A3835', fontFamily: 'system-ui' }}>{feat.text}</span>
                 </div>
               ))}
             </div>
-            <div style={{ marginTop: 'auto', display: 'flex', gap: 12, alignItems: 'center' }}>
-              <a href="https://beeleven.fr" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', background: '#1A1916', color: '#fff', padding: '10px 20px', borderRadius: 9, fontWeight: 700, fontSize: 13, textDecoration: 'none', fontFamily: 'system-ui' }}>
-                {locale === 'en' ? 'Visit beeleven.fr →' : 'Visiter beeleven.fr →'}
-              </a>
-              <Link href="/contact" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
-                {locale === 'en' ? 'Contact us' : 'Nous contacter'}
-              </Link>
+            <button
+              onClick={() => { setSelectedPlan('pro'); openModal(); }}
+              style={{ display: 'block', width: '100%', textAlign: 'center', background: '#1A1916', color: '#F7F5F2', padding: '11px 0', borderRadius: 9, fontWeight: 700, fontSize: 13, fontFamily: 'system-ui', border: 'none', cursor: 'pointer', marginBottom: 10 }}>
+              {t('pricing.proCard.cta')}
+            </button>
+            <div style={{ textAlign: 'center' }}>
+              <Link href="/pro" style={{ fontSize: 11, color: '#D97757', textDecoration: 'none', fontFamily: 'system-ui', borderBottom: '1px solid rgba(217,119,87,0.3)', paddingBottom: 1 }}>{t('pricing.proCard.learnMore')}</Link>
             </div>
           </div>
         </div>
       </div>
 
       {/* GARANTIE */}
-      <div style={{ maxWidth: 560, margin: '0 auto 64px', padding: '0 24px', textAlign: 'center' }}>
+      <div style={{ maxWidth: 560, margin: '0 auto 56px', padding: '0 24px', textAlign: 'center' }}>
         <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 28px', display: 'inline-flex', alignItems: 'center', gap: 14 }}>
-          <span style={{ fontSize: 24 }}>🔒</span>
+          <span style={{ fontSize: 24 }}>&#128274;</span>
           <div style={{ textAlign: 'left' }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 3 }}>{t('pricing.guarantee.title')}</div>
             <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui' }}>{t('pricing.guarantee.subtitle')}</div>
@@ -444,10 +485,12 @@ export default function Pricing() {
         </div>
       </div>
 
-      {/* FAQ — Accordion */}
+      {/* FAQ */}
       <div style={{ maxWidth: 600, margin: '0 auto', padding: '0 24px 80px' }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{t('pricing.faq.label')}</div>
-        {faqItems.map((faq, i) => (
+        <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>
+          {locale === 'en' ? 'FAQ' : 'QUESTIONS FR\u00C9QUENTES'}
+        </div>
+        {newFaqItems.map((faq, i) => (
           <details key={i} className="pricing-faq-item" style={{ borderBottom: '1px solid #E5E2DC' }}>
             <summary style={{ padding: '18px 0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, listStyle: 'none' }}>
               <span style={{ fontSize: 14, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.4 }}>{faq.q}</span>
@@ -484,6 +527,9 @@ export default function Pricing() {
           ))}
         </div>
       </footer>
+
+      {/* BEELEVEN CONTACT MODAL */}
+      <BeelevenContactModal open={showBeeleven} onClose={() => setShowBeeleven(false)} />
 
       {/* URL MODAL */}
       {showModal && (
@@ -524,7 +570,7 @@ export default function Pricing() {
               <span style={{ fontFamily: 'system-ui', fontSize: 11, color: '#6B6762', lineHeight: 1.5 }}>
                 {locale === 'en'
                   ? <>I accept the <a href="/cgu" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>terms of service</a> and <a href="/confidentialite" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>privacy policy</a></>
-                  : <>J&apos;accepte les <a href="/cgu" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>conditions générales de vente</a> et la <a href="/confidentialite" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>politique de confidentialité</a></>}
+                  : <>J&apos;accepte les <a href="/cgu" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>conditions g&eacute;n&eacute;rales de vente</a> et la <a href="/confidentialite" target="_blank" rel="noopener noreferrer" style={{ color: '#D97757', textDecoration: 'none' }}>politique de confidentialit&eacute;</a></>}
               </span>
             </label>
 
@@ -601,12 +647,8 @@ export default function Pricing() {
 
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        @media (max-width: 900px) {
-          .pricing-cards { grid-template-columns: 1fr 1fr !important; }
-        }
         @media (max-width: 600px) {
-          .pricing-cards { grid-template-columns: 1fr !important; }
-          .pricing-services { grid-template-columns: 1fr !important; }
+          .pricing-selfservice { grid-template-columns: 1fr !important; }
           .pricing-footer-inner { flex-direction: column !important; gap: 24px !important; }
         }
         /* FAQ accordion — native <details> styling */

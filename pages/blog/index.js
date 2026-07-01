@@ -19,6 +19,20 @@ export default function BlogIndex() {
       <SEO
         title={t('blog.index.seo.title')}
         description={t('blog.index.seo.description')}
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: locale === 'en' ? 'Detekia Blog — AI Visibility & GEO' : 'Blog Detekia — Visibilité IA & GEO',
+          description: locale === 'en' ? 'Guides, strategies and analysis on AI visibility and Generative Engine Optimization.' : 'Guides, stratégies et analyses sur la visibilité IA et le GEO.',
+          url: locale === 'en' ? 'https://detekia.fr/en/blog' : 'https://detekia.fr/blog',
+          publisher: { '@type': 'Organization', name: 'Detekia', url: 'https://detekia.fr' },
+          blogPost: localizedArticles.slice(0, 10).map(a => ({
+            '@type': 'BlogPosting',
+            headline: a.title,
+            datePublished: a.date,
+            url: `https://detekia.fr${locale === 'en' ? '/en' : ''}/blog/${a.slug}`,
+          })),
+        }}
       />
 
       <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>

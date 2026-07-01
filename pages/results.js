@@ -295,8 +295,8 @@ export default function Results() {
   }
 
   const templateRecos = useMemo(
-    () => result?.criteria ? generateTemplateRecos(result.criteria, result?.evidence) : [],
-    [result?.criteria, result?.evidence]
+    () => result?.criteria ? generateTemplateRecos(result.criteria, result?.evidence, locale) : [],
+    [result?.criteria, result?.evidence, locale]
   );
 
   const grades = t('common.grades');
