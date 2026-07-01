@@ -5,6 +5,7 @@ import Link from 'next/link';
 import SEO from '../components/SEO';
 import Header from '../components/Header';
 import CheckoutFlow from '../components/CheckoutFlow';
+import BeelevenContactModal from '../components/BeelevenContactModal';
 import { useTranslation } from '../lib/useTranslation';
 
 const stepColors = ['#10A37F', '#D97757', '#4285F4'];
@@ -58,10 +59,10 @@ function HeroMockup({ locale }) {
   }, []);
 
   const criteria = [
-    { label: locale === 'en' ? 'AI Accessibility' : 'Accessibilité IA', pct: 85, color: '#10A37F' },
+    { label: locale === 'en' ? 'AI Accessibility' : 'Accessibilite IA', pct: 85, color: '#10A37F' },
     { label: locale === 'en' ? 'Technical SEO' : 'SEO technique', pct: 68, color: '#D97757' },
     { label: locale === 'en' ? 'Content depth' : 'Profondeur contenu', pct: 42, color: '#D97757' },
-    { label: locale === 'en' ? 'Freshness' : 'Fraîcheur', pct: 91, color: '#10A37F' },
+    { label: locale === 'en' ? 'Freshness' : 'Fraicheur', pct: 91, color: '#10A37F' },
   ];
 
   const badges = [
@@ -81,7 +82,7 @@ function HeroMockup({ locale }) {
       <div style={{ background: '#1A1916', padding: '28px 24px 22px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '30%', left: 16, width: 100, height: 100, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.15) 0%, transparent 70%)' }} />
         <div style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(247,245,242,0.3)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 14, display: 'inline-flex', alignItems: 'center', gap: 5, border: '1px solid rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: 4 }}>
-          <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#D97757' }} /> {locale === 'en' ? 'VISIBILITY SCORE' : 'SCORE DE VISIBILITÉ'}
+          <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#D97757' }} /> {locale === 'en' ? 'VISIBILITY SCORE' : 'SCORE DE VISIBILITE'}
         </div>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, position: 'relative' }}>
           <div>
@@ -95,7 +96,7 @@ function HeroMockup({ locale }) {
       </div>
       <div style={{ padding: '16px 20px 12px' }}>
         <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#B0ABA5', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>
-          {locale === 'en' ? '7 CRITERIA ANALYZED' : '7 CRITÈRES ANALYSÉS'}
+          {locale === 'en' ? '7 CRITERIA ANALYZED' : '7 CRITERES ANALYSES'}
         </div>
         {criteria.map((c, i) => (
           <div key={i} style={{ marginBottom: 8 }}>
@@ -140,6 +141,7 @@ export default function OnePage() {
   const { t, locale } = useTranslation();
   const router = useRouter();
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showBeeleven, setShowBeeleven] = useState(false);
   const [ctaUrl, setCtaUrl] = useState('');
 
   const p = (key) => t(`onepage.${key}`);
@@ -148,11 +150,11 @@ export default function OnePage() {
 
   return (
     <div style={{ background: '#F7F5F2', minHeight: '100vh', fontFamily: 'Georgia, serif' }}>
-      <SEO title={p('seo.title')} description={p('seo.description')} schema={{
+      <SEO title={locale === 'en' ? 'Single-page GEO audit — AI visibility score & recommendations' : 'Audit GEO 1 page — score de visibilite IA et recommandations'} description={locale === 'en' ? 'Analyze any web page for AI visibility: GEO score out of 100, 7 criteria, actionable recommendations. Start free, upgrade for the full report.' : 'Analysez n\'importe quelle page pour la visibilite IA : score GEO sur 100, 7 criteres, recommandations actionnables. Commencez gratuitement.'} schema={{
         "@context": "https://schema.org",
         "@type": "Service",
         "name": "Detekia — Audit GEO 1 page",
-        "description": "Audit de visibilité IA sur 1 page — score GEO sur 100, 7 critères analysés, recommandations détaillées, test de citation ChatGPT, rapport HTML + PDF.",
+        "description": locale === 'en' ? 'AI visibility audit for a single web page — GEO score, 7 criteria, detailed recommendations, AI citation test.' : 'Audit de visibilite IA sur 1 page web — score GEO, 7 criteres, recommandations detaillees, test de citation IA.',
         "serviceType": "AI Visibility Audit",
         "provider": {
           "@type": "Organization",
@@ -168,7 +170,7 @@ export default function OnePage() {
           "priceCurrency": "EUR",
           "url": "https://detekia.fr/one-page",
           "availability": "https://schema.org/OnlineOnly",
-          "description": "Audit GEO 1 page — score détaillé, 8 recommandations, test IA 10 requêtes",
+          "description": "Audit GEO 1 page — score detaille, recommandations, test IA 10 requetes",
           "hasMerchantReturnPolicy": { "@type": "MerchantReturnPolicy", "applicableCountry": "FR", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted" },
           "shippingDetails": { "@type": "OfferShippingDetails", "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "EUR" }, "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "FR" }, "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "d" } } }
         }
@@ -182,21 +184,27 @@ export default function OnePage() {
       <Header ctaLabel={t('nav.ctaAnalyze')} />
       <main>
 
-      {/* ═══ 1. HERO (inchangé) ═══ */}
+      {/* ═══ 1. HERO — informatif ═══ */}
       <section className="gradient-bg lp-hero-section" style={{ padding: '80px 24px 72px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '20%', right: '10%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(217,119,87,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div className="lp-hero-grid" style={{ maxWidth: 1060, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 380px', gap: 48, alignItems: 'center' }}>
           <div>
             <div className="reveal" style={{ display: 'inline-block', fontFamily: 'monospace', fontSize: 11, color: '#D97757', letterSpacing: 2, textTransform: 'uppercase', border: '1px solid rgba(217,119,87,0.25)', padding: '5px 14px', borderRadius: 20, marginBottom: 24, background: 'rgba(217,119,87,0.08)' }}>
-              {p('hero.badge')}
+              {locale === 'en' ? 'SINGLE-PAGE AUDIT' : 'AUDIT 1 PAGE'}
             </div>
-            <h1 className="reveal reveal-d1" style={{ fontSize: 'clamp(34px, 5vw, 50px)', lineHeight: 1.06, letterSpacing: -1.5, color: '#F7F5F2', marginBottom: 16 }}>{p('hero.title')}</h1>
-            <p className="reveal reveal-d2" style={{ fontSize: 16, color: 'rgba(247,245,242,0.6)', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 32, maxWidth: 460 }}>{p('hero.subtitle')}</p>
-            <button onClick={() => setShowCheckout(true)} className="reveal reveal-d3 btn-interactive" style={{ background: '#D97757', color: '#fff', border: 'none', padding: '16px 40px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 10 }}>
-              {p('hero.cta')}
-            </button>
+            <h1 className="reveal reveal-d1" style={{ fontSize: 'clamp(34px, 5vw, 50px)', lineHeight: 1.06, letterSpacing: -1.5, color: '#F7F5F2', marginBottom: 16 }}>
+              {locale === 'en' ? 'Detailed GEO audit of a single page' : 'Audit GEO detaille d\'une page'}
+            </h1>
+            <p className="reveal reveal-d2" style={{ fontSize: 16, color: 'rgba(247,245,242,0.6)', lineHeight: 1.65, fontFamily: 'system-ui', marginBottom: 32, maxWidth: 460 }}>
+              {locale === 'en'
+                ? 'Measure how visible your page is to AI systems. Score out of 100, 7 criteria analyzed, concrete recommendations to improve your AI presence.'
+                : 'Mesurez la visibilite de votre page aupres des IA. Score sur 100, 7 criteres analyses, recommandations concretes pour ameliorer votre presence IA.'}
+            </p>
+            <Link href="/" className="reveal reveal-d3 btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', border: 'none', padding: '16px 40px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'system-ui', marginBottom: 10, textDecoration: 'none' }}>
+              {locale === 'en' ? 'Start with a free score' : 'Commencer par le scoring gratuit'}
+            </Link>
             <div className="reveal reveal-d4" style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.25)', letterSpacing: 1.5, marginTop: 8 }}>
-              {locale === 'en' ? 'REPORT IN 1 MINUTE • NO SUBSCRIPTION' : 'RAPPORT EN 1 MINUTE • SANS ABONNEMENT'}
+              {locale === 'en' ? 'FREE SCORE + RECOMMENDATIONS • NO SIGN-UP' : 'SCORE + RECOMMANDATIONS GRATUITS • SANS INSCRIPTION'}
             </div>
           </div>
           <div className="lp-hero-mockup reveal reveal-d2" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -205,7 +213,7 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ 2. CE QUE VOUS OBTENEZ — Feature sections ═══ */}
+      {/* ═══ 2. CE QUE L'AUDIT 1 PAGE INCLUT ═══ */}
       <section style={{ padding: '72px 24px 64px' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>{p('included.label')}</div>
@@ -226,58 +234,83 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ 3. POUR QUI + IDÉAL POUR — cards animées ═══ */}
-      <section style={{ padding: '56px 24px', background: '#fff' }}>
-        <div ref={targetRef} style={{ maxWidth: 860, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 40 }}>
-            {locale === 'en' ? 'WHO IS THIS AUDIT FOR' : 'À QUI S\'ADRESSE CET AUDIT'}
+      {/* ═══ 3. BANDEAU GRATUIT ═══ */}
+      <section style={{ padding: '48px 24px', background: '#fff' }}>
+        <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2" strokeLinecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#10A37F', letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 700 }}>
+              {locale === 'en' ? 'START FREE' : 'COMMENCEZ GRATUITEMENT'}
+            </span>
           </div>
-          <div className="lp-target-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
-            {/* Left — Profiles */}
-            <div>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 14, fontWeight: 600 }}>
-                {locale === 'en' ? 'YOUR PROFILE' : 'VOTRE PROFIL'}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {p('audience.items').map((item, i) => (
-                  <div key={i} className="card-interactive" style={{
-                    background: '#F7F5F2', border: '1px solid #E5E2DC', borderLeft: '3px solid #D97757',
-                    borderRadius: '4px 10px 10px 4px', padding: '12px 16px',
-                    fontFamily: 'system-ui', fontSize: 14, color: '#1A1916', fontWeight: 500,
-                    opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateY(0)' : 'translateY(10px)',
-                    transition: `opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05}s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05}s, box-shadow 0.25s, border-color 0.25s`,
-                  }}>
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Right — Site types */}
-            <div>
-              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#D97757', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 14, fontWeight: 600 }}>
-                {locale === 'en' ? 'YOU ANALYZE' : 'VOUS ANALYSEZ'}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {p('sites.items').map((item, i) => (
-                  <div key={i} className="card-interactive" style={{
-                    background: '#F7F5F2', border: '1px solid #E5E2DC', borderLeft: '3px solid #10A37F',
-                    borderRadius: '4px 10px 10px 4px', padding: '12px 16px',
-                    fontFamily: 'system-ui', fontSize: 14, color: '#1A1916', fontWeight: 500,
-                    opacity: targetVisible ? 1 : 0, transform: targetVisible ? 'translateY(0)' : 'translateY(10px)',
-                    transition: `opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05 + 0.2}s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05 + 0.2}s, box-shadow 0.25s, border-color 0.25s`,
-                  }}>
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', fontStyle: 'italic', textAlign: 'center', marginTop: 28, lineHeight: 1.6 }}>{p('audience.closing')}</p>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(22px, 4vw, 28px)', color: '#1A1916', letterSpacing: -0.8, marginBottom: 14, lineHeight: 1.2 }}>
+            {locale === 'en'
+              ? 'Get your score and recommendations for free'
+              : 'Obtenez votre score et vos recommandations gratuitement'}
+          </h2>
+          <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.65, marginBottom: 28, maxWidth: 520, margin: '0 auto 28px' }}>
+            {locale === 'en'
+              ? 'Our free GEO audit gives you a score out of 100, detailed analysis across 7 criteria, and actionable recommendations. No payment, no sign-up required.'
+              : 'Notre audit GEO gratuit vous donne un score sur 100, une analyse detaillee sur 7 criteres et des recommandations actionnables. Sans paiement, sans inscription.'}
+          </p>
+          <Link href="/" className="btn-interactive" style={{ display: 'inline-block', background: '#10A37F', color: '#fff', border: 'none', padding: '14px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'system-ui', textDecoration: 'none' }}>
+            {locale === 'en' ? 'Analyze a page for free' : 'Analyser une page gratuitement'}
+          </Link>
         </div>
       </section>
 
-      {/* ═══ 4. COMMENT ÇA MARCHE ═══ */}
+      {/* ═══ 4. RAPPORT PAYANT — secondaire ═══ */}
       <section style={{ padding: '64px 24px' }}>
+        <div style={{ maxWidth: 680, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 12 }}>
+            {locale === 'en' ? 'GO FURTHER' : 'ALLER PLUS LOIN'}
+          </div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(22px, 4vw, 28px)', color: '#1A1916', letterSpacing: -0.8, textAlign: 'center', marginBottom: 14, lineHeight: 1.2 }}>
+            {locale === 'en'
+              ? 'Need a more in-depth report?'
+              : 'Besoin d\'un rapport plus approfondi ?'}
+          </h2>
+          <p style={{ fontSize: 14, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.65, textAlign: 'center', marginBottom: 32, maxWidth: 560, margin: '0 auto 32px' }}>
+            {locale === 'en'
+              ? 'The full single-page audit at 29\u20AC adds exclusive features on top of the free analysis:'
+              : 'L\'audit complet 1 page a 29\u20AC ajoute des fonctionnalites exclusives en plus de l\'analyse gratuite :'}
+          </p>
+          <div style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '28px 32px', maxWidth: 560, margin: '0 auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 28 }}>
+              {(locale === 'en' ? [
+                'Detailed AI-generated recommendations with code examples',
+                'AI citation test: 10 real queries to ChatGPT about your topic',
+                'Analysis of which competitors get cited instead of you',
+                'Exportable HTML + PDF report',
+                'Delivered by email in under 2 minutes',
+              ] : [
+                'Recommandations detaillees generees par IA avec exemples de code',
+                'Test de citation IA : 10 requetes reelles a ChatGPT sur votre sujet',
+                'Analyse des concurrents cites a votre place',
+                'Rapport HTML + PDF exportable',
+                'Livre par email en moins de 2 minutes',
+              ]).map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97757" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0, marginTop: 2 }}><polyline points="20 6 9 17 4 12"/></svg>
+                  <span style={{ fontSize: 14, color: '#1A1916', fontFamily: 'system-ui', lineHeight: 1.5 }}>{item}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #E5E2DC', paddingTop: 20 }}>
+              <div>
+                <span style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#1A1916', fontWeight: 600 }}>29 &euro;</span>
+                <span style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', marginLeft: 8 }}>{locale === 'en' ? 'one-time' : 'unique'}</span>
+              </div>
+              <button onClick={() => setShowCheckout(true)} className="btn-interactive" style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', padding: '12px 28px', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'system-ui' }}>
+                {locale === 'en' ? 'Get the full report' : 'Obtenir le rapport complet'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 5. COMMENT CA MARCHE ═══ */}
+      <section style={{ padding: '64px 24px', background: '#fff' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('steps.label')}</div>
           <div className="lp-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
@@ -292,8 +325,8 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ 5. EXEMPLE RAPPORT ═══ */}
-      <section style={{ padding: '0 24px 48px', textAlign: 'center' }}>
+      {/* ═══ 6. EXEMPLE RAPPORT ═══ */}
+      <section style={{ padding: '48px 24px', textAlign: 'center' }}>
         <a href={locale === 'en' ? '/example-report.html' : '/exemple-rapport.html'} target="_blank" rel="noopener noreferrer"
           className="btn-interactive"
           style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#D97757', fontFamily: 'system-ui', fontWeight: 600, textDecoration: 'none', border: '1px solid rgba(217,119,87,0.3)', padding: '10px 22px', borderRadius: 10, background: 'rgba(217,119,87,0.04)' }}>
@@ -302,7 +335,7 @@ export default function OnePage() {
         </a>
       </section>
 
-      {/* ═══ 6. FAQ ═══ */}
+      {/* ═══ 7. FAQ ═══ */}
       <section style={{ padding: '0 24px 64px' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', textAlign: 'center', marginBottom: 32 }}>{p('faq.label')}</div>
@@ -315,24 +348,29 @@ export default function OnePage() {
         </div>
       </section>
 
-      {/* ═══ 7. CTA FINAL ═══ */}
+      {/* ═══ 8. CTA BEELEVEN ═══ */}
       <section className="gradient-bg" style={{ padding: '64px 24px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 520, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', letterSpacing: -0.8, marginBottom: 12, lineHeight: 1.15 }}>{p('finalCta.title')}</h2>
-          <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginBottom: 28, lineHeight: 1.6 }}>{p('finalCta.subtitle')}</p>
-          <div className="lp-final-input" style={{ maxWidth: 480, margin: '0 auto', display: 'flex', background: 'rgba(247,245,242,0.06)', border: '1px solid rgba(247,245,242,0.12)', borderRadius: 10, overflow: 'hidden' }}>
-            <input value={ctaUrl} onChange={e => setCtaUrl(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') setShowCheckout(true); }}
-              placeholder={locale === 'en' ? 'https://your-site.com' : 'https://votre-site.fr'}
-              style={{ flex: 1, border: 'none', outline: 'none', padding: '14px 18px', fontSize: 15, fontFamily: 'system-ui', color: '#F7F5F2', background: 'transparent', minWidth: 0 }} />
-            <button onClick={() => setShowCheckout(true)} className="btn-interactive"
-              style={{ background: '#D97757', color: '#fff', border: 'none', padding: '14px 28px', fontWeight: 700, fontSize: 14, cursor: 'pointer', fontFamily: 'system-ui', whiteSpace: 'nowrap', flexShrink: 0 }}>
-              {locale === 'en' ? 'Analyze →' : 'Analyser →'}
-            </button>
+        <div style={{ maxWidth: 560, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(247,245,242,0.35)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
+            {locale === 'en' ? 'DONE-FOR-YOU' : 'ON S\'EN OCCUPE'}
           </div>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: '#F7F5F2', letterSpacing: -0.8, marginBottom: 14, lineHeight: 1.15 }}>
+            {locale === 'en'
+              ? 'Or let us implement the fixes for you'
+              : 'Ou laissez-nous implementer les corrections pour vous'}
+          </h2>
+          <p style={{ fontSize: 14, color: 'rgba(247,245,242,0.5)', fontFamily: 'system-ui', marginBottom: 28, lineHeight: 1.6 }}>
+            {locale === 'en'
+              ? 'Our GEO experts at Beeleven can audit your site and implement all the optimizations. Free discovery call, no commitment.'
+              : 'Nos experts GEO chez Beeleven peuvent auditer votre site et implementer toutes les optimisations. Appel decouverte gratuit, sans engagement.'}
+          </p>
+          <button onClick={() => setShowBeeleven(true)} className="btn-interactive" style={{ background: '#D97757', color: '#fff', border: 'none', padding: '16px 40px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'system-ui' }}>
+            {locale === 'en' ? 'Talk to a GEO expert' : 'Discuter avec un expert GEO'}
+          </button>
         </div>
       </section>
 
-      {/* ═══ 8. CROSS-SELL PRO ═══ */}
+      {/* ═══ 9. CROSS-SELL PRO ═══ */}
       <section style={{ padding: '48px 24px 64px' }}>
         <div className="card-interactive" style={{ maxWidth: 560, margin: '0 auto', background: '#fff', border: '1px solid #E5E2DC', borderRadius: 16, padding: '32px 28px', display: 'flex', gap: 20, alignItems: 'center' }}>
           <div style={{ width: 52, height: 52, borderRadius: 12, background: 'rgba(217,119,87,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -346,7 +384,7 @@ export default function OnePage() {
                 {p('crossSell.cta')}
               </Link>
               <Link href="/pricing" style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', textDecoration: 'none', borderBottom: '1px solid #E5E2DC', paddingBottom: 1 }}>
-                {locale === 'en' ? 'Compare all plans →' : 'Comparer toutes les offres →'}
+                {locale === 'en' ? 'Compare all plans' : 'Comparer toutes les offres'}
               </Link>
             </div>
           </div>
@@ -354,6 +392,7 @@ export default function OnePage() {
       </section>
 
       <CheckoutFlow plan="rapport" showModal={showCheckout} onClose={() => setShowCheckout(false)} initialUrl={ctaUrl} />
+      <BeelevenContactModal open={showBeeleven} onClose={() => setShowBeeleven(false)} />
 
       </main>
       <style>{`
