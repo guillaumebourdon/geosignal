@@ -163,8 +163,8 @@
       "criticalDesc": "Your robots.txt file blocks AI bots. This is a common issue. Result: no AI can read or cite your content.",
       "fixText": "<strong>Fix needed:</strong> Allow GPTBot, ClaudeBot and PerplexityBot in your robots.txt. Just 2 lines to change.",
       "impactPoints": "+12 estimated visibility points",
-      "lockedCount": "+14 locked recommendations",
-      "unlock": "Unlock →"
+      "lockedCount": "7 personalized recommendations ✓",
+      "unlock": "Included for free"
     },
     "stats": [
       {
@@ -412,7 +412,7 @@
       "subtitle": "Join the professionals who have already optimized their AI visibility. for free, in under 60 seconds.",
       "cta": "Analyze my website for free →",
       "trustBadge": "Free · No signup · Results in under 60 seconds",
-      "priceNote": "Full report 29 € · One-time payment"
+      "priceNote": "100% free analysis · No signup"
     },
     "footer": {
       "copyright": "© 2026 Detekia. Beeleven SASU",
@@ -424,11 +424,11 @@
             "href": "/"
           },
           {
-            "label": "1-Page audit. €29",
+            "label": "Free scoring",
             "href": "/one-page"
           },
           {
-            "label": "Complete audit. €99",
+            "label": "GEO consulting",
             "href": "/pro"
           }
         ]
@@ -830,7 +830,7 @@
           "text": "7 criteria analyzed in depth"
         },
         {
-          "text": "8 recommendations with code examples"
+          "text": "7 recommendations with code examples"
         },
         {
           "text": "Real AI test (10 ChatGPT queries). competing sites identified"
@@ -853,7 +853,7 @@
       "items": [
         {
           "q": "What's the difference between the 3 audits?",
-          "a": "The free audit gives a quick overview of your AI visibility on 1 page. The 1-page audit (€29) analyzes a URL in depth with 8 detailed recommendations and code examples. The complete audit (€99) analyzes 10 key pages, detects cross-page patterns and produces a prioritized action plan."
+          "a": "The free audit gives a quick overview of your AI visibility on 1 page. The 1-page audit (€29) analyzes a URL in depth with 7 detailed recommendations and code examples. The complete audit (€99) analyzes 10 key pages, detects cross-page patterns and produces a prioritized action plan."
         },
         {
           "q": "How long to receive my report?",
@@ -1331,8 +1331,7 @@
             "<strong>Resend</strong> (United States). transactional email delivery (reports, confirmations, alerts). Compliant with the EU-US Data Privacy Framework.",
             "<strong>Anthropic</strong> (United States). recommendation generation and editorial neutrality analysis via the Claude API. Only the textual content of the analyzed page is transmitted. Compliant with the EU-US Data Privacy Framework.",
             "<strong>OpenAI</strong> (United States). AI visibility testing via the GPT API. Simulated queries do not contain personal data. Compliant with the EU-US Data Privacy Framework.",
-            "<strong>Jina AI</strong> (EU/US). web page content extraction for analysis. The URL of the analyzed page is transmitted. GDPR compliant.",
-            "<strong>Browserless.io</strong> (United States). JavaScript web page rendering for sites requiring a headless browser. The URL of the analyzed page is transmitted. Compliant with the EU-US Data Privacy Framework.",
+"<strong>Browserless.io</strong> (United States). JavaScript web page rendering for sites requiring a headless browser. The URL of the analyzed page is transmitted. Compliant with the EU-US Data Privacy Framework.",
             "<strong>PDFShift</strong> (EU). PDF report generation. Report HTML content is transmitted for conversion. Hosted in the European Union.",
             "<strong>Google Analytics 4</strong>. anonymized analytics, subject to user consent. Compliant with the EU-US Data Privacy Framework."
           ],
@@ -1920,7 +1919,7 @@
   "onepage": {
     "seo": {
       "title": "1-Page GEO Audit. €29 | Detekia",
-      "description": "Analyze your page's AI visibility in depth. Score out of 100, 7 criteria, 8 recommendations with code examples. Report in 1 minute."
+      "description": "Analyze your page's AI visibility in depth. Score out of 100, 7 criteria, 7 recommendations with code examples. Report in 1 minute."
     },
     "hero": {
       "badge": "1-PAGE AUDIT",

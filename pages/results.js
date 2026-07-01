@@ -701,24 +701,8 @@ export default function Results() {
             </div>
           )}
 
-          {/* ── 3. EMAIL + PARTAGER (même ligne) ─────── */}
-          <div className="results-capture-share" style={{ display: 'flex', gap: 12, margin: '0 0 24px', alignItems: 'stretch' }}>
-            <div style={{ flex: 1, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 22px' }}>
-              {captureSent ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, height: '100%' }}>
-                  <span style={{ fontSize: 18 }}>✓</span>
-                  <span style={{ fontFamily: 'system-ui', fontSize: 14, color: '#10A37F', fontWeight: 500 }}>{t('results.capture.sent')}</span>
-                </div>
-              ) : (
-                <>
-                  <div style={{ fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, color: '#1A1916', marginBottom: 10 }}>{t('results.capture.title')}</div>
-                  <form onSubmit={handleCaptureEmail} className="capture-form" style={{ display: 'flex', gap: 8 }}>
-                    <input type="email" value={captureEmail} onChange={e => setCaptureEmail(e.target.value)} placeholder={t('results.capture.placeholder')} required style={{ flex: 1, border: '1px solid #E5E2DC', borderRadius: 8, padding: '10px 14px', fontSize: 13, fontFamily: 'system-ui', color: '#1A1916', background: '#F7F5F2', outline: 'none', minWidth: 0 }} />
-                    <button type="submit" disabled={captureLoading} style={{ background: '#1A1916', color: '#F7F5F2', border: 'none', borderRadius: 8, padding: '10px 18px', fontFamily: 'system-ui', fontSize: 13, fontWeight: 600, cursor: captureLoading ? 'wait' : 'pointer', whiteSpace: 'nowrap', opacity: captureLoading ? 0.7 : 1 }}>{captureLoading ? '…' : t('results.capture.submit')}</button>
-                  </form>
-                </>
-              )}
-            </div>
+          {/* ── 3. PARTAGER ─────── */}
+          <div className="results-capture-share" style={{ display: 'flex', gap: 12, margin: '0 0 24px', alignItems: 'stretch', justifyContent: 'flex-end' }}>
             <div style={{ position: 'relative', flexShrink: 0, display: 'flex', alignItems: 'center' }} ref={shareRef}>
               <button onClick={() => setShowShare(v => !v)} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 20px', color: '#6B6762', fontSize: 13, fontFamily: 'system-ui', cursor: 'pointer', height: '100%', transition: 'border-color 0.15s' }} onMouseEnter={e => e.currentTarget.style.borderColor = '#1A1916'} onMouseLeave={e => e.currentTarget.style.borderColor = '#E5E2DC'}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
@@ -740,42 +724,6 @@ export default function Results() {
             </div>
           </div>
 
-          {/* ── 4. APERÇU PLAN D'ACTION (recos) ──────── */}
-          {recommendations.length > 0 && (
-            <div style={{ marginTop: 16 }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 }}>
-                <div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.recos.label')}</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5 }}>{t('results.recos.title')}</div>
-                </div>
-                {!isPaid && (
-                  <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#D97757', background: 'rgba(217,119,87,0.08)', padding: '4px 12px', borderRadius: 20, border: '1px solid rgba(217,119,87,0.2)' }}>
-                    {t('results.recos.lockedCount').replace('{preview}', '1').replace('{locked}', recommendations.length - 1)}
-                  </div>
-                )}
-              </div>
-              {!isPaid && (
-                <div style={{ fontSize: 13, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.6, marginBottom: 16 }}>
-                  {t('results.recos.subtitle').replace('{count}', recommendations.length)}
-                </div>
-              )}
-
-              {previewReco && (
-                <RecoCard r={previewReco} index={0} isPaid={isPaid} isPreview={true} previewFadeText={previewFadeText} onCheckout={handleCheckout} total={recommendations.length} t={t} />
-              )}
-
-              {!isPaid && otherRecos.length > 0 && (
-                <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 14, padding: '20px 24px', marginBottom: 8 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1916', fontFamily: 'system-ui', marginBottom: 8 }}>
-                    {otherRecos.length === 1 ? t('results.recos.lockedReco1') : t('results.recos.lockedRecoN').replace('{count}', otherRecos.length)}
-                  </div>
-                  <div style={{ fontSize: 12, color: '#6B6762', fontFamily: 'system-ui', lineHeight: 1.7 }}>
-                    {otherRecos.map(r => criteriaInfoMain[r.criterion]?.title || r.criterion || r.title).filter(Boolean).join(' · ')}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
 
           {/* ── 5. CITATION TEST ─────────────────────── */}
           {result?.citationTest?.tests && result.citationTest.tests.length > 0 && (() => {
@@ -828,9 +776,9 @@ export default function Results() {
                     <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.6, marginBottom: 14 }}>
                       {t('results.citation.lockedDesc')}
                     </div>
-                    <Link href="/pricing" style={{ display: 'inline-block', background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 24px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', textDecoration: 'none' }}>
-                      {t('results.citation.lockedCta')}
-                    </Link>
+                    <button onClick={() => setShowBeeleven(true)} style={{ display: 'inline-block', background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 24px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', cursor: 'pointer' }}>
+                      {locale === 'en' ? 'Talk to a GEO expert →' : 'Discuter avec un expert GEO →'}
+                    </button>
                   </div>
                 )}
               </div>

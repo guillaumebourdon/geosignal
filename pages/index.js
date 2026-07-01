@@ -293,8 +293,9 @@ export default function Home() {
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "offers": [
-          { "@type": "Offer", "name": t('homepage.schema.freeOffer'), "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/OnlineOnly", "description": "Score GEO gratuit en 30 secondes" },
-          { "@type": "Offer", "name": t('homepage.schema.paidOffer'), "price": "29", "priceCurrency": "EUR", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO détaillé avec recommandations" }
+          { "@type": "Offer", "name": t('homepage.schema.freeOffer'), "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO gratuit : score, 7 critères, recommandations personnalisées" },
+          { "@type": "Offer", "name": t('homepage.schema.paidOffer'), "price": "29", "priceCurrency": "EUR", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO one-page avec test de citation IA et rapport permanent" },
+          { "@type": "Offer", "name": "Audit GEO Pro", "price": "99", "priceCurrency": "EUR", "availability": "https://schema.org/OnlineOnly", "description": "Audit GEO complet de 10 pages avec plan d'action et test de citation IA" }
         ],
         "featureList": t('homepage.schema.featureList'),
         "inLanguage": locale,
@@ -394,9 +395,9 @@ export default function Home() {
                     { value: locale === 'en' ? 'Recommendations with code' : 'Recommandations avec code', label: locale === 'en' ? 'copy-paste' : 'copier-coller' },
                     { value: '< 60s', label: locale === 'en' ? 'no signup' : 'sans inscription' },
                     { value: locale === 'en' ? '7 research-based criteria' : '7 critères basés sur la recherche', label: locale === 'en' ? 'open methodology' : 'méthodologie ouverte' },
-                    { value: locale === 'en' ? 'Permanent report' : 'Rapport permanent', label: locale === 'en' ? 'lifetime access' : 'accessible à vie' },
                     { value: locale === 'en' ? 'Projected score' : 'Score projeté', label: locale === 'en' ? 'after fixes' : 'après corrections' },
-                    { value: locale === 'en' ? '3 competitors identified' : '3 concurrents identifiés', label: locale === 'en' ? 'cited instead of you' : 'cités à votre place' },
+                    { value: locale === 'en' ? '100% free' : '100% gratuit', label: locale === 'en' ? 'no credit card required' : 'sans carte bancaire' },
+                    { value: locale === 'en' ? 'Detailed criteria' : 'Critères détaillés', label: locale === 'en' ? 'score breakdown per criterion' : 'score par critère' },
                   ].map((stat, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '0 28px', flexShrink: 0 }}>
                       <span style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#D97757', fontWeight: 700 }}>{stat.value}</span>
@@ -521,7 +522,7 @@ export default function Home() {
                 </div>
                 <p style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.5)', lineHeight: 1.6, marginBottom: 28, position: 'relative' }}>
                   {locale === 'en'
-                    ? 'Detekia fetches your actual HTML and runs 8 weighted, transparent criteria. Every time. Reproducibly.'
+                    ? 'Detekia fetches your actual HTML and runs 7 weighted, transparent criteria. Every time. Reproducibly.'
                     : 'Detekia télécharge votre HTML réel et applique 7 critères basés sur la recherche et transparents. À chaque fois. De façon reproductible.'}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 'auto', position: 'relative' }}>
@@ -623,6 +624,11 @@ export default function Home() {
               <Link href="/#analyser" className="btn-interactive" style={{ display: 'inline-block', background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 12, fontSize: 15, fontFamily: 'system-ui', textDecoration: 'none', fontWeight: 700, boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
                 {locale === 'en' ? 'Audit my site for free →' : 'Auditer mon site gratuitement →'}
               </Link>
+              <div style={{ marginTop: 16 }}>
+                <button onClick={() => setShowBeeleven(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: 'rgba(247,245,242,0.45)', fontFamily: 'system-ui', padding: 0, borderBottom: '1px solid rgba(247,245,242,0.2)' }}>
+                  {locale === 'en' ? 'Need help implementing? Talk to a GEO expert →' : 'Besoin d\'aide pour implémenter ? Discutez avec un expert GEO →'}
+                </button>
+              </div>
             </div>
           </RevealSection>
         </div>
