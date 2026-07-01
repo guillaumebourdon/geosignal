@@ -666,17 +666,20 @@ export default function Results() {
           {/* ── CTA BEELEVEN (principal) ──────────────── */}
           {!isPaid && (
             <div style={{ marginTop: 28, marginBottom: 24 }}>
-              <div style={{ background: 'linear-gradient(135deg, #1A1916 0%, #2A2824 100%)', borderRadius: 20, padding: '32px 28px', textAlign: 'center' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#F7F5F2', marginBottom: 8, letterSpacing: -0.5 }}>
-                  {locale === 'en' ? 'Want to fix these issues?' : 'Envie de corriger ces problèmes ?'}
+              <div style={{ background: 'linear-gradient(135deg, #1A1916 0%, #2A2824 100%)', borderRadius: 20, padding: '36px 32px', textAlign: 'center' }}>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 24, color: '#F7F5F2', marginBottom: 10, letterSpacing: -0.5, lineHeight: 1.2 }}>
+                  {locale === 'en' ? 'You know the problems. We fix them.' : 'Vous connaissez les problèmes. On les corrige.'}
                 </div>
-                <div style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.6)', lineHeight: 1.7, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>
+                <div style={{ fontFamily: 'system-ui', fontSize: 14, color: 'rgba(247,245,242,0.55)', lineHeight: 1.7, maxWidth: 460, margin: '0 auto 10px' }}>
                   {locale === 'en'
-                    ? 'Our GEO experts at Beeleven can implement these recommendations and get your site cited by AI engines.'
-                    : 'Nos experts GEO chez Beeleven peuvent implémenter ces recommandations et faire citer votre site par les moteurs IA.'}
+                    ? 'Our GEO team implements these recommendations on your site — structured data, content restructuring, authority signals — so AI engines start citing you.'
+                    : 'Notre équipe GEO implémente ces recommandations sur votre site — données structurées, restructuration du contenu, signaux d\'autorité — pour que les IA vous citent.'}
                 </div>
-                <button onClick={() => setShowBeeleven(true)} className="btn-interactive" style={{ background: '#D97757', color: '#fff', padding: '16px 36px', borderRadius: 12, fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
-                  {locale === 'en' ? 'Talk to a GEO expert →' : 'Discuter avec un expert GEO →'}
+                <div style={{ fontFamily: 'system-ui', fontSize: 12, color: 'rgba(247,245,242,0.35)', marginBottom: 20 }}>
+                  {locale === 'en' ? 'First call is free · 15 min · No commitment' : 'Premier appel gratuit · 15 min · Sans engagement'}
+                </div>
+                <button onClick={() => setShowBeeleven(true)} className="btn-interactive" style={{ background: '#D97757', color: '#fff', padding: '16px 40px', borderRadius: 12, fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'system-ui', boxShadow: '0 8px 24px rgba(217,119,87,0.35)' }}>
+                  {locale === 'en' ? 'Book a free call →' : 'Réserver un appel gratuit →'}
                 </button>
               </div>
               {/* CTA secondaire : rapports payants */}
@@ -728,29 +731,27 @@ export default function Results() {
           {/* ── 5. CITATION TEST ─────────────────────── */}
           {result?.citationTest?.tests && result.citationTest.tests.length > 0 && (() => {
             const tests = result.citationTest.tests;
-            const scored = tests.map((ct, i) => {
-              let s = 0;
-              if (!ct.cited) s += 10;
-              if (ct.competitors_cited?.length > 0) s += 5 + Math.min(ct.competitors_cited.length, 3);
-              if (ct.difficulty === 'générique' || ct.difficulty === 'generic') s += 4;
-              else if (ct.difficulty === 'niche') s += 2;
-              return { ...ct, _score: s, _idx: i };
-            });
-            scored.sort((a, b) => b._score - a._score);
-            const pick1 = scored[0];
-            const pick2 = scored.find(s => s._idx !== pick1._idx && s.query !== pick1.query) || scored[1];
-            const previewTests = [pick1, pick2].filter(Boolean);
-            const lockedCount = tests.length - previewTests.length;
+            const citedCount = tests.filter(t => t.cited).length;
 
             return (
               <div style={{ marginTop: 32 }}>
                 <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#6B6762', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>{t('results.citation.label')}</div>
                 <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#1A1916', letterSpacing: -0.5, marginBottom: 6 }}>{t('results.citation.title')}</div>
-                <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.6, marginBottom: 16 }}>{t('results.citation.intro')}</p>
+                <p style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762', lineHeight: 1.6, marginBottom: 8 }}>{t('results.citation.intro')}</p>
 
-                {previewTests.map((test, i) => (
+                {/* Score résumé */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 18px', background: citedCount > 0 ? 'rgba(16,163,127,0.06)' : 'rgba(217,119,87,0.06)', border: `1px solid ${citedCount > 0 ? 'rgba(16,163,127,0.15)' : 'rgba(217,119,87,0.15)'}`, borderRadius: 12, marginBottom: 16 }}>
+                  <span style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: citedCount > 0 ? '#10A37F' : '#D97757', fontWeight: 700 }}>{citedCount}/{tests.length}</span>
+                  <span style={{ fontFamily: 'system-ui', fontSize: 13, color: '#6B6762' }}>
+                    {locale === 'en'
+                      ? `Your site was cited in ${citedCount} out of ${tests.length} real ChatGPT queries`
+                      : `Votre site a été cité dans ${citedCount} requête${citedCount > 1 ? 's' : ''} ChatGPT sur ${tests.length}`}
+                  </span>
+                </div>
+
+                {tests.map((test, i) => (
                   <div key={i} style={{ background: '#fff', border: '1px solid #E5E2DC', borderRadius: 12, padding: '18px 22px', marginBottom: 10 }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{t('results.citation.queryLabel')}</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#6B6762', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{t('results.citation.queryLabel')} {i + 1}/{tests.length}</div>
                     <div style={{ fontFamily: 'Georgia, serif', fontSize: 16, color: '#1A1916', marginBottom: 10, lineHeight: 1.3 }}>"{test.query}"</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                       <span style={{ width: 8, height: 8, borderRadius: '50%', background: test.cited ? '#10A37F' : '#D97757', flexShrink: 0 }} />
@@ -766,21 +767,6 @@ export default function Results() {
                     )}
                   </div>
                 ))}
-
-                {!isPaid && lockedCount > 0 && (
-                  <div style={{ background: '#FAFAF9', border: '1px solid #E5E2DC', borderRadius: 12, padding: '20px 22px', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 40, background: 'linear-gradient(to top, #FAFAF9, transparent)', pointerEvents: 'none' }} />
-                    <div style={{ fontFamily: 'system-ui', fontSize: 14, fontWeight: 600, color: '#1A1916', marginBottom: 6 }}>
-                      🔒 {t('results.citation.lockedTitle')}
-                    </div>
-                    <div style={{ fontFamily: 'system-ui', fontSize: 12, color: '#6B6762', lineHeight: 1.6, marginBottom: 14 }}>
-                      {t('results.citation.lockedDesc')}
-                    </div>
-                    <button onClick={() => setShowBeeleven(true)} style={{ display: 'inline-block', background: '#D97757', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 24px', fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', cursor: 'pointer' }}>
-                      {locale === 'en' ? 'Talk to a GEO expert →' : 'Discuter avec un expert GEO →'}
-                    </button>
-                  </div>
-                )}
               </div>
             );
           })()}
