@@ -27,6 +27,13 @@ const nextConfig = {
     defaultLocale: 'fr',
     localeDetection: false,
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: '/demo/:path*', destination: '/demo/:path*', locale: false },
+      ],
+    };
+  },
   async headers() {
     return [
       { source: '/', headers: securityHeaders },

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recommandations post-audit — BNP Paribas</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0A0A0A;--card:#141414;--card-alt:#1A1A1A;--border:rgba(240,236,224,0.06);
+  --orange:#C9A84C;--cyan:#E8C97A;--green:#10b981;--pink:#C4897A;--red:#ef4444;
+  --t1:#F0ECE0;--t2:#B0A890;--t3:#555555;--muted:#3A3A3A;
+  --openai:#10A37F;--anthropic:#D97757;--perplexity:#1C7DC4;--gemini:#8B5CF6;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--t1);line-height:1.6}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between}
+.nav-left{display:flex;align-items:center;gap:16px}
+.nav-brand{font-family:'Inter',sans-serif;font-weight:800;font-size:14px;color:var(--orange)}
+.nav-sep{width:1px;height:20px;background:var(--border)}
+.nav-title{font-family:'Inter',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--t2)}
+.nav-client{font-size:13px;color:var(--orange);font-weight:600}
+.nav-date{font-family:'DM Mono',monospace;font-size:11px;color:var(--t3)}
+
+/* Layout */
+.container{max-width:1200px;margin:0 auto;padding:0 40px}
+.section{padding:60px 0;border-bottom:1px solid var(--border)}
+.section:last-child{border-bottom:none}
+.section-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+.section-title{font-family:'Inter',sans-serif;font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px}
+.section-sub{font-size:15px;color:var(--t2);margin-bottom:32px;max-width:700px}
+
+/* Glass card */
+.glass{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color 0.3s}
+.glass:hover{border-color:rgba(240,236,224,0.12)}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.kpi-val{font-family:'Inter',sans-serif;font-size:36px;font-weight:900;letter-spacing:-2px}
+.kpi-label{font-size:12px;color:var(--t2);margin-top:6px}
+
+/* Bars */
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.bar-label{font-size:13px;color:var(--t2);width:220px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:28px;background:rgba(240,236,224,0.04);border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;font-family:'DM Mono',monospace;font-size:12px;font-weight:600;color:#fff;transition:width 1s ease}
+
+/* Article cards */
+.article-card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden;transition:border-color 0.3s}
+.article-card:hover{border-color:rgba(201,168,76,0.3)}
+.article-header{padding:20px 24px;cursor:pointer;display:flex;align-items:center;gap:16px}
+.article-num{font-family:'DM Mono',monospace;font-size:13px;color:var(--bg);background:var(--orange);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
+.article-title{font-family:'Inter',sans-serif;font-size:15px;font-weight:700;flex:1}
+.article-queries{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.article-queries span{font-size:11px;color:var(--t3);background:rgba(240,236,224,0.05);padding:3px 10px;border-radius:20px}
+.article-meta{display:flex;align-items:center;gap:10px}
+.impact{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px;font-weight:600}
+.impact-high{background:rgba(16,185,129,0.15);color:var(--green)}
+.impact-med{background:rgba(201,168,76,0.15);color:var(--orange)}
+.impact-low{background:rgba(240,236,224,0.08);color:var(--t3)}
+.chevron{color:var(--t3);font-size:18px;transition:transform 0.3s}
+.article-card.open .chevron{transform:rotate(180deg)}
+.article-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.article-card.open .article-body{max-height:2000px}
+.article-content{padding:0 24px 24px;border-top:1px solid var(--border)}
+.article-content > div{margin-top:16px}
+.field-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+
+/* Pills */
+.pill{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;margin:2px}
+.pill-openai{background:rgba(16,163,127,0.15);color:var(--openai)}
+.pill-anthropic{background:rgba(217,119,87,0.15);color:var(--anthropic)}
+.pill-perplexity{background:rgba(28,125,196,0.15);color:var(--perplexity)}
+.pill-gemini{background:rgba(139,92,246,0.15);color:var(--gemini)}
+
+/* Competitor tags */
+.comp-tag{display:inline-block;font-size:11px;color:var(--t2);background:var(--card-alt);border:1px solid var(--border);padding:3px 10px;border-radius:6px;margin:2px}
+
+/* Source tags */
+.src-tag{display:inline-block;font-size:11px;color:var(--cyan);background:rgba(232,201,122,0.08);border:1px solid rgba(232,201,122,0.15);padding:3px 10px;border-radius:6px;margin:2px}
+
+/* Brief box */
+.brief-box{background:var(--card-alt);border:1px solid var(--border);border-radius:12px;padding:20px}
+.brief-box h4{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px;color:var(--orange)}
+.brief-box p{font-size:13px;color:var(--t2);line-height:1.7}
+.brief-box .keywords{margin-top:10px}
+.brief-box .keywords span{display:inline-block;font-family:'DM Mono',monospace;font-size:11px;background:rgba(201,168,76,0.1);color:var(--orange);padding:3px 10px;border-radius:6px;margin:2px}
+
+/* Theme header */
+.theme-header{font-family:'Inter',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;padding:16px 0 12px;margin-top:32px;border-bottom:2px solid var(--orange);color:var(--orange);display:flex;align-items:center;gap:12px}
+.theme-header:first-of-type{margin-top:0}
+.theme-count{font-family:'DM Mono',monospace;font-size:12px;color:var(--t3);font-weight:400}
+
+/* Defensive cards */
+.defense-card{background:var(--card);border:1px solid rgba(239,68,68,0.2);border-left:3px solid var(--red);border-radius:16px;padding:28px;margin-bottom:16px}
+.defense-card h3{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}
+.defense-card .verbatim{font-style:italic;font-size:13px;color:var(--red);background:rgba(239,68,68,0.08);padding:8px 14px;border-radius:8px;margin:4px 0;line-height:1.5}
+
+/* Source table */
+.source-table{width:100%;border-collapse:collapse}
+.source-table th{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);text-align:left;padding:12px 16px;border-bottom:1px solid var(--border)}
+.source-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+.source-table tr:hover{background:rgba(255,255,255,0.02)}
+.source-domain{font-weight:600;color:var(--cyan)}
+.source-count{font-family:'DM Mono',monospace;font-weight:600;color:var(--orange)}
+.source-action{font-size:12px;color:var(--t2);max-width:320px}
+
+/* Monitoring */
+.monitor-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.monitor-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
+.monitor-card h3{font-family:'Inter',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px}
+.monitor-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.monitor-row:last-child{border-bottom:none}
+.monitor-metric{font-size:13px;color:var(--t2)}
+.monitor-val{font-family:'DM Mono',monospace;font-weight:600}
+
+/* Footer */
+.footer{padding:40px;text-align:center;border-top:1px solid var(--border);margin-top:40px}
+.footer-brand{font-family:'Inter',sans-serif;font-weight:700;font-size:13px;color:var(--t3)}
+.footer-disclaimer{font-size:11px;color:var(--muted);margin-top:12px;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.6}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <span class="nav-brand">Beeleven</span>
+    <div class="nav-sep"></div>
+    <span class="nav-title">Recommandations post-audit</span>
+    <div class="nav-sep"></div>
+    <span class="nav-client">BNP Paribas &mdash; Particuliers</span>
+  </div>
+  <span class="nav-date">Juin 2026</span>
+</nav>
+
+<div class="container">
+
+<!-- ══════ SECTION 1: SYNTHESE ══════ -->
+<div class="section">
+  <div class="section-tag">Synth&egrave;se</div>
+  <div class="section-title">Ce que l'audit a r&eacute;v&eacute;l&eacute;</div>
+  <div class="section-sub">L'audit de visibilit&eacute; LLM a analys&eacute; 100 requ&ecirc;tes &times; 4 IA = 400 r&eacute;ponses. Voici les axes d'am&eacute;lioration identifi&eacute;s et les actions recommand&eacute;es.</div>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val" style="color:var(--orange)">39</div><div class="kpi-label">Requ&ecirc;tes manqu&eacute;es<br>sur 100 test&eacute;es</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--red)">18</div><div class="kpi-label">Verbatims n&eacute;gatifs<br>identifi&eacute;s</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--cyan)">1 235</div><div class="kpi-label">Domaines sources<br>cartographi&eacute;s</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--green)">20</div><div class="kpi-label">Briefs de contenu<br>recommand&eacute;s</div></div>
+  </div>
+
+  <div class="glass">
+    <div class="field-label">Taux de mention par th&eacute;matique</div>
+    <div style="margin-top:16px">
+      <div class="bar-row"><div class="bar-label">Investissement</div><div class="bar-track"><div class="bar-fill" style="width:30%;background:linear-gradient(90deg,rgba(201,168,76,0.3),var(--orange))">30%</div></div></div>
+      <div class="bar-row"><div class="bar-label">Conseil financier &amp; patrimonial</div><div class="bar-track"><div class="bar-fill" style="width:28.7%;background:linear-gradient(90deg,rgba(201,168,76,0.3),var(--orange))">28,7%</div></div></div>
+      <div class="bar-row"><div class="bar-label">&Eacute;pargne</div><div class="bar-track"><div class="bar-fill" style="width:22.5%;background:linear-gradient(90deg,rgba(239,68,68,0.3),var(--red))">22,5%</div></div></div>
+      <div class="bar-row"><div class="bar-label">Actualit&eacute; &eacute;co &amp; patrimoine</div><div class="bar-track"><div class="bar-fill" style="width:17.5%;background:linear-gradient(90deg,rgba(239,68,68,0.3),var(--red))">17,5%</div></div></div>
+      <div class="bar-row"><div class="bar-label">Retraite</div><div class="bar-track"><div class="bar-fill" style="width:15%;background:linear-gradient(90deg,rgba(239,68,68,0.3),var(--red))">15%</div></div></div>
+    </div>
+    <div style="font-size:12px;color:var(--t3);margin-top:16px">&bull; Rouge = th&eacute;matiques prioritaires &agrave; renforcer &bull; Les requ&ecirc;tes manqu&eacute;es se concentrent sur Retraite (12) et &Eacute;pargne (10)</div>
+  </div>
+</div>
+
+<!-- ══════ SECTION 2: PLAN DE CONTENU ══════ -->
+<div class="section">
+  <div class="section-tag">Plan de contenu</div>
+  <div class="section-title">20 briefs de contenu d&eacute;taill&eacute;s</div>
+  <div class="section-sub">Chaque brief est bas&eacute; sur les requ&ecirc;tes o&ugrave; BNP Paribas est absente mais ses concurrents sont cit&eacute;s.</div>
+  <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 16px;margin-bottom:24px;font-size:12px;color:#C9A84C;"><span style="font-size:16px;">&#9662;</span> Cliquez sur un article pour d&eacute;plier le brief complet</div>
+
+  <!-- RETRAITE -->
+  <div class="theme-header">Retraite <span class="theme-count">6 articles &mdash; 12 requ&ecirc;tes manqu&eacute;es &mdash; 15% de mention</span></div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">01</div>
+      <div style="flex:1"><div class="article-title">PER BNP Paribas : guide complet, avantages et comparatif</div>
+        <div class="article-queries"><span>PER banque ou courtier ?</span><span>PER ou assurance-vie retraite ?</span><span>Avantages fiscaux PER 2025</span></div>
+      </div>
+      <div class="article-meta"><span class="impact impact-high">&Eacute;lev&eacute;</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div><div class="field-label">Concurrents &agrave; d&eacute;loger</div><span class="comp-tag">Linxea</span><span class="comp-tag">Yomoni</span><span class="comp-tag">Nalo</span><span class="comp-tag">Ramify</span><span class="comp-tag">Boursorama</span></div>
+      <div><div class="field-label">Sources IA &agrave; cibler</div><span class="src-tag">service-public.gouv.fr</span><span class="src-tag">placement.meilleurtaux.com</span><span class="src-tag">blog.nalo.fr</span></div>
+      <div><div class="field-label">LLM prioritaires</div><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span></div>
+      <div class="brief-box">
+        <h4>Brief &eacute;ditorial</h4>
+        <p><strong>Angle :</strong> Comparatif objectif PER BNP vs courtiers en ligne. Ne pas &eacute;viter le sujet des frais &mdash; les assumer et expliquer la valeur ajout&eacute;e.</p>
+        <p style="margin-top:8px"><strong>Structure :</strong> Qu'est-ce que le PER BNP &bull; Frais d&eacute;taill&eacute;s (en toute transparence) &bull; Comparatif BNP vs Linxea vs Boursorama &bull; Simulateur fiscal &bull; Pour qui le PER BNP est-il adapt&eacute; ? &bull; FAQ</p>
+        <p style="margin-top:8px"><strong>Donn&eacute;es &agrave; inclure :</strong> Grille de frais compl&egrave;te, performance historique nette de frais, avantage fiscal par TMI, simulation sur 20 ans.</p>
+        <div class="keywords"><span>PER individuel</span><span>plan &eacute;pargne retraite</span><span>avantage fiscal PER</span><span>frais PER banque</span><span>comparatif PER 2025</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">02</div>
+      <div style="flex:1"><div class="article-title">Pr&eacute;parer sa retraite &agrave; 30 ans : le plan d'action</div>
+        <div class="article-queries"><span>Pr&eacute;parer retraite &agrave; 30 ans</span><span>200&euro;/mois pour la retraite</span></div>
+      </div>
+      <div class="article-meta"><span class="impact impact-high">&Eacute;lev&eacute;</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div><div class="field-label">Concurrents &agrave; d&eacute;loger</div><span class="comp-tag">Boursorama</span><span class="comp-tag">Yomoni</span><span class="comp-tag">Fortuneo</span><span class="comp-tag">Soci&eacute;t&eacute; G&eacute;n&eacute;rale</span></div>
+      <div><div class="field-label">Sources IA &agrave; cibler</div><span class="src-tag">placement.meilleurtaux.com</span><span class="src-tag">blog.nalo.fr</span><span class="src-tag">service-public.gouv.fr</span></div>
+      <div><div class="field-label">LLM prioritaires</div><span class="pill pill-openai">ChatGPT</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></div>
+      <div class="brief-box">
+        <h4>Brief &eacute;ditorial</h4>
+        <p><strong>Angle :</strong> Guide pratique avec montants concrets et simulations par profil. Ton accessible, pas institutionnel.</p>
+        <p style="margin-top:8px"><strong>Structure :</strong> Pourquoi commencer t&ocirc;t &bull; Combien &eacute;pargner selon votre &acirc;ge &bull; Tableau &laquo; 200&euro;/mois pendant 30 ans = X&euro; &raquo; &bull; PER, AV ou PEA : quelle enveloppe &bull; Les solutions BNP &bull; FAQ</p>
+        <p style="margin-top:8px"><strong>Donn&eacute;es &agrave; inclure :</strong> Simulations par tranche de revenus, effet des int&eacute;r&ecirc;ts compos&eacute;s, comparaison avec inflation.</p>
+        <div class="keywords"><span>pr&eacute;parer retraite jeune</span><span>&eacute;pargne retraite 30 ans</span><span>combien &eacute;pargner retraite</span><span>200 euros par mois retraite</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">03</div>
+      <div style="flex:1"><div class="article-title">Simulation retraite : combien &eacute;pargner selon votre situation</div>
+        <div class="article-queries"><span>Simulation retraite mensuelle</span><span>Compenser baisse revenus retraite</span></div>
+      </div>
+      <div class="article-meta"><span class="impact impact-med">Moyen</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div><div class="field-label">Concurrents &agrave; d&eacute;loger</div><span class="comp-tag">Boursorama</span><span class="comp-tag">Caisse d'&Eacute;pargne</span><span class="comp-tag">Cr&eacute;dit Agricole</span><span class="comp-tag">Linxea</span></div>
+      <div><div class="field-label">Sources IA &agrave; cibler</div><span class="src-tag">service-public.gouv.fr</span><span class="src-tag">placement.meilleurtaux.com</span></div>
+      <div><div class="field-label">LLM prioritaires</div><span class="pill pill-openai">ChatGPT</span><span class="pill pill-perplexity">Perplexity</span></div>
+      <div class="brief-box">
+        <h4>Brief &eacute;ditorial</h4>
+        <p><strong>Angle :</strong> Outil/tableaux de simulation par tranche d'&acirc;ge et revenus. Tr&egrave;s data-driven.</p>
+        <p style="margin-top:8px"><strong>Structure :</strong> Estimez votre pension &bull; L'&eacute;cart &agrave; combler &bull; Tableaux par profil (30/40/50 ans) &bull; Combien &eacute;pargner chaque mois &bull; O&ugrave; placer &bull; FAQ</p>
+        <div class="keywords"><span>simulateur retraite</span><span>combien &eacute;pargner retraite</span><span>compl&eacute;ment retraite</span><span>retraite 64 ans</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">04</div>
+      <div style="flex:1"><div class="article-title">Sortie en capital du PER : r&egrave;gles, fiscalit&eacute; et strat&eacute;gies</div>
+        <div class="article-queries"><span>Sortir en capital PER</span><span>D&eacute;fiscaliser avec PER</span></div>
+      </div>
+      <div class="article-meta"><span class="impact impact-med">Moyen</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div><div class="field-label">Concurrents &agrave; d&eacute;loger</div><span class="comp-tag">Nalo</span><span class="comp-tag">Goodvest</span><span class="comp-tag">Linxea</span></div>
+      <div class="brief-box">
+        <h4>Brief &eacute;ditorial</h4>
+        <p><strong>Angle :</strong> Guide fiscal d&eacute;taill&eacute; sortie capital vs rente. Cas pratiques chiffr&eacute;s par TMI.</p>
+        <div class="keywords"><span>sortie capital PER</span><span>fiscalit&eacute; PER retraite</span><span>rente ou capital PER</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">05</div>
+      <div style="flex:1"><div class="article-title">Transfert PERP vers PER : proc&eacute;dure et avantages</div><div class="article-queries"><span>Transf&eacute;rer PERP vers PER</span></div></div>
+      <div class="article-meta"><span class="impact impact-low">Faible</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p><strong>Angle :</strong> Guide pratique pour les d&eacute;tenteurs d'anciens PERP qui h&eacute;sitent &agrave; migrer. Rassurer sur la proc&eacute;dure et montrer les avantages concrets.</p><p style="margin-top:8px"><strong>Structure :</strong> PERP vs PER : les diff&eacute;rences cl&eacute;s &bull; Pourquoi transf&eacute;rer &bull; Proc&eacute;dure pas &agrave; pas &bull; Frais de transfert &bull; Cas pratique chiffr&eacute; &bull; FAQ</p><p style="margin-top:8px"><strong>Donn&eacute;es &agrave; inclure :</strong> Comparatif fiscal PERP vs PER, frais de transfert BNP, d&eacute;lais moyens, conditions de sortie am&eacute;lior&eacute;es du PER.</p><div class="keywords"><span>transfert PERP PER</span><span>migration PERP</span><span>avantages PER vs PERP</span><span>frais transfert PERP</span></div></div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">06</div>
+      <div style="flex:1"><div class="article-title">Retraite compl&eacute;mentaire du salari&eacute; priv&eacute; : toutes les options</div><div class="article-queries"><span>Options retraite salari&eacute; priv&eacute;</span></div></div>
+      <div class="article-meta"><span class="impact impact-low">Faible</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p><strong>Angle :</strong> Guide p&eacute;dagogique qui part de ce que le salari&eacute; a d&eacute;j&agrave; (Agirc-Arrco) et montre comment compl&eacute;ter avec des solutions BNP.</p><p style="margin-top:8px"><strong>Structure :</strong> Comment fonctionne Agirc-Arrco &bull; Combien allez-vous toucher (simulation) &bull; L'&eacute;cart &agrave; combler &bull; Les solutions : PER, AV, PEA &bull; L'offre BNP &bull; FAQ</p><p style="margin-top:8px"><strong>Donn&eacute;es &agrave; inclure :</strong> Taux de remplacement moyen par tranche de revenus, plafonds Agirc-Arrco, simulations de compl&eacute;ment.</p><div class="keywords"><span>retraite compl&eacute;mentaire salari&eacute;</span><span>Agirc-Arrco</span><span>&eacute;pargne retraite suppl&eacute;mentaire</span><span>compl&eacute;ment retraite priv&eacute;</span></div></div>
+    </div></div>
+  </div>
+
+  <!-- EPARGNE -->
+  <div class="theme-header">&Eacute;pargne <span class="theme-count">5 articles &mdash; 10 requ&ecirc;tes manqu&eacute;es &mdash; 22,5% de mention</span></div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">07</div>
+      <div style="flex:1"><div class="article-title">Livrets d'&eacute;pargne BNP Paribas : taux, plafonds et comparatif 2025</div>
+        <div class="article-queries"><span>Taux livret A 2025</span><span>Meilleure banque livret &eacute;pargne</span><span>Comparatif livrets bancaires</span></div>
+      </div>
+      <div class="article-meta"><span class="impact impact-high">&Eacute;lev&eacute;</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div><div class="field-label">Concurrents &agrave; d&eacute;loger</div><span class="comp-tag">BoursoBank</span><span class="comp-tag">Fortuneo</span><span class="comp-tag">Hello Bank</span><span class="comp-tag">BforBank</span></div>
+      <div><div class="field-label">Sources IA &agrave; cibler</div><span class="src-tag">placement.meilleurtaux.com</span><span class="src-tag">economie.gouv.fr</span><span class="src-tag">moneyvox.fr</span></div>
+      <div><div class="field-label">LLM prioritaires</div><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></div>
+      <div class="brief-box">
+        <h4>Brief &eacute;ditorial</h4>
+        <p><strong>Angle :</strong> Comparatif honn&ecirc;te livrets BNP vs banques en ligne. Mettre en avant les avantages banque traditionnelle (r&eacute;seau, conseil, s&eacute;curit&eacute;).</p>
+        <p style="margin-top:8px"><strong>Structure :</strong> Tous les livrets BNP (taux, plafonds, conditions) &bull; Comparatif vs banques en ligne &bull; Pour qui BNP est le bon choix &bull; FAQ Schema.org</p>
+        <div class="keywords"><span>livret A BNP Paribas</span><span>meilleur livret &eacute;pargne</span><span>comparatif livrets 2025</span><span>taux livret A</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">08</div>
+      <div style="flex:1"><div class="article-title">Comment placer 10 000 &agrave; 50 000&euro; en toute s&eacute;curit&eacute;</div>
+        <div class="article-queries"><span>Placer 10 000&euro; sans risque</span><span>Placer 50 000&euro; en s&eacute;curit&eacute;</span></div>
+      </div>
+      <div class="article-meta"><span class="impact impact-high">&Eacute;lev&eacute;</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div><div class="field-label">Concurrents &agrave; d&eacute;loger</div><span class="comp-tag">BoursoBank</span><span class="comp-tag">Nalo</span><span class="comp-tag">Fortuneo</span><span class="comp-tag">La Banque Postale</span></div>
+      <div class="brief-box">
+        <h4>Brief &eacute;ditorial</h4>
+        <p><strong>Angle :</strong> Guide par tranche de montant avec allocation recommand&eacute;e. Fonds euros, livrets, CAT. Tableaux concrets.</p>
+        <div class="keywords"><span>placer 10000 euros</span><span>placement s&eacute;curis&eacute;</span><span>placer 50000 euros sans risque</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">09</div>
+      <div style="flex:1"><div class="article-title">Livret A vs assurance-vie : le comparatif objectif</div><div class="article-queries"><span>Livret A ou assurance-vie</span><span>Diff&eacute;rences livret A, LDDS, LEP</span></div></div>
+      <div class="article-meta"><span class="impact impact-med">Moyen</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p>Comparatif d&eacute;taill&eacute; avec cas d'usage par profil. Tableau avantages/inconv&eacute;nients. Positionner l'offre BNP.</p><div class="keywords"><span>livret A ou assurance-vie</span><span>diff&eacute;rence livret A LDDS LEP</span><span>&eacute;pargne s&eacute;curis&eacute;e</span></div></div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">10</div>
+      <div style="flex:1"><div class="article-title">Super livrets boost&eacute;s 2025 : comparatif et avis</div><div class="article-queries"><span>Avis super livrets banques en ligne</span></div></div>
+      <div class="article-meta"><span class="impact impact-med">Moyen</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p>Comparatif des offres promotionnelles + analyse post-boost. Taux r&eacute;els annualis&eacute;s. Inclure l'offre BNP.</p><div class="keywords"><span>super livret boost&eacute;</span><span>meilleur livret bancaire</span><span>offre promotionnelle &eacute;pargne</span></div></div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">11</div>
+      <div style="flex:1"><div class="article-title">Comptes &agrave; terme en 2025 : sont-ils encore int&eacute;ressants ?</div><div class="article-queries"><span>CAT int&eacute;ressants en 2025</span></div></div>
+      <div class="article-meta"><span class="impact impact-low">Faible</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p><strong>Angle :</strong> Analyse objective : dans quel contexte un CAT reste pertinent vs fonds euros, livrets boost&eacute;s ou obligations. Ton factuel, pas promotionnel.</p><p style="margin-top:8px"><strong>Structure :</strong> Qu'est-ce qu'un CAT &bull; Taux actuels (tableau comparatif) &bull; CAT vs livrets vs fonds euros &bull; Pour qui c'est adapt&eacute; &bull; L'offre BNP &bull; FAQ</p><p style="margin-top:8px"><strong>Donn&eacute;es &agrave; inclure :</strong> Taux nets d'imp&ocirc;t par dur&eacute;e, comparaison avec taux du livret A et fonds euros, conditions BNP.</p><div class="keywords"><span>compte &agrave; terme 2025</span><span>taux compte &agrave; terme</span><span>CAT banque</span><span>placement court terme</span></div></div>
+    </div></div>
+  </div>
+
+  <!-- ACTUALITE ECO -->
+  <div class="theme-header">Actualit&eacute; &eacute;conomique <span class="theme-count">4 articles &mdash; 9 requ&ecirc;tes manqu&eacute;es &mdash; 17,5% de mention</span></div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">12</div>
+      <div style="flex:1"><div class="article-title">Baisse du livret A : les alternatives pour votre &eacute;pargne</div>
+        <div class="article-queries"><span>Baisse livret A o&ugrave; placer</span><span>Impact inflation placements</span></div>
+      </div>
+      <div class="article-meta"><span class="impact impact-high">&Eacute;lev&eacute;</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div><div class="field-label">Concurrents &agrave; d&eacute;loger</div><span class="comp-tag">BoursoBank</span><span class="comp-tag">Yomoni</span><span class="comp-tag">Linxea</span><span class="comp-tag">Fortuneo</span></div>
+      <div><div class="field-label">Sources IA &agrave; cibler</div><span class="src-tag">banque-france.fr</span><span class="src-tag">placement.meilleurtaux.com</span><span class="src-tag">lemonde.fr</span><span class="src-tag">moneyvox.fr</span></div>
+      <div class="brief-box">
+        <h4>Brief &eacute;ditorial</h4>
+        <p><strong>Angle :</strong> Guide actualit&eacute; avec solutions concr&egrave;tes BNP. Donn&eacute;es macro + recommandations par profil.</p>
+        <div class="keywords"><span>baisse livret A</span><span>o&ugrave; placer argent 2025</span><span>alternative livret A</span><span>inflation &eacute;pargne</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">13</div>
+      <div style="flex:1"><div class="article-title">Placements s&ucirc;rs en p&eacute;riode de crise : le guide</div><div class="article-queries"><span>Placements s&ucirc;rs en crise</span><span>Investir en bourse 2025 ou attendre</span></div></div>
+      <div class="article-meta"><span class="impact impact-med">Moyen</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p>Guide rassurant avec allocation d&eacute;fensive. Donn&eacute;es historiques crises pass&eacute;es. Positionner BNP comme banque de confiance.</p><div class="keywords"><span>placement s&ucirc;r crise</span><span>investir en 2025</span><span>protection &eacute;pargne</span></div></div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">14</div>
+      <div style="flex:1"><div class="article-title">Immobilier ou march&eacute;s financiers en 2025</div><div class="article-queries"><span>Immobilier ou bourse 2025</span></div></div>
+      <div class="article-meta"><span class="impact impact-low">Faible</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p><strong>Angle :</strong> Comparatif objectif avec donn&eacute;es historiques sur 10-20 ans. Pas de r&eacute;ponse unique : montrer les profils pour qui chaque option est adapt&eacute;e.</p><p style="margin-top:8px"><strong>Structure :</strong> Rendement historique immo vs bourse &bull; Risque et liquidit&eacute; &bull; Fiscalit&eacute; compar&eacute;e &bull; Profils types &bull; Et si on combinait les deux ? &bull; Les solutions BNP (SCPI, PEA, AV) &bull; FAQ</p><p style="margin-top:8px"><strong>Donn&eacute;es &agrave; inclure :</strong> Performance CAC40 vs prix immobilier sur 20 ans, rendement locatif moyen, simulation 100K&euro; plac&eacute;s en immo vs bourse.</p><div class="keywords"><span>immobilier ou bourse 2025</span><span>investir immobilier ou actions</span><span>rendement immobilier vs bourse</span><span>diversification patrimoine</span></div></div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">15</div>
+      <div style="flex:1"><div class="article-title">Euro num&eacute;rique : ce que &ccedil;a change pour votre &eacute;pargne</div><div class="article-queries"><span>Euro num&eacute;rique impact &eacute;pargnants</span></div></div>
+      <div class="article-meta"><span class="impact impact-low">Faible</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p><strong>Angle :</strong> Vulgarisation accessible d'un sujet encore flou pour le grand public. Positionner BNP comme banque qui anticipe et accompagne la transformation.</p><p style="margin-top:8px"><strong>Structure :</strong> Qu'est-ce que l'euro num&eacute;rique &bull; Calendrier de la BCE &bull; Diff&eacute;rence avec crypto/stablecoins &bull; Impact concret sur votre compte &bull; Ce qui change (et ce qui ne change pas) &bull; Le r&ocirc;le de BNP dans le projet &bull; FAQ</p><p style="margin-top:8px"><strong>Donn&eacute;es &agrave; inclure :</strong> Calendrier BCE, pays pilotes, limites de d&eacute;tention envisag&eacute;es, position de BNP dans les consultations europ&eacute;ennes.</p><div class="keywords"><span>euro num&eacute;rique</span><span>MNBC</span><span>impact &eacute;pargnants</span><span>BCE monnaie num&eacute;rique</span><span>euro digital</span></div></div>
+    </div></div>
+  </div>
+
+  <!-- INVESTISSEMENT -->
+  <div class="theme-header">Investissement <span class="theme-count">3 articles &mdash; 4 requ&ecirc;tes manqu&eacute;es &mdash; 30% de mention</span></div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">16</div>
+      <div style="flex:1"><div class="article-title">Investir en bourse avec un petit budget : le guide pour d&eacute;marrer</div>
+        <div class="article-queries"><span>Investir bourse 500 euros</span></div>
+      </div>
+      <div class="article-meta"><span class="impact impact-high" style="background:rgba(239,68,68,0.15);color:var(--red)">Critique</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:12px;margin-bottom:12px;font-size:12px;color:var(--red)">&#9888; BNP Paribas est absente sur les 4 LLM pour cette requ&ecirc;te. Priorit&eacute; absolue.</div>
+      <div><div class="field-label">Concurrents &agrave; d&eacute;loger</div><span class="comp-tag">Fortuneo</span><span class="comp-tag">Boursorama</span><span class="comp-tag">Trade Republic</span><span class="comp-tag">Bourse Direct</span><span class="comp-tag">XTB</span></div>
+      <div><div class="field-label">Sources IA &agrave; cibler</div><span class="src-tag">finance-heros.fr</span><span class="src-tag">blog.nalo.fr</span><span class="src-tag">cafedelabourse.com</span></div>
+      <div class="brief-box">
+        <h4>Brief &eacute;ditorial</h4>
+        <p><strong>Angle :</strong> Guide accessible, ton p&eacute;dagogique. Montrer que BNP peut rivaliser avec les courtiers en ligne pour les petits budgets. ETF, PEA, frais r&eacute;els.</p>
+        <p style="margin-top:8px"><strong>Structure :</strong> Par o&ugrave; commencer &bull; PEA BNP : comment &ccedil;a marche &bull; Construire un portefeuille avec 500&euro; &bull; Frais r&eacute;els (transparence) &bull; &Eacute;tapes pratiques pas &agrave; pas &bull; FAQ</p>
+        <div class="keywords"><span>investir bourse 500 euros</span><span>commencer bourse petit budget</span><span>PEA petit montant</span><span>ETF d&eacute;butant</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">17</div>
+      <div style="flex:1"><div class="article-title">PEA ou assurance-vie : que choisir et dans quel ordre</div><div class="article-queries"><span>PEA ou AV en premier</span><span>Performance fonds ISR vs classiques</span></div></div>
+      <div class="article-meta"><span class="impact impact-med">Moyen</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p>Comparatif fiscal et strat&eacute;gique. Inclure section ISR avec donn&eacute;es de performance.</p><div class="keywords"><span>PEA ou assurance-vie</span><span>ouvrir PEA en premier</span><span>fonds ISR performance</span></div></div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">18</div>
+      <div style="flex:1"><div class="article-title">Investir dans l'immobilier sans acheter : SCPI, crowdfunding, OPCI</div><div class="article-queries"><span>Immobilier sans acheter un bien</span></div></div>
+      <div class="article-meta"><span class="impact impact-low">Faible</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p>Guide des alternatives : SCPI, crowdfunding, OPCI, SCI. Inclure les solutions BNP.</p><div class="keywords"><span>investir immobilier sans acheter</span><span>SCPI</span><span>crowdfunding immobilier</span><span>pierre papier</span></div></div>
+    </div></div>
+  </div>
+
+  <!-- CONSEIL PATRIMONIAL -->
+  <div class="theme-header">Conseil patrimonial <span class="theme-count">2 articles &mdash; 4 requ&ecirc;tes manqu&eacute;es &mdash; 28,7% de mention</span></div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">19</div>
+      <div style="flex:1"><div class="article-title">H&eacute;ritage de 100 000&euro; : comment le g&eacute;rer intelligemment</div><div class="article-queries"><span>G&eacute;rer h&eacute;ritage 100 000&euro;</span><span>Diversification patrimoniale 2025</span></div></div>
+      <div class="article-meta"><span class="impact impact-med">Moyen</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p>Allocation type par profil de risque. &Eacute;tapes pratiques (fiscalit&eacute; succession, placement progressif). Positionner le conseil patrimonial BNP.</p><div class="keywords"><span>placer h&eacute;ritage 100000 euros</span><span>g&eacute;rer h&eacute;ritage</span><span>diversification patrimoniale</span></div></div>
+    </div></div>
+  </div>
+
+  <div class="article-card" onclick="this.classList.toggle('open')">
+    <div class="article-header">
+      <div class="article-num">20</div>
+      <div style="flex:1"><div class="article-title">Assurance-vie ou PEA pour transmettre : comparatif fiscal</div><div class="article-queries"><span>Transmettre AV ou PEA</span><span>R&eacute;duire imp&ocirc;ts placement</span></div></div>
+      <div class="article-meta"><span class="impact impact-med">Moyen</span><span class="chevron">&#9662;</span></div>
+    </div>
+    <div class="article-body"><div class="article-content">
+      <div class="brief-box"><h4>Brief &eacute;ditorial</h4><p>Comparatif transmission AV vs PEA avec cas fiscaux chiffr&eacute;s. Abattements, droits de succession.</p><div class="keywords"><span>transmettre assurance-vie</span><span>transmission PEA</span><span>r&eacute;duire imp&ocirc;ts placement</span></div></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ══════ SECTION 3: CONTENUS DEFENSIFS ══════ -->
+<div class="section">
+  <div class="section-tag">Contenus d&eacute;fensifs</div>
+  <div class="section-title">Contrer les verbatims n&eacute;gatifs</div>
+  <div class="section-sub">18 verbatims n&eacute;gatifs identifi&eacute;s dans les r&eacute;ponses des IA. 3 axes de contenu d&eacute;fensif recommand&eacute;s.</div>
+
+  <div class="defense-card">
+    <h3>Transparence frais <span style="font-size:13px;color:var(--red);font-weight:400">&mdash; 9 verbatims</span></h3>
+    <div style="margin:12px 0"><div class="verbatim">&laquo; BNP Paribas pratiquent des frais souvent exorbitants &raquo; &mdash; Gemini</div>
+    <div class="verbatim">&laquo; facturent 50 &agrave; 60&euro; annuels en frais &raquo; &mdash; Perplexity</div>
+    <div class="verbatim">&laquo; appliquent des frais plut&ocirc;t &eacute;lev&eacute;s avec des droits de garde &raquo; &mdash; Claude</div></div>
+    <div style="margin-top:16px"><div class="field-label">Recommandation</div>
+    <p style="font-size:13px;color:var(--t2);line-height:1.7">Publier un article <strong style="color:var(--t1)">&laquo; Frais bancaires BNP Paribas : ce qu'il faut savoir &raquo;</strong> et renforcer les contenus existants sur les tarifs. Inclure un comparatif honn&ecirc;te avec les banques en ligne, en expliquant la valeur ajout&eacute;e (conseil personnalis&eacute;, r&eacute;seau d'agences, accompagnement patrimonial) qui justifie l'&eacute;cart. Privil&eacute;gier un format FAQ avec donn&eacute;es chiffr&eacute;es et cas d'usage concrets.</p></div>
+  </div>
+
+  <div class="defense-card">
+    <h3>Engagements ESG &amp; climat <span style="font-size:13px;color:var(--red);font-weight:400">&mdash; 4 verbatims</span></h3>
+    <div style="margin:12px 0"><div class="verbatim">&laquo; critiqu&eacute;e pour son soutien financier &agrave; des entreprises p&eacute;troli&egrave;res &raquo; &mdash; ChatGPT</div>
+    <div class="verbatim">&laquo; g&eacute;n&eacute;r&eacute; 3,3 milliards de tonnes &eacute;quivalent CO2 en 2019 &raquo; &mdash; Gemini</div></div>
+    <div style="margin-top:16px"><div class="field-label">Recommandation</div>
+    <p style="font-size:13px;color:var(--t2);line-height:1.7">Publier un article <strong style="color:var(--t1)">&laquo; BNP Paribas et la transition &eacute;cologique : bilan et engagements &raquo;</strong> et renforcer les contenus existants sur le sujet ESG. Inclure les donn&eacute;es 2024-2025, objectifs chiffr&eacute;s, progression ann&eacute;e apr&egrave;s ann&eacute;e. Les IA valorisent les donn&eacute;es r&eacute;centes et v&eacute;rifiables &mdash; des chiffres &agrave; jour changent le narrative.</p></div>
+  </div>
+
+  <div class="defense-card">
+    <h3>Performance PER <span style="font-size:13px;color:var(--red);font-weight:400">&mdash; 5 verbatims</span></h3>
+    <div style="margin:12px 0"><div class="verbatim">&laquo; Option la moins int&eacute;ressante des trois en termes de performance et de frais &raquo; &mdash; Claude</div>
+    <div class="verbatim">&laquo; g&eacute;n&eacute;ralement moins comp&eacute;titifs en termes de frais &raquo; &mdash; Gemini</div></div>
+    <div style="margin-top:16px"><div class="field-label">Recommandation</div>
+    <p style="font-size:13px;color:var(--t2);line-height:1.7">Publier un article <strong style="color:var(--t1)">&laquo; PER BNP Paribas : ce que disent les comparatifs (et ce qu'ils oublient) &raquo;</strong> et renforcer les contenus existants sur le PER. Mettre en avant les donn&eacute;es de performance nettes de frais, les avantages sp&eacute;cifiques (accompagnement, gamme de fonds, gestion pilot&eacute;e). Adopter un ton transparent et factuel.</p></div>
+  </div>
+</div>
+
+<!-- ══════ SECTION 4: SOURCES A CIBLER ══════ -->
+<div class="section">
+  <div class="section-tag">Strat&eacute;gie de sources</div>
+  <div class="section-title">Top 15 sites &agrave; cibler</div>
+  <div class="section-sub">Les sites les plus cit&eacute;s par les IA sur les requ&ecirc;tes de l'audit. Se faire r&eacute;f&eacute;rencer sur ces sites augmente directement la visibilit&eacute; IA.</div>
+
+  <div class="glass" style="overflow-x:auto">
+    <table class="source-table">
+      <thead><tr><th>#</th><th>Domaine</th><th>Citations</th><th>LLM</th><th>Action recommand&eacute;e</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="source-domain">placement.meilleurtaux.com</td><td class="source-count">181</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span></td><td class="source-action">&Eacute;tude/comparatif relay&eacute;, partenariat contenu sponsoris&eacute;</td></tr>
+        <tr><td>2</td><td class="source-domain">service-public.gouv.fr</td><td class="source-count">130</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Source institutionnelle &mdash; v&eacute;rifier que BNP est dans les guides officiels</td></tr>
+        <tr><td>3</td><td class="source-domain">finance-heros.fr</td><td class="source-count">128</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Article invit&eacute;, interview expert BNP, sponsoring &eacute;ditorial</td></tr>
+        <tr><td>4</td><td class="source-domain">blog.nalo.fr</td><td class="source-count">112</td><td><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span></td><td class="source-action">Concurrent direct &mdash; cr&eacute;er du contenu &eacute;quivalent sur le blog BNP</td></tr>
+        <tr><td>5</td><td class="source-domain">moneyvox.fr</td><td class="source-count">98</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Communiqu&eacute; de presse, relais d'&eacute;tudes, comparatif</td></tr>
+        <tr><td>6</td><td class="source-domain">economie.gouv.fr</td><td class="source-count">87</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Source institutionnelle &mdash; v&eacute;rifier les donn&eacute;es BNP dans les bases</td></tr>
+        <tr><td>7</td><td class="source-domain">banque-france.fr</td><td class="source-count">79</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">S'appuyer sur leurs donn&eacute;es dans le contenu BNP</td></tr>
+        <tr><td>8</td><td class="source-domain">goodvest.fr</td><td class="source-count">71</td><td><span class="pill pill-anthropic">Claude</span><span class="pill pill-gemini">Gemini</span><span class="pill pill-perplexity">Perplexity</span></td><td class="source-action">Concurrent ISR &mdash; renforcer le contenu BNP sur l'investissement responsable</td></tr>
+        <tr><td>9</td><td class="source-domain">ramify.fr</td><td class="source-count">69</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Concurrent fintech &mdash; cr&eacute;er du contenu comparable (guides, simulateurs)</td></tr>
+        <tr><td>10</td><td class="source-domain">avenuedesinvestisseurs.fr</td><td class="source-count">67</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Blog influent &mdash; proposer interview/contribution expert BNP</td></tr>
+        <tr><td>11</td><td class="source-domain">boursorama.com</td><td class="source-count">65</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Concurrent principal &mdash; &eacute;tudier leur strat&eacute;gie de contenu</td></tr>
+        <tr><td>12</td><td class="source-domain">prosper-conseil.fr</td><td class="source-count">61</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Cabinet de conseil &mdash; partenariat ou contribution expert</td></tr>
+        <tr><td>13</td><td class="source-domain">sinvestir.fr</td><td class="source-count">53</td><td><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span></td><td class="source-action">Blog investissement &mdash; article invit&eacute; ou interview</td></tr>
+        <tr><td>14</td><td class="source-domain">francetransactions.com</td><td class="source-count">43</td><td><span class="pill pill-openai">ChatGPT</span><span class="pill pill-anthropic">Claude</span><span class="pill pill-perplexity">Perplexity</span><span class="pill pill-gemini">Gemini</span></td><td class="source-action">Comparateur &mdash; v&eacute;rifier que les donn&eacute;es BNP sont &agrave; jour</td></tr>
+        <tr><td>15</td><td class="source-domain">cafedupatrimoine.com</td><td class="source-count">39</td><td><span class="pill pill-anthropic">Claude</span><span class="pill pill-gemini">Gemini</span><span class="pill pill-perplexity">Perplexity</span></td><td class="source-action">M&eacute;dia patrimoine &mdash; tribune expert ou &eacute;tude relay&eacute;e</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════ SECTION 5: MONITORING ══════ -->
+<div class="section">
+  <div class="section-tag">Plan de monitoring</div>
+  <div class="section-title">Mesurer l'impact dans le temps</div>
+  <div class="section-sub">Un second audit dans 3 mois permettra de quantifier l'impact des actions mises en place.</div>
+
+  <div class="monitor-grid">
+    <div class="monitor-card">
+      <h3>Baseline actuelle</h3>
+      <div class="monitor-row"><span class="monitor-metric">Taux de mention global</span><span class="monitor-val" style="color:var(--orange)">33,2%</span></div>
+      <div class="monitor-row"><span class="monitor-metric">Requ&ecirc;tes manqu&eacute;es</span><span class="monitor-val" style="color:var(--red)">39</span></div>
+      <div class="monitor-row"><span class="monitor-metric">Verbatims n&eacute;gatifs</span><span class="monitor-val" style="color:var(--red)">18</span></div>
+      <div class="monitor-row"><span class="monitor-metric">Mention Retraite</span><span class="monitor-val" style="color:var(--red)">15%</span></div>
+      <div class="monitor-row"><span class="monitor-metric">Mention &Eacute;pargne</span><span class="monitor-val" style="color:var(--red)">22,5%</span></div>
+    </div>
+    <div class="monitor-card">
+      <h3>Cibles indicatives &agrave; 3 mois</h3>
+      <div class="monitor-row"><span class="monitor-metric">Taux de mention global</span><span class="monitor-val" style="color:var(--green)">37-42%</span></div>
+      <div class="monitor-row"><span class="monitor-metric">Requ&ecirc;tes manqu&eacute;es</span><span class="monitor-val" style="color:var(--green)">25-30</span></div>
+      <div class="monitor-row"><span class="monitor-metric">Verbatims n&eacute;gatifs</span><span class="monitor-val" style="color:var(--green)">12-15</span></div>
+      <div class="monitor-row"><span class="monitor-metric">Mention Retraite</span><span class="monitor-val" style="color:var(--green)">20-25%</span></div>
+      <div class="monitor-row"><span class="monitor-metric">Mention &Eacute;pargne</span><span class="monitor-val" style="color:var(--green)">27-32%</span></div>
+    </div>
+  </div>
+  <div class="glass" style="margin-top:20px">
+    <div style="font-size:13px;color:var(--t2);line-height:1.7">
+      <strong style="color:var(--t1)">Recommandation :</strong> Re-run de l'audit dans 3 mois apr&egrave;s publication des premiers contenus. Focus sur les 39 requ&ecirc;tes manqu&eacute;es comme baseline de comparaison. Les th&eacute;matiques Retraite et &Eacute;pargne sont les priorit&eacute;s absolues.<br><br>
+      <span style="color:var(--t3)">Note : ces cibles sont indicatives et d&eacute;pendent du rythme de publication, de l'indexation par les LLM et des &eacute;volutions algorithmiques. Un audit de suivi permettra de mesurer les progr&egrave;s r&eacute;els et d'ajuster la strat&eacute;gie.</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <div class="footer-brand">Beeleven &mdash; Strat&eacute;gie digitale &amp; IA</div>
+  <div class="footer-disclaimer">
+    Ce document accompagne l'audit de visibilit&eacute; LLM r&eacute;alis&eacute; pour BNP Paribas (Particuliers) en mai 2026.
+    Les recommandations sont bas&eacute;es sur l'analyse de 400 r&eacute;ponses IA (100 requ&ecirc;tes &times; 4 LLM).
+    L'&eacute;volution de la visibilit&eacute; d&eacute;pend de facteurs multiples, incluant les algorithmes des LLM.
+  </div>
+</div>
+
+</body>
+</html>
