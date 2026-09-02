@@ -1257,13 +1257,13 @@ body {
       <div class="kpi-grid">
         <!-- Row 1: MENTIONS -->
         <div class="kpi-card kpi-card--cyan">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Mentions</div><div class="info-bubble-text">Pourcentage de réponses IA mentionnant le client parmi celles citant au moins une marque. En mode pondéré, chaque IA est pondérée par son audience (ChatGPT 78%, Gemini 13%, Perplexity 7%, Claude 2%). <strong>Position moyenne</strong> : rang moyen d'apparition (1 = cité en premier). <strong>Requêtes testées</strong> : nombre total de requêtes soumises aux 4 IA.</div></span></span>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Mentions</div><div class="info-bubble-text">Base de calcul : <strong>62 réponses</strong> citant BNP Paribas, rapportées aux <strong>195 réponses</strong> qui citent au moins une marque — et non aux 400 réponses collectées, dont beaucoup ne nomment aucun acteur. Ce taux diffère donc du nombre de mentions du classement, qui compte les <em>occurrences</em> : une même réponse peut citer la marque sous deux libellés. En mode pondéré, chaque IA compte à hauteur de son audience (ChatGPT 78%, Gemini 13%, Perplexity 7%, Claude 2%). <strong>Position moyenne</strong> : rang d'apparition dans la réponse (1 = cité en premier). <strong>Requêtes testées</strong> : nombre de requêtes soumises aux 4 IA.</div></span></span>
           <div class="kpi-category kpi-category--cyan">Mentions</div>
-          <div class="kpi-value"><span class="switchable" data-raw="31.8%" data-weighted="37.5%">37.5%</span></div>
+          <div class="kpi-value"><span class="switchable" data-raw="31,8%" data-weighted="37,5%">37,5%</span></div>
           <div class="kpi-desc">Taux de mention client</div>
           <div class="kpi-sub-row">
             <div class="kpi-sub">
-              <div class="kpi-sub-value"><span class="switchable" data-raw="2.77" data-weighted="3.06">3.06</span></div>
+              <div class="kpi-sub-value"><span class="switchable" data-raw="2,77" data-weighted="3,06">3,06</span></div>
               <div class="kpi-sub-label">Position moyenne</div>
             </div>
             <div class="kpi-sub">
@@ -1274,13 +1274,13 @@ body {
         </div>
 
         <div class="kpi-card kpi-card--cyan">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Absence client</div><div class="info-bubble-text">Nombre de requêtes où des concurrents sont cités mais pas le client. C'est un indicateur d'opportunité. En mode brut, le sous-indicateur affiche le nombre de réponses négatives. En mode pondéré, il affiche le pourcentage de sentiment négatif (pondéré par audience).</div></span></span>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Absence client</div><div class="info-bubble-text">Requêtes où des concurrents sont cités mais pas BNP Paribas : ce sont les occasions manquées. Sur 100 requêtes, <strong>33 ne font citer aucune marque</strong> par aucune IA — elles ne comptent pas ici, puisqu'aucun concurrent n'y prend la place. Ce chiffre est donc inférieur au nombre de requêtes où la marque est simplement absente. <strong>Sous-indicateur</strong> : nombre de réponses négatives en mode brut, part du sentiment négatif pondérée par audience en mode pondéré.</div></span></span>
           <div class="kpi-category kpi-category--cyan">Absence</div>
           <div class="kpi-value">43</div>
           <div class="kpi-desc">Requ&ecirc;tes manqu&eacute;es</div>
           <div class="kpi-sub-row">
             <div class="kpi-sub">
-              <div class="kpi-sub-value"><span class="switchable" data-raw="1" data-weighted="0.1%">0.1%</span></div>
+              <div class="kpi-sub-value"><span class="switchable" data-raw="1" data-weighted="0,1%">0,1%</span></div>
               <div class="kpi-sub-label"><span class="switchable" data-raw="R&eacute;ponses n&eacute;gatives" data-weighted="Sentiment n&eacute;gatif">Sentiment n&eacute;gatif</span></div>
             </div>
             <div class="kpi-sub">
@@ -1292,7 +1292,7 @@ body {
 
         <!-- Row 1 cont: CITATIONS -->
         <div class="kpi-card kpi-card--green">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Citations</div><div class="info-bubble-text">Part des URLs sources citées par les IA qui pointent vers le domaine client. <strong>Rang domaine</strong> : position du site client parmi tous les domaines cités. <strong>Domaines détectés</strong> : nombre total de domaines uniques trouvés dans les réponses.</div></span></span>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Citations</div><div class="info-bubble-text">Part des <strong>5 754 citations de sources</strong> relevées dans les réponses qui pointent vers mabanquepro.bnpparibas. Une citation = une référence à une page dans une réponse ; un même site peut être cité plusieurs fois. <strong>Rang domaine</strong> : place du site client parmi les 945 domaines cités. <strong>Domaines détectés</strong> : nombre de domaines distincts, tous types confondus (institutions, médias, comparateurs, concurrents).</div></span></span>
           <div class="kpi-category kpi-category--green">Citations</div>
           <div class="kpi-value">1%</div>
           <div class="kpi-desc">Part des citations source</div>
@@ -1310,8 +1310,8 @@ body {
 
         <!-- Row 2: REQUETES -->
         <div class="kpi-card kpi-card--pink">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Sentiment</div><div class="info-bubble-text">Pourcentage de mentions positives (recommandation explicite). En mode pondéré, le sentiment est pondéré par l'audience de chaque IA. <strong>Neutre</strong> : mention factuelle sans jugement. <strong>Négatif</strong> : critique ou restriction explicite (limite de l'offre, prestation absente, service déconseillé).</div></span></span>
-          <div class="kpi-category kpi-category--pink">Requ&ecirc;tes</div>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Sentiment</div><div class="info-bubble-text">Répartition du sentiment sur les <strong>62 réponses</strong> citant BNP Paribas — un seul sentiment est retenu par réponse. <strong>Positif</strong> : recommandation explicite. <strong>Neutre</strong> : mention factuelle sans jugement. <strong>Négatif</strong> : critique ou restriction explicite (limite de l'offre, prestation absente). En mode pondéré, chaque réponse compte à hauteur de l'audience de son IA : un avis porté par une IA peu utilisée pèse peu, d'où des valeurs décimales.</div></span></span>
+          <div class="kpi-category kpi-category--pink">Sentiment</div>
           <div class="kpi-value"><span class="switchable" data-raw="53%" data-weighted="44%">44%</span></div>
           <div class="kpi-desc">Sentiment positif</div>
           <div class="kpi-sub-row">
@@ -1320,7 +1320,7 @@ body {
               <div class="kpi-sub-label">Neutre</div>
             </div>
             <div class="kpi-sub">
-              <div class="kpi-sub-value"><span class="switchable" data-raw="2%" data-weighted="0.1%">0.1%</span></div>
+              <div class="kpi-sub-value"><span class="switchable" data-raw="2%" data-weighted="0,1%">0,1%</span></div>
               <div class="kpi-sub-label">N&eacute;gatif</div>
             </div>
           </div>
@@ -1329,29 +1329,29 @@ body {
         <div class="kpi-card kpi-card--pink" id="kpi-positionnement">
           <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Positionnement</div><div class="info-bubble-text">Rang du client dans le classement des marques. En mode brut, chaque IA pèse 25%. En mode pondéré, le classement reflète l'audience réelle (ChatGPT 78%) et peut donc différer du brut. Lorsque l'écart avec la marque voisine est inférieur à 5%, il est affiché : un rang tenu à quelques mentions près n'est pas un écart significatif.</div></span></span>
           <div class="kpi-category kpi-category--pink">Positionnement</div>
-          <div class="kpi-value" id="pos-value" style="color:var(--accent-green);">#1</div>
-          <div class="kpi-desc" id="pos-desc">Leader en mentions</div>
+          <div class="kpi-value" id="pos-value" style="color:var(--text-primary);">#1</div>
+          <div class="kpi-desc" id="pos-desc">1er en score pondéré — écart de 0,6 % avec Qonto</div>
           <div class="kpi-sub-row">
             <div class="kpi-sub">
-              <div class="kpi-sub-value" id="pos-sub1-value">105</div>
-              <div class="kpi-sub-label" id="pos-sub1-label">Mentions client</div>
+              <div class="kpi-sub-value" id="pos-sub1-value">1 691</div>
+              <div class="kpi-sub-label" id="pos-sub1-label">Score pond&eacute;r&eacute;</div>
             </div>
             <div class="kpi-sub">
-              <div class="kpi-sub-value" id="pos-sub2-value">78</div>
-              <div class="kpi-sub-label" id="pos-sub2-label">2&egrave;me (Qonto)</div>
+              <div class="kpi-sub-value" id="pos-sub2-value">1 680</div>
+              <div class="kpi-sub-label" id="pos-sub2-label">2ème : Qonto</div>
             </div>
           </div>
         </div>
 
         <div class="kpi-card kpi-card--green">
-          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Marques émergentes</div><div class="info-bubble-text">Marques détectées dans les réponses qui ne figurent pas dans la liste de concurrents prédéfinie. <strong>Marques détectées</strong> : nombre total de marques identifiées. <strong>Thématiques</strong> : nombre de thèmes analysés.</div></span></span>
+          <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Marques émergentes</div><div class="info-bubble-text">Deux compteurs distincts. <strong>Marques suivies</strong> : les acteurs du classement, soit BNP Paribas et les concurrents identifiés pour cet audit. <strong>Autres marques citées</strong> : les marques repérées dans les réponses hors de cette liste — un signal de veille sur les acteurs qui émergent, sans classement ni pondération. <strong>Thématiques</strong> : nombre de thèmes couverts par les requêtes.</div></span></span>
           <div class="kpi-category kpi-category--green">Marques</div>
-          <div class="kpi-value">140</div>
-          <div class="kpi-desc">Marques &eacute;mergentes d&eacute;tect&eacute;es</div>
+          <div class="kpi-value">29</div>
+          <div class="kpi-desc">Marques suivies au classement</div>
           <div class="kpi-sub-row">
             <div class="kpi-sub">
-              <div class="kpi-sub-value">29</div>
-              <div class="kpi-sub-label">Marques d&eacute;tect&eacute;es</div>
+              <div class="kpi-sub-value">140</div>
+              <div class="kpi-sub-label">Autres marques cit&eacute;es</div>
             </div>
             <div class="kpi-sub">
               <div class="kpi-sub-value">4</div>
@@ -1480,7 +1480,7 @@ body {
             </div>
           </div>
           <div class="neg-pct">
-            <div style="font-family:var(--font-display);font-weight:800;font-size:56px;color:var(--accent-red);line-height:1;"><span class="switchable" data-raw="2%" data-weighted="0.1%">0.1%</span></div>
+            <div style="font-family:var(--font-display);font-weight:800;font-size:56px;color:var(--accent-red);line-height:1;"><span class="switchable" data-raw="2%" data-weighted="0,1%">0,1%</span></div>
             <div style="font-size:13px;color:var(--text-tertiary);margin-top:6px;">des mentions<br>sont n&eacute;gatives</div>
           </div>
         </div>
@@ -13029,7 +13029,7 @@ Voici comment la facturation électronique permet de gagner un temps considérab
       var sentChart = Chart.getChart('chartSentiment');
       if (sentChart) {
         var rawSent = REPORT_DATA.sentiment;
-        var weightedSent = { positive: 44, neutral: 56, negative: 0.1 };
+        var weightedSent = { positive: 44, neutral: 56, negative: 0,1 };
         var sent = mode === 'weighted' ? weightedSent : rawSent;
         sentChart.data.datasets[0].data = [sent.positive, sent.neutral, sent.negative];
         sentChart.update();
