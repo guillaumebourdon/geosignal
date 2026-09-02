@@ -1462,6 +1462,85 @@ body {
         </div>
       </div>
 
+      <div class="glass-card" style="margin-top:32px;position:relative;">
+        <span class="info-tip">i<span class="info-bubble"><div class="info-bubble-title">Retours négatifs</div><div class="info-bubble-text">Nombre de mentions négatives après filtrage des faux négatifs. Ce chiffre peut différer du tableau de marques (qui compte toutes les variantes du nom, y compris les filiales) et du KPI « réponses négatives » (qui déduplique par requête). En mode pondéré, le sous-indicateur affiche le pourcentage de sentiment négatif pondéré par audience.</div></span></span>
+        <div class="chart-title">Analyse des retours n&eacute;gatifs</div>
+        <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:20px;">1 verbatims n&eacute;gatifs repr&eacute;sentatifs &mdash; r&eacute;partition par cat&eacute;gorie</div>
+        <div style="font-size:12px;line-height:1.6;color:var(--text-secondary);background:var(--bg-card-alt);border-left:3px solid var(--border-card);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:20px;">Lecture : le sentiment est établi une fois par marque et par réponse. Lorsqu&#x27;une même réponse décrit l&#x27;offre favorablement puis en pose une limite, un seul verdict est retenu. La remarque « la grande majorité des banques traditionnelles ne sont pas Plateforme Agréée DGFiP directe » apparaît ainsi dans 3 réponses, dont une seule est comptabilisée ici en négatif. Le volume de retours négatifs doit donc se lire comme un plancher, non comme un décompte exhaustif.</div>
+
+        <!-- Category breakdown chart + legends + big % -->
+        <div class="neg-row">
+          <div class="neg-chart">
+            <canvas id="chartNegatives" height="140"></canvas>
+          </div>
+          <div class="neg-legends">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--accent-red);min-width:32px;">1</span>
+              <span style="font-size:13px;color:var(--text-secondary);">Absence d&#x27;offre</span>
+            </div>
+          </div>
+          <div class="neg-pct">
+            <div style="font-family:var(--font-display);font-weight:800;font-size:56px;color:var(--accent-red);line-height:1;"><span class="switchable" data-raw="2%" data-weighted="0%">0%</span></div>
+            <div style="font-size:13px;color:var(--text-tertiary);margin-top:6px;">des mentions<br>sont n&eacute;gatives</div>
+          </div>
+        </div>
+
+        <!-- Top verbatims -->
+        <div style="font-family:var(--font-display);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-tertiary);margin-bottom:12px;">Verbatims repr&eacute;sentatifs <span style="font-weight:400;text-transform:none;letter-spacing:0;">&mdash; cliquez pour voir la r&eacute;ponse compl&egrave;te</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div>
+            <div onclick="toggleVerbatim(0)" style="background:var(--bg-card-alt);border:1px solid var(--border-card);border-left:3px solid var(--accent-red);border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.12)'" onmouseout="this.style.borderColor='var(--border-card)'">
+              <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+                <span style="color:var(--accent-orange);">Facturation électronique &amp; banque pro</span>
+                <span style="background:rgba(239,68,68,0.12);color:var(--accent-red);font-family:var(--font-display);font-weight:700;font-size:9px;padding:2px 7px;border-radius:100px;text-transform:uppercase;letter-spacing:0.5px;">Absence d&#x27;offre</span>
+                <span style="background:#D97757;color:rgba(255,255,255,0.9);font-family:var(--font-display);font-weight:700;font-size:9px;padding:2px 7px;border-radius:100px;">Claude</span>
+                <span style="margin-left:auto;color:var(--accent-cyan);font-family:var(--font-display);font-weight:600;font-size:10px;letter-spacing:0.5px;" id="vlink-0">Voir la r&eacute;ponse &#9656;</span>
+              </div>
+              <div style="font-size:13px;color:var(--text-secondary);font-style:italic;">&laquo; ne sont pas Plateforme Agréée DGFiP directe &raquo;</div>
+            </div>
+            <div id="verbatim-0" style="display:none;background:var(--bg-card-alt);border:1px solid var(--border-card);border-top:none;border-left:3px solid var(--accent-red);border-radius:0 0 var(--radius-sm) var(--radius-sm);padding:14px 16px;">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#D97757;margin-bottom:8px;">Claude &mdash; R&eacute;ponse compl&egrave;te</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:8px;">Requ&ecirc;te : <em>Facturation électronique et compte pro : la solution tout-en-un existe-t-elle ?</em></div>
+              <div style="font-size:12px;line-height:1.6;color:var(--text-secondary);max-height:300px;overflow-y:auto;white-space:pre-wrap;"># Facturation électronique et compte pro : la solution tout-en-un existe-t-elle ?
+
+Oui, la solution tout-en-un existe bel et bien en France ! Face à l&#x27;obligation de facturation électronique qui arrive en septembre 2026, plusieurs néobanques professionnelles ont développé des offres intégrant compte professionnel et facturation électronique conforme. Voici tout ce qu&#x27;il faut savoir.
+
+## Le contexte réglementaire
+
+Dès le 1er septembre 2026, la facturation électronique devient obligatoire pour toutes les entreprises assujetties à la TVA. Le calendrier se déploie progressivement :
+
+- **1er septembre 2026** : Toutes les entreprises françaises devront être en mesure de recevoir des factures électroniques. Les grandes entreprises et les ETI devront également émettre des factures électroniques.
+- **1er septembre 2027** : Les TPE et les PME seront tenues d&#x27;émettre des factures électroniques.
+
+Les factures électronique B2B devront transiter via une Plateforme Agréée (PA) et dans un format structuré (Factur‑X, UBL, CII).
+
+## Les solutions tout-en-un disponibles
+
+Plusieurs banques et néobanques spécialisées proposent des solutions tout-en-un, intégrant des outils de facturation conformes à la réforme, en complément de leurs services habituels : comptes pro, moyens de paiement, encaissements, outils de gestion de trésorerie, etc.
+
+### Les trois acteurs principaux
+
+**1. Qonto**
+
+Qonto est la néobanque pro la plus complète du marché français. Compte avec IBAN FR, cartes physiques et virtuelles, gestion multi-utilisateurs, facturation intégrée agréée DGFiP et rapprochement bancaire automatique : c&#x27;est l&#x27;outil idéal dès que l&#x27;entreprise se structure (associés, salariés, comptable).
+
+Qonto a déployé en avril 2025 sa plateforme agréée, qui a obtenu un agrément définitif depuis janvier 2026. Elle est accessible gratuitement à toutes les entreprises, y compris celles qui ne sont pas clientes, et est intégrée dans les forfaits proposées par la néobanque, à partir de 9 euros par mois pour les indépendants.
+
+**2. Tiime**
+
+Tiime propose une facturation électronique gratuite et illimitée couplée à un compte pro, le tout agréé DGFiP. Pour un auto-entrepreneur ou une TPE qui débute et veut se mettre en conformité sans dépenser un euro, c&#x27;est l&#x27;entrée en matière la plus accessible.
+
+**3. Shine**
+
+Shine (groupe Société Générale) cible les indépendants et les TPE qui veulent un compte pro simple, sans complexité inutile. Elle propose un IBAN FR, une Mastercard, et un module de facturation électronique agréé DGFiP — avec une offre de facturation gratuite pour démarrer.
+
+## Les avantages d&#x27;une solution tout-en-un
+
+Regrouper votre compte pro, votre logiciel de facturation et vos outils de comptabilité au sein d&#x27;une solution tout-en-un s&#x27;avère être une excellente stratégie pour simplifier votre gestion. Regrouper ces outils permet d&#x27;optimiser votre temps, de simplifier vos processus et de réduire les erreurs. Une gestion centralisée favorise également une meilleure visibilité sur ...</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </section>
 
@@ -12708,7 +12787,7 @@ Voici comment la facturation électronique permet de gagner un temps considérab
     (function() {
       const el = document.getElementById('chartNegatives');
       if (!el) return;
-      const breakdown = [];
+      const breakdown = [{"name":"Absence d'offre","count":1}];
       if (!breakdown || !breakdown.length) return;
       const labels = breakdown.map(b => b.name);
       const values = breakdown.map(b => b.count);
@@ -12969,14 +13048,14 @@ Voici comment la facturation électronique permet de gagner un temps considérab
           sub2Label: 'Mentions client'
         },
         weighted: {
-          isLeader: true,
+          isLeader: false,
           value: '#1',
-          valueColor: 'var(--accent-green)',
-          desc: 'Leader en mentions (pond\u00e9r\u00e9)',
-          sub1Value: '—',
-          sub1Label: 'Mentions client',
-          sub2Value: '—',
-          sub2Label: '—'
+          valueColor: 'var(--text-primary)',
+          desc: '1er en score pondéré — écart de 0,6 % avec Qonto',
+          sub1Value: '1 691',
+          sub1Label: 'Score pond\u00e9r\u00e9',
+          sub2Value: '1 680',
+          sub2Label: '2ème : Qonto'
         }
       };
       var pd = posData[mode];
