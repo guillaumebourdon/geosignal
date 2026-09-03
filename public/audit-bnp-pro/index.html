@@ -13098,8 +13098,8 @@ Voici comment la facturation électronique permet de gagner un temps considérab
             var meta = cards[i].querySelector('.theme-card-meta');
             if (meta) {
               var spans = meta.querySelectorAll('span');
-              if (spans[0]) spans[0].textContent = 'Taux : ' + ti.mention_rate + '%';
-              if (spans[1]) spans[1].textContent = 'Pos. moy. : ' + (ti.avg_position || '\u2014');
+              if (spans[0]) spans[0].textContent = 'Taux : ' + String(ti.mention_rate).replace('.', ',') + '%';
+              if (spans[1]) spans[1].textContent = 'Pos. moy. : ' + (ti.avg_position != null ? String(ti.avg_position).replace('.', ',') : '\u2014');
             }
           }
         });
@@ -13113,9 +13113,9 @@ Voici comment la facturation électronique permet de gagner un temps considérab
           label: 'Positions d\'\u00e9cart vs Qonto'
         },
         weighted: {
-          title: '\u00c9cart vs 2\u00e8me',
+          title: 'Positionnement pond\u00e9r\u00e9',
           value: '#1',
-          label: 'Leader pond\u00e9r\u00e9'
+          label: '1er en score pondéré — écart de 0,6 % avec Qonto'
         }
       };
       var dd = deltaData[mode];
